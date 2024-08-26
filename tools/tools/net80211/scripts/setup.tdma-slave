@@ -2,7 +2,6 @@
 #
 # Setup a TDMA slave and hook it into a bridge.
 #
-# $FreeBSD: 22607c2f842f6ba54c91308ffb68fe7d75120feb $
 #
 PATH=.:$PATH
 . config

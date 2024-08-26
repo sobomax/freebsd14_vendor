@@ -41,8 +41,6 @@
  *
  *	@(#)ieee.h	8.1 (Berkeley) 6/11/93
  *
- * $FreeBSD: 0942eac8eadf66cd651adae70adc6ccf8d9eec28 $
- *
  */
 
 /*

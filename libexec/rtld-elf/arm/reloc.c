@@ -1,7 +1,6 @@
 /*	$NetBSD: mdreloc.c,v 1.23 2003/07/26 15:04:38 mrg Exp $	*/
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: c3219d52bf7eabd034470d301eaf15583fdd9ffd $");
 #include <sys/param.h>
 #include <sys/stat.h>
 #include <sys/mman.h>
@@ -17,46 +16,6 @@ __FBSDID("$FreeBSD: c3219d52bf7eabd034470d301eaf15583fdd9ffd $");
 #include "debug.h"
 #include "rtld.h"
 #include "rtld_paths.h"
-
-#ifdef __ARM_FP
-/*
- * On processors that have hard floating point supported, we also support
- * running soft float binaries. If we're being built with hard float support,
- * check the ELF headers to make sure that this is a hard float binary. If it is
- * a soft float binary, force the dynamic linker to use the alternative soft
- * float path.
- */
-void
-arm_abi_variant_hook(Elf_Auxinfo **aux_info)
-{
-	Elf_Word ehdr;
-
-	/*
-	 * If we're running an old kernel that doesn't provide any data fail
-	 * safe by doing nothing.
-	 */
-	if (aux_info[AT_EHDRFLAGS] == NULL)
-		return;
-	ehdr = aux_info[AT_EHDRFLAGS]->a_un.a_val;
-
-	/*
-	 * Hard float ABI binaries are the default, and use the default paths
-	 * and such.
-	 */
-	if ((ehdr & EF_ARM_VFP_FLOAT) != 0)
-		return;
-
-	/*
-	 * This is a soft float ABI binary. We need to use the soft float
-	 * settings.
-	 */
-	ld_elf_hints_default = _PATH_SOFT_ELF_HINTS;
-	ld_path_libmap_conf = _PATH_SOFT_LIBMAP_CONF;
-	ld_path_rtld = _PATH_SOFT_RTLD;
-	ld_standard_library_path = SOFT_STANDARD_LIBRARY_PATH;
-	ld_env_prefix = LD_SOFT_;
-}
-#endif
 
 void
 init_pltgot(Obj_Entry *obj)
@@ -131,7 +90,6 @@ _rtld_relocate_nonplt_self(Elf_Dyn *dynp, Elf_Addr relocbase)
 	const Elf_Rel *rel = NULL, *rellim;
 	Elf_Addr relsz = 0;
 	Elf_Addr *where;
-	uint32_t size;
 
 	for (; dynp->d_tag != DT_NULL; dynp++) {
 		switch (dynp->d_tag) {
@@ -144,7 +102,6 @@ _rtld_relocate_nonplt_self(Elf_Dyn *dynp, Elf_Addr relocbase)
 		}
 	}
 	rellim = (const Elf_Rel *)((const char *)rel + relsz);
-	size = (rellim - 1)->r_offset - rel->r_offset;
 	for (; rel < rellim; rel++) {
 		where = (Elf_Addr *)(relocbase + rel->r_offset);
 		
@@ -319,7 +276,7 @@ reloc_nonplt_object(Obj_Entry *obj, const Elf_Rel *rel, SymCache *cache,
 			if (def == NULL)
 				return -1;
 
-			if (!defobj->tls_done && !allocate_tls_offset(obj))
+			if (!defobj->tls_static && !allocate_tls_offset(obj))
 				return -1;
 
 			tmp = (Elf_Addr)def->st_value + defobj->tlsoffset;
@@ -491,14 +448,14 @@ ifunc_init(Elf_Auxinfo aux_info[__min_size(AT_COUNT)] __unused)
 void
 allocate_initial_tls(Obj_Entry *objs)
 {
-
 	/*
 	* Fix the size of the static TLS block by using the maximum
 	* offset allocated so far and adding a bit for dynamic modules to
 	* use.
 	*/
 
-	tls_static_space = tls_last_offset + tls_last_size + RTLD_STATIC_TLS_EXTRA;
+	tls_static_space = tls_last_offset + tls_last_size +
+	    ld_static_tls_extra;
 
 	_tcb_set(allocate_tls(objs, NULL, TLS_TCB_SIZE, TLS_TCB_ALIGN));
 }

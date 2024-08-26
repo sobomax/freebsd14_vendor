@@ -18,8 +18,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 1eb58df152e7e11c2ed47f82ca99afece4065d27 $");
-
 #include "opt_inet.h"
 #include "opt_inet6.h"
 

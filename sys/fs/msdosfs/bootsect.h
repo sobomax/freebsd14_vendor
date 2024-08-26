@@ -1,4 +1,3 @@
-/* $FreeBSD: 5a3ff56b8508841cff7d28c316781e9020be0061 $ */
 /*	$NetBSD: bootsect.h,v 1.9 1997/11/17 15:36:17 ws Exp $	*/
 
 /*-

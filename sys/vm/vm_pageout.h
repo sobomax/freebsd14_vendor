@@ -58,8 +58,6 @@
  *
  * any improvements or extensions that they make and grant Carnegie the
  * rights to redistribute these changes.
- *
- * $FreeBSD: 82ba3c81ef1b4aa4ba8cc5a76c70f01d6d87f20e $
  */
 
 #ifndef _VM_VM_PAGEOUT_H_
@@ -87,6 +85,7 @@ extern int vm_pageout_page_count;
  */
 #define	VM_LOW_KMEM	0x01
 #define	VM_LOW_PAGES	0x02
+#define	VM_LOW_MBUFS	0x04
 
 /*
  *	Exported routines.

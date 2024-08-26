@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 1992 Christopher G. Demetriou
  * All rights reserved.
@@ -29,8 +29,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 6bfb47b74c2d0d3d890664228766120df0ac38e6 $");
-
 #include <ctype.h>
 #include <err.h>
 #include <errno.h>
@@ -42,7 +40,7 @@ __FBSDID("$FreeBSD: 6bfb47b74c2d0d3d890664228766120df0ac38e6 $");
 #include <sys/types.h>
 #include <sys/ioctl.h>
 
-static void usage(void);
+static void usage(void) __dead2;
 
 static void
 usage(void)

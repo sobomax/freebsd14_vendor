@@ -1,6 +1,5 @@
 #!/bin/sh
 #
-# $FreeBSD: ecebfe0174a3d333cd325a29ba822d52e6bab246 $
 #
 
 # PROVIDE: bsnmpd

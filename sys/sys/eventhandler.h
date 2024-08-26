@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 1999 Michael Smith <msmith@freebsd.org>
  * All rights reserved.
@@ -24,8 +24,6 @@
  * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
- *
- * $FreeBSD: 48b4942b42d9fd0d9d7a3b23e4461763b75c6aea $
  */
 
 #ifndef _SYS_EVENTHANDLER_H_
@@ -147,7 +145,7 @@ do {									\
 									\
 	if ((_el = eventhandler_find_list(#name)) != NULL)		\
 		eventhandler_deregister(_el, tag);			\
-} while(0)
+} while (0)
 
 #define EVENTHANDLER_DEREGISTER_NOWAIT(name, tag)			\
 do {									\
@@ -155,7 +153,7 @@ do {									\
 									\
 	if ((_el = eventhandler_find_list(#name)) != NULL)		\
 		eventhandler_deregister_nowait(_el, tag);		\
-} while(0)
+} while (0)
 
 eventhandler_tag eventhandler_register(struct eventhandler_list *list, 
 	    const char *name, void *func, void *arg, int priority);
@@ -184,7 +182,14 @@ eventhandler_tag vimage_eventhandler_register(struct eventhandler_list *list,
 #define	EVENTHANDLER_PRI_ANY	10000
 #define	EVENTHANDLER_PRI_LAST	20000
 
-/* Shutdown events */
+/*
+ * Successive shutdown events invoked by kern_reboot(9).
+ *
+ * Handlers will receive the 'howto' value as their second argument.
+ *
+ * All handlers must be prepared to be executed from a panic/debugger context;
+ * see the man page for details.
+ */
 typedef void (*shutdown_fn)(void *, int);
 
 #define	SHUTDOWN_PRI_FIRST	EVENTHANDLER_PRI_FIRST
@@ -205,6 +210,8 @@ EVENTHANDLER_DECLARE(power_suspend_early, power_change_fn);
 typedef void (*vm_lowmem_handler_t)(void *, int);
 #define	LOWMEM_PRI_DEFAULT	EVENTHANDLER_PRI_FIRST
 EVENTHANDLER_DECLARE(vm_lowmem, vm_lowmem_handler_t);
+/* Some of mbuf(9) zones reached maximum */
+EVENTHANDLER_DECLARE(mbuf_lowmem, vm_lowmem_handler_t);
 
 /* Root mounted event */
 typedef void (*mountroot_handler_t)(void *);
@@ -309,8 +316,10 @@ enum evhdev_detach {
 };
 typedef void (*device_attach_fn)(void *, device_t);
 typedef void (*device_detach_fn)(void *, device_t, enum evhdev_detach);
+typedef void (*device_nomatch_fn)(void *, device_t);
 EVENTHANDLER_DECLARE(device_attach, device_attach_fn);
 EVENTHANDLER_DECLARE(device_detach, device_detach_fn);
+EVENTHANDLER_DECLARE(device_nomatch, device_nomatch_fn);
 
 /* Interface address addition and removal event */
 struct ifaddr;

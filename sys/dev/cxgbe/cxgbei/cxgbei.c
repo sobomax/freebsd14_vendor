@@ -29,8 +29,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: b6dc5d5c3577104085b88bc613c9b07d4b097881 $");
-
 #include "opt_inet.h"
 #include "opt_inet6.h"
 
@@ -502,7 +500,7 @@ do_rx_iscsi_ddp(struct sge_iq *iq, const struct rss_header *rss, struct mbuf *m)
 	}
 
 	INP_WLOCK(inp);
-	if (__predict_false(inp->inp_flags & (INP_DROPPED | INP_TIMEWAIT))) {
+	if (__predict_false(inp->inp_flags & INP_DROPPED)) {
 		CTR4(KTR_CXGBE, "%s: tid %u, rx (%d bytes), inp_flags 0x%x",
 		    __func__, tid, pdu_len, inp->inp_flags);
 		INP_WUNLOCK(inp);
@@ -655,7 +653,7 @@ do_rx_iscsi_cmp(struct sge_iq *iq, const struct rss_header *rss, struct mbuf *m)
 	}
 
 	INP_WLOCK(inp);
-	if (__predict_false(inp->inp_flags & (INP_DROPPED | INP_TIMEWAIT))) {
+	if (__predict_false(inp->inp_flags & INP_DROPPED)) {
 		CTR4(KTR_CXGBE, "%s: tid %u, rx (%d bytes), inp_flags 0x%x",
 		    __func__, tid, pdu_len, inp->inp_flags);
 		INP_WUNLOCK(inp);

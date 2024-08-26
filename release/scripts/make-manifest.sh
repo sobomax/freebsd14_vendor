@@ -7,7 +7,6 @@
 # The output file looks like this (tab-delimited):
 #  foo1.txz SHA256-checksum Number-of-files foo1 Description Install-by-default
 #
-# $FreeBSD: 8dc182a55bf1fc4c786dc0287539032cc4a094d3 $
 
 base="Base system"
 kernel="Kernel"

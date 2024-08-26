@@ -33,7 +33,6 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  * 
- * $FreeBSD: cb043cb35481143b80f0ceec9b160bb70c142be8 $
  */
 
 #ifndef _NET_IF_FWEVAR_H_
@@ -47,7 +46,7 @@ struct fwe_softc {
 	struct fw_pkt pkt_hdr;
 	STAILQ_HEAD(, fw_xfer) xferlist;
 	struct fwe_eth_softc {
-		struct ifnet *ifp;
+		if_t ifp;
 		struct fwe_softc *fwe;
 	} eth_softc;
 	struct mtx mtx;

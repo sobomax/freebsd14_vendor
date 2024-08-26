@@ -1,4 +1,3 @@
-# $FreeBSD: 56f0476f88979333a8c845efec1548dbb56cdf2f $
 
 CFLAGS+= -I${LIBC_SRCTOP}/powerpc
 

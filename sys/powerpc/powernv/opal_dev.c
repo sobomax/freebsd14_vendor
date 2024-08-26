@@ -25,8 +25,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: e23844fde04d01e023860ac75f40ca8636d9c044 $");
-
 #include <sys/param.h>
 #include <sys/systm.h>
 #include <sys/module.h>
@@ -75,7 +73,7 @@ static device_method_t  opaldev_methods[] = {
 	DEVMETHOD(clock_settime,	opal_settime),
 
 	/* Bus interface */
-	DEVMETHOD(bus_child_pnpinfo_str, ofw_bus_gen_child_pnpinfo_str),
+	DEVMETHOD(bus_child_pnpinfo,	ofw_bus_gen_child_pnpinfo),
 
         /* ofw_bus interface */
 	DEVMETHOD(ofw_bus_get_devinfo,	opaldev_get_devinfo),
@@ -94,10 +92,7 @@ static driver_t opaldev_driver = {
 	0
 };
 
-static devclass_t opaldev_devclass;
-
-EARLY_DRIVER_MODULE(opaldev, ofwbus, opaldev_driver, opaldev_devclass, 0, 0,
-    BUS_PASS_BUS);
+EARLY_DRIVER_MODULE(opaldev, ofwbus, opaldev_driver, 0, 0, BUS_PASS_BUS);
 
 static void opal_heartbeat(void);
 static void opal_handle_messages(void);
@@ -349,10 +344,12 @@ static void
 opal_shutdown(void *arg, int howto)
 {
 
-	if (howto & RB_HALT)
+	if ((howto & RB_POWEROFF) != 0)
 		opal_call(OPAL_CEC_POWER_DOWN, 0 /* Normal power off */);
-	else
+	else if ((howto & RB_HALT) == 0)
 		opal_call(OPAL_CEC_REBOOT);
+	else
+		return;
 
 	opal_call(OPAL_RETURN_CPU);
 }

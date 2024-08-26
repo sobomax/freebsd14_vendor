@@ -24,8 +24,6 @@
  *
  * any improvements or extensions that they make and grant Carnegie the
  * rights to redistribute these changes.
- *
- * $FreeBSD: bc7201e577bdf8c245e5b33d3e279b279f90a18e $
  */
 
 /*

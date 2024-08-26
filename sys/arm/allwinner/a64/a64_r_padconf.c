@@ -21,13 +21,9 @@
  * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
- *
- * $FreeBSD: afbdfc28f7fca90c3e5558d5f1839efeea0f9abd $
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: afbdfc28f7fca90c3e5558d5f1839efeea0f9abd $");
-
 #include <sys/param.h>
 #include <sys/systm.h>
 #include <sys/kernel.h>

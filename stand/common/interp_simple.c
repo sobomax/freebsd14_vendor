@@ -24,9 +24,6 @@
  * SUCH DAMAGE.
  */
 
-#include <sys/cdefs.h>
-__FBSDID("$FreeBSD: e25743d4f01c5bfcbf0ed53cee660266333c4479 $");
-
 /*
  * Simple commandline interpreter, toplevel and misc.
  */
@@ -199,4 +196,12 @@ interp_include(const char *filename)
 		free(se);
 	}
 	return(res);
+}
+
+/*
+ * There's no graphics commands for the simple interpreter.
+ */
+void
+gfx_interp_ref(void)
+{
 }

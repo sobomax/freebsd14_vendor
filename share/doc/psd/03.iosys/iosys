@@ -35,8 +35,6 @@
 .\" IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 .\" 
 .\"	@(#)iosys	8.1 (Berkeley) 6/8/93
-.\"
-.\" $FreeBSD: 1459f142a9d50773114d6e16dac4431ad6134cf7 $
 .EH 'PSD:3-%''The UNIX I/O System'
 .OH 'The UNIX I/O System''PSD:3-%'
 .TL

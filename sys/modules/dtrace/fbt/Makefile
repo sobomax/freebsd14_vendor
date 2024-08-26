@@ -1,4 +1,3 @@
-# $FreeBSD: 360d920007764a7fa4e1a5e3c6752300a834c4ee $
 
 SYSDIR?=	${SRCTOP}/sys
 
@@ -23,4 +22,3 @@ CFLAGS+=  -I${SYSDIR}/cddl/dev/fbt
 .include <bsd.kmod.mk>
 
 CFLAGS+=	-include ${SYSDIR}/cddl/compat/opensolaris/sys/debug_compat.h
-CWARNFLAGS+=	${OPENZFS_CWARNFLAGS}

@@ -26,8 +26,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 208cc36c9a591cd898a0de7d60683cb43852d668 $");
-
 #include "opt_acpi.h"
 #include <sys/param.h>
 #include <sys/kernel.h>
@@ -181,9 +179,7 @@ static driver_t acpi_toshiba_driver = {
 	sizeof(struct acpi_toshiba_softc),
 };
 
-static devclass_t acpi_toshiba_devclass;
-DRIVER_MODULE(acpi_toshiba, acpi, acpi_toshiba_driver, acpi_toshiba_devclass,
-    0, 0);
+DRIVER_MODULE(acpi_toshiba, acpi, acpi_toshiba_driver, 0, 0);
 MODULE_DEPEND(acpi_toshiba, acpi, 1, 1, 1);
 
 static device_method_t acpi_toshiba_video_methods[] = {
@@ -199,9 +195,7 @@ static driver_t acpi_toshiba_video_driver = {
 	0,
 };
 
-static devclass_t acpi_toshiba_video_devclass;
-DRIVER_MODULE(acpi_toshiba_video, acpi, acpi_toshiba_video_driver,
-    acpi_toshiba_video_devclass, 0, 0);
+DRIVER_MODULE(acpi_toshiba_video, acpi, acpi_toshiba_video_driver, 0, 0);
 MODULE_DEPEND(acpi_toshiba_video, acpi, 1, 1, 1);
 
 static int	enable_fn_keys = 1;

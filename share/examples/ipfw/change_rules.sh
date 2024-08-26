@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+# SPDX-License-Identifier: BSD-2-Clause
 #
 # Copyright (c) 2000 Alexandre Peixoto
 # All rights reserved.
@@ -26,7 +26,6 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: c33ce2680c4faa1aff482a77aff4f0c32a01d6d7 $
 
 # Change ipfw(8) rules with safety guarantees for remote operation
 #

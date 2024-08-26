@@ -38,9 +38,6 @@
  * From: FreeBSD: head/lib/libc/gen/glob.c 317913 2017-05-07 19:52:56Z jilles
  */
 
-#include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 76a4553c922cc8a184a14f3489c68ed0e65bbb9e $");
-
 #include <sys/param.h>
 #define	_WANT_FREEBSD11_STAT
 #include <sys/stat.h>
@@ -422,8 +419,7 @@ globtilde(const Char *pattern, Char *patbuf, size_t patbuf_len, glob11_t *pglob)
 		 * we're not running setuid or setgid) and then trying
 		 * the password file
 		 */
-		if (issetugid() != 0 ||
-		    (h = getenv("HOME")) == NULL) {
+		if ((h = secure_getenv("HOME")) == NULL) {
 			if (((h = getlogin()) != NULL &&
 			     (pwd = getpwnam(h)) != NULL) ||
 			    (pwd = getpwuid(getuid())) != NULL)

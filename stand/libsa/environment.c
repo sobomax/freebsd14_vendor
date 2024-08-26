@@ -24,9 +24,6 @@
  * SUCH DAMAGE.
  */
 
-#include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 53b6a75cc020e5f0048117bf9644dad32609b4af $");
-
 /*
  * Manage an environment-like space in which string variables may be stored.
  * Provide support for some method-like operations for setting/retrieving

@@ -1,4 +1,3 @@
-/* $FreeBSD: db0e875ccaebb9181f5380ae45f23480f8973c32 $ */
 /* try to catch thread exiting, and rethrow the exception */
 
 #include <pthread.h>

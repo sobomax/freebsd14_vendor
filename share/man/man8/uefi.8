@@ -1,5 +1,4 @@
 .\" Copyright (c) 2014 The FreeBSD Foundation
-.\" All rights reserved.
 .\"
 .\" Redistribution and use in source and binary forms, with or without
 .\" modification, are permitted provided that the following conditions
@@ -22,9 +21,7 @@
 .\" OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 .\" SUCH DAMAGE.
 .\"
-.\" $FreeBSD: 6c94f6ca190a2ccd064d972e2476865629b075a7 $
-.\"
-.Dd March 18, 2022
+.Dd August 31, 2023
 .Dt UEFI 8
 .Os
 .Sh NAME
@@ -37,11 +34,11 @@ Unified Extensible Firmware Interface provides boot- and run-time services
 to operating systems.
 .Nm
 is a replacement for the legacy BIOS on the i386 and amd64 CPU architectures,
-and is also used on arm, arm64 and ia64.
+and is also used on arm, arm64 and riscv architectures.
 .Pp
 The UEFI specification is the successor to the Extensible Firmware Interface
 (EFI) specification.
-The terms are often used interchangeably.
+The terms UEFI and EFI are often used interchangeably.
 .Pp
 The
 .Nm
@@ -64,7 +61,8 @@ boot process proceeds as follows:
 .Nm
 firmware runs at power up and searches for an OS loader in the EFI system
 partition.
-The path to the loader may be set by an EFI environment variable.
+The path to the loader may be set by an EFI environment variable managed by
+.Xr efibootmgr 8 .
 If not set, an architecture-specific default is used.
 .Bl -column -offset indent "Architecture" "Default Path"
 .It Sy Architecture Ta Sy Default Path
@@ -91,7 +89,7 @@ or
 .It
 .Pa loader.efi
 loads and boots the kernel, as described in
-.Xr loader 8 .
+.Xr loader.efi 8 .
 .El
 .Pp
 The
@@ -118,6 +116,7 @@ Typical non-default kernel (optional)
 .Xr efidp 8 ,
 .Xr efivar 8 ,
 .Xr gpart 8 ,
+.Xr loader.efi 8 ,
 .Xr uefisign 8
 .Sh HISTORY
 EFI boot support for the ia64 architecture first appeared in
@@ -131,3 +130,5 @@ for armv6 and armv7 in
 .Fx 12.0 ;
 and for riscv in
 .Fx 13.0 .
+.Sh BUGS
+There is no support for 32-bit i386 booting via UEFI.

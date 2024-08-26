@@ -1,6 +1,6 @@
 #-
 #
-# SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+# SPDX-License-Identifier: BSD-2-Clause
 #
 # Copyright 2020 Michal Meloun <mmel@FreeBSD.org>
 #
@@ -25,7 +25,6 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: ad2d292de783897c0ccbae6e2d778b3783b2b157 $
 #
 
 #include <machine/bus.h>

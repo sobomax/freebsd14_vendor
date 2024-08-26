@@ -23,7 +23,6 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: 6017a69e7bd68c5afd7cfdcb1aa88d9696497cca $
 #
 
 #include <dev/ofw/openfirm.h>

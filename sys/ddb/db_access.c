@@ -31,8 +31,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: dcc3055f4463939ab199f142d7ab860f3c707ede $");
-
 #include <sys/param.h>
 #include <sys/kdb.h>
 #include <sys/endian.h>
@@ -55,7 +53,7 @@ static unsigned db_extend[] = {	/* table for sign-extending */
 db_expr_t
 db_get_value(db_addr_t addr, int size, bool is_signed)
 {
-	char		data[sizeof(u_int64_t)];
+	char		data[sizeof(uint64_t)];
 	db_expr_t	value;
 	int		i;
 

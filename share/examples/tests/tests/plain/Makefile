@@ -1,4 +1,3 @@
-# $FreeBSD: be6312778132b797d40c5e304f8218355c167d4e $
 
 # The release package to use for the tests contained within the directory
 #
@@ -47,3 +46,7 @@ file1:
 	@echo "File 1" > ${.TARGET}
 
 .include <bsd.test.mk>
+
+.if ${COMPILER_TYPE} == "clang" && ${COMPILER_VERSION} >= 180000
+CWARNFLAGS.printf_test.c+=	-Wno-format-truncation
+.endif

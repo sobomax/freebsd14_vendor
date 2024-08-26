@@ -1,6 +1,7 @@
-# $FreeBSD: ed4de3b55745ab93a0d4f6790603c4339172bbd4 $
 
 .include <src.opts.mk>
+
+PACKAGE=	elftoolchain
 
 ELFTCDIR=	${SRCTOP}/contrib/elftoolchain
 READELFDIR=	${ELFTCDIR}/readelf

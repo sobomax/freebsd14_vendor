@@ -23,7 +23,6 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: f5b8e8e51071f80f951f0d102bdb6a6e5239fa5f $
 #
 # PROVIDE: devmatch
 # REQUIRE: kld
@@ -64,7 +63,7 @@ devmatch_start()
 	# names with .ko
 
 	devctl freeze
-	x=$(echo '#'${devmatch_blocklist:-${devmatch_blacklist}}'#' | \
+	x=$(echo "#${devmatch_blocklist:-${devmatch_blacklist}}#$(kenv -q devmatch_blocklist)#" | \
 		sed -e "s/ /#/g;s/\.ko#/#/g")
 	for m in ${list}; do
 		m="${m%.ko}"

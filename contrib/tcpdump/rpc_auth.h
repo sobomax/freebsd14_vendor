@@ -28,7 +28,7 @@
  *
  *	from: @(#)auth.h 1.17 88/02/08 SMI
  *	from: @(#)auth.h	2.3 88/08/07 4.0 RPCSRC
- * $FreeBSD: 21f7859887a92487c935548a0f3ad1c659a6ecf1 $
+ * $FreeBSD: f2d65c1553055dfc1a04ec487eaa678586b18b90 $
  */
 
 /*
@@ -65,14 +65,7 @@ enum sunrpc_auth_stat {
  * Authentication info.  Opaque to client.
  */
 struct sunrpc_opaque_auth {
-	uint32_t oa_flavor;		/* flavor of auth */
-	uint32_t oa_len;		/* length of opaque body */
+	nd_uint32_t oa_flavor;		/* flavor of auth */
+	nd_uint32_t oa_len;		/* length of opaque body */
 	/* zero or more bytes of body */
 };
-
-#define SUNRPC_AUTH_NONE	0	/* no authentication */
-#define	SUNRPC_AUTH_NULL	0	/* backward compatibility */
-#define	SUNRPC_AUTH_UNIX	1	/* unix style (uid, gids) */
-#define	SUNRPC_AUTH_SYS		1	/* forward compatibility */
-#define	SUNRPC_AUTH_SHORT	2	/* short hand unix style */
-#define SUNRPC_AUTH_DES		3	/* des style (encrypted timestamps) */

@@ -2,8 +2,6 @@
  * tzone.c - get the timezone
  *
  * This is shared by bootpd and bootpef
- *
- * $FreeBSD: 354fb54ed373dd9449f8b8190d67608d541af48b $
  */
 
 #ifdef	SVR4

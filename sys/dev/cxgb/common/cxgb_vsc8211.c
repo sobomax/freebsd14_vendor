@@ -1,5 +1,5 @@
 /**************************************************************************
-SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+SPDX-License-Identifier: BSD-2-Clause
 
 Copyright (c) 2007, Chelsio Inc.
 All rights reserved.
@@ -29,8 +29,6 @@ POSSIBILITY OF SUCH DAMAGE.
 ***************************************************************************/
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 5d3c551e0a4fbe5e3b91e08e3801f178a7cea177 $");
-
 #include <cxgb_include.h>
 
 #undef msleep

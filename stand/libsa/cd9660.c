@@ -31,9 +31,6 @@
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 57e4916c0fb51ab30f841dcb0c47b02e695b560a $");
-
 /*
  * Stand-alone ISO9660 file reading package.
  *

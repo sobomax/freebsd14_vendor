@@ -53,8 +53,6 @@
  * derivative of this code cannot be changed.  i.e. this code cannot simply be
  * copied and put under another distribution licence
  * [including the GNU Public Licence.]
- *
- * $FreeBSD: af32f56bfb5b2fbf553d03fa3cde0fa75c057c3e $
  */
 
 #ifndef _SHA_H_

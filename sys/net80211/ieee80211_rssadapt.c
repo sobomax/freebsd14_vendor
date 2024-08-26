@@ -1,4 +1,3 @@
-/*	$FreeBSD: 4ca0b29fa56998348959e46fa1328c7f215e562b $	*/
 /* $NetBSD: ieee80211_rssadapt.c,v 1.9 2005/02/26 22:45:09 perry Exp $ */
 /*-
  * SPDX-License-Identifier: BSD-3-Clause

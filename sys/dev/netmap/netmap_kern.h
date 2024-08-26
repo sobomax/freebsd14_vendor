@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (C) 2011-2014 Matteo Landi, Luigi Rizzo
  * Copyright (C) 2013-2016 Universita` di Pisa
@@ -28,7 +28,6 @@
  */
 
 /*
- * $FreeBSD: 195b5de7a50201e2f297e10b86b6eb67fe71862d $
  *
  * The header contains the definitions of constants and function
  * prototypes used only in kernelspace.
@@ -110,8 +109,6 @@
 #define NM_ATOMIC_TEST_AND_SET(p)       (!atomic_cmpset_acq_int((p), 0, 1))
 #define NM_ATOMIC_CLEAR(p)              atomic_store_rel_int((p), 0)
 
-#define	WNA(_ifp)	(_ifp)->if_netmap
-
 struct netmap_adapter *netmap_getna(if_t ifp);
 
 #define MBUF_REFCNT(m)		((m)->m_ext.ext_count)
@@ -152,7 +149,7 @@ struct hrtimer {
 	})
 
 /* See explanation in nm_os_generic_xmit_frame. */
-#define	GEN_TX_MBUF_IFP(m)	((struct ifnet *)skb_shinfo(m)->destructor_arg)
+#define	GEN_TX_MBUF_IFP(m)	((if_t)skb_shinfo(m)->destructor_arg)
 
 #define NM_ATOMIC_T	volatile long unsigned int
 
@@ -297,13 +294,13 @@ void nm_os_ifnet_fini(void);
 void nm_os_ifnet_lock(void);
 void nm_os_ifnet_unlock(void);
 
-unsigned nm_os_ifnet_mtu(struct ifnet *ifp);
+unsigned nm_os_ifnet_mtu(if_t ifp);
 
 void nm_os_get_module(void);
 void nm_os_put_module(void);
 
-void netmap_make_zombie(struct ifnet *);
-void netmap_undo_zombie(struct ifnet *);
+void netmap_make_zombie(if_t);
+void netmap_undo_zombie(if_t);
 
 /* os independent alloc/realloc/free */
 void *nm_os_malloc(size_t);
@@ -313,10 +310,10 @@ void nm_os_free(void *);
 void nm_os_vfree(void *);
 
 /* os specific attach/detach enter/exit-netmap-mode routines */
-void nm_os_onattach(struct ifnet *);
-void nm_os_ondetach(struct ifnet *);
-void nm_os_onenter(struct ifnet *);
-void nm_os_onexit(struct ifnet *);
+void nm_os_onattach(if_t);
+void nm_os_ondetach(if_t);
+void nm_os_onenter(if_t);
+void nm_os_onexit(if_t);
 
 /* passes a packet up to the host stack.
  * If the packet is sent (or dropped) immediately it returns NULL,
@@ -324,7 +321,7 @@ void nm_os_onexit(struct ifnet *);
  * In this case, a final call with m=NULL and prev != NULL will send up
  * the entire chain to the host stack.
  */
-void *nm_os_send_up(struct ifnet *, struct mbuf *m, struct mbuf *prev);
+void *nm_os_send_up(if_t, struct mbuf *m, struct mbuf *prev);
 
 int nm_os_mbuf_has_seg_offld(struct mbuf *m);
 int nm_os_mbuf_has_csum_offld(struct mbuf *m);
@@ -448,8 +445,16 @@ struct netmap_kring {
 	 * On a NIC reset, the NIC ring indexes may be reset but the
 	 * indexes in the netmap rings remain the same. nkr_hwofs
 	 * keeps track of the offset between the two.
+	 *
+	 * Moreover, during reset, we can restore only the subset of
+	 * the NIC ring that corresponds to the kernel-owned part of
+	 * the netmap ring. The rest of the slots must be restored
+	 * by the *sync routines when the user releases more slots.
+	 * The nkr_to_refill field keeps track of the number of slots
+	 * that still need to be restored.
 	 */
 	int32_t		nkr_hwofs;
+	int32_t		nkr_to_refill;
 
 	/* last_reclaim is opaque marker to help reduce the frequency
 	 * of operations such as reclaiming tx buffers. A possible use
@@ -495,6 +500,9 @@ struct netmap_kring {
 	struct mbuf	**tx_pool;
 	struct mbuf	*tx_event;	/* TX event used as a notification */
 	NM_LOCK_T	tx_event_lock;	/* protects the tx_event mbuf */
+#ifdef __FreeBSD__
+	struct callout	tx_event_callout;
+#endif
 	struct mbq	rx_queue;       /* intercepted rx mbufs. */
 
 	uint32_t	users;		/* existing bindings for this ring */
@@ -523,6 +531,36 @@ struct netmap_kring {
 					 */
 	uint32_t pipe_tail;		/* hwtail updated by the other end */
 #endif /* WITH_PIPES */
+
+	/* mask for the offset-related part of the ptr field in the slots */
+	uint64_t offset_mask;
+	/* maximum user-specified offset, as stipulated at bind time.
+	 * Larger offset requests will be silently capped to offset_max.
+	 */
+	uint64_t offset_max;
+	/* minimum gap between two consecutive offsets into the same
+	 * buffer, as stipulated at bind time. This is used to choose
+	 * the hwbuf_len, but is not otherwise checked for compliance
+	 * at runtime.
+	 */
+	uint64_t offset_gap;
+
+	/* size of hardware buffer. This may be less than the size of
+	 * the netmap buffers because of non-zero offsets, or because
+	 * the netmap buffer size exceeds the capability of the hardware.
+	 */
+	uint64_t hwbuf_len;
+
+	/* required alignment (in bytes) for the buffers used by this ring.
+	 * Netmap buffers are aligned to cachelines, which should suffice
+	 * for most NICs. If the user is passing offsets, though, we need
+	 * to check that the resulting buf address complies with any
+	 * alignment restriction.
+	 */
+	uint64_t buf_align;
+
+	/* hardware specific logic for the selection of the hwbuf_len */
+	int (*nm_bufcfg)(struct netmap_kring *kring, uint64_t target);
 
 	int (*save_notify)(struct netmap_kring *kring, int flags);
 
@@ -708,6 +746,8 @@ struct netmap_adapter {
 #define NAF_FORCE_NATIVE 128	/* the adapter is always NATIVE */
 /* free */
 #define NAF_MOREFRAG	512	/* the adapter supports NS_MOREFRAG */
+#define NAF_OFFSETS	1024	/* the adapter supports the slot offsets */
+#define NAF_HOST_ALL	2048	/* the adapter wants as many host rings as hw */
 #define NAF_ZOMBIE	(1U<<30) /* the nic driver has been unloaded */
 #define	NAF_BUSY	(1U<<31) /* the adapter is used internally and
 				  * cannot be registered from userspace
@@ -745,14 +785,14 @@ struct netmap_adapter {
 	/* copy of if_qflush and if_transmit pointers, to intercept
 	 * packets from the network stack when netmap is active.
 	 */
-	int     (*if_transmit)(struct ifnet *, struct mbuf *);
+	int     (*if_transmit)(if_t, struct mbuf *);
 
 	/* copy of if_input for netmap_send_up() */
-	void     (*if_input)(struct ifnet *, struct mbuf *);
+	void     (*if_input)(if_t, struct mbuf *);
 
 	/* Back reference to the parent ifnet struct. Used for
 	 * hardware ports (emulated netmap included). */
-	struct ifnet *ifp; /* adapter is ifp->if_softc */
+	if_t ifp; /* adapter is if_getsoftc(ifp) */
 
 	/*---- callbacks for this netmap adapter -----*/
 	/*
@@ -770,6 +810,22 @@ struct netmap_adapter {
 	 *
 	 * nm_config() returns configuration information from the OS
 	 *	Called with NMG_LOCK held.
+	 *
+	 * nm_bufcfg()
+	 *      the purpose of this callback is to fill the kring->hwbuf_len
+	 *      (l) and kring->buf_align fields. The l value is most important
+	 *      for RX rings, where we want to disallow writes outside of the
+	 *      netmap buffer. The l value must be computed taking into account
+	 *      the stipulated max_offset (o), possibly increased if there are
+	 *      alignment constraints, the maxframe (m), if known, and the
+	 *      current NETMAP_BUF_SIZE (b) of the memory region used by the
+	 *      adapter. We want the largest supported l such that o + l <= b.
+	 *      If m is known to be <= b - o, the callback may also choose the
+	 *      largest l <= m, ignoring the offset.  The buf_align field is
+	 *      most important for TX rings when there are offsets.  The user
+	 *      will see this value in the ring->buf_align field.  Misaligned
+	 *      offsets will cause the corresponding packets to be silently
+	 *      dropped.
 	 *
 	 * nm_krings_create() create and init the tx_rings and
 	 * 	rx_rings arrays of kring structures. In particular,
@@ -800,6 +856,7 @@ struct netmap_adapter {
 	int (*nm_txsync)(struct netmap_kring *kring, int flags);
 	int (*nm_rxsync)(struct netmap_kring *kring, int flags);
 	int (*nm_notify)(struct netmap_kring *kring, int flags);
+	int (*nm_bufcfg)(struct netmap_kring *kring, uint64_t target);
 #define NAF_FORCE_READ      1
 #define NAF_FORCE_RECLAIM   2
 #define NAF_CAN_FORWARD_DOWN 4
@@ -987,14 +1044,11 @@ struct netmap_generic_adapter {	/* emulated device */
 	struct netmap_adapter *prev;
 
 	/* Emulated netmap adapters support:
-	 *  - save_if_input saves the if_input hook (FreeBSD);
 	 *  - mit implements rx interrupt mitigation;
 	 */
-	void (*save_if_input)(struct ifnet *, struct mbuf *);
-
 	struct nm_generic_mit *mit;
 #ifdef linux
-        netdev_tx_t (*save_start_xmit)(struct mbuf *, struct ifnet *);
+        netdev_tx_t (*save_start_xmit)(struct mbuf *, if_t);
 #endif
 	/* Is the adapter able to use multiple RX slots to scatter
 	 * each packet pushed up by the driver? */
@@ -1085,13 +1139,14 @@ struct netmap_bwrap_adapter {
 	 * here its original value, to be restored at detach
 	 */
 	struct netmap_vp_adapter *saved_na_vp;
+	int (*nm_intr_notify)(struct netmap_kring *kring, int flags);
 };
 int nm_is_bwrap(struct netmap_adapter *na);
 int nm_bdg_polling(struct nmreq_header *hdr);
 
+int netmap_bdg_attach(struct nmreq_header *hdr, void *auth_token);
+int netmap_bdg_detach(struct nmreq_header *hdr, void *auth_token);
 #ifdef WITH_VALE
-int netmap_vale_attach(struct nmreq_header *hdr, void *auth_token);
-int netmap_vale_detach(struct nmreq_header *hdr, void *auth_token);
 int netmap_vale_list(struct nmreq_header *hdr);
 int netmap_vi_create(struct nmreq_header *hdr, int);
 int nm_vi_create(struct nmreq_header *);
@@ -1115,7 +1170,7 @@ struct netmap_pipe_adapter {
 	struct netmap_adapter *parent; /* adapter that owns the memory */
 	struct netmap_pipe_adapter *peer; /* the other end of the pipe */
 	int peer_ref;		/* 1 iff we are holding a ref to the peer */
-	struct ifnet *parent_ifp;	/* maybe null */
+	if_t parent_ifp;	/* maybe null */
 
 	u_int parent_slot; /* index in the parent pipe array */
 };
@@ -1288,8 +1343,8 @@ static __inline void nm_kr_start(struct netmap_kring *kr)
  */
 int netmap_attach(struct netmap_adapter *);
 int netmap_attach_ext(struct netmap_adapter *, size_t size, int override_reg);
-void netmap_detach(struct ifnet *);
-int netmap_transmit(struct ifnet *, struct mbuf *);
+void netmap_detach(if_t);
+int netmap_transmit(if_t, struct mbuf *);
 struct netmap_slot *netmap_reset(struct netmap_adapter *na,
 	enum txrx tx, u_int n, u_int new_cur);
 int netmap_ring_reinit(struct netmap_kring *);
@@ -1312,7 +1367,7 @@ enum {
 };
 
 /* default functions to handle rx/tx interrupts */
-int netmap_rx_irq(struct ifnet *, u_int, u_int *);
+int netmap_rx_irq(if_t, u_int, u_int *);
 #define netmap_tx_irq(_n, _q) netmap_rx_irq(_n, _q, NULL)
 int netmap_common_irq(struct netmap_adapter *, u_int, u_int *work_done);
 
@@ -1367,16 +1422,6 @@ nm_iszombie(struct netmap_adapter *na)
 	return na == NULL || (na->na_flags & NAF_ZOMBIE);
 }
 
-static inline void
-nm_update_hostrings_mode(struct netmap_adapter *na)
-{
-	/* Process nr_mode and nr_pending_mode for host rings. */
-	na->tx_rings[na->num_tx_rings]->nr_mode =
-		na->tx_rings[na->num_tx_rings]->nr_pending_mode;
-	na->rx_rings[na->num_rx_rings]->nr_mode =
-		na->rx_rings[na->num_rx_rings]->nr_pending_mode;
-}
-
 void nm_set_native_flags(struct netmap_adapter *);
 void nm_clear_native_flags(struct netmap_adapter *);
 
@@ -1420,6 +1465,12 @@ uint32_t nm_rxsync_prologue(struct netmap_kring *, struct netmap_ring *);
 			_l = NETMAP_BUF_SIZE(_na);			\
 	} while (0)
 #endif
+
+#define NM_CHECK_ADDR_LEN_OFF(na_, l_, o_) do {				\
+	if ((l_) + (o_) < (l_) || 					\
+	    (l_) + (o_) > NETMAP_BUF_SIZE(na_)) {			\
+		(l_) = NETMAP_BUF_SIZE(na_) - (o_);			\
+	} } while (0)
 
 
 /*---------------------------------------------------------------*/
@@ -1469,8 +1520,8 @@ void netmap_set_ring(struct netmap_adapter *, u_int ring_id, enum txrx, int stop
 /* set the stopped/enabled status of all rings of the adapter. */
 void netmap_set_all_rings(struct netmap_adapter *, int stopped);
 /* convenience wrappers for netmap_set_all_rings */
-void netmap_disable_all_rings(struct ifnet *);
-void netmap_enable_all_rings(struct ifnet *);
+void netmap_disable_all_rings(if_t);
+void netmap_enable_all_rings(if_t);
 
 int netmap_buf_size_validate(const struct netmap_adapter *na, unsigned mtu);
 int netmap_do_regif(struct netmap_priv_d *priv, struct netmap_adapter *na,
@@ -1479,10 +1530,11 @@ void netmap_do_unregif(struct netmap_priv_d *priv);
 
 u_int nm_bound_var(u_int *v, u_int dflt, u_int lo, u_int hi, const char *msg);
 int netmap_get_na(struct nmreq_header *hdr, struct netmap_adapter **na,
-		struct ifnet **ifp, struct netmap_mem_d *nmd, int create);
-void netmap_unget_na(struct netmap_adapter *na, struct ifnet *ifp);
-int netmap_get_hw_na(struct ifnet *ifp,
+		if_t *ifp, struct netmap_mem_d *nmd, int create);
+void netmap_unget_na(struct netmap_adapter *na, if_t ifp);
+int netmap_get_hw_na(if_t ifp,
 		struct netmap_mem_d *nmd, struct netmap_adapter **na);
+void netmap_mem_restore(struct netmap_adapter *na);
 
 #ifdef WITH_VALE
 uint32_t netmap_vale_learning(struct nm_bdg_fwd *ft, uint8_t *dst_ring,
@@ -1635,13 +1687,14 @@ extern int netmap_generic_txqdisc;
 
 /*
  * NA returns a pointer to the struct netmap adapter from the ifp.
- * WNA is os-specific and must be defined in glue code.
+ * The if_getnetmapadapter() and if_setnetmapadapter() helpers are
+ * os-specific and must be defined in glue code.
  */
-#define	NA(_ifp)	((struct netmap_adapter *)WNA(_ifp))
+#define	NA(_ifp)	(if_getnetmapadapter(_ifp))
 
 /*
  * we provide a default implementation of NM_ATTACH_NA/NM_DETACH_NA
- * based on the WNA field.
+ * based on the if_setnetmapadapter() setter function.
  * Glue code may override this by defining its own NM_ATTACH_NA
  */
 #ifndef NM_ATTACH_NA
@@ -1658,14 +1711,14 @@ extern int netmap_generic_txqdisc;
 	((uint32_t)(uintptr_t)NA(ifp) ^ NA(ifp)->magic) == NETMAP_MAGIC )
 
 #define	NM_ATTACH_NA(ifp, na) do {					\
-	WNA(ifp) = na;							\
+	if_setnetmapadapter(ifp, na);					\
 	if (NA(ifp))							\
 		NA(ifp)->magic = 					\
 			((uint32_t)(uintptr_t)NA(ifp)) ^ NETMAP_MAGIC;	\
 } while(0)
-#define NM_RESTORE_NA(ifp, na) 	WNA(ifp) = na;
+#define NM_RESTORE_NA(ifp, na) 	if_setnetmapadapter(ifp, na);
 
-#define NM_DETACH_NA(ifp)	do { WNA(ifp) = NULL; } while (0)
+#define NM_DETACH_NA(ifp)	do { if_setnetmapadapter(ifp, NULL); } while (0)
 #define NM_NA_CLASH(ifp)	(NA(ifp) && !NM_NA_VALID(ifp))
 #endif /* !NM_ATTACH_NA */
 
@@ -1676,7 +1729,7 @@ extern int netmap_generic_txqdisc;
 
 /* Assigns the device IOMMU domain to an allocator.
  * Returns -ENOMEM in case the domain is different */
-#define nm_iommu_group_id(dev) (0)
+#define nm_iommu_group_id(dev) (-1)
 
 /* Callback invoked by the dma machinery after a successful dmamap_load */
 static void netmap_dmamap_cb(__unused void *arg,
@@ -1886,6 +1939,9 @@ struct plut_entry {
 
 struct netmap_obj_pool;
 
+/* alignment for netmap buffers */
+#define NM_BUF_ALIGN	64
+
 /*
  * NMB return the virtual address of a buffer (buffer 0 on bad index)
  * PNMB also fills the physical address
@@ -1915,6 +1971,40 @@ PNMB(struct netmap_adapter *na, struct netmap_slot *slot, uint64_t *pp)
 	return ret;
 }
 
+static inline void
+nm_write_offset(struct netmap_kring *kring,
+		struct netmap_slot *slot, uint64_t offset)
+{
+	slot->ptr = (slot->ptr & ~kring->offset_mask) |
+		(offset & kring->offset_mask);
+}
+
+static inline uint64_t
+nm_get_offset(struct netmap_kring *kring, struct netmap_slot *slot)
+{
+	uint64_t offset = (slot->ptr & kring->offset_mask);
+	if (unlikely(offset > kring->offset_max))
+		offset = kring->offset_max;
+	return offset;
+}
+
+static inline void *
+NMB_O(struct netmap_kring *kring, struct netmap_slot *slot)
+{
+	void *addr = NMB(kring->na, slot);
+	return (char *)addr + nm_get_offset(kring, slot);
+}
+
+static inline void *
+PNMB_O(struct netmap_kring *kring, struct netmap_slot *slot, uint64_t *pp)
+{
+	void *addr = PNMB(kring->na, slot, pp);
+	uint64_t offset = nm_get_offset(kring, slot);
+	addr = (char *)addr + offset;
+	*pp += offset;
+	return addr;
+}
+
 
 /*
  * Structure associated to each netmap file descriptor.
@@ -1935,7 +2025,7 @@ struct netmap_priv_d {
 	struct netmap_if * volatile np_nifp;	/* netmap if descriptor. */
 
 	struct netmap_adapter	*np_na;
-	struct ifnet	*np_ifp;
+	if_t		np_ifp;
 	uint32_t	np_flags;	/* from the ioctl */
 	u_int		np_qfirst[NR_TXRX],
 			np_qlast[NR_TXRX]; /* range of tx/rx rings to scan */
@@ -2029,8 +2119,8 @@ struct netmap_monitor_adapter {
  * generic netmap emulation for devices that do not have
  * native netmap support.
  */
-int generic_netmap_attach(struct ifnet *ifp);
-int generic_rx_handler(struct ifnet *ifp, struct mbuf *m);;
+int generic_netmap_attach(if_t ifp);
+int generic_rx_handler(if_t ifp, struct mbuf *m);
 
 int nm_os_catch_rx(struct netmap_generic_adapter *gna, int intercept);
 int nm_os_catch_tx(struct netmap_generic_adapter *gna, int intercept);
@@ -2048,7 +2138,7 @@ int na_is_generic(struct netmap_adapter *na);
  * routine to send the queue and free any resources. Failure is ignored.
  */
 struct nm_os_gen_arg {
-	struct ifnet *ifp;
+	if_t ifp;
 	void *m;	/* os-specific mbuf-like object */
 	void *head, *tail; /* tailq, if the OS-specific routine needs to build one */
 	void *addr;	/* payload of current packet */
@@ -2058,11 +2148,11 @@ struct nm_os_gen_arg {
 };
 
 int nm_os_generic_xmit_frame(struct nm_os_gen_arg *);
-int nm_os_generic_find_num_desc(struct ifnet *ifp, u_int *tx, u_int *rx);
-void nm_os_generic_find_num_queues(struct ifnet *ifp, u_int *txq, u_int *rxq);
+int nm_os_generic_find_num_desc(if_t ifp, u_int *tx, u_int *rx);
+void nm_os_generic_find_num_queues(if_t ifp, u_int *txq, u_int *rxq);
 void nm_os_generic_set_features(struct netmap_generic_adapter *gna);
 
-static inline struct ifnet*
+static inline if_t
 netmap_generic_getifp(struct netmap_generic_adapter *gna)
 {
         if (gna->prev)
@@ -2199,8 +2289,8 @@ void bdg_mismatch_datapath(struct netmap_vp_adapter *na,
 			   u_int *j, u_int lim, u_int *howmany);
 
 /* persistent virtual port routines */
-int nm_os_vi_persist(const char *, struct ifnet **);
-void nm_os_vi_detach(struct ifnet *);
+int nm_os_vi_persist(const char *, if_t *);
+void nm_os_vi_detach(if_t);
 void nm_os_vi_init_index(void);
 
 /*
@@ -2293,39 +2383,59 @@ ptnet_sync_tail(struct nm_csb_ktoa *ktoa, struct netmap_kring *kring)
  *
  * We allocate mbufs with m_gethdr(), since the mbuf header is needed
  * by the driver. We also attach a customly-provided external storage,
- * which in this case is a netmap buffer. When calling m_extadd(), however
- * we pass a NULL address, since the real address (and length) will be
- * filled in by nm_os_generic_xmit_frame() right before calling
- * if_transmit().
+ * which in this case is a netmap buffer.
  *
  * The dtor function does nothing, however we need it since mb_free_ext()
  * has a KASSERT(), checking that the mbuf dtor function is not NULL.
  */
 
-static void void_mbuf_dtor(struct mbuf *m) { }
+static inline void
+nm_generic_mbuf_dtor(struct mbuf *m)
+{
+	uma_zfree(zone_clust, m->m_ext.ext_buf);
+}
 
 #define SET_MBUF_DESTRUCTOR(m, fn)	do {		\
 	(m)->m_ext.ext_free = (fn != NULL) ?		\
-	    (void *)fn : (void *)void_mbuf_dtor;	\
+	    (void *)fn : (void *)nm_generic_mbuf_dtor;	\
 } while (0)
 
 static inline struct mbuf *
-nm_os_get_mbuf(struct ifnet *ifp, int len)
+nm_os_get_mbuf(if_t ifp __unused, int len)
 {
 	struct mbuf *m;
+	void *buf;
 
-	(void)ifp;
-	(void)len;
+	KASSERT(len <= MCLBYTES, ("%s: len %d", __func__, len));
 
 	m = m_gethdr(M_NOWAIT, MT_DATA);
-	if (m == NULL) {
-		return m;
+	if (__predict_false(m == NULL))
+		return (NULL);
+	buf = uma_zalloc(zone_clust, M_NOWAIT);
+	if (__predict_false(buf == NULL)) {
+		m_free(m);
+		return (NULL);
 	}
+	m_extadd(m, buf, MCLBYTES, nm_generic_mbuf_dtor, NULL, NULL, 0,
+	    EXT_NET_DRV);
+	return (m);
+}
 
-	m_extadd(m, NULL /* buf */, 0 /* size */, void_mbuf_dtor,
-		 NULL, NULL, 0, EXT_NET_DRV);
+static inline void
+nm_os_mbuf_reinit(struct mbuf *m)
+{
+	void *buf;
 
-	return m;
+	KASSERT((m->m_flags & M_EXT) != 0,
+	    ("%s: mbuf %p has no external storage", __func__, m));
+	KASSERT(m->m_ext.ext_size == MCLBYTES,
+	    ("%s: mbuf %p has wrong external storage size %u", __func__, m,
+	    m->m_ext.ext_size));
+
+	buf = m->m_ext.ext_buf;
+	m_init(m, M_NOWAIT, MT_DATA, M_PKTHDR);
+	m_extadd(m, buf, MCLBYTES, nm_generic_mbuf_dtor, NULL, NULL, 0,
+	    EXT_NET_DRV);
 }
 
 #endif /* __FreeBSD__ */
@@ -2340,8 +2450,30 @@ void netmap_uninit_bridges(void);
 #define CSB_READ(csb, field, r) (get_user(r, &csb->field))
 #define CSB_WRITE(csb, field, v) (put_user(v, &csb->field))
 #else  /* ! linux */
-#define CSB_READ(csb, field, r) (r = fuword32(&csb->field))
-#define CSB_WRITE(csb, field, v) (suword32(&csb->field, v))
+#define CSB_READ(csb, field, r) do {				\
+	int32_t v __diagused;					\
+								\
+	v = fuword32(&csb->field);				\
+	KASSERT(v != -1, ("%s: fuword32 failed", __func__));	\
+	r = v;							\
+} while (0)
+#define CSB_WRITE(csb, field, v) do {				\
+	int error __diagused;					\
+								\
+	error = suword32(&csb->field, v);			\
+	KASSERT(error == 0, ("%s: suword32 failed", __func__));	\
+} while (0)
 #endif /* ! linux */
+
+/* some macros that may not be defined */
+#ifndef ETH_HLEN
+#define ETH_HLEN 6
+#endif
+#ifndef ETH_FCS_LEN
+#define ETH_FCS_LEN 4
+#endif
+#ifndef VLAN_HLEN
+#define VLAN_HLEN 4
+#endif
 
 #endif /* _NET_NETMAP_KERN_H_ */

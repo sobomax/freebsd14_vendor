@@ -1,4 +1,3 @@
-# $FreeBSD: abfb486a41c16e7aa9857164688025f2b4b8d5f7 $
 
 PACKAGE=resolvconf
 DIST=		${SRCTOP}/contrib/openresolv

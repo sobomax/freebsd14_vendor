@@ -10,9 +10,6 @@
  * ====================================================
  */
 
-#include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 844f10360fe6356c4faf471335fb605430492baa $");
-
 /* expm1(x)
  * Returns exp(x)-1, the exponential of x minus 1.
  *

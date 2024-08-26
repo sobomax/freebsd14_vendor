@@ -22,8 +22,6 @@
  * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
- *
- * $FreeBSD: 5b6182d67d0aff9b048dde0dd5231219091f3dc0 $
  */
 
 #include <machine/asm.h>
@@ -140,6 +138,7 @@ section_table:
 _end_header:
 
 	.text
+	.globl	_start
 _start:
 	/* Save the boot params to the stack */
 	push	{r0, r1}

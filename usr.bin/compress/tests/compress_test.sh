@@ -22,7 +22,6 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: 147f842dd29ee2fb98b40ea47bc6e828129c7c03 $
 
 atf_test_case uncompress_file_1
 uncompress_file_1_head()

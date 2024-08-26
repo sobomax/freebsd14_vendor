@@ -7,8 +7,6 @@
  * can do whatever you want with this stuff. If we meet some day, and you think
  * this stuff is worth it, you can buy me a beer in return.   Poul-Henning Kamp
  * ----------------------------------------------------------------------------
- *
- * $FreeBSD: 1da557212ae2598a997f67eec82e84913cf8a826 $
  */
 
 #ifndef _SYS_SMP_H_
@@ -178,6 +176,9 @@ extern int smp_threads_per_core;
 extern cpuset_t all_cpus;
 extern cpuset_t cpuset_domain[MAXMEMDOM]; 	/* CPUs in each NUMA domain. */
 
+struct pcb;
+extern struct pcb *stoppcbs;
+
 /*
  * Macro allowing us to determine whether a CPU is absent at any given
  * time, thus permitting us to configure sparse maps of cpuid-dependent
@@ -213,7 +214,7 @@ cpu_next(int i)
 
 	for (;;) {
 		i++;
-		if (i > mp_maxid)
+		if ((u_int)i > mp_maxid)
 			i = 0;
 		if (!CPU_ABSENT(i))
 			return (i);

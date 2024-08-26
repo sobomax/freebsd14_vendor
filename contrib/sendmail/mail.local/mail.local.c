@@ -8,7 +8,7 @@
  * forth in the LICENSE file which can be found at the top level of
  * the sendmail distribution.
  *
- * $FreeBSD: d62f74eadbf13e3647003ac4dbcd705e7a45de04 $
+ * $FreeBSD: 193b89dd4f1043880c119a664649e99bd8a9ce44 $
  *
  */
 
@@ -1702,7 +1702,7 @@ hashname(name)
 	MD5_CTX ctx;
 	unsigned char md5[18];
 #  if MAXPATHLEN <= 24
-#    ERROR "MAXPATHLEN <= 24"
+#    error "MAXPATHLEN <= 24"
 #  endif
 	char b64[24];
 	MD5_LONG bits;

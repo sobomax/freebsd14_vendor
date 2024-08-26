@@ -31,9 +31,6 @@
  * read in to temporary space and relocate on exec, when btx is stopped.
  */
 
-#include <sys/cdefs.h>
-__FBSDID("$FreeBSD: d4e3936e13dfa2e93187ac8f1989607e9762b64d $");
-
 #include <stand.h>
 #include <sys/param.h>
 #include <sys/linker.h>

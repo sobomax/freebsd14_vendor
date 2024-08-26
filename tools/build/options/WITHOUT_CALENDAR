@@ -1,3 +1,2 @@
-.\" $FreeBSD: aa87b2fa1c0970595c0a068c2591e4be247f8cca $
 Do not build
 .Xr calendar 1 .

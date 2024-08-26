@@ -34,8 +34,6 @@
  * SUCH DAMAGE.
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 645227df48d746071bcda13b4840eeb78799643f $");
-
 #include <stdlib.h>
 
 #ifdef __GLIBC__

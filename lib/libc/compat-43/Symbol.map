@@ -1,7 +1,3 @@
-/*
- * $FreeBSD: bd49f99e2df6e79130673dbeca1034831e5b64fd $
- */
-
 FBSD_1.0 {
 	creat;
 	gethostid;

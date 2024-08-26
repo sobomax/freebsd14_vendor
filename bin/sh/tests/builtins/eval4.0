@@ -1,4 +1,3 @@
-# $FreeBSD: 67da2f5c832d121117a11342b377f27183b8589b $
 
 # eval should preserve $? from command substitutions when starting
 # the parsed command.

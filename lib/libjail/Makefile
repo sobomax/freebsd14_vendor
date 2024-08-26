@@ -1,4 +1,3 @@
-# $FreeBSD: a2ee0c9ac1f73043ea60573c2fe172608da22e0d $
 
 PACKAGE=	runtime
 LIB=	jail

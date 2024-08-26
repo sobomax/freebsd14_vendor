@@ -29,8 +29,6 @@
  */
 
 #include <machine/asm.h>
-__FBSDID("$FreeBSD: 42a5ea207544caf4ee945e06b2c128f2117e7bf3 $"); 
-	
 ENTRY(remquol)
 	fldt    24(%rsp)
 	fldt    8(%rsp)

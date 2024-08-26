@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 1998-2002,2010 Luigi Rizzo, Universita` di Pisa
  * All rights reserved
@@ -28,8 +28,6 @@
 
 /*
  * Userland code for testing binary heaps and hash tables
- *
- * $FreeBSD: a608768c3b963fc7cb13e17a99fe7968574516d2 $
  */
 
 #include <sys/cdefs.h>

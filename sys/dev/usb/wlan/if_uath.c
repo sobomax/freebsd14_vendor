@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: (BSD-2-Clause-FreeBSD AND BSD-1-Clause)
+ * SPDX-License-Identifier: (BSD-2-Clause AND BSD-1-Clause)
  *
  * Copyright (c) 2006 Sam Leffler, Errno Consulting
  * Copyright (c) 2008-2009 Weongyo Jeong <weongyo@freebsd.org>
@@ -51,8 +51,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: df7e1d7c396f97d3034374fbb77135deeb7631c2 $");
-
 /*-
  * Driver for Atheros AR5523 USB parts.
  *
@@ -477,7 +475,7 @@ uath_detach(device_t dev)
 {
 	struct uath_softc *sc = device_get_softc(dev);
 	struct ieee80211com *ic = &sc->sc_ic;
-	unsigned int x;
+	unsigned x;
 
 	/*
 	 * Prevent further allocations from RX/TX/CMD
@@ -1659,7 +1657,7 @@ uath_txfrag_setup(struct uath_softc *sc, uath_datahead *frags,
 			uath_txfrag_cleanup(sc, frags, ni);
 			break;
 		}
-		ieee80211_node_incref(ni);
+		(void) ieee80211_ref_node(ni);
 		STAILQ_INSERT_TAIL(frags, bf, next);
 	}
 
@@ -2244,7 +2242,7 @@ uath_cmdeof(struct uath_softc *sc, struct uath_cmd *cmd)
 			u_int olen;
 
 			if (sizeof(*hdr) > hdr->len ||
-			    hdr->len >= UATH_MAX_CMDSZ) {
+			    hdr->len > UATH_MAX_CMDSZ) {
 				device_printf(sc->sc_dev,
 				    "%s: invalid WDC msg length %u; "
 				    "msg ignored\n", __func__, hdr->len);
@@ -2360,11 +2358,10 @@ uath_intr_rx_callback(struct usb_xfer *xfer, usb_error_t error)
 		usbd_copy_out(pc, 0, cmd->buf, actlen);
 
 		hdr = (struct uath_cmd_hdr *)cmd->buf;
-		hdr->len = be32toh(hdr->len);
-		if (hdr->len > (uint32_t)actlen) {
+		if (be32toh(hdr->len) > (uint32_t)actlen) {
 			device_printf(sc->sc_dev,
 			    "%s: truncated xfer (len %u, actlen %d)\n",
-			    __func__, hdr->len, actlen);
+			    __func__, be32toh(hdr->len), actlen);
 			goto setup;
 		}
 
@@ -2706,7 +2703,6 @@ uath_bulk_rx_callback(struct usb_xfer *xfer, usb_error_t error)
 	struct ieee80211com *ic = &sc->sc_ic;
 	struct ieee80211_frame *wh;
 	struct ieee80211_node *ni;
-	struct epoch_tracker et;
 	struct mbuf *m = NULL;
 	struct uath_data *data;
 	struct uath_rx_desc *desc = NULL;
@@ -2753,7 +2749,6 @@ setup:
 			ni = ieee80211_find_rxnode(ic,
 			    (struct ieee80211_frame_min *)wh);
 			nf = -95;	/* XXX */
-			NET_EPOCH_ENTER(et);
 			if (ni != NULL) {
 				(void) ieee80211_input(ni, m,
 				    (int)be32toh(desc->rssi), nf);
@@ -2762,7 +2757,6 @@ setup:
 			} else
 				(void) ieee80211_input_all(ic, m,
 				    (int)be32toh(desc->rssi), nf);
-			NET_EPOCH_EXIT(et);
 			m = NULL;
 			desc = NULL;
 		}
@@ -2865,14 +2859,14 @@ static device_method_t uath_methods[] = {
 	DEVMETHOD(device_detach, uath_detach),
 	DEVMETHOD_END
 };
+
 static driver_t uath_driver = {
 	.name = "uath",
 	.methods = uath_methods,
 	.size = sizeof(struct uath_softc)
 };
-static devclass_t uath_devclass;
 
-DRIVER_MODULE(uath, uhub, uath_driver, uath_devclass, NULL, 0);
+DRIVER_MODULE(uath, uhub, uath_driver, NULL, NULL);
 MODULE_DEPEND(uath, wlan, 1, 1, 1);
 MODULE_DEPEND(uath, usb, 1, 1, 1);
 MODULE_VERSION(uath, 1);

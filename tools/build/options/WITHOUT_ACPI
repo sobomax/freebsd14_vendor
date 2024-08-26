@@ -1,4 +1,3 @@
-.\" $FreeBSD: 76c304a1b1a8250870571239b319ee14285e2445 $
 Do not build
 .Xr acpiconf 8 ,
 .Xr acpidump 8

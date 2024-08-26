@@ -1,4 +1,3 @@
-.\" $FreeBSD: 016666f24033bc6f91004fce39da0038e0510a5d $
 Do not build
 .Xr locate 1
 and related programs.

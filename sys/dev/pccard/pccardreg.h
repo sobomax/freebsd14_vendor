@@ -1,5 +1,4 @@
 /*	$NetBSD: pcmciareg.h,v 1.7 1998/10/29 09:45:52 enami Exp $	*/
-/* $FreeBSD: 7d567dd6d52b34e07f64a43ba423b36f70811004 $ */
 
 /*-
  * SPDX-License-Identifier: BSD-4-Clause

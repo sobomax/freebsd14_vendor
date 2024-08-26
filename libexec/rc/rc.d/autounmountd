@@ -1,6 +1,5 @@
 #!/bin/sh
 #
-# $FreeBSD: 2acbe09139ca4982f92ff2c391a9052616051bc5 $
 #
 
 # PROVIDE: autounmountd

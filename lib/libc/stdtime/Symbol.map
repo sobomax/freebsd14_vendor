@@ -1,7 +1,3 @@
-/*
- * $FreeBSD: 3bee3735f7e648edae6a7ce5d24bd91f12e75b01 $
- */
-
 FBSD_1.0 {
 	_time32_to_time;
 	_time_to_time32;
@@ -21,6 +17,7 @@ FBSD_1.0 {
 	gmtime;
 	gmtime_r;
 	offtime;
+	offtime_r;
 	ctime;
 	ctime_r;
 	mktime;

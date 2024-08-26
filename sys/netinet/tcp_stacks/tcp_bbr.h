@@ -21,8 +21,6 @@
  * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
- *
- * $FreeBSD: b5fd3e9b946b24b1ebb6b3de55da351cca0542d4 $
  */
 
 #ifndef _NETINET_TCP_BBR_H_
@@ -269,7 +267,7 @@ struct bbr_log {
 	uint8_t n_sackblks;
 	uint8_t applied;	/* UU */
 	uint8_t inhpts;		/* UU */
-	uint8_t ininput;	/* UU */
+	uint8_t __spare;	/* UU */
 	uint8_t use_lt_bw;	/* UU */
 };
 

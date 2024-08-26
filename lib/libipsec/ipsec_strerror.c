@@ -32,8 +32,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 4e304bc970187d49a2269ea7fe43e8b4e3b2c60b $");
-
 #include <sys/types.h>
 #include <sys/param.h>
 
@@ -80,13 +78,11 @@ const char *ipsec_strerror(void)
 	if (__ipsec_errcode < 0 || __ipsec_errcode > EIPSEC_MAX)
 		__ipsec_errcode = EIPSEC_MAX;
 
-	return ipsec_errlist[__ipsec_errcode];
+	return (ipsec_errlist[__ipsec_errcode]);
 }
 
 void __ipsec_set_strerror(const char *str)
 {
 	__ipsec_errcode = EIPSEC_SYSTEM_ERROR;
 	ipsec_errlist[EIPSEC_SYSTEM_ERROR] = str;
-
-	return;
 }

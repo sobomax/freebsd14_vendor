@@ -27,9 +27,7 @@
 .\" OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 .\" SUCH DAMAGE.
 .\"
-.\" $FreeBSD: 6b0e64ab0fac66ab4ae6d6ea37bac043c138e1b3 $
-.\"
-.Dd November 12, 2021
+.Dd May 2, 2023
 .Dt RTSOLD 8
 .Os
 .\"
@@ -42,6 +40,7 @@
 .Op Fl dDfFimu1
 .Op Fl M Ar script-name
 .Op Fl O Ar script-name
+.Op Fl A Ar script-name
 .Op Fl p Ar pidfile
 .Op Fl R Ar script-name
 .Ar interface ...
@@ -49,6 +48,7 @@
 .Op Fl dDfFimu1
 .Op Fl M Ar script-name
 .Op Fl O Ar script-name
+.Op Fl A Ar script-name
 .Op Fl p Ar pidfile
 .Op Fl R Ar script-name
 .Fl a
@@ -56,12 +56,14 @@
 .Op Fl dDiu
 .Op Fl M Ar script-name
 .Op Fl O Ar script-name
+.Op Fl A Ar script-name
 .Op Fl R Ar script-name
 .Ar interface ...
 .Nm rtsol
 .Op Fl dDiu
 .Op Fl M Ar script-name
 .Op Fl O Ar script-name
+.Op Fl A Ar script-name
 .Op Fl R Ar script-name
 .Fl a
 .\"
@@ -250,6 +252,18 @@ router advertisement is also TRUE.
 must be the absolute path from root to the script file, be a regular
 file, and be created by the same owner who runs
 .Nm .
+.It Fl A Ar script-name
+Specifies a supplement script file to always be called for the router
+advertisement.
+.Nm
+will invoke
+.Ar script-name
+with a first argument of the receiving interface name
+and a second argument of the sending router address.
+.Ar script-name
+must be the absolute path from root to the script file, be a regular
+file, and be created by the same owner who runs
+.Nm .
 .It Fl p Ar pidfile
 Writes the process ID of
 .Nm
@@ -309,8 +323,8 @@ is now integrated into
 .Xr rtsold 8 .
 .\"
 .Sh BUGS
-In some operating systems, when a PCMCIA network card is removed
-and reinserted, the corresponding interface index is changed.
+When a network card is removed and reinserted, the corresponding interface index
+may change.
 However,
 .Nm
 assumes such changes will not occur, and always uses the index that

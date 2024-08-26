@@ -1,4 +1,3 @@
-# $FreeBSD: bcb46ae2fc5c468861840a7f6fc79f7cd4f46c0d $
 
 .include <src.opts.mk>
 
@@ -12,6 +11,10 @@
 
 .ifndef SRCDIR
 .error Please define SRCDIR before including this file
+.endif
+
+.ifndef OS_REVISION
+.error Please define OS_REVISION before including this file
 .endif
 
 .PATH:		${LLVM_BASE}/${SRCDIR}
@@ -34,20 +37,20 @@ TARGET_ARCH?=	${MACHINE_ARCH}
 BUILD_ARCH?=	${MACHINE_ARCH}
 
 # Armv6 and armv7 uses hard float abi, unless the CPUTYPE has soft in it.
-# arm (for armv4 and armv5 CPUs) always uses the soft float ABI.
 # For all other targets, we stick with 'unknown'.
-.if ${TARGET_ARCH:Marmv[67]*} && (!defined(CPUTYPE) || ${CPUTYPE:M*soft*} == "")
-TARGET_ABI=	-gnueabihf
-.elif ${TARGET_ARCH:Marm*}
-TARGET_ABI=	-gnueabi
+.if ${TARGET_ARCH:Marm*}
+.if !defined(CPUTYPE) || ${CPUTYPE:M*soft*} == ""
+TARGET_TRIPLE_ABI=-gnueabihf
 .else
-TARGET_ABI=
+TARGET_TRIPLE_ABI=-gnueabi
+.endif
+.else
+TARGET_TRIPLE_ABI=
 .endif
 VENDOR=		unknown
-OS_VERSION=	freebsd13.2
 
-LLVM_TARGET_TRIPLE?=	${TARGET_ARCH:C/amd64/x86_64/:C/[hs]f$//:S/mipsn32/mips64/}-${VENDOR}-${OS_VERSION}${TARGET_ABI}
-LLVM_BUILD_TRIPLE?=	${BUILD_ARCH:C/amd64/x86_64/:C/[hs]f$//:S/mipsn32/mips64/}-${VENDOR}-${OS_VERSION}
+LLVM_TARGET_TRIPLE?=	${TARGET_ARCH:C/amd64/x86_64/}-${VENDOR}-freebsd${OS_REVISION}${TARGET_TRIPLE_ABI}
+LLVM_BUILD_TRIPLE?=	${BUILD_ARCH:C/amd64/x86_64/}-${VENDOR}-freebsd${OS_REVISION}
 
 CFLAGS+=	-DLLVM_DEFAULT_TARGET_TRIPLE=\"${LLVM_TARGET_TRIPLE}\"
 CFLAGS+=	-DLLVM_HOST_TRIPLE=\"${LLVM_BUILD_TRIPLE}\"
@@ -70,9 +73,6 @@ CFLAGS+=	-DLLVM_TARGET_ENABLE_BPF
 .endif
 .if ${MK_LLVM_TARGET_MIPS} != "no"
 CFLAGS+=	-DLLVM_TARGET_ENABLE_MIPS
-. if ${MACHINE_CPUARCH} == "mips"
-LLVM_NATIVE_ARCH=	Mips
-. endif
 .endif
 .if ${MK_LLVM_TARGET_POWERPC} != "no"
 CFLAGS+=	-DLLVM_TARGET_ENABLE_POWERPC
@@ -111,7 +111,7 @@ LDFLAGS+=	-Wl,-dead_strip
 LDFLAGS+=	-Wl,--gc-sections
 .endif
 
-CXXSTD?=	c++14
+CXXSTD?=	c++17
 CXXFLAGS+=	-fno-exceptions
 CXXFLAGS+=	-fno-rtti
 .if ${.MAKE.OS} == "FreeBSD" || !defined(BOOTSTRAPPING)
@@ -122,9 +122,4 @@ CFLAGS+=	-DBOOTSTRAPPING_WANT_NATIVE_SYSCTL
 .endif
 .if defined(BOOTSTRAPPING) && ${.MAKE.OS} == "Linux"
 LIBADD+=	dl
-.endif
-
-.if ${MACHINE_ARCH:Mmips64}
-STATIC_CFLAGS+= -mxgot
-STATIC_CXXFLAGS+= -mxgot
 .endif

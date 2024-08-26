@@ -1,4 +1,3 @@
-# $FreeBSD: abc79f516fc8d70a3295ea0650eb29e03228f4fc $
 
 .PATH: ${SRCTOP}/sys/security/mac_lomac
 

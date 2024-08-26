@@ -1,6 +1,5 @@
 #!/bin/sh
 #
-# $FreeBSD: 77369aa599618899cc892effef355ad5a94f81f6 $
 #
 
 # PROVIDE: pfsync

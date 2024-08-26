@@ -25,10 +25,7 @@
 .\" OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 .\" SUCH DAMAGE.
 .\"
-.\"     @(#)open.2	8.2 (Berkeley) 11/16/93
-.\" $FreeBSD: 876a4ce1e57dcc3dbf34930852ce95d4a833773f $
-.\"
-.Dd April 22, 2022
+.Dd January 29, 2024
 .Dt OPEN 2
 .Os
 .Sh NAME
@@ -317,10 +314,16 @@ may not be used for any read operations like
 The primary use for this descriptor will be as the lookup descriptor for the
 .Fn *at
 family of functions.
+If
+.Dv O_SEARCH
+was not requested at open time, then the
+.Fn *at
+functions use the current directory permissions for the directory referenced
+by the descriptor at the time of the call.
 .Pp
 .Dv O_PATH
 returns a file descriptor that can be used as a directory file descriptor for
-.Xr openat 2
+.Fn openat
 and other system calls taking a file descriptor argument, like
 .Xr fstatat 2
 and others.
@@ -344,6 +347,7 @@ message
 using for
 .Dv EVFILT_VNODE
 .It Xr readlinkat 2
+.It Xr __acl_get_fd 2 , Xr __acl_aclcheck_fd 2
 .El
 But operations like
 .Xr read 2 ,
@@ -483,6 +487,10 @@ The system file table is full.
 .It Bq Er EMLINK
 .Dv O_NOFOLLOW
 was specified and the target is a symbolic link.
+.Tn POSIX
+specifies a different error for this case; see the note in
+.Sx STANDARDS
+below.
 .It Bq Er ENXIO
 The named file is a character special or block
 special file, and the device associated with this special file
@@ -572,12 +580,6 @@ and
 .Dv O_EXEC
 or
 .Dv O_SEARCH .
-.It Bq Er EINVAL
-The
-.Dv O_RESOLVE_BENEATH
-flag is specified and
-.Dv path
-is absolute.
 .It Bq Er EBADF
 The
 .Fa path
@@ -606,19 +608,32 @@ is specified and the process is in capability mode.
 was called and the process is in capability mode.
 .It Bq Er ENOTCAPABLE
 .Fa path
-is an absolute path,
-or contained a ".." component leading to a
-directory outside of the directory hierarchy specified by
-.Fa fd ,
+is an absolute path and the process is in capability mode.
+.It Bq Er ENOTCAPABLE
+.Fa path
+is an absolute path and
+.Dv O_RESOLVE_BENEATH
+is specified.
+.It Bq Er ENOTCAPABLE
+.Fa path
+contains a ".." component leading to a directory outside
+of the directory hierarchy specified by
+.Fa fd
 and the process is in capability mode.
 .It Bq Er ENOTCAPABLE
-The
-.Dv O_RESOLVE_BENEATH
-flag was provided, and the relative
 .Fa path
-escapes the
-.Ar fd
-directory.
+contains a ".." component leading to a directory outside
+of the directory hierarchy specified by
+.Fa fd
+and
+.Dv O_RESOLVE_BENEATH
+is specified.
+.It Bq Er ENOTCAPABLE
+.Fa path
+contains a ".." component, the
+.Dv vfs.lookup_cap_dotdot
+.Xr sysctl 3
+is set, and the process is in capability mode.
 .El
 .Sh SEE ALSO
 .Xr chmod 2 ,
@@ -638,6 +653,7 @@ directory.
 .Sh STANDARDS
 These functions are specified by
 .St -p1003.1-2008 .
+.Pp
 .Fx
 sets
 .Va errno
@@ -651,6 +667,23 @@ when
 is set in flags and the final component of pathname is a symbolic link
 to distinguish it from the case of too many symbolic link traversals
 in one of its non-final components.
+.Pp
+The Open Group Extended API Set 2 specification, that introduced the
+.Fn *at
+API, required that the test for whether
+.Fa fd
+is searchable is based on whether
+.Fa fd
+is open for searching, not whether the underlying directory currently
+permits searches.
+The present implementation of the
+.Fa openat
+system call is believed to be compatible with
+.St -p1003.1-2017 ,
+which specifies that behavior for
+.Dv O_SEARCH ,
+in the absence of the flag the implementation checks the current
+permissions of a directory.
 .Sh HISTORY
 The
 .Fn open
@@ -663,17 +696,6 @@ function was introduced in
 .Dv O_DSYNC
 appeared in 13.0.
 .Sh BUGS
-The Open Group Extended API Set 2 specification requires that the test
-for whether
-.Fa fd
-is searchable is based on whether
-.Fa fd
-is open for searching, not whether the underlying directory currently
-permits searches.
-The present implementation of the
-.Fa openat
-checks the current permissions of directory instead.
-.Pp
 The
 .Fa mode
 argument is variadic and may result in different calling conventions

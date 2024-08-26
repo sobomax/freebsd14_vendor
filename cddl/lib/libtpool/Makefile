@@ -1,4 +1,3 @@
-# $FreeBSD: d6a1d9fcfb7c983c0cecf21855708bc758f89dd1 $
 
 .PATH: ${SRCTOP}/sys/contrib/openzfs/lib/libtpool
 .PATH: ${SRCTOP}/sys/contrib/openzfs/include

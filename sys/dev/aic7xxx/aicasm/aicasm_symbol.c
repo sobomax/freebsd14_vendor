@@ -40,8 +40,6 @@
  * POSSIBILITY OF SUCH DAMAGES.
  *
  * $Id: //depot/aic7xxx/aic7xxx/aicasm/aicasm_symbol.c#24 $
- *
- * $FreeBSD: 96b1086f90f1a319bbf23d98a19b0f0f324ae2be $
  */
 
 #include <sys/types.h>

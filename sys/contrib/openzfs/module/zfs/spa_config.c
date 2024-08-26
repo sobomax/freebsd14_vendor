@@ -6,7 +6,7 @@
  * You may not use this file except in compliance with the License.
  *
  * You can obtain a copy of the license at usr/src/OPENSOLARIS.LICENSE
- * or http://www.opensolaris.org/os/licensing.
+ * or https://opensource.org/licenses/CDDL-1.0.
  * See the License for the specific language governing permissions
  * and limitations under the License.
  *
@@ -67,8 +67,10 @@ static uint64_t spa_config_generation = 1;
  * This can be overridden in userland to preserve an alternate namespace for
  * userland pools when doing testing.
  */
-char *spa_config_path = ZPOOL_CACHE;
-int zfs_autoimport_disable = 1;
+char *spa_config_path = (char *)ZPOOL_CACHE;
+#ifdef _KERNEL
+static int zfs_autoimport_disable = B_TRUE;
+#endif
 
 /*
  * Called when the module is first loaded, this routine loads the configuration
@@ -238,11 +240,12 @@ spa_config_write(spa_config_dirent_t *dp, nvlist_t *nvl)
  * would be required.
  */
 void
-spa_write_cachefile(spa_t *target, boolean_t removing, boolean_t postsysevent)
+spa_write_cachefile(spa_t *target, boolean_t removing, boolean_t postsysevent,
+    boolean_t postblkidevent)
 {
 	spa_config_dirent_t *dp, *tdp;
 	nvlist_t *nvl;
-	char *pool_name;
+	const char *pool_name;
 	boolean_t ccw_failure;
 	int error = 0;
 
@@ -344,6 +347,18 @@ spa_write_cachefile(spa_t *target, boolean_t removing, boolean_t postsysevent)
 
 	if (postsysevent)
 		spa_event_notify(target, NULL, NULL, ESC_ZFS_CONFIG_SYNC);
+
+	/*
+	 * Post udev event to sync blkid information if the pool is created
+	 * or a new vdev is added to the pool.
+	 */
+	if ((target->spa_root_vdev) && postblkidevent) {
+		vdev_post_kobj_evt(target->spa_root_vdev);
+		for (int i = 0; i < target->spa_l2cache.sav_count; i++)
+			vdev_post_kobj_evt(target->spa_l2cache.sav_vdevs[i]);
+		for (int i = 0; i < target->spa_spares.sav_count; i++)
+			vdev_post_kobj_evt(target->spa_spares.sav_vdevs[i]);
+	}
 }
 
 /*
@@ -352,23 +367,24 @@ spa_write_cachefile(spa_t *target, boolean_t removing, boolean_t postsysevent)
  * So we have to invent the ZFS_IOC_CONFIG ioctl to grab the configuration
  * information for all pool visible within the zone.
  */
-nvlist_t *
-spa_all_configs(uint64_t *generation)
+int
+spa_all_configs(uint64_t *generation, nvlist_t **pools)
 {
-	nvlist_t *pools;
 	spa_t *spa = NULL;
 
 	if (*generation == spa_config_generation)
-		return (NULL);
+		return (SET_ERROR(EEXIST));
 
-	pools = fnvlist_alloc();
+	int error = mutex_enter_interruptible(&spa_namespace_lock);
+	if (error)
+		return (SET_ERROR(EINTR));
 
-	mutex_enter(&spa_namespace_lock);
+	*pools = fnvlist_alloc();
 	while ((spa = spa_next(spa)) != NULL) {
 		if (INGLOBALZONE(curproc) ||
 		    zone_dataset_visible(spa_name(spa), NULL)) {
 			mutex_enter(&spa->spa_props_lock);
-			fnvlist_add_nvlist(pools, spa_name(spa),
+			fnvlist_add_nvlist(*pools, spa_name(spa),
 			    spa->spa_config);
 			mutex_exit(&spa->spa_props_lock);
 		}
@@ -376,7 +392,7 @@ spa_all_configs(uint64_t *generation)
 	*generation = spa_config_generation;
 	mutex_exit(&spa_namespace_lock);
 
-	return (pools);
+	return (0);
 }
 
 void
@@ -403,7 +419,7 @@ spa_config_generate(spa_t *spa, vdev_t *vd, uint64_t txg, int getstats)
 	unsigned long hostid = 0;
 	boolean_t locked = B_FALSE;
 	uint64_t split_guid;
-	char *pool_name;
+	const char *pool_name;
 
 	if (vd == NULL) {
 		vd = rvd;
@@ -598,6 +614,7 @@ spa_config_update(spa_t *spa, int what)
 	 */
 	if (!spa->spa_is_root) {
 		spa_write_cachefile(spa, B_FALSE,
+		    what != SPA_CONFIG_UPDATE_POOL,
 		    what != SPA_CONFIG_UPDATE_POOL);
 	}
 
@@ -611,7 +628,6 @@ EXPORT_SYMBOL(spa_config_set);
 EXPORT_SYMBOL(spa_config_generate);
 EXPORT_SYMBOL(spa_config_update);
 
-/* BEGIN CSTYLED */
 #ifdef __linux__
 /* string sysctls require a char array on FreeBSD */
 ZFS_MODULE_PARAM(zfs_spa, spa_, config_path, STRING, ZMOD_RD,
@@ -620,4 +636,3 @@ ZFS_MODULE_PARAM(zfs_spa, spa_, config_path, STRING, ZMOD_RD,
 
 ZFS_MODULE_PARAM(zfs, zfs_, autoimport_disable, INT, ZMOD_RW,
 	"Disable pool import at module load");
-/* END CSTYLED */

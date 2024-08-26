@@ -1,4 +1,3 @@
-# $FreeBSD: 194e101d2f8418f3b4add60ff893b97acccb028b $
 
 atf_test_case "space" cleanup
 space_head()

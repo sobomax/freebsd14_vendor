@@ -1,4 +1,3 @@
-# $FreeBSD: 16f9f8c703be1e0d51d1415ad4cf10199f7e2e81 $
 
 .PATH: ${SRCTOP}/sys/compat/linprocfs
 

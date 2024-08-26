@@ -1,9 +1,3 @@
-# $FreeBSD: 0b550d995241a51ebb38c2996a282d681a227f92 $
-#
-# All library objects contain FreeBSD revision strings by default; they may be
-# excluded as a space-saving measure.  To produce a library that does
-# not contain these strings, add -DSTRIP_FBSDID (see <sys/cdefs.h>) to CFLAGS
-# below.
 
 PACKAGE=	clibs
 SHLIBDIR?= /lib
@@ -28,6 +22,12 @@ CFLAGS+=-I${SRCTOP}/lib/libthread_db
 CFLAGS.thr_stack.c+=	-Wno-cast-align
 CFLAGS.rtld_malloc.c+=	-Wno-cast-align
 CFLAGS.thr_symbols.c+=	-Wno-missing-variable-declarations
+.if ${MK_ASAN} != "no"
+# False-positive ASAN error claiming the local "struct sigaction act;" is
+# overflowed by handle_signal() reading from the ucontext_t argument. This
+# could be caused by ASAN not treating this function as a signal handler.
+CFLAGS.thr_sig.c+=	-fno-sanitize=address
+.endif
 
 .if ${MACHINE_CPUARCH} == "arm"
 NO_THREAD_UNWIND_STACK= yes
@@ -45,8 +45,10 @@ SYMBOL_MAPS=${.CURDIR}/pthread.map
 
 MAN=	libthr.3
 
+.if ${MK_PTHREADS_ASSERTIONS} != "no"
 # enable extra internal consistency checks
 CFLAGS+=-D_PTHREADS_INVARIANTS
+.endif
 
 PRECIOUSLIB=
 

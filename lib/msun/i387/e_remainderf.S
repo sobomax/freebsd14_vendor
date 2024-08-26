@@ -4,8 +4,6 @@
  */
 
 #include <machine/asm.h>
-
-__FBSDID("$FreeBSD: 38987e5bf4dba51343c04739a204806fe0e2babe $");
 /* RCSID("$NetBSD: e_remainderf.S,v 1.2 1995/05/08 23:49:47 jtc Exp $") */
 
 ENTRY(remainderf)

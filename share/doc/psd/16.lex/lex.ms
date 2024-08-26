@@ -35,8 +35,6 @@
 .\" IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 .\" 
 .\"	@(#)lex.ms	8.1 (Berkeley) 6/8/93
-.\"
-.\" $FreeBSD: 8b3c82ee23b3a1b4113b0650a225b3845332f2b5 $
 .nr tm 0
 .de MH
 Bell Laboratories, Murray Hill, NJ 07974.

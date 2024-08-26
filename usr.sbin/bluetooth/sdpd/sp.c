@@ -1,7 +1,7 @@
 /*-
  * sp.c
  *
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2004 Maksim Yevmenkin <m_evmenkin@yahoo.com>
  * All rights reserved.
@@ -28,7 +28,6 @@
  * SUCH DAMAGE.
  *
  * $Id: sp.c,v 1.5 2004/01/13 01:54:39 max Exp $
- * $FreeBSD: a909cd181ed10c70819807804320c1dcb798e1c8 $
  */
 
 #include <sys/queue.h>

@@ -38,8 +38,6 @@ static char sccsid[] = "@(#)zopen.c	8.1 (Berkeley) 6/27/93";
 #endif /* LIBC_SCCS and not lint */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 1622508fb6c166a177fb0596767828c24b931885 $");
-
 /*-
  * fcompress.c - File compression ala IEEE Computer, June 1984.
  *

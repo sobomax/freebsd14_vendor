@@ -33,11 +33,6 @@
  * $NetBSD: syncicache.c,v 1.2 1999/05/05 12:36:40 tsubai Exp $
  */
 
-#ifndef lint
-static const char rcsid[] =
-  "$FreeBSD: d96529bc383316a4d80c2eaafdcc7eff71e8a806 $";
-#endif /* not lint */
-
 #include <sys/param.h>
 #if	defined(_KERNEL) || defined(_STANDALONE)
 #include <sys/time.h>

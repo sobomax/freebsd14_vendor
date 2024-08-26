@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2020 Advanced Micro Devices, Inc.
  *
@@ -30,8 +30,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 7d7c1acb792b56841f0618d35b3937783a799dd7 $");
-
 #include <sys/param.h>
 #include <sys/bus.h>
 #include <sys/kernel.h>
@@ -139,7 +137,7 @@ static struct resource_spec axgbe_pci_mac_spec[] = {
 	{ -1, 0 }
 };
 
-static pci_vendor_info_t axgbe_vendor_info_array[] =
+static const pci_vendor_info_t axgbe_vendor_info_array[] =
 {
 	PVID(0x1022, 0x1458,  "AMD 10 Gigabit Ethernet Driver"),
 	PVID(0x1022, 0x1459,  "AMD 10 Gigabit Ethernet Driver"),
@@ -195,9 +193,8 @@ static driver_t ax_driver = {
 	"ax", ax_methods, sizeof(struct axgbe_if_softc),
 };
 
-devclass_t ax_devclass;
-DRIVER_MODULE(axp, pci, ax_driver, ax_devclass, 0, 0);
-DRIVER_MODULE(miibus, ax, miibus_driver, miibus_devclass, 0, 0);
+DRIVER_MODULE(axp, pci, ax_driver, 0, 0);
+DRIVER_MODULE(miibus, ax, miibus_driver, 0, 0);
 IFLIB_PNP_INFO(pci, ax_driver, axgbe_vendor_info_array);
 
 MODULE_DEPEND(ax, pci, 1, 1, 1);
@@ -343,14 +340,14 @@ axgbe_miibus_statchg(device_t dev)
         struct axgbe_if_softc   *sc = iflib_get_softc(device_get_softc(dev));
         struct xgbe_prv_data    *pdata = &sc->pdata;
 	struct mii_data		*mii = device_get_softc(pdata->axgbe_miibus);
-	struct ifnet		*ifp = pdata->netdev;
+	if_t			 ifp = pdata->netdev;
 	int bmsr;
 
 	axgbe_printf(2, "%s: Link %d/%d\n", __func__, pdata->phy.link,
 	    pdata->phy_link);
 
 	if (mii == NULL || ifp == NULL ||
-	    (ifp->if_drv_flags & IFF_DRV_RUNNING) == 0)
+	    (if_getdrvflags(ifp) & IFF_DRV_RUNNING) == 0)
 		return;
 
 	if ((mii->mii_media_status & (IFM_ACTIVE | IFM_AVALID)) ==
@@ -589,7 +586,7 @@ xgbe_init_all_fptrs(struct xgbe_prv_data *pdata)
 static void
 axgbe_set_counts(if_ctx_t ctx)
 {
-	struct axgbe_if_softc *sc = iflib_get_softc(ctx);;
+	struct axgbe_if_softc *sc = iflib_get_softc(ctx);
 	struct xgbe_prv_data *pdata = &sc->pdata;
 	cpuset_t lcpus;
 	int cpu_count, err;
@@ -816,7 +813,7 @@ xgbe_service_timer(void *data)
 static void
 xgbe_init_timers(struct xgbe_prv_data *pdata)
 {
-        callout_init(&pdata->service_timer, 1*hz);
+        callout_init(&pdata->service_timer, 1);
 }
 
 static void
@@ -1350,24 +1347,12 @@ xgbe_default_config(struct xgbe_prv_data *pdata)
         pdata->enable_rss = 1;
 }
 
-static void
-axgbe_setup_sysctl(struct xgbe_prv_data *pdata)
-{
-	struct sysctl_ctx_list *clist;
-	struct sysctl_oid *parent;
-	struct sysctl_oid_list *top;
-	
-	clist = device_get_sysctl_ctx(pdata->dev);
-	parent = device_get_sysctl_tree(pdata->dev);
-	top = SYSCTL_CHILDREN(parent);
-}
-
 static int
 axgbe_if_attach_post(if_ctx_t ctx)
 {
 	struct axgbe_if_softc	*sc = iflib_get_softc(ctx);
 	struct xgbe_prv_data	*pdata = &sc->pdata;
-	struct ifnet		*ifp = pdata->netdev;
+	if_t			 ifp = pdata->netdev;
         struct xgbe_phy_if	*phy_if = &pdata->phy_if;
 	struct xgbe_hw_if 	*hw_if = &pdata->hw_if;
 	if_softc_ctx_t		scctx = sc->scctx;
@@ -1480,11 +1465,9 @@ axgbe_if_attach_post(if_ctx_t ctx)
 	 */
 	set_bit(XGBE_DOWN, &pdata->dev_state);
 
-	DBGPR("mtu %d\n", ifp->if_mtu);
-	scctx->isc_max_frame_size = ifp->if_mtu + 18;
+	DBGPR("mtu %d\n", if_getmtu(ifp));
+	scctx->isc_max_frame_size = if_getmtu(ifp) + 18;
 	scctx->isc_min_frame_size = XGMAC_MIN_PACKET;
-
-	axgbe_setup_sysctl(pdata);
 
 	axgbe_sysctl_init(pdata);
 
@@ -2095,7 +2078,7 @@ axgbe_msix_que(void *arg)
 {
 	struct xgbe_channel	*channel = (struct xgbe_channel *)arg;
 	struct xgbe_prv_data	*pdata = channel->pdata;
-	unsigned int 		dma_ch_isr, dma_status;
+	unsigned int 		dma_status;
 
 	axgbe_printf(1, "%s: Channel: %d SR 0x%04x DSR 0x%04x IER:0x%04x D_ISR:0x%04x M_ISR:0x%04x\n",
 	    __func__, channel->queue_index,
@@ -2105,7 +2088,7 @@ axgbe_msix_que(void *arg)
 	    XGMAC_IOREAD(pdata, DMA_ISR),
 	    XGMAC_IOREAD(pdata, MAC_ISR));
 
-	dma_ch_isr = XGMAC_DMA_IOREAD(channel, DMA_CH_SR);
+	(void)XGMAC_DMA_IOREAD(channel, DMA_CH_SR);
 
 	/* Disable Tx and Rx channel interrupts */
 	xgbe_disable_rx_tx_int(pdata, channel);
@@ -2348,12 +2331,13 @@ axgbe_if_promisc_set(if_ctx_t ctx, int flags)
 {
 	struct axgbe_if_softc *sc = iflib_get_softc(ctx);
 	struct xgbe_prv_data *pdata = &sc->pdata;
-	struct ifnet *ifp = pdata->netdev;
+	if_t ifp = pdata->netdev;
 
 	axgbe_printf(1, "%s: MAC_PFR 0x%x drv_flags 0x%x if_flags 0x%x\n",
-	    __func__, XGMAC_IOREAD(pdata, MAC_PFR), ifp->if_drv_flags, ifp->if_flags);
+	    __func__, XGMAC_IOREAD(pdata, MAC_PFR), if_getdrvflags(ifp),
+	    if_getflags(ifp));
 
-	if (ifp->if_flags & IFF_PPROMISC) {
+	if (if_getflags(ifp) & IFF_PPROMISC) {
 
 		axgbe_printf(1, "User requested to enter promisc mode\n");
 
@@ -2386,7 +2370,7 @@ static uint64_t
 axgbe_if_get_counter(if_ctx_t ctx, ift_counter cnt)
 {
 	struct axgbe_if_softc	*sc = iflib_get_softc(ctx);
-        struct ifnet		*ifp = iflib_get_ifp(ctx);
+        if_t			 ifp = iflib_get_ifp(ctx);
         struct xgbe_prv_data    *pdata = &sc->pdata;
         struct xgbe_mmc_stats	*pstats = &pdata->mmc_stats;
 

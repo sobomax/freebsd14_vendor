@@ -3,9 +3,6 @@
  * Cannot be copyrighted.
  */
 
-#include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 7bd67c91620a64385ae556a2825f9fa6fd67f419 $");
-
 #include <sys/types.h>
 
 u_char const bcd2bin_data[] = {

@@ -1,4 +1,3 @@
-/* $FreeBSD: 710a222fd84c2452c114d85fd9d2daa1d60ecedd $ */
 /* $NetBSD: trap_subr.S,v 1.20 2002/04/22 23:20:08 kleink Exp $	*/
 
 /*-
@@ -316,6 +315,7 @@ cpu_reset:
 1:
 	mflr	%r1
 	addi	%r1,%r1,(124-16)@l
+	lwz	%r30,TRAP_TOCBASE(0)
 
 	bl	CNAME(cpudep_ap_early_bootstrap)
 	lis	%r3,1@l
@@ -800,11 +800,9 @@ CNAME(trapexit):
 	bf	17,1f			/* branch if PSL_PR is false */
 
 	GET_CPUINFO(%r3)		/* get per-CPU pointer */
-	lwz	%r4, TD_FLAGS(%r2)	/* get thread flags value
+	lwz	%r4, TD_AST(%r2)	/* get thread ast value
 					 * (r2 is curthread) */
-	lis	%r5, (TDF_ASTPENDING|TDF_NEEDRESCHED)@h
-	ori	%r5,%r5, (TDF_ASTPENDING|TDF_NEEDRESCHED)@l
-	and.	%r4,%r4,%r5
+	cmpwi	%r4, 0
 	beq	1f
 	mfmsr	%r3			/* re-enable interrupts */
 	ori	%r3,%r3,PSL_EE@l

@@ -1,4 +1,3 @@
-/* $FreeBSD: 72f993cb9fb9dc02fe1fa63875714d42c2fc1fdb $ */
 
 OUTPUT_FORMAT("elf64-powerpcle-freebsd", "elf64-powerpcle-freebsd",
 	      "elf64-powerpcle-freebsd")

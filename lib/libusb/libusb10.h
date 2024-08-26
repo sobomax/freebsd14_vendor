@@ -1,6 +1,5 @@
-/* $FreeBSD: 5caa56666c32b57f2353faf40abef0bf3408ee27 $ */
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2009 Sylvestre Gallon. All rights reserved.
  *

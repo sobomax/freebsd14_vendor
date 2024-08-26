@@ -26,7 +26,6 @@
  */
 
 #include "test.h"
-__FBSDID("$FreeBSD: 85dffdc7277bde6df5f0537a261324be5a4d6422 $");
 
 static char buff[4096];
 static char buff2[64];

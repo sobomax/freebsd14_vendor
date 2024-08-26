@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2005 Scott Long
  * All rights reserved.
@@ -25,7 +25,6 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  */
-/* $FreeBSD: 947a25819a7e303d7b2bc59268d8df653c8f0959 $ */
 
 #ifndef _POWERPC_BUS_DMA_H_
 #define _POWERPC_BUS_DMA_H_

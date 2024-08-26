@@ -33,8 +33,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 95407ccae261b07ebd65fffe0b8cabddb73440dd $");
-
 #include <sys/types.h>
 #include <sys/ioctl.h>
 #include <sys/socket.h>

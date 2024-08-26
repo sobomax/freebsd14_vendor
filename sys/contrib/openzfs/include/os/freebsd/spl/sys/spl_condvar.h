@@ -1,5 +1,5 @@
 /*
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2000 Jake Burkholder <jake@freebsd.org>.
  * All rights reserved.
@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 7405f647d59ac05342c6b57ebc67c9bfe6ac5fd4 $
+ * $FreeBSD: 2835adafd416e807c00a90da779616c61aceefc2 $
  */
 
 #ifndef	_SPL_SYS_CONDVAR_H_

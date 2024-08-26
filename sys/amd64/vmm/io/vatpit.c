@@ -27,8 +27,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: c58a6da66c1a9fbcf413c552de86a59defee57a8 $");
-
 #include "opt_bhyve_snapshot.h"
 
 #include <sys/param.h>

@@ -30,14 +30,11 @@
  * SUCH DAMAGE.
  *
  *	@(#)glob.h	8.1 (Berkeley) 6/2/93
- * from: $FreeBSD: d43086f819c53bff9c77b3194cf900c629169a69 $
- * $FreeBSD: d43086f819c53bff9c77b3194cf900c629169a69 $
  */
 
 #ifndef _GLOB_COMPAT11_H_
 #define	_GLOB_COMPAT11_H_
 
-#include <sys/cdefs.h>
 #include <sys/types.h>
 #include <glob.h>
 

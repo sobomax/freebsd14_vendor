@@ -24,7 +24,6 @@ if [ ! "$_STRINGS_SUBR" ]; then _STRINGS_SUBR=1
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: f33f4df566ade00d83080ef2b64248d9de8a98b1 $
 #
 ############################################################ INCLUDES
 

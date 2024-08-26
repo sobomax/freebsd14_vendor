@@ -1,5 +1,4 @@
 #
-# $FreeBSD: acc52fd5755733fa6fa87db6ad2ac8388f181996 $
 #
 # For multiple programs using a single source file each,
 # we can just define 'progs' and create custom targets.

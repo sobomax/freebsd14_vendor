@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2013 Adrian Chadd <adrian@FreeBSD.org>
  * All rights reserved.
@@ -27,12 +27,8 @@
  * IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF
  * THE POSSIBILITY OF SUCH DAMAGES.
- *
- * $FreeBSD: c89a6b107749effda2ad474440a5b801d93160d4 $
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: c89a6b107749effda2ad474440a5b801d93160d4 $");
-
 /*
  * This module handles LNA diversity for those chips which implement LNA
  * mixing (AR9285/AR9485.)

@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2005 Antoine Brodin
  * All rights reserved.
@@ -29,8 +29,6 @@
 #include "opt_ddb.h"
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: cc10584f03a1e3814fbfd8488d4a11cbca8fe9b4 $");
-
 #include <sys/param.h>
 #include <sys/kernel.h>
 #ifdef KTR

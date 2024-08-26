@@ -14,8 +14,6 @@ static char sccsid[] = "%Z% %M% %I% %E% %U%";
 #endif
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 719808858dacc3ac65f7841f90e5ae22122c950b $");
-
 #include <sys/types.h>
 #include <sys/param.h>
 #include <ctype.h>

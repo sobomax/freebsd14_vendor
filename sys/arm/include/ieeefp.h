@@ -1,5 +1,4 @@
 /*	$NetBSD: ieeefp.h,v 1.1 2001/01/10 19:02:06 bjh21 Exp $	*/
-/* $FreeBSD: 0b61744b450b823895c59c4145a9284f1e35417c $ */
 /*-
  * Based on ieeefp.h written by J.T. Conklin, Apr 28, 1995
  * Public domain.

@@ -1,12 +1,15 @@
-# $FreeBSD: b6c90f2b3c86a21a8c4d0972983c07db66e01aff $
 
 .include <src.opts.mk>
 
 TESTSDIR=		${TESTSBASE}/sys/netpfil
+TESTS_SUBDIRS+=		common
 
 .if ${MK_PF} != "no"
-TESTS_SUBDIRS+=		pf \
-					common
+TESTS_SUBDIRS+=		pf
+.endif
+
+.if ${MK_IPFW} != "no"
+TESTS_SUBDIRS+=		ipfw
 .endif
 
 .include <bsd.test.mk>

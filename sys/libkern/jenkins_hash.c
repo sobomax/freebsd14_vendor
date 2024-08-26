@@ -1,6 +1,5 @@
 /*
  * Taken from http://burtleburtle.net/bob/c/lookup3.c
- * $FreeBSD: 250ef458aa67d07f2f9d7af71a6d5fe233423007 $
  */
 
 #include <sys/hash.h>

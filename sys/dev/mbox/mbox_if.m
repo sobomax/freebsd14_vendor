@@ -23,7 +23,6 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: ad29a7d73e2a4e662c03f8fe5e04515a37c1fc8a $
 #
 # Mailboxes are used as an IPC mechanism that allows subsystems to 
 # communicate with each other.

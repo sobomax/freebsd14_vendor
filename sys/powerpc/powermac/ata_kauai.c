@@ -28,8 +28,6 @@
  *
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 32b33f130a6b1b0988212065e44d7121664b5195 $");
-
 /*
  * Mac 'Kauai' PCI ATA controller
  */
@@ -121,7 +119,7 @@ static driver_t ata_kauai_driver = {
 	sizeof(struct ata_kauai_softc),
 };
 
-DRIVER_MODULE(ata, pci, ata_kauai_driver, ata_devclass, NULL, NULL);
+DRIVER_MODULE(ata, pci, ata_kauai_driver, NULL, NULL);
 MODULE_DEPEND(ata, ata, 1, 1, 1);
 
 /*
@@ -197,7 +195,6 @@ static int
 ata_kauai_probe(device_t dev)
 {
 	u_int32_t devid;
-	phandle_t node;
 	int i, found;
 
 	found = 0;
@@ -212,7 +209,6 @@ ata_kauai_probe(device_t dev)
 	if (!found)
 		return (ENXIO);
 
-	node = ofw_bus_get_node(dev);
         return (ata_probe(dev));
 }
 

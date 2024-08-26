@@ -12,9 +12,6 @@
  * Optimized by Bruce D. Evans.
  */
 
-#include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 4353d340a1acfdad5d491b21dd88c44b4b58619c $");
-
 #include <float.h>
 #include "math.h"
 #include "math_private.h"

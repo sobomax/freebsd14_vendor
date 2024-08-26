@@ -1,4 +1,3 @@
-# $FreeBSD: 6e3a1b6d9079ef96c847ec1e5c1820bf15d335ca $
 .PATH:	${SRCTOP}/sys/dev/mlx5/mlx5_ib
 
 KMOD=mlx5ib
@@ -6,6 +5,7 @@ SRCS= \
 mlx5_ib_ah.c \
 mlx5_ib_cong.c \
 mlx5_ib_cq.c \
+mlx5_ib_devx.c \
 mlx5_ib_doorbell.c \
 mlx5_ib_gsi.c \
 mlx5_ib_mad.c \

@@ -1,7 +1,6 @@
-/*      $FreeBSD: a78910b8272c1ab20a81202dcd8f4d66f4b25077 $	*/
 
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2004-2006
  *      Damien Bergamini <damien.bergamini@free.fr>. All rights reserved.

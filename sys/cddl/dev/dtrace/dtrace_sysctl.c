@@ -18,8 +18,6 @@
  *
  * CDDL HEADER END
  *
- * $FreeBSD: db2c44db0249d42b4e858876063a326d83f347c3 $
- *
  */
 
 /* Report registered DTrace providers. */

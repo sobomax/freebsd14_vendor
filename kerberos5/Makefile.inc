@@ -1,4 +1,3 @@
-# $FreeBSD: 0d52313977ce8b53aa6e7388059139e30ffd97dc $
 
 .include <src.opts.mk>
 
@@ -11,7 +10,7 @@ CFLAGS+=	-DHAVE_CONFIG_H -I${.CURDIR:H:H}/include
 WARNS?=		1
 CWARNFLAGS.clang+=	-Wno-absolute-value
 
-.if ${MK_OPENLDAP} != "no" && !defined(COMPAT_32BIT)
+.if ${MK_OPENLDAP} != "no" && !defined(COMPAT_LIBCOMPAT)
 OPENLDAPBASE?=	/usr/local
 LDAPLDADD=	-lldap -llber
 LDAPDPADD=	${LDAPLDADD:C;^-l(.*)$;${OPENLDAPBASE}/lib/lib\1.a;}

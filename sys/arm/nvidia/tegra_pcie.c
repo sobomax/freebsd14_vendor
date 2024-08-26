@@ -25,8 +25,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: d71d599391245ecb094a24094de58668c44676c6 $");
-
 /*
  * Nvidia Integrated PCI/PCI-Express controller driver.
  */
@@ -392,7 +390,7 @@ tegra_pcbib_map_cfg(struct tegra_pcib_softc *sc, u_int bus, u_int slot,
     u_int func, u_int reg)
 {
 	bus_size_t offs;
-	int rv;
+	int flags, rv;
 
 	offs = sc->cfg_base_addr;
 	offs |= PCI_CFG_BUS(bus) | PCI_CFG_DEV(slot) | PCI_CFG_FUN(func) |
@@ -402,7 +400,12 @@ tegra_pcbib_map_cfg(struct tegra_pcib_softc *sc, u_int bus, u_int slot,
 	if (sc->cfg_handle != 0)
 		bus_space_unmap(sc->bus_tag, sc->cfg_handle, 0x800);
 
-	rv = bus_space_map(sc->bus_tag, offs, 0x800, 0, &sc->cfg_handle);
+#if defined(BUS_SPACE_MAP_NONPOSTED)
+	flags = BUS_SPACE_MAP_NONPOSTED;
+#else
+	flags = 0;
+#endif
+	rv = bus_space_map(sc->bus_tag, offs, 0x800, flags, &sc->cfg_handle);
 	if (rv != 0)
 		device_printf(sc->dev, "Cannot map config space\n");
 	else
@@ -710,12 +713,6 @@ static int
 tegra_pcib_msi_setup_intr(device_t dev, struct intr_irqsrc *isrc,
     struct resource *res, struct intr_map_data *data)
 {
-	struct tegra_pcib_softc *sc;
-	struct tegra_pcib_irqsrc *tgi;
-
-	sc = device_get_softc(dev);
-	tgi = (struct tegra_pcib_irqsrc *)isrc;
-
 	if (data == NULL || data->type != INTR_MAP_DATA_MSI)
 		return (ENOTSUP);
 
@@ -835,17 +832,16 @@ tegra_pcib_msi_map_msi(device_t dev, device_t child, struct intr_irqsrc *isrc,
 static bus_size_t
 tegra_pcib_pex_ctrl(struct tegra_pcib_softc *sc, int port)
 {
-	if (port >= TEGRA_PCIB_MAX_PORTS)
-		panic("invalid port number: %d\n", port);
-
-	if (port == 0)
+	switch (port) {
+	case 0:
 		return (AFI_PEX0_CTRL);
-	else if (port == 1)
+	case 1:
 		return (AFI_PEX1_CTRL);
-	else if (port == 2)
+	case 2:
 		return (AFI_PEX2_CTRL);
-	else
+	default:
 		panic("invalid port number: %d\n", port);
+	}
 }
 
 static int
@@ -1389,7 +1385,7 @@ tegra_pcib_attach_msi(device_t dev)
 
 	sc = device_get_softc(dev);
 
-	sc->msi_page = kmem_alloc_contig(PAGE_SIZE, M_WAITOK, 0,
+	sc->msi_page = (uintptr_t)kmem_alloc_contig(PAGE_SIZE, M_WAITOK, 0,
 	    BUS_SPACE_MAXADDR, PAGE_SIZE, 0, VM_MEMATTR_DEFAULT);
 
 	/* MSI BAR */
@@ -1533,7 +1529,7 @@ tegra_pcib_attach(device_t dev)
 	}
 
 	sc->ofw_pci.sc_range_mask = 0x3;
-	rv = ofw_pci_init(dev);
+	rv = ofw_pcib_init(dev);
 	if (rv != 0)
 		goto out;
 
@@ -1623,8 +1619,6 @@ static device_method_t tegra_pcib_methods[] = {
 	DEVMETHOD_END
 };
 
-static devclass_t pcib_devclass;
 DEFINE_CLASS_1(pcib, tegra_pcib_driver, tegra_pcib_methods,
-    sizeof(struct tegra_pcib_softc), ofw_pci_driver);
-DRIVER_MODULE(tegra_pcib, simplebus, tegra_pcib_driver, pcib_devclass,
-    NULL, NULL);
+    sizeof(struct tegra_pcib_softc), ofw_pcib_driver);
+DRIVER_MODULE(tegra_pcib, simplebus, tegra_pcib_driver, NULL, NULL);

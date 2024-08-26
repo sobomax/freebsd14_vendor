@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 1999 Poul-Henning Kamp.
  * Copyright (c) 2009 James Gritton.
@@ -25,8 +25,6 @@
  * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
- *
- * $FreeBSD: b0183d4043523b97ca5a97af9d7cd174d3a5a057 $
  */
 
 #ifndef _SYS_JAIL_H_
@@ -146,6 +144,12 @@ MALLOC_DECLARE(M_PRISON);
 struct racct;
 struct prison_racct;
 
+typedef enum {
+	PR_INET		= 0,
+	PR_INET6	= 1,
+	PR_FAMILY_MAX	= 2,
+} pr_family_t;
+
 /*
  * This structure describes a prison.  It is pointed to by all struct
  * ucreds's of the inmates.  pr_ref keeps track of them and is used to
@@ -153,6 +157,7 @@ struct prison_racct;
  *
  * Lock key:
  *   (a) allprison_lock
+ *   (A) allproc_lock
  *   (c) set only during creation before the structure is shared, no mutex
  *       required to read
  *   (m) locked by pr_mtx
@@ -161,6 +166,7 @@ struct prison_racct;
  *   (q) locked by both pr_mtx and allprison_lock
  *   (r) atomic via refcount(9), pr_mtx and allprison_lock required to
  *       decrement to zero
+ *   (n) read access granted with the network epoch
  */
 struct prison {
 	TAILQ_ENTRY(prison) pr_list;			/* (a) all prisons */
@@ -169,6 +175,7 @@ struct prison {
 	volatile u_int	 pr_uref;			/* (r) user (alive) refcount */
 	unsigned	 pr_flags;			/* (p) PR_* flags */
 	LIST_HEAD(, prison) pr_children;		/* (a) list of child jails */
+	LIST_HEAD(, proc) pr_proclist;			/* (A) list of jailed processes */
 	LIST_ENTRY(prison) pr_sibling;			/* (a) next in parent's list */
 	struct prison	*pr_parent;			/* (c) containing jail */
 	struct mtx	 pr_mtx;
@@ -177,10 +184,7 @@ struct prison {
 	struct cpuset	*pr_cpuset;			/* (p) cpuset */
 	struct vnet	*pr_vnet;			/* (c) network stack */
 	struct vnode	*pr_root;			/* (c) vnode to rdir */
-	int		 pr_ip4s;			/* (p) number of v4 IPs */
-	int		 pr_ip6s;			/* (p) number of v6 IPs */
-	struct in_addr	*pr_ip4;			/* (p) v4 IPs of jail */
-	struct in6_addr	*pr_ip6;			/* (p) v6 IPs of jail */
+	struct prison_ip  *pr_addrs[PR_FAMILY_MAX];	/* (p,n) IPs of jail */
 	struct prison_racct *pr_prison_racct;		/* (c) racct jail proxy */
 	void		*pr_sparep[3];
 	int		 pr_childcount;			/* (a) number of child jails */
@@ -190,7 +194,8 @@ struct prison {
 	int		 pr_enforce_statfs;		/* (p) statfs permission */
 	int		 pr_devfs_rsnum;		/* (p) devfs ruleset */
 	enum prison_state pr_state;			/* (q) state in life cycle */
-	int		 pr_spare[2];
+	volatile int	 pr_exportcnt;			/* (r) count of mount exports */
+	int		 pr_spare;
 	int		 pr_osreldate;			/* (c) kern.osreldate value */
 	unsigned long	 pr_hostid;			/* (p) jail hostid */
 	char		 pr_name[MAXHOSTNAMELEN];	/* (p) admin jail name */
@@ -247,7 +252,8 @@ struct prison_racct {
 #define	PR_ALLOW_SUSER			0x00000400
 #define	PR_ALLOW_RESERVED_PORTS		0x00008000
 #define	PR_ALLOW_KMEM_ACCESS		0x00010000	/* reserved, not used yet */
-#define	PR_ALLOW_ALL_STATIC		0x000187ff
+#define	PR_ALLOW_NFSD			0x00020000
+#define	PR_ALLOW_ALL_STATIC		0x000387ff
 
 /*
  * PR_ALLOW_DIFFERENCES determines which flags are able to be
@@ -405,52 +411,63 @@ struct vfsconf;
  */
 #define jailed(cred)	(cred->cr_prison != &prison0)
 
-int jailed_without_vnet(struct ucred *);
+bool jailed_without_vnet(struct ucred *);
 void getcredhostname(struct ucred *, char *, size_t);
 void getcreddomainname(struct ucred *, char *, size_t);
 void getcredhostuuid(struct ucred *, char *, size_t);
 void getcredhostid(struct ucred *, unsigned long *);
 void getjailname(struct ucred *cred, char *name, size_t len);
 void prison0_init(void);
-int prison_allow(struct ucred *, unsigned);
+bool prison_allow(struct ucred *, unsigned);
 int prison_check(struct ucred *cred1, struct ucred *cred2);
-int prison_owns_vnet(struct ucred *);
+bool prison_check_nfsd(struct ucred *cred);
+bool prison_owns_vnet(struct ucred *);
 int prison_canseemount(struct ucred *cred, struct mount *mp);
 void prison_enforce_statfs(struct ucred *cred, struct mount *mp,
     struct statfs *sp);
 struct prison *prison_find(int prid);
 struct prison *prison_find_child(struct prison *, int);
 struct prison *prison_find_name(struct prison *, const char *);
-int prison_flag(struct ucred *, unsigned);
+bool prison_flag(struct ucred *, unsigned);
 void prison_free(struct prison *pr);
 void prison_free_locked(struct prison *pr);
 void prison_hold(struct prison *pr);
 void prison_hold_locked(struct prison *pr);
 void prison_proc_hold(struct prison *);
 void prison_proc_free(struct prison *);
+void prison_proc_link(struct prison *, struct proc *);
+void prison_proc_unlink(struct prison *, struct proc *);
+void prison_proc_iterate(struct prison *, void (*)(struct proc *, void *), void *);
 void prison_set_allow(struct ucred *cred, unsigned flag, int enable);
-int prison_ischild(struct prison *, struct prison *);
-bool prison_isalive(struct prison *);
+bool prison_ischild(struct prison *, struct prison *);
+bool prison_isalive(const struct prison *);
 bool prison_isvalid(struct prison *);
-int prison_equal_ip4(struct prison *, struct prison *);
+#if defined(INET) || defined(INET6)
+int prison_ip_check(const struct prison *, const pr_family_t, const void *);
+const void *prison_ip_get0(const struct prison *, const pr_family_t);
+u_int prison_ip_cnt(const struct prison *, const pr_family_t);
+#endif
+#ifdef INET
+bool prison_equal_ip4(struct prison *, struct prison *);
 int prison_get_ip4(struct ucred *cred, struct in_addr *ia);
 int prison_local_ip4(struct ucred *cred, struct in_addr *ia);
 int prison_remote_ip4(struct ucred *cred, struct in_addr *ia);
 int prison_check_ip4(const struct ucred *, const struct in_addr *);
 int prison_check_ip4_locked(const struct prison *, const struct in_addr *);
-int prison_saddrsel_ip4(struct ucred *, struct in_addr *);
-int prison_restrict_ip4(struct prison *, struct in_addr *);
+bool prison_saddrsel_ip4(struct ucred *, struct in_addr *);
 int prison_qcmp_v4(const void *, const void *);
+bool prison_valid_v4(const void *);
+#endif
 #ifdef INET6
-int prison_equal_ip6(struct prison *, struct prison *);
+bool prison_equal_ip6(struct prison *, struct prison *);
 int prison_get_ip6(struct ucred *, struct in6_addr *);
 int prison_local_ip6(struct ucred *, struct in6_addr *, int);
 int prison_remote_ip6(struct ucred *, struct in6_addr *);
 int prison_check_ip6(const struct ucred *, const struct in6_addr *);
 int prison_check_ip6_locked(const struct prison *, const struct in6_addr *);
-int prison_saddrsel_ip6(struct ucred *, struct in6_addr *);
-int prison_restrict_ip6(struct prison *, struct in6_addr *);
+bool prison_saddrsel_ip6(struct ucred *, struct in6_addr *);
 int prison_qcmp_v6(const void *, const void *);
+bool prison_valid_v6(const void *);
 #endif
 int prison_check_af(struct ucred *cred, int af);
 int prison_if(struct ucred *cred, const struct sockaddr *sa);

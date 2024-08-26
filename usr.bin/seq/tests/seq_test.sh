@@ -22,7 +22,6 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: f6f20a87216b79bf446ebfa43a7f704762237d18 $
 
 atf_test_case float_rounding
 float_rounding_head()

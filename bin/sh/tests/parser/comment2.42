@@ -1,4 +1,3 @@
-# $FreeBSD: 196b733544936e65aa2e0ba274883e1adacd8600 $
 
 ${SH} -c '#
 exit 42'

@@ -1,4 +1,3 @@
-.\" $FreeBSD: cb1334e1e654d96f2c9b81812d66087a9cdc51d5 $
 Do not build
 .Xr apm 8 ,
 .Xr apmd 8

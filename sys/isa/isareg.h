@@ -32,7 +32,6 @@
  * SUCH DAMAGE.
  *
  *	from: @(#)isa.h	5.7 (Berkeley) 5/9/91
- * $FreeBSD: 73ed5e68c3327ac5aef60117011d483b469582be $
  */
 
 #ifndef _ISA_ISA_H_

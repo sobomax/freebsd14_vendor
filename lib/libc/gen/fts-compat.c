@@ -32,9 +32,6 @@
  * From: $OpenBSD: fts.c,v 1.22 1999/10/03 19:22:22 millert Exp $
  */
 
-#include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 9f295110f1c7acef16ecaf00c3d90687ea84395e $");
-
 #include "namespace.h"
 #include <sys/param.h>
 #define	_WANT_FREEBSD11_STATFS

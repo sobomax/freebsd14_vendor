@@ -21,13 +21,9 @@
  * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
- *
- * $FreeBSD: 0a1611cd9cef92ce149ae08d2c050da187049dfb $
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 0a1611cd9cef92ce149ae08d2c050da187049dfb $");
-
 #include <sys/param.h>
 #include <sys/systm.h>
 #include <sys/bus.h>
@@ -106,6 +102,7 @@ static kobj_method_t snps_methods[] = {
 	KOBJMETHOD(uart_receive,	ns8250_bus_receive),
 	KOBJMETHOD(uart_setsig,		ns8250_bus_setsig),
 	KOBJMETHOD(uart_transmit,	ns8250_bus_transmit),
+	KOBJMETHOD(uart_txbusy,		ns8250_bus_txbusy),
 	KOBJMETHOD(uart_grab,		ns8250_bus_grab),
 	KOBJMETHOD(uart_ungrab,		ns8250_bus_ungrab),
 	KOBJMETHOD_END
@@ -216,7 +213,7 @@ snps_probe(device_t dev)
 		device_printf(dev, "could not determine frequency\n");
 
 	error = uart_bus_probe(dev, (int)shift, (int)iowidth, (int)clock, 0, 0, UART_F_BUSY_DETECT);
-	if (error != 0)
+	if (error > 0)
 		return (error);
 
 	/* XXX uart_bus_probe has changed the softc, so refresh it */
@@ -227,7 +224,7 @@ snps_probe(device_t dev)
 	sc->apb_pclk = apb_pclk;
 	sc->reset = reset;
 
-	return (0);
+	return (BUS_PROBE_VENDOR);
 }
 
 static int
@@ -287,4 +284,4 @@ static driver_t snps_uart_driver = {
 	sizeof(struct snps_softc)
 };
 
-DRIVER_MODULE(uart_snps, simplebus, snps_uart_driver, uart_devclass, 0, 0);
+DRIVER_MODULE(uart_snps, simplebus, snps_uart_driver, 0, 0);

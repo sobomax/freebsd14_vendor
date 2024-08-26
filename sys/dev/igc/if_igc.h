@@ -25,8 +25,6 @@
  * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
- *
- * $FreeBSD: 86a02266a81cb74c08ccb161b8f23c40bdf8961d $
  */
 
 #include "opt_ddb.h"
@@ -336,7 +334,7 @@ struct igc_rx_queue {
 
 /* Our adapter structure */
 struct igc_adapter {
-	struct ifnet 	*ifp;
+	if_t		ifp;
 	struct igc_hw	hw;
 
         if_softc_ctx_t shared;
@@ -374,8 +372,6 @@ struct igc_adapter {
 
         u32		txd_cmd;
 
-        u32             tx_process_limit;
-        u32             rx_process_limit;
 	u32		rx_mbuf_sz;
 
 	/* Management and WOL features */

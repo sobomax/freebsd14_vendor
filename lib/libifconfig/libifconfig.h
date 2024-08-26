@@ -22,8 +22,6 @@
  * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
  * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- *
- * $FreeBSD: c8bbb5edd3bb692a59abb69808996778791161aa $
  */
 
 #pragma once
@@ -33,6 +31,7 @@
 #include <net/if.h>
 
 #include <netinet/in.h>
+#include <netinet/ip_carp.h>
 #include <netinet6/in6_var.h>
 
 #define ND6_IFF_DEFAULTIF    0x8000
@@ -41,7 +40,8 @@ typedef enum {
 	OK = 0,
 	OTHER,
 	IOCTL,
-	SOCKET
+	SOCKET,
+	NETLINK
 } ifconfig_errtype;
 
 /*
@@ -51,7 +51,6 @@ typedef enum {
 struct ifconfig_handle;
 typedef struct ifconfig_handle ifconfig_handle_t;
 
-struct carpreq;
 struct ifaddrs;
 struct ifbropreq;
 struct ifbreq;
@@ -279,8 +278,23 @@ ifmedia_t *ifconfig_media_lookup_options(ifmedia_t media, const char **opts,
 int ifconfig_media_get_downreason(ifconfig_handle_t *h, const char *name,
     struct ifdownreason *ifdr);
 
+struct ifconfig_carp {
+	size_t		carpr_count;
+	uint32_t	carpr_vhid;
+	uint32_t	carpr_state;
+	int32_t		carpr_advbase;
+	int32_t		carpr_advskew;
+	uint8_t		carpr_key[CARP_KEY_LEN];
+	struct in_addr	carpr_addr;
+	struct in6_addr	carpr_addr6;
+};
+
+int ifconfig_carp_get_vhid(ifconfig_handle_t *h, const char *name,
+    struct ifconfig_carp *carpr, uint32_t vhid);
 int ifconfig_carp_get_info(ifconfig_handle_t *h, const char *name,
-    struct carpreq *carpr, int ncarpr);
+    struct ifconfig_carp *carpr, size_t ncarp);
+int ifconfig_carp_set_info(ifconfig_handle_t *h, const char *name,
+    const struct ifconfig_carp *carpr);
 
 /** Retrieve additional information about an inet address
  * @param h	An open ifconfig state object

@@ -8,9 +8,6 @@
 #include "milieu.h"
 #include "softfloat.h"
 
-#include <sys/cdefs.h>
-__FBSDID("$FreeBSD: b8317cbf8dd8f8dd753b4a28c5fd963a2b1b5ff2 $");
-
 flag __nesf2(float32, float32);
 
 flag

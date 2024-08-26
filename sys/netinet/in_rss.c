@@ -27,16 +27,8 @@
  * SUCH DAMAGE.
  */
 
-#include <sys/cdefs.h>
-
-__FBSDID("$FreeBSD: e73d2d236f92996d9040d6a08fab6774f4667a33 $");
 
 #include "opt_inet6.h"
-#include "opt_pcbgroup.h"
-
-#ifndef PCBGROUP
-#error "options RSS depends on options PCBGROUP"
-#endif
 
 #include <sys/param.h>
 #include <sys/mbuf.h>

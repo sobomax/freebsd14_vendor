@@ -1,4 +1,3 @@
-# $FreeBSD: ddbd10433a36aacd759aad6b4d1680f8111fb641 $
 
 f() {
 	: ${LINENO+${x?}}

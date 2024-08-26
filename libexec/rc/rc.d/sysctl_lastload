@@ -1,6 +1,5 @@
 #!/bin/sh
 #
-# $FreeBSD: 22aafd96d0516a8733864fa8ddbace502db67e83 $
 #
 
 # PROVIDE: sysctl_lastload

@@ -11,8 +11,6 @@
  * implied warranties, including, without limitation, the implied
  * warranties of merchantability and fitness for a particular
  * purpose.
- *
- * $FreeBSD: 1a0f5f40ff0727547e93921917205bef426582cd $
  */
 
 #include <bootargs.h>

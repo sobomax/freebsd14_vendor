@@ -38,8 +38,6 @@
 /* The actual program logic is in the file procs.c			*/
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: a1cd8582e7a6ef6dc834a2f10fbe3c289b1b6ed3 $");
-
 #include <err.h>
 #include <errno.h>
 #include <stdio.h>

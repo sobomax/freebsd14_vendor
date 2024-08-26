@@ -31,9 +31,6 @@
 #if defined(LIBC_SCCS) && !defined(lint)
 static char sccsid[] = "@(#)netname.c 1.8 91/03/11 Copyr 1986 Sun Micro";
 #endif
-#include <sys/cdefs.h>
-__FBSDID("$FreeBSD: a9ccf1d2ef99908d1474d6d09eabd95ebe913a3e $");
-
 /*
  * netname utility routines
  * convert from unix names to network names and vice-versa

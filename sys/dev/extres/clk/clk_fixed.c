@@ -25,8 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: fd20bb61e9df0485b90199ddd6e6b75543d4d906 $");
-
+#include "opt_platform.h"
 #include <sys/param.h>
 #include <sys/conf.h>
 #include <sys/bus.h>
@@ -40,8 +39,11 @@ __FBSDID("$FreeBSD: fd20bb61e9df0485b90199ddd6e6b75543d4d906 $");
 
 #include <machine/bus.h>
 
+#ifdef FDT
 #include <dev/ofw/ofw_bus.h>
 #include <dev/ofw/ofw_bus_subr.h>
+#endif
+
 #include <dev/extres/clk/clk_fixed.h>
 
 #define	CLK_TYPE_FIXED		1
@@ -155,14 +157,24 @@ clk_fixed_probe(device_t dev)
 	clk_type = ofw_bus_search_compatible(dev, compat_data)->ocd_data;
 	switch (clk_type) {
 	case CLK_TYPE_FIXED:
+		if (OF_hasprop(ofw_bus_get_node(dev), "clock-frequency") == 0) {
+			device_printf(dev,
+			    "clock-fixed has no clock-frequency\n");
+			return (ENXIO);
+		}
 		device_set_desc(dev, "Fixed clock");
-		return (BUS_PROBE_DEFAULT);
+		break;
 	case CLK_TYPE_FIXED_FACTOR:
 		device_set_desc(dev, "Fixed factor clock");
-		return (BUS_PROBE_DEFAULT);
+		break;
 	default:
 		return (ENXIO);
 	}
+
+	if (!bootverbose)
+		device_quiet(dev);
+
+	return (BUS_PROBE_DEFAULT);
 }
 
 static int
@@ -251,9 +263,10 @@ clk_fixed_attach(device_t dev)
 		rv = ENXIO;
 		goto fail;
 	}
-#ifdef CLK_DEBUG
-	clkdom_dump(sc->clkdom);
-#endif
+
+	if (bootverbose)
+		clkdom_dump(sc->clkdom);
+
 	OF_prop_free(__DECONST(char *, def.clkdef.name));
 	OF_prop_free(def.clkdef.parent_names);
 	return (bus_generic_attach(dev));
@@ -274,9 +287,8 @@ static device_method_t clk_fixed_methods[] = {
 
 DEFINE_CLASS_0(clk_fixed, clk_fixed_driver, clk_fixed_methods,
     sizeof(struct clk_fixed_softc));
-static devclass_t clk_fixed_devclass;
-EARLY_DRIVER_MODULE(clk_fixed, simplebus, clk_fixed_driver,
-    clk_fixed_devclass, 0, 0, BUS_PASS_BUS + BUS_PASS_ORDER_MIDDLE);
+EARLY_DRIVER_MODULE(clk_fixed, simplebus, clk_fixed_driver, 0, 0,
+    BUS_PASS_BUS + BUS_PASS_ORDER_MIDDLE);
 MODULE_VERSION(clk_fixed, 1);
 
 #endif

@@ -1,4 +1,3 @@
-# $FreeBSD: 4f148f9d4c46df3d138ccedefb5d68966364e1cb $
 
 #
 # Library of internal routines for the print spooler suite.

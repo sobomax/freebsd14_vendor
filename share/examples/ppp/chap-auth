@@ -24,7 +24,6 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: 1e56b07575c0704a37ffd89cab19f9d651faec98 $
 
 #
 # Display a window to request a users CHAP secret, accepting the relevant

@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 1998 Doug Rabson
  * All rights reserved.
@@ -24,8 +24,6 @@
  * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
- *
- * $FreeBSD: 81ba280da4572d350cb44d5426ac37b39130fac0 $
  */
 
 #ifndef _ISA_ISAVAR_H_
@@ -79,17 +77,17 @@ typedef void isa_config_cb(void *arg, struct isa_config *config, int enable);
  * ISA_ADD_CONFIG().
  */
 struct isa_range {
-	u_int32_t		ir_start;
-	u_int32_t		ir_end;
-	u_int32_t		ir_size;
-	u_int32_t		ir_align;
+	uint32_t		ir_start;
+	uint32_t		ir_end;
+	uint32_t		ir_size;
+	uint32_t		ir_align;
 };
 
 struct isa_config {
 	struct isa_range	ic_mem[ISA_NMEM];
 	struct isa_range	ic_port[ISA_NPORT];
-	u_int32_t		ic_irqmask[ISA_NIRQ];
-	u_int32_t		ic_drqmask[ISA_NDRQ];
+	uint32_t		ic_irqmask[ISA_NIRQ];
+	uint32_t		ic_drqmask[ISA_NDRQ];
 	int			ic_nmem;
 	int			ic_nport;
 	int			ic_nirq;
@@ -100,7 +98,7 @@ struct isa_config {
  * Used to build lists of IDs and description strings for PnP drivers.
  */
 struct isa_pnp_id {
-	u_int32_t		ip_id;
+	uint32_t		ip_id;
 	const char		*ip_desc;
 };
 
@@ -164,9 +162,6 @@ ISA_ACCESSOR(configattr, CONFIGATTR, int)
 ISA_ACCESSOR(pnp_csn, PNP_CSN, int)
 ISA_ACCESSOR(pnp_ldn, PNP_LDN, int)
 ISA_ACCESSOR(pnpbios_handle, PNPBIOS_HANDLE, int)
-
-/* Device class for ISA bridges. */
-extern devclass_t isab_devclass;
 
 extern void	isa_probe_children(device_t dev);
 

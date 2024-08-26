@@ -1,3 +1,2 @@
-.\" $FreeBSD: 9b71cd0de3f260d741d2c84fa3252996f512c65d $
 Do not build
 .Xr rescue 8 .

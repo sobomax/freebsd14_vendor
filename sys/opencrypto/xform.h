@@ -1,4 +1,3 @@
-/*	$FreeBSD: cad7e5272d4712e10df9af8db754879b70baa374 $	*/
 /*	$OpenBSD: xform.h,v 1.8 2001/08/28 12:20:43 ben Exp $	*/
 
 /*-
@@ -42,8 +41,4 @@
 #include <opencrypto/xform_comp.h>
 #include <opencrypto/xform_enc.h>
 
-#ifdef _KERNEL
-#include <sys/malloc.h>
-MALLOC_DECLARE(M_XDATA);
-#endif
 #endif /* _CRYPTO_XFORM_H_ */

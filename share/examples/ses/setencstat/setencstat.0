@@ -29,8 +29,6 @@
 .\" Feral Software
 .\" mjacob@feral.com
 .\"
-.\" $FreeBSD: 5c51757432a3f16dfbcedc8069897229aa581315 $
-.\"
 .Dd February 21, 2000
 .Dt SETENCSTAT 8
 .Os

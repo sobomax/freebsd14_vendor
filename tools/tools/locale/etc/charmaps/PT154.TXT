@@ -1,5 +1,4 @@
 #
-# $FreeBSD: df6acbe624d88e2e9028fdb2a74ac37cd4b561b5 $
 #
 # Charset name:
 # PTCP154

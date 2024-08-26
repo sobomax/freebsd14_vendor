@@ -1,4 +1,3 @@
-/*	$FreeBSD: bc085c2c086ea7c89ca68d6a3f121f08b8d0c669 $ */
 /*	$NetBSD: db_interface.c,v 1.20 2002/05/13 20:30:09 matt Exp $ */
 /*	$OpenBSD: db_interface.c,v 1.2 1996/12/28 06:21:50 rahnds Exp $	*/
 

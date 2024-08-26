@@ -3,7 +3,7 @@
  */
 
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2001-2002 Maksim Yevmenkin <m_evmenkin@yahoo.com>
  * All rights reserved.
@@ -30,7 +30,6 @@
  * SUCH DAMAGE.
  *
  * $Id: ng_btsocket_l2cap.c,v 1.16 2003/09/14 23:29:06 max Exp $
- * $FreeBSD: cd620fe3aef95e182d95480ccd49f44051b4a7bd $
  */
 
 #include <sys/param.h>
@@ -1887,14 +1886,10 @@ ng_btsocket_l2cap_rtclean(void *context, int pending)
  * Initialize everything
  */
 
-void
-ng_btsocket_l2cap_init(void)
+static void
+ng_btsocket_l2cap_init(void *arg __unused)
 {
 	int	error = 0;
-
-	/* Skip initialization of globals for non-default instances. */
-	if (!IS_DEFAULT_VNET(curvnet))
-		return;
 
 	ng_btsocket_l2cap_node = NULL;
 	ng_btsocket_l2cap_debug_level = NG_BTSOCKET_WARN_LEVEL;
@@ -1950,6 +1945,8 @@ ng_btsocket_l2cap_init(void)
 	TASK_INIT(&ng_btsocket_l2cap_rt_task, 0,
 		ng_btsocket_l2cap_rtclean, NULL);
 } /* ng_btsocket_l2cap_init */
+SYSINIT(ng_btsocket_l2cap_init, SI_SUB_PROTO_DOMAIN, SI_ORDER_THIRD,
+    ng_btsocket_l2cap_init, NULL);
 
 /*
  * Abort connection on socket
@@ -2282,7 +2279,7 @@ ng_btsocket_l2cap_connect(struct socket *so, struct sockaddr *nam,
  */
 
 int
-ng_btsocket_l2cap_control(struct socket *so, u_long cmd, caddr_t data,
+ng_btsocket_l2cap_control(struct socket *so, u_long cmd, void *data,
 		struct ifnet *ifp, struct thread *td)
 {
 	return (EINVAL);
@@ -2506,14 +2503,17 @@ ng_btsocket_l2cap_listen(struct socket *so, int backlog, struct thread *td)
 	if (error != 0)
 		goto out;
 	if (pcb == NULL) {
+		solisten_proto_abort(so);
 		error = EINVAL;
 		goto out;
 	}
 	if (ng_btsocket_l2cap_node == NULL) {
+		solisten_proto_abort(so);
 		error = EINVAL;
 		goto out;
 	}
 	if (pcb->psm == 0) {
+		solisten_proto_abort(so);
 		error = EADDRNOTAVAIL;
 		goto out;
 	}

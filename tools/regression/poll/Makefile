@@ -1,4 +1,3 @@
-# $FreeBSD: 45f743f17ae69ddd4e026b222273fc20400d21cd $
 # This makefile has been uglified for portability.
 # Nothing yet works with gmake for the path to the sources.
 .PATH: ..

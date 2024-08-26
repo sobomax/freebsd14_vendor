@@ -1,3 +1,2 @@
-.\" $FreeBSD: aa0019edaee375b73ae4c2e3df5a13202d9c6458 $
 Build the base system with the retpoline speculative execution
 vulnerability mitigation for CVE-2017-5715.

@@ -26,7 +26,6 @@
 # ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF
 # THE POSSIBILITY OF SUCH DAMAGES.
 #
-# $FreeBSD: 2b36ecf948c0aa1c1ce5f76be3300fab3cca8e13 $
 #
 
 ATH_RATE?=	sample		# tx rate control algorithm
@@ -55,3 +54,5 @@ CFLAGS+=  -I. -I${SRCTOP}/sys/dev/ath -I${SRCTOP}/sys/dev/ath/ath_hal
 CFLAGS+=  -I. -I${SRCTOP}/sys/contrib/dev/ath/ath_hal/
 
 .include <bsd.kmod.mk>
+
+CWARNFLAGS+=	${NO_WUNUSED_BUT_SET_VARIABLE}

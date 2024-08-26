@@ -2,7 +2,7 @@
  * @Id: skel2c,v 1.4 2016/06/07 00:26:09 tom Exp @
  */
 
-/* @Id: yaccpar.skel,v 1.10 2018/05/06 21:28:14 Guy.Harris Exp @ */
+/* @Id: yaccpar.skel,v 1.11 2021/06/19 20:45:25 tom Exp @ */
 
 #include "defs.h"
 
@@ -160,14 +160,14 @@ const char *const body_1[] =
     "",
     "    i = (int) (data->s_mark - data->s_base);",
     "    newss = (YYINT *)realloc(data->s_base, newsize * sizeof(*newss));",
-    "    if (newss == 0)",
+    "    if (newss == NULL)",
     "        return YYENOMEM;",
     "",
     "    data->s_base = newss;",
     "    data->s_mark = newss + i;",
     "",
     "    newvs = (YYSTYPE *)realloc(data->l_base, newsize * sizeof(*newvs));",
-    "    if (newvs == 0)",
+    "    if (newvs == NULL)",
     "        return YYENOMEM;",
     "",
     "    data->l_base = newvs;",
@@ -206,7 +206,7 @@ const char *const body_2[] =
     "#if YYDEBUG",
     "    const char *yys;",
     "",
-    "    if ((yys = getenv(\"YYDEBUG\")) != 0)",
+    "    if ((yys = getenv(\"YYDEBUG\")) != NULL)",
     "    {",
     "        yyn = *yys;",
     "        if (yyn >= '0' && yyn <= '9')",
@@ -227,8 +227,8 @@ const char *const init_vars[] =
 
 const char *const body_3[] =
 {
-    "    yym = 0;",
-    "    yyn = 0;",
+    "    /* yym is set below */",
+    "    /* yyn is set below */",
     "    yynerrs = 0;",
     "    yyerrflag = 0;",
     "    yychar = YYEMPTY;",

@@ -5,7 +5,7 @@
  *	The Regents of the University of California.  All rights reserved.
  *
  * Copyright (c) 2011 The FreeBSD Foundation
- * All rights reserved.
+ *
  * Portions of this software were developed by David Chisnall
  * under sponsorship from the FreeBSD Foundation.
  *
@@ -33,9 +33,6 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  */
-
-#include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 98bd5f85a4d12dc3eda2c062d610820e7e25c639 $");
 
 #include <ctype.h>
 #include <errno.h>
@@ -65,7 +62,7 @@ wcstol_l(const wchar_t * __restrict nptr, wchar_t ** __restrict endptr, int
 	do {
 		c = *s++;
 	} while (iswspace_l(c, locale));
-	if (c == '-') {
+	if (c == L'-') {
 		neg = 1;
 		c = *s++;
 	} else {
@@ -74,10 +71,20 @@ wcstol_l(const wchar_t * __restrict nptr, wchar_t ** __restrict endptr, int
 			c = *s++;
 	}
 	if ((base == 0 || base == 16) &&
-	    c == L'0' && (*s == L'x' || *s == L'X')) {
+	    c == L'0' && (*s == L'x' || *s == L'X') &&
+	    ((s[1] >= L'0' && s[1] <= L'9') ||
+	    (s[1] >= L'A' && s[1] <= L'F') ||
+	    (s[1] >= L'a' && s[1] <= L'f'))) {
 		c = s[1];
 		s += 2;
 		base = 16;
+	}
+	if ((base == 0 || base == 2) &&
+	    c == L'0' && (*s == L'b' || *s == L'B') &&
+	    (s[1] >= L'0' && s[1] <= L'1')) {
+		c = s[1];
+		s += 2;
+		base = 2;
 	}
 	if (base == 0)
 		base = c == L'0' ? 8 : 10;

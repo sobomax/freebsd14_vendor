@@ -31,7 +31,6 @@
   POSSIBILITY OF SUCH DAMAGE.
 
 ******************************************************************************/
-/*$FreeBSD: 970b9ae0e01a05f7d9b8b37cadab5295ea785e95 $*/
 
 #include "e1000_mbx.h"
 

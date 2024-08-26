@@ -1,6 +1,4 @@
 
-# $FreeBSD: b2ebb2430936c0850ba5e6fc8eb6b746b44dd3f6 $
-
 .PATH:	${SRCTOP}/sys/dev/ppbus
 KMOD=	ppbus
 SRCS=	bus_if.h device_if.h ppbus_if.h ppbus_if.c \

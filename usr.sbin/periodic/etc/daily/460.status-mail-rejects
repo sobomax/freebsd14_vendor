@@ -1,6 +1,5 @@
 #!/bin/sh
 #
-# $FreeBSD: ce633640b6a4146077b7f151535a01a84beb62d1 $
 #
 
 # If there is a global system configuration file, suck it in.
@@ -52,6 +51,12 @@ case "$daily_status_mail_rejects_enable" in
 		    elif [ -f /var/log/maillog.$n.bz2 ]
 		    then
 			bzcat -fc /var/log/maillog.$n.bz2
+		    elif [ -f /var/log/maillog.$n.xz ]
+		    then
+			xzcat -f /var/log/maillog.$n.xz
+		    elif [ -f /var/log/maillog.$n.zst ]
+		    then
+			zstdcat -fc /var/log/maillog.$n.zst
 		    fi
 		    n=$(($n - 1))
 		done

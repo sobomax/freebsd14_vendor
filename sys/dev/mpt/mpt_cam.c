@@ -2,7 +2,7 @@
  * FreeBSD/CAM specific routines for LSI '909 FC  adapters.
  * FreeBSD Version.
  *
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD AND BSD-3-Clause
+ * SPDX-License-Identifier: BSD-2-Clause AND BSD-3-Clause
  *
  * Copyright (c)  2000, 2001 by Greg Ansley
  *
@@ -96,8 +96,6 @@
  * OWNER OR CONTRIBUTOR IS ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 64776d673674f34ab096bff77cf3e0f637e9f2a0 $");
-
 #include <dev/mpt/mpt.h>
 #include <dev/mpt/mpt_cam.h>
 #include <dev/mpt/mpt_raid.h>
@@ -2448,6 +2446,7 @@ mpt_cam_event(struct mpt_softc *mpt, request_t *req,
 				    "XPT_REL_SIMQ");
 				break;
 			}
+			memset(&crs, 0, sizeof(crs));
 			xpt_setup_ccb(&crs.ccb_h, tmppath, 5);
 			crs.ccb_h.func_code = XPT_REL_SIMQ;
 			crs.ccb_h.flags = CAM_DEV_QFREEZE;

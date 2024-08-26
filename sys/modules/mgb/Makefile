@@ -1,4 +1,3 @@
-# $FreeBSD: 74b5c058a76208a707c7c7a7cfd1dff8907c769e $
 
 .PATH:	${SRCTOP}/sys/dev/mgb
 

@@ -4,8 +4,6 @@
  */
 
 #include <machine/asm.h>
-
-__FBSDID("$FreeBSD: 01511af1c7509df74d90d6caaa2d7534af4e98fe $");
 /* RCSID("$NetBSD: e_logf.S,v 1.2 1996/07/06 00:15:45 jtc Exp $") */
 
 ENTRY(logf)

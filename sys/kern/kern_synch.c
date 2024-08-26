@@ -37,8 +37,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 5abc38d64296045984e5c1fa15c3aa3fd34c3cea $");
-
 #include "opt_ktrace.h"
 #include "opt_sched.h"
 
@@ -49,6 +47,7 @@ __FBSDID("$FreeBSD: 5abc38d64296045984e5c1fa15c3aa3fd34c3cea $");
 #include <sys/kdb.h>
 #include <sys/kernel.h>
 #include <sys/ktr.h>
+#include <sys/ktrace.h>
 #include <sys/lock.h>
 #include <sys/mutex.h>
 #include <sys/proc.h>
@@ -64,7 +63,6 @@ __FBSDID("$FreeBSD: 5abc38d64296045984e5c1fa15c3aa3fd34c3cea $");
 #include <sys/vmmeter.h>
 #ifdef KTRACE
 #include <sys/uio.h>
-#include <sys/ktrace.h>
 #endif
 #ifdef EPOCH_TRACE
 #include <sys/epoch.h>
@@ -135,7 +133,7 @@ int
 _sleep(const void *ident, struct lock_object *lock, int priority,
     const char *wmesg, sbintime_t sbt, sbintime_t pr, int flags)
 {
-	struct thread *td;
+	struct thread *td __ktrace_used;
 	struct lock_class *class;
 	uintptr_t lock_state;
 	int catch, pri, rval, sleepq_flags;
@@ -149,7 +147,8 @@ _sleep(const void *ident, struct lock_object *lock, int priority,
 #endif
 	WITNESS_WARN(WARN_GIANTOK | WARN_SLEEPOK, lock,
 	    "Sleeping on \"%s\"", wmesg);
-	KASSERT(sbt != 0 || mtx_owned(&Giant) || lock != NULL,
+	KASSERT(sbt != 0 || mtx_owned(&Giant) || lock != NULL ||
+	    (priority & PNOLOCK) != 0,
 	    ("sleeping without a lock"));
 	KASSERT(ident != NULL, ("_sleep: NULL ident"));
 	KASSERT(TD_IS_RUNNING(td), ("_sleep: curthread not running"));
@@ -241,7 +240,7 @@ int
 msleep_spin_sbt(const void *ident, struct mtx *mtx, const char *wmesg,
     sbintime_t sbt, sbintime_t pr, int flags)
 {
-	struct thread *td;
+	struct thread *td __ktrace_used;
 	int rval;
 	WITNESS_SAVE_DECL(mtx);
 
@@ -482,7 +481,7 @@ kdb_switch(void)
 }
 
 /*
- * The machine independent parts of context switching.
+ * mi_switch(9): The machine-independent parts of context switching.
  *
  * The thread lock is required on entry and is no longer held on return.
  */
@@ -499,10 +498,15 @@ mi_switch(int flags)
 	if (!TD_ON_LOCK(td) && !TD_IS_RUNNING(td))
 		mtx_assert(&Giant, MA_NOTOWNED);
 #endif
+	/* thread_lock() performs spinlock_enter(). */
 	KASSERT(td->td_critnest == 1 || KERNEL_PANICKED(),
-		("mi_switch: switch in a critical section"));
+	    ("mi_switch: switch in a critical section"));
 	KASSERT((flags & (SW_INVOL | SW_VOL)) != 0,
 	    ("mi_switch: switch must be voluntary or involuntary"));
+	KASSERT((flags & SW_TYPE_MASK) != 0,
+	    ("mi_switch: a switch reason (type) must be specified"));
+	KASSERT((flags & SW_TYPE_MASK) < SWT_COUNT,
+	    ("mi_switch: invalid switch reason %d", (flags & SW_TYPE_MASK)));
 
 	/*
 	 * Don't perform context switches from the debugger.
@@ -572,7 +576,7 @@ setrunnable(struct thread *td, int srqflags)
 	    ("setrunnable: pid %d is a zombie", td->td_proc->p_pid));
 
 	swapin = 0;
-	switch (td->td_state) {
+	switch (TD_GET_STATE(td)) {
 	case TDS_RUNNING:
 	case TDS_RUNQ:
 		break;
@@ -595,7 +599,7 @@ setrunnable(struct thread *td, int srqflags)
 		}
 		break;
 	default:
-		panic("setrunnable: state 0x%x", td->td_state);
+		panic("setrunnable: state 0x%x", TD_GET_STATE(td));
 	}
 	if ((srqflags & (SRQ_HOLD | SRQ_HOLDTD)) == 0)
 		thread_unlock(td);
@@ -631,17 +635,33 @@ loadav(void *arg)
 	    loadav, NULL, C_DIRECT_EXEC | C_PREL(32));
 }
 
-/* ARGSUSED */
 static void
-synch_setup(void *dummy)
+ast_scheduler(struct thread *td, int tda __unused)
+{
+#ifdef KTRACE
+	if (KTRPOINT(td, KTR_CSW))
+		ktrcsw(1, 1, __func__);
+#endif
+	thread_lock(td);
+	sched_prio(td, td->td_user_pri);
+	mi_switch(SW_INVOL | SWT_NEEDRESCHED);
+#ifdef KTRACE
+	if (KTRPOINT(td, KTR_CSW))
+		ktrcsw(0, 1, __func__);
+#endif
+}
+
+static void
+synch_setup(void *dummy __unused)
 {
 	callout_init(&loadav_callout, 1);
+	ast_register(TDA_SCHED, ASTR_ASTF_REQUIRED, 0, ast_scheduler);
 
 	/* Kick off timeout driven events by calling first time. */
 	loadav(NULL);
 }
 
-int
+bool
 should_yield(void)
 {
 

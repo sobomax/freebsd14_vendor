@@ -1,4 +1,3 @@
-.\" $FreeBSD: 1d8db03c432a087b541c88826f3c6af971b72b84 $
 .\"
 .\" Copyright (c) 1986, 1993
 .\"	The Regents of the University of California.  All rights reserved.

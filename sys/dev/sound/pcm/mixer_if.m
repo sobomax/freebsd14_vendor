@@ -25,7 +25,6 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: 9bd974ce7d9e13f930308f4cdcd54044e0d762cb $
 #
 
 #include <dev/sound/pcm/sound.h>

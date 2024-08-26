@@ -1,4 +1,3 @@
-# $FreeBSD: 0904766ccdd14ee588d993227daeb8ce18937d5e $
 
 key=`printf '\r\t\001\200\300'`
 r=`{ set -x; : "$key"; } 2>&1 >/dev/null`

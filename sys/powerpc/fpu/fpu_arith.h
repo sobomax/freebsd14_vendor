@@ -1,5 +1,4 @@
 /*	$NetBSD: fpu_arith.h,v 1.4 2005/12/24 20:07:28 perry Exp $ */
-/* $FreeBSD: c39862217fac1f071d709f63e301afa2ca660d34 $ */
 
 /*-
  * SPDX-License-Identifier: BSD-3-Clause

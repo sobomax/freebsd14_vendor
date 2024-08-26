@@ -38,8 +38,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: e4c83c1ddbf43094280513b9cb68c42e7d42d32c $");
-
 #include <linux/slab.h>
 #include <linux/string.h>
 
@@ -141,13 +139,13 @@ void agent_send_response(const struct ib_mad_hdr *mad_hdr, const struct ib_grh *
 err2:
 	ib_free_send_mad(send_buf);
 err1:
-	ib_destroy_ah(ah);
+	ib_destroy_ah(ah, RDMA_DESTROY_AH_SLEEPABLE);
 }
 
 static void agent_send_handler(struct ib_mad_agent *mad_agent,
 			       struct ib_mad_send_wc *mad_send_wc)
 {
-	ib_destroy_ah(mad_send_wc->send_buf->ah);
+	ib_destroy_ah(mad_send_wc->send_buf->ah, RDMA_DESTROY_AH_SLEEPABLE);
 	ib_free_send_mad(mad_send_wc->send_buf);
 }
 

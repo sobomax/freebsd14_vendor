@@ -1,4 +1,3 @@
-# $FreeBSD: 4294c593b755f2bf01eb2b30e4358a9e0cc43d9e $
 
 .PATH: ${SRCTOP}/sys/dev/mmc
 

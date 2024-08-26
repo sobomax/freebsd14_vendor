@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (C) 2018 The FreeBSD Foundation. All rights reserved.
  * Copyright (C) 2018, 2019 Andrew Turner
@@ -31,17 +31,13 @@
  * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
- *
- * $FreeBSD: 9a719bcaecad10ae5b44d8c5caa4d3731582715e $
  */
 
-#ifdef KCSAN
+#ifdef SAN_NEEDS_INTERCEPTORS
 #define	SAN_RUNTIME
 #endif
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 9a719bcaecad10ae5b44d8c5caa4d3731582715e $");
-
 #include <sys/param.h>
 #include <sys/coverage.h>
 

@@ -1,7 +1,5 @@
 /*-
  * Test 0084:	Check very long BPF program.
- *
- * $FreeBSD: f6a7777120990e2fd9eedf16f04b932fc6955671 $
  */
 
 /* BPF program */

@@ -13,8 +13,6 @@
 # purpose.
 #
 
-# $FreeBSD: 3cfc20dd58e19d1cdbfeaf1a3896243e4250487d $
-
 # A 512 byte MBR boot manager that simply boots the active partition.
 
 		.set LOAD,0x7c00		# Load address

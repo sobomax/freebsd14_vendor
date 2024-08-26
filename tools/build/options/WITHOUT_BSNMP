@@ -1,4 +1,3 @@
-.\" $FreeBSD: 2836cc58bff1b750187ccbabc7ee223fc483ed0a $
 Do not build or install
 .Xr bsnmpd 1
 and related libraries and data files.

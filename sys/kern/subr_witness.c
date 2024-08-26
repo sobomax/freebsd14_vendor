@@ -87,8 +87,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: c849a191bf169e2f9d4ce1e059dadae0be92f2a8 $");
-
 #include "opt_ddb.h"
 #include "opt_hwpmc_hooks.h"
 #include "opt_stack.h"
@@ -541,7 +539,6 @@ static struct witness_order_list_entry order_lists[] = {
 	{ "udpinp", &lock_class_rw },
 	{ "in_multi_list_mtx", &lock_class_mtx_sleep },
 	{ "igmp_mtx", &lock_class_mtx_sleep },
-	{ "ifnet_rw", &lock_class_rw },
 	{ "if_addr_lock", &lock_class_mtx_sleep },
 	{ NULL, NULL },
 	/*
@@ -552,7 +549,6 @@ static struct witness_order_list_entry order_lists[] = {
 	{ "udpinp", &lock_class_rw },
 	{ "in6_multi_list_mtx", &lock_class_mtx_sleep },
 	{ "mld_mtx", &lock_class_mtx_sleep },
-	{ "ifnet_rw", &lock_class_rw },
 	{ "if_addr_lock", &lock_class_mtx_sleep },
 	{ NULL, NULL },
 	/*
@@ -566,15 +562,15 @@ static struct witness_order_list_entry order_lists[] = {
 	/*
 	 * UDP/IP
 	 */
-	{ "udp", &lock_class_mtx_sleep },
 	{ "udpinp", &lock_class_rw },
+	{ "udp", &lock_class_mtx_sleep },
 	{ "so_snd", &lock_class_mtx_sleep },
 	{ NULL, NULL },
 	/*
 	 * TCP/IP
 	 */
-	{ "tcp", &lock_class_mtx_sleep },
 	{ "tcpinp", &lock_class_rw },
+	{ "tcp", &lock_class_mtx_sleep },
 	{ "so_snd", &lock_class_mtx_sleep },
 	{ NULL, NULL },
 	/*
@@ -742,6 +738,12 @@ static struct witness_blessed blessed_list[] = {
 	 * parent directory vnode is locked.
 	 */
 	{ "ufs",	"bufwait" },
+
+	/*
+	 * The tarfs decompression stream vnode may be locked while a
+	 * buffer belonging to a tarfs data vnode is locked.
+	 */
+	{ "tarfs",	"bufwait" },
 };
 
 /*
@@ -2360,6 +2362,10 @@ witness_save(struct lock_object *lock, const char **filep, int *linep)
 	struct lock_instance *instance;
 	struct lock_class *class;
 
+	/* Initialize for KMSAN's benefit. */
+	*filep = NULL;
+	*linep = 0;
+
 	/*
 	 * This function is used independently in locking code to deal with
 	 * Giant, SCHEDULER_STOPPED() check can be removed here after Giant
@@ -2425,6 +2431,32 @@ witness_restore(struct lock_object *lock, const char *file, int line)
 	instance->li_line = line;
 }
 
+static bool
+witness_find_instance(const struct lock_object *lock,
+    struct lock_instance **instance)
+{
+#ifdef INVARIANT_SUPPORT
+	struct lock_class *class;
+
+	if (lock->lo_witness == NULL || witness_watch < 1 || KERNEL_PANICKED())
+		return (false);
+	class = LOCK_CLASS(lock);
+	if ((class->lc_flags & LC_SLEEPLOCK) != 0) {
+		*instance = find_instance(curthread->td_sleeplocks, lock);
+		return (true);
+	} else if ((class->lc_flags & LC_SPINLOCK) != 0) {
+		*instance = find_instance(PCPU_GET(spinlocks), lock);
+		return (true);
+	} else {
+		kassert_panic("Lock (%s) %s is not sleep or spin!",
+		    class->lc_name, lock->lo_name);
+		return (false);
+	}
+#else
+	return (false);
+#endif
+}
+
 void
 witness_assert(const struct lock_object *lock, int flags, const char *file,
     int line)
@@ -2433,18 +2465,9 @@ witness_assert(const struct lock_object *lock, int flags, const char *file,
 	struct lock_instance *instance;
 	struct lock_class *class;
 
-	if (lock->lo_witness == NULL || witness_watch < 1 || KERNEL_PANICKED())
+	if (!witness_find_instance(lock, &instance))
 		return;
 	class = LOCK_CLASS(lock);
-	if ((class->lc_flags & LC_SLEEPLOCK) != 0)
-		instance = find_instance(curthread->td_sleeplocks, lock);
-	else if ((class->lc_flags & LC_SPINLOCK) != 0)
-		instance = find_instance(PCPU_GET(spinlocks), lock);
-	else {
-		kassert_panic("Lock (%s) %s is not sleep or spin!",
-		    class->lc_name, lock->lo_name);
-		return;
-	}
 	switch (flags) {
 	case LA_UNLOCKED:
 		if (instance != NULL)
@@ -2495,6 +2518,27 @@ witness_assert(const struct lock_object *lock, int flags, const char *file,
 		    fixup_filename(file), line);
 	}
 #endif	/* INVARIANT_SUPPORT */
+}
+
+/*
+ * Checks the ownership of the lock by curthread, consulting the witness list.
+ * Returns:
+ *   0  if witness is disabled or did not work
+ *   -1 if not owned
+ *   1  if owned
+ */
+int
+witness_is_owned(const struct lock_object *lock)
+{
+#ifdef INVARIANT_SUPPORT
+	struct lock_instance *instance;
+
+	if (!witness_find_instance(lock, &instance))
+		return (0);
+	return (instance == NULL ? -1 : 1);
+#else
+	return (0);
+#endif
 }
 
 static void
@@ -2606,9 +2650,9 @@ DB_SHOW_ALL_COMMAND(locks, db_witness_list_all)
 		}
 	}
 }
-DB_SHOW_ALIAS(alllocks, db_witness_list_all)
+DB_SHOW_ALIAS_FLAGS(alllocks, db_witness_list_all, DB_CMD_MEMSAFE);
 
-DB_SHOW_COMMAND(witness, db_witness_display)
+DB_SHOW_COMMAND_FLAGS(witness, db_witness_display, DB_CMD_MEMSAFE)
 {
 
 	witness_ddb_display(db_printf);
@@ -2784,7 +2828,7 @@ sbuf_db_printf_drain(void *arg __unused, const char *data, int len)
 	return (db_printf("%.*s", len, data));
 }
 
-DB_SHOW_COMMAND(badstacks, db_witness_badstacks)
+DB_SHOW_COMMAND_FLAGS(badstacks, db_witness_badstacks, DB_CMD_MEMSAFE)
 {
 	struct sbuf sb;
 	char buffer[128];
@@ -3083,7 +3127,6 @@ witness_lock_order_add(struct witness *parent, struct witness *child)
 	data->wlod_key = key;
 	w_lohash.wloh_array[hash] = data;
 	w_lohash.wloh_count++;
-	stack_zero(&data->wlod_stack);
 	stack_save(&data->wlod_stack);
 	return (1);
 }
@@ -3120,7 +3163,6 @@ witness_debugger(int cond, const char *msg)
 		sbuf_new(&sb, buf, sizeof(buf), SBUF_FIXEDLEN);
 		sbuf_set_drain(&sb, witness_output_drain, NULL);
 
-		stack_zero(&st);
 		stack_save(&st);
 		witness_output("stack backtrace:\n");
 		stack_sbuf_print_ddb(&sb, &st);

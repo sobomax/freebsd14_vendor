@@ -11,9 +11,6 @@
  * ====================================================
  */
 
-#include <sys/cdefs.h>
-__FBSDID("$FreeBSD: c4702e65b282bbada036c6d1cc82a49bdebe6eeb $");
-
 /*
  * __kernel_cos( x,  y )
  * kernel cos function on [-pi/4, pi/4], pi/4 ~ 0.785398164

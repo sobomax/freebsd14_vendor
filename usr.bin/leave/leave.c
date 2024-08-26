@@ -41,8 +41,6 @@ static char sccsid[] = "@(#)leave.c	8.1 (Berkeley) 6/6/93";
 #endif
 #endif /* not lint */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 1e3d4ed78ae111373b7da5e4b47118a2313d9fb2 $");
-
 #include <err.h>
 #include <ctype.h>
 #include <locale.h>
@@ -52,7 +50,7 @@ __FBSDID("$FreeBSD: 1e3d4ed78ae111373b7da5e4b47118a2313d9fb2 $");
 #include <unistd.h>
 
 static void doalarm(u_int);
-static void usage(void);
+static void usage(void) __dead2;
 
 /*
  * leave [[+]hhmm]

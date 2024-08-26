@@ -39,8 +39,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: e608fdb5f20d19af3d40073c919244cec35502f4 $");
-
 #include "opt_cpu.h"
 
 #include <sys/param.h>
@@ -153,14 +151,14 @@ sysctl_hw_machine(SYSCTL_HANDLER_ARGS)
 
 }
 SYSCTL_PROC(_hw, HW_MACHINE, machine, CTLTYPE_STRING | CTLFLAG_RD |
-    CTLFLAG_MPSAFE, NULL, 0, sysctl_hw_machine, "A", "Machine class");
+    CTLFLAG_CAPRD | CTLFLAG_MPSAFE, NULL, 0, sysctl_hw_machine, "A", "Machine class");
 #else
-SYSCTL_STRING(_hw, HW_MACHINE, machine, CTLFLAG_RD,
+SYSCTL_STRING(_hw, HW_MACHINE, machine, CTLFLAG_RD | CTLFLAG_CAPRD,
     machine, 0, "Machine class");
 #endif
 
-static char cpu_model[128];
-SYSCTL_STRING(_hw, HW_MODEL, model, CTLFLAG_RD | CTLFLAG_MPSAFE,
+char cpu_model[128];
+SYSCTL_STRING(_hw, HW_MODEL, model, CTLFLAG_RD | CTLFLAG_CAPRD,
     cpu_model, 0, "Machine model");
 
 static int hw_clockrate;
@@ -170,7 +168,7 @@ SYSCTL_INT(_hw, OID_AUTO, clockrate, CTLFLAG_RD,
 u_int hv_base;
 u_int hv_high;
 char hv_vendor[16];
-SYSCTL_STRING(_hw, OID_AUTO, hv_vendor, CTLFLAG_RD | CTLFLAG_MPSAFE, hv_vendor,
+SYSCTL_STRING(_hw, OID_AUTO, hv_vendor, CTLFLAG_RD, hv_vendor,
     0, "Hypervisor vendor");
 
 static eventhandler_tag tsc_post_tag;
@@ -1201,7 +1199,6 @@ static	volatile u_int trap_by_rdmsr;
  * be advanced.
  */
 inthand_t	bluetrap6;
-#ifdef __GNUCLIKE_ASM
 __asm
 ("									\n\
 	.text								\n\
@@ -1213,14 +1210,12 @@ __asm
 	addl	$2, (%esp)	/* rdmsr is a 2-byte instruction */	\n\
 	iret								\n\
 ");
-#endif
 
 /*
  * Special exception 13 handler.
  * Accessing non-existent MSR generates general protection fault.
  */
 inthand_t	bluetrap13;
-#ifdef __GNUCLIKE_ASM
 __asm
 ("									\n\
 	.text								\n\
@@ -1233,7 +1228,6 @@ __asm
 	addl	$2, (%esp)	/* rdmsr is a 2-byte instruction */	\n\
 	iret								\n\
 ");
-#endif
 
 /*
  * Distinguish IBM Blue Lightning CPU from Cyrix CPUs that does not
@@ -1346,29 +1340,6 @@ hook_tsc_freq(void *arg __unused)
 
 SYSINIT(hook_tsc_freq, SI_SUB_CONFIGURE, SI_ORDER_ANY, hook_tsc_freq, NULL);
 
-static const struct {
-	const char *	vm_bname;
-	int		vm_guest;
-} vm_bnames[] = {
-	{ "QEMU",	VM_GUEST_VM },		/* QEMU */
-	{ "Plex86",	VM_GUEST_VM },		/* Plex86 */
-	{ "Bochs",	VM_GUEST_VM },		/* Bochs */
-	{ "Xen",	VM_GUEST_XEN },		/* Xen */
-	{ "BHYVE",	VM_GUEST_BHYVE },	/* bhyve */
-	{ "Seabios",	VM_GUEST_KVM },		/* KVM */
-};
-
-static const struct {
-	const char *	vm_pname;
-	int		vm_guest;
-} vm_pnames[] = {
-	{ "VMware Virtual Platform",	VM_GUEST_VMWARE },
-	{ "Virtual Machine",		VM_GUEST_VM }, /* Microsoft VirtualPC */
-	{ "VirtualBox",			VM_GUEST_VBOX },
-	{ "Parallels Virtual Platform",	VM_GUEST_PARALLELS },
-	{ "KVM",			VM_GUEST_KVM },
-};
-
 static struct {
 	const char	*vm_cpuid;
 	int		vm_guest;
@@ -1450,8 +1421,8 @@ identify_hypervisor(void)
 {
 	u_int regs[4];
 	char *p;
-	int i;
 
+	TSENTER();
 	/*
 	 * If CPUID2_HV is set, we are running in a hypervisor environment.
 	 */
@@ -1460,8 +1431,10 @@ identify_hypervisor(void)
 		identify_hypervisor_cpuid_base();
 
 		/* If we have a definitive vendor, we can return now. */
-		if (*hv_vendor != '\0')
+		if (*hv_vendor != '\0') {
+			TSEXIT();
 			return;
+		}
 	}
 
 	/*
@@ -1474,44 +1447,13 @@ identify_hypervisor(void)
 			if (regs[1] == VMW_HVMAGIC) {
 				vm_guest = VM_GUEST_VMWARE;
 				freeenv(p);
+				TSEXIT();
 				return;
 			}
 		}
 		freeenv(p);
 	}
-
-	/*
-	 * XXX: Some of these entries may not be needed since they were
-	 * added to FreeBSD before the checks above.
-	 */
-	p = kern_getenv("smbios.bios.vendor");
-	if (p != NULL) {
-		for (i = 0; i < nitems(vm_bnames); i++)
-			if (strcmp(p, vm_bnames[i].vm_bname) == 0) {
-				vm_guest = vm_bnames[i].vm_guest;
-				/* If we have a specific match, return */
-				if (vm_guest != VM_GUEST_VM) {
-					freeenv(p);
-					return;
-				}
-				/*
-				 * We are done with bnames, but there might be
-				 * a more specific match in the pnames
-				 */
-				break;
-			}
-		freeenv(p);
-	}
-	p = kern_getenv("smbios.system.product");
-	if (p != NULL) {
-		for (i = 0; i < nitems(vm_pnames); i++)
-			if (strcmp(p, vm_pnames[i].vm_pname) == 0) {
-				vm_guest = vm_pnames[i].vm_guest;
-				freeenv(p);
-				return;
-			}
-		freeenv(p);
-	}
+	TSEXIT();
 }
 
 bool

@@ -26,8 +26,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 28cc245c7254032b301af10b19c135b356f25248 $");
-
 #include "opt_platform.h"
 
 #include <sys/param.h>
@@ -384,7 +382,5 @@ static driver_t a10_aintc_driver = {
 	sizeof(struct a10_aintc_softc),
 };
 
-static devclass_t a10_aintc_devclass;
-
-EARLY_DRIVER_MODULE(aintc, simplebus, a10_aintc_driver, a10_aintc_devclass, 0, 0,
+EARLY_DRIVER_MODULE(aintc, simplebus, a10_aintc_driver, 0, 0,
     BUS_PASS_INTERRUPT + BUS_PASS_ORDER_FIRST);

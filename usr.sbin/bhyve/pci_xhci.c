@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2014 Leon Dang <ldang@nahannisys.com>
  * All rights reserved.
@@ -33,8 +33,6 @@
      tablet             USB tablet mouse
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 0ac1423f0736296b95c09c55fb6a96be32e3f367 $");
-
 #include <sys/param.h>
 #include <sys/uio.h>
 #include <sys/types.h>
@@ -48,8 +46,6 @@ __FBSDID("$FreeBSD: 0ac1423f0736296b95c09c55fb6a96be32e3f367 $");
 #include <pthread.h>
 #include <unistd.h>
 
-#include <machine/vmm_snapshot.h>
-
 #include <dev/usb/usbdi.h>
 #include <dev/usb/usb.h>
 #include <dev/usb/usb_freebsd.h>
@@ -60,6 +56,9 @@ __FBSDID("$FreeBSD: 0ac1423f0736296b95c09c55fb6a96be32e3f367 $");
 #include "debug.h"
 #include "pci_emul.h"
 #include "pci_xhci.h"
+#ifdef BHYVE_SNAPSHOT
+#include "snapshot.h"
+#endif
 #include "usb_emul.h"
 
 
@@ -2965,8 +2964,8 @@ pci_xhci_map_devs_slots(struct pci_xhci_softc *sc, int maps[])
 }
 
 static int
-pci_xhci_snapshot_ep(struct pci_xhci_softc *sc __unused,
-    struct pci_xhci_dev_emu *dev, int idx, struct vm_snapshot_meta *meta)
+pci_xhci_snapshot_ep(struct pci_xhci_softc *sc, struct pci_xhci_dev_emu *dev,
+    int idx, struct vm_snapshot_meta *meta)
 {
 	int k;
 	int ret;
@@ -2992,9 +2991,9 @@ pci_xhci_snapshot_ep(struct pci_xhci_softc *sc __unused,
 	for (k = 0; k < USB_MAX_XFER_BLOCKS; k++) {
 		xfer_block = &xfer->data[k];
 
-		SNAPSHOT_GUEST2HOST_ADDR_OR_LEAVE(xfer_block->buf,
-			XHCI_GADDR_SIZE(xfer_block->buf), true, meta, ret,
-			done);
+		SNAPSHOT_GUEST2HOST_ADDR_OR_LEAVE(sc->xsc_pi->pi_vmctx,
+		    xfer_block->buf, XHCI_GADDR_SIZE(xfer_block->buf), true,
+		    meta, ret, done);
 		SNAPSHOT_VAR_OR_LEAVE(xfer_block->blen, meta, ret, done);
 		SNAPSHOT_VAR_OR_LEAVE(xfer_block->bdone, meta, ret, done);
 		SNAPSHOT_VAR_OR_LEAVE(xfer_block->processed, meta, ret, done);
@@ -3059,11 +3058,11 @@ pci_xhci_snapshot(struct vm_snapshot_meta *meta)
 	SNAPSHOT_VAR_OR_LEAVE(sc->opregs.config, meta, ret, done);
 
 	/* opregs.cr_p */
-	SNAPSHOT_GUEST2HOST_ADDR_OR_LEAVE(sc->opregs.cr_p,
+	SNAPSHOT_GUEST2HOST_ADDR_OR_LEAVE(pi->pi_vmctx, sc->opregs.cr_p,
 		XHCI_GADDR_SIZE(sc->opregs.cr_p), true, meta, ret, done);
 
 	/* opregs.dcbaa_p */
-	SNAPSHOT_GUEST2HOST_ADDR_OR_LEAVE(sc->opregs.dcbaa_p,
+	SNAPSHOT_GUEST2HOST_ADDR_OR_LEAVE(pi->pi_vmctx, sc->opregs.dcbaa_p,
 		XHCI_GADDR_SIZE(sc->opregs.dcbaa_p), true, meta, ret, done);
 
 	/* rtsregs */
@@ -3078,11 +3077,11 @@ pci_xhci_snapshot(struct vm_snapshot_meta *meta)
 	SNAPSHOT_VAR_OR_LEAVE(sc->rtsregs.intrreg.erdp, meta, ret, done);
 
 	/* rtsregs.erstba_p */
-	SNAPSHOT_GUEST2HOST_ADDR_OR_LEAVE(sc->rtsregs.erstba_p,
+	SNAPSHOT_GUEST2HOST_ADDR_OR_LEAVE(pi->pi_vmctx, sc->rtsregs.erstba_p,
 		XHCI_GADDR_SIZE(sc->rtsregs.erstba_p), true, meta, ret, done);
 
 	/* rtsregs.erst_p */
-	SNAPSHOT_GUEST2HOST_ADDR_OR_LEAVE(sc->rtsregs.erst_p,
+	SNAPSHOT_GUEST2HOST_ADDR_OR_LEAVE(pi->pi_vmctx, sc->rtsregs.erst_p,
 		XHCI_GADDR_SIZE(sc->rtsregs.erst_p), true, meta, ret, done);
 
 	SNAPSHOT_VAR_OR_LEAVE(sc->rtsregs.er_deq_seg, meta, ret, done);
@@ -3103,8 +3102,8 @@ pci_xhci_snapshot(struct vm_snapshot_meta *meta)
 
 		/* check if the restored device (when restoring) is sane */
 		if (restore_idx != i) {
-			fprintf(stderr, "%s: idx not matching: actual: %d, "
-				"expected: %d\r\n", __func__, restore_idx, i);
+			EPRINTLN("%s: idx not matching: actual: %d, "
+			    "expected: %d", __func__, restore_idx, i);
 			ret = EINVAL;
 			goto done;
 		}
@@ -3119,9 +3118,9 @@ pci_xhci_snapshot(struct vm_snapshot_meta *meta)
 		if (meta->op == VM_SNAPSHOT_RESTORE) {
 			dname[sizeof(dname) - 1] = '\0';
 			if (strcmp(dev->dev_ue->ue_emu, dname)) {
-				fprintf(stderr, "%s: device names mismatch: "
-					"actual: %s, expected: %s\r\n",
-					__func__, dname, dev->dev_ue->ue_emu);
+				EPRINTLN("%s: device names mismatch: "
+				    "actual: %s, expected: %s",
+				    __func__, dname, dev->dev_ue->ue_emu);
 
 				ret = EINVAL;
 				goto done;
@@ -3168,7 +3167,7 @@ pci_xhci_snapshot(struct vm_snapshot_meta *meta)
 		if (dev == NULL)
 			continue;
 
-		SNAPSHOT_GUEST2HOST_ADDR_OR_LEAVE(dev->dev_ctx,
+		SNAPSHOT_GUEST2HOST_ADDR_OR_LEAVE(pi->pi_vmctx, dev->dev_ctx,
 			XHCI_GADDR_SIZE(dev->dev_ctx), true, meta, ret, done);
 
 		if (dev->dev_ctx != NULL) {

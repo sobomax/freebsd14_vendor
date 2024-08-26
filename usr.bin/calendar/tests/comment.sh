@@ -1,4 +1,3 @@
-# $FreeBSD: adde5d7552522f74afbb3146f2797f17156367e4 $
 
 CALENDAR_FILE="-f ${SRCDIR}/calendar.comment"
 CALENDAR_BIN="calendar"

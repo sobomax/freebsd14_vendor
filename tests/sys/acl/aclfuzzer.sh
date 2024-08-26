@@ -23,7 +23,6 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: f2117d5d46b65fbf07a45b217337ba054bea81ff $
 #
 
 # This is an NFSv4 ACL fuzzer.  It expects to be run by non-root in a scratch

@@ -1,4 +1,3 @@
-.\" $FreeBSD: 199c1cd85ddfd6196ebc38c1239a11f3f0e390fe $
 Do not build
 .Xr routed 8
 utility.

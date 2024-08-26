@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2010 Alexander V. Chernikov <melifaro@ipfw.ru>
  * All rights reserved.
@@ -24,13 +24,9 @@
  * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
- *
- * 	$FreeBSD: 798bf6fecc42cdcaef566883735d0d6a426b0b36 $
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 798bf6fecc42cdcaef566883735d0d6a426b0b36 $");
-
 #include "opt_inet6.h"
 #include "opt_route.h"
 #include <sys/param.h>

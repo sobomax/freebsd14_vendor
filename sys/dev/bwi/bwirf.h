@@ -34,7 +34,6 @@
  * SUCH DAMAGE.
  * 
  * $DragonFly: src/sys/dev/netif/bwi/bwirf.h,v 1.3 2007/10/03 04:53:19 sephe Exp $
- * $FreeBSD: d381563d48bde5c164714e1e66b0b8a476043260 $
  */
 
 #ifndef _BWI_RF_H

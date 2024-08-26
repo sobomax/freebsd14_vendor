@@ -28,8 +28,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 66ff351b5a9da938644f50a0fd8810b5c5213055 $");
-
 /*
  * Driver for the Atheros Wireless LAN controller.
  *

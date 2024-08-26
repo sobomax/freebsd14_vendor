@@ -1,4 +1,3 @@
-# $FreeBSD: 1ee731a786efa13037cf1fbf9dd3f16f65b8a974 $
 
 # The pw command
 PW="pw -V ${HOME}"

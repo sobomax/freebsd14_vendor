@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2005 Pawel Jakub Dawidek <pjd@FreeBSD.org>
  * All rights reserved.
@@ -27,8 +27,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 5ca00b64219d21231e21089a7684e5f3d32846d6 $");
-
 #include <sys/param.h>
 #include <sys/systm.h>
 #include <sys/kernel.h>
@@ -249,11 +247,9 @@ g_shsec_xor1(uint32_t *src, uint32_t *dst, ssize_t len)
 static void
 g_shsec_done(struct bio *bp)
 {
-	struct g_shsec_softc *sc;
 	struct bio *pbp;
 
 	pbp = bp->bio_parent;
-	sc = pbp->bio_to->geom->softc;
 	if (bp->bio_error == 0)
 		G_SHSEC_LOGREQ(2, bp, "Request done.");
 	else {

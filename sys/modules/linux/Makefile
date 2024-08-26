@@ -1,4 +1,3 @@
-# $FreeBSD: fad03e8a8ca0361e37d6213db6abfcabe87a82c2 $
 
 .if ${MACHINE_CPUARCH} == "amd64"
 SFX= 32
@@ -34,10 +33,10 @@ SRCS=	linux${SFX}_dummy_machdep.c \
 	linux_timer.c \
 	linux_uid16.c \
 	linux_vdso.c \
-	opt_compat.h \
+	linux_xattr.c \
 	opt_inet6.h \
+	opt_ktrace.h \
 	opt_posix.h \
-	opt_usb.h \
 	bus_if.h \
 	device_if.h \
 	vnode_if.h
@@ -46,10 +45,7 @@ SRCS+=	linux_dummy_x86.c
 VDSODEPS=linux_vdso_gettc_x86.inc
 .endif
 .if ${MACHINE_CPUARCH} == "amd64"
-SRCS+=	linux${SFX}_support.s
-.else
-SRCS+=	linux_copyout.c
-SRCS+=	linux_netlink.c
+SRCS+=	linux${SFX}_support.S
 .endif
 DPSRCS=	assym.inc linux${SFX}_genassym.c
 
@@ -72,12 +68,13 @@ SRCS+=	imgact_linux.c \
 	linux_ptrace_machdep.c \
 	linux_util.c \
 	linux_vdso_selector_x86.c \
-	linux_x86.c
+	linux_x86.c \
+	linux_copyout.c \
+	linux_netlink.c
 .endif
 
 .if ${MACHINE_CPUARCH} == "i386"
 EXPORT_SYMS=
-EXPORT_SYMS+=	linux_emul_path
 EXPORT_SYMS+=	linux_get_osname
 EXPORT_SYMS+=	linux_get_osrelease
 EXPORT_SYMS+=	linux_ioctl_register_handler
@@ -132,9 +129,9 @@ linux${SFX}_vdso.so: linux${SFX}_vdso.so.o
 	${STRIPBIN} -N _binary_linux${SFX}_vdso_so_o_size ${.TARGET}
 
 .if ${MACHINE_CPUARCH} == "amd64"
-linux${SFX}_support.o: linux${SFX}_assym.h assym.inc
+linux${SFX}_support.o: linux${SFX}_support.S linux${SFX}_assym.h assym.inc
 	${CC} -c -x assembler-with-cpp -DLOCORE ${CFLAGS} \
-	    ${.IMPSRC} -o ${.TARGET}
+	    ${.ALLSRC:M*.S:u} -o ${.TARGET}
 .endif
 
 linux${SFX}_genassym.o: offset.inc

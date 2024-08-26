@@ -64,8 +64,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 1d6c2c7d9668596669ddc78cd7108dc6c05418b1 $");
-
 /*
  * seed = random (bits - 1) bit
  * n = prime, g0 = generator to n,

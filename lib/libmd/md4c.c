@@ -2,8 +2,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 66d3652465a94f0cba198e8fe1e050fba219b753 $");
-
 /*-
    SPDX-License-Identifier: RSA-MD
 

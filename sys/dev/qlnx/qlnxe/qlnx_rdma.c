@@ -30,8 +30,6 @@
  * Author: David C Somayajulu
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 276219134843508efa9af73ede6d077ae4e5c54d $");
-
 #include "qlnx_os.h"
 #include "bcm_osal.h"
 
@@ -183,7 +181,6 @@ int
 qlnx_rdma_dev_remove(struct qlnx_host *ha)
 {
 	int ret = 0;
-	qlnx_host_t *ha_prev;
 	qlnx_host_t *ha_cur;
 
 	QL_DPRINT12(ha, "enter ha = %p\n", ha);
@@ -210,15 +207,13 @@ qlnx_rdma_dev_remove(struct qlnx_host *ha)
 		return (ret);
 	}
 
-	ha_prev = ha_cur = qlnx_host_list;
+	ha_cur = qlnx_host_list;
 
 	while ((ha_cur != ha) && (ha_cur != NULL)) {
-		ha_prev = ha_cur;
 		ha_cur = ha_cur->next;
 	}
 
 	if (ha_cur == ha) {
-		ha_prev = ha->next;
 		ha->next = NULL;
 	}
 

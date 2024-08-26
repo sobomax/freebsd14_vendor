@@ -23,7 +23,6 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: a7a2af7bb4a9d37c2fa837637cc1b293c289ff70 $
 #
 
 #include <sys/bus.h>
@@ -59,6 +58,7 @@ HEADER {
 	enum pci_id_type {
 	    PCI_ID_RID,
 	    PCI_ID_MSI,
+	    PCI_ID_OFW_IOMMU,
 	};
 
 	enum pci_feature {

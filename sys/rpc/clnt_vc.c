@@ -36,8 +36,6 @@ static char *sccsid = "@(#)clnt_tcp.c	2.2 88/08/01 4.0 RPCSRC";
 static char sccsid3[] = "@(#)clnt_vc.c 1.19 89/03/16 Copyr 1988 Sun Micro";
 #endif
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: d6b4f918cf8fe75e00b41ca8334aec3e0fefb56f $");
- 
 /*
  * clnt_tcp.c, Implements a TCP/IP based, client side RPC.
  *
@@ -445,7 +443,7 @@ call_again:
 	if (error == EMSGSIZE || (error == ERESTART &&
 	    (ct->ct_waitflag & PCATCH) == 0 && trycnt-- > 0)) {
 		SOCKBUF_LOCK(&ct->ct_socket->so_snd);
-		sbwait(&ct->ct_socket->so_snd);
+		sbwait(ct->ct_socket, SO_SND);
 		SOCKBUF_UNLOCK(&ct->ct_socket->so_snd);
 		AUTH_VALIDATE(auth, xid, NULL, NULL);
 		mtx_lock(&ct->ct_lock);
@@ -761,6 +759,7 @@ clnt_vc_control(CLIENT *cl, u_int request, void *info)
 	case CLSET_BACKCHANNEL:
 		xprt = (SVCXPRT *)info;
 		if (ct->ct_backchannelxprt == NULL) {
+			SVC_ACQUIRE(xprt);
 			xprt->xp_p2 = ct;
 			if (ct->ct_sslrefno != 0)
 				xprt->xp_tls = RPCTLS_FLAGS_HANDSHAKE;
@@ -774,9 +773,11 @@ clnt_vc_control(CLIENT *cl, u_int request, void *info)
 		ct->ct_sslusec = *p++;
 		ct->ct_sslrefno = *p;
 		if (ct->ct_sslrefno != RPCTLS_REFNO_HANDSHAKE) {
+			/* cl ref cnt is released by clnt_vc_dotlsupcall(). */
+			CLNT_ACQUIRE(cl);
 			mtx_unlock(&ct->ct_lock);
 			/* Start the kthread that handles upcalls. */
-			error = kthread_add(clnt_vc_dotlsupcall, ct,
+			error = kthread_add(clnt_vc_dotlsupcall, cl,
 			    NULL, NULL, 0, 0, "krpctls%u", thrdnum++);
 			if (error != 0)
 				panic("Can't add KRPC thread error %d", error);
@@ -876,6 +877,7 @@ clnt_vc_destroy(CLIENT *cl)
 		mtx_lock(&ct->ct_lock);
 		xprt->xp_p2 = NULL;
 		sx_xunlock(&xprt->xp_lock);
+		SVC_RELEASE(xprt);
 	}
 
 	if (ct->ct_socket) {
@@ -911,7 +913,6 @@ clnt_vc_destroy(CLIENT *cl)
 			}
 			/* Must sorele() to get rid of reference. */
 			CURVNET_SET(so->so_vnet);
-			SOCK_LOCK(so);
 			sorele(so);
 			CURVNET_RESTORE();
 		} else {
@@ -1277,7 +1278,8 @@ clnt_vc_upcallsdone(struct ct_data *ct)
 static void
 clnt_vc_dotlsupcall(void *data)
 {
-	struct ct_data *ct = (struct ct_data *)data;
+	CLIENT *cl = (CLIENT *)data;
+	struct ct_data *ct = (struct ct_data *)cl->cl_private;
 	enum clnt_stat ret;
 	uint32_t reterr;
 
@@ -1314,5 +1316,6 @@ clnt_vc_dotlsupcall(void *data)
 	ct->ct_rcvstate &= ~RPCRCVSTATE_UPCALLTHREAD;
 	wakeup(&ct->ct_sslrefno);
 	mtx_unlock(&ct->ct_lock);
+	CLNT_RELEASE(cl);
 	kthread_exit();
 }

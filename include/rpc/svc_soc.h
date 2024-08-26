@@ -1,5 +1,4 @@
 /*	$NetBSD: svc_soc.h,v 1.1 2000/06/02 22:57:57 fvdl Exp $	*/
-/*	$FreeBSD: 912e2ec2df1f404238258076cae8ccac2dd75ed0 $ */
 
 /*-
  * SPDX-License-Identifier: BSD-3-Clause

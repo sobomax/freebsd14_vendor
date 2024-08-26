@@ -22,8 +22,6 @@
  * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
- *
- * $FreeBSD: cc22cbcb729dd5555fcdd744815c067cd043fb4c $
  */
 
 #ifndef _BOOTSTRAP_H_
@@ -182,6 +180,7 @@ extern int isapnp_readport;
  * Version information
  */
 extern char bootprog_info[];
+extern unsigned bootprog_rev;
 
 /*
  * Interpreter information
@@ -372,9 +371,6 @@ struct arch_switch
 
 	/* Return the hypervisor name/type or NULL if not virtualized. */
 	const char *(*arch_hypervisor)(void);
-
-	/* For kexec-type loaders, get ksegment structure */
-	void (*arch_kexec_kseg_get)(int *nseg, void **kseg);
 };
 extern struct arch_switch archsw;
 
@@ -385,9 +381,5 @@ void	delay(int delay);
 int gen_setcurrdev(struct env_var *ev, int flags, const void *value);
 int mount_currdev(struct env_var *, int, const void *);
 void set_currdev(const char *devname);
-
-#ifndef CTASSERT
-#define	CTASSERT(x)	_Static_assert(x, "compile-time assertion failed")
-#endif
 
 #endif /* !_BOOTSTRAP_H_ */

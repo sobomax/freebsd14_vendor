@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 1999 Seigo Tanimura
  * All rights reserved.
@@ -42,8 +42,6 @@
 
 #include <dev/pci/pcireg.h>
 #include <dev/pci/pcivar.h>
-
-SND_DECLARE_FILE("$FreeBSD: 41500e46e66db1d3350b0878271af4a9e193f9b8 $");
 
 /* Buffer size on dma transfer. Fixed for CS416x. */
 #define CS461x_BUFFSIZE   (4 * 1024)
@@ -716,8 +714,8 @@ csa_allocres(struct csa_info *csa, device_t dev)
 			       /*highaddr*/BUS_SPACE_MAXADDR,
 			       /*filter*/NULL, /*filterarg*/NULL,
 			       /*maxsize*/CS461x_BUFFSIZE, /*nsegments*/1, /*maxsegz*/0x3ffff,
-			       /*flags*/0, /*lockfunc*/busdma_lock_mutex,
-			       /*lockarg*/&Giant, &csa->parent_dmat) != 0)
+			       /*flags*/0, /*lockfunc*/NULL, /*lockarg*/NULL,
+			       &csa->parent_dmat) != 0)
 		return (1);
 
 	return (0);
@@ -821,8 +819,9 @@ pcmcsa_attach(device_t dev)
 		return (ENXIO);
 	}
 
-	snprintf(status, SND_STATUSLEN, "at irq %jd %s",
-			rman_get_start(resp->irq),PCM_KLDSTRING(snd_csa));
+	snprintf(status, SND_STATUSLEN, "irq %jd on %s",
+			rman_get_start(resp->irq),
+			device_get_nameunit(device_get_parent(dev)));
 
 	/* Enable interrupt. */
 	if (snd_setup_intr(dev, resp->irq, 0, csa_intr, csa, &csa->ih)) {
@@ -1035,7 +1034,7 @@ static driver_t pcmcsa_driver = {
 	PCM_SOFTC_SIZE,
 };
 
-DRIVER_MODULE(snd_csapcm, csa, pcmcsa_driver, pcm_devclass, 0, 0);
+DRIVER_MODULE(snd_csapcm, csa, pcmcsa_driver, 0, 0);
 MODULE_DEPEND(snd_csapcm, sound, SOUND_MINVER, SOUND_PREFVER, SOUND_MAXVER);
 MODULE_DEPEND(snd_csapcm, snd_csa, 1, 1, 1);
 MODULE_VERSION(snd_csapcm, 1);

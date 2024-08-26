@@ -28,8 +28,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: cb8c0acfc0dc0af4a1f950c3505f091613d0ecc8 $");
-
 #include <sys/param.h>
 #include <sys/systm.h>
 #include <sys/conf.h>
@@ -113,8 +111,7 @@ perfmon_init(void)
 }
 
 static void
-perfmon_init_dev(dummy)
-	void *dummy;
+perfmon_init_dev(void *dummy)
 {
 	make_dev(&perfmon_cdevsw, 32, UID_ROOT, GID_KMEM, 0640, "perfmon");
 }

@@ -1,4 +1,3 @@
-# $FreeBSD: 37e72c8f18965c3f4062dbf70a4efecb2394207c $
 
 .PATH: ${SRCTOP}/sys/netpfil/ipfw
 

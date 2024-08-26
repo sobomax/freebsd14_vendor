@@ -23,7 +23,6 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 #include "test.h"
-__FBSDID("$FreeBSD: ba3a553db9871ca88bc9e4cce15d69ea29bcf3e4 $");
 
 /*
  * This was inspired by an ISO fuzz tester written by Michal Zalewski
@@ -124,10 +123,9 @@ test_fuzz(const struct files *filesets)
 				newraw = realloc(rawimage, oldsize + size);
 				if (!assert(newraw != NULL))
 				{
-					free(rawimage);
-					rawimage = NULL;
 					free(tmp);
-					continue;
+					size = 0;
+					break;
 				}
 				rawimage = newraw;
 				memcpy(rawimage + oldsize, tmp, size);

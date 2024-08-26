@@ -1,6 +1,5 @@
-# $FreeBSD: a269efd57fbf410a81d97b1ee7452cf23f9a0c96 $
 
-.PATH:		${SRCTOP}/sys/dev/iicbus
+.PATH:		${SRCTOP}/sys/dev/iicbus/rtc
 KMOD		= ds13rtc
 SRCS		= ds13rtc.c bus_if.h clock_if.h device_if.h iicbus_if.h ofw_bus_if.h opt_platform.h
 

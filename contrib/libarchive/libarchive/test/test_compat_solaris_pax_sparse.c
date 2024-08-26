@@ -23,8 +23,6 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 #include "test.h"
-__FBSDID("$FreeBSD: 0ab333bb180b88c2072655647172cbfbb4e15d1c $");
-
 /*
  * Verify our ability to read sample files created by Solaris pax for
  * a sparse file.

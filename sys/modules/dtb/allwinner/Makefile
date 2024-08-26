@@ -1,4 +1,3 @@
-# $FreeBSD: f6b5aa54c04f51425a0696f28be954e8c84a921a $
 # All the dts files for allwinner systems we support.
 
 .if ${MACHINE_ARCH} == "armv7"
@@ -30,7 +29,9 @@ DTSO=	sun8i-a83t-sid.dtso \
 	sun8i-h3-mmc0-disable.dtso \
 	sun8i-h3-mmc1-disable.dtso \
 	sun8i-h3-mmc2-disable.dtso \
-	sun8i-h3-spi0.dtso
+	sun8i-h3-spi0.dtso \
+	sun8i-h3-usb1.dtso \
+	sun8i-h3-usb2.dtso
 
 LINKS= \
 	${DTBDIR}/sun4i-a10-cubieboard.dtb ${DTBDIR}/cubieboard.dtb \
@@ -56,7 +57,9 @@ DTS=	\
 	allwinner/sun50i-h6-pine-h64.dts \
 	allwinner/sun50i-h6-pine-h64-model-b.dts
 
-DTSO=	sun50i-a64-opp.dtso \
+DTSO=	sun50i-a64-mmc0-disable.dtso \
+	sun50i-a64-mmc1-disable.dtso \
+	sun50i-a64-mmc2-disable.dtso \
 	sun50i-a64-pwm.dtso \
 	sun50i-a64-rpwm.dtso \
 	sun50i-a64-spi0-spigen.dtso \

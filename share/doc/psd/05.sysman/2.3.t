@@ -26,7 +26,6 @@
 .\" SUCH DAMAGE.
 .\"
 .\"	@(#)2.3.t	8.1 (Berkeley) 6/8/93
-.\" $FreeBSD: 7fe386a5bb84f59c60aa9868ab3e27163902a13f $
 .\"
 .sh "Interprocess communications
 .NH 3

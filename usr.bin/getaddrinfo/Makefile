@@ -1,5 +1,4 @@
 #	$NetBSD: Makefile,v 1.2 2014/04/29 01:21:02 christos Exp $
-#	$FreeBSD: ced8c9e725b7879ecc6a4bb3ad8556e159893985 $
 .include <bsd.own.mk>
 
 PROG=	getaddrinfo

@@ -13,9 +13,6 @@
  * purpose.
  */
 
-#include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 0c35fe9b7d938260e4315c1fa4fff58a3377e334 $");
-
 #include <sys/param.h>
 #include <sys/disklabel.h>
 #include <sys/diskmbr.h>

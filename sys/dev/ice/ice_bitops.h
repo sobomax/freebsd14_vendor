@@ -1,5 +1,5 @@
 /* SPDX-License-Identifier: BSD-3-Clause */
-/*  Copyright (c) 2022, Intel Corporation
+/*  Copyright (c) 2024, Intel Corporation
  *  All rights reserved.
  *
  *  Redistribution and use in source and binary forms, with or without
@@ -28,7 +28,6 @@
  *  ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  *  POSSIBILITY OF SUCH DAMAGE.
  */
-/*$FreeBSD: c29963d0a31870f0c8345cc535eb55b1df069882 $*/
 
 #ifndef _ICE_BITOPS_H_
 #define _ICE_BITOPS_H_
@@ -403,7 +402,7 @@ static inline bool ice_is_any_bit_set(ice_bitmap_t *bitmap, u16 size)
 }
 
 /**
- * ice_cp_bitmap - copy bitmaps.
+ * ice_cp_bitmap - copy bitmaps
  * @dst: bitmap destination
  * @src: bitmap to copy from
  * @size: Size of the bitmaps in bits
@@ -461,7 +460,7 @@ ice_bitmap_hweight(ice_bitmap_t *bm, u16 size)
 }
 
 /**
- * ice_cmp_bitmaps - compares two bitmaps.
+ * ice_cmp_bitmap - compares two bitmaps
  * @bmp1: the bitmap to compare
  * @bmp2: the bitmap to compare with bmp1
  * @size: Size of the bitmaps in bits

@@ -8,8 +8,6 @@
  *  Copyright (c) 1989 - 1994, William LeFebvre, Northwestern University
  *  Copyright (c) 1994, 1995, William LeFebvre, Argonne National Laboratory
  *  Copyright (c) 1996, William LeFebvre, Group sys Consulting
- *
- * $FreeBSD: 6b18b9572b200f965cb4ed328c76f69b71e0615b $
  */
 
 #include <sys/types.h>

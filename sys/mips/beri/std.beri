@@ -1,7 +1,0 @@
-# $FreeBSD: ba276338efd8fe21211bb9ded20c3ae053064957 $
-files	"../beri/files.beri"
-
-cpu		CPU_MIPS4KC
-
-options 	BERI_LARGE_TLB
-options 	PLATFORM_INIT_SECONDARY

@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2006 Marcel Moolenaar
  * All rights reserved.
@@ -24,8 +24,6 @@
  * THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- *
- * $FreeBSD: 68678d3771e1379ca15a92ef40bea089cb7e32f9 $
  */
 
 #ifndef _DEV_PUC_BFE_H_
@@ -38,7 +36,6 @@ struct puc_port;
 
 extern const struct puc_cfg puc_pci_devices[];
 
-extern devclass_t puc_devclass;
 extern const char puc_driver_name[];
 
 struct puc_bar {
@@ -65,10 +62,10 @@ struct puc_softc {
 	int		sc_nports;
 	struct puc_port *sc_port;
 
-	int		sc_fastintr:1;
-	int		sc_leaving:1;
-	int		sc_polled:1;
-	int		sc_msi:1;
+	bool		sc_fastintr:1;
+	bool		sc_leaving:1;
+	bool		sc_polled:1;
+	bool		sc_msi:1;
 
 	int		sc_ilr;
 
@@ -85,8 +82,8 @@ int puc_bfe_attach(device_t);
 int puc_bfe_detach(device_t);
 int puc_bfe_probe(device_t, const struct puc_cfg *);
 
-int puc_bus_child_location_str(device_t, device_t, char *, size_t);
-int puc_bus_child_pnpinfo_str(device_t, device_t, char *, size_t);
+int puc_bus_child_location(device_t, device_t, struct sbuf *sb);
+int puc_bus_child_pnpinfo(device_t, device_t, struct sbuf *sb);
 struct resource *puc_bus_alloc_resource(device_t, device_t, int, int *,
     rman_res_t, rman_res_t, rman_res_t, u_int);
 int puc_bus_get_resource(device_t, device_t, int, int, rman_res_t *, rman_res_t *);

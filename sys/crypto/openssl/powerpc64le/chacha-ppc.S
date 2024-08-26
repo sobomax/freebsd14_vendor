@@ -1,4 +1,3 @@
-/* $FreeBSD: 91d52da4baa1096ab9ec08ea92e68bd488fc0b5e $ */
 /* Do not modify. This file is auto-generated from chacha-ppc.pl. */
 .machine	"any"
 .abiversion	2

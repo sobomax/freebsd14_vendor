@@ -1,8 +1,7 @@
-/* $FreeBSD: 455b23e2c306bc213e7af02c860470445a2bc221 $ */
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
- * Copyright (c) 2008 Hans Petter Selasky. All rights reserved.
+ * Copyright (c) 2008-2021 Hans Petter Selasky. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -1590,7 +1589,7 @@ usbd_setup_ctrl_transfer(struct usb_xfer *xfer)
 		 * parts a time.
 		 */
 		DPRINTFN(0, "Too many frames: %u\n",
-		    (unsigned int)xfer->nframes);
+		    (unsigned)xfer->nframes);
 		goto error;
 	}
 
@@ -2690,6 +2689,61 @@ usbd_transfer_start_cb(void *arg)
 }
 
 /*------------------------------------------------------------------------*
+ *	usbd_xfer_set_zlp
+ *
+ * This function sets the USB transfers ZLP flag.
+ *------------------------------------------------------------------------*/
+void
+usbd_xfer_set_zlp(struct usb_xfer *xfer)
+{
+	if (xfer == NULL) {
+		/* tearing down */
+		return;
+	}
+	USB_XFER_LOCK_ASSERT(xfer, MA_OWNED);
+
+	/* avoid any races by locking the USB mutex */
+	USB_BUS_LOCK(xfer->xroot->bus);
+	xfer->flags.send_zlp = 1;
+	USB_BUS_UNLOCK(xfer->xroot->bus);
+}
+
+/*------------------------------------------------------------------------*
+ *	usbd_xfer_get_and_clr_zlp
+ *
+ * This function gets and clears the USB transfers ZLP flag and
+ * queues a zero-length USB transfer if the flag was set.
+ *------------------------------------------------------------------------*/
+uint8_t
+usbd_xfer_get_and_clr_zlp(struct usb_xfer *xfer)
+{
+	uint8_t retval;
+
+	if (xfer == NULL) {
+		/* tearing down */
+		return (0);
+	}
+	USB_XFER_LOCK_ASSERT(xfer, MA_OWNED);
+
+	retval = xfer->flags.send_zlp;
+
+	if (retval != 0) {
+		DPRINTFN(1, "Sending zero-length packet.\n");
+
+		/* avoid any races by locking the USB mutex */
+		USB_BUS_LOCK(xfer->xroot->bus);
+		xfer->flags.send_zlp = 0;
+		USB_BUS_UNLOCK(xfer->xroot->bus);
+
+		/* queue up a zero-length packet */
+		usbd_xfer_set_frame_len(xfer, 0, 0);
+		usbd_xfer_set_frames(xfer, 1);
+		usbd_transfer_submit(xfer);
+	}
+	return (retval);
+}
+
+/*------------------------------------------------------------------------*
  *	usbd_xfer_set_stall
  *
  * This function is used to set the stall flag outside the
@@ -2733,9 +2787,7 @@ usbd_transfer_clear_stall(struct usb_xfer *xfer)
 
 	/* avoid any races by locking the USB mutex */
 	USB_BUS_LOCK(xfer->xroot->bus);
-
 	xfer->flags.stall_pipe = 0;
-
 	USB_BUS_UNLOCK(xfer->xroot->bus);
 }
 

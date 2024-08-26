@@ -33,8 +33,6 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: 494ff45c61dbc17835dfd2e1b9e19c22faa42edf $
- *
  */
 
 typedef	struct thread fw_proc;

@@ -30,8 +30,6 @@
  * SUCH DAMAGE.
  *
  *      @(#)extern.h	8.1 (Berkeley) 6/6/93
- *
- * $FreeBSD: e34451dbb18e1f0e8973cd4317bd6a3ce820efb2 $
  */
 
 

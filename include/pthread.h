@@ -31,8 +31,6 @@
  * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF 
  * SUCH DAMAGE.
- *
- * $FreeBSD: 143401ddf68b8812f47d1f85cda77c9b1a24d490 $
  */
 #ifndef _PTHREAD_H_
 #define	_PTHREAD_H_
@@ -43,8 +41,11 @@
 #include <sys/cdefs.h>
 #include <sys/_pthreadtypes.h>
 #include <machine/_limits.h>
-#include <machine/_types.h>
+#include <sys/_types.h>
 #include <sys/_sigset.h>
+#if __BSD_VISIBLE
+#include <sys/_sigval.h>
+#endif
 #include <sched.h>
 #include <time.h>
 
@@ -304,6 +305,10 @@ void		pthread_yield(void);
 
 int		pthread_getname_np(pthread_t, char *, size_t);
 int		pthread_setname_np(pthread_t, const char *);
+
+int		pthread_sigqueue(pthread_t thread, int sig,
+		    const union sigval value);
+
 #endif
 
 int		pthread_mutexattr_getprioceiling(

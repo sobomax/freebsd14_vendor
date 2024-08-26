@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2011 Nathan Whitehorn
  * All rights reserved.
@@ -27,8 +27,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: d300b2e8457b224132730ffa1b34ce1cf2832961 $");
-
 #include <sys/param.h>
 #include <sys/systm.h>
 #include <sys/kernel.h>
@@ -71,7 +69,7 @@ static device_method_t vdevice_methods[] = {
 
 	/* Bus interface */
 	DEVMETHOD(bus_add_child,	bus_generic_add_child),
-	DEVMETHOD(bus_child_pnpinfo_str, ofw_bus_gen_child_pnpinfo_str),
+	DEVMETHOD(bus_child_pnpinfo,	ofw_bus_gen_child_pnpinfo),
 	DEVMETHOD(bus_print_child,	vdevice_print_child),
 	DEVMETHOD(bus_setup_intr,	bus_generic_setup_intr),
 	DEVMETHOD(bus_teardown_intr,	bus_generic_teardown_intr),
@@ -103,9 +101,7 @@ static driver_t vdevice_driver = {
 	0
 };
 
-static devclass_t vdevice_devclass;
-
-DRIVER_MODULE(vdevice, ofwbus, vdevice_driver, vdevice_devclass, 0, 0);
+DRIVER_MODULE(vdevice, ofwbus, vdevice_driver, 0, 0);
 
 static int 
 vdevice_probe(device_t dev) 

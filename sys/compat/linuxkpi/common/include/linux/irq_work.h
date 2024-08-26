@@ -24,8 +24,6 @@
  * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
- *
- * $FreeBSD: 3fbc7690b7989c67c36421440e82d78cb880d929 $
  */
 
 #ifndef _LINUXKPI_LINUX_IRQ_WORK_H_
@@ -51,13 +49,13 @@ typedef void (*irq_work_func_t)(struct irq_work *);
 
 struct irq_work {
 	struct task irq_task;
-	irq_work_func_t func;
 	union {
 		struct llist_node llnode;
 		struct {
 			struct llist_node llist;
 		} node;
 	};
+	irq_work_func_t func;
 };
 
 extern struct taskqueue *linux_irq_work_tq;

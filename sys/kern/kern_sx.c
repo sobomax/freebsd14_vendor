@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2007 Attilio Rao <attilio@freebsd.org>
  * Copyright (c) 2001 Jason Evans <jasone@freebsd.org>
@@ -43,8 +43,6 @@
 #include "opt_no_adaptive_sx.h"
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: d8bdf4a173580618824d2b308c2a28a0fae0bf90 $");
-
 #include <sys/param.h>
 #include <sys/systm.h>
 #include <sys/kdb.h>
@@ -558,7 +556,7 @@ sx_drop_critical(uintptr_t x, bool *in_critical, int *extra_work)
 	}
 }
 #else
-#define sx_drop_critical(x, in_critical, extra_work) do { } while(0)
+#define sx_drop_critical(x, in_critical, extra_work) do { } while (0)
 #endif
 
 /*
@@ -1039,7 +1037,7 @@ _sx_slock_hard(struct sx *sx, int opts, uintptr_t x LOCK_FILE_LINE_ARG_DEF)
 #if defined(KDTRACE_HOOKS) || defined(LOCK_PROFILING)
 	uintptr_t state = 0;
 #endif
-	int extra_work = 0;
+	int extra_work __sdt_used = 0;
 
 	td = curthread;
 

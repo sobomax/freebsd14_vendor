@@ -29,7 +29,6 @@
  * SUCH DAMAGE.
  *
  *	@(#)hexdump.h	8.1 (Berkeley) 6/6/93
- * $FreeBSD: f21e2f240b1e51b115746ffac7980e046c3c8327 $
  */
 
 #include <wchar.h>

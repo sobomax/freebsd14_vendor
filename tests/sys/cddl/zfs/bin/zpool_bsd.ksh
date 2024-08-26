@@ -1,8 +1,6 @@
 #!/usr/local/bin/ksh93 -p
 #
 
-# $FreeBSD: 53ce877c7e06896f9ef3599f7d669a58ec17abfb $
-
 cmd=$1
 
 if [[ -z $cmd ]]; then

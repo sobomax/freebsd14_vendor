@@ -1,6 +1,5 @@
-# $FreeBSD: a340de3b2951dc0eff9aa76354288726d96cc2da $
 
-.PATH:		${SRCTOP}/sys/dev/iicbus
+.PATH:		${SRCTOP}/sys/dev/iicbus/adc
 
 KMOD=	ads111x
 SRCS=	ads111x.c

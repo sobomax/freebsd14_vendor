@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2013 The FreeBSD Foundation
  *
@@ -29,8 +29,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 9d9635835202caaf082c41d356eb22269739212d $");
-
 #include <sys/param.h>
 #include <sys/systm.h>
 #include <sys/kernel.h>
@@ -93,24 +91,24 @@ vt_efb_initialize(struct fb_info *info)
 	 */
 	switch (info->fb_depth) {
 	case 8:
-		vt_generate_cons_palette(info->fb_cmap, COLOR_FORMAT_RGB,
+		vt_config_cons_colors(info, COLOR_FORMAT_RGB,
 		    0x7, 5, 0x7, 2, 0x3, 0);
 		break;
 	case 15:
-		vt_generate_cons_palette(info->fb_cmap, COLOR_FORMAT_RGB,
+		vt_config_cons_colors(info, COLOR_FORMAT_RGB,
 		    0x1f, 10, 0x1f, 5, 0x1f, 0);
 		break;
 	case 16:
-		vt_generate_cons_palette(info->fb_cmap, COLOR_FORMAT_RGB,
+		vt_config_cons_colors(info, COLOR_FORMAT_RGB,
 		    0x1f, 11, 0x3f, 5, 0x1f, 0);
 		break;
 	case 24:
 	case 32:
 #if BYTE_ORDER == BIG_ENDIAN
-		vt_generate_cons_palette(info->fb_cmap,
+		vt_config_cons_colors(info,
 		    COLOR_FORMAT_RGB, 255, 0, 255, 8, 255, 16);
 #else
-		vt_generate_cons_palette(info->fb_cmap,
+		vt_config_cons_colors(info,
 		    COLOR_FORMAT_RGB, 255, 16, 255, 8, 255, 0);
 #endif
 #ifdef	FDT

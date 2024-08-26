@@ -1,5 +1,4 @@
 /*	$OpenBSD: if_uathreg.h,v 1.2 2006/09/18 16:34:23 damien Exp $	*/
-/*	$FreeBSD: 1e7929bc7e8fc4d29cbe43ce1ed69c2d365aaf0a $	*/
 
 /*-
  * Copyright (c) 2006
@@ -51,7 +50,7 @@ struct uath_fwblock {
  *    parameter 2
  *       ...
  *
- * A variable-length parameter, or a parmeter that is larger than
+ * A variable-length parameter, or a parameter that is larger than
  * 32 bits is passed as <length, data> pair, where length is a
  * 32-bit quantity and data is padded to 32 bits.
  */

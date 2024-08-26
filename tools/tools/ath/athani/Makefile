@@ -1,4 +1,3 @@
-# $FreeBSD: b475a6b0ed633d71db60487a636cd62bfef11680 $
 
 PROG=	athani
 MAN=

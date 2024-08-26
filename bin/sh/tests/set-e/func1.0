@@ -1,4 +1,3 @@
-# $FreeBSD: 3c6b70492fa220c713abd0fc07678330cdf762e7 $
 set -e
 f() {
 	false

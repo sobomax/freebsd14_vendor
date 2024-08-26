@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2000,2001 Jonathan Chen.  All rights reserved.
  * Copyright (c) 2003-2008 M. Warner Losh <imp@FreeBSD.org>
@@ -27,8 +27,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 6145ad8cebb100f8591b69d345f020d5e80c864a $");
-
 #include <sys/param.h>
 #include <sys/eventhandler.h>
 #include <sys/systm.h>
@@ -317,10 +315,8 @@ static int
 cardbus_read_ivar(device_t cbdev, device_t child, int which, uintptr_t *result)
 {
 	struct cardbus_devinfo *dinfo;
-	pcicfgregs *cfg;
 
 	dinfo = device_get_ivars(child);
-	cfg = &dinfo->pci.cfg;
 
 	switch (which) {
 	case PCI_IVAR_ETHADDR:
@@ -367,7 +363,5 @@ static device_method_t cardbus_methods[] = {
 DEFINE_CLASS_1(cardbus, cardbus_driver, cardbus_methods,
     sizeof(struct cardbus_softc), pci_driver);
 
-static devclass_t cardbus_devclass;
-
-DRIVER_MODULE(cardbus, cbb, cardbus_driver, cardbus_devclass, 0, 0);
+DRIVER_MODULE(cardbus, cbb, cardbus_driver, 0, 0);
 MODULE_VERSION(cardbus, 1);

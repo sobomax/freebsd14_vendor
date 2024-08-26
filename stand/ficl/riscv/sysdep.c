@@ -7,7 +7,6 @@
 **
 *******************************************************************/
 
-/* $FreeBSD: 43e7c3c91f1db7b15bfdfaaa4bfa0cd0e11e87ff $ */
 
 #ifdef TESTMAIN
 #include <stdio.h>

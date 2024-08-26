@@ -38,7 +38,6 @@
  * SUCH DAMAGE.
  *
  *	@(#)param.h	8.1 (Berkeley) 6/10/93
- * $FreeBSD: cf1d2bd0a5867fdd15d6db8a66c0a5f34470c086 $
  */
 
 #ifndef _AMD64_INCLUDE_PARAM_H_
@@ -65,7 +64,7 @@
 
 #ifdef SMP
 #ifndef MAXCPU
-#define MAXCPU		256
+#define MAXCPU		1024
 #endif
 #else
 #define MAXCPU		1
@@ -134,7 +133,7 @@
 #define	IOPERM_BITMAP_SIZE	(IOPAGES * PAGE_SIZE + 1)
 
 #ifndef	KSTACK_PAGES
-#ifdef KASAN
+#if defined(KASAN) || defined(KMSAN)
 #define	KSTACK_PAGES	6
 #else
 #define	KSTACK_PAGES	4	/* pages of kstack (with pcb) */

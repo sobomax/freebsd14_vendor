@@ -1,4 +1,3 @@
-# $FreeBSD: 486ca47a44be840e176a4df79fc6387e4cff565b $
 
 MDSRCS+= \
 	bcopy.S \

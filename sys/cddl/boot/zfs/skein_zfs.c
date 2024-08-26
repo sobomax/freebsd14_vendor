@@ -17,8 +17,6 @@
  * information: Portions Copyright [yyyy] [name of copyright owner]
  *
  * CDDL HEADER END
- *
- * $FreeBSD: 5b424c7a8b21aa5e4406b5d47801e19d5d58d315 $
  */
 /*
  * Copyright 2013 Saso Kiselkov.  All rights reserved.

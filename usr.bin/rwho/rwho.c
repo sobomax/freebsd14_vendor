@@ -43,8 +43,6 @@ static char sccsid[] = "@(#)rwho.c	8.1 (Berkeley) 6/6/93";
 #endif /* not lint */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 8e6384161f28950af3d4515fe13bd70248f65d2a $");
-
 #include <sys/capsicum.h>
 #include <sys/param.h>
 #include <sys/file.h>
@@ -83,7 +81,7 @@ static struct	myutmp {
 static time_t	now;
 static int	aflg;
 
-static void usage(void);
+static void usage(void) __dead2;
 static int utmpcmp(const void *, const void *);
 
 int

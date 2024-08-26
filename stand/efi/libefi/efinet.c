@@ -25,9 +25,6 @@
  * SUCH DAMAGE.
  */
 
-#include <sys/cdefs.h>
-__FBSDID("$FreeBSD: a6582bd2c1b54072fb3f4c9bf92cca75edab5053 $");
-
 #include <sys/param.h>
 #include <net/ethernet.h>
 #include <netinet/in.h>
@@ -355,7 +352,7 @@ struct devsw efinet_dev = {
 };
 
 static int
-efinet_dev_init()
+efinet_dev_init(void)
 {
 	struct netif_dif *dif;
 	struct netif_stats *stats;

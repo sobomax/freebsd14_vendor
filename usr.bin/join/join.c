@@ -45,8 +45,6 @@ static char sccsid[] = "@(#)join.c	8.6 (Berkeley) 5/4/95";
 #endif
 #endif /* not lint */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 40107802a1f8d92365447691acc9efbdac5c4479 $");
-
 #include <sys/param.h>
 
 #include <err.h>
@@ -114,7 +112,7 @@ static void outoneline(INPUT *, LINE *);
 static void outtwoline(INPUT *, LINE *, INPUT *, LINE *);
 static void slurp(INPUT *);
 static wchar_t *towcs(const char *);
-static void usage(void);
+static void usage(void) __dead2;
 
 int
 main(int argc, char *argv[])
@@ -394,9 +392,9 @@ static int
 cmp(LINE *lp1, u_long fieldno1, LINE *lp2, u_long fieldno2)
 {
 	if (lp1->fieldcnt <= fieldno1)
-		return (lp2->fieldcnt <= fieldno2 ? 0 : 1);
+		return (lp2->fieldcnt <= fieldno2 ? 0 : -1);
 	if (lp2->fieldcnt <= fieldno2)
-		return (-1);
+		return (1);
 	return (mbscoll(lp1->fields[fieldno1], lp2->fields[fieldno2]));
 }
 

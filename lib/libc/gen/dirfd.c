@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2011 Gleb Kurtsou <gleb@FreeBSD.org>
  * All rights reserved.
@@ -24,12 +24,7 @@
  * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
- *
- * $FreeBSD: 14fd3c8fc8231582deb153036ee9037455d76c11 $
  */
-
-#include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 14fd3c8fc8231582deb153036ee9037455d76c11 $");
 
 #include "namespace.h"
 #include <sys/param.h>

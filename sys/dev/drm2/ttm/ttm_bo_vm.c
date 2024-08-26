@@ -36,8 +36,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: c87eff0f6c98a9a3a36e7fcd7da6d83d4dd41ef8 $");
-
 #include "opt_vm.h"
 
 #include <dev/drm2/drmP.h>

@@ -37,8 +37,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: fe2aadb747972d231b4e7b4c9610bfc6d7582b9d $");
-
 #include "opt_param.h"
 #include "opt_msgbuf.h"
 #include "opt_maxphys.h"
@@ -63,11 +61,7 @@ __FBSDID("$FreeBSD: fe2aadb747972d231b4e7b4c9610bfc6d7582b9d $");
  */
 
 #ifndef HZ
-#  if defined(__mips__) || defined(__arm__)
-#    define	HZ 100
-#  else
-#    define	HZ 1000
-#  endif
+#  define	HZ 1000
 #  ifndef HZ_VM
 #    define	HZ_VM 100
 #  endif
@@ -175,9 +169,14 @@ void
 init_param1(void)
 {
 
-#if !defined(__mips__) && !defined(__arm64__)
+	TSENTER();
+
+	/*
+	 * arm64 and riscv currently hard-code the thread0 kstack size
+	 * to KSTACK_PAGES, ignoring the tunable.
+	 */
 	TUNABLE_INT_FETCH("kern.kstack_pages", &kstack_pages);
-#endif
+
 	hz = -1;
 	TUNABLE_INT_FETCH("kern.hz", &hz);
 	if (hz == -1)
@@ -249,6 +248,7 @@ init_param1(void)
 		pid_max = 300;
 
 	TUNABLE_INT_FETCH("vfs.unmapped_buf_allowed", &unmapped_buf_allowed);
+	TSEXIT();
 }
 
 /*
@@ -258,6 +258,7 @@ void
 init_param2(long physpages)
 {
 
+	TSENTER();
 	/* Base parameters */
 	maxusers = MAXUSERS;
 	TUNABLE_INT_FETCH("kern.maxusers", &maxusers);
@@ -339,6 +340,7 @@ init_param2(long physpages)
 	if (maxpipekva > (VM_MAX_KERNEL_ADDRESS - VM_MIN_KERNEL_ADDRESS) / 64)
 		maxpipekva = (VM_MAX_KERNEL_ADDRESS - VM_MIN_KERNEL_ADDRESS) /
 		    64;
+	TSEXIT();
 }
 
 /*

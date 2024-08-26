@@ -1,4 +1,3 @@
-/* $FreeBSD: 3b1074f6d70790bbfea823419bc85d6d7fda3725 $ */
 /* Do not modify. This file is auto-generated from aes-ppc.pl. */
 .machine	"any"
 .abiversion	2

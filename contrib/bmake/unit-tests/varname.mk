@@ -1,4 +1,4 @@
-# $NetBSD: varname.mk,v 1.9 2022/01/27 10:42:02 rillig Exp $
+# $NetBSD: varname.mk,v 1.11 2023/06/01 20:56:35 rillig Exp $
 #
 # Tests for special variables, such as .MAKE or .PARSEDIR.
 # And for variable names in general.
@@ -27,11 +27,14 @@ ${VARNAME}=	3 open parentheses
 # This is not a variable assignment since the parentheses and braces are not
 # balanced.  At the end of the line, there are still 3 levels open, which
 # means the variable name is not finished.
+# expect+2: Error in archive specification: "VAR"
+# expect+1: No closing parenthesis in archive specification
 ${:UVAR(((}=	try1
 # On the left-hand side of a variable assignments, the backslash is not parsed
 # as an escape character, therefore the parentheses still count to the nesting
 # level, which at the end of the line is still 3.  Therefore this is not a
 # variable assignment as well.
+# expect+1: Invalid line type
 ${:UVAR\(\(\(}=	try2
 # To assign to a variable with an arbitrary name, the variable name has to
 # come from an external source, not the text that is parsed in the assignment
@@ -42,7 +45,7 @@ ${VARNAME}=	try3
 .MAKEFLAGS: -d0
 
 # All variable names of a scope are stored in the same hash table, using a
-# simple hash function.  Ensure that HashEntry_KeyEquals handles collisions
+# simple hash function.  Ensure that HashTable_Find handles collisions
 # correctly and that the correct variable is looked up.  The strings "0x" and
 # "1Y" have the same hash code, as 31 * '0' + 'x' == 31 * '1' + 'Y'.
 V.0x=	0x

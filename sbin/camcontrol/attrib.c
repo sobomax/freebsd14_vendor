@@ -34,8 +34,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 52fd4be4106025cee2f62b6ef765f2587f8a475c $");
-
 #include <sys/ioctl.h>
 #include <sys/stdint.h>
 #include <sys/types.h>
@@ -137,8 +135,6 @@ scsiattrib(struct cam_device *device, int argc, char **argv, char *combinedopt,
 		error = 1;
 		goto bailout;
 	}
-
-	CCB_CLEAR_ALL_EXCEPT_HDR(&ccb->csio);
 
 	STAILQ_INIT(&write_attr_list);
 

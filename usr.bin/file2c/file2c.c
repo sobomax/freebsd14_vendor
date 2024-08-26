@@ -8,8 +8,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: e50bd1f8a46d69a0cd23afe8a66564022faac5e6 $");
-
 #include <limits.h>
 #include <stdio.h>
 #include <stdlib.h>

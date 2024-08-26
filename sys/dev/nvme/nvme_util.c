@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (C) 2013 Intel Corporation
  * Copyright (C) 1997 Justin T. Gibbs
@@ -28,8 +28,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 6b9cb467fd49cf422b3839a3b9adc5825c61c098 $");
-
 #include <sys/param.h>
 #include <dev/nvme/nvme.h>
 

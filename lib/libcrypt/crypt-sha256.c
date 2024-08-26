@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2011 The FreeBSD Project. All rights reserved.
  *
@@ -30,8 +30,6 @@
  * Ulrich Drepper <drepper@redhat.com>. */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 56a6fab58ae40ad48a86b38957926f4329001b78 $");
-
 #include <sys/endian.h>
 #include <sys/param.h>
 

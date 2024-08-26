@@ -1,4 +1,3 @@
-# $FreeBSD: b995e81b29ab45ffbd2c4b834b91303861ad8b7f $
 
 PACKAGE=	dpv
 LIB=		figpar

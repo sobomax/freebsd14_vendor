@@ -1,4 +1,3 @@
-# $FreeBSD: b40811e7e42005e95a2440826372f61007400069 $
 
 OFEDINCS=	${SRCTOP}/contrib/ofed/include
 IBVERBS=	${SRCTOP}/contrib/ofed/libibverbs

@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2009-2015 LSI Corp.
  * Copyright (c) 2013-2015 Avago Technologies
@@ -27,8 +27,6 @@
  * SUCH DAMAGE.
  *
  * Avago Technologies (LSI) MPT-Fusion Host Adapter FreeBSD
- *
- * $FreeBSD: 2afcf05030b193d439cd2b2f71c48b24cf60d8a9 $
  */
 
 /*

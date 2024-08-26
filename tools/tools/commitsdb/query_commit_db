@@ -1,7 +1,5 @@
 #!/usr/bin/perl -w
 
-# $FreeBSD: e855efb067661a8e35b8d60cb08e6d1bceb1cd0b $
-
 # This script takes a filename and revision number as arguments
 # and spits out a list of other files and their revisions that share
 # the same log message.  This is done by referring to the database

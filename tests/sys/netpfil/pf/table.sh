@@ -1,6 +1,5 @@
-# $FreeBSD: cc95daba048ba9c922f8ddf864326e7b0022e61f $
 #
-# SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+# SPDX-License-Identifier: BSD-2-Clause
 #
 # Copyright (c) 2020 Mark Johnston <markj@FreeBSD.org>
 #
@@ -52,7 +51,8 @@ v4_counters_body()
 	    "table <foo> counters { 192.0.2.1 }" \
 	    "block all" \
 	    "pass in from <foo> to any" \
-	    "pass out from any to <foo>"
+	    "pass out from any to <foo>" \
+	    "set skip on lo"
 
 	atf_check -s exit:0 -o ignore ping -c 3 192.0.2.2
 
@@ -91,7 +91,8 @@ v6_counters_body()
 	    "table <foo6> counters { 2001:db8:42::1 }" \
 	    "block all" \
 	    "pass in from <foo6> to any" \
-	    "pass out from any to <foo6>"
+	    "pass out from any to <foo6>" \
+	    "set skip on lo"
 
 	atf_check -s exit:0 -o ignore ping -6 -c 3 2001:db8:42::2
 
@@ -146,37 +147,6 @@ pr251414_cleanup()
 	pft_cleanup
 }
 
-atf_test_case "network" "cleanup"
-network_head()
-{
-	atf_set descr 'Test <ifgroup>:network'
-	atf_set require.user root
-}
-
-network_body()
-{
-	pft_init
-
-	epair=$(vnet_mkepair)
-	ifconfig ${epair}a 192.0.2.1/24 up
-
-	vnet_mkjail alcatraz ${epair}b
-	jexec alcatraz ifconfig ${epair}b 192.0.2.2/24 up
-	jexec alcatraz pfctl -e
-
-	pft_set_rules alcatraz \
-		"table <allow> const { epair:network }"\
-		"block in" \
-		"pass in from <allow>"
-
-	atf_check -s exit:0 -o ignore ping -c 1 192.0.2.2
-}
-
-network_cleanup()
-{
-	pft_cleanup
-}
-
 atf_test_case "automatic" "cleanup"
 automatic_head()
 {
@@ -210,6 +180,37 @@ automatic_body()
 }
 
 automatic_cleanup()
+{
+	pft_cleanup
+}
+
+atf_test_case "network" "cleanup"
+network_head()
+{
+	atf_set descr 'Test <ifgroup>:network'
+	atf_set require.user root
+}
+
+network_body()
+{
+	pft_init
+
+	epair=$(vnet_mkepair)
+	ifconfig ${epair}a 192.0.2.1/24 up
+
+	vnet_mkjail alcatraz ${epair}b
+	jexec alcatraz ifconfig ${epair}b 192.0.2.2/24 up
+	jexec alcatraz pfctl -e
+
+	pft_set_rules alcatraz \
+		"table <allow> const { epair:network }"\
+		"block in" \
+		"pass in from <allow>"
+
+	atf_check -s exit:0 -o ignore ping -c 1 192.0.2.2
+}
+
+network_cleanup()
 {
 	pft_cleanup
 }
@@ -324,8 +325,8 @@ atf_init_test_cases()
 	atf_add_test_case "v4_counters"
 	atf_add_test_case "v6_counters"
 	atf_add_test_case "pr251414"
-	atf_add_test_case "network"
 	atf_add_test_case "automatic"
+	atf_add_test_case "network"
 	atf_add_test_case "pr259689"
 	atf_add_test_case "precreate"
 	atf_add_test_case "anchor"

@@ -31,7 +31,6 @@
   POSSIBILITY OF SUCH DAMAGE.
 
 ******************************************************************************/
-/*$FreeBSD: abf62f676a6f823fcf591110ef7bdf7fcb92dad4 $*/
 
 #ifndef _E1000_VF_H_
 #define _E1000_VF_H_

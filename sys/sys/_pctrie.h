@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2013 EMC Corp.
  * Copyright (c) 2011 Jeffrey Roberson <jeff@freebsd.org>
@@ -26,18 +26,21 @@
  * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
- *
- * $FreeBSD: d9a98a78bfb214c6f3e484169147e1dcfe4b3dc2 $
  */
 
 #ifndef __SYS_PCTRIE_H_
 #define __SYS_PCTRIE_H_
 
 /*
+ * Radix tree node.
+ */
+struct pctrie_node;
+
+/*
  * Radix tree root.
  */
 struct pctrie {
-	uintptr_t	pt_root;
+	struct pctrie_node	*pt_root;
 };
 
 #endif /* !__SYS_PCTRIE_H_ */

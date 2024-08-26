@@ -1,7 +1,0 @@
-# $FreeBSD: cef006ba692ed9c9671df9f669ee56a4521d0f2d $
-files	"../nlm/files.xlp"
-cpu	CPU_NLM
-
-# Devices needed always
-device		uart
-device		pci

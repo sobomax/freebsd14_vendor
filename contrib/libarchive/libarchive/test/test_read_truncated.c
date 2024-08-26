@@ -23,7 +23,6 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 #include "test.h"
-__FBSDID("$FreeBSD: 4d5e4385e92aac1a3b16ada8b260771112ff698a $");
 
 static char buff[1000000];
 static char buff2[100000];

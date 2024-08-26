@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2002 Juli Mallett.  All rights reserved.
  *
@@ -28,13 +28,13 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 653ef8ceeea1c4162ae4eff3fc43c8ae692cb885 $");
-
 #include <sys/param.h>
 #include <sys/mount.h>
 #include <sys/disklabel.h>
 #include <sys/stat.h>
 
+#include <ufs/ufs/extattr.h>
+#include <ufs/ufs/quota.h>
 #include <ufs/ufs/ufsmount.h>
 #include <ufs/ufs/dinode.h>
 #include <ufs/ffs/fs.h>
@@ -166,6 +166,8 @@ again:	if ((ret = stat(name, &st)) < 0) {
 	disk->d_ufs = 0;
 	disk->d_error = NULL;
 	disk->d_si = NULL;
+	disk->d_sblockloc = UFS_STDSB;
+	disk->d_lookupflags = 0;
 
 	if (oname != name) {
 		name = strdup(name);

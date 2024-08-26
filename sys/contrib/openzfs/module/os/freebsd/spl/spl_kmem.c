@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: ee8f1d851a48acaf463ffb0a457f543c25bd3a34 $");
+__FBSDID("$FreeBSD: ca9a677567d9037a8b21b9cf1c3c7cd02102d8f6 $");
 
 #include <sys/types.h>
 #include <sys/param.h>
@@ -156,7 +156,7 @@ kmem_std_destructor(void *mem, int size __unused, void *private)
 }
 
 kmem_cache_t *
-kmem_cache_create(char *name, size_t bufsize, size_t align,
+kmem_cache_create(const char *name, size_t bufsize, size_t align,
     int (*constructor)(void *, void *, int), void (*destructor)(void *, void *),
     void (*reclaim)(void *) __unused, void *private, vmem_t *vmp, int cflags)
 {

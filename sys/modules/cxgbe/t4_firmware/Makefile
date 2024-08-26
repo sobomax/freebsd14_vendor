@@ -1,5 +1,4 @@
 #
-# $FreeBSD: bd46124af6686a0bba5b24b1b2945c8833fd3dca $
 #
 
 T4FW=	${SRCTOP}/sys/dev/cxgbe/firmware
@@ -17,7 +16,7 @@ FIRMWS+=	${F}:${F:C/.txt//}:1.0.0.0
 .endif
 .endfor
 
-T4FW_VER=	1.27.0.0
+T4FW_VER=	1.27.5.0
 FIRMWS+=	t4fw-${T4FW_VER}.bin:t4fw:${T4FW_VER}
 
 .include <bsd.kmod.mk>

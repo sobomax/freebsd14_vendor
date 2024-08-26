@@ -26,7 +26,6 @@
 
 
 #include "cpio_platform.h"
-__FBSDID("$FreeBSD: 3d5a0ecad7f742a9434f25a73b4acc0f8a3a1bb4 $");
 
 #ifdef HAVE_ERRNO_H
 #include <errno.h>
@@ -115,12 +114,18 @@ cpio_getopt(struct cpio *cpio)
 	static int state = state_start;
 	static char *opt_word;
 
-	const struct option *popt, *match = NULL, *match2 = NULL;
-	const char *p, *long_prefix = "--";
+	const struct option *popt, *match, *match2;
+	const char *p, *long_prefix;
 	size_t optlength;
-	int opt = '?';
-	int required = 0;
+	int opt;
+	int required;
 
+again:
+	match = NULL;
+	match2 = NULL;
+	long_prefix = "--";
+	opt = '?';
+	required = 0;
 	cpio->argument = NULL;
 
 	/* First time through, initialize everything. */
@@ -170,7 +175,7 @@ cpio_getopt(struct cpio *cpio)
 		if (opt == '\0') {
 			/* End of this group; recurse to get next option. */
 			state = state_next_word;
-			return cpio_getopt(cpio);
+			goto again;
 		}
 
 		/* Does this option take an argument? */

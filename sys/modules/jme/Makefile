@@ -1,4 +1,3 @@
-# $FreeBSD: e17a8ebdf8c6efcf9a2965109e6ab47a42a49924 $
 
 .PATH: ${SRCTOP}/sys/dev/jme
 

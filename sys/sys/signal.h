@@ -34,7 +34,6 @@
  * SUCH DAMAGE.
  *
  *	@(#)signal.h	8.4 (Berkeley) 5/4/95
- * $FreeBSD: 5985ec9e94eed0a2a6d665565ff11366adfa04f7 $
  */
 
 #ifndef _SYS_SIGNAL_H_
@@ -43,6 +42,7 @@
 #include <sys/cdefs.h>
 #include <sys/_types.h>
 #include <sys/_sigset.h>
+#include <sys/_sigval.h>
 
 #include <machine/_limits.h>	/* __MINSIGSTKSZ */
 #include <machine/signal.h>	/* sig_atomic_t; trap codes; sigcontext */
@@ -167,27 +167,6 @@ typedef	__sigset_t	sigset_t;
 #endif
 #endif
 
-#if __POSIX_VISIBLE >= 199309 || __XSI_VISIBLE >= 500
-union sigval {
-	/* Members as suggested by Annex C of POSIX 1003.1b. */
-	int	sival_int;
-	void	*sival_ptr;
-	/* 6.0 compatibility */
-	int     sigval_int;
-	void    *sigval_ptr;
-};
-
-#if defined(_WANT_LWPINFO32) || (defined(_KERNEL) && defined(__LP64__))
-union sigval32 {
-	int	sival_int;
-	uint32_t sival_ptr;
-	/* 6.0 compatibility */
-	int	sigval_int;
-	uint32_t sigval_ptr;
-};
-#endif
-#endif
-
 #if __POSIX_VISIBLE >= 199309
 
 struct pthread_attr;
@@ -256,6 +235,12 @@ typedef	struct __siginfo {
 			long	_band;		/* band event for SIGPOLL */
 		} _poll;			/* was this ever used ? */
 		struct {
+			int	_syscall;	/* Syscall number for signals
+						 * delivered as a result of
+						 * system calls denied by
+						 * Capsicum. */
+		} _capsicum;
+		struct {
 			long	__spare1__;
 			int	__spare2__[7];
 		} __spare__;
@@ -267,6 +252,7 @@ typedef	struct __siginfo {
 #define si_overrun	_reason._timer._overrun
 #define si_mqd		_reason._mesgq._mqd
 #define si_band		_reason._poll._band
+#define si_syscall	_reason._capsicum._syscall
 
 #if defined(_WANT_LWPINFO32) || (defined(_KERNEL) && defined(__LP64__))
 struct siginfo32 {
@@ -493,6 +479,10 @@ struct sigstack {
 
 #if __BSD_VISIBLE
 #define	BADSIG		SIG_ERR
+
+/* sigqueue(2) signo high-bits flags */
+#define	__SIGQUEUE_TID	0x80000000	/* queue for tid, instead of pid */
+#define	__SIGQUEUE_RSRV	0x40000000	/* reserved */
 #endif
 
 #if __POSIX_VISIBLE || __XSI_VISIBLE

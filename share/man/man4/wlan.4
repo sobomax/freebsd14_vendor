@@ -23,14 +23,12 @@
 .\" OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 .\" SUCH DAMAGE.
 .\"
-.\" $FreeBSD: 2e0ebdb09c2ff458ecf4e635802fa1c9b03c66ac $
-.\"
-.Dd January 9, 2021
+.Dd May 5, 2023
 .Dt WLAN 4
 .Os
 .Sh NAME
 .Nm wlan
-.Nd generic 802.11 link-layer support
+.Nd generic WiFi 802.11 link-layer support
 .Sh SYNOPSIS
 .Cd "device wlan"
 .Sh DESCRIPTION
@@ -41,9 +39,7 @@ Where a device does not directly support 802.11 functionality
 this layer fills in.
 The
 .Nm
-module is required by all native 802.11 drivers as well as the
-.Xr ndis 4
-support.
+module is required by all native 802.11 drivers.
 .Pp
 .Nm
 supports multi-mode devices capable of
@@ -170,12 +166,12 @@ not ratified and subject to change.
 Be aware that this specification is incompatible with earlier drafts.
 Stations implementing earlier drafts (e.g., Linux) may be incompatible.
 .Sh SEE ALSO
-.Xr an 4 ,
 .Xr ath 4 ,
 .Xr bwi 4 ,
 .Xr bwn 4 ,
 .Xr ipw 4 ,
 .Xr iwi 4 ,
+.Xr iwlwifi 4 ,
 .Xr iwm 4 ,
 .Xr iwn 4 ,
 .Xr malo 4 ,
@@ -184,6 +180,7 @@ Stations implementing earlier drafts (e.g., Linux) may be incompatible.
 .Xr otus 4 ,
 .Xr ral 4 ,
 .Xr rsu 4 ,
+.Xr rtw88 4 ,
 .Xr rtwn 4 ,
 .Xr rum 4 ,
 .Xr run 4 ,

@@ -1,3 +1,2 @@
-# $FreeBSD: 1e25566a156b21c86635485ce7a2db6e3c646220 $
 set -e
 false | true

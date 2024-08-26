@@ -31,9 +31,6 @@
  * try-and-error for region size.
  */
 
-#include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 2de869ca6f9e93afd64740f373ad45ac1d8a2bbb $");
-
 #include "namespace.h"
 #include <sys/types.h>
 #include <sys/ioctl.h>

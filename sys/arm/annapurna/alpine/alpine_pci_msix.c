@@ -27,8 +27,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: a988a00d19120248d42f5f1f28b6bc70bfd584c5 $");
-
 #include <sys/param.h>
 #include <sys/systm.h>
 #include <sys/kernel.h>
@@ -107,10 +105,8 @@ static driver_t al_msix_driver = {
 	sizeof(struct al_msix_softc),
 };
 
-devclass_t al_msix_devclass;
-
-DRIVER_MODULE(al_msix, ofwbus, al_msix_driver, al_msix_devclass, 0, 0);
-DRIVER_MODULE(al_msix, simplebus, al_msix_driver, al_msix_devclass, 0, 0);
+DRIVER_MODULE(al_msix, ofwbus, al_msix_driver, 0, 0);
+DRIVER_MODULE(al_msix, simplebus, al_msix_driver, 0, 0);
 
 MALLOC_DECLARE(M_AL_MSIX);
 MALLOC_DEFINE(M_AL_MSIX, "al_msix", "Alpine MSIX");

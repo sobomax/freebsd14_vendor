@@ -33,9 +33,6 @@
 #if defined(LIBC_SCCS) && !defined(lint)
 static char *sccsid = "@(#)rpc_commondata.c	2.1 88/07/29 4.0 RPCSRC";
 #endif
-#include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 4506f3068e95fa4d91bd33a08ddadf19156b79f3 $");
-
 #include "namespace.h"
 #include <rpc/rpc.h>
 #include "un-namespace.h"

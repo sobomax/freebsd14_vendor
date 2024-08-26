@@ -1,5 +1,4 @@
 # $Id: Makefile,v 1.1 2004/01/20 21:27:55 max Exp $
-# $FreeBSD: 65c1df35d12c75c2c38650b0e123ec40beac89f3 $
 
 PACKAGE=	bluetooth
 PROG=		sdpd

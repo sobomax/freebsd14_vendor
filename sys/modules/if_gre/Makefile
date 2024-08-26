@@ -1,4 +1,3 @@
-# $FreeBSD: 1b81cb2ca96839064df7168ddf1b07a7466721ca $
 
 SYSDIR?=${SRCTOP}/sys
 .PATH: ${SYSDIR}/net ${SYSDIR}/netinet ${SYSDIR}/netinet6

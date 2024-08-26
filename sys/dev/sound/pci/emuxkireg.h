@@ -1,4 +1,3 @@
-/* $FreeBSD: a1cf896db53d5d06f9417b9a620c982d845866ba $ */
 /*	$NetBSD: emuxkireg.h,v 1.8 2008/04/28 20:23:54 martin Exp $	*/
 
 /*-

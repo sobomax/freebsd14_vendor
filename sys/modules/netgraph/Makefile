@@ -1,12 +1,9 @@
 # $Whistle: Makefile,v 1.5 1999/01/24 06:48:37 archie Exp $
-# $FreeBSD: 1c5da9a1692e86ec237bd3d30e8135fc62baa919 $
 
 SYSDIR?=${SRCTOP}/sys
 .include "${SYSDIR}/conf/kern.opts.mk"
 
 SUBDIR=	async \
-	atm \
-	atmllc \
 	${_bluetooth} \
 	bpf \
 	bridge \
@@ -47,7 +44,6 @@ SUBDIR=	async \
 	socket \
 	source \
 	split \
-	sppp \
 	tag \
 	tcpmss \
 	tee \

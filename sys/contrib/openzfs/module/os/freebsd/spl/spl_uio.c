@@ -6,7 +6,7 @@
  * You may not use this file except in compliance with the License.
  *
  * You can obtain a copy of the license at usr/src/OPENSOLARIS.LICENSE
- * or http://www.opensolaris.org/os/licensing.
+ * or https://opensource.org/licenses/CDDL-1.0.
  * See the License for the specific language governing permissions
  * and limitations under the License.
  *
@@ -37,7 +37,7 @@
  */
 
 /*
- * $FreeBSD: 0bf251a1edac9a50270b4a618dad75f8f82aaae3 $
+ * $FreeBSD: ffccb6f2594e68062ca06c9ae80a16013f9f71f1 $
  */
 
 #include <sys/param.h>

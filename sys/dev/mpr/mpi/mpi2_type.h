@@ -26,8 +26,6 @@
  * SUCH DAMAGE.
  *
  * Broadcom Inc. (LSI) MPT-Fusion Host Adapter FreeBSD
- *
- * $FreeBSD: 93d74586e219efceb376610b615d138210ffa314 $
  */
 
 /*

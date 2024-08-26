@@ -19,8 +19,6 @@
  * CDDL HEADER END
  *
  * Portions Copyright 2018 Devin Teske dteske@freebsd.org
- *
- * $FreeBSD: d643ad732a94ae8aa1ab380b643d7a31b765754d $
  */
 /*
  * Copyright 2006 Sun Microsystems, Inc.  All rights reserved.

@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2018 Emmanuel Vadot <manu@FreeBSD.org>
  * Copyright (c) 2013 Alexander Fedorov
@@ -28,8 +28,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 81dd34ce8c54973b96012dbd10827d0ddde1a09f $");
-
 #include <sys/param.h>
 #include <sys/systm.h>
 #include <sys/bus.h>
@@ -1510,16 +1508,13 @@ static device_method_t aw_mmc_methods[] = {
 	DEVMETHOD_END
 };
 
-static devclass_t aw_mmc_devclass;
-
 static driver_t aw_mmc_driver = {
 	"aw_mmc",
 	aw_mmc_methods,
 	sizeof(struct aw_mmc_softc),
 };
 
-DRIVER_MODULE(aw_mmc, simplebus, aw_mmc_driver, aw_mmc_devclass, NULL,
-    NULL);
+DRIVER_MODULE(aw_mmc, simplebus, aw_mmc_driver, NULL, NULL);
 #ifndef MMCCAM
 MMC_DECLARE_BRIDGE(aw_mmc);
 #endif

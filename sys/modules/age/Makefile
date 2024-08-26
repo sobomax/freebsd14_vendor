@@ -1,4 +1,3 @@
-# $FreeBSD: add3f66bcd3a582b144d8becdaec58672cf8cfec $
 
 .PATH: ${SRCTOP}/sys/dev/age
 

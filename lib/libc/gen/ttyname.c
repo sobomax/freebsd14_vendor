@@ -31,8 +31,6 @@
 
 #include <sys/cdefs.h>
 __SCCSID("@(#)ttyname.c	8.2 (Berkeley) 1/27/94");
-__FBSDID("$FreeBSD: 0984538eaf7698830dd2b98d3bf7c7d9459be17d $");
-
 #include "namespace.h"
 #include <sys/types.h>
 #include <sys/ioctl.h>

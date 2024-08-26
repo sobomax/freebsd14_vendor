@@ -1,9 +1,12 @@
-# $FreeBSD: 395b9fc49c72409b4ffc427c9784770fd11f7fbc $
 
-.PATH: ${SRCTOP}/sys/arm64/rockchip
+.PATH: ${SRCTOP}/sys/dev/iicbus/pmic/rockchip
 
 KMOD=	rk805
-SRCS=	rk805.c
+SRCS=	rk8xx.c \
+	rk805.c \
+	rk8xx_clocks.c \
+	rk8xx_rtc.c \
+	rk8xx_regulators.c
 
 SRCS+=	\
 	bus_if.h \

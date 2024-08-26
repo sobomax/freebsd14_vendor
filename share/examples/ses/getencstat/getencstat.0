@@ -29,8 +29,6 @@
 .\" Feral Software
 .\" mjacob@feral.com
 .\"
-.\" $FreeBSD: 45a949818d5502f3f46534f4e14418e60e158189 $
-.\"
 .Dd February 21, 2000
 .Dt GETENCSTAT 8
 .Os

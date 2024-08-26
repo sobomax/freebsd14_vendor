@@ -1,5 +1,4 @@
 #	@(#)Makefile	8.2 (Berkeley) 4/22/94
-# $FreeBSD: d743f60c6a7c8f77f15d341492b1d2f5eb6a0e93 $
 
 PROG=	nologin
 MAN=	nologin.5 nologin.8

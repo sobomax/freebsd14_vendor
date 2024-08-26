@@ -1,5 +1,4 @@
 #
-# $FreeBSD: b67641de9f625dc37b46d3f89d7e453b9551959a $
 #
 
 .include <src.opts.mk>
@@ -14,7 +13,7 @@ CFLAGS+= -I${SRCTOP}/lib/libpmcstat
 # Does not link when built position-independent.
 MK_PIE=no
 
-LIBADD=	kvm pmc m ncursesw pmcstat elf
+LIBADD=	pmc m pmcstat elf
 
 SRCS=	pmc.c pmc_util.c cmd_pmc_stat.c \
 	cmd_pmc_list.c cmd_pmc_filter.cc \

@@ -35,8 +35,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: c88de648eabde61d519a4c768748b3ece88f22cd $");
-
 #include <sys/param.h>
 #include <sys/systm.h>
 #include <sys/kernel.h>
@@ -44,7 +42,6 @@ __FBSDID("$FreeBSD: c88de648eabde61d519a4c768748b3ece88f22cd $");
 #include <sys/malloc.h>
 #include <sys/mbuf.h>
 #include <sys/protosw.h>
-#include <sys/rmlock.h>
 #include <sys/socket.h>
 #include <sys/socketvar.h>
 #include <sys/protosw.h>
@@ -67,6 +64,7 @@ __FBSDID("$FreeBSD: c88de648eabde61d519a4c768748b3ece88f22cd $");
 #include <netinet/in_fib.h>
 #include <netinet/in_pcb.h>
 #include <netinet/in_var.h>
+#include <net/if_private.h>
 #include <netinet/ip_var.h>
 #include <netinet/igmp_var.h>
 
@@ -95,8 +93,8 @@ static MALLOC_DEFINE(M_IPMSOURCE, "ip_msource",
 /*
  * Locking:
  *
- * - Lock order is: Giant, IN_MULTI_LOCK, INP_WLOCK,
- *   IN_MULTI_LIST_LOCK, IGMP_LOCK, IF_ADDR_LOCK.
+ * - Lock order is: IN_MULTI_LOCK, INP_WLOCK, IN_MULTI_LIST_LOCK, IGMP_LOCK,
+ *                  IF_ADDR_LOCK.
  * - The IF_ADDR_LOCK is implicitly taken by inm_lookup() earlier, however
  *   it can be taken by code in net/if.c also.
  * - ip_moptions and in_mfilter are covered by the INP_WLOCK.
@@ -118,8 +116,6 @@ SX_SYSINIT(in_multi_sx, &in_multi_sx, "in_multi_sx");
  * Functions with non-static linkage defined in this file should be
  * declared in in_var.h:
  *  imo_multi_filter()
- *  in_addmulti()
- *  in_delmulti()
  *  in_joingroup()
  *  in_joingroup_locked()
  *  in_leavegroup()
@@ -128,9 +124,6 @@ SX_SYSINIT(in_multi_sx, &in_multi_sx, "in_multi_sx");
  *  inp_freemoptions()
  *  inp_getmoptions()
  *  inp_setmoptions()
- *
- * XXX: Both carp and pf need to use the legacy (*,G) KPIs in_addmulti()
- * and in_delmulti().
  */
 static void	imf_commit(struct in_mfilter *);
 static int	imf_get_source(struct in_mfilter *imf,
@@ -485,7 +478,7 @@ imo_multi_filter(const struct ip_moptions *imo, const struct ifnet *ifp,
 	ims = imo_match_source(imf, src);
 
 	if ((ims == NULL && mode == MCAST_INCLUDE) ||
-	    (ims != NULL && ims->imsl_st[0] != mode))
+	    (ims != NULL && ims->imsl_st[0] == MCAST_EXCLUDE))
 		return (MCAST_NOTSMEMBER);
 
 	return (MCAST_PASS);
@@ -922,6 +915,8 @@ imf_purge(struct in_mfilter *imf)
 	imf->imf_st[0] = imf->imf_st[1] = MCAST_UNDEFINED;
 	KASSERT(RB_EMPTY(&imf->imf_sources),
 	    ("%s: imf_sources not empty", __func__));
+	if (imf->imf_inm != NULL)
+		mbufq_drain(&imf->imf_inm->inm_scq);
 }
 
 /*
@@ -1193,9 +1188,9 @@ inm_purge(struct in_multi *inm)
 /*
  * Join a multicast group; unlocked entry point.
  *
- * SMPng: XXX: in_joingroup() is called from in_control() when Giant
- * is not held. Fortunately, ifp is unlikely to have been detached
- * at this point, so we assume it's OK to recurse.
+ * SMPng: XXX: in_joingroup() is called from in_control().  Fortunately,
+ * ifp is unlikely to have been detached at this point, so we assume
+ * it's OK to recurse.
  */
 int
 in_joingroup(struct ifnet *ifp, const struct in_addr *gina,
@@ -1361,30 +1356,6 @@ in_leavegroup_locked(struct in_multi *inm, /*const*/ struct in_mfilter *imf)
 }
 
 /*#ifndef BURN_BRIDGES*/
-/*
- * Join an IPv4 multicast group in (*,G) exclusive mode.
- * The group must be a 224.0.0.0/24 link-scope group.
- * This KPI is for legacy kernel consumers only.
- */
-struct in_multi *
-in_addmulti(struct in_addr *ap, struct ifnet *ifp)
-{
-	struct in_multi *pinm;
-	int error;
-#ifdef INVARIANTS
-	char addrbuf[INET_ADDRSTRLEN];
-#endif
-
-	KASSERT(IN_LOCAL_GROUP(ntohl(ap->s_addr)),
-	    ("%s: %s not in 224.0.0.0/24", __func__,
-	    inet_ntoa_r(*ap, addrbuf)));
-
-	error = in_joingroup(ifp, ap, NULL, &pinm);
-	if (error != 0)
-		pinm = NULL;
-
-	return (pinm);
-}
 
 /*
  * Block or unblock an ASM multicast source on an inpcb.
@@ -1393,15 +1364,13 @@ in_addmulti(struct in_addr *ap, struct ifnet *ifp)
  * The delta-based API applies only to exclusive-mode memberships.
  * An IGMP downcall will be performed.
  *
- * SMPng: NOTE: Must take Giant as a join may create a new ifma.
- *
  * Return 0 if successful, otherwise return an appropriate error code.
  */
 static int
 inp_block_unblock_source(struct inpcb *inp, struct sockopt *sopt)
 {
+	struct epoch_tracker		 et;
 	struct group_source_req		 gsr;
-	struct rm_priotracker		 in_ifa_tracker;
 	sockunion_t			*gsa, *ssa;
 	struct ifnet			*ifp;
 	struct in_mfilter		*imf;
@@ -1439,9 +1408,10 @@ inp_block_unblock_source(struct inpcb *inp, struct sockopt *sopt)
 		ssa->sin.sin_addr = mreqs.imr_sourceaddr;
 
 		if (!in_nullhost(mreqs.imr_interface)) {
-			IN_IFADDR_RLOCK(&in_ifa_tracker);
+			NET_EPOCH_ENTER(et);
 			INADDR_TO_IFP(mreqs.imr_interface, ifp);
-			IN_IFADDR_RUNLOCK(&in_ifa_tracker);
+			/* XXXGL: ifref? */
+			NET_EPOCH_EXIT(et);
 		}
 		if (sopt->sopt_name == IP_BLOCK_SOURCE)
 			doblock = 1;
@@ -1467,10 +1437,11 @@ inp_block_unblock_source(struct inpcb *inp, struct sockopt *sopt)
 		    ssa->sin.sin_len != sizeof(struct sockaddr_in))
 			return (EINVAL);
 
-		if (gsr.gsr_interface == 0 || V_if_index < gsr.gsr_interface)
-			return (EADDRNOTAVAIL);
-
+		NET_EPOCH_ENTER(et);
 		ifp = ifnet_byindex(gsr.gsr_interface);
+		NET_EPOCH_EXIT(et);
+		if (ifp == NULL)
+			return (EADDRNOTAVAIL);
 
 		if (sopt->sopt_name == MCAST_BLOCK_SOURCE)
 			doblock = 1;
@@ -1579,7 +1550,6 @@ out_inp_locked:
  * Given an inpcb, return its multicast options structure pointer.  Accepts
  * an unlocked inpcb pointer, but will return it locked.  May sleep.
  *
- * SMPng: NOTE: Potentially calls malloc(M_WAITOK) with Giant held.
  * SMPng: NOTE: Returns with the INP write lock held.
  */
 static struct ip_moptions *
@@ -1611,12 +1581,15 @@ inp_findmoptions(struct inpcb *inp)
 	return (imo);
 }
 
-static void
-inp_gcmoptions(struct ip_moptions *imo)
+void
+inp_freemoptions(struct ip_moptions *imo)
 {
 	struct in_mfilter *imf;
 	struct in_multi *inm;
 	struct ifnet *ifp;
+
+	if (imo == NULL)
+		return;
 
 	while ((imf = ip_mfilter_first(&imo->imo_head)) != NULL) {
 		ip_mfilter_remove(&imo->imo_head, imf);
@@ -1637,26 +1610,13 @@ inp_gcmoptions(struct ip_moptions *imo)
 }
 
 /*
- * Discard the IP multicast options (and source filters).  To minimize
- * the amount of work done while holding locks such as the INP's
- * pcbinfo lock (which is used in the receive path), the free
- * operation is deferred to the epoch callback task.
- */
-void
-inp_freemoptions(struct ip_moptions *imo)
-{
-	if (imo == NULL)
-		return;
-	inp_gcmoptions(imo);
-}
-
-/*
  * Atomically get source filters on a socket for an IPv4 multicast group.
  * Called with INP lock held; returns with lock released.
  */
 static int
 inp_get_source_filters(struct inpcb *inp, struct sockopt *sopt)
 {
+	struct epoch_tracker	 et;
 	struct __msfilterreq	 msfr;
 	sockunion_t		*gsa;
 	struct ifnet		*ifp;
@@ -1682,10 +1642,9 @@ inp_get_source_filters(struct inpcb *inp, struct sockopt *sopt)
 	if (error)
 		return (error);
 
-	if (msfr.msfr_ifindex == 0 || V_if_index < msfr.msfr_ifindex)
-		return (EINVAL);
-
+	NET_EPOCH_ENTER(et);
 	ifp = ifnet_byindex(msfr.msfr_ifindex);
+	NET_EPOCH_EXIT(et);	/* XXXGL: unsafe ifnet pointer left */
 	if (ifp == NULL)
 		return (EINVAL);
 
@@ -1775,7 +1734,6 @@ inp_get_source_filters(struct inpcb *inp, struct sockopt *sopt)
 int
 inp_getmoptions(struct inpcb *inp, struct sockopt *sopt)
 {
-	struct rm_priotracker	 in_ifa_tracker;
 	struct ip_mreqn		 mreqn;
 	struct ip_moptions	*imo;
 	struct ifnet		*ifp;
@@ -1785,13 +1743,9 @@ inp_getmoptions(struct inpcb *inp, struct sockopt *sopt)
 
 	INP_WLOCK(inp);
 	imo = inp->inp_moptions;
-	/*
-	 * If socket is neither of type SOCK_RAW or SOCK_DGRAM,
-	 * or is a divert socket, reject it.
-	 */
-	if (inp->inp_socket->so_proto->pr_protocol == IPPROTO_DIVERT ||
-	    (inp->inp_socket->so_proto->pr_type != SOCK_RAW &&
-	    inp->inp_socket->so_proto->pr_type != SOCK_DGRAM)) {
+	/* If socket is neither of type SOCK_RAW or SOCK_DGRAM reject it. */
+	if (inp->inp_socket->so_proto->pr_type != SOCK_RAW &&
+	    inp->inp_socket->so_proto->pr_type != SOCK_DGRAM) {
 		INP_WUNLOCK(inp);
 		return (EOPNOTSUPP);
 	}
@@ -1818,7 +1772,7 @@ inp_getmoptions(struct inpcb *inp, struct sockopt *sopt)
 
 				mreqn.imr_ifindex = ifp->if_index;
 				NET_EPOCH_ENTER(et);
-				IFP_TO_IA(ifp, ia, &in_ifa_tracker);
+				IFP_TO_IA(ifp, ia);
 				if (ia != NULL)
 					mreqn.imr_address =
 					    IA_SIN(ia)->sin_addr;
@@ -1906,10 +1860,10 @@ static struct ifnet *
 inp_lookup_mcast_ifp(const struct inpcb *inp,
     const struct sockaddr_in *gsin, const struct in_addr ina)
 {
-	struct rm_priotracker in_ifa_tracker;
 	struct ifnet *ifp;
 	struct nhop_object *nh;
 
+	NET_EPOCH_ASSERT();
 	KASSERT(inp != NULL, ("%s: inp must not be NULL", __func__));
 	KASSERT(gsin->sin_family == AF_INET, ("%s: not AF_INET", __func__));
 	KASSERT(IN_MULTICAST(ntohl(gsin->sin_addr.s_addr)),
@@ -1917,11 +1871,9 @@ inp_lookup_mcast_ifp(const struct inpcb *inp,
 
 	ifp = NULL;
 	if (!in_nullhost(ina)) {
-		IN_IFADDR_RLOCK(&in_ifa_tracker);
 		INADDR_TO_IFP(ina, ifp);
 		if (ifp != NULL)
 			if_ref(ifp);
-		IN_IFADDR_RUNLOCK(&in_ifa_tracker);
 	} else {
 		nh = fib4_lookup(inp->inp_inc.inc_fibnum, gsin->sin_addr, 0, NHR_NONE, 0);
 		if (nh != NULL) {
@@ -1932,7 +1884,6 @@ inp_lookup_mcast_ifp(const struct inpcb *inp,
 			struct ifnet *mifp;
 
 			mifp = NULL;
-			IN_IFADDR_RLOCK(&in_ifa_tracker);
 			CK_STAILQ_FOREACH(ia, &V_in_ifaddrhead, ia_link) {
 				mifp = ia->ia_ifp;
 				if (!(mifp->if_flags & IFF_LOOPBACK) &&
@@ -1942,7 +1893,6 @@ inp_lookup_mcast_ifp(const struct inpcb *inp,
 					break;
 				}
 			}
-			IN_IFADDR_RUNLOCK(&in_ifa_tracker);
 		}
 	}
 
@@ -2064,11 +2014,11 @@ inp_join_group(struct inpcb *inp, struct sockopt *sopt)
 		if (!IN_MULTICAST(ntohl(gsa->sin.sin_addr.s_addr)))
 			return (EINVAL);
 
-		if (gsr.gsr_interface == 0 || V_if_index < gsr.gsr_interface)
-			return (EADDRNOTAVAIL);
 		NET_EPOCH_ENTER(et);
 		ifp = ifnet_byindex_ref(gsr.gsr_interface);
 		NET_EPOCH_EXIT(et);
+		if (ifp == NULL)
+			return (EADDRNOTAVAIL);
 		break;
 
 	default:
@@ -2281,9 +2231,9 @@ out_inp_unlocked:
 static int
 inp_leave_group(struct inpcb *inp, struct sockopt *sopt)
 {
+	struct epoch_tracker		 et;
 	struct group_source_req		 gsr;
 	struct ip_mreq_source		 mreqs;
-	struct rm_priotracker		 in_ifa_tracker;
 	sockunion_t			*gsa, *ssa;
 	struct ifnet			*ifp;
 	struct in_mfilter		*imf;
@@ -2343,9 +2293,10 @@ inp_leave_group(struct inpcb *inp, struct sockopt *sopt)
 		 * using an IPv4 address as a key is racy.
 		 */
 		if (!in_nullhost(mreqs.imr_interface)) {
-			IN_IFADDR_RLOCK(&in_ifa_tracker);
+			NET_EPOCH_ENTER(et);
 			INADDR_TO_IFP(mreqs.imr_interface, ifp);
-			IN_IFADDR_RUNLOCK(&in_ifa_tracker);
+			/* XXXGL ifref? */
+			NET_EPOCH_EXIT(et);
 		}
 		CTR3(KTR_IGMPV3, "%s: imr_interface = 0x%08x, ifp = %p",
 		    __func__, ntohl(mreqs.imr_interface.s_addr), ifp);
@@ -2376,11 +2327,9 @@ inp_leave_group(struct inpcb *inp, struct sockopt *sopt)
 				return (EINVAL);
 		}
 
-		if (gsr.gsr_interface == 0 || V_if_index < gsr.gsr_interface)
-			return (EADDRNOTAVAIL);
-
+		NET_EPOCH_ENTER(et);
 		ifp = ifnet_byindex(gsr.gsr_interface);
-
+		NET_EPOCH_EXIT(et);	/* XXXGL: unsafe ifp */
 		if (ifp == NULL)
 			return (EADDRNOTAVAIL);
 		break;
@@ -2501,7 +2450,6 @@ out_inp_locked:
 static int
 inp_set_multicast_if(struct inpcb *inp, struct sockopt *sopt)
 {
-	struct rm_priotracker	 in_ifa_tracker;
 	struct in_addr		 addr;
 	struct ip_mreqn		 mreqn;
 	struct ifnet		*ifp;
@@ -2518,13 +2466,17 @@ inp_set_multicast_if(struct inpcb *inp, struct sockopt *sopt)
 		if (error)
 			return (error);
 
-		if (mreqn.imr_ifindex < 0 || V_if_index < mreqn.imr_ifindex)
+		if (mreqn.imr_ifindex < 0)
 			return (EINVAL);
 
 		if (mreqn.imr_ifindex == 0) {
 			ifp = NULL;
 		} else {
+			struct epoch_tracker et;
+
+			NET_EPOCH_ENTER(et);
 			ifp = ifnet_byindex(mreqn.imr_ifindex);
+			NET_EPOCH_EXIT(et);	/* XXXGL: unsafe ifp */
 			if (ifp == NULL)
 				return (EADDRNOTAVAIL);
 		}
@@ -2540,9 +2492,12 @@ inp_set_multicast_if(struct inpcb *inp, struct sockopt *sopt)
 		if (in_nullhost(addr)) {
 			ifp = NULL;
 		} else {
-			IN_IFADDR_RLOCK(&in_ifa_tracker);
+			struct epoch_tracker et;
+
+			NET_EPOCH_ENTER(et);
 			INADDR_TO_IFP(addr, ifp);
-			IN_IFADDR_RUNLOCK(&in_ifa_tracker);
+			/* XXXGL ifref? */
+			NET_EPOCH_EXIT(et);
 			if (ifp == NULL)
 				return (EADDRNOTAVAIL);
 		}
@@ -2564,12 +2519,11 @@ inp_set_multicast_if(struct inpcb *inp, struct sockopt *sopt)
 
 /*
  * Atomically set source filters on a socket for an IPv4 multicast group.
- *
- * SMPng: NOTE: Potentially calls malloc(M_WAITOK) with Giant held.
  */
 static int
 inp_set_source_filters(struct inpcb *inp, struct sockopt *sopt)
 {
+	struct epoch_tracker	 et;
 	struct __msfilterreq	 msfr;
 	sockunion_t		*gsa;
 	struct ifnet		*ifp;
@@ -2600,10 +2554,9 @@ inp_set_source_filters(struct inpcb *inp, struct sockopt *sopt)
 
 	gsa->sin.sin_port = 0;	/* ignore port */
 
-	if (msfr.msfr_ifindex == 0 || V_if_index < msfr.msfr_ifindex)
-		return (EADDRNOTAVAIL);
-
+	NET_EPOCH_ENTER(et);
 	ifp = ifnet_byindex(msfr.msfr_ifindex);
+	NET_EPOCH_EXIT(et);	/* XXXGL: unsafe ifp */
 	if (ifp == NULL)
 		return (EADDRNOTAVAIL);
 
@@ -2750,13 +2703,9 @@ inp_setmoptions(struct inpcb *inp, struct sockopt *sopt)
 
 	error = 0;
 
-	/*
-	 * If socket is neither of type SOCK_RAW or SOCK_DGRAM,
-	 * or is a divert socket, reject it.
-	 */
-	if (inp->inp_socket->so_proto->pr_protocol == IPPROTO_DIVERT ||
-	    (inp->inp_socket->so_proto->pr_type != SOCK_RAW &&
-	     inp->inp_socket->so_proto->pr_type != SOCK_DGRAM))
+	/* If socket is neither of type SOCK_RAW or SOCK_DGRAM, reject it. */
+	if (inp->inp_socket->so_proto->pr_type != SOCK_RAW &&
+	     inp->inp_socket->so_proto->pr_type != SOCK_DGRAM)
 		return (EOPNOTSUPP);
 
 	switch (sopt->sopt_name) {
@@ -2915,13 +2864,6 @@ sysctl_ip_mcast_filters(SYSCTL_HANDLER_ARGS)
 	if (namelen != 2)
 		return (EINVAL);
 
-	ifindex = name[0];
-	if (ifindex <= 0 || ifindex > V_if_index) {
-		CTR2(KTR_IGMPV3, "%s: ifindex %u out of range",
-		    __func__, ifindex);
-		return (ENOENT);
-	}
-
 	group.s_addr = name[1];
 	if (!IN_MULTICAST(ntohl(group.s_addr))) {
 		CTR2(KTR_IGMPV3, "%s: group 0x%08x is not multicast",
@@ -2929,6 +2871,7 @@ sysctl_ip_mcast_filters(SYSCTL_HANDLER_ARGS)
 		return (EINVAL);
 	}
 
+	ifindex = name[0];
 	NET_EPOCH_ENTER(et);
 	ifp = ifnet_byindex(ifindex);
 	if (ifp == NULL) {

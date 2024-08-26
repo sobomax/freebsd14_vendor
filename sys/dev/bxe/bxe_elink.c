@@ -27,8 +27,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 52b375816cfca9630a2622b2fa9f5ec37bd1bf4c $");
-
 #include "bxe.h"
 #include "bxe_elink.h"
 #include "ecore_mfw_req.h"

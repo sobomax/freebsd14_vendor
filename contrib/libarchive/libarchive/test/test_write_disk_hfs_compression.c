@@ -24,7 +24,6 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 #include "test.h"
-__FBSDID("$FreeBSD: 8a2e7df3b9b2445b9cafc67f8ed9f797d32408be $");
 
 #ifdef HAVE_SYS_XATTR_H
 #include <sys/xattr.h>

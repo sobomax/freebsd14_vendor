@@ -35,8 +35,6 @@ static char sccsid[] = "@(#)lex.c	8.2 (Berkeley) 4/20/95";
 #endif
 #endif /* not lint */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 77004e52f28c48354efeec0bb93317f9802cc8bd $");
-
 #include "rcv.h"
 #include <errno.h>
 #include <fcntl.h>
@@ -672,7 +670,7 @@ newfileinfo(int omsgCount)
  */
 
 int
-pversion(int e __unused)
+pversion(void *arg __unused)
 {
 
 	printf("Version %s\n", version);

@@ -13,7 +13,7 @@
  * Paul Borman at Krystal Technologies.
  *
  * Copyright (c) 2011 The FreeBSD Foundation
- * All rights reserved.
+ *
  * Portions of this software were developed by David Chisnall
  * under sponsorship from the FreeBSD Foundation.
  *
@@ -41,9 +41,6 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  */
-
-#include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 3a8805f1b754df7ad37e16fa134f49b2bb911d25 $");
 
 #include <wchar.h>
 #include "xlocale_private.h"

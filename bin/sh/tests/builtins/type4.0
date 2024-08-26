@@ -1,4 +1,3 @@
-# $FreeBSD: 5b5f96c5078d8fc39922fcbb12a99c4616d98ab7 $
 
 r=`cd /bin && PATH=. type ls`
 case $r in

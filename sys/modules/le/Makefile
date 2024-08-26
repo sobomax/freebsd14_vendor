@@ -1,4 +1,3 @@
-# $FreeBSD: b77a2e69f1610196493d3d01c5f61ead118014bb $
 
 .PATH: ${SRCTOP}/sys/dev/le
 

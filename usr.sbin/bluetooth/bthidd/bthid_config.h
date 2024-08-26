@@ -3,7 +3,7 @@
  */
 
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2006 Maksim Yevmenkin <m_evmenkin@yahoo.com>
  * All rights reserved.
@@ -30,7 +30,6 @@
  * SUCH DAMAGE.
  *
  * $Id: bthid_config.h,v 1.4 2006/09/07 21:06:53 max Exp $
- * $FreeBSD: 8a53329333befaf6d4e24157e6597856c10552ba $
  */
 
 #ifndef _BTHID_CONFIG_H_

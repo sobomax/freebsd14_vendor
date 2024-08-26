@@ -21,7 +21,6 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: ac75fc9e922628778f22aee8aab334f81941e1bb $
 #
 
 # This is a tools-level test for NFSv4 ACL functionality.  Run it as root

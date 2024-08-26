@@ -1,4 +1,3 @@
-/* $FreeBSD: b62084b66ffa0d281e8741014a8639a6fc8435c5 $ */
 /*
 ** $Id: linit.c,v 1.39.1.1 2017/04/19 17:20:42 roberto Exp $
 ** Initialization of libraries for lua.c and other clients

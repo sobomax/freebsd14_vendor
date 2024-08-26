@@ -1,4 +1,3 @@
-# $FreeBSD: 330fccdb3dd7effea81a52e151ac818708bab870 $
 
 atf_test_case nl
 

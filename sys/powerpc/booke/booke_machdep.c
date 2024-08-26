@@ -79,8 +79,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 5db1a17fc2436eef3fe4fc22aa97870d8b2bbf33 $");
-
 #include "opt_ddb.h"
 #include "opt_hwpmc_hooks.h"
 #include "opt_kstack_pages.h"

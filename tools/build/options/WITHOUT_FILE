@@ -1,4 +1,3 @@
-.\" $FreeBSD: 67859bd6ded1a040b9799764effbe7c4141a4530 $
 Do not build
 .Xr file 1
 and related programs.

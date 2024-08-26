@@ -6,8 +6,6 @@
  * this stuff is worth it, you can buy me a beer in return.   Poul-Henning Kamp
  * ----------------------------------------------------------------------------
  *
- * $FreeBSD: 395695d3ecd203c20fc3136c4e84bbbbe8b62793 $
- *
  */
 
 #ifndef _MACHINE_SMP_H_

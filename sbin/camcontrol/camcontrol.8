@@ -25,9 +25,7 @@
 .\" OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 .\" SUCH DAMAGE.
 .\"
-.\" $FreeBSD: 236ddd8c479d347f57371c4ddfe19a0c677c6c89 $
-.\"
-.Dd October 20, 2021
+.Dd December 28, 2023
 .Dt CAMCONTROL 8
 .Os
 .Sh NAME
@@ -52,6 +50,12 @@
 .Ic tur
 .Op device id
 .Op generic args
+.Nm
+.Ic sense
+.Op device id
+.Op generic args
+.Op Fl D
+.Op Fl x
 .Nm
 .Ic inquiry
 .Op device id
@@ -366,13 +370,21 @@
 .Ic devtype
 .Op device id
 .Nm
+.Ic depop
+.Op device id
+.Op generic args
+.Ao Fl l | Fl d | Fl r Ac
+.Op Fl e Ar elem
+.Op Fl c Ar capacity
+.Nm
 .Ic help
 .Sh DESCRIPTION
 The
 .Nm
-utility is designed to provide a way for users to access and control the
+utility allows users to access and control the
 .Fx
-CAM subsystem.
+CAM subsystem described in
+.Xr cam 4 .
 .Pp
 The
 .Nm
@@ -482,6 +494,15 @@ Send the SCSI test unit ready (0x00) command to the given device.
 The
 .Nm
 utility will report whether the device is ready or not.
+.It Ic sense
+Send a SCSI REQUEST SENSE command (0x03) to a device.
+The decoded sense (or hexdump) is printed to stdout.
+.Bl -tag -width 4n
+.It Fl D
+Request descriptor sense instead of fixed sense.
+.It Fl x
+Do a hexdump of the returned sense data.
+.El
 .It Ic inquiry
 Send a SCSI inquiry command (0x12) to a device.
 By default,
@@ -1679,6 +1700,8 @@ Tested with Constellation ES (ST32000444SS), ES.2 (ST33000651SS) and
 ES.3 (ST1000NM0023) drives.
 .It SmrtStor
 Tested with 400GB Optimus SSDs (TXA2D20400GA6001).
+.It TOSHIBA
+Tested with 22TB MG10SFA22TE SAS drives.
 .El
 .Pp
 .Em WARNING! WARNING! WARNING!
@@ -1796,7 +1819,7 @@ One of those two options is required.
 Persistent reservations are complex, and fully explaining them is outside
 the scope of this manual.
 Please visit
-http://www.t10.org
+https://www.t10.org
 and download the latest SPC spec for a full explanation of persistent
 reservations.
 .Bl -tag -width 8n
@@ -2584,6 +2607,60 @@ Device type is unknown
 .It illegal
 A programming error occurred
 .El
+.It Ic depop
+Commands necessary to support the depopulation (depop) of defective elements of a device
+(typically heads for hard drives) or setting capacity point (typically used on
+flash drives).
+Issues either GET PHYSICAL ELEMENT STATUS, REMOVE ELEMENT AND TRUNCATE, or RESTORE
+ELEMENT AND REBUILD command to manage storage elements of a drive.
+Removal or restoration of elements may take up to a day to complete.
+One of the
+.Fl d ,
+.Fl l ,
+or
+.Fl r
+options must be specified.
+These options are mutually exclusive.
+Only SCSI drives are supported.
+Changing the storage elements of a storage drive may result in the loss of all
+data on that storage drive.
+The drive may need to reinitialize after
+.Fl d
+or
+.Fl r
+commands.
+The data on the drive is inaccessible until one of these commands complete.
+Once one of these commands start, the drive is format corrupt until the
+operation successfully completes.
+While format corrupt, no read or write I/O is possible to the drive.
+If the drive power cycles, it will remain format corrupt and the operation
+must be restarted.
+TEST UNIT READY or
+.Dq camcontrol tur
+can monitor an in-progress depop operation.
+.Bl -tag -width 6n
+.It Fl c Ar capacity
+Specify the desired capacity point for the drive.
+Valid only for the
+.Fl d
+flag.
+.It Fl d
+Remove the physical element from service or set the capacity point specified by the
+.Fl e
+or
+.Fl c
+flags.
+The drive's capacity may be reduced by this operation.
+.It Fl e Ar element
+Specify the physical element to remove from service.
+Valid only for the
+.Fl d
+flag.
+.It Fl l
+Report the current status of the physical elements of a drive.
+.It Fl r
+Restore all the eligible physical elements to service.
+.El
 .It Ic help
 Print out verbose usage information.
 .El
@@ -2910,6 +2987,7 @@ that was created using this format string.
 .Xr cam 4 ,
 .Xr pass 4 ,
 .Xr xpt 4 ,
+.Xr diskinfo 8 ,
 .Xr trim 8 ,
 .Xr zonectl 8
 .Sh HISTORY

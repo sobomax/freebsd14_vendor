@@ -1,4 +1,3 @@
-# $FreeBSD: 5dc413c5bfbe2a95a8a28e9f08ad6222d06b540e $
 .PATH:	${SRCTOP}/sys/dev/mlx5/mlx5_en
 
 KMOD=mlx5en
@@ -9,6 +8,7 @@ mlx5_en_main.c \
 mlx5_en_tx.c \
 mlx5_en_flow_table.c \
 mlx5_en_hw_tls.c \
+mlx5_en_hw_tls_rx.c \
 mlx5_en_iq.c \
 mlx5_en_rx.c \
 mlx5_en_rl.c \
@@ -30,6 +30,7 @@ CFLAGS+= -DCONFIG_MLX5_FPGA
 .endif
 
 CFLAGS+= -I${SRCTOP}/sys/ofed/include
+CFLAGS+= -I${SRCTOP}/sys/ofed/include/uapi
 CFLAGS+= ${LINUXKPI_INCLUDES}
 
 .include <bsd.kmod.mk>

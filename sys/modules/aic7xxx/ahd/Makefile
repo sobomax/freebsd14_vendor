@@ -1,6 +1,4 @@
 
-# $FreeBSD: f6a9f0bdbd815602b6f731bbd3841f677318bad7 $
-
 .PATH:	${SRCTOP}/sys/dev/aic7xxx
 KMOD=	ahd
 

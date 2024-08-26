@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2008-2016 Solarflare Communications Inc.
  * All rights reserved.
@@ -31,8 +31,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 3f4f8882d0101f904f912c827e2e5e662efbb277 $");
-
 #include "efx.h"
 #include "efx_impl.h"
 
@@ -1179,7 +1177,11 @@ efx_mcdi_read_assertion(
 	efx_mcdi_req_t req;
 	EFX_MCDI_DECLARE_BUF(payload, MC_CMD_GET_ASSERTS_IN_LEN,
 		MC_CMD_GET_ASSERTS_OUT_LEN);
+#ifdef KDTRACE_HOOKS
 	const char *reason;
+#else
+	const char *reason __unused;
+#endif
 	unsigned int flags;
 	unsigned int index;
 	unsigned int ofst;

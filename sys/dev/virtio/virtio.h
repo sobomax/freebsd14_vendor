@@ -24,8 +24,6 @@
  * THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- *
- * $FreeBSD: 8c6fdc4638d0f71611208c6218394881c2a9b91e $
  */
 
 #ifndef _VIRTIO_H_
@@ -68,9 +66,9 @@ struct virtio_feature_desc {
 	const char	*vfd_str;
 };
 
-#define VIRTIO_DRIVER_MODULE(name, driver, devclass, evh, arg)		\
-	DRIVER_MODULE(name, virtio_mmio, driver, devclass, evh, arg);	\
-	DRIVER_MODULE(name, virtio_pci, driver, devclass, evh, arg)
+#define VIRTIO_DRIVER_MODULE(name, driver, evh, arg)			\
+	DRIVER_MODULE(name, virtio_mmio, driver, evh, arg);		\
+	DRIVER_MODULE(name, virtio_pci, driver, evh, arg)
 
 struct virtio_pnp_match {
 	uint32_t	 device_type;
@@ -113,8 +111,7 @@ void	 virtio_stop(device_t dev);
 int	 virtio_config_generation(device_t dev);
 int	 virtio_reinit(device_t dev, uint64_t features);
 void	 virtio_reinit_complete(device_t dev);
-int	 virtio_child_pnpinfo_str(device_t busdev, device_t child, char *buf,
-	     size_t buflen);
+int	 virtio_child_pnpinfo(device_t busdev, device_t child, struct sbuf *sb);
 
 /*
  * Read/write a variable amount from the device specific (ie, network)

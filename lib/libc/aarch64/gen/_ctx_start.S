@@ -1,6 +1,5 @@
 /*-
  * Copyright (c) 2015 The FreeBSD Foundation
- * All rights reserved.
  *
  * This software was developed by Andrew Turner under
  * sponsorship from the FreeBSD Foundation.
@@ -28,7 +27,7 @@
  */
 
 #include <machine/asm.h>
-__FBSDID("$FreeBSD: 8664f69667c311703c89757c2676375af606ebb5 $");
+#include <sys/elf_common.h>
 
 ENTRY(_ctx_start)
 	blr	x19		/* Call func from makecontext */
@@ -36,3 +35,5 @@ ENTRY(_ctx_start)
 	bl	_C_LABEL(ctx_done)
 	bl	_C_LABEL(abort)
 END(_ctx_start)
+
+GNU_PROPERTY_AARCH64_FEATURE_1_NOTE(GNU_PROPERTY_AARCH64_FEATURE_1_VAL)

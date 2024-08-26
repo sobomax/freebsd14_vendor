@@ -1,4 +1,3 @@
-/* $FreeBSD: f8033c55ac55f54b917b7ad14f027018080e3a07 $ */
 /* 
     PE32+ header file
  */

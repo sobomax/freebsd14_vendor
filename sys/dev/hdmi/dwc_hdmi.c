@@ -25,8 +25,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 0f13888742926f8a23e2bb103979526b53824874 $");
-
 /*
  * HDMI core module
  */
@@ -51,7 +49,7 @@ __FBSDID("$FreeBSD: 0f13888742926f8a23e2bb103979526b53824874 $");
 #include <dev/hdmi/dwc_hdmi.h>
 #include <dev/hdmi/dwc_hdmireg.h>
 
-#include "hdmi_if.h"
+#include "crtc_if.h"
 
 #define	I2C_DDC_ADDR	(0x50 << 1)
 #define	I2C_DDC_SEGADDR	(0x30 << 1)

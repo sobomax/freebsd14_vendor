@@ -1,4 +1,3 @@
-# $FreeBSD: c2b1cf53738bd7b791ee8e764e3e8ff66727b0e8 $
 # All the dts files for Nvidia ARM systems we support.
 .if ${MACHINE_ARCH} == "armv7"
 DTS=	tegra124-jetson-tk1-fbsd.dts

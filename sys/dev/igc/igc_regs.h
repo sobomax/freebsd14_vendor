@@ -2,8 +2,6 @@
  * Copyright 2021 Intel Corp
  * Copyright 2021 Rubicon Communications, LLC (Netgate)
  * SPDX-License-Identifier: BSD-3-Clause
- *
- * $FreeBSD: d2b15957dcca3ceb7e9277d9cc852f5a0998b9d8 $
  */
 
 #ifndef _IGC_REGS_H_

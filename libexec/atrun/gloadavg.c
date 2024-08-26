@@ -25,11 +25,6 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef lint
-static const char rcsid[] =
-  "$FreeBSD: 86651aac3e6736106dc35120c019383e4a7fa1ca $";
-#endif /* not lint */
-
 #ifndef __FreeBSD__
 #define _POSIX_SOURCE 1
 

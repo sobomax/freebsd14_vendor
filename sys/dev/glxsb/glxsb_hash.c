@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2006 Pawel Jakub Dawidek <pjd@FreeBSD.org>
  * All rights reserved.
@@ -27,8 +27,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: b9ceb27deb4d58c8852cada9c923075737018a4f $");
-
 #include <sys/param.h>
 #include <sys/systm.h>
 #include <sys/malloc.h>
@@ -52,7 +50,7 @@ MALLOC_DECLARE(M_GLXSB);
 static void
 glxsb_hash_key_setup(struct glxsb_session *ses, const char *key, int klen)
 {
-	struct auth_hash *axf;
+	const struct auth_hash *axf;
 
 	axf = ses->ses_axf;
 	hmac_init_ipad(axf, key, klen, ses->ses_ictx);
@@ -66,7 +64,7 @@ static int
 glxsb_authcompute(struct glxsb_session *ses, struct cryptop *crp)
 {
 	u_char hash[HASH_MAX_LEN];
-	struct auth_hash *axf;
+	const struct auth_hash *axf;
 	union authctx ctx;
 	int error;
 

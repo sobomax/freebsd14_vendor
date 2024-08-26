@@ -1,4 +1,3 @@
-# $FreeBSD: aa13e1561b688cddd0cacbad5e0ef48eaa2d368e $
 
 bad=0
 for i in 0 1 2 3; do

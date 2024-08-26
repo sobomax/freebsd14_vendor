@@ -27,8 +27,6 @@
  * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
- *
- * $FreeBSD: 883c51fabc68fcd592397556763dde0b2f1321ea $
  */
 
 #include <sys/cdefs.h>
@@ -64,7 +62,6 @@ __COPYRIGHT("@(#) Copyright (c) 1983, 1988, 1993\n"
 #ifdef __NetBSD__
 __RCSID("$NetBSD$");
 #elif defined(__FreeBSD__)
-__RCSID("$FreeBSD: 883c51fabc68fcd592397556763dde0b2f1321ea $");
 #else
 __RCSID("$Revision: 2.26 $");
 #ident "$Revision: 2.26 $"
@@ -131,7 +128,7 @@ static void query_loop(char *argv[], int) __attribute((__noreturn__));
 static int getnet(char *, struct netinfo *);
 static u_int std_mask(u_int);
 static int parse_quote(char **, const char *, char *, char *, int);
-static void usage(void);
+static void usage(void) __dead2;
 
 
 int

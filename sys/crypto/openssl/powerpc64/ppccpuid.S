@@ -1,4 +1,3 @@
-/* $FreeBSD: 1ed506ee382fce629f3c272262da3d164d28dd5d $ */
 /* Do not modify. This file is auto-generated from ppccpuid.pl. */
 .machine	"any"
 .abiversion	2

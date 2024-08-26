@@ -81,8 +81,14 @@ static struct {
 	HCA(MELLANOX, 4124),	/* ConnectX-6 VF */
 	HCA(MELLANOX, 4125),	/* ConnectX-6 DX */
 	HCA(MELLANOX, 4126),	/* ConnectX family mlx5Gen Virtual Function */
+	HCA(MELLANOX, 4127),	/* ConnectX-6 LX */
+	HCA(MELLANOX, 4129),	/* ConnectX-7 */
+	HCA(MELLANOX, 4131),	/* ConnectX-8 */
 	HCA(MELLANOX, 41682),	/* BlueField integrated ConnectX-5 network controller */
 	HCA(MELLANOX, 41683),	/* BlueField integrated ConnectX-5 network controller VF */
+	HCA(MELLANOX, 41686),	/* BlueField-2 integrated ConnectX-6 Dx network controller */
+	HCA(MELLANOX, 41692),	/* BlueField-3 integrated ConnectX-7 network controller */
+	HCA(MELLANOX, 41695),	/* BlueField-4 integrated ConnectX-8 network controller */
 };
 
 uint32_t mlx5_debug_mask = 0;
@@ -363,7 +369,12 @@ static int mlx5_enable_sandy_bridge_fix(struct ibv_device *ibdev)
 	mlx5_local_cpu_set(ibdev, &dev_local_cpus);
 
 	/* check if my cpu set is in dev cpu */
+#if __FreeBSD_version < 1400046
+	CPU_OR(&result_set, &my_cpus);
+	CPU_OR(&result_set, &dev_local_cpus);
+#else
 	CPU_OR(&result_set, &my_cpus, &dev_local_cpus);
+#endif
 	stall_enable = CPU_EQUAL(&result_set, &dev_local_cpus) ? 0 : 1;
 
 out:

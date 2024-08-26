@@ -1,4 +1,3 @@
-# $FreeBSD: fea6efdb991df31a44a71bd7c4dcc492e3ad915b $
 # Options specific to the i386 platform kernels
 
 AUTO_EOI_1		opt_auto_eoi.h
@@ -8,10 +7,8 @@ COUNT_XINVLTLB_HITS	opt_smp.h
 COUNT_IPIS		opt_smp.h
 DISABLE_PG_G		opt_pmap.h
 DISABLE_PSE		opt_pmap.h
-I586_PMC_GUPROF		opt_i586_guprof.h
 MAXMEM
 MPTABLE_FORCE_HTT
-MP_WATCHDOG
 NKPT			opt_pmap.h
 PERFMON
 PMAP_SHPGPERPROC	opt_pmap.h
@@ -25,7 +22,6 @@ COMPAT_AOUT		opt_dontuse.h
 COMPAT_LINUX		opt_dontuse.h
 LINPROCFS		opt_dontuse.h
 LINSYSFS		opt_dontuse.h
-NDISAPI			opt_dontuse.h
 
 # Change KVM size.  Changes things all over the kernel.
 KVA_PAGES		opt_global.h
@@ -68,13 +64,6 @@ I486_CPU		opt_global.h
 I586_CPU		opt_global.h
 I686_CPU		opt_global.h
 
-# options for serial support
-COM_ESP			opt_sio.h
-COM_MULTIPORT		opt_sio.h
-CONSPEED		opt_sio.h
-GDBSPEED		opt_sio.h
-COM_NO_ACPI		opt_sio.h
-
 VGA_ALT_SEQACCESS	opt_vga.h
 VGA_DEBUG		opt_vga.h
 VGA_NO_FONT_LOADING	opt_vga.h
@@ -97,9 +86,6 @@ ATKBD_DFLT_KEYMAP	opt_atkbd.h
 # Video spigot
 SPIGOT_UNSECURE		opt_spigot.h
 
-# Enables NETGRAPH support for Cronyx adapters
-NETGRAPH_CRONYX		opt_ng_cronyx.h
-
 # Device options
 DEV_APIC		opt_apic.h
 DEV_ATPIC		opt_atpic.h
@@ -117,3 +103,9 @@ XENHVM			opt_global.h
 
 # options for the Intel C600 SAS driver (isci)
 ISCI_LOGGING	opt_isci.h
+
+# Don't create a "legacy" PCI bridge if none is found.
+NO_LEGACY_PCIB		opt_cpu.h
+
+# Compatibility with Linux MP table bugs.
+MPTABLE_LINUX_BUG_COMPAT

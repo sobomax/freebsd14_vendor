@@ -32,8 +32,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: d5895ef5d02dda6a7dfcb8cce22dcd8be21d1257 $");
-
 #include "opt_inet.h"
 #include "opt_inet6.h"
 #include "opt_ipsec.h"
@@ -61,6 +59,7 @@ __FBSDID("$FreeBSD: d5895ef5d02dda6a7dfcb8cce22dcd8be21d1257 $");
 #include <net/if_types.h>
 #include <net/if_dl.h>
 #include <net/if_var.h>
+#include <net/if_private.h>
 #include <net/route.h>
 #include <net/vnet.h>
 
@@ -95,6 +94,9 @@ static void nd6_na_output_fib(struct ifnet *, const struct in6_addr *,
     const struct in6_addr *, u_long, int, struct sockaddr *, u_int);
 static void nd6_ns_output_fib(struct ifnet *, const struct in6_addr *,
     const struct in6_addr *, const struct in6_addr *, uint8_t *, u_int);
+
+static struct ifaddr *nd6_proxy_fill_sdl(struct ifnet *,
+    const struct in6_addr *, struct sockaddr_dl *);
 
 VNET_DEFINE_STATIC(int, dad_enhanced) = 1;
 #define	V_dad_enhanced			VNET(dad_enhanced)
@@ -255,38 +257,12 @@ nd6_ns_input(struct mbuf *m, int off, int icmp6len)
 	/* (2) check. */
 	proxy = 0;
 	if (ifa == NULL) {
-		struct sockaddr_dl rt_gateway;
-		struct rt_addrinfo info;
-		struct sockaddr_in6 dst6;
-
-		bzero(&dst6, sizeof(dst6));
-		dst6.sin6_len = sizeof(struct sockaddr_in6);
-		dst6.sin6_family = AF_INET6;
-		dst6.sin6_addr = taddr6;
-
-		bzero(&rt_gateway, sizeof(rt_gateway));
-		rt_gateway.sdl_len = sizeof(rt_gateway);
-		bzero(&info, sizeof(info));
-		info.rti_info[RTAX_GATEWAY] = (struct sockaddr *)&rt_gateway;
-
-		if (rib_lookup_info(ifp->if_fib, (struct sockaddr *)&dst6,
-		    0, 0, &info) == 0) {
-			if ((info.rti_flags & RTF_ANNOUNCE) != 0 &&
-			    rt_gateway.sdl_family == AF_LINK) {
-				/*
-				 * proxy NDP for single entry
-				 */
-				proxydl = *SDL(&rt_gateway);
-				ifa = (struct ifaddr *)in6ifa_ifpforlinklocal(
-				    ifp, IN6_IFF_NOTREADY|IN6_IFF_ANYCAST);
-				if (ifa)
-					proxy = 1;
-			}
-		}
+		if ((ifa = nd6_proxy_fill_sdl(ifp, &taddr6, &proxydl)) != NULL)
+			proxy = 1;
 	}
 	if (ifa == NULL) {
 		/*
-		 * We've got an NS packet, and we don't have that adddress
+		 * We've got an NS packet, and we don't have that address
 		 * assigned for us.  We MUST silently ignore it.
 		 * See RFC2461 7.2.3.
 		 */
@@ -386,6 +362,30 @@ nd6_ns_input(struct mbuf *m, int off, int icmp6len)
 	m_freem(m);
 }
 
+static struct ifaddr *
+nd6_proxy_fill_sdl(struct ifnet *ifp, const struct in6_addr *taddr6,
+    struct sockaddr_dl *sdl)
+{
+	struct ifaddr *ifa;
+	struct llentry *ln;
+
+	ifa = NULL;
+	ln = nd6_lookup(taddr6, LLE_SF(AF_INET6, 0), ifp);
+	if (ln == NULL)
+		return (ifa);
+	if ((ln->la_flags & (LLE_PUB | LLE_VALID)) == (LLE_PUB | LLE_VALID)) {
+		link_init_sdl(ifp, (struct sockaddr *)sdl, ifp->if_type);
+		sdl->sdl_alen = ifp->if_addrlen;
+		bcopy(ln->ll_addr, &sdl->sdl_data, ifp->if_addrlen);
+		LLE_RUNLOCK(ln);
+		ifa = (struct ifaddr *)in6ifa_ifpforlinklocal(ifp,
+		    IN6_IFF_NOTREADY|IN6_IFF_ANYCAST);
+	} else
+		LLE_RUNLOCK(ln);
+
+	return (ifa);
+}
+
 /*
  * Output a Neighbor Solicitation Message. Caller specifies:
  *	- ICMP6 header source IP6 address
@@ -464,6 +464,7 @@ nd6_ns_output_fib(struct ifnet *ifp, const struct in6_addr *saddr6,
 			goto bad;
 	}
 	if (nonce == NULL) {
+		char ip6buf[INET6_ADDRSTRLEN];
 		struct ifaddr *ifa = NULL;
 
 		/*
@@ -479,14 +480,9 @@ nd6_ns_output_fib(struct ifnet *ifp, const struct in6_addr *saddr6,
 		 * (saddr6), if saddr6 belongs to the outgoing interface.
 		 * Otherwise, we perform the source address selection as usual.
 		 */
-
 		if (saddr6 != NULL)
 			ifa = (struct ifaddr *)in6ifa_ifpwithaddr(ifp, saddr6);
-		if (ifa != NULL) {
-			/* ip6_src set already. */
-			ip6->ip6_src = *saddr6;
-			ifa_free(ifa);
-		} else {
+		if (ifa == NULL) {
 			int error;
 			struct in6_addr dst6, src6;
 			uint32_t scopeid;
@@ -495,7 +491,6 @@ nd6_ns_output_fib(struct ifnet *ifp, const struct in6_addr *saddr6,
 			error = in6_selectsrc_addr(fibnum, &dst6,
 			    scopeid, ifp, &src6, NULL);
 			if (error) {
-				char ip6buf[INET6_ADDRSTRLEN];
 				nd6log((LOG_DEBUG, "%s: source can't be "
 				    "determined: dst=%s, error=%d\n", __func__,
 				    ip6_sprintf(ip6buf, &dst6),
@@ -503,7 +498,32 @@ nd6_ns_output_fib(struct ifnet *ifp, const struct in6_addr *saddr6,
 				goto bad;
 			}
 			ip6->ip6_src = src6;
+		} else
+			ip6->ip6_src = *saddr6;
+
+		if (ifp->if_carp != NULL) {
+			/*
+			 * Check that selected source address belongs to
+			 * CARP addresses.
+			 */
+			if (ifa == NULL)
+				ifa = (struct ifaddr *)in6ifa_ifpwithaddr(ifp,
+				    &ip6->ip6_src);
+			/*
+			 * Do not send NS for CARP address if we are not
+			 * the CARP master.
+			 */
+			if (ifa != NULL && ifa->ifa_carp != NULL &&
+			    !(*carp_master_p)(ifa)) {
+				nd6log((LOG_DEBUG,
+				    "nd6_ns_output: NS from BACKUP CARP address %s\n",
+				    ip6_sprintf(ip6buf, &ip6->ip6_src)));
+				ifa_free(ifa);
+				goto bad;
+			}
 		}
+		if (ifa != NULL)
+			ifa_free(ifa);
 	} else {
 		/*
 		 * Source address for DAD packet must always be IPv6
@@ -713,15 +733,20 @@ nd6_na_input(struct mbuf *m, int off, int icmp6len)
 		lladdrlen = ndopts.nd_opts_tgt_lladdr->nd_opt_len << 3;
 	}
 
-	/*
-	 * This effectively disables the DAD check on a non-master CARP
-	 * address.
-	 */
-	if (ifp->if_carp)
-		ifa = (*carp_iamatch6_p)(ifp, &taddr6);
-	else
-		ifa = (struct ifaddr *)in6ifa_ifpwithaddr(ifp, &taddr6);
-
+	ifa = (struct ifaddr *)in6ifa_ifpwithaddr(ifp, &taddr6);
+	if (ifa != NULL && ifa->ifa_carp != NULL) {
+		/*
+		 * Silently ignore NAs for CARP addresses if we are not
+		 * the CARP master.
+		 */
+		if (!(*carp_master_p)(ifa)) {
+			nd6log((LOG_DEBUG,
+			    "nd6_na_input: NA for BACKUP CARP address %s\n",
+			    ip6_sprintf(ip6bufs, &taddr6)));
+			ifa_free(ifa);
+			goto freeit;
+		}
+	}
 	/*
 	 * Target address matches one of my interface address.
 	 *

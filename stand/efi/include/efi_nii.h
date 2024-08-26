@@ -1,4 +1,3 @@
-/* $FreeBSD: 561cbd46a3ea378dbea8b8f995629b974939100c $ */
 #ifndef _EFI_NII_H
 #define _EFI_NII_H
 

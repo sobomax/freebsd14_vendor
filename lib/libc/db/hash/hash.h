@@ -32,7 +32,6 @@
  * SUCH DAMAGE.
  *
  *	@(#)hash.h	8.3 (Berkeley) 5/31/94
- * $FreeBSD: 5d4f8d5e8735f902ff5403c2df6c114f78a7b42a $
  */
 
 /* Operations */

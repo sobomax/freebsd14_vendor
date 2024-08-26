@@ -24,7 +24,6 @@
  */
 
 #include "test.h"
-__FBSDID("$FreeBSD: db7e50e7f0f80df8e52072a32682a2309cc1ba83 $");
 
 #define should(__a, __code, __opts) \
 assertEqualInt(__code, archive_write_set_options(__a, __opts))

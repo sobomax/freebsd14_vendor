@@ -31,7 +31,6 @@
   POSSIBILITY OF SUCH DAMAGE.
 
 ******************************************************************************/
-/*$FreeBSD: e60fc8ebf08e7b03b829673b498abacc444113ab $*/
 
 /*
  * 82540EM Gigabit Ethernet Controller

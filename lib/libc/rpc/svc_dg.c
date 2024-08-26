@@ -37,9 +37,6 @@
 #if defined(LIBC_SCCS) && !defined(lint)
 #ident	"@(#)svc_dg.c	1.17	94/04/24 SMI"
 #endif
-#include <sys/cdefs.h>
-__FBSDID("$FreeBSD: c7e0726270b7d3b92d4a0c0f894bbce00132d12f $");
-
 /*
  * svc_dg.c, Server side for connectionless RPC.
  *

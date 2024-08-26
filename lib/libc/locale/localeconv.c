@@ -6,7 +6,7 @@
  *	The Regents of the University of California.  All rights reserved.
  *
  * Copyright (c) 2011 The FreeBSD Foundation
- * All rights reserved.
+ *
  * Portions of this software were developed by David Chisnall
  * under sponsorship from the FreeBSD Foundation.
  *
@@ -38,9 +38,6 @@
 #if defined(LIBC_SCCS) && !defined(lint)
 static char sccsid[] = "@(#)localeconv.c	8.1 (Berkeley) 6/4/93";
 #endif /* LIBC_SCCS and not lint */
-#include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 641773944e32857361b4fd48d37455982a36731a $");
-
 #include <locale.h>
 
 #include "lmonetary.h"
@@ -65,7 +62,7 @@ localeconv_l(locale_t loc)
 	FIX_LOCALE(loc);
     struct lconv *ret = &loc->lconv;
 
-    if (loc->monetary_locale_changed) {
+    if (atomic_load_acq_int(&loc->monetary_locale_changed) != 0) {
 	/* LC_MONETARY part */
         struct lc_monetary_T * mptr; 
 
@@ -94,10 +91,10 @@ localeconv_l(locale_t loc)
 	M_ASSIGN_CHAR(int_n_sep_by_space);
 	M_ASSIGN_CHAR(int_p_sign_posn);
 	M_ASSIGN_CHAR(int_n_sign_posn);
-	loc->monetary_locale_changed = 0;
+	atomic_store_int(&loc->monetary_locale_changed, 0);
     }
 
-    if (loc->numeric_locale_changed) {
+    if (atomic_load_acq_int(&loc->numeric_locale_changed) != 0) {
 	/* LC_NUMERIC part */
         struct lc_numeric_T * nptr; 
 
@@ -107,7 +104,7 @@ localeconv_l(locale_t loc)
 	N_ASSIGN_STR(decimal_point);
 	N_ASSIGN_STR(thousands_sep);
 	N_ASSIGN_STR(grouping);
-	loc->numeric_locale_changed = 0;
+	atomic_store_int(&loc->numeric_locale_changed, 0);
     }
 
     return ret;

@@ -31,8 +31,6 @@ SOFTWARE.
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 3c128c03a9a6dbc5fe74d22eef1b832e904e5299 $");
-
 #include <sys/types.h>
 #include <sys/param.h>
 #include <sys/socket.h>
@@ -84,7 +82,7 @@ __FBSDID("$FreeBSD: 3c128c03a9a6dbc5fe74d22eef1b832e904e5299 $");
  * Externals, forward declarations, and global variables
  */
 
-static void usage(void);
+static void usage(void) __dead2;
 static void handle_reply(void);
 static void handle_request(void);
 
@@ -144,9 +142,7 @@ char *hostname;
  */
 
 int
-main(argc, argv)
-	int argc;
-	char **argv;
+main(int argc, char **argv)
 {
 	struct timeval *timeout;
 	struct bootp *bp;

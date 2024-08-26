@@ -3,8 +3,8 @@
 /* (use YYMAJOR/YYMINOR for ifdefs dependent on parser version) */
 
 #define YYBYACC 1
-#define YYMAJOR 1
-#define YYMINOR 9
+#define YYMAJOR 2
+#define YYMINOR 0
 #define YYCHECK "yyyymmdd"
 
 #define YYEMPTY        (-1)
@@ -440,8 +440,8 @@ YYDESTRUCT_DECL()
 		    free(pp->s); free(pp);
 		  }
 		}
+#line 444 "err_inherit3.tab.c"
 	break;
-#line 445 "err_inherit3.tab.c"
 	case 264:
 #line 30 "err_inherit3.y"
 	{
@@ -452,8 +452,8 @@ YYDESTRUCT_DECL()
 		    free(pp->s); free(pp);
 		  }
 		}
+#line 456 "err_inherit3.tab.c"
 	break;
-#line 457 "err_inherit3.tab.c"
 	case 265:
 #line 30 "err_inherit3.y"
 	{
@@ -464,8 +464,8 @@ YYDESTRUCT_DECL()
 		    free(pp->s); free(pp);
 		  }
 		}
+#line 468 "err_inherit3.tab.c"
 	break;
-#line 469 "err_inherit3.tab.c"
     }
 }
 #define YYDESTRUCT_IS_DECLARED 1
@@ -504,14 +504,14 @@ static int yygrowstack(YYSTACKDATA *data)
 
     i = (int) (data->s_mark - data->s_base);
     newss = (YYINT *)realloc(data->s_base, newsize * sizeof(*newss));
-    if (newss == 0)
+    if (newss == NULL)
         return YYENOMEM;
 
     data->s_base = newss;
     data->s_mark = newss + i;
 
     newvs = (YYSTYPE *)realloc(data->l_base, newsize * sizeof(*newvs));
-    if (newvs == 0)
+    if (newvs == NULL)
         return YYENOMEM;
 
     data->l_base = newvs;
@@ -519,7 +519,7 @@ static int yygrowstack(YYSTACKDATA *data)
 
 #if defined(YYLTYPE) || defined(YYLTYPE_IS_DECLARED)
     newps = (YYLTYPE *)realloc(data->p_base, newsize * sizeof(*newps));
-    if (newps == 0)
+    if (newps == NULL)
         return YYENOMEM;
 
     data->p_base = newps;
@@ -613,7 +613,7 @@ YYPARSE_DECL()
 #if YYDEBUG
     const char *yys;
 
-    if ((yys = getenv("YYDEBUG")) != 0)
+    if ((yys = getenv("YYDEBUG")) != NULL)
     {
         yyn = *yys;
         if (yyn >= '0' && yyn <= '9')
@@ -631,7 +631,7 @@ YYPARSE_DECL()
     yyps->save = 0;
 #endif /* YYBTYACC */
     yym = 0;
-    yyn = 0;
+    /* yyn is set below */
     yynerrs = 0;
     yyerrflag = 0;
     yychar = YYEMPTY;
@@ -1142,60 +1142,73 @@ yyreduce:
 case 1:
 #line 50 "err_inherit3.y"
 yyval.cval = yystack.l_mark[-1].cval;
+#line 1146 "err_inherit3.tab.c"
 break;
 case 2:
 #line 50 "err_inherit3.y"
 yyval.tval =  yystack.l_mark[-1].tval;
+#line 1151 "err_inherit3.tab.c"
 break;
 case 3:
 #line 51 "err_inherit3.y"
 	{ yyval.nlist = yystack.l_mark[0].nlist; }
+#line 1156 "err_inherit3.tab.c"
 break;
 case 4:
 #line 53 "err_inherit3.y"
 	{ yyval.nlist = yystack.l_mark[0].nlist; }
+#line 1161 "err_inherit3.tab.c"
 break;
 case 5:
 #line 56 "err_inherit3.y"
 	{ yyval.cval = cGLOBAL; }
+#line 1166 "err_inherit3.tab.c"
 break;
 case 6:
 #line 57 "err_inherit3.y"
 	{ yyval.cval = cLOCAL; }
+#line 1171 "err_inherit3.tab.c"
 break;
 case 7:
 #line 60 "err_inherit3.y"
 	{ yyval.tval = tREAL; }
+#line 1176 "err_inherit3.tab.c"
 break;
 case 8:
 #line 61 "err_inherit3.y"
 	{ yyval.tval = tINTEGER; }
+#line 1181 "err_inherit3.tab.c"
 break;
 case 9:
 #line 64 "err_inherit3.y"
 yyval.cval = yystack.l_mark[-2];
+#line 1186 "err_inherit3.tab.c"
 break;
 case 10:
 #line 65 "err_inherit3.y"
 	{ yyval.nlist->s = mksymbol(yystack.l_mark[-5].tval, yystack.l_mark[-5].cval, yystack.l_mark[0].id);
 	      yyval.nlist->next = yystack.l_mark[-1].nlist;
 	    }
+#line 1193 "err_inherit3.tab.c"
 break;
 case 11:
 #line 69 "err_inherit3.y"
 	{ yyval.nlist->s = mksymbol(yystack.l_mark[-3], yystack.l_mark[-3], yystack.l_mark[0].id);
 	      yyval.nlist->next = NULL;
 	    }
+#line 1200 "err_inherit3.tab.c"
 break;
 case 12:
 #line 74 "err_inherit3.y"
 yyval.cval = cLOCAL;
+#line 1205 "err_inherit3.tab.c"
 break;
 case 13:
 #line 75 "err_inherit3.y"
 	{ yyval.nlist = yystack.l_mark[0].nlist; }
+#line 1210 "err_inherit3.tab.c"
 break;
-#line 1199 "err_inherit3.tab.c"
+#line 1212 "err_inherit3.tab.c"
     default:
         break;
     }

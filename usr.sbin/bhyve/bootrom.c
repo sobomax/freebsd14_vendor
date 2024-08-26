@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2015 Neel Natu <neel@freebsd.org>
  * All rights reserved.
@@ -27,8 +27,6 @@
  */
 
 #include <sys/param.h>
-__FBSDID("$FreeBSD: b851d39b485cb943d9d99de7b8fb00f28bbb927f $");
-
 #include <sys/types.h>
 #include <sys/mman.h>
 #include <sys/stat.h>
@@ -84,9 +82,8 @@ static struct bootrom_var_state {
  * that the Firmware Volume area is writable and persistent.
  */
 static int
-bootrom_var_mem_handler(struct vmctx *ctx __unused, int vcpu __unused, int dir,
-    uint64_t addr, int size, uint64_t *val, void *arg1 __unused,
-    long arg2 __unused)
+bootrom_var_mem_handler(struct vcpu *vcpu __unused, int dir, uint64_t addr,
+    int size, uint64_t *val, void *arg1 __unused, long arg2 __unused)
 {
 	off_t offset;
 
@@ -240,14 +237,14 @@ bootrom_loadrom(struct vmctx *ctx, const nvlist_t *nvl)
 	if (varfile != NULL) {
 		varfd = open(varfile, O_RDWR);
 		if (varfd < 0) {
-			fprintf(stderr, "Error opening bootrom variable file "
-			    "\"%s\": %s\n", varfile, strerror(errno));
+			EPRINTLN("Error opening bootrom variable file "
+			    "\"%s\": %s", varfile, strerror(errno));
 			goto done;
 		}
 
 		if (fstat(varfd, &sbuf) < 0) {
-			fprintf(stderr,
-			    "Could not fstat bootrom variable file \"%s\": %s\n",
+			EPRINTLN(
+			    "Could not fstat bootrom variable file \"%s\": %s",
 			    varfile, strerror(errno));
 			goto done;
 		}
@@ -257,7 +254,7 @@ bootrom_loadrom(struct vmctx *ctx, const nvlist_t *nvl)
 
 	if (var_size > BOOTROM_SIZE ||
 	    (var_size != 0 && var_size < PAGE_SIZE)) {
-		fprintf(stderr, "Invalid bootrom variable size %ld\n",
+		EPRINTLN("Invalid bootrom variable size %ld",
 		    var_size);
 		goto done;
 	}
@@ -265,8 +262,8 @@ bootrom_loadrom(struct vmctx *ctx, const nvlist_t *nvl)
 	total_size = rom_size + var_size;
 
 	if (total_size > BOOTROM_SIZE) {
-		fprintf(stderr, "Invalid bootrom and variable aggregate size "
-		    "%ld\n", total_size);
+		EPRINTLN("Invalid bootrom and variable aggregate size %ld",
+		    total_size);
 		goto done;
 	}
 

@@ -1,4 +1,3 @@
-# $FreeBSD: 96b60d2a97924fad20d20c06c8ee5915cfc17d2b $
 
 PACKAGE=	tests
 
@@ -8,7 +7,7 @@ TESTSRC=	${SRCTOP}/contrib/netbsd-tests/lib/libc/net/${.CURDIR:T}
 
 BINDIR=		${TESTSDIR}
 
-.error "This testcase needs to be ported to FreeBSD (the output from getaddrinfo_test differs from NetBSD)"
+.error This testcase needs to be ported to FreeBSD (the output from getaddrinfo_test differs from NetBSD)
 
 NETBSD_ATF_TESTS_SH=	getaddrinfo_test
 

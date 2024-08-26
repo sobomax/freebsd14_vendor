@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2013 Nathan Whitehorn
  * All rights reserved.
@@ -27,7 +27,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: a29b28f2a01611e85a31f37382413ab2b9e7e49a $");
 #include <sys/param.h>
 #include <sys/systm.h>
 #include <sys/module.h>
@@ -91,9 +90,10 @@ static device_method_t	simplebus_methods[] = {
 	DEVMETHOD(bus_adjust_resource,	bus_generic_adjust_resource),
 	DEVMETHOD(bus_set_resource,	bus_generic_rl_set_resource),
 	DEVMETHOD(bus_get_resource,	bus_generic_rl_get_resource),
-	DEVMETHOD(bus_child_pnpinfo_str, ofw_bus_gen_child_pnpinfo_str),
+	DEVMETHOD(bus_child_pnpinfo,	ofw_bus_gen_child_pnpinfo),
 	DEVMETHOD(bus_get_resource_list, simplebus_get_resource_list),
 	DEVMETHOD(bus_get_property,	simplebus_get_property),
+	DEVMETHOD(bus_get_device_path,  ofw_bus_gen_get_device_path),
 
 	/* ofw_bus interface */
 	DEVMETHOD(ofw_bus_get_devinfo,	simplebus_get_devinfo),
@@ -109,11 +109,9 @@ static device_method_t	simplebus_methods[] = {
 DEFINE_CLASS_0(simplebus, simplebus_driver, simplebus_methods,
     sizeof(struct simplebus_softc));
 
-static devclass_t simplebus_devclass;
-EARLY_DRIVER_MODULE(simplebus, ofwbus, simplebus_driver, simplebus_devclass,
-    0, 0, BUS_PASS_BUS);
-EARLY_DRIVER_MODULE(simplebus, simplebus, simplebus_driver, simplebus_devclass,
-    0, 0, BUS_PASS_BUS + BUS_PASS_ORDER_MIDDLE);
+EARLY_DRIVER_MODULE(simplebus, ofwbus, simplebus_driver, 0, 0, BUS_PASS_BUS);
+EARLY_DRIVER_MODULE(simplebus, simplebus, simplebus_driver, 0, 0,
+    BUS_PASS_BUS + BUS_PASS_ORDER_MIDDLE);
 
 static int
 simplebus_probe(device_t dev)

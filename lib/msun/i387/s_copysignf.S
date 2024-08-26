@@ -4,8 +4,6 @@
  */
 
 #include <machine/asm.h>
-
-__FBSDID("$FreeBSD: 7ad1a64b3adc5c63cec7add9ae51c11210017730 $");
 /* RCSID("$NetBSD: s_copysignf.S,v 1.3 1995/05/08 23:53:25 jtc Exp $") */
 
 ENTRY(copysignf)

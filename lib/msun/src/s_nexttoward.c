@@ -10,9 +10,6 @@
  * ====================================================
  */
 
-#include <sys/cdefs.h>
-__FBSDID("$FreeBSD: b2a50d3139de5eb8fb25166b5a23b460414b3c96 $");
-
 /*
  * We assume that a long double has a 15-bit exponent.  On systems
  * where long double is the same as double, nexttoward() is an alias

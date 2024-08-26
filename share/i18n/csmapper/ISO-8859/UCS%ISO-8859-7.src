@@ -1,4 +1,3 @@
-# $FreeBSD: 21ece4a76d1b7c7fbab0758d3a6ca82c38e60ca6 $
 # $NetBSD: UCS%ISO-8859-7.src,v 1.5 2006/07/12 16:56:35 tnozaki Exp $
 
 TYPE		ROWCOL

@@ -3,8 +3,8 @@
 /* (use YYMAJOR/YYMINOR for ifdefs dependent on parser version) */
 
 #define YYBYACC 1
-#define YYMAJOR 1
-#define YYMINOR 9
+#define YYMAJOR 2
+#define YYMINOR 0
 #define YYCHECK "yyyymmdd"
 
 #define YYEMPTY        (-1)
@@ -507,8 +507,8 @@ YYDESTRUCT_DECL()
 		    free(pp->s); free(pp);
 		  }
 		}
+#line 511 "btyacc_destroy2.tab.c"
 	break;
-#line 512 "btyacc_destroy2.tab.c"
     }
 }
 #define YYDESTRUCT_IS_DECLARED 1
@@ -547,14 +547,14 @@ static int yygrowstack(YYSTACKDATA *data)
 
     i = (int) (data->s_mark - data->s_base);
     newss = (YYINT *)realloc(data->s_base, newsize * sizeof(*newss));
-    if (newss == 0)
+    if (newss == NULL)
         return YYENOMEM;
 
     data->s_base = newss;
     data->s_mark = newss + i;
 
     newvs = (YYSTYPE *)realloc(data->l_base, newsize * sizeof(*newvs));
-    if (newvs == 0)
+    if (newvs == NULL)
         return YYENOMEM;
 
     data->l_base = newvs;
@@ -562,7 +562,7 @@ static int yygrowstack(YYSTACKDATA *data)
 
 #if defined(YYLTYPE) || defined(YYLTYPE_IS_DECLARED)
     newps = (YYLTYPE *)realloc(data->p_base, newsize * sizeof(*newps));
-    if (newps == 0)
+    if (newps == NULL)
         return YYENOMEM;
 
     data->p_base = newps;
@@ -656,7 +656,7 @@ YYPARSE_DECL()
 #if YYDEBUG
     const char *yys;
 
-    if ((yys = getenv("YYDEBUG")) != 0)
+    if ((yys = getenv("YYDEBUG")) != NULL)
     {
         yyn = *yys;
         if (yyn >= '0' && yyn <= '9')
@@ -674,7 +674,7 @@ YYPARSE_DECL()
     yyps->save = 0;
 #endif /* YYBTYACC */
     yym = 0;
-    yyn = 0;
+    /* yyn is set below */
     yynerrs = 0;
     yyerrflag = 0;
     yychar = YYEMPTY;
@@ -1186,31 +1186,37 @@ case 1:
   if (!yytrial)
 #line 62 "btyacc_destroy2.y"
 	{ yyval.nlist = yystack.l_mark[-5].nlist; }
+#line 1190 "btyacc_destroy2.tab.c"
 break;
 case 2:
   if (!yytrial)
 #line 64 "btyacc_destroy2.y"
 	{ yyval.nlist = yystack.l_mark[-3].nlist; }
+#line 1196 "btyacc_destroy2.tab.c"
 break;
 case 3:
   if (!yytrial)
 #line 67 "btyacc_destroy2.y"
 	{ yyval.cval = cGLOBAL; }
+#line 1202 "btyacc_destroy2.tab.c"
 break;
 case 4:
   if (!yytrial)
 #line 68 "btyacc_destroy2.y"
 	{ yyval.cval = cLOCAL; }
+#line 1208 "btyacc_destroy2.tab.c"
 break;
 case 5:
   if (!yytrial)
 #line 71 "btyacc_destroy2.y"
 	{ yyval.tval = tREAL; }
+#line 1214 "btyacc_destroy2.tab.c"
 break;
 case 6:
   if (!yytrial)
 #line 72 "btyacc_destroy2.y"
 	{ yyval.tval = tINTEGER; }
+#line 1220 "btyacc_destroy2.tab.c"
 break;
 case 7:
   if (!yytrial)
@@ -1218,6 +1224,7 @@ case 7:
 	{ yyval.nlist->s = mksymbol(yystack.l_mark[-2].tval, yystack.l_mark[-2].cval, yystack.l_mark[0].id);
 	      yyval.nlist->next = yystack.l_mark[-1].nlist;
 	    }
+#line 1228 "btyacc_destroy2.tab.c"
 break;
 case 8:
   if (!yytrial)
@@ -1225,13 +1232,15 @@ case 8:
 	{ yyval.nlist->s = mksymbol(0, 0, yystack.l_mark[0].id);
 	      yyval.nlist->next = NULL;
 	    }
+#line 1236 "btyacc_destroy2.tab.c"
 break;
 case 9:
   if (!yytrial)
 #line 86 "btyacc_destroy2.y"
 	{ yyval.nlist = yystack.l_mark[-5].nlist; }
+#line 1242 "btyacc_destroy2.tab.c"
 break;
-#line 1235 "btyacc_destroy2.tab.c"
+#line 1244 "btyacc_destroy2.tab.c"
     default:
         break;
     }

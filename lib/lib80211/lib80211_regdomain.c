@@ -22,9 +22,6 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-#ifndef lint
-static const char rcsid[] = "$FreeBSD: f5ed236467f5674a2cbfcc05286d60f0b64507d4 $";
-#endif /* not lint */
 
 #include <sys/types.h>
 #include <sys/errno.h>

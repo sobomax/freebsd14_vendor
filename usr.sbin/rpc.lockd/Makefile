@@ -1,5 +1,4 @@
 #	$NetBSD: Makefile,v 1.12 2000/08/07 16:23:31 thorpej Exp $
-# $FreeBSD: 71c68a2d0cedc4cd2009a846ec7b38b21f07835b $
 
 PACKAGE=	nfs
 

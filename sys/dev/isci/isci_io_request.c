@@ -31,8 +31,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 711f5757ee5e9bc0e53b5a031705e78bffd11f01 $");
-
 #include <dev/isci/isci.h>
 
 #include <cam/scsi/scsi_all.h>
@@ -186,6 +184,7 @@ isci_io_request_complete(SCI_CONTROLLER_HANDLE_T scif_controller,
 			    cam_sim_path(isci_controller->sim),
 			    isci_remote_device->index, 0);
 
+			memset(&ccb_relsim, 0, sizeof(ccb_relsim));
 			xpt_setup_ccb(&ccb_relsim.ccb_h, path, 5);
 			ccb_relsim.ccb_h.func_code = XPT_REL_SIMQ;
 			ccb_relsim.ccb_h.flags = CAM_DEV_QFREEZE;

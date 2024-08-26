@@ -29,7 +29,6 @@
 #
 #  Authors: Alan Somers         (Spectra Logic Corporation)
 #
-# $FreeBSD: 60483a2da33408f1c456dafe73810032d069e83b $
 
 # Outline:
 # For each cloned interface type, do three tests

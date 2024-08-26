@@ -32,7 +32,6 @@
 
 #ifndef RPC_HDR
 %#include <sys/cdefs.h>
-%__FBSDID("$FreeBSD: a1d6be51f3697f80205fe497f755c468deff5f8e $");
 #endif
 
 #ifdef RPC_HDR

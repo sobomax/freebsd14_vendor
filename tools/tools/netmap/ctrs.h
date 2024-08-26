@@ -1,7 +1,6 @@
 #ifndef CTRS_H_
 #define CTRS_H_
 
-/* $FreeBSD: eb4c4c9d4bfd7cc74ed55fba26a32ef70864261c $ */
 
 #include <sys/time.h>
 

@@ -22,8 +22,6 @@
  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
  * IN THE SOFTWARE.
- *
- * $FreeBSD: bea65fff8e5ad12a80808f8fa6cf56a01fe4dd44 $
  */
 
 /**
@@ -45,9 +43,9 @@
 #include <machine/stdarg.h>
 
 #include <xen/xen-os.h>
-#include <xen/interface/grant_table.h>
-#include <xen/interface/io/xenbus.h>
-#include <xen/interface/io/xs_wire.h>
+#include <contrib/xen/grant_table.h>
+#include <contrib/xen/io/xenbus.h>
+#include <contrib/xen/io/xs_wire.h>
 
 #include <xen/xenstore/xenstorevar.h>
 

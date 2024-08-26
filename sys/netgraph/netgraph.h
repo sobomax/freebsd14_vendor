@@ -36,8 +36,6 @@
  * OF SUCH DAMAGE.
  *
  * Author: Julian Elischer <julian@freebsd.org>
- *
- * $FreeBSD: d63ea6116fc9ab21ec57c2ea17487da3398b6b6d $
  * $Whistle: netgraph.h,v 1.29 1999/11/01 07:56:13 julian Exp $
  */
 
@@ -1156,6 +1154,7 @@ int 	ng_send_fn1(node_p node, hook_p hook, ng_item_fn *fn, void *arg1,
 int 	ng_send_fn2(node_p node, hook_p hook, item_p pitem, ng_item_fn2 *fn,
 	void *arg1, int arg2, int flags);
 int	ng_uncallout(struct callout *c, node_p node);
+int	ng_uncallout_drain(struct callout *c, node_p node);
 int	ng_callout(struct callout *c, node_p node, hook_p hook, int ticks,
 	    ng_item_fn *fn, void * arg1, int arg2);
 #define	ng_callout_init(c)	callout_init(c, 1)

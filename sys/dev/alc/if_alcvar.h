@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2009, Pyun YongHyeon <yongari@FreeBSD.org>
  * All rights reserved.
@@ -25,8 +25,6 @@
  * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
- *
- * $FreeBSD: 926c800218580168aa4c64b2182893e658ab78b4 $
  */
 
 #ifndef	_IF_ALCVAR_H
@@ -204,7 +202,7 @@ struct alc_ident {
  * Software state per device.
  */
 struct alc_softc {
-	struct ifnet 		*alc_ifp;
+	if_t			alc_ifp;
 	device_t		alc_dev;
 	device_t		alc_miibus;
 	struct resource		*alc_res[1];

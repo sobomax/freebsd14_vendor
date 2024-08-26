@@ -1,11 +1,11 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2000, 2001 Alexey Zelkin <phantom@FreeBSD.org>
  * All rights reserved.
  *
  * Copyright (c) 2011 The FreeBSD Foundation
- * All rights reserved.
+ *
  * Portions of this software were developed by David Chisnall
  * under sponsorship from the FreeBSD Foundation.
  *
@@ -30,9 +30,6 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  */
-
-#include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 86b788d315ee9afc01d3ace24a7abe95ab2d9c79 $");
 
 #include <limits.h>
 
@@ -73,8 +70,6 @@ numeric_load_locale(struct xlocale_numeric *loc, int *using_locale,
 	    &loc->buffer, "LC_NUMERIC",
 	    LCNUMERIC_SIZE, LCNUMERIC_SIZE,
 	    (const char**)l);
-	if (ret != _LDP_ERROR)
-		*changed= 1;
 	if (ret == _LDP_LOADED) {
 		/* Can't be empty according to C99 */
 		if (*l->decimal_point == '\0')
@@ -83,6 +78,8 @@ numeric_load_locale(struct xlocale_numeric *loc, int *using_locale,
 		l->grouping =
 		    __fix_locale_grouping_str(l->grouping);
 	}
+	if (ret != _LDP_ERROR)
+		atomic_store_rel_int(changed, 1);
 	return (ret);
 }
 

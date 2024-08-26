@@ -30,9 +30,6 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 30e109e75742113159455d7a415519d3f58fb9f3 $");
-
 /*
  * RPC/bootparams
  */

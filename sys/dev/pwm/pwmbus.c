@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2018 Emmanuel Vadot <manu@FreeBSD.org>
  *
@@ -26,8 +26,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: cacd21c07709c6f94b91f79e144a92114f05a691 $");
-
 #include "opt_platform.h"
 
 #include <sys/param.h>
@@ -38,6 +36,7 @@ __FBSDID("$FreeBSD: cacd21c07709c6f94b91f79e144a92114f05a691 $");
 #include <sys/kernel.h>
 #include <sys/malloc.h>
 #include <sys/module.h>
+#include <sys/sbuf.h>
 
 #include <dev/pwm/pwmbus.h>
 
@@ -68,22 +67,14 @@ pwmbus_add_child(device_t dev, u_int order, const char *name, int unit)
 }
 
 static int
-pwmbus_child_location_str(device_t dev, device_t child, char *buf, size_t blen)
+pwmbus_child_location(device_t dev, device_t child, struct sbuf *sb)
 {
 	struct pwmbus_ivars *ivars;
 
 	ivars = device_get_ivars(child);
-	snprintf(buf, blen, "hwdev=%s channel=%u", 
+	sbuf_printf(sb, "hwdev=%s channel=%u", 
 	    device_get_nameunit(device_get_parent(dev)), ivars->pi_channel);
 
-	return (0);
-}
-
-static int
-pwmbus_child_pnpinfo_str(device_t dev, device_t child, char *buf,
-    size_t buflen)
-{
-	*buf = '\0';
 	return (0);
 }
 
@@ -261,8 +252,7 @@ static device_method_t pwmbus_methods[] = {
 
         /* bus_if */
 	DEVMETHOD(bus_add_child,		pwmbus_add_child),
-	DEVMETHOD(bus_child_location_str,	pwmbus_child_location_str),
-	DEVMETHOD(bus_child_pnpinfo_str,	pwmbus_child_pnpinfo_str),
+	DEVMETHOD(bus_child_location,		pwmbus_child_location),
 	DEVMETHOD(bus_hinted_child,		pwmbus_hinted_child),
 	DEVMETHOD(bus_print_child,		pwmbus_print_child),
 	DEVMETHOD(bus_probe_nomatch,		pwmbus_probe_nomatch),
@@ -285,8 +275,7 @@ driver_t pwmbus_driver = {
 	pwmbus_methods,
 	sizeof(struct pwmbus_softc),
 };
-devclass_t pwmbus_devclass;
 
-EARLY_DRIVER_MODULE(pwmbus, pwm, pwmbus_driver, pwmbus_devclass, 0, 0,
-  BUS_PASS_BUS + BUS_PASS_ORDER_MIDDLE);
+EARLY_DRIVER_MODULE(pwmbus, pwm, pwmbus_driver, 0, 0,
+    BUS_PASS_BUS + BUS_PASS_ORDER_MIDDLE);
 MODULE_VERSION(pwmbus, 1);

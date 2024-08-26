@@ -25,8 +25,6 @@
  * SUCH DAMAGE.
  *
  * Avago Technologies (LSI) MPT-Fusion Host Adapter FreeBSD
- *
- * $FreeBSD: 45af49025104cc14ae89a35b7f840e6bbfe7ae11 $
  */
 
  ==============================

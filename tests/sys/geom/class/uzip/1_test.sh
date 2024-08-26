@@ -1,5 +1,4 @@
 #!/bin/sh
-# $FreeBSD: c73f20e187645637d4eb73c8e5036b020de37a41 $
 
 testsdir=$(dirname $0)
 . $testsdir/conf.sh

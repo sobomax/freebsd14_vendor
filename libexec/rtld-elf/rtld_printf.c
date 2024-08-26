@@ -33,8 +33,6 @@
  * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
- *
- * $FreeBSD: 48a148f72dff2fc3cf2fec0032a1a2b4b364fc76 $
  */
 
 #include <sys/param.h>
@@ -83,11 +81,10 @@ snprintf_func(int ch, struct snprintf_arg *const info)
 		}
 		break;
 	case PRINT_METHOD_WRITE:
-		if (info->remain > 0) {
-			*info->str++ = ch;
-			info->remain--;
-		} else
+		if (info->remain == 0)
 			printf_out(info);
+		*info->str++ = ch;
+		info->remain--;
 		break;
 	}
 }

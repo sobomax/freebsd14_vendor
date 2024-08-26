@@ -1,4 +1,3 @@
-# $FreeBSD: 597dc6db160636632cb1084367c892ebfe62961b $
 
 WARNS?=		3
 LIB=		memstat

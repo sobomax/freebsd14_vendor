@@ -1,4 +1,3 @@
-# $FreeBSD: a6affe1d76fc5389d0a511f9d830e26093b5d3d5 $
 
 .PATH:		${SRCTOP}/sys/dev/iicbus
 KMOD		= iichid

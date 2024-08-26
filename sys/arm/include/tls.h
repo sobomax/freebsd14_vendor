@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2005 David Xu <davidxu@freebsd.org>.
  * All rights reserved.
@@ -39,25 +39,17 @@
 static __inline void
 _tcb_set(struct tcb *tcb)
 {
-#ifdef ARM_TP_ADDRESS
-	*((struct tcb **)ARM_TP_ADDRESS) = tcb;	/* avoids a system call */
-#else
 	sysarch(ARM_SET_TP, tcb);
-#endif
 }
 
 static __inline struct tcb *
 _tcb_get(void)
 {
-#ifdef ARM_TP_ADDRESS
-	return (*((struct tcb **)ARM_TP_ADDRESS));
-#else
 	struct tcb *tcb;
 
 	__asm __volatile("mrc  p15, 0, %0, c13, c0, 3"		\
 	   		 : "=r" (tcb));
 	return (tcb);
-#endif
 }
 
 #endif /* !_MACHINE_TLS_H_ */

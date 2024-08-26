@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  * Copyright 2014 Jonathan Anderson.
  * Copyright 2021 Mariusz Zaborski <oshogbo@vexillium.org>
  *
@@ -22,8 +22,6 @@
  * THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- *
- * $FreeBSD: d5bf2050dcfd9b7d4839bba0541fdae05a437db3 $
  */
 
 #ifndef _LD_COMMON_H_
@@ -37,7 +35,7 @@ void	expect_missing_library(int binary, char *senv);
 
 void	try_to_run(int binary, int expected_exit_status, char * const *env,
 	    const char *expected_out, const char *expected_err);
-int	opendir(const char *name);
+int	opendir_fd(const char *name);
 int	opendirat(int parent, const char *name);
 
 #endif /* _LD_COMMON_H_ */

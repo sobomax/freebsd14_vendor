@@ -1,4 +1,3 @@
-# $FreeBSD: c58671d59aa02d1bc00b173b9fb90909bc8dbade $
 .include <src.opts.mk>
 
 _LIBARCHIVEDIR=	${SRCTOP}/contrib/libarchive

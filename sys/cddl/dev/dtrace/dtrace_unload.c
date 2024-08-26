@@ -18,8 +18,6 @@
  *
  * CDDL HEADER END
  *
- * $FreeBSD: 1dfaa774e99fd5340f95fd8611ebf039d89c8542 $
- *
  */
 
 static int

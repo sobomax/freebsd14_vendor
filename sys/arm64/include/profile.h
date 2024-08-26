@@ -28,47 +28,22 @@
  *
  *	from: NetBSD: profile.h,v 1.9 1997/04/06 08:47:37 cgd Exp
  *	from: FreeBSD: src/sys/alpha/include/profile.h,v 1.4 1999/12/29
- * $FreeBSD: 0b117d0ff442092ef3a271185fdfc588e1072fae $
  */
+
+#ifdef __arm__
+#include <arm/profile.h>
+#else /* !__arm__ */
 
 #ifndef _MACHINE_PROFILE_H_
 #define	_MACHINE_PROFILE_H_
-
-#if !defined(_KERNEL) && !defined(_SYS_CDEFS_H_)
-#error this file needs sys/cdefs.h as a prerequisite
-#endif
 
 #define	FUNCTION_ALIGNMENT	32
 
 typedef u_long	fptrdiff_t;
 
-#ifdef _KERNEL
+#ifndef _KERNEL
 
-#include <machine/cpufunc.h>
-
-#define	_MCOUNT_DECL	void mcount
-#define	MCOUNT
-
-#define	MCOUNT_DECL(s)	register_t s;
-#define	MCOUNT_ENTER(s)	{s = intr_disable(); }
-#define	MCOUNT_EXIT(s)	{intr_restore(s); }
-
-void bintr(void);
-void btrap(void);
-void eintr(void);
-void user(void);
-
-#define	MCOUNT_FROMPC_USER(pc)					\
-	((pc < (uintfptr_t)VM_MAXUSER_ADDRESS) ? (uintfptr_t)user : pc)
-
-#define	MCOUNT_FROMPC_INTR(pc)					\
-	((pc >= (uintfptr_t)btrap && pc < (uintfptr_t)eintr) ?	\
-	    ((pc >= (uintfptr_t)bintr) ? (uintfptr_t)bintr :	\
-		(uintfptr_t)btrap) : ~0UL)
-
-void	mcount(uintfptr_t frompc, uintfptr_t selfpc);
-
-#else /* !_KERNEL */
+#include <sys/cdefs.h>
 
 typedef __uintfptr_t    uintfptr_t;
 
@@ -76,7 +51,6 @@ typedef __uintfptr_t    uintfptr_t;
 static void _mcount(uintfptr_t frompc, uintfptr_t selfpc) __used; \
 static void _mcount
 
-#ifdef __GNUCLIKE_ASM
 /*
  * Call into _mcount. On arm64 the .mcount is a function so callers will
  * handle caller saved registers. As we don't directly touch any callee
@@ -94,6 +68,8 @@ static void _mcount
 "	.globl	.mcount				\n"	\
 "	.mcount:				\n"	\
 "	.cfi_startproc				\n"	\
+	/* Allow this to work with BTI, see BTI_C in asm.h */ \
+"	hint	#34				\n"	\
 	/* Load the caller return address as frompc */	\
 "	ldr	x0, [x29, #8]			\n"	\
 	/* Use our return address as selfpc */		\
@@ -114,10 +90,9 @@ mcount(uintfptr_t frompc)
 	_mcount(frompc, __builtin_return_address(0));
 }
 #endif
-#else
-#define	MCOUNT
-#endif
 
-#endif /* _KERNEL */
+#endif /* !_KERNEL */
 
 #endif /* !_MACHINE_PROFILE_H_ */
+
+#endif /* !__arm__ */

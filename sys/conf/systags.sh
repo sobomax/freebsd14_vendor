@@ -30,7 +30,6 @@
 # SUCH DAMAGE.
 #
 #	@(#)systags.sh	8.1 (Berkeley) 6/10/93
-# $FreeBSD: 458627a45bf5dad0bdb92f0f892d5ca907aa2f95 $
 #
 # systags.sh - construct a system tags file using dependence relations
 #	in a .depend file

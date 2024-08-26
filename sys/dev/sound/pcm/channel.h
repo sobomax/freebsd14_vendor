@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2005-2009 Ariff Abdullah <ariff@FreeBSD.org>
  * Portions Copyright (c) Ryan Beasley <ryan.beasley@gmail.com> - GSoC 2006
@@ -26,8 +26,6 @@
  * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
- *
- * $FreeBSD: 60b7b3416cc30d55e22ac16f6668330c4f145829 $
  */
 
 struct pcmchan_caps {
@@ -266,8 +264,8 @@ int chn_poll(struct pcm_channel *c, int ev, struct thread *td);
 
 int chn_init(struct pcm_channel *c, void *devinfo, int dir, int direction);
 int chn_kill(struct pcm_channel *c);
+void chn_shutdown(struct pcm_channel *c);
 int chn_reset(struct pcm_channel *c, u_int32_t fmt, u_int32_t spd);
-int chn_setvolume(struct pcm_channel *c, int left, int right);
 int chn_setvolume_multi(struct pcm_channel *c, int vc, int left, int right,
     int center);
 int chn_setvolume_matrix(struct pcm_channel *c, int vc, int vt, int val);

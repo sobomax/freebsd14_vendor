@@ -1,4 +1,3 @@
-# $FreeBSD: 4c94f67cf4e00ea8bd35e03737276cdc3c1eba30 $
 
 LOADER_NET_SUPPORT?=	yes
 LOADER_MSDOS_SUPPORT?=	yes
@@ -68,6 +67,7 @@ CFLAGS+=	-DEFI
 .if defined(HAVE_FDT) && ${MK_FDT} != "no"
 .include	"${BOOTSRC}/fdt.mk"
 LIBEFI_FDT=	${BOOTOBJ}/efi/fdt/libefi_fdt.a
+HELP_FILES+=	${FDTSRC}/help.fdt
 .endif
 
 # Include bcache code.
@@ -100,7 +100,7 @@ FILESMODE_${LOADER}.efi=	${BINMODE}
 LINKS+=		${BINDIR}/${LOADER}.efi ${BINDIR}/loader.efi
 .endif
 
-LDSCRIPT=	${.CURDIR}/../loader/arch/${MACHINE}/ldscript.${MACHINE}
+LDSCRIPT=	${.CURDIR}/../loader/arch/${MACHINE}/${MACHINE}.ldscript
 LDFLAGS+=	-Wl,-T${LDSCRIPT},-Bsymbolic,-znotext -pie
 .if ${LINKER_TYPE} == "bfd" && ${LINKER_VERSION} >= 23400
 LDFLAGS+=	-Wl,--no-dynamic-linker
@@ -109,7 +109,7 @@ LDFLAGS+=	-Wl,--no-dynamic-linker
 CLEANFILES+=	${LOADER}.efi
 
 ${LOADER}.efi: ${PROG}
-	if ${NM} ${.ALLSRC} | grep ' U '; then \
+	@if ${NM} ${.ALLSRC} | grep ' U '; then \
 		echo "Undefined symbols in ${.ALLSRC}"; \
 		exit 1; \
 	fi
@@ -117,12 +117,12 @@ ${LOADER}.efi: ${PROG}
 	${OBJCOPY} -j .peheader -j .text -j .sdata -j .data \
 		-j .dynamic -j .dynsym -j .rel.dyn \
 		-j .rela.dyn -j .reloc -j .eh_frame -j set_Xcommand_set \
-		-j set_Xficl_compile_set \
+		-j set_X${LOADER_INTERP}_compile_set \
 		--output-target=${EFI_TARGET} ${.ALLSRC} ${.TARGET}
 
 LIBEFI=		${BOOTOBJ}/efi/libefi/libefi.a
 
-DPADD=		${LDR_INTERP} ${LIBEFI} ${LIBFDT} ${LIBEFI_FDT} ${LIBSA} ${LDSCRIPT}
-LDADD=		${LDR_INTERP} ${LIBEFI} ${LIBFDT} ${LIBEFI_FDT} ${LIBSA}
+DPADD=		${LDR_INTERP} ${LIBEFI} ${LIBSAFDT} ${LIBEFI_FDT} ${LIBSA} ${LDSCRIPT}
+LDADD=		${LDR_INTERP} ${LIBEFI} ${LIBSAFDT} ${LIBEFI_FDT} ${LIBSA}
 
 .include <bsd.prog.mk>

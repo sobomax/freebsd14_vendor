@@ -25,8 +25,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: a94ed630ab7307619f07b6f6956efa6c04e12ed5 $");
-
 #include <sys/param.h>
 #include <sys/systm.h>
 #include <sys/bus.h>
@@ -148,17 +146,15 @@ static device_method_t lkpi_iic_methods[] = {
 	DEVMETHOD_END
 };
 
-devclass_t lkpi_iic_devclass;
-
 driver_t lkpi_iic_driver = {
 	"lkpi_iic",
 	lkpi_iic_methods,
 	sizeof(struct lkpi_iic_softc),
 };
 
-DRIVER_MODULE(lkpi_iic, drmn, lkpi_iic_driver, lkpi_iic_devclass, 0, 0);
-DRIVER_MODULE(lkpi_iic, drm, lkpi_iic_driver, lkpi_iic_devclass, 0, 0);
-DRIVER_MODULE(iicbus, lkpi_iic, iicbus_driver, iicbus_devclass, 0, 0);
+DRIVER_MODULE(lkpi_iic, drmn, lkpi_iic_driver, 0, 0);
+DRIVER_MODULE(lkpi_iic, drm, lkpi_iic_driver, 0, 0);
+DRIVER_MODULE(iicbus, lkpi_iic, iicbus_driver, 0, 0);
 MODULE_DEPEND(linuxkpi, iicbus, IICBUS_MINVER, IICBUS_PREFVER, IICBUS_MAXVER);
 
 static int
@@ -166,6 +162,116 @@ lkpi_i2c_reset(device_t dev, u_char speed, u_char addr, u_char *oldaddr)
 {
 
 	/* That doesn't seems to be supported in linux */
+	return (0);
+}
+
+static int i2c_check_for_quirks(struct i2c_adapter *adapter,
+    struct iic_msg *msgs, uint32_t nmsgs)
+{
+	const struct i2c_adapter_quirks *quirks;
+	device_t dev;
+	int i, max_nmsgs;
+	bool check_len;
+
+	dev = adapter->dev.parent->bsddev;
+	quirks = adapter->quirks;
+	if (quirks == NULL)
+		return (0);
+
+	check_len = true;
+	max_nmsgs = quirks->max_num_msgs;
+
+	if (quirks->flags & I2C_AQ_COMB) {
+		max_nmsgs = 2;
+
+		if (nmsgs == 2) {
+			if (quirks->flags & I2C_AQ_COMB_WRITE_FIRST &&
+			    msgs[0].flags & IIC_M_RD) {
+				device_printf(dev,
+				    "Error: "
+				    "first combined message must be write\n");
+				return (EOPNOTSUPP);
+			}
+			if (quirks->flags & I2C_AQ_COMB_READ_SECOND &&
+			    !(msgs[1].flags & IIC_M_RD)) {
+				device_printf(dev,
+				    "Error: "
+				    "second combined message must be read\n");
+				return (EOPNOTSUPP);
+			}
+
+			if (quirks->flags & I2C_AQ_COMB_SAME_ADDR &&
+			    msgs[0].slave != msgs[1].slave) {
+				device_printf(dev,
+				    "Error: "
+				    "combined message must be use the same "
+				    "address\n");
+				return (EOPNOTSUPP);
+			}
+
+			if (quirks->max_comb_1st_msg_len &&
+			    msgs[0].len > quirks->max_comb_1st_msg_len) {
+				device_printf(dev,
+				    "Error: "
+				    "message too long: %hu > %hu max\n",
+				    msgs[0].len,
+				    quirks->max_comb_1st_msg_len);
+				return (EOPNOTSUPP);
+			}
+			if (quirks->max_comb_2nd_msg_len &&
+			    msgs[1].len > quirks->max_comb_2nd_msg_len) {
+				device_printf(dev,
+				    "Error: "
+				    "message too long: %hu > %hu max\n",
+				    msgs[1].len,
+				    quirks->max_comb_2nd_msg_len);
+				return (EOPNOTSUPP);
+			}
+
+			check_len = false;
+		}
+	}
+
+	if (max_nmsgs && nmsgs > max_nmsgs) {
+		device_printf(dev,
+		    "Error: too many messages: %d > %d max\n",
+		    nmsgs, max_nmsgs);
+		return (EOPNOTSUPP);
+	}
+
+	for (i = 0; i < nmsgs; i++) {
+		if (msgs[i].flags & IIC_M_RD) {
+			if (check_len && quirks->max_read_len &&
+			    msgs[i].len > quirks->max_read_len) {
+				device_printf(dev,
+				    "Error: "
+				    "message %d too long: %hu > %hu max\n",
+				    i, msgs[i].len, quirks->max_read_len);
+				return (EOPNOTSUPP);
+			}
+			if (quirks->flags & I2C_AQ_NO_ZERO_LEN_READ &&
+			    msgs[i].len == 0) {
+				device_printf(dev,
+				    "Error: message %d of length 0\n", i);
+				return (EOPNOTSUPP);
+			}
+		} else {
+			if (check_len && quirks->max_write_len &&
+			    msgs[i].len > quirks->max_write_len) {
+				device_printf(dev,
+				    "Message %d too long: %hu > %hu max\n",
+				    i, msgs[i].len, quirks->max_write_len);
+				return (EOPNOTSUPP);
+			}
+			if (quirks->flags & I2C_AQ_NO_ZERO_LEN_WRITE &&
+			    msgs[i].len == 0) {
+				device_printf(dev,
+				    "Error: message %d of length 0\n", i);
+				return (EOPNOTSUPP);
+			}
+		}
+	}
+
 	return (0);
 }
 
@@ -179,6 +285,9 @@ lkpi_i2c_transfer(device_t dev, struct iic_msg *msgs, uint32_t nmsgs)
 	sc = device_get_softc(dev);
 	if (sc->adapter == NULL)
 		return (ENXIO);
+	ret = i2c_check_for_quirks(sc->adapter, msgs, nmsgs);
+	if (ret != 0)
+		return (ret);
 	linux_set_current(curthread);
 
 	linux_msgs = malloc(sizeof(struct i2c_msg) * nmsgs,

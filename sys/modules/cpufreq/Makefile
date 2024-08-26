@@ -1,4 +1,3 @@
-# $FreeBSD: 4198d7d66a75c2f362b3246329cab8423059851c $
 
 .PATH:	${SRCTOP}/sys/dev/cpufreq		\
 	${SRCTOP}/sys/${MACHINE_CPUARCH}/cpufreq

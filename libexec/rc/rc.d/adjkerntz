@@ -1,6 +1,5 @@
 #!/bin/sh
 #
-# $FreeBSD: 18a822012059e76faaaf83ef9357fa737970b96f $
 #
 
 # PROVIDE: adjkerntz

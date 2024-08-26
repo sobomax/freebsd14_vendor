@@ -29,8 +29,6 @@
  * File : ecore_ooo.c
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 50359b6e20c6a707d1b0556f69980e9d7b646bcd $");
-
 #include "bcm_osal.h"
 
 #include "ecore.h"

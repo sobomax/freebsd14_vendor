@@ -24,9 +24,6 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include <sys/cdefs.h>
-__FBSDID("$FreeBSD: a55239dbec8c4b02077a13a931a4e878ce7cf7f8 $");
-
 #include <efi.h>
 #include <efilib.h>
 

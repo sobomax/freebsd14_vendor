@@ -1,11 +1,8 @@
-# $FreeBSD: 2adbccb34f9d248187a8e2f9dd862e04f8ef6bef $
 
 # Common flags to build FICL related files
 
 .if ${MACHINE_CPUARCH} == "amd64" && ${DO32:U0} == 1
 FICL_CPUARCH=	i386
-.elif ${MACHINE_ARCH:Mmips64*} != ""
-FICL_CPUARCH=	mips64
 .else
 FICL_CPUARCH=	${MACHINE_CPUARCH}
 .endif

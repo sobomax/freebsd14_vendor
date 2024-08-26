@@ -6,8 +6,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 993b515c49b532dc19adfbf351cc6e7c73a1d8d2 $");
-
 #include <sys/types.h>
 #include <sys/wait.h>
 

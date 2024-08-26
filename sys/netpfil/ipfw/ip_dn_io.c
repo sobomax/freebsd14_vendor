@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2010 Luigi Rizzo, Riccardo Panicucci, Universita` di Pisa
  * All rights reserved
@@ -30,8 +30,6 @@
  * Dummynet portions related to packet handling.
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: dad5cb087b393d57232c97d2f0f67e05fbb4f9d5 $");
-
 #include "opt_inet6.h"
 
 #include <sys/param.h>
@@ -51,6 +49,7 @@ __FBSDID("$FreeBSD: dad5cb087b393d57232c97d2f0f67e05fbb4f9d5 $");
 
 #include <net/if.h>	/* IFNAMSIZ, struct ifaddr, ifq head, lock.h mutex.h */
 #include <net/if_var.h>	/* NET_EPOCH_... */
+#include <net/if_private.h>
 #include <net/netisr.h>
 #include <net/vnet.h>
 
@@ -500,6 +499,8 @@ dn_enqueue(struct dn_queue *q, struct mbuf* m, int drop)
 		goto drop;
 	if (f->plr && random() < f->plr)
 		goto drop;
+	if (m->m_pkthdr.rcvif != NULL)
+		m_rcvif_serialize(m);
 #ifdef NEW_AQM
 	/* Call AQM enqueue function */
 	if (q->fs->aqmfp)
@@ -548,7 +549,11 @@ transmit_event(struct mq *q, struct delay_line *dline, uint64_t now)
 			break;
 		dline->mq.head = m->m_nextpkt;
 		dline->mq.count--;
-		mq_append(q, m);
+		if (m->m_pkthdr.rcvif != NULL &&
+		  __predict_false(m_rcvif_restore(m) == NULL))
+			m_freem(m);
+		else
+			mq_append(q, m);
 	}
 	if (m != NULL) {
 		dline->oid.subtype = 1; /* in heap */
@@ -617,6 +622,8 @@ serve_sched(struct mq *q, struct dn_sch_inst *si, uint64_t now)
 		si->credit -= len_scaled;
 		/* Move packet in the delay line */
 		dn_tag_get(m)->output_time = V_dn_cfg.curr_time + s->link.delay ;
+		if (m->m_pkthdr.rcvif != NULL)
+			m_rcvif_serialize(m);
 		mq_append(&si->dline.mq, m);
 	}
 
@@ -660,6 +667,11 @@ dummynet_task(void *context, int pending)
 	VNET_FOREACH(vnet_iter) {
 		memset(&q, 0, sizeof(struct mq));
 		CURVNET_SET(vnet_iter);
+
+		if (! V_dn_cfg.init_done) {
+			CURVNET_RESTORE();
+			continue;
+		}
 
 		DN_BH_WLOCK();
 
@@ -758,12 +770,13 @@ dummynet_send(struct mbuf *m)
 			/* extract the dummynet info, rename the tag
 			 * to carry reinject info.
 			 */
-			if (pkt->dn_dir == (DIR_OUT | PROTO_LAYER2) &&
-				pkt->ifp == NULL) {
+			ifp = ifnet_byindexgen(pkt->if_index, pkt->if_idxgen);
+			if (((pkt->dn_dir == (DIR_OUT | PROTO_LAYER2)) ||
+			    (pkt->dn_dir == (DIR_OUT | PROTO_LAYER2 | PROTO_IPV6))) &&
+				ifp == NULL) {
 				dst = DIR_DROP;
 			} else {
 				dst = pkt->dn_dir;
-				ifp = pkt->ifp;
 				tag->m_tag_cookie = MTAG_IPFW_RULE;
 				tag->m_tag_id = 0;
 			}
@@ -796,6 +809,7 @@ dummynet_send(struct mbuf *m)
 
 			break;
 
+		case DIR_IN | PROTO_LAYER2 | PROTO_IPV6:
 		case DIR_IN | PROTO_LAYER2: /* DN_TO_ETH_DEMUX: */
 			/*
 			 * The Ethernet code assumes the Ethernet header is
@@ -811,7 +825,9 @@ dummynet_send(struct mbuf *m)
 			ether_demux(m->m_pkthdr.rcvif, m);
 			break;
 
+		case DIR_OUT | PROTO_LAYER2 | PROTO_IPV6:
 		case DIR_OUT | PROTO_LAYER2: /* DN_TO_ETH_OUT: */
+			MPASS(ifp != NULL);
 			ether_output_frame(ifp, m);
 			break;
 
@@ -841,10 +857,15 @@ tag_mbuf(struct mbuf *m, int dir, struct ip_fw_args *fwa)
 	m_tag_prepend(m, mtag);		/* Attach to mbuf chain. */
 	dt = (struct dn_pkt_tag *)(mtag + 1);
 	dt->rule = fwa->rule;
-	dt->rule.info &= IPFW_ONEPASS;	/* only keep this info */
+	/* only keep this info */
+	dt->rule.info &= (IPFW_ONEPASS | IPFW_IS_DUMMYNET);
 	dt->dn_dir = dir;
-	dt->ifp = fwa->flags & IPFW_ARGS_OUT ? fwa->ifp : NULL;
-	/* dt->output tame is updated as we move through */
+	if (fwa->flags & IPFW_ARGS_OUT && fwa->ifp != NULL) {
+		NET_EPOCH_ASSERT();
+		dt->if_index = fwa->ifp->if_index;
+		dt->if_idxgen = fwa->ifp->if_idxgen;
+	}
+	/* dt->output_time is updated as we move through */
 	dt->output_time = V_dn_cfg.curr_time;
 	dt->iphdr_off = (dir & PROTO_LAYER2) ? ETHER_HDR_LEN : 0;
 	return 0;

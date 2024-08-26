@@ -30,8 +30,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 6e275b29106d9538800699c51301fa36c00ebee3 $");
-
 #include <sys/param.h>
 #include <sys/systm.h>
 #include <sys/bus.h>
@@ -62,8 +60,8 @@ static driver_t cfi_fdt_driver = {
 	sizeof(struct cfi_softc),
 };
 
-DRIVER_MODULE (cfi, lbc, cfi_fdt_driver, cfi_devclass, 0, 0);
-DRIVER_MODULE (cfi, simplebus, cfi_fdt_driver, cfi_devclass, 0, 0);
+DRIVER_MODULE (cfi, lbc, cfi_fdt_driver, 0, 0);
+DRIVER_MODULE (cfi, simplebus, cfi_fdt_driver, 0, 0);
 
 static int
 cfi_fdt_probe(device_t dev)

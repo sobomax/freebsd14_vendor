@@ -1,4 +1,3 @@
-# $FreeBSD: 152e7d306a7de7176c58cf1619f107ff601a7894 $ 
 # $NetBSD: PTCP154.src,v 1.1 2007/03/13 16:34:39 tnozaki Exp $
 
 NAME		"PTCP154"

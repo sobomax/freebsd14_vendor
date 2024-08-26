@@ -24,20 +24,20 @@
  */
 
 #include <machine/asm.h>
-__FBSDID("$FreeBSD: 618dca178877da6ed6f8486b7e07589770e01598 $");
-
 	.section .init,"ax",@progbits
 	.align	4
 	.globl	_init
 	.type	_init,@function
 _init:
-	subq	$8,%rsp
+	pushq	%rbp
+	movq	%rsp,%rbp
 
 	.section .fini,"ax",@progbits
 	.align	4
 	.globl	_fini
 	.type	_fini,@function
 _fini:
-	subq	$8,%rsp
+	pushq	%rbp
+	movq	%rsp,%rbp
 
 	.section .note.GNU-stack,"",%progbits

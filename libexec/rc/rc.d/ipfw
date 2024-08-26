@@ -1,6 +1,5 @@
 #!/bin/sh
 #
-# $FreeBSD: 22b65d2908cb49c56237f7de2a5da4023c5b9e19 $
 #
 
 # PROVIDE: ipfw

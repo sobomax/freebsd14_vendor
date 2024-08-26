@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2012 Semihalf.
  * All rights reserved.
@@ -30,8 +30,6 @@
 #include "opt_platform.h"
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: ae1536bc43004a954b50290e5e2deab0a8adec8f $");
-
 #include <sys/param.h>
 #include <sys/systm.h>
 #include <sys/kernel.h>

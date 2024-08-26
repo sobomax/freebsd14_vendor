@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2005 Bruce D. Evans and Steven G. Kargl
  * All rights reserved.
@@ -37,9 +37,6 @@
  * The sign of the result for some exceptional values is unspecified but
  * must satisfy both sinh(conj(z)) == conj(sinh(z)) and sinh(-z) == -sinh(z).
  */
-
-#include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 09b2dcbecb7b5a8bfd142d0c12f9657e671fa123 $");
 
 #include <complex.h>
 #include <math.h>

@@ -1,5 +1,5 @@
 #-
-# SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+# SPDX-License-Identifier: BSD-2-Clause
 #
 # Copyright (c) 2020 Emmanuel Vadot <manu@FreeBSD.org>
 #
@@ -24,7 +24,6 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: f7d3f4df5ebb13b061c3b7fd7b63b5a88f2b768b $
 
 #include <sys/types.h>
 #include <sys/callout.h>

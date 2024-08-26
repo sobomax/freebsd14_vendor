@@ -24,8 +24,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 21766f57c9b66af317b05ba8a37b6ae4d69611aa $");
-
 /*
  * ARMADA 8040 GPIO driver.
  */
@@ -868,9 +866,7 @@ static device_method_t mvebu_gpio_methods[] = {
 	DEVMETHOD_END
 };
 
-static devclass_t mvebu_gpio_devclass;
 static DEFINE_CLASS_0(gpio, mvebu_gpio_driver, mvebu_gpio_methods,
     sizeof(struct mvebu_gpio_softc));
-EARLY_DRIVER_MODULE(mvebu_gpio, simplebus, mvebu_gpio_driver,
-     mvebu_gpio_devclass, NULL, NULL,
+EARLY_DRIVER_MODULE(mvebu_gpio, simplebus, mvebu_gpio_driver, NULL, NULL,
      BUS_PASS_TIMER + BUS_PASS_ORDER_LAST);

@@ -1,4 +1,3 @@
-# $FreeBSD: 4ecf16f07b400f77feeb2755f03de3c80241de8d $
 
 PROG=	zstd
 SRCS=	\
@@ -9,7 +8,8 @@ SRCS=	\
 	fileio.c \
 	timefn.c \
 	util.c \
-	zstdcli.c
+	zstdcli.c \
+	zstdcli_trace.c
 
 CFLAGS+=	-I${SRCTOP}/sys/contrib/zstd/programs \
 		-I${SRCTOP}/sys/contrib/zstd/lib/common \

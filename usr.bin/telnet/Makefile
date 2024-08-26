@@ -1,4 +1,3 @@
-# $FreeBSD: 33c8b9cba19315752d66a809103817ffa894c3c5 $
 
 .include <src.opts.mk>
 
@@ -21,7 +20,7 @@ CFLAGS+=	-DINET6
 
 WARNS?=		2
 
-LIBADD=		telnet ncursesw
+LIBADD=		telnet tinfow
 
 CFLAGS+=	-DIPSEC
 LIBADD+=	ipsec

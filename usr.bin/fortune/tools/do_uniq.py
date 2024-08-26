@@ -1,6 +1,5 @@
 #!/usr/local/bin/python
 #
-# $FreeBSD: b434a10f5b3fe36ec598e3d0aa8790be0d04d35a $
 #
 # an aggressive little script for trimming duplicate cookies
 from __future__ import print_function

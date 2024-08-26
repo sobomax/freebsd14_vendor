@@ -30,7 +30,6 @@
  *   (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  *   OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-/*$FreeBSD: 8017592306094500534204dce2f42540f86d4759 $*/
 
 /*  \file  lio_config.h
  *  \brief Host Driver: Configuration data structures for the host driver.

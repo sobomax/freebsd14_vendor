@@ -1,4 +1,3 @@
-# $FreeBSD: 6fb32caebcb1cc0726d068d40e2ade0d9f3c6896 $
 
 .include <src.opts.mk>
 
@@ -94,6 +93,7 @@ MLINKS+=sysdecode_mask.3 sysdecode_accessmode.3 \
 	sysdecode_mask.3 sysdecode_msync_flags.3 \
 	sysdecode_mask.3 sysdecode_open_flags.3 \
 	sysdecode_mask.3 sysdecode_pipe2_flags.3 \
+	sysdecode_mask.3 sysdecode_pollfd_events.3 \
 	sysdecode_mask.3 sysdecode_reboot_howto.3 \
 	sysdecode_mask.3 sysdecode_rfork_flags.3 \
 	sysdecode_mask.3 sysdecode_semget_flags.3 \
@@ -112,7 +112,8 @@ MLINKS+=sysdecode_mask.3 sysdecode_accessmode.3 \
 
 CLEANFILES= ioctl.c ioctl.c.tmp tables.h tables_linux.h
 
-.if defined(COMPAT_32BIT)
+# XXX: The flags should come from bsd.compat.mk / Makefile.libcompat
+.if ${COMPAT_LIBCOMPAT:U} == "32"
 CPP+=	-m32
 .endif
 

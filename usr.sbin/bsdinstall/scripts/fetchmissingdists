@@ -25,12 +25,14 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: d96ddabb2c2534955de9f518138f6fb8bfb13b45 $
 #
+
+BSDCFG_SHARE="/usr/share/bsdconfig"
+. $BSDCFG_SHARE/common.subr || exit 1
 
 error()
 {
-	dialog --backtitle "FreeBSD Installer" --title "Error" --msgbox $1 0 0
+	bsddialog --backtitle "$OSNAME Installer" --title "Error" --msgbox "$1" 0 0
 	exit 1
 }
 
@@ -79,7 +81,7 @@ else
 	VERIFY_MANIFEST_SIG=1
 
 	# XXX actually verify signature on manifest
-	dialog --backtitle "FreeBSD Installer" --title "Warning" --msgbox "Manifest not found on local disk and will be fetched from an unverified source. This is a potential security risk. If you do not wish to proceed, press control-C now." 0 0
+	bsddialog --backtitle "$OSNAME Installer" --title "Warning" --msgbox "Manifest not found on local disk and will be fetched from an unverified source. This is a potential security risk. If you do not wish to proceed, press control-C now." 0 0
 fi
 
 if [ ! -z "$LOCAL_DISTRIBUTIONS" ]; then

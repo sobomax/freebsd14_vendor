@@ -1,4 +1,3 @@
-# $FreeBSD: aced256b4cdc67133d8a26297f156967531daab1 $
 
 TESTSDIR=	${TESTSBASE}/sys/kern/acct
 

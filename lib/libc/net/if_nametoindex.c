@@ -27,9 +27,6 @@
  *	BSDI Id: if_nametoindex.c,v 2.3 2000/04/17 22:38:05 dab Exp
  */
 
-#include <sys/cdefs.h>
-__FBSDID("$FreeBSD: c38fce76b037f9054def3deb252c91c00f37c9b1 $");
-
 #include "namespace.h"
 #include <sys/types.h>
 #include <sys/socket.h>

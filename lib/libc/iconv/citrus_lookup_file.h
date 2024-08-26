@@ -1,4 +1,3 @@
-/* $FreeBSD: a2ada5fc7d5cec6a7f95ab27b0edbce9640e22bc $ */
 /* $NetBSD: citrus_lookup_file.h,v 1.1 2003/06/25 09:51:36 tshiozak Exp $ */
 
 /*-

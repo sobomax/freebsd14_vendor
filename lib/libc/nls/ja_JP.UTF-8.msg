@@ -1,4 +1,3 @@
-$ $FreeBSD: 6be65fbb5c0a737c8bd1a7ff56df8be941b53506 $
 $
 $ Message catalog for ja_JP.UTF-8 locale
 $

@@ -1,4 +1,3 @@
-# $FreeBSD: 261828072e74ca9ede7f267cf609d1dd22c3467f $
 
 # We're actually creating a libc_noshared.a that is PIC along side libc.so.*
 # It is used exclusively with libc.so.* - there is no need for any other
@@ -10,6 +9,7 @@ NO_PIC=
 # -fpic on some platforms, -fPIC on others.
 CFLAGS+=${PICFLAG} -DPIC -fvisibility=hidden
 
+PACKAGE= clibs
 LIB=	c_nonshared
 
 LIBC_NONSHARED_SRCS=

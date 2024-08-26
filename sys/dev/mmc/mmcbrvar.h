@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2006 Bernd Walter.  All rights reserved.
  * Copyright (c) 2006 M. Warner Losh <imp@FreeBSD.org>
@@ -50,8 +50,6 @@
  * herein shall be construed as an obligation by the SD Group, the SD-3C LLC
  * or the SD Card Association to disclose or distribute any technical
  * information, know-how or other confidential information to any third party.
- *
- * $FreeBSD: 90095710dbb12820ad7c2831e050ff21055fb4ab $
  */
 
 #ifndef DEV_MMC_MMCBRVAR_H

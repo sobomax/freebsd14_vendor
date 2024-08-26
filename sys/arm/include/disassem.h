@@ -36,8 +36,6 @@
  * SUCH DAMAGE.
  *
  * Define the interface structure required by the disassembler.
- *
- * $FreeBSD: 2ef5cda04c2f59040537e4dd379ed26769d296da $
  */
 
 #ifndef _MACHINE_DISASSEM_H_

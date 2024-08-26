@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2020 Jan Kokemüller
  *
@@ -26,8 +26,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: c4bd402c8e9616daffe92b10efbcd554601be0c4 $");
-
 #include <sys/param.h>
 #include <sys/event.h>
 #include <sys/stat.h>

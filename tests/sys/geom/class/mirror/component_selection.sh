@@ -1,4 +1,3 @@
-# $FreeBSD: eafaeafb30c6881531deca0aa5e9eab9f0a9710b $
 
 ATF_TEST=true
 class=mirror

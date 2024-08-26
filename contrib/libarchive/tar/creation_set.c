@@ -24,7 +24,6 @@
  */
 
 #include "bsdtar_platform.h"
-__FBSDID("$FreeBSD: cfc5a642aed3235661d82d0f18b527dd3e757663 $");
 
 #ifdef HAVE_STDLIB_H
 #include <stdlib.h>

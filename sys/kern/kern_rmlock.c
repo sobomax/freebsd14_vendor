@@ -34,8 +34,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: d7dea8efc40ece46e4551d0b200b994cde19b2b5 $");
-
 #include "opt_ddb.h"
 
 #include <sys/param.h>
@@ -1025,7 +1023,7 @@ rms_rlock(struct rmslock *rms)
 {
 	struct rmslock_pcpu *pcpu;
 
-	WITNESS_WARN(WARN_GIANTOK | WARN_SLEEPOK, NULL, __func__);
+	rms_assert_rlock_ok(rms);
 	MPASS(atomic_load_ptr(&rms->owner) != curthread);
 
 	critical_enter();

@@ -1,4 +1,3 @@
-# $FreeBSD: 3533fd3965061622f59b9875a289eb9c992cc4cf $
 
 SUBDIR=		dso
 TESTS_SUBDIRS=	dynamic

@@ -17,8 +17,6 @@
  *
  * NEW command line interface for IP firewall facility
  *
- * $FreeBSD: 081262fd3d80e76820a593fa878514196dd050e1 $
- *
  * altq interface
  */
 

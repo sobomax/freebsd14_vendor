@@ -32,7 +32,6 @@
  * SUCH DAMAGE.
  *
  *	from: @(#)cpu.h	5.4 (Berkeley) 5/9/91
- * $FreeBSD: f7732435fc39c09859e7c898b2a78166efb360a8 $
  */
 
 #ifndef _MACHINE_CPU_H_

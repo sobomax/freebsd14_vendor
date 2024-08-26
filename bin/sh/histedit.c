@@ -36,8 +36,6 @@ static char sccsid[] = "@(#)histedit.c	8.2 (Berkeley) 5/4/95";
 #endif
 #endif /* not lint */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: b9af20e6e9abf46216f568129095a76f8c80bdb9 $");
-
 #include <sys/param.h>
 #include <sys/stat.h>
 #include <dirent.h>
@@ -90,7 +88,7 @@ get_histfile(void)
 	const char *histfile;
 
 	/* don't try to save if the history size is 0 */
-	if (hist == NULL || histsizeval() == 0)
+	if (hist == NULL || !strcmp(histsizeval(), "0"))
 		return (NULL);
 	histfile = expandstr("${HISTFILE-${HOME-}/.sh_history}");
 
@@ -190,7 +188,7 @@ histedit(void)
 			if (el != NULL) {
 				if (hist)
 					el_set(el, EL_HIST, history, hist);
-				el_set(el, EL_PROMPT, getprompt);
+				el_set(el, EL_PROMPT_ESC, getprompt, '\001');
 				el_set(el, EL_ADDFN, "sh-complete",
 				    "Filename completion",
 				    sh_complete);
@@ -210,7 +208,6 @@ bad:
 				el_set(el, EL_EDITOR, "vi");
 			else if (Eflag) {
 				el_set(el, EL_EDITOR, "emacs");
-				el_set(el, EL_BIND, "^R", "em-inc-search-prev", NULL);
 			}
 			el_set(el, EL_BIND, "^I", "sh-complete", NULL);
 			el_source(el, NULL);
@@ -454,7 +451,7 @@ operands:
 		editcmd = stalloc(strlen(editor) + strlen(editfile) + 2);
 		sprintf(editcmd, "%s %s", editor, editfile);
 		evalstring(editcmd, 0);	/* XXX - should use no JC command */
-		readcmdfile(editfile);	/* XXX - should read back - quick tst */
+		readcmdfile(editfile, 0 /* verify */);	/* XXX - should read back - quick tst */
 		unlink(editfile);
 	}
 
@@ -590,22 +587,37 @@ static int
 comparator(const void *a, const void *b, void *thunk)
 {
 	size_t curpos = (intptr_t)thunk;
+
 	return (strcmp(*(char *const *)a + curpos,
 		*(char *const *)b + curpos));
 }
 
+static char
+**add_match(char **matches, size_t i, size_t *size, char *match_copy)
+{
+	if (match_copy == NULL)
+		return (NULL);
+	matches[i] = match_copy;
+	if (i >= *size - 1) {
+		*size *= 2;
+		matches = reallocarray(matches, *size, sizeof(matches[0]));
+	}
+
+	return (matches);
+}
+
 /*
- * This function is passed to libedit's fn_complete2(). The library will
- * use it instead of its standard function that finds matching files in
- * current directory. If we're at the start of the line, we want to look
- * for available commands from all paths in $PATH.
+ * This function is passed to libedit's fn_complete2(). The library will use
+ * it instead of its standard function that finds matching files in current
+ * directory. If we're at the start of the line, we want to look for
+ * available commands from all paths in $PATH.
  */
 static char
 **sh_matches(const char *text, int start, int end)
 {
 	char *free_path = NULL, *path;
 	const char *dirname;
-	char **matches = NULL;
+	char **matches = NULL, **rmatches;
 	size_t i = 0, size = 16, uniq;
 	size_t curpos = end - start, lcstring = -1;
 
@@ -631,7 +643,6 @@ static char
 		}
 		while ((entry = readdir(dir)) != NULL) {
 			struct stat statb;
-			char **rmatches;
 
 			if (strncmp(entry->d_name, text, curpos) != 0)
 				continue;
@@ -642,11 +653,8 @@ static char
 					continue;
 			} else if (entry->d_type != DT_REG)
 				continue;
-			matches[++i] = strdup(entry->d_name);
-			if (i < size - 1)
-				continue;
-			size *= 2;
-			rmatches = reallocarray(matches, size, sizeof(matches[0]));
+			rmatches = add_match(matches, ++i, &size,
+				strdup(entry->d_name));
 			if (rmatches == NULL) {
 				closedir(dir);
 				goto out;
@@ -654,6 +662,14 @@ static char
 			matches = rmatches;
 		}
 		closedir(dir);
+	}
+	for (const unsigned char *bp = builtincmd; *bp != 0; bp += 2 + bp[0]) {
+		if (curpos > bp[0] || memcmp(bp + 2, text, curpos) != 0)
+			continue;
+		rmatches = add_match(matches, ++i, &size, strndup(bp + 2, bp[0]));
+		if (rmatches == NULL)
+			goto out;
+		matches = rmatches;
 	}
 out:
 	free(free_path);
@@ -682,13 +698,13 @@ out:
 	}
 	matches[uniq + 1] = NULL;
 	/*
-	 * matches[0] is special: it's not a real matching file name but a common
-	 * prefix for all matching names. It can't be null, unlike any other
-	 * element of the array. When strings matches[0] and matches[1] compare
-	 * equal and matches[2] is null that means to libedit that there is only
-	 * a single match. It will then replace user input with possibly escaped
-	 * string in matches[0] which is the reason to copy the full name of the
-	 * only match.
+	 * matches[0] is special: it's not a real matching file name but
+	 * a common prefix for all matching names. It can't be null, unlike
+	 * any other element of the array. When strings matches[0] and
+	 * matches[1] compare equal and matches[2] is null that means to
+	 * libedit that there is only a single match. It will then replace
+	 * user input with possibly escaped string in matches[0] which is the
+	 * reason to copy the full name of the only match.
 	 */
 	if (uniq == 1)
 		matches[0] = strdup(matches[1]);

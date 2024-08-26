@@ -1,5 +1,4 @@
 #!/bin/sh
-# $FreeBSD: c580b3ed6f4ce7a2e0409c1c32ed1559017a108d $
 # A really simple script to create a swap-backed msdosfs filesystem, then
 # test to make sure the nmount conversion(mount_msdosfs.c rev 1.37)
 # doesn't break multi-byte characters.

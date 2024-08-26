@@ -26,8 +26,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: e41d9d6a218d11015b311b0267e0fe20b1a2f8e4 $");
-
 #include "opt_acpi.h"
 #include <sys/param.h>
 #include <sys/bus.h>
@@ -79,11 +77,7 @@ static int	acpi_timer_sysctl_freq(SYSCTL_HANDLER_ARGS);
 static void	acpi_timer_boot_test(void);
 
 static int	acpi_timer_test(void);
-#ifdef __i386__
-static int	acpi_timer_test_enabled = 1;
-#else
 static int	acpi_timer_test_enabled = 0;
-#endif
 TUNABLE_INT("hw.acpi.timer_test_enabled", &acpi_timer_test_enabled);
 
 static device_method_t acpi_timer_methods[] = {
@@ -100,8 +94,7 @@ static driver_t acpi_timer_driver = {
     0,
 };
 
-static devclass_t acpi_timer_devclass;
-DRIVER_MODULE(acpi_timer, acpi, acpi_timer_driver, acpi_timer_devclass, 0, 0);
+DRIVER_MODULE(acpi_timer, acpi, acpi_timer_driver, 0, 0);
 MODULE_DEPEND(acpi_timer, acpi, 1, 1, 1);
 
 static struct timecounter acpi_timer_timecounter = {

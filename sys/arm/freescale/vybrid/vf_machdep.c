@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2013 Ruslan Bukin <br@bsdpad.com>
  * All rights reserved.
@@ -29,8 +29,6 @@
 #include "opt_platform.h"
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 6c5b7bcf3755fca6d8e160223247cd4a5fce2fb1 $");
-
 #include <sys/param.h>
 #include <sys/systm.h>
 #include <sys/devmap.h>

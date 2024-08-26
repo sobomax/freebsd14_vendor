@@ -35,8 +35,6 @@
 #include "opt_ddb.h"
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 3a542207fbfbe8376677608c78324a4c9bbf4784 $");
-
 #include <sys/param.h>
 #include <sys/kernel.h>
 #include <sys/bus.h>
@@ -300,6 +298,10 @@ kcsan_memmove(void *dst, const void *src, size_t len)
 	kcsan_access((uintptr_t)dst, len, true, false, __RET_ADDR);
 	return __builtin_memmove(dst, src, len);
 }
+
+__strong_reference(kcsan_memcpy, __tsan_memcpy);
+__strong_reference(kcsan_memset, __tsan_memset);
+__strong_reference(kcsan_memmove, __tsan_memmove);
 
 char *
 kcsan_strcpy(char *dst, const char *src)
@@ -566,10 +568,8 @@ CSAN_ATOMIC_FUNC_SET(32, uint32_t)
 CSAN_ATOMIC_FUNC_SUBTRACT(32, uint32_t)
 CSAN_ATOMIC_FUNC_STORE(32, uint32_t)
 CSAN_ATOMIC_FUNC_SWAP(32, uint32_t)
-#if !defined(__aarch64__)
 CSAN_ATOMIC_FUNC_TESTANDCLEAR(32, uint32_t)
 CSAN_ATOMIC_FUNC_TESTANDSET(32, uint32_t)
-#endif
 
 CSAN_ATOMIC_FUNC_ADD(64, uint64_t)
 CSAN_ATOMIC_FUNC_CLEAR(64, uint64_t)
@@ -582,10 +582,8 @@ CSAN_ATOMIC_FUNC_SET(64, uint64_t)
 CSAN_ATOMIC_FUNC_SUBTRACT(64, uint64_t)
 CSAN_ATOMIC_FUNC_STORE(64, uint64_t)
 CSAN_ATOMIC_FUNC_SWAP(64, uint64_t)
-#if !defined(__aarch64__)
 CSAN_ATOMIC_FUNC_TESTANDCLEAR(64, uint64_t)
 CSAN_ATOMIC_FUNC_TESTANDSET(64, uint64_t)
-#endif
 
 CSAN_ATOMIC_FUNC_ADD(char, uint8_t)
 CSAN_ATOMIC_FUNC_CLEAR(char, uint8_t)
@@ -630,10 +628,8 @@ CSAN_ATOMIC_FUNC_SET(int, u_int)
 CSAN_ATOMIC_FUNC_SUBTRACT(int, u_int)
 CSAN_ATOMIC_FUNC_STORE(int, u_int)
 CSAN_ATOMIC_FUNC_SWAP(int, u_int)
-#if !defined(__aarch64__)
 CSAN_ATOMIC_FUNC_TESTANDCLEAR(int, u_int)
 CSAN_ATOMIC_FUNC_TESTANDSET(int, u_int)
-#endif
 
 CSAN_ATOMIC_FUNC_ADD(long, u_long)
 CSAN_ATOMIC_FUNC_CLEAR(long, u_long)
@@ -646,11 +642,9 @@ CSAN_ATOMIC_FUNC_SET(long, u_long)
 CSAN_ATOMIC_FUNC_SUBTRACT(long, u_long)
 CSAN_ATOMIC_FUNC_STORE(long, u_long)
 CSAN_ATOMIC_FUNC_SWAP(long, u_long)
-#if !defined(__aarch64__)
 CSAN_ATOMIC_FUNC_TESTANDCLEAR(long, u_long)
 CSAN_ATOMIC_FUNC_TESTANDSET(long, u_long)
 CSAN_ATOMIC_FUNC_TESTANDSET(acq_long, u_long)
-#endif
 
 CSAN_ATOMIC_FUNC_ADD(ptr, uintptr_t)
 CSAN_ATOMIC_FUNC_CLEAR(ptr, uintptr_t)

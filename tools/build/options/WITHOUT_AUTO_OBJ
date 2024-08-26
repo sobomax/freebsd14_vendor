@@ -1,3 +1,2 @@
-.\" $FreeBSD: 69dd6c387bdb16a205aa2c4800c2837a29efe1fa $
 Disable automatic creation of objdirs.
 This is enabled by default if the wanted OBJDIR is writable by the current user.

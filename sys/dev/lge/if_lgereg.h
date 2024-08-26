@@ -31,8 +31,6 @@
  * CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF
  * THE POSSIBILITY OF SUCH DAMAGE.
- *
- * $FreeBSD: e5e8893fb7335c9de779130440cd9faea46eb309 $
  */
 
 
@@ -507,7 +505,7 @@ struct lge_ring_data {
 };
 
 struct lge_softc {
-	struct ifnet		*lge_ifp;
+	if_t			lge_ifp;
 	device_t		lge_dev;
 	bus_space_handle_t	lge_bhandle;
 	bus_space_tag_t		lge_btag;

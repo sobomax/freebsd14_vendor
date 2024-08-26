@@ -1,11 +1,8 @@
-/*	$FreeBSD: 79fbdcb1dfe76de8068573d324a86101faf8912c $	*/
 
 /*
  * Copyright (C) 2012 by Darren Reed.
  *
  * See the IPFILTER.LICENCE file for details on licencing.
- *
- * $FreeBSD: 79fbdcb1dfe76de8068573d324a86101faf8912c $
  * Id: ip_proxy.h,v 2.31.2.2 2005/03/12 19:33:48 darrenr Exp
  */
 

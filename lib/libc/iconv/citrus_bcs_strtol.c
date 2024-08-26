@@ -1,4 +1,3 @@
-/* $FreeBSD: fda263b6479f01c1678d2d505e2be1aff3ccc0e0 $ */
 /* $NetBSD: citrus_bcs_strtol.c,v 1.4 2013/04/26 21:20:47 joerg Exp $ */
 
 /*-
@@ -30,7 +29,6 @@
  * SUCH DAMAGE.
  */
 
-#include <sys/cdefs.h>
 
 #include <assert.h>
 #include <errno.h>

@@ -25,7 +25,6 @@
  */
 
 /*
- * $FreeBSD: 3bd23a6dd2aa3942226b96ea610288784ea6d931 $
  */
 
 #ifndef	_THREAD_POOL_H_

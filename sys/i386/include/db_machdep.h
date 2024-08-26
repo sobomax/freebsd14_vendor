@@ -22,8 +22,6 @@
  *
  * any improvements or extensions that they make and grant Carnegie Mellon
  * the rights to redistribute these changes.
- *
- * $FreeBSD: 83daab106b82177ea169e31b73e7c386f1d4c97e $
  */
 
 #ifndef _MACHINE_DB_MACHDEP_H_

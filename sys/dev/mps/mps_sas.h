@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2011-2015 LSI Corp.
  * Copyright (c) 2013-2015 Avago Technologies
@@ -27,8 +27,6 @@
  * SUCH DAMAGE.
  *
  * Avago Technologies (LSI) MPT-Fusion Host Adapter FreeBSD
- *
- * $FreeBSD: 4d782ad8e7a34ab6cfda0b04359e4b0582b1b861 $
  */
 
 struct mps_fw_event_work;
@@ -86,16 +84,13 @@ struct mpssas_softc {
 	u_int			flags;
 #define MPSSAS_IN_DISCOVERY	(1 << 0)
 #define MPSSAS_IN_STARTUP	(1 << 1)
-#define MPSSAS_DISCOVERY_TIMEOUT_PENDING	(1 << 2)
 #define MPSSAS_QUEUE_FROZEN	(1 << 3)
-#define	MPSSAS_SHUTDOWN		(1 << 4)
 	u_int			maxtargets;
 	struct mpssas_target	*targets;
 	struct cam_devq		*devq;
 	struct cam_sim		*sim;
 	struct cam_path		*path;
 	struct intr_config_hook	sas_ich;
-	struct callout		discovery_callout;
 	struct mps_event_handle	*mpssas_eh;
 
 	u_int                   startup_refcount;

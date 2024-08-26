@@ -25,8 +25,6 @@
  * IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF
  * THE POSSIBILITY OF SUCH DAMAGES.
- *
- * $FreeBSD: 29e86365c83babf85713f4201698539e525fae32 $
  */
 
 /*
@@ -64,6 +62,9 @@ static struct {
   },
   { "tdma",
     "input,output,bexmit,tdmau,tdmadj,crcerr,phyerr,phytor,rssi,noise,rate"
+  },
+  { "beacon",
+    "bstuck,bmiss,bexmit,beacons,bmisscount,reset,ofdm,cck,input,output"
   },
 };
 

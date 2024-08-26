@@ -1,4 +1,3 @@
-# $FreeBSD: 781a52856b64d3a47ed947452d7b28b09521e092 $
 # $Id: meta.subdir.mk,v 1.12 2020/08/19 17:51:53 sjg Exp $
 
 #

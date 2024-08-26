@@ -1,5 +1,4 @@
 /*
- * $FreeBSD: 2688f55185759c71b6fbb4eda3a5e3074c81a8b0 $
  *
  *  Top users/processes display for Unix
  *

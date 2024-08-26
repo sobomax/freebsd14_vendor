@@ -1,11 +1,10 @@
-# $FreeBSD: 3ed8b92372f8fc3219d2e036c64c643781378e91 $
 
 .include <src.opts.mk>
 
 PACKAGE=runtime
 PROG=	camcontrol
 SRCS=	camcontrol.c util.c
-SRCS+=	attrib.c epc.c fwdownload.c modeedit.c persist.c progress.c timestamp.c zone.c
+SRCS+=	attrib.c depop.c epc.c fwdownload.c modeedit.c persist.c progress.c timestamp.c zone.c
 .if ${MK_NVME} != "no"
 .PATH:	${SRCTOP}/sbin/nvmecontrol
 CFLAGS+= -I${SRCTOP}/sbin/nvmecontrol -DWITH_NVME

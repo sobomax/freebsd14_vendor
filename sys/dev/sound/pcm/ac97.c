@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 1999 Cameron Grant <cg@freebsd.org>
  * All rights reserved.
@@ -37,8 +37,6 @@
 #include <dev/pci/pcivar.h>
 
 #include "mixer_if.h"
-
-SND_DECLARE_FILE("$FreeBSD: 960176329b3e9c2001c5689ac006c178960fa575 $");
 
 static MALLOC_DEFINE(M_AC97, "ac97", "ac97 codec");
 
@@ -602,7 +600,7 @@ ac97_initmixer(struct ac97_info *codec)
 	ac97_patch codec_patch;
 	const char *cname, *vname;
 	char desc[80];
-	u_int8_t model, step;
+	device_t pdev;
 	unsigned i, j, k, bit, old;
 	u_int32_t id;
 	int reg;
@@ -641,23 +639,25 @@ ac97_initmixer(struct ac97_info *codec)
 		return ENODEV;
 	}
 
+	pdev = codec->dev;
+	while (strcmp(device_get_name(device_get_parent(pdev)), "pci") != 0) {
+		/* find the top-level PCI device handler */
+		pdev = device_get_parent(pdev);
+	}
 	codec->id = id;
-	codec->subvendor = (u_int32_t)pci_get_subdevice(codec->dev) << 16;
-	codec->subvendor |= (u_int32_t)pci_get_subvendor(codec->dev) &
+	codec->subvendor = (u_int32_t)pci_get_subdevice(pdev) << 16;
+	codec->subvendor |= (u_int32_t)pci_get_subvendor(pdev) &
 	    0x0000ffff;
 	codec->noext = 0;
 	codec_patch = NULL;
 
 	cname = NULL;
-	model = step = 0;
 	for (i = 0; ac97codecid[i].id; i++) {
 		u_int32_t modelmask = 0xffffffff ^ ac97codecid[i].stepmask;
 		if ((ac97codecid[i].id & modelmask) == (id & modelmask)) {
 			codec->noext = ac97codecid[i].noext;
 			codec_patch = ac97codecid[i].patch;
 			cname = ac97codecid[i].name;
-			model = (id & modelmask) & 0xff;
-			step = (id & ~modelmask) & 0xff;
 			break;
 		}
 	}

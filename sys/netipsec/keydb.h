@@ -1,4 +1,3 @@
-/*	$FreeBSD: a2da0da613e2a4f2639d80958c171736df066879 $	*/
 /*	$KAME: keydb.h,v 1.14 2000/08/02 17:58:26 sakane Exp $	*/
 
 /*-
@@ -200,6 +199,8 @@ struct secasvar {
 			(_sav)->alg_enc == SADB_X_EALG_AESGCM12 ||	\
 			(_sav)->alg_enc == SADB_X_EALG_AESGCM16)
 #define	SAV_ISCTR(_sav) ((_sav)->alg_enc == SADB_X_EALG_AESCTR)
+#define	SAV_ISCHACHA(_sav)	\
+    ((_sav)->alg_enc == SADB_X_EALG_CHACHA20POLY1305)
 #define SAV_ISCTRORGCM(_sav)	(SAV_ISCTR((_sav)) || SAV_ISGCM((_sav)))
 
 #define	IPSEC_SEQH_SHIFT	32

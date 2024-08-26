@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD AND BSD-4-Clause
+ * SPDX-License-Identifier: BSD-2-Clause AND BSD-4-Clause
  *
  * Copyright (c) 2010 Justin T. Gibbs, Spectra Logic Corporation
  * All rights reserved.
@@ -91,8 +91,6 @@
  * SUCH DAMAGE.
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 82a9adaab49453f41358d9d098d46d66b498f3b0 $");
-
 /**
  * \file control.c
  *
@@ -130,9 +128,11 @@ __FBSDID("$FreeBSD: 82a9adaab49453f41358d9d098d46d66b498f3b0 $");
 #include <geom/geom.h>
 
 #include <machine/_inttypes.h>
+#if defined(__amd64__) || defined(__i386__)
 #include <machine/intr_machdep.h>
 
 #include <x86/apicvar.h>
+#endif
 
 #include <vm/vm.h>
 #include <vm/vm_extern.h>
@@ -146,8 +146,8 @@ __FBSDID("$FreeBSD: 82a9adaab49453f41358d9d098d46d66b498f3b0 $");
 
 #include <xen/hvm.h>
 
-#include <xen/interface/event_channel.h>
-#include <xen/interface/grant_table.h>
+#include <contrib/xen/event_channel.h>
+#include <contrib/xen/grant_table.h>
 
 #include <xen/xenbus/xenbusvar.h>
 
@@ -194,6 +194,13 @@ xctrl_reboot(void)
 	shutdown_nice(0);
 }
 
+#if !defined(__amd64__) && !defined(__i386__)
+static void
+xctrl_suspend(void)
+{
+	printf("WARNING: xen/control: Suspend not supported!\n");
+}
+#else /* __amd64__ || __i386__ */
 static void
 xctrl_suspend(void)
 {
@@ -288,8 +295,10 @@ xctrl_suspend(void)
 		 * resume CPUs.
 		 */
 		resume_cpus(cpu_suspend_map);
+#if defined(__amd64__) || defined(__i386__)
 		/* Send an IPI_BITMAP in case there are pending bitmap IPIs. */
 		lapic_ipi_vectored(IPI_BITMAP_VECTOR, APIC_IPI_DEST_ALL);
+#endif
 	}
 #endif
 
@@ -327,6 +336,7 @@ xctrl_suspend(void)
 		printf("System resumed after suspension\n");
 
 }
+#endif /* __amd64__ || __i386__ */
 
 static void
 xctrl_crash(void)
@@ -335,17 +345,18 @@ xctrl_crash(void)
 }
 
 static void
-xen_pv_shutdown_final(void *arg, int howto)
+xctrl_shutdown_final(void *arg, int howto)
 {
 	/*
-	 * Inform the hypervisor that shutdown is complete.
-	 * This is not necessary in HVM domains since Xen
-	 * emulates ACPI in that mode and FreeBSD's ACPI
-	 * support will request this transition.
+	 * Inform the hypervisor that shutdown is complete, and specify the
+	 * nature of the shutdown. RB_HALT is not handled by this function.
 	 */
-	if (howto & (RB_HALT | RB_POWEROFF))
+	if (KERNEL_PANICKED())
+		HYPERVISOR_shutdown(SHUTDOWN_crash);
+	else if ((howto & RB_POWEROFF) != 0)
 		HYPERVISOR_shutdown(SHUTDOWN_poweroff);
-	else
+	else if ((howto & RB_HALT) == 0)
+		/* RB_POWERCYCLE or regular reset. */
 		HYPERVISOR_shutdown(SHUTDOWN_reboot);
 }
 
@@ -441,9 +452,8 @@ xctrl_attach(device_t dev)
 	xctrl->xctrl_watch.max_pending = 1;
 	xs_register_watch(&xctrl->xctrl_watch);
 
-	if (xen_pv_domain())
-		EVENTHANDLER_REGISTER(shutdown_final, xen_pv_shutdown_final, NULL,
-		                      SHUTDOWN_PRI_LAST);
+	EVENTHANDLER_REGISTER(shutdown_final, xctrl_shutdown_final, NULL,
+	    SHUTDOWN_PRI_LAST);
 
 	return (0);
 }
@@ -481,6 +491,5 @@ static device_method_t xctrl_methods[] = {
 }; 
 
 DEFINE_CLASS_0(xctrl, xctrl_driver, xctrl_methods, sizeof(struct xctrl_softc));
-devclass_t xctrl_devclass; 
 
-DRIVER_MODULE(xctrl, xenstore, xctrl_driver, xctrl_devclass, NULL, NULL);
+DRIVER_MODULE(xctrl, xenstore, xctrl_driver, NULL, NULL);

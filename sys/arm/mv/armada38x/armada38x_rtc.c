@@ -26,8 +26,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: d6f2073b414a6663cef7b5a28cd567fb7d799191 $");
-
 #include <sys/param.h>
 #include <sys/bus.h>
 #include <sys/lock.h>
@@ -148,9 +146,7 @@ static struct ofw_compat_data mv_rtc_compat[] = {
 	{NULL,				0},
 };
 
-static devclass_t mv_rtc_devclass;
-
-DRIVER_MODULE(a38x_rtc, simplebus, mv_rtc_driver, mv_rtc_devclass, 0, 0);
+DRIVER_MODULE(a38x_rtc, simplebus, mv_rtc_driver, 0, 0);
 
 static void
 mv_rtc_reset(device_t dev)

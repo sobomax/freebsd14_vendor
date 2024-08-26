@@ -34,8 +34,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: bf22817d2b25e8eeef179be6c03934a36629777c $");
-
 #include "opt_nfs.h"
 
 #include <sys/param.h>

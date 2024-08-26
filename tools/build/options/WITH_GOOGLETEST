@@ -1,4 +1,3 @@
-.\" $FreeBSD: 28a59d697bb728ce65cd51c340a1f951a98f3afe $
 Build and install
 .Lb libgmock ,
 .Lb libgtest ,

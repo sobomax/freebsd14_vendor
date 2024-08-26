@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2001 Scott Long <scottl@freebsd.org>
  * Copyright (c) 2001 Darrell Anderson <anderson@cs.duke.edu>
@@ -68,8 +68,6 @@
 
 #include <dev/sound/pci/allegro_reg.h>
 #include <dev/sound/pci/allegro_code.h>
-
-SND_DECLARE_FILE("$FreeBSD: 77b85f20c327a998de00fe8f058d133b3ea30874 $");
 
 /* -------------------------------------------------------------------- */
 
@@ -1441,10 +1439,10 @@ m3_pci_attach(device_t dev)
 			goto bad;
 		}
 	}
- 	snprintf(status, SND_STATUSLEN, "at %s 0x%jx irq %jd %s",
-	    (sc->regtype == SYS_RES_IOPORT)? "io" : "memory",
+	snprintf(status, SND_STATUSLEN, "%s 0x%jx irq %jd on %s",
+	    (sc->regtype == SYS_RES_IOPORT)? "port" : "mem",
 	    rman_get_start(sc->reg), rman_get_start(sc->irq),
-	    PCM_KLDSTRING(snd_maestro3));
+	    device_get_nameunit(device_get_parent(dev)));
 	if (pcm_setstatus(dev, status)) {
 		device_printf(dev, "attach: pcm_setstatus error\n");
 		goto bad;
@@ -1794,6 +1792,6 @@ static driver_t m3_driver = {
 	PCM_SOFTC_SIZE,
 };
 
-DRIVER_MODULE(snd_maestro3, pci, m3_driver, pcm_devclass, 0, 0);
+DRIVER_MODULE(snd_maestro3, pci, m3_driver, 0, 0);
 MODULE_DEPEND(snd_maestro3, sound, SOUND_MINVER, SOUND_PREFVER, SOUND_MAXVER);
 MODULE_VERSION(snd_maestro3, 1);

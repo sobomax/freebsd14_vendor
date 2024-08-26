@@ -1,4 +1,3 @@
-# $FreeBSD: 5ff4805399b39239eff38e173dc6057176c84586 $
 
 .PATH:	${SRCTOP}/sys/dev/spibus
 KMOD=	spigen

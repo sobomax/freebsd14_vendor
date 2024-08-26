@@ -1,4 +1,3 @@
-$ $FreeBSD: 2598f4d9357e4cf3f8fd1495aa5b80c13fe4fe58 $
 $
 $ Message catalog for no_NO.ISO8859-1 locale
 $

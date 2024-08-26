@@ -31,7 +31,6 @@
   POSSIBILITY OF SUCH DAMAGE.
 
 ******************************************************************************/
-/*$FreeBSD: 2fdf7066865bdce92383dd8303a300e2ce017778 $*/
 
 /*
  * 82542 Gigabit Ethernet Controller

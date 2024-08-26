@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2017 Netflix, Inc.
  * Copyright (C) 2018-2019 Alexander Motin <mav@FreeBSD.org>
@@ -27,8 +27,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 040918caf9c53752c9b5da46131ce5829b0fa3ef $");
-
 #include <sys/param.h>
 #include <sys/ioccom.h>
 
@@ -372,7 +370,7 @@ static struct ns_result_str ns_result[] = {
 	{ 0xa,  "Invalid Format"},
 	{ 0xb,  "Invalid Namespace or format"},
 	{ 0x15, "Namespace insufficient capacity"},
-	{ 0x16, "Namespace ID unavaliable"},
+	{ 0x16, "Namespace ID unavailable"},
 	{ 0x18, "Namespace already attached"},
 	{ 0x19, "Namespace is private"},
 	{ 0x1a, "Namespace is not attached"},

@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * HighPoint RR3xxx/4xxx RAID Driver for FreeBSD
  * Copyright (C) 2007-2012 HighPoint Technologies, Inc. All Rights Reserved.
@@ -29,8 +29,6 @@
 #define _HPTIOP_H
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: d18a027b9660cd43f9eee87ed811b2ae1d5a9007 $");
-
 #define DBG 0
 
 #ifdef DBG

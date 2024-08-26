@@ -25,8 +25,6 @@
  * THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- *
- * $FreeBSD: 67f7d3858e24861e100c8462053f439ca8a9cb74 $
  */
 
 #ifndef _LINUXKPI_ASM_ATOMIC_H_
@@ -166,9 +164,7 @@ atomic_cmpxchg(atomic_t *v, int old, int new)
 #define	LINUXKPI_ATOMIC_16(...)
 #endif
 
-#if !(defined(i386) || (defined(__mips__) && !(defined(__mips_n32) ||	\
-    defined(__mips_n64))) || (defined(__powerpc__) &&			\
-    !defined(__powerpc64__)))
+#if !(defined(i386) || (defined(__powerpc__) && !defined(__powerpc64__)))
 #define	LINUXKPI_ATOMIC_64(...) __VA_ARGS__
 #else
 #define	LINUXKPI_ATOMIC_64(...)

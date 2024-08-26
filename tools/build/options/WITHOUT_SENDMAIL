@@ -1,4 +1,3 @@
-.\" $FreeBSD: db99666a26962957c02ba80613ae98e79bbbcfed $
 Do not build
 .Xr sendmail 8
 and related programs.

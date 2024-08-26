@@ -1,6 +1,5 @@
 #!/bin/sh
 #
-# $FreeBSD: 9e34ddaf4b73f2e344c020b012ea2ddd48693dad $
 #
 
 # PROVIDE: cfumass

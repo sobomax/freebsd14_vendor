@@ -1,6 +1,5 @@
-/* $FreeBSD: 96440673adc468fc979b166cd0d12c17a57c18f1 $ */
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2020 Mellanox Technologies. All rights reserved.
  *

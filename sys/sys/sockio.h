@@ -29,7 +29,6 @@
  * SUCH DAMAGE.
  *
  *	@(#)sockio.h	8.1 (Berkeley) 3/28/94
- * $FreeBSD: 93b8af28e1714c626897c6a5144b4e1c0c7ce95a $
  */
 
 #ifndef _SYS_SOCKIO_H_
@@ -146,5 +145,8 @@
 #define	SIOCSLANPCP	 _IOW('i', 153, struct ifreq)	/* Set (V)LAN PCP */
 
 #define	SIOCGIFDOWNREASON	_IOWR('i', 154, struct ifdownreason)
+
+#define	SIOCSIFCAPNV	_IOW('i', 155, struct ifreq)	/* set IF features */
+#define	SIOCGIFCAPNV	_IOWR('i', 156, struct ifreq)	/* get IF features */
 
 #endif /* !_SYS_SOCKIO_H_ */

@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright 2008 by Nathan Whitehorn. All rights reserved.
  *
@@ -27,8 +27,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 6b57d052943a1c1b13ccc0f54702cf2789827db3 $");
-
 #include <sys/param.h>
 #include <sys/systm.h>
 #include <sys/module.h>
@@ -75,9 +73,7 @@ static driver_t mambobus_driver = {
 	0
 };
 
-static devclass_t mambobus_devclass;
-
-DRIVER_MODULE(mambo, ofwbus, mambobus_driver, mambobus_devclass, 0, 0);
+DRIVER_MODULE(mambo, ofwbus, mambobus_driver, 0, 0);
 
 static int
 mambobus_probe(device_t dev)

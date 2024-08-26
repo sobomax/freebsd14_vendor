@@ -1,4 +1,3 @@
-# $FreeBSD: d8891a23b83f2e296f1b8669e4463ecacc96546e $
 
 ZFSTOP=	${SRCTOP}/sys/contrib/openzfs
 
@@ -12,7 +11,9 @@ MLINKS=	zstream.8 zstreamdump.8
 INCS=	zstream.h
 SRCS= \
 	zstream.c \
+	zstream_decompress.c \
 	zstream_dump.c \
+	zstream_recompress.c  \
 	zstream_redup.c \
 	zstream_token.c
 

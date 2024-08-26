@@ -28,8 +28,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 2b441da098e01523ebdff37a8d44936a7bcd1fcb $");
-
 #include "if_igc.h"
 
 #ifdef RSS

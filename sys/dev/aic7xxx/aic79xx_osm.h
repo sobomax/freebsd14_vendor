@@ -31,8 +31,6 @@
  * SUCH DAMAGE.
  *
  * $Id: //depot/aic7xxx/freebsd/dev/aic7xxx/aic79xx_osm.h#23 $
- *
- * $FreeBSD: c745b80333206e435321c70d45ed4c17ac870f84 $
  */
 
 #ifndef _AIC79XX_FREEBSD_H_

@@ -1,4 +1,3 @@
-# $FreeBSD: eb87ba49caa94c4b46dda306c263d7054b08be4c $
 
 .if !target(__<bsd.init.mk>__)
 .  error bsd.conf.mk cannot be included directly.
@@ -135,8 +134,10 @@ _${group}INS_${cnf:T}: ${cnf}
 .if ${MK_STAGING} != "no"
 .  if !empty(STAGE_SETS)
 buildconfig: stage_files
+stage_files:
 .    if !empty(STAGE_AS_SETS)
 buildconfig: stage_as
+stage_as:
 .    endif
 .  endif
 .endif

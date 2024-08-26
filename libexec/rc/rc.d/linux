@@ -1,10 +1,9 @@
 #!/bin/sh
 #
-# $FreeBSD: adb9f4c64bad51caa691344db641bf0b605b56b2 $
 #
 
 # PROVIDE: linux
-# REQUIRE: archdep
+# REQUIRE: kldxref zfs
 # KEYWORD: nojail
 
 . /etc/rc.subr

@@ -1,8 +1,4 @@
 /*
- * $FreeBSD: 98034bcbb04d57aa802bcab7422fc84a88705af7 $
- */
-
-/*
  * This file defines compatibility versions of several video structures
  * defined in the Linux videodev.h header (linux_videodev.h).  The
  * structures defined in this file are the ones that have been determined

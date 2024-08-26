@@ -27,8 +27,6 @@
  * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
- *
- * $FreeBSD: 9d85c03bb95149e4a57b82c5a026a0d50cda7e33 $
  */
 
 /*
@@ -36,8 +34,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 9d85c03bb95149e4a57b82c5a026a0d50cda7e33 $");
-
 #include <sys/param.h>
 #include <sys/systm.h>
 #include <sys/bus.h>
@@ -622,7 +618,5 @@ static driver_t awusbdrd_driver = {
 	.size = sizeof(struct awusbdrd_softc),
 };
 
-static devclass_t awusbdrd_devclass;
-
-DRIVER_MODULE(musbotg, simplebus, awusbdrd_driver, awusbdrd_devclass, 0, 0);
+DRIVER_MODULE(musbotg, simplebus, awusbdrd_driver, 0, 0);
 MODULE_DEPEND(musbotg, usb, 1, 1, 1);

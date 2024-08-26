@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2012 Olivier Houchard.  All rights reserved.
  *
@@ -25,7 +25,6 @@
  */
 
 /*
- * $FreeBSD: 39e8434097a7db26fac2e43c55cd25f7b0ecb067 $
  */
 
 #ifndef PL310_H_

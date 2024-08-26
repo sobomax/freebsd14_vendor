@@ -1,4 +1,3 @@
-# $FreeBSD: 9f7240a5d22414dd915c4eafb999e3f72dab3cc9 $
 
 PROG =	rpc.rusersd
 SRCS =	rusersd.c rusers_proc.c extern.h

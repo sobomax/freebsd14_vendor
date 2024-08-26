@@ -1,6 +1,5 @@
 /*-
  * Copyright (c) 2014 The FreeBSD Foundation
- * All rights reserved.
  *
  * This software was developed by Andrew Turner under
  * sponsorship from the FreeBSD Foundation.
@@ -28,8 +27,9 @@
  */
 
 #include <machine/asm.h>
-__FBSDID("$FreeBSD: 63148357d5679606663fa79db9d7f8d3edeec667 $");
-
+#include <sys/elf_common.h>
 #include "SYS.h"
 
 RSYSCALL(syscall)
+
+GNU_PROPERTY_AARCH64_FEATURE_1_NOTE(GNU_PROPERTY_AARCH64_FEATURE_1_VAL)

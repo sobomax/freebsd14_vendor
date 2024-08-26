@@ -33,7 +33,6 @@
  * SUCH DAMAGE.
  *
  *	@(#)regex2.h	8.4 (Berkeley) 3/20/94
- * $FreeBSD: 38bbed90fd8f2fa609e5c2a922bb3040078e352d $
  */
 
 /*

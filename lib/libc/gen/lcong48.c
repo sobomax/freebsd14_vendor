@@ -11,9 +11,6 @@
  * to anyone/anything when using this software.
  */
 
-#include <sys/cdefs.h>
-__FBSDID("$FreeBSD: ab0d1f762d80f058f520d3e3214805bb5aeda214 $");
-
 #include "rand48.h"
 
 extern unsigned short _rand48_seed[3];

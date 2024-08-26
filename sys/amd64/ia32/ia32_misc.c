@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2009 Konstantin Belousov
  * All rights reserved.
@@ -27,8 +27,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 6307ede32047f863581960031a6ddd515b708cab $");
-
 #include <sys/param.h>
 #include <sys/mount.h>
 #include <sys/proc.h>
@@ -69,14 +67,3 @@ freebsd32_sysarch(struct thread *td, struct freebsd32_sysarch_args *uap)
 		return (sysarch(td, &uap1));
 	}
 }
-
-#ifdef COMPAT_43
-int
-ofreebsd32_getpagesize(struct thread *td,
-    struct ofreebsd32_getpagesize_args *uap)
-{
-
-	td->td_retval[0] = IA32_PAGE_SIZE;
-	return (0);
-}
-#endif

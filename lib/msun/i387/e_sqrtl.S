@@ -34,8 +34,6 @@
  */
 
 #include <machine/asm.h>
-__FBSDID("$FreeBSD: aec8fbd9e533ec0747fe0f9185b59d20a951c995 $")
-
 ENTRY(sqrtl)
 	fldt	4(%esp)
 	fsqrt

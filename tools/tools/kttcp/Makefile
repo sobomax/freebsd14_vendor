@@ -1,4 +1,3 @@
-#	$FreeBSD: 2f2feb3709bbc470501b60b5718d5f899ba16d14 $
 
 SHELL=	/bin/sh
 

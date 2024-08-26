@@ -50,8 +50,6 @@
  *		the memory utilization would be insane if you actually did
  *		that.  Managing something like 512MB worth of 4K blocks 
  *		eats around 32 KBytes of memory. 
- *
- * $FreeBSD: 654708b2ae5fa481de1a0af4aa247b3c0b97e69e $
 
  */
 

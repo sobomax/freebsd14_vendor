@@ -21,8 +21,6 @@
  *
  * Slightly modified by AK to not assume 0 terminated input.
  *
- * $FreeBSD: 5972845d13e75af564b7eb36bee9155948dd1731 $
- *
  */
 
 #include <stdlib.h>

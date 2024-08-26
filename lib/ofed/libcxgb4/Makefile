@@ -1,4 +1,3 @@
-# $FreeBSD: 7611e228b8399d02f719fa7a8672366a04a88e5f $
 
 _spath=	${SRCTOP}/contrib/ofed/libcxgb4
 .PATH: ${_spath}

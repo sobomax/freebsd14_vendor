@@ -1,4 +1,3 @@
-# $FreeBSD: fef18dab7b32c4e2d3a9bf5c516c2728274228e9 $
 
 .include "../Makefile.inc"
 

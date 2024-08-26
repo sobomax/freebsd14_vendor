@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 1999,2000 Jonathan Lemon
  * All rights reserved.
@@ -24,8 +24,6 @@
  * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
- *
- * $FreeBSD: 227a8e1170ebefad218fc01a213b9d5f7501594f $
  */
 
 /*
@@ -64,8 +62,6 @@ static int idad_detach(device_t dev);
 static	d_strategy_t	idad_strategy;
 static	dumper_t	idad_dump;
 
-static devclass_t	idad_devclass;
-
 static device_method_t idad_methods[] = {
 	DEVMETHOD(device_probe,		idad_probe),
 	DEVMETHOD(device_attach,	idad_attach),
@@ -79,7 +75,7 @@ static driver_t idad_driver = {
 	sizeof(struct idad_softc)
 };
 
-DRIVER_MODULE(idad, ida, idad_driver, idad_devclass, 0, 0);
+DRIVER_MODULE(idad, ida, idad_driver, 0, 0);
 
 /*
  * Read/write routine for a buffer.  Finds the proper unit, range checks
@@ -152,9 +148,6 @@ idad_dump(void *arg, void *virtual, off_t offset, size_t length)
 void
 idad_intr(struct bio *bp)
 {
-	struct idad_softc *drv;
-
-	drv = bp->bio_disk->d_drv1;
 
 	if (bp->bio_flags & BIO_ERROR)
 		bp->bio_error = EIO;

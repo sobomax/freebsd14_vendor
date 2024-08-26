@@ -1,8 +1,9 @@
 #	from: @(#)Makefile	5.11 (Berkeley) 5/21/91
-# $FreeBSD: 104e40b6e345e0ac6033d0ecd26c36980d148038 $
 
 .include <src.opts.mk>
 .include <src.tools.mk>
+
+.include <bsd.compat.pre.mk>
 
 FILESGROUPS=	FILES
 NLS_ALIASES=	POSIX C \
@@ -11,6 +12,7 @@ NLS_ALIASES=	POSIX C \
 # No need as it is empty and just causes rebuilds since this file does so much.
 UPDATE_DEPENDFILE=	no
 
+SUBDIR+=termcap
 .if ${MK_SENDMAIL} != "no"
 SUBDIR+=sendmail
 .endif
@@ -19,7 +21,7 @@ SUBDIR+=sendmail
 
 ETCMAIL=aliases
 .if ${MK_SENDMAIL} != "no"
-ETCMAIL+=Makefile README access.sample virtusertable.sample \
+ETCMAIL_SENDMAIL+=Makefile README access.sample virtusertable.sample \
 	mailertable.sample
 .endif
 
@@ -76,12 +78,16 @@ distribution:
 
 .if ${MK_MAIL} != "no"
 	cd ${.CURDIR}/mail; ${INSTALL} -o ${BINOWN} -g ${BINGRP} -m 644 \
-	    -T "package=sendmail" ${ETCMAIL} ${DESTDIR}/etc/mail
+	    -T "package=runtime,config" ${ETCMAIL} ${DESTDIR}/etc/mail
 	if [ -d ${DESTDIR}/etc/mail -a -f ${DESTDIR}/etc/mail/aliases -a \
 	      ! -f ${DESTDIR}/etc/aliases ]; then \
-		${INSTALL_SYMLINK} -T "package=sendmail" \
+		${INSTALL_SYMLINK} -T "package=runtime" \
 		mail/aliases ${DESTDIR}/etc/aliases; \
 	fi
+.endif
+.if ${MK_SENDMAIL} != "no"
+	cd ${.CURDIR}/mail; ${INSTALL} -o ${BINOWN} -g ${BINGRP} -m 644 \
+		-T "package=sendmail" ${ETCMAIL_SENDMAIL} ${DESTDIR}/etc/mail
 .endif
 .if ${MK_LOCATE} != "no"
 	${INSTALL} -o nobody -g ${BINGRP} -m 644 -T "package=runtime"\
@@ -103,14 +109,12 @@ MTREES=		mtree/BSD.root.dist		/		\
 		mtree/BSD.usr.dist		/usr		\
 		mtree/BSD.include.dist		/usr/include	\
 		mtree/BSD.debug.dist		/usr/lib
-.if ${MK_LIB32} != "no"
-MTREES+=	mtree/BSD.lib32.dist		/usr
-MTREES+=	mtree/BSD.lib32.dist		/usr/lib/debug/usr
+.for LIBCOMPAT libcompat in ${_ALL_LIBCOMPATS_libcompats}
+.if ${MK_LIB${LIBCOMPAT}} != "no"
+MTREES+=	mtree/BSD.lib${libcompat}.dist	/usr
+MTREES+=	mtree/BSD.lib${libcompat}.dist	/usr/lib/debug/usr
 .endif
-.if ${MK_LIBSOFT} != "no"
-MTREES+=	mtree/BSD.libsoft.dist		/usr
-MTREES+=	mtree/BSD.libsoft.dist		/usr/lib/debug/usr
-.endif
+.endfor
 .if ${MK_TESTS} != "no"
 MTREES+=	mtree/BSD.tests.dist		${TESTSBASE}
 MTREES+=	mtree/BSD.tests.dist		/usr/lib/debug/${TESTSBASE}
@@ -122,13 +126,13 @@ MTREES+=	mtree/BSD.sendmail.dist		/
 MTREES+=	../${mtree}			/
 .endfor
 
-# Clean up some directories that where mistakenly created as files that
-# should not have been as part of the nvi update in r281994.
-# This should be removed after 11.0-RELEASE.
-DISTRIB_CLEANUP_SHARE_FILES=	${SHAREDIR}/doc/usd/10.exref ${SHAREDIR}/doc/usd/11.edit
-DISTRIB_CLEANUP_SHARE_FILES+=	${SHAREDIR}/doc/usd/12.vi ${SHAREDIR}/doc/usd/13.viref
+# Clean up files that have changed into directories, as mtree cannot handle this
+# scenario.
+DISTRIB_CLEANUP_FILES+=	${INCLUDEDIR}/c++/v1/__string
+DISTRIB_CLEANUP_FILES+=	${INCLUDEDIR}/c++/v1/__tuple
+DISTRIB_CLEANUP_FILES+=	${LIBEXECDIR}/kgdb
 distrib-cleanup: .PHONY
-	for file in ${DISTRIB_CLEANUP_SHARE_FILES}; do \
+	for file in ${DISTRIB_CLEANUP_FILES}; do \
 		if [ -f ${DESTDIR}/$${file} ]; then \
 			rm -f ${DESTDIR}/$${file}; \
 		fi; \
@@ -149,9 +153,8 @@ distrib-dirs: ${MTREES:N/*} distrib-cleanup .PHONY
 .for _m _d in ${MTREES}
 	@m=${.CURDIR}/${_m}; \
 	d=${_d}; \
-	test "$$d" == "/" && d=""; \
+	test "$$d" = "/" && d=""; \
 	d=${DISTBASE}$$d; \
-	test -d ${DESTDIR}/$$d || mkdir -p ${DESTDIR}/$$d; \
 	${ECHO} "${MTREE_CMD:N-W} -C -f $$m -K all | " \
 	    "sed s#^\.#.$$d# | ${METALOG.add}" ; \
 	${MTREE_FILTER} $$m | \

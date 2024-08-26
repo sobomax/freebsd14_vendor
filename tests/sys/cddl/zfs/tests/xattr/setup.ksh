@@ -25,8 +25,6 @@
 # ident	"@(#)setup.ksh	1.2	07/05/29 SMI"
 #
 
-# $FreeBSD: 0e2b96d5b1834cd06058773d94b74a61d957d165 $
-
 . ${STF_SUITE}/include/libtest.kshlib
 . ${STF_SUITE}/tests/xattr/xattr.cfg
 

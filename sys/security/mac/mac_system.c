@@ -51,8 +51,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: f3da0479ef8ae6dfab0e155395d1300456ad0d37 $");
-
 #include "opt_mac.h"
 
 #include <sys/param.h>

@@ -30,7 +30,6 @@
 # SUCH DAMAGE.
 #
 #	@(#)termcap.src	8.2 (Berkeley) 11/17/93
-# $FreeBSD: 6abd897d0a0dcf6d4b38ebd2622591027a27bb5c $
 
 #	Termcap source file
 #	John Kunze, Berkeley
@@ -4769,6 +4768,10 @@ kitty+common|KovId's TTY common properties:\
 	:us=\E[4m:vb=\E[?5h\E[?5l:ve=\E[?12l\E[?25h:vi=\E[?25l:\
 	:vs=\E[?12;25h:
 
+foot|foot terminal emulator:\
+	:bw:hs:\
+	:ds=\E]2;\E\\:fs=\E\\:kb=\177:ts=\E]2;:vb=\E]555\E\\:\
+	:tc=xterm-256color:
 #
 # END OF TERMCAP
 # ------------------------

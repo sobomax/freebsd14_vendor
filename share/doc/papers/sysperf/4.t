@@ -27,8 +27,6 @@
 .\"
 .\"	@(#)4.t	5.1 (Berkeley) 4/17/91
 .\"
-.\"	$FreeBSD: 5b298fed9986278df08468737b4f448108d15a8d $
-.\"
 .ds RH Performance Improvements
 .NH
 Performance Improvements

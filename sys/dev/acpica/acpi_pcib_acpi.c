@@ -26,8 +26,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 59f255cdba161104406d38ce3282ebf09fb7b160 $");
-
 #include "opt_acpi.h"
 #include "opt_pci.h"
 
@@ -156,11 +154,9 @@ static device_method_t acpi_pcib_acpi_methods[] = {
     DEVMETHOD_END
 };
 
-static devclass_t pcib_devclass;
-
 DEFINE_CLASS_0(pcib, acpi_pcib_acpi_driver, acpi_pcib_acpi_methods,
     sizeof(struct acpi_hpcib_softc));
-DRIVER_MODULE(acpi_pcib, acpi, acpi_pcib_acpi_driver, pcib_devclass, 0, 0);
+DRIVER_MODULE(acpi_pcib, acpi, acpi_pcib_acpi_driver, 0, 0);
 MODULE_DEPEND(acpi_pcib, acpi, 1, 1, 1);
 
 static int
@@ -292,16 +288,18 @@ acpi_pcib_producer_handler(ACPI_RESOURCE *res, void *context)
 #endif
 
 #if defined(NEW_PCIB) && defined(PCI_RES_BUS)
-static int
-first_decoded_bus(struct acpi_hpcib_softc *sc, rman_res_t *startp)
+static bool
+get_decoded_bus_range(struct acpi_hpcib_softc *sc, rman_res_t *startp,
+    rman_res_t *endp)
 {
 	struct resource_list_entry *rle;
 
 	rle = resource_list_find(&sc->ap_host_res.hr_rl, PCI_RES_BUS, 0);
 	if (rle == NULL)
-		return (ENXIO);
+		return (false);
 	*startp = rle->start;
-	return (0);
+	*endp = rle->end;
+	return (true);
 }
 #endif
 
@@ -370,7 +368,7 @@ acpi_pcib_acpi_attach(device_t dev)
     u_int slot, func, busok;
 #if defined(NEW_PCIB) && defined(PCI_RES_BUS)
     struct resource *bus_res;
-    rman_res_t start;
+    rman_res_t end, start;
     int rid;
 #endif
     int error, domain;
@@ -412,8 +410,9 @@ acpi_pcib_acpi_attach(device_t dev)
      */
     status = acpi_GetInteger(sc->ap_handle, "_ADR", &sc->ap_addr);
     if (ACPI_FAILURE(status)) {
-	device_printf(dev, "could not evaluate _ADR - %s\n",
-	    AcpiFormatException(status));
+	if (status != AE_NOT_FOUND)
+	    device_printf(dev, "could not evaluate _ADR - %s\n",
+		AcpiFormatException(status));
 	sc->ap_addr = -1;
     }
 
@@ -498,7 +497,7 @@ acpi_pcib_acpi_attach(device_t dev)
 	     * If we have a region of bus numbers, use the first
 	     * number for our bus.
 	     */
-	    if (first_decoded_bus(sc, &start) == 0)
+	    if (get_decoded_bus_range(sc, &start, &end))
 		    sc->ap_bus = start;
 	    else {
 		    rid = 0;
@@ -515,15 +514,21 @@ acpi_pcib_acpi_attach(device_t dev)
 	    }
     } else {
 	    /*
-	     * Require the bus number from _BBN to match the start of any
-	     * decoded range.
+	     * If there is a decoded bus range, assume the bus number is
+	     * the first value in the range.  Warn if _BBN doesn't match.
 	     */
-	    if (first_decoded_bus(sc, &start) == 0 && sc->ap_bus != start) {
-		    device_printf(dev,
-		"bus number %d does not match start of decoded range %ju\n",
-			sc->ap_bus, (uintmax_t)start);
-		    pcib_host_res_free(dev, &sc->ap_host_res);
-		    return (ENXIO);
+	    if (get_decoded_bus_range(sc, &start, &end)) {
+		    if (sc->ap_bus != start) {
+			    device_printf(dev,
+				"WARNING: BIOS configured bus number (%d) is "
+				"not within decoded bus number range "
+				"(%ju - %ju).\n",
+				sc->ap_bus, (uintmax_t)start, (uintmax_t)end);
+			    device_printf(dev,
+				"Using range start (%ju) as bus number.\n",
+				(uintmax_t)start);
+			    sc->ap_bus = start;
+		    }
 	    }
     }
 #else
@@ -624,14 +629,18 @@ static uint32_t
 acpi_pcib_read_config(device_t dev, u_int bus, u_int slot, u_int func,
     u_int reg, int bytes)
 {
-    return (pci_cfgregread(bus, slot, func, reg, bytes));
+    struct acpi_hpcib_softc *sc = device_get_softc(dev);
+
+    return (pci_cfgregread(sc->ap_segment, bus, slot, func, reg, bytes));
 }
 
 static void
 acpi_pcib_write_config(device_t dev, u_int bus, u_int slot, u_int func,
     u_int reg, uint32_t data, int bytes)
 {
-    pci_cfgregwrite(bus, slot, func, reg, data, bytes);
+    struct acpi_hpcib_softc *sc = device_get_softc(dev);
+
+    pci_cfgregwrite(sc->ap_segment, bus, slot, func, reg, data, bytes);
 }
 
 static int

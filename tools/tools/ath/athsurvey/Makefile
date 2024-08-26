@@ -1,4 +1,3 @@
-# $FreeBSD: 6c0106095016bc9973cc0b5608c2261336cbedad $
 
 PROG=	athsurvey
 

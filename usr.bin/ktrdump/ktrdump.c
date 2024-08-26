@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2002 Jake Burkholder
  * Copyright (c) 2004 Robert Watson
@@ -28,8 +28,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: bbe8fb19aae92e6b3dc222779a008915ae96a45d $");
-
 #include <sys/types.h>
 #include <sys/capsicum.h>
 #include <sys/ktr.h>
@@ -53,7 +51,7 @@ __FBSDID("$FreeBSD: bbe8fb19aae92e6b3dc222779a008915ae96a45d $");
 #define	USAGE \
 	"usage: ktrdump [-cflqrtH] [-i ktrfile] [-M core] [-N system] [-o outfile]\n"
 
-static void usage(void);
+static void usage(void) __dead2;
 
 static struct nlist nl[] = {
 	{ .n_name = "_ktr_version" },
@@ -298,6 +296,8 @@ dump_entries:
 				continue;
 next:			if ((c = *p++) == '\0')
 				break;
+			if (c == '%')
+				continue;
 			if (parm == KTR_PARMS)
 				errx(1, "too many parameters in \"%s\"", desc);
 			switch (c) {

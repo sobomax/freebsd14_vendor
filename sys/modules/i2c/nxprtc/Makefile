@@ -1,6 +1,5 @@
-# $FreeBSD: 29cd2d05b54624691ac28eea153ad710dcdc3055 $
 
-.PATH:		${SRCTOP}/sys/dev/iicbus
+.PATH:		${SRCTOP}/sys/dev/iicbus/rtc
 KMOD		= nxprtc
 SRCS		= nxprtc.c bus_if.h clock_if.h device_if.h iicbus_if.h ofw_bus_if.h opt_platform.h
 

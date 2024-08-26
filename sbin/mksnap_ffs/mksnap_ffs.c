@@ -33,14 +33,16 @@
  * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
- *
- * $FreeBSD: 5d230701de85b74bbd9b49142018c9e4829a9a05 $
  */
 
 #include <sys/param.h>
 #include <sys/mount.h>
 #include <sys/stat.h>
+
+#include <ufs/ufs/extattr.h>
+#include <ufs/ufs/quota.h>
 #include <ufs/ufs/ufsmount.h>
+
 #include <err.h>
 #include <errno.h>
 #include <fcntl.h>

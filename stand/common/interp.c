@@ -24,9 +24,6 @@
  * SUCH DAMAGE.
  */
 
-#include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 8b779fb7a5e9a30918620251317aea5c8d3cb970 $");
-
 /*
  * Simple commandline interpreter, toplevel and misc.
  *
@@ -36,6 +33,10 @@ __FBSDID("$FreeBSD: 8b779fb7a5e9a30918620251317aea5c8d3cb970 $");
 #include <stand.h>
 #include <string.h>
 #include "bootstrap.h"
+
+#ifdef LOADER_VERIEXEC
+#include <verify_file.h>
+#endif
 
 #define	MAXARGS	20			/* maximum number of arguments allowed */
 
@@ -81,6 +82,10 @@ interact(void)
 		input[0] = '\0';
 		interp_emit_prompt();
 		ngets(input, sizeof(input));
+#ifdef LOADER_VERIEXEC
+		/* some settings should be restritcted */
+		ve_status_set(-1, VE_UNVERIFIED_OK);
+#endif
 		interp_run(input);
 	}
 }

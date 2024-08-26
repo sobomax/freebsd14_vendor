@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2013 The FreeBSD Foundation
  *
@@ -26,8 +26,6 @@
  * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
- *
- * $FreeBSD: 5a77159ec4b16fa315cc3202cead9d02958b493e $
  */
 
 /* Generic framebuffer */
@@ -35,8 +33,6 @@
 /* TODO done normal /dev/fb methods */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 5a77159ec4b16fa315cc3202cead9d02958b493e $");
-
 #include <sys/param.h>
 #include <sys/systm.h>
 #include <sys/bus.h>
@@ -362,10 +358,8 @@ driver_t fbd_driver = {
 	sizeof(struct fbd_softc)
 };
 
-devclass_t	fbd_devclass;
-
-DRIVER_MODULE(fbd, fb, fbd_driver, fbd_devclass, 0, 0);
-DRIVER_MODULE(fbd, drmn, fbd_driver, fbd_devclass, 0, 0);
-DRIVER_MODULE(fbd, udl, fbd_driver, fbd_devclass, 0, 0);
+DRIVER_MODULE(fbd, fb, fbd_driver, 0, 0);
+DRIVER_MODULE(fbd, drmn, fbd_driver, 0, 0);
+DRIVER_MODULE(fbd, udl, fbd_driver, 0, 0);
 MODULE_VERSION(fbd, 1);
 

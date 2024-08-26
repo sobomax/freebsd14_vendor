@@ -11,8 +11,6 @@
  * use.
  *
  * Aug, 1994	Implemented on FreeBSD 1.1.5.1R (Toshiba AVS001WD)
- *
- * $FreeBSD: 5c855afde1be0f618ffc5cba915e1a6c051987cb $
  */
 
 #ifndef _X86_APM_BIOS_H_

@@ -1,6 +1,5 @@
-# $FreeBSD: e420dca9c9b56c65733651070230ed97cb8d4614 $
 
-.PATH:	${SRCTOP}/sys/dev/iicbus
+.PATH:	${SRCTOP}/sys/dev/iicbus/rtc
 KMOD	= ds1672
 SRCS	= ds1672.c 
 

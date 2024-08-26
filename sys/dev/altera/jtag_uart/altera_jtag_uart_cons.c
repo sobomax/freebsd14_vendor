@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2011-2012 Robert N. M. Watson
  * All rights reserved.
@@ -31,8 +31,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 51e0b2b2869949201c1196f59c1313af8420abd3 $");
-
 #include <sys/param.h>
 #include <sys/bus.h>
 #include <sys/cons.h>
@@ -49,8 +47,6 @@ __FBSDID("$FreeBSD: 51e0b2b2869949201c1196f59c1313af8420abd3 $");
 #include <ddb/ddb.h>
 
 #include <dev/altera/jtag_uart/altera_jtag_uart.h>
-
-devclass_t	altera_jtag_uart_devclass;
 
 static SYSCTL_NODE(_hw, OID_AUTO, altera_jtag_uart,
     CTLFLAG_RW | CTLFLAG_MPSAFE, 0,

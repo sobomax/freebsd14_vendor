@@ -1,4 +1,3 @@
-# $FreeBSD: f5a87525ae373c12c0663de20cf2fa5e4ac0b232 $
 
 e=
 test "${e:-\}}" = '}'

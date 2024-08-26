@@ -32,7 +32,6 @@
  * SUCH DAMAGE.
  *
  *	from: @(#)trap.h	5.4 (Berkeley) 5/9/91
- * $FreeBSD: c31e454cd05f2fcd4829e784ffb936b3b9b1790d $
  */
 
 #ifndef _MACHINE_TRAP_H_

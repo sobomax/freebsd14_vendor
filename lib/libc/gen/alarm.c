@@ -31,8 +31,6 @@
 
 #include <sys/cdefs.h>
 __SCCSID("@(#)alarm.c	8.1 (Berkeley) 6/4/93");
-__FBSDID("$FreeBSD: 64bc7a86ebb5178377969401bf482df9a18f8a2a $");
-
 /*
  * Backwards compatible alarm.
  */

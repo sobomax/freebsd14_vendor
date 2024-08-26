@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2013 Tycho Nightingale <tycho.nightingale@pluribusnetworks.com>
  * Copyright (c) 2013 Neel Natu <neel@freebsd.org>
@@ -25,13 +25,9 @@
  * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
- *
- * $FreeBSD: 00a206fa604d80117c18729c545a4ee37c0d5dd0 $
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 00a206fa604d80117c18729c545a4ee37c0d5dd0 $");
-
 #include "opt_bhyve_snapshot.h"
 
 #include <sys/param.h>

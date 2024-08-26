@@ -1,4 +1,3 @@
-# $FreeBSD: ac7715d57f5d7bb1f499c28688aa27a4b44d2809 $
 
 TESTSDIR=	${TESTSBASE}/sys/auditpipe
 

@@ -1,6 +1,5 @@
-/* $FreeBSD: f53a99f2b2334987026fb055d247f3c8592b2499 $ */
 /*-
- * SPDX-License-Identifier: (BSD-2-Clause-FreeBSD OR GPL-2.0)
+ * SPDX-License-Identifier: (BSD-2-Clause OR GPL-2.0)
  *
  * Copyright (c) 2000 by Matthew Jacob
  * All rights reserved.

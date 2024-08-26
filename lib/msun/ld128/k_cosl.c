@@ -11,9 +11,6 @@
  * ====================================================
  */
 
-#include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 422357bf8a6cbebf5cb6eebb3cef6ba5492a1de7 $");
-
 /*
  * ld128 version of k_cos.c.  See ../src/k_cos.c for most comments.
  */

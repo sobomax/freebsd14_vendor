@@ -32,8 +32,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 31a23f975b0c3be487b7a232d03986920d56b1b3 $");
-
 #include <sys/param.h>
 #include <sys/systm.h>
 #include <sys/kernel.h>
@@ -126,7 +124,7 @@ sysctl_vm_loadavg(SYSCTL_HANDLER_ARGS)
 {
 
 #ifdef SCTL_MASK32
-	u_int32_t la[4];
+	uint32_t la[4];
 
 	if (req->flags & SCTL_MASK32) {
 		la[0] = averunnable.ldavg[0];
@@ -192,7 +190,7 @@ vmtotal(SYSCTL_HANDLER_ARGS)
 		if (p->p_state != PRS_NEW) {
 			FOREACH_THREAD_IN_PROC(p, td) {
 				thread_lock(td);
-				switch (td->td_state) {
+				switch (TD_GET_STATE(td)) {
 				case TDS_INHIBITED:
 					if (TD_IS_SWAPPED(td))
 						total.t_sw++;

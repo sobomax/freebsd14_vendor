@@ -1,4 +1,3 @@
-# $FreeBSD: 4e887b25f2856060e9a3b43c31f8efabd784e846 $
 # POSIX does not require these bytes to work in function names,
 # but making them all work seems a good goal.
 

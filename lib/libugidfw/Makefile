@@ -1,4 +1,3 @@
-# $FreeBSD: 9da8907cb5d03b4dc002b6d7850b1af2c9cb44c3 $
 
 LIB=		ugidfw
 SHLIB_MAJOR=	5

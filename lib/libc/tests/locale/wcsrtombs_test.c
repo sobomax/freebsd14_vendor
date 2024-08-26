@@ -32,9 +32,6 @@
  * "ja_JP.eucJP". Other encodings are not tested.
  */
 
-#include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 4c3455a8776987138722798eabeef710a401d575 $");
-
 #include <errno.h>
 #include <limits.h>
 #include <locale.h>

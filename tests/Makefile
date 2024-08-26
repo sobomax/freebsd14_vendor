@@ -1,4 +1,3 @@
-# $FreeBSD: 47fc9488f7729aee35161829d327c28060828036 $
 
 PACKAGE= tests
 
@@ -10,6 +9,7 @@ KYUAFILE= yes
 
 SUBDIR+= etc
 SUBDIR+= examples
+SUBDIR+= include
 SUBDIR+= sys
 SUBDIR+= atf_python
 

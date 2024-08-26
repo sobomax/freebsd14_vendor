@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2010 Riccardo Panicucci, Universita` di Pisa
  * All rights reserved
@@ -27,7 +27,6 @@
  */
 
 /*
- * $FreeBSD: a690aa0290d79382c3ce6058e016148deaeeefd8 $
  *
  * Binary compatibility support for /sbin/ipfw RELENG_7 and RELENG_8
  */

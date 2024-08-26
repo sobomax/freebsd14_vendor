@@ -1,6 +1,5 @@
 /*-
  * Copyright (c) 2010,2018 The FreeBSD Foundation
- * All rights reserved.
  *
  * This software was developed by Shteryana Sotirova Shopova under
  * sponsorship from the FreeBSD Foundation.
@@ -26,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 67a971644e7d8d8725d1c0c1c7fe9505d12ed6dd $
+ * $FreeBSD: 6304af0213752d6541782945407cab18b839b6f3 $
  */
 #include <sys/queue.h>
 #include <sys/types.h>

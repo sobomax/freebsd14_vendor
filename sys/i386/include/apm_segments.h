@@ -11,8 +11,6 @@
  * use.
  *
  * Sep., 1994	Implemented on FreeBSD 1.1.5.1R (Toshiba AVS001WD)
- *
- * $FreeBSD: 2d04b9bd8e15f2bdb6c6fc80a40e147ba0a75336 $
  */
 
 #ifndef _MACHINE_APM_SEGMENTS_H

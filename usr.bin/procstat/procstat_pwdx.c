@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2020 Juraj Lutter <juraj@lutter.sk>
  * All rights reserved.
@@ -27,8 +27,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 22550ec8233c90b7324ad3031400f442dd4b2111 $");
-
 #include <sys/param.h>
 #include <sys/capsicum.h>
 #include <sys/socket.h>

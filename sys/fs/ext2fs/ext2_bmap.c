@@ -34,7 +34,6 @@
  * SUCH DAMAGE.
  *
  *	@(#)ufs_bmap.c	8.7 (Berkeley) 3/21/95
- * $FreeBSD: 412f08b871e0c4bdcf9121969e08bf0f0ca5d6bb $
  */
 
 #include <sys/param.h>

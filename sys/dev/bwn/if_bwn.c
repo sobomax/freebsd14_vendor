@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2009-2010 Weongyo Jeong <weongyo@freebsd.org>
  * Copyright (c) 2016 Landon Fuller <landonf@FreeBSD.org>
@@ -35,8 +35,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: ecec524c07d4496b42c5749f8774a782878a9c64 $");
-
 /*
  * The Broadcom Wireless LAN controller driver.
  */
@@ -809,8 +807,6 @@ bwn_attach_post(struct bwn_softc *sc)
 
 	/* call MI attach routine. */
 	ieee80211_ifattach(ic);
-
-	ic->ic_headroom = sizeof(struct bwn_txhdr);
 
 	/* override default methods */
 	ic->ic_raw_xmit = bwn_raw_xmit;
@@ -5077,7 +5073,6 @@ bwn_intr(void *arg)
 static void
 bwn_intrtask(void *arg, int npending)
 {
-	struct epoch_tracker et;
 	struct bwn_mac *mac = arg;
 	struct bwn_softc *sc = mac->mac_sc;
 	uint32_t merged = 0;
@@ -5138,7 +5133,6 @@ bwn_intrtask(void *arg, int npending)
 	if (mac->mac_reason_intr & BWN_INTR_NOISESAMPLE_OK)
 		bwn_intr_noise(mac);
 
-	NET_EPOCH_ENTER(et);
 	if (mac->mac_flags & BWN_MAC_FLAG_DMA) {
 		if (mac->mac_reason[0] & BWN_DMAINTR_RX_DONE) {
 			bwn_dma_rx(mac->mac_method.dma.rx);
@@ -5146,7 +5140,6 @@ bwn_intrtask(void *arg, int npending)
 		}
 	} else
 		rx = bwn_pio_rx(&mac->mac_method.pio.rx);
-	NET_EPOCH_EXIT(et);
 
 	KASSERT(!(mac->mac_reason[1] & BWN_DMAINTR_RX_DONE), ("%s", __func__));
 	KASSERT(!(mac->mac_reason[2] & BWN_DMAINTR_RX_DONE), ("%s", __func__));
@@ -5987,7 +5980,7 @@ bwn_rxeof(struct bwn_mac *mac, struct mbuf *m, const void *_rxhdr)
 	struct ieee80211_node *ni;
 	struct ieee80211com *ic = &sc->sc_ic;
 	uint32_t macstat;
-	int padding, rate, rssi = 0, noise = 0, type;
+	int padding, rate, rssi = 0, noise = 0;
 	uint16_t phytype, phystat0, phystat3, chanstat;
 	unsigned char *mp = mtod(m, unsigned char *);
 
@@ -6101,10 +6094,10 @@ bwn_rxeof(struct bwn_mac *mac, struct mbuf *m, const void *_rxhdr)
 
 	ni = ieee80211_find_rxnode(ic, wh);
 	if (ni != NULL) {
-		type = ieee80211_input(ni, m, rssi, noise);
+		ieee80211_input(ni, m, rssi, noise);
 		ieee80211_free_node(ni);
 	} else
-		type = ieee80211_input_all(ic, m, rssi, noise);
+		ieee80211_input_all(ic, m, rssi, noise);
 
 	BWN_LOCK(sc);
 	return;
@@ -7738,13 +7731,14 @@ static device_method_t bwn_methods[] = {
 	DEVMETHOD(device_resume,	bwn_resume),
 	DEVMETHOD_END
 };
+
 static driver_t bwn_driver = {
 	"bwn",
 	bwn_methods,
 	sizeof(struct bwn_softc)
 };
-static devclass_t bwn_devclass;
-DRIVER_MODULE(bwn, bhnd, bwn_driver, bwn_devclass, 0, 0);
+
+DRIVER_MODULE(bwn, bhnd, bwn_driver, 0, 0);
 MODULE_DEPEND(bwn, bhnd, 1, 1, 1);
 MODULE_DEPEND(bwn, gpiobus, 1, 1, 1);
 MODULE_DEPEND(bwn, wlan, 1, 1, 1);		/* 802.11 media layer */

@@ -7,8 +7,6 @@
  * can do whatever you want with this stuff. If we meet some day, and you think
  * this stuff is worth it, you can buy me a beer in return.   Poul-Henning Kamp
  * ----------------------------------------------------------------------------
- *
- * $FreeBSD: 811cc1af461ac3645fd0836f071ba030a96aa2ce $
  */
 
 #ifndef _SYS_TIMETC_H_

@@ -1,4 +1,3 @@
-.\" $FreeBSD: 14bfcc05f14ce563f325208224b852db64a25f4c $
 Do not build
 .Xr pkg 7
 bootstrap tool.

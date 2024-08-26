@@ -27,10 +27,6 @@
  * SUCH DAMAGE.
  */
 
-#include <sys/cdefs.h>
-
-__FBSDID("$FreeBSD: 3df81409a7d81f9532d3017e3e8100ac50b9b193 $");
-
 #ifndef lint
 #if 0
 static char sccsid[] = "@(#)getent.c	8.2 (Berkeley) 12/15/93";

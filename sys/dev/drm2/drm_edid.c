@@ -29,8 +29,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 9ff4ee1d1e3e176e6a4f2545829403de44ecf08f $");
-
 #include <dev/drm2/drmP.h>
 #include <dev/drm2/drm_edid.h>
 #include "drm_edid_modes.h"

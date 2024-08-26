@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 1999,2000 Jonathan Lemon
  * All rights reserved.
@@ -31,8 +31,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: c09e856a75afc373df0350138b1c60f73ad69701 $");
-
 /*
  * Generic driver for Compaq SMART RAID adapters.
  */
@@ -248,7 +246,7 @@ ida_setup(struct ida_softc *ida)
 		/* maxsegsz	*/ BUS_SPACE_MAXSIZE_32BIT,
 		/* flags	*/ 0,
 		/* lockfunc	*/ busdma_lock_mutex,
-		/* lockarg	*/ &Giant,
+		/* lockarg	*/ &ida->lock,
 		&ida->buffer_dmat);
 	if (error)
 		return (ENOMEM);

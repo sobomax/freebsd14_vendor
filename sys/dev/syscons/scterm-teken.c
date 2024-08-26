@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 1999 Kazutaka YOKOTA <yokota@zodiac.mech.utsunomiya-u.ac.jp>
  * All rights reserved.
@@ -30,8 +30,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: ed287a74b8f9e848ef902ee7b33f2f3255931c72 $");
-
 #include "opt_syscons.h"
 #include "opt_teken.h"
 
@@ -42,7 +40,7 @@ __FBSDID("$FreeBSD: ed287a74b8f9e848ef902ee7b33f2f3255931c72 $");
 #include <sys/consio.h>
 #include <sys/kbio.h>
 
-#if defined(__arm__) || defined(__mips__) || defined(__powerpc__)
+#if defined(__arm__) || defined(__powerpc__)
 #include <machine/sc_machdep.h>
 #else
 #include <machine/pc/display.h>

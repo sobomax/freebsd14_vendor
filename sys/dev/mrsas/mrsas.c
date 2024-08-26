@@ -38,8 +38,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 73c2ae2b0e2bbeb60c7544fbd1de4d3a3c10de8f $");
-
 #include <dev/mrsas/mrsas.h>
 #include <dev/mrsas/mrsas_ioctl.h>
 
@@ -59,8 +57,6 @@ __FBSDID("$FreeBSD: 73c2ae2b0e2bbeb60c7544fbd1de4d3a3c10de8f $");
  */
 static d_open_t mrsas_open;
 static d_close_t mrsas_close;
-static d_read_t mrsas_read;
-static d_write_t mrsas_write;
 static d_ioctl_t mrsas_ioctl;
 static d_poll_t mrsas_poll;
 
@@ -225,8 +221,6 @@ static struct cdevsw mrsas_cdevsw = {
 	.d_version = D_VERSION,
 	.d_open = mrsas_open,
 	.d_close = mrsas_close,
-	.d_read = mrsas_read,
-	.d_write = mrsas_write,
 	.d_ioctl = mrsas_ioctl,
 	.d_poll = mrsas_poll,
 	.d_name = "mrsas",
@@ -234,43 +228,17 @@ static struct cdevsw mrsas_cdevsw = {
 
 MALLOC_DEFINE(M_MRSAS, "mrsasbuf", "Buffers for the MRSAS driver");
 
-/*
- * In the cdevsw routines, we find our softc by using the si_drv1 member of
- * struct cdev.  We set this variable to point to our softc in our attach
- * routine when we create the /dev entry.
- */
 int
 mrsas_open(struct cdev *dev, int oflags, int devtype, struct thread *td)
 {
-	struct mrsas_softc *sc;
 
-	sc = dev->si_drv1;
 	return (0);
 }
 
 int
 mrsas_close(struct cdev *dev, int fflag, int devtype, struct thread *td)
 {
-	struct mrsas_softc *sc;
 
-	sc = dev->si_drv1;
-	return (0);
-}
-
-int
-mrsas_read(struct cdev *dev, struct uio *uio, int ioflag)
-{
-	struct mrsas_softc *sc;
-
-	sc = dev->si_drv1;
-	return (0);
-}
-int
-mrsas_write(struct cdev *dev, struct uio *uio, int ioflag)
-{
-	struct mrsas_softc *sc;
-
-	sc = dev->si_drv1;
 	return (0);
 }
 
@@ -321,26 +289,24 @@ void
 mrsas_disable_intr(struct mrsas_softc *sc)
 {
 	u_int32_t mask = 0xFFFFFFFF;
-	u_int32_t status;
 
 	sc->mask_interrupts = 1;
 	mrsas_write_reg(sc, offsetof(mrsas_reg_set, outbound_intr_mask), mask);
 	/* Dummy read to force pci flush */
-	status = mrsas_read_reg(sc, offsetof(mrsas_reg_set, outbound_intr_mask));
+	(void)mrsas_read_reg(sc, offsetof(mrsas_reg_set, outbound_intr_mask));
 }
 
 void
 mrsas_enable_intr(struct mrsas_softc *sc)
 {
 	u_int32_t mask = MFI_FUSION_ENABLE_INTERRUPT_MASK;
-	u_int32_t status;
 
 	sc->mask_interrupts = 0;
 	mrsas_write_reg(sc, offsetof(mrsas_reg_set, outbound_intr_status), ~0);
-	status = mrsas_read_reg(sc, offsetof(mrsas_reg_set, outbound_intr_status));
+	(void)mrsas_read_reg(sc, offsetof(mrsas_reg_set, outbound_intr_status));
 
 	mrsas_write_reg(sc, offsetof(mrsas_reg_set, outbound_intr_mask), ~mask);
-	status = mrsas_read_reg(sc, offsetof(mrsas_reg_set, outbound_intr_mask));
+	(void)mrsas_read_reg(sc, offsetof(mrsas_reg_set, outbound_intr_mask));
 }
 
 static int
@@ -1481,7 +1447,14 @@ mrsas_ioctl(struct cdev *dev, u_long cmd, caddr_t arg, int flag,
 	int ret = 0, i = 0;
 	MRSAS_DRV_PCI_INFORMATION *pciDrvInfo;
 
-	sc = mrsas_get_softc_instance(dev, cmd, arg);
+	switch (cmd) {
+	case MFIIO_PASSTHRU:
+                sc = (struct mrsas_softc *)(dev->si_drv1);
+		break;
+	default:
+		sc = mrsas_get_softc_instance(dev, cmd, arg);
+		break;
+        }
 	if (!sc)
 		return ENOENT;
 
@@ -1542,6 +1515,10 @@ do_ioctl:
 		    pciDrvInfo->busNumber, pciDrvInfo->deviceNumber,
 		    pciDrvInfo->functionNumber, pciDrvInfo->domainID);
 		ret = 0;
+		break;
+
+	case MFIIO_PASSTHRU:
+		ret = mrsas_user_command(sc, (struct mfi_ioc_passthru *)arg);
 		break;
 
 	default:
@@ -1755,11 +1732,13 @@ mrsas_complete_cmd(struct mrsas_softc *sc, u_int32_t MSIxIndex)
 						data_length = r1_cmd->io_request->DataLength;
 						sense = r1_cmd->sense;
 					}
+					mtx_lock(&sc->sim_lock);
 					r1_cmd->ccb_ptr = NULL;
 					if (r1_cmd->callout_owner) {
 						callout_stop(&r1_cmd->cm_callout);
 						r1_cmd->callout_owner  = false;
 					}
+					mtx_unlock(&sc->sim_lock);
 					mrsas_release_mpt_cmd(r1_cmd);
 					mrsas_atomic_dec(&sc->fw_outstanding);
 					mrsas_map_mpt_cmd_status(cmd_mpt, cmd_mpt->ccb_ptr, status,
@@ -2976,7 +2955,7 @@ mrsas_transition_to_ready(struct mrsas_softc *sc, int ocr)
 	int i;
 	u_int8_t max_wait;
 	u_int32_t val, fw_state;
-	u_int32_t cur_state;
+	u_int32_t cur_state __unused;
 	u_int32_t abs_state, curr_abs_state;
 
 	val = mrsas_read_reg_with_retries(sc, offsetof(mrsas_reg_set, outbound_scratch_pad));
@@ -4012,6 +3991,7 @@ mrsas_issue_blocked_cmd(struct mrsas_softc *sc, struct mrsas_mfi_cmd *cmd)
 			}
 		}
 	}
+	sc->chan = NULL;
 
 	if (cmd->cmd_status == 0xFF) {
 		device_printf(sc->mrsas_dev, "DCMD timed out after %d "
@@ -4408,7 +4388,7 @@ mrsas_sync_map_info(struct mrsas_softc *sc)
 	int retcode = 0, i;
 	struct mrsas_mfi_cmd *cmd;
 	struct mrsas_dcmd_frame *dcmd;
-	uint32_t size_sync_info, num_lds;
+	uint32_t num_lds;
 	MR_LD_TARGET_SYNC *target_map = NULL;
 	MR_DRV_RAID_MAP_ALL *map;
 	MR_LD_RAID *raid;
@@ -4424,7 +4404,6 @@ mrsas_sync_map_info(struct mrsas_softc *sc)
 	num_lds = map->raidMap.ldCount;
 
 	dcmd = &cmd->frame->dcmd;
-	size_sync_info = sizeof(MR_LD_TARGET_SYNC) * num_lds;
 	memset(dcmd->mbox.b, 0, MFI_MBOX_SIZE);
 
 	target_map = (MR_LD_TARGET_SYNC *) sc->raidmap_mem[(sc->map_id - 1) & 1];
@@ -5080,7 +5059,5 @@ static driver_t mrsas_driver = {
 	sizeof(struct mrsas_softc)
 };
 
-static devclass_t mrsas_devclass;
-
-DRIVER_MODULE(mrsas, pci, mrsas_driver, mrsas_devclass, 0, 0);
+DRIVER_MODULE(mrsas, pci, mrsas_driver, 0, 0);
 MODULE_DEPEND(mrsas, cam, 1, 1, 1);

@@ -62,9 +62,6 @@
 #include "event.h"
 #include "event_factory.h"
 #include "exception.h"
-
-__FBSDID("$FreeBSD: 76ef1896975a0f576921b5c89a3ccd0c952767c9 $");
-
 /*================================== Macros ==================================*/
 #define NUM_ELEMENTS(x) (sizeof(x) / sizeof(*x))
 

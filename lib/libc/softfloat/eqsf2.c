@@ -4,9 +4,6 @@
  * Written by Ben Harris, 2000.  This file is in the Public Domain.
  */
 
-#include <sys/cdefs.h>
-__FBSDID("$FreeBSD: d45b806cc9f34e653ae53787a582a2d6b7ee29ab $");
-
 #include "softfloat-for-gcc.h"
 #include "milieu.h"
 #include "softfloat.h"

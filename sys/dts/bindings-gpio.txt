@@ -1,4 +1,3 @@
-$FreeBSD: 89e6fc0b9311d7e6b27824fc93cb93d89ff84ffe $
 
 GPIO configuration.
 ===================

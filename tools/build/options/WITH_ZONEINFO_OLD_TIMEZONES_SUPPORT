@@ -1,3 +1,2 @@
-.\" $FreeBSD: 6d22fe1055a817d8074b7a4a95101ce88741a765 $
 Build backward compatibility timezone aliases in to the timezone
 database.

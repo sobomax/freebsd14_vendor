@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c)2006,2007,2008,2009 YAMAMOTO Takashi,
  * Copyright (c) 2013 EMC Corp.
@@ -41,8 +41,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: dfc9c3b9bf7454db2920c4001421e8a37e00c72d $");
-
 #include "opt_ddb.h"
 
 #include <sys/param.h>
@@ -181,7 +179,7 @@ struct vmem {
 #define	BT_END(bt)	((bt)->bt_start + (bt)->bt_size - 1)
 
 #if defined(DIAGNOSTIC)
-static int enable_vmem_check = 1;
+static int enable_vmem_check = 0;
 SYSCTL_INT(_debug, OID_AUTO, vmem_check, CTLFLAG_RWTUN,
     &enable_vmem_check, 0, "Enable vmem check");
 static void vmem_check(vmem_t *);

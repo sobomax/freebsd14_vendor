@@ -1,4 +1,3 @@
-# $FreeBSD: a7280953da24894365e62a59e27523d39ceb4702 $
 # $NetBSD: Makefile.inc,v 1.13 2007/04/01 18:52:29 tnozaki Exp $
 
 CODE=	MISC

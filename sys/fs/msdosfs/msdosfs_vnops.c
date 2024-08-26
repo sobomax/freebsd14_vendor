@@ -1,4 +1,3 @@
-/* $FreeBSD: 94af83b5a0a6b884fdb31415285c9fa2bb8ce0d8 $ */
 /*	$NetBSD: msdosfs_vnops.c,v 1.68 1998/02/10 14:10:04 mrg Exp $	*/
 
 /*-
@@ -127,8 +126,7 @@ static vop_vptofh_t	msdosfs_vptofh;
 /*
  * Create a regular file. On entry the directory to contain the file being
  * created is locked.  We must release before we return. We must also free
- * the pathname buffer pointed at by cnp->cn_pnbuf, always on error, or
- * only if the SAVESTART bit in cn_flags is clear on success.
+ * the pathname buffer pointed at by cnp->cn_pnbuf, always on error.
  */
 static int
 msdosfs_create(struct vop_create_args *ap)
@@ -161,10 +159,6 @@ msdosfs_create(struct vop_create_args *ap)
 	 * use the absence of the owner write bit to make the file
 	 * readonly.
 	 */
-#ifdef DIAGNOSTIC
-	if ((cnp->cn_flags & HASBUF) == 0)
-		panic("msdosfs_create: no name");
-#endif
 	memset(&ndirent, 0, sizeof(ndirent));
 	error = uniqdosname(pdep, cnp, ndirent.de_Name);
 	if (error)
@@ -318,8 +312,11 @@ msdosfs_getattr(struct vop_getattr_args *ap)
 		vap->va_flags |= UF_SYSTEM;
 	vap->va_gen = 0;
 	vap->va_blocksize = pmp->pm_bpcluster;
-	vap->va_bytes =
-	    (dep->de_FileSize + pmp->pm_crbomask) & ~pmp->pm_crbomask;
+	if (dep->de_StartCluster != MSDOSFSROOT)
+		vap->va_bytes =
+		    (dep->de_FileSize + pmp->pm_crbomask) & ~pmp->pm_crbomask;
+	else
+		vap->va_bytes = 0; /* FAT12/FAT16 root dir in reserved area */
 	vap->va_type = ap->a_vp->v_type;
 	vap->va_filerev = dep->de_modrev;
 	return (0);
@@ -801,8 +798,8 @@ msdosfs_write(struct vop_write_args *ap)
 			bawrite(bp);
 		else if (n + croffset == pmp->pm_bpcluster) {
 			if ((vp->v_mount->mnt_flag & MNT_NOCLUSTERW) == 0)
-				cluster_write(vp, bp, dep->de_FileSize,
-				    seqcount, 0);
+				cluster_write(vp, &dep->de_clusterw, bp,
+				    dep->de_FileSize, seqcount, 0);
 			else
 				bawrite(bp);
 		} else
@@ -964,11 +961,6 @@ msdosfs_rename(struct vop_rename_args *ap)
 	fcnp = ap->a_fcnp;
 	pmp = VFSTOMSDOSFS(fdvp->v_mount);
 
-#ifdef DIAGNOSTIC
-	if ((tcnp->cn_flags & HASBUF) == 0 ||
-	    (fcnp->cn_flags & HASBUF) == 0)
-		panic("msdosfs_rename: no name");
-#endif
 	/*
 	 * Check for cross-device rename.
 	 */
@@ -1110,7 +1102,7 @@ relock:
 	 * to namei, as the parent directory is unlocked by the
 	 * call to doscheckpath().
 	 */
-	error = VOP_ACCESS(fvp, VWRITE, tcnp->cn_cred, tcnp->cn_thread);
+	error = VOP_ACCESS(fvp, VWRITE, tcnp->cn_cred, curthread);
 	if (fdip->de_StartCluster != tdip->de_StartCluster)
 		newparent = true;
 	if (doingdirectory && newparent) {
@@ -1136,8 +1128,6 @@ relock:
 		}
 		if (error != 0)
 			goto unlock;
-		if ((tcnp->cn_flags & SAVESTART) == 0)
-			panic("msdosfs_rename: lost to startdir");
 	}
 
 	if (tip != NULL) {
@@ -1190,8 +1180,10 @@ relock:
 	memcpy(oldname, fip->de_Name, 11);
 	memcpy(fip->de_Name, toname, 11);	/* update denode */
 	error = msdosfs_lookup_ino(tdvp, NULL, tcnp, &scn, &blkoff);
-	MPASS(error == EJUSTRETURN);
-	error = createde(fip, tdip, NULL, tcnp);
+	if (error == EJUSTRETURN) {
+		tdip->de_fndoffset = to_diroffset;
+		error = createde(fip, tdip, NULL, tcnp);
+	}
 	if (error != 0) {
 		memcpy(fip->de_Name, oldname, 11);
 		goto unlock;
@@ -1213,7 +1205,10 @@ relock:
 	MPASS(error == 0);
 	error = removede(fdip, fip);
 	if (error != 0) {
-		/* XXX should downgrade to ro here, fs is corrupt */
+		printf("%s: removede %s %s err %d\n",
+		    pmp->pm_mountp->mnt_stat.f_mntonname,
+		    fdip->de_Name, fip->de_Name, error);
+		msdosfs_integrity_error(pmp);
 		goto unlock;
 	}
 	if (!doingdirectory) {
@@ -1247,7 +1242,10 @@ relock:
 		error = bread(pmp->pm_devvp, bn, pmp->pm_bpcluster,
 		    NOCRED, &bp);
 		if (error != 0) {
-			/* XXX should downgrade to ro here, fs is corrupt */
+			printf("%s: block read error %d while renaming dir\n",
+			    pmp->pm_mountp->mnt_stat.f_mntonname,
+			    error);
+			msdosfs_integrity_error(pmp);
 			goto unlock;
 		}
 		dotdotp = (struct direntry *)bp->b_data + 1;
@@ -1260,7 +1258,10 @@ relock:
 		if (DOINGASYNC(fvp))
 			bdwrite(bp);
 		else if ((error = bwrite(bp)) != 0) {
-			/* XXX should downgrade to ro here, fs is corrupt */
+			printf("%s: block write error %d while renaming dir\n",
+			    pmp->pm_mountp->mnt_stat.f_mntonname,
+			    error);
+			msdosfs_integrity_error(pmp);
 			goto unlock;
 		}
 	}
@@ -1420,10 +1421,6 @@ msdosfs_mkdir(struct vop_mkdir_args *ap)
 	 * cluster.  This will be written to an empty slot in the parent
 	 * directory.
 	 */
-#ifdef DIAGNOSTIC
-	if ((cnp->cn_flags & HASBUF) == 0)
-		panic("msdosfs_mkdir: no name");
-#endif
 	error = uniqdosname(pdep, cnp, ndirent.de_Name);
 	if (error)
 		goto bad;
@@ -1523,7 +1520,7 @@ msdosfs_readdir(struct vop_readdir_args *ap)
 	struct direntry *dentp;
 	struct dirent dirbuf;
 	struct uio *uio = ap->a_uio;
-	u_long *cookies = NULL;
+	uint64_t *cookies = NULL;
 	int ncookies = 0;
 	off_t offset, off;
 	int chksum = -1;
@@ -1559,7 +1556,7 @@ msdosfs_readdir(struct vop_readdir_args *ap)
 
 	if (ap->a_ncookies) {
 		ncookies = uio->uio_resid / 16;
-		cookies = malloc(ncookies * sizeof(u_long), M_TEMP,
+		cookies = malloc(ncookies * sizeof(*cookies), M_TEMP,
 		       M_WAITOK);
 		*ap->a_cookies = cookies;
 		*ap->a_ncookies = ncookies;

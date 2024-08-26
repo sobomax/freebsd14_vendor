@@ -1,4 +1,3 @@
-#$FreeBSD: 6fbf7dde6584f382a20ccc24e63683e1c73c1ee0 $
 
 .PATH:  ${SRCTOP}/sys/dev/iavf
 

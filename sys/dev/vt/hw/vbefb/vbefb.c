@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2014 The FreeBSD Foundation
  *
@@ -29,8 +29,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 2e8fe8330e5676562c75b78139c8a1c0941e8b9a $");
-
 #include <sys/param.h>
 #include <sys/systm.h>
 #include <sys/kernel.h>
@@ -135,7 +133,7 @@ vt_vbefb_init(struct vt_device *vd)
 	roff = ffs(vbefb->fb_mask_red) - 1;
 	goff = ffs(vbefb->fb_mask_green) - 1;
 	boff = ffs(vbefb->fb_mask_blue) - 1;
-	vt_generate_cons_palette(info->fb_cmap, format,
+	vt_config_cons_colors(info, format,
 	    vbefb->fb_mask_red >> roff, roff,
 	    vbefb->fb_mask_green >> goff, goff,
 	    vbefb->fb_mask_blue >> boff, boff);
@@ -159,5 +157,5 @@ vt_vbefb_fini(struct vt_device *vd, void *softc)
 	struct fb_info	*info = softc;
 
 	vt_fb_fini(vd, softc);
-	pmap_unmapdev(info->fb_vbase, info->fb_size);
+	pmap_unmapdev((void *)info->fb_vbase, info->fb_size);
 }

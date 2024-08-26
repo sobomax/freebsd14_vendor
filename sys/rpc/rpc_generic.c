@@ -35,8 +35,6 @@
 
 /* #pragma ident	"@(#)rpc_generic.c	1.17	94/04/24 SMI" */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 1a02085efe47a3278883c357ee080e5c3bab31e5 $");
-
 /*
  * rpc_generic.c, Miscl routines for RPC.
  *
@@ -146,8 +144,7 @@ __rpc_get_t_size(int af, int proto, int size)
  * Find the appropriate address buffer size
  */
 u_int
-__rpc_get_a_size(af)
-	int af;
+__rpc_get_a_size(int af)
 {
 	switch (af) {
 	case AF_INET:
@@ -195,7 +192,7 @@ __rpc_socket2sockinfo(struct socket *so, struct __rpc_sockinfo *sip)
 	int error;
 
 	CURVNET_SET(so->so_vnet);
-	error = so->so_proto->pr_usrreqs->pru_sockaddr(so, &sa);
+	error = so->so_proto->pr_sockaddr(so, &sa);
 	CURVNET_RESTORE();
 	if (error)
 		return 0;
@@ -309,7 +306,7 @@ __rpc_taddr2uaddr_af(int af, const struct netbuf *nbuf)
 	struct sockaddr_in6 *sin6;
 	char namebuf6[INET6_ADDRSTRLEN];
 #endif
-	u_int16_t port;
+	uint16_t port;
 
 	sbuf_new(&sb, NULL, 0, SBUF_AUTOEXTEND);
 
@@ -567,8 +564,7 @@ __rpc_getconfip(const char *nettype)
  * unset, i.e. iterate over all visible entries in netconfig.
  */
 void *
-__rpc_setconf(nettype)
-	const char *nettype;
+__rpc_setconf(const char *nettype)
 {
 	struct handle *handle;
 
@@ -688,8 +684,7 @@ __rpc_getconf(void *vhandle)
 }
 
 void
-__rpc_endconf(vhandle)
-	void * vhandle;
+__rpc_endconf(void *vhandle)
 {
 	struct handle *handle;
 
@@ -708,7 +703,7 @@ __rpc_sockisbound(struct socket *so)
 	int error, bound;
 
 	CURVNET_SET(so->so_vnet);
-	error = so->so_proto->pr_usrreqs->pru_sockaddr(so, &sa);
+	error = so->so_proto->pr_sockaddr(so, &sa);
 	CURVNET_RESTORE();
 	if (error)
 		return (0);
@@ -793,12 +788,12 @@ bindresvport(struct socket *so, struct sockaddr *sa)
 #endif
 	struct sockopt opt;
 	int proto, portrange, portlow;
-	u_int16_t *portp;
+	uint16_t *portp;
 	socklen_t salen;
 
 	if (sa == NULL) {
 		CURVNET_SET(so->so_vnet);
-		error = so->so_proto->pr_usrreqs->pru_sockaddr(so, &sa);
+		error = so->so_proto->pr_sockaddr(so, &sa);
 		CURVNET_RESTORE();
 		if (error)
 			return (error);

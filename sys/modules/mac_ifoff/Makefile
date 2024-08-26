@@ -1,4 +1,3 @@
-# $FreeBSD: 9d79eb085524335baf6d0f3001428d5d395501e2 $
 
 .PATH: ${SRCTOP}/sys/security/mac_ifoff
 

@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2007-2009 Sean C. Farley <scf@FreeBSD.org>
  * All rights reserved.
@@ -26,10 +26,6 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 4c71801b242f3c3f1a15efc4005d1a5111327160 $");
-
-
 #include "namespace.h"
 #include <sys/types.h>
 #include <errno.h>
@@ -39,7 +35,7 @@ __FBSDID("$FreeBSD: 4c71801b242f3c3f1a15efc4005d1a5111327160 $");
 #include <string.h>
 #include <unistd.h>
 #include "un-namespace.h"
-
+#include "libc_private.h"
 
 static const char CorruptEnvFindMsg[] = "environment corrupt; unable to find ";
 static const char CorruptEnvValueMsg[] =
@@ -56,7 +52,6 @@ static const char CorruptEnvValueMsg[] =
  *	intEnviron:	Internally-built environ.  Exposed via environ during
  *			(re)builds of the environment.
  */
-extern char **environ;
 static char **origEnviron;
 static char **intEnviron = NULL;
 static int environSize = 0;
@@ -449,6 +444,18 @@ getenv(const char *name)
 
 
 /*
+ * Runs getenv() unless the current process is tainted by uid or gid changes, in
+ * which case it will return NULL.
+ */
+char *
+secure_getenv(const char *name)
+{
+	if (issetugid())
+		return (NULL);
+	return (getenv(name));
+}
+
+/*
  * Set the value of a variable.  Older settings are labeled as inactive.  If an
  * older setting has enough room to store the new value, it will be reused.  No
  * previous variables are ever freed here to avoid causing a segmentation fault
@@ -688,6 +695,31 @@ unsetenv(const char *name)
 	}
 	if (newEnvActive != envActive)
 		__rebuild_environ(newEnvActive);
+
+	return (0);
+}
+
+/*
+ * Unset all variable by flagging them as inactive.  No variable is
+ * ever freed.
+ */
+int
+clearenv(void)
+{
+	int ndx;
+
+	/* Initialize environment. */
+	if (__merge_environ() == -1 || (envVars == NULL && __build_env() == -1))
+		return (-1);
+
+	/* Remove from the end to not shuffle memory too much. */
+	for (ndx = envVarsTotal - 1; ndx >= 0; ndx--) {
+		envVars[ndx].active = false;
+		if (envVars[ndx].putenv)
+			__remove_putenv(ndx);
+	}
+
+	__rebuild_environ(0);
 
 	return (0);
 }

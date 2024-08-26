@@ -1,7 +1,6 @@
-/* $FreeBSD: 1c086d4a5304fe8b88264a90485b7a3ece392ba4 $ */
 
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2015 Semihalf.
  * Copyright (c) 2015 Stormshield.

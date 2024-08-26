@@ -39,8 +39,6 @@ static char sccsid[] = "@(#)mount.c	8.25 (Berkeley) 5/8/95";
 #endif /* not lint */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 22e596eaafbcc46b56ab97b1c11b4179e4c745cc $");
-
 #include <sys/param.h>
 #define _WANT_MNTOPTNAMES
 #include <sys/mount.h>
@@ -207,33 +205,8 @@ specified_ro(const char *arg)
 static void
 restart_mountd(void)
 {
-	struct pidfh *pfh;
-	pid_t mountdpid;
 
-	mountdpid = 0;
-	pfh = pidfile_open(_PATH_MOUNTDPID, 0600, &mountdpid);
-	if (pfh != NULL) {
-		/* Mountd is not running. */
-		pidfile_remove(pfh);
-		return;
-	}
-	if (errno != EEXIST) {
-		/* Cannot open pidfile for some reason. */
-		return;
-	}
-
-	/*
-	 * Refuse to send broadcast or group signals, this has
-	 * happened due to the bugs in pidfile(3).
-	 */
-	if (mountdpid <= 0) {
-		xo_warnx("mountd pid %d, refusing to send SIGHUP", mountdpid);
-		return;
-	}
-
-	/* We have mountd(8) PID in mountdpid varible, let's signal it. */
-	if (kill(mountdpid, SIGHUP) == -1)
-		xo_err(1, "signal mountd");
+	pidfile_signal(_PATH_MOUNTDPID, SIGHUP, NULL);
 }
 
 int
@@ -732,6 +705,12 @@ prmount(struct statfs *sfp)
 			fsidbuf[i * 2] = '\0';
 			xo_emit("{D:, }{Lw:fsid}{:fsid}", fsidbuf);
 			free(fsidbuf);
+		}
+		if (sfp->f_nvnodelistsize != 0) {
+			xo_open_container("vnodes");
+			xo_emit("{D:, }{Lwc:vnodes}{Lw:count}{w:count/%ju}",
+			    (uintmax_t)sfp->f_nvnodelistsize);
+			xo_close_container("vnodes");
 		}
 	}
 	xo_emit("{D:)}\n");

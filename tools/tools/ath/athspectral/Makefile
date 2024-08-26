@@ -1,4 +1,3 @@
-# $FreeBSD: e13891fec72c413aa0ec4979ba87dc5f967d7962 $
 
 PROG=	athspectral
 

@@ -63,8 +63,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: d0c93e475f9bf80a06a97e8b3b644ebbb67a0a33 $");
-
 #include <sys/param.h>
 #include <sys/disk.h>
 #include <sys/kerneldump.h>
@@ -1546,7 +1544,6 @@ main(int argc, char **argv)
 	for (i = 0; i < argc; i++)
 		DoFile(savedir, savedirfd, devs[i]);
 
-	/* Emit minimal output. */
 	if (nfound == 0) {
 		if (checkfor) {
 			if (verbose)
@@ -1563,6 +1560,8 @@ main(int argc, char **argv)
 			exit(1);
 		} else if (verbose)
 			logmsg(LOG_WARNING, "no unsaved dumps found");
+	} else if (verbose) {
+		logmsg(LOG_NOTICE, "%d cores saved in %s\n", nsaved, savedir);
 	}
 
 	return (0);

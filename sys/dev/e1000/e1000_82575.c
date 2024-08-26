@@ -31,7 +31,6 @@
   POSSIBILITY OF SUCH DAMAGE.
 
 ******************************************************************************/
-/*$FreeBSD: a0c057e5f07f08a72b4657d4e364842b7cb0cacf $*/
 
 /*
  * 82575EB Gigabit Network Connection

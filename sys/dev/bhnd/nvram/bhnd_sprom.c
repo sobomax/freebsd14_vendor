@@ -32,8 +32,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 1272644bfb4b7cd4475258f738545171b68b4b2e $");
-
 /*
  * BHND SPROM driver.
  * 

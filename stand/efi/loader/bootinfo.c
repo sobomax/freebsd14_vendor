@@ -26,9 +26,6 @@
  * SUCH DAMAGE.
  */
 
-#include <sys/cdefs.h>
-__FBSDID("$FreeBSD: a6b722b947e98fc0431552a7d24609a1b32150c8 $");
-
 #include <stand.h>
 #include <string.h>
 #include <sys/param.h>
@@ -43,6 +40,8 @@ __FBSDID("$FreeBSD: a6b722b947e98fc0431552a7d24609a1b32150c8 $");
 #ifdef EFI
 #include <efi.h>
 #include <efilib.h>
+#else
+#include "kboot.h"
 #endif
 
 #include "bootstrap.h"
@@ -67,8 +66,6 @@ __FBSDID("$FreeBSD: a6b722b947e98fc0431552a7d24609a1b32150c8 $");
 
 int bi_load(char *args, vm_offset_t *modulep, vm_offset_t *kernendp,
     bool exit_bs);
-
-int boot_services_gone;
 
 static int
 bi_getboothowto(char *kargs)
@@ -119,10 +116,17 @@ bi_getboothowto(char *kargs)
 			if (tmp != NULL)
 				speed = strtol(tmp, NULL, 0);
 			tmp = getenv("efi_com_port");
-			if (tmp == NULL)
-				tmp = getenv("comconsole_port");
 			if (tmp != NULL)
 				port = strtol(tmp, NULL, 0);
+			if (port <= 0) {
+				tmp = getenv("comconsole_port");
+				if (tmp != NULL)
+					port = strtol(tmp, NULL, 0);
+				else {
+					if (port == 0)
+						port = 0x3f8;
+				}
+			}
 			if (speed != -1 && port != -1) {
 				snprintf(buf, sizeof(buf), "io:%d,br:%d", port,
 				    speed);
@@ -194,16 +198,19 @@ bi_load_efi_data(struct preloaded_file *kfp, bool exit_bs)
 	efifb.fb_mask_blue = gfx_state.tg_fb.fb_mask_blue;
 	efifb.fb_mask_reserved = gfx_state.tg_fb.fb_mask_reserved;
 
-	printf("EFI framebuffer information:\n");
-	printf("addr, size     0x%jx, 0x%jx\n", efifb.fb_addr, efifb.fb_size);
-	printf("dimensions     %d x %d\n", efifb.fb_width, efifb.fb_height);
-	printf("stride         %d\n", efifb.fb_stride);
-	printf("masks          0x%08x, 0x%08x, 0x%08x, 0x%08x\n",
-	    efifb.fb_mask_red, efifb.fb_mask_green, efifb.fb_mask_blue,
-	    efifb.fb_mask_reserved);
+	if (efifb.fb_addr != 0) {
+		printf("EFI framebuffer information:\n");
+		printf("addr, size     0x%jx, 0x%jx\n",
+		    efifb.fb_addr, efifb.fb_size);
+		printf("dimensions     %d x %d\n",
+		    efifb.fb_width, efifb.fb_height);
+		printf("stride         %d\n", efifb.fb_stride);
+		printf("masks          0x%08x, 0x%08x, 0x%08x, 0x%08x\n",
+		    efifb.fb_mask_red, efifb.fb_mask_green, efifb.fb_mask_blue,
+		    efifb.fb_mask_reserved);
 
-	if (efifb.fb_addr != 0)
 		file_addmetadata(kfp, MODINFOMD_EFI_FB, sizeof(efifb), &efifb);
+	}
 #endif
 
 	do_vmap = true;
@@ -279,7 +286,7 @@ bi_load_efi_data(struct preloaded_file *kfp, bool exit_bs)
 
 		if (!exit_bs)
 			break;
-		status = BS->ExitBootServices(IH, efi_mapkey);
+		status = efi_exit_boot_services(efi_mapkey);
 		if (!EFI_ERROR(status))
 			break;
 	}
@@ -324,7 +331,10 @@ bi_load(char *args, vm_offset_t *modulep, vm_offset_t *kernendp, bool exit_bs)
 	struct devdesc *rootdev;
 	struct file_metadata *md;
 	vm_offset_t addr;
-	uint64_t kernend, module;
+	uint64_t kernend;
+#ifdef MODINFOMD_MODULEP
+	uint64_t module;
+#endif
 	uint64_t envp;
 	vm_offset_t size;
 	char *rootdevname;
@@ -363,10 +373,8 @@ bi_load(char *args, vm_offset_t *modulep, vm_offset_t *kernendp, bool exit_bs)
 		return(EINVAL);
 	}
 
-#ifdef EFI
 	/* Try reading the /etc/fstab file to select the root device */
 	getrootmount(devformat(rootdev));
-#endif
 
 	addr = 0;
 	for (xp = file_findfile(NULL, NULL); xp != NULL; xp = xp->f_next) {
@@ -377,10 +385,12 @@ bi_load(char *args, vm_offset_t *modulep, vm_offset_t *kernendp, bool exit_bs)
 	/* Pad to a page boundary. */
 	addr = roundup(addr, PAGE_SIZE);
 
+#ifdef EFI
 	addr = build_font_module(addr);
 
 	/* Pad to a page boundary. */
 	addr = roundup(addr, PAGE_SIZE);
+#endif
 
 	/* Copy our environment. */
 	envp = addr;
@@ -407,7 +417,7 @@ bi_load(char *args, vm_offset_t *modulep, vm_offset_t *kernendp, bool exit_bs)
 	kernend = 0;	/* fill it in later */
 
 	/* Figure out the size and location of the metadata. */
-	module = *modulep = addr;
+	*modulep = addr;
 
 	file_addmetadata(kfp, MODINFOMD_HOWTO, sizeof(howto), &howto);
 	file_addmetadata(kfp, MODINFOMD_ENVP, sizeof(envp), &envp);
@@ -420,6 +430,7 @@ bi_load(char *args, vm_offset_t *modulep, vm_offset_t *kernendp, bool exit_bs)
 #endif
 	file_addmetadata(kfp, MODINFOMD_KERNEND, sizeof(kernend), &kernend);
 #ifdef MODINFOMD_MODULEP
+	module = *modulep;
 	file_addmetadata(kfp, MODINFOMD_MODULEP, sizeof(module), &module);
 #endif
 #ifdef EFI
@@ -430,6 +441,8 @@ bi_load(char *args, vm_offset_t *modulep, vm_offset_t *kernendp, bool exit_bs)
 #endif
 #ifdef EFI
 	bi_load_efi_data(kfp, exit_bs);
+#else
+	bi_loadsmap(kfp);
 #endif
 
 	size = md_copymodules(0, is64);	/* Find the size of the modules */

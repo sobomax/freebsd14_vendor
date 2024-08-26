@@ -1,4 +1,3 @@
-# $FreeBSD: 7020439a43669e01b96b3dcfd03b53dc9e9186f8 $
 
 ZFSTOP=	${SRCTOP}/sys/contrib/openzfs
 
@@ -14,6 +13,7 @@ PACKAGE=	zfs
 PROG=	zpool
 MAN= \
 	spl.4 \
+	vdevprops.7 \
 	zfs.4 \
 	zpool.8 \
 	zpool-add.8 \

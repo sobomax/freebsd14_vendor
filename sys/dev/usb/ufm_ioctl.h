@@ -1,6 +1,5 @@
-/* $FreeBSD: dbd0862440a1519d9838c5358c23af015abc486a $ */
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2001 M. Warner Losh <imp@FreeBSD.org>
  *

@@ -30,7 +30,6 @@
  * SUCH DAMAGE.
  *
  *	@(#)exec.h	8.3 (Berkeley) 6/8/95
- * $FreeBSD: 03e7e6ab0b0cbfb8588014475974d60667d1d048 $
  */
 
 /* values of cmdtype */

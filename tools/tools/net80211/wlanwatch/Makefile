@@ -1,4 +1,3 @@
-# $FreeBSD: 7cd0550071b40e1efe3996ce3e1ddc481137ebc4 $
 
 PROG=	wlanwatch
 BINDIR=	/usr/local/bin

@@ -12,9 +12,6 @@
  * ====================================================
  */
 
-#include <sys/cdefs.h>
-__FBSDID("$FreeBSD: a85765f1bf562f487b68185993ff8d817f2929fd $");
-
 /*
  * See comments in e_asin.c.
  * Converted to long double by David Schultz <das@FreeBSD.ORG>.

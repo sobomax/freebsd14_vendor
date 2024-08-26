@@ -29,11 +29,6 @@
  * SUCH DAMAGE.
  */
 
-#ifndef lint
-static const char rcsid[] =
-  "$FreeBSD: 6a6b09b9ae0c46e81ffdbca68a89c39392a7acb5 $";
-#endif /* not lint */
-
 #include <stdlib.h>
 #include <rpc/rpc.h>
 #include <signal.h>

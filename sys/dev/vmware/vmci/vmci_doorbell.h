@@ -2,8 +2,6 @@
  * Copyright (c) 2018 VMware, Inc.
  *
  * SPDX-License-Identifier: (BSD-2-Clause OR GPL-2.0)
- *
- * $FreeBSD: a819ff342e94f81f3ceb80b27d3d80751acb5c52 $
  */
 
 /* Internal functions in the VMCI Doorbell API. */

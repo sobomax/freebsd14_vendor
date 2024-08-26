@@ -30,7 +30,6 @@
  *   (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  *   OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-/*$FreeBSD: e8736e59ae62d349a3c390b8e50a5a7aa1e4b2af $*/
 
 /*   \file  lio_common.h
  *   \brief Common: Structures and macros used in PCI-NIC package by core and

@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2008 Marcel Moolenaar
  * All rights reserved.
@@ -27,8 +27,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: a9f2aaf36adc1f488f62ee6406844691e53c94f9 $");
-
 #include <sys/param.h>
 #include <sys/systm.h>
 #include <sys/kernel.h>
@@ -66,7 +64,6 @@ volatile static int ap_awake;
 volatile static u_int ap_letgo;
 volatile static u_quad_t ap_timebase;
 static struct mtx ap_boot_mtx;
-struct pcb stoppcbs[MAXCPU];
 
 void
 machdep_ap_bootstrap(void)
@@ -112,7 +109,7 @@ machdep_ap_bootstrap(void)
 	cpu_initclocks_ap();
 
 	/* Announce ourselves awake, and enter the scheduler */
-	sched_throw(NULL);
+	sched_ap_entry();
 }
 
 void
@@ -176,7 +173,7 @@ cpu_mp_start(void)
 			void *dpcpu;
 
 			pc = &__pcpu[cpu.cr_cpuid];
-			dpcpu = (void *)kmem_malloc_domainset(DOMAINSET_PREF(domain),
+			dpcpu = kmem_malloc_domainset(DOMAINSET_PREF(domain),
 			    DPCPU_SIZE, M_WAITOK | M_ZERO);
 			pcpu_init(pc, cpu.cr_cpuid, sizeof(*pc));
 			dpcpu_init(dpcpu, cpu.cr_cpuid);
@@ -299,49 +296,43 @@ powerpc_ipi_handler(void *arg)
 {
 	u_int cpuid;
 	uint32_t ipimask;
-	int msg;
 
 	CTR2(KTR_SMP, "%s: MSR 0x%08x", __func__, mfmsr());
 
 	ipimask = atomic_readandclear_32(&(pcpup->pc_ipimask));
 	if (ipimask == 0)
 		return (FILTER_STRAY);
-	while ((msg = ffs(ipimask) - 1) != -1) {
-		ipimask &= ~(1u << msg);
-		switch (msg) {
-		case IPI_AST:
-			CTR1(KTR_SMP, "%s: IPI_AST", __func__);
-			break;
-		case IPI_PREEMPT:
-			CTR1(KTR_SMP, "%s: IPI_PREEMPT", __func__);
-			sched_preempt(curthread);
-			break;
-		case IPI_RENDEZVOUS:
-			CTR1(KTR_SMP, "%s: IPI_RENDEZVOUS", __func__);
-			smp_rendezvous_action();
-			break;
-		case IPI_STOP:
+	if (ipimask & (1 << IPI_AST)) {
+		CTR1(KTR_SMP, "%s: IPI_AST", __func__);
+	}
+	if (ipimask & (1 << IPI_PREEMPT)) {
+		CTR1(KTR_SMP, "%s: IPI_PREEMPT", __func__);
+		sched_preempt(curthread);
+	}
+	if (ipimask & (1 << IPI_RENDEZVOUS)) {
+		CTR1(KTR_SMP, "%s: IPI_RENDEZVOUS", __func__);
+		smp_rendezvous_action();
+	}
+	if (ipimask & (1 << IPI_STOP)) {
 
-			/*
-			 * IPI_STOP_HARD is mapped to IPI_STOP so it is not
-			 * necessary to add such case in the switch.
-			 */
-			CTR1(KTR_SMP, "%s: IPI_STOP or IPI_STOP_HARD (stop)",
-			    __func__);
-			cpuid = PCPU_GET(cpuid);
-			savectx(&stoppcbs[cpuid]);
-			CPU_SET_ATOMIC(cpuid, &stopped_cpus);
-			while (!CPU_ISSET(cpuid, &started_cpus))
-				cpu_spinwait();
-			CPU_CLR_ATOMIC(cpuid, &stopped_cpus);
-			CPU_CLR_ATOMIC(cpuid, &started_cpus);
-			CTR1(KTR_SMP, "%s: IPI_STOP (restart)", __func__);
-			break;
-		case IPI_HARDCLOCK:
-			CTR1(KTR_SMP, "%s: IPI_HARDCLOCK", __func__);
-			hardclockintr();
-			break;
-		}
+		/*
+		 * IPI_STOP_HARD is mapped to IPI_STOP so it is not
+		 * necessary to add such case.
+		 */
+		CTR1(KTR_SMP, "%s: IPI_STOP or IPI_STOP_HARD (stop)",
+				__func__);
+		cpuid = PCPU_GET(cpuid);
+		savectx(&stoppcbs[cpuid]);
+		CPU_SET_ATOMIC(cpuid, &stopped_cpus);
+		while (!CPU_ISSET(cpuid, &started_cpus))
+			cpu_spinwait();
+		CPU_CLR_ATOMIC(cpuid, &stopped_cpus);
+		CPU_CLR_ATOMIC(cpuid, &started_cpus);
+		CTR1(KTR_SMP, "%s: IPI_STOP (restart)", __func__);
+	}
+	if (ipimask & (1 << IPI_HARDCLOCK)) {
+		CTR1(KTR_SMP, "%s: IPI_HARDCLOCK", __func__);
+		hardclockintr();
 	}
 
 	return (FILTER_HANDLED);

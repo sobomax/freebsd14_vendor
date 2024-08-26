@@ -1,5 +1,4 @@
 #	@(#)Makefile	8.1 (Berkeley) 5/31/93
-# $FreeBSD: dd7466302263b38e3f83e6fcce058b87cd15a695 $
 
 .include <src.opts.mk>
 
@@ -15,5 +14,8 @@ LIBADD+=crypto
 MAN=	factor.6
 MLINKS+=factor.6 primes.6
 .PATH:	${SRCTOP}/usr.bin/primes
+
+HAS_TESTS=
+SUBDIR.${MK_TESTS}+=	tests
 
 .include <bsd.prog.mk>

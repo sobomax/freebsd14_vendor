@@ -1,4 +1,4 @@
-/*	$NetBSD: str.h,v 1.15 2021/12/15 10:57:01 rillig Exp $	*/
+/*	$NetBSD: str.h,v 1.17 2023/06/23 04:56:54 rillig Exp $	*/
 
 /*
  Copyright (c) 2021 Roland Illig <rillig@NetBSD.org>
@@ -69,6 +69,11 @@ typedef struct SubstringWords {
 	size_t len;
 	void *freeIt;
 } SubstringWords;
+
+typedef struct StrMatchResult {
+	const char *error;
+	bool matched;
+} StrMatchResult;
 
 
 MAKE_INLINE FStr
@@ -273,19 +278,13 @@ LazyBuf_AddStr(LazyBuf *buf, const char *str)
 		LazyBuf_Add(buf, *p);
 }
 
-MAKE_STATIC void
-LazyBuf_AddBytesBetween(LazyBuf *buf, const char *start, const char *end)
-{
-	const char *p;
-
-	for (p = start; p != end; p++)
-		LazyBuf_Add(buf, *p);
-}
-
 MAKE_INLINE void
 LazyBuf_AddSubstring(LazyBuf *buf, Substring sub)
 {
-	LazyBuf_AddBytesBetween(buf, sub.start, sub.end);
+	const char *p;
+
+	for (p = sub.start; p != sub.end; p++)
+		LazyBuf_Add(buf, *p);
 }
 
 MAKE_STATIC Substring
@@ -342,7 +341,7 @@ SubstringWords_Free(SubstringWords w)
 char *str_concat2(const char *, const char *);
 char *str_concat3(const char *, const char *, const char *);
 
-bool Str_Match(const char *, const char *);
+StrMatchResult Str_Match(const char *, const char *);
 
 void Str_Intern_Init(void);
 void Str_Intern_End(void);

@@ -35,8 +35,6 @@
  * SUCH DAMAGE.
  *
  *	@(#)openpromio.h	8.1 (Berkeley) 6/11/93
- *
- * $FreeBSD: e892c50c672a80cad1ffecad76acda349d5aa379 $
  */
 
 #ifndef _DEV_OFW_OPENFIRMIO_H_

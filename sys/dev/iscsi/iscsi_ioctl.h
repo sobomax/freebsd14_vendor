@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2012 The FreeBSD Foundation
  *
@@ -26,8 +26,6 @@
  * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
- *
- * $FreeBSD: fe5a39e29d202576a1e8a7418b842959dc5be9c9 $
  */
 
 #ifndef ISCSI_IOCTL_H
@@ -71,7 +69,8 @@ struct iscsi_session_conf {
 	int		isc_enable;
 	int		isc_dscp;
 	int		isc_pcp;
-	int		isc_spare[2];
+	int		isc_ping_timeout;
+	int		isc_login_timeout;
 };
 
 /*

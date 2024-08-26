@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2020 Advanced Micro Devices, Inc.
  *
@@ -30,8 +30,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: f7998b943b166d44b2f3916227b32a4491fa82b9 $");
-
 #include <sys/param.h>
 #include <sys/sysctl.h>
 #include <sys/sbuf.h>
@@ -515,7 +513,7 @@ sysctl_xgmac_reg_addr_handler(SYSCTL_HANDLER_ARGS)
 	if (req->newptr == NULL) {
 		sb = sbuf_new_for_sysctl(NULL, NULL, buf_size, req);
 		if (sb == NULL) {
-			rc = sb->s_error;
+			rc = ENOMEM;
 			return (rc);
 		}
 
@@ -551,7 +549,7 @@ sysctl_get_drv_info_handler(SYSCTL_HANDLER_ARGS)
 	if (req->newptr == NULL) {
 		sb = sbuf_new_for_sysctl(NULL, NULL, buf_size, req);
 		if (sb == NULL) {
-			rc = sb->s_error;
+			rc = ENOMEM;
 			return (rc);
 		}
 
@@ -583,7 +581,7 @@ sysctl_get_link_info_handler(SYSCTL_HANDLER_ARGS)
 	if (req->newptr == NULL) {
 		sb = sbuf_new_for_sysctl(NULL, NULL, buf_size, req);
 		if (sb == NULL) {
-			rc = sb->s_error;
+			rc = ENOMEM;
 			return (rc);
 		}
 		
@@ -639,7 +637,7 @@ sysctl_coalesce_handler(SYSCTL_HANDLER_ARGS)
 	if (req->newptr == NULL) {
 		sb = sbuf_new_for_sysctl(NULL, NULL, buf_size, req);
 		if (sb == NULL) {
-			rc = sb->s_error;
+			rc = ENOMEM;
 			return (rc);
 		}
 		sys_op->rx_coalesce_usecs = pdata->rx_usecs;
@@ -770,7 +768,7 @@ sysctl_pauseparam_handler(SYSCTL_HANDLER_ARGS)
 	if (req->newptr == NULL) {
 		sb = sbuf_new_for_sysctl(NULL, NULL, buf_size, req);
 		if (sb == NULL) {
-			rc = sb->s_error;
+			rc = ENOMEM;
 			return (rc);
 		}
 		sys_op->autoneg = pdata->phy.pause_autoneg;
@@ -868,7 +866,7 @@ sysctl_link_ksettings_handler(SYSCTL_HANDLER_ARGS)
 	if (req->newptr == NULL) {
 		sb = sbuf_new_for_sysctl(NULL, NULL, buf_size, req);
 		if (sb == NULL) {
-			rc = sb->s_error;
+			rc = ENOMEM;
 			return (rc);
 		}
 		sys_op->autoneg = pdata->phy.autoneg;
@@ -993,7 +991,7 @@ sysctl_ringparam_handler(SYSCTL_HANDLER_ARGS)
 	if (req->newptr == NULL) {
 		sb = sbuf_new_for_sysctl(NULL, NULL, buf_size, req);
 		if (sb == NULL) {
-			rc = sb->s_error;
+			rc = ENOMEM;
 			return (rc);
 		}
 		sys_op->rx_max_pending = XGBE_RX_DESC_CNT_MAX;
@@ -1096,7 +1094,7 @@ sysctl_channels_handler(SYSCTL_HANDLER_ARGS)
 	if (req->newptr == NULL) {
 		sb = sbuf_new_for_sysctl(NULL, NULL, buf_size, req);
 		if (sb == NULL) {
-			rc = sb->s_error;
+			rc = ENOMEM;
 			return (rc);
 		}
 		rx = min(pdata->hw_feat.rx_ch_cnt, pdata->rx_max_channel_count);
@@ -1174,7 +1172,7 @@ sysctl_mac_stats_handler(SYSCTL_HANDLER_ARGS)
 	if (req->newptr == NULL) {
 		sb = sbuf_new_for_sysctl(NULL, NULL, buf_size, req);
 		if (sb == NULL) {
-			rc = sb->s_error;
+			rc = ENOMEM;
 			return (rc);
 		}
 
@@ -1220,7 +1218,7 @@ sysctl_xgmac_reg_value_handler(SYSCTL_HANDLER_ARGS)
 	if (req->newptr == NULL) {
 		sb = sbuf_new_for_sysctl(NULL, NULL, buf_size, req);
 		if (sb == NULL) {
-			rc = sb->s_error;
+			rc = ENOMEM;
 			return (rc);
 		}
 
@@ -1256,7 +1254,7 @@ sysctl_xpcs_mmd_reg_handler(SYSCTL_HANDLER_ARGS)
 	if (req->newptr == NULL) {
 		sb = sbuf_new_for_sysctl(NULL, NULL, buf_size, req);
 		if (sb == NULL) {
-			rc = sb->s_error;
+			rc = ENOMEM;
 			return (rc);
 		}
 
@@ -1293,7 +1291,7 @@ sysctl_xpcs_reg_addr_handler(SYSCTL_HANDLER_ARGS)
 	if (req->newptr == NULL) {
 		sb = sbuf_new_for_sysctl(NULL, NULL, buf_size, req);
 		if (sb == NULL) {
-			rc = sb->s_error;
+			rc = ENOMEM;
 			return (rc);
 		}
 
@@ -1330,7 +1328,7 @@ sysctl_xpcs_reg_value_handler(SYSCTL_HANDLER_ARGS)
 	if (req->newptr == NULL) {
 		sb = sbuf_new_for_sysctl(NULL, NULL, buf_size, req);
 		if (sb == NULL) {
-			rc = sb->s_error;
+			rc = ENOMEM;
 			return (rc);
 		}
 
@@ -1368,7 +1366,7 @@ sysctl_xprop_reg_addr_handler(SYSCTL_HANDLER_ARGS)
 	if (req->newptr == NULL) {
 		sb = sbuf_new_for_sysctl(NULL, NULL, buf_size, req);
 		if (sb == NULL) {
-			rc = sb->s_error;
+			rc = ENOMEM;
 			return (rc);
 		}
 
@@ -1405,7 +1403,7 @@ sysctl_xprop_reg_value_handler(SYSCTL_HANDLER_ARGS)
 	if (req->newptr == NULL) {
 		sb = sbuf_new_for_sysctl(NULL, NULL, buf_size, req);
 		if (sb == NULL) {
-			rc = sb->s_error;
+			rc = ENOMEM;
 			return (rc);
 		}
 
@@ -1441,7 +1439,7 @@ sysctl_xi2c_reg_addr_handler(SYSCTL_HANDLER_ARGS)
 	if (req->newptr == NULL) {
 		sb = sbuf_new_for_sysctl(NULL, NULL, buf_size, req);
 		if (sb == NULL) {
-			rc = sb->s_error;
+			rc = ENOMEM;
 			return (rc);
 		}
 
@@ -1478,7 +1476,7 @@ sysctl_xi2c_reg_value_handler(SYSCTL_HANDLER_ARGS)
 	if (req->newptr == NULL) {
 		sb = sbuf_new_for_sysctl(NULL, NULL, buf_size, req);
 		if (sb == NULL) {
-			rc = sb->s_error;
+			rc = ENOMEM;
 			return (rc);
 		}
 
@@ -1514,7 +1512,7 @@ sysctl_an_cdr_wr_handler(SYSCTL_HANDLER_ARGS)
 	if (req->newptr == NULL) {
 		sb = sbuf_new_for_sysctl(NULL, NULL, buf_size, req);
 		if (sb == NULL) {
-			rc = sb->s_error;
+			rc = ENOMEM;
 			return (rc);
 		}
 
@@ -1555,7 +1553,7 @@ sysctl_an_cdr_track_early_handler(SYSCTL_HANDLER_ARGS)
 	if (req->newptr == NULL) {
 		sb = sbuf_new_for_sysctl(NULL, NULL, buf_size, req);
 		if (sb == NULL) {
-			rc = sb->s_error;
+			rc = ENOMEM;
 			return (rc);
 		}
 

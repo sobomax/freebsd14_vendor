@@ -25,8 +25,6 @@
  * THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- *
- * $FreeBSD: 4d1e669dd32eeb846485f9273e04e6a034521107 $
  */
 #ifndef	_LINUXKPI_LINUX_SCHED_H_
 #define	_LINUXKPI_LINUX_SCHED_H_
@@ -49,6 +47,8 @@
 #include <linux/string.h>
 #include <linux/spinlock.h>
 #include <linux/time.h>
+
+#include <linux/sched/mm.h>
 
 #include <asm/atomic.h>
 
@@ -87,7 +87,8 @@ struct task_struct {
 	int bsd_interrupt_value;
 	struct work_struct *work;	/* current work struct, if set */
 	struct task_struct *group_leader;
-  	unsigned rcu_section[TS_RCU_TYPE_MAX];
+	unsigned rcu_section[TS_RCU_TYPE_MAX];
+	unsigned int fpu_ctx_level;
 };
 
 #define	current	({ \
@@ -129,7 +130,8 @@ put_task_struct(struct task_struct *task)
 #define	yield()		kern_yield(PRI_UNCHANGED)
 #define	sched_yield()	sched_relinquish(curthread)
 
-#define	need_resched() (curthread->td_flags & TDF_NEEDRESCHED)
+#define	need_resched()	(curthread->td_owepreempt || \
+    td_ast_pending(curthread, TDA_SCHED))
 
 static inline int
 cond_resched_lock(spinlock_t *lock)

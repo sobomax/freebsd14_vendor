@@ -7,8 +7,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 86b58cda9843d7af5a3db0a4a9a1bd01c86a50ac $");
-
 #include <sys/param.h>
 #include <sys/systm.h>
 #include <sys/kernel.h>
@@ -403,11 +401,7 @@ static int spkr_active = FALSE; /* exclusion flag */
 static char *spkr_inbuf;  /* incoming buf */
 
 static int
-spkropen(dev, flags, fmt, td)
-	struct cdev *dev;
-	int flags;
-	int fmt;
-	struct thread	*td;
+spkropen(struct cdev *dev, int flags, int fmt, struct thread *td)
 {
 #ifdef DEBUG
 	(void) printf("spkropen: entering with dev = %s\n", devtoname(dev));
@@ -427,10 +421,7 @@ spkropen(dev, flags, fmt, td)
 }
 
 static int
-spkrwrite(dev, uio, ioflag)
-	struct cdev *dev;
-	struct uio *uio;
-	int ioflag;
+spkrwrite(struct cdev *dev, struct uio *uio, int ioflag)
 {
 #ifdef DEBUG
 	printf("spkrwrite: entering with dev = %s, count = %zd\n",
@@ -456,11 +447,7 @@ spkrwrite(dev, uio, ioflag)
 }
 
 static int
-spkrclose(dev, flags, fmt, td)
-	struct cdev *dev;
-	int flags;
-	int fmt;
-	struct thread *td;
+spkrclose(struct cdev *dev, int flags, int fmt, struct thread *td)
 {
 #ifdef DEBUG
 	(void) printf("spkrclose: entering with dev = %s\n", devtoname(dev));
@@ -474,12 +461,8 @@ spkrclose(dev, flags, fmt, td)
 }
 
 static int
-spkrioctl(dev, cmd, cmdarg, flags, td)
-	struct cdev *dev;
-	unsigned long cmd;
-	caddr_t cmdarg;
-	int flags;
-	struct thread *td;
+spkrioctl(struct cdev *dev, unsigned long cmd, caddr_t cmdarg, int flags,
+    struct thread *td)
 {
 #ifdef DEBUG
 	(void) printf("spkrioctl: entering with dev = %s, cmd = %lx\n",

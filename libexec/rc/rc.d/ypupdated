@@ -1,6 +1,5 @@
 #!/bin/sh
 #
-# $FreeBSD: 4098bd773c3e8858cbbdc8e2ba5490260203bd06 $
 #
 
 # PROVIDE: ypupdated

@@ -1,4 +1,3 @@
-# $FreeBSD: 2fea81540bc0172591ee04d4e5cfe58947f9e8d7 $
 
 PROG=	ncpus
 MAN=

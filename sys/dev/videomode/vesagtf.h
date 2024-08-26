@@ -1,5 +1,4 @@
 /*	$NetBSD$	*/
-/*	$FreeBSD: ea9dae407077c4b60d9f23c185aa1d63e122f9f8 $	*/
 
 /*-
  * Copyright (c) 2006 Itronix Inc.

@@ -1,4 +1,3 @@
-# $FreeBSD: ae417356df6b48c12b9aa68f77ff081b87bce461 $
 
 .include <src.opts.mk>
 
@@ -6,6 +5,7 @@ PROG_CXX=	llvm-symbolizer
 MAN=		llvm-symbolizer.1 llvm-addr2line.1
 
 SRCDIR=		llvm/tools/llvm-symbolizer
+SRCS+=		llvm-symbolizer-driver.cpp
 SRCS+=		llvm-symbolizer.cpp
 
 .include "${SRCTOP}/lib/clang/llvm.pre.mk"
@@ -20,19 +20,15 @@ ${INCFILE}: ${TDFILE}
 	    -o ${.TARGET} ${TDFILE}
 TGHDRS+=	${INCFILE}
 
-${TGHDRS}: ${LLVM_TBLGEN_BIN}
-
 DEPENDFILES+=	${TGHDRS:C/$/.d/}
 DPSRCS+=	${TGHDRS}
 CLEANFILES+=	${TGHDRS} ${TGHDRS:C/$/.d/}
 
-LIBADD+=	z
-
 LINKS+=		${BINDIR}/llvm-symbolizer ${BINDIR}/llvm-addr2line
 
 .if ${MK_LLVM_BINUTILS} != "no"
-LINKS=		${BINDIR}/llvm-symbolizer ${BINDIR}/addr2line
-MLINKS=		llvm-addr2line.1 addr2line.1
+LINKS+=		${BINDIR}/llvm-symbolizer ${BINDIR}/addr2line
+MLINKS+=	llvm-addr2line.1 addr2line.1
 .endif
 
 .include "../llvm.prog.mk"

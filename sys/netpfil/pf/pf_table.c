@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2002 Cedric Berger
  * All rights reserved.
@@ -32,8 +32,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 42cd633f8411d12c766e34f39847bd481407c56d $");
-
 #include "opt_inet.h"
 #include "opt_inet6.h"
 
@@ -107,21 +105,15 @@ struct pfr_walktree {
 		PFRW_COUNTERS
 	}	 pfrw_op;
 	union {
-		struct pfr_addr		*pfrw1_addr;
-		struct pfr_astats	*pfrw1_astats;
-		struct pfr_kentryworkq	*pfrw1_workq;
-		struct pfr_kentry	*pfrw1_kentry;
-		struct pfi_dynaddr	*pfrw1_dyn;
-	}	 pfrw_1;
+		struct pfr_addr		*pfrw_addr;
+		struct pfr_astats	*pfrw_astats;
+		struct pfr_kentryworkq	*pfrw_workq;
+		struct pfr_kentry	*pfrw_kentry;
+		struct pfi_dynaddr	*pfrw_dyn;
+	};
 	int	 pfrw_free;
 	int	 pfrw_flags;
 };
-#define	pfrw_addr	pfrw_1.pfrw1_addr
-#define	pfrw_astats	pfrw_1.pfrw1_astats
-#define	pfrw_workq	pfrw_1.pfrw1_workq
-#define	pfrw_kentry	pfrw_1.pfrw1_kentry
-#define	pfrw_dyn	pfrw_1.pfrw1_dyn
-#define	pfrw_cnt	pfrw_free
 
 #define	senderr(e)	do { rv = (e); goto _bad; } while (0)
 
@@ -740,7 +732,7 @@ pfr_enqueue_addrs(struct pfr_ktable *kt, struct pfr_kentryworkq *workq,
 		    pfr_walktree, &w))
 			printf("pfr_enqueue_addrs: IPv6 walktree failed.\n");
 	if (naddr != NULL)
-		*naddr = w.pfrw_cnt;
+		*naddr = w.pfrw_free;
 }
 
 static void
@@ -1068,7 +1060,7 @@ pfr_walktree(struct radix_node *rn, void *arg)
 		/* FALLTHROUGH */
 	case PFRW_ENQUEUE:
 		SLIST_INSERT_HEAD(w->pfrw_workq, ke, pfrke_workq);
-		w->pfrw_cnt++;
+		w->pfrw_free++;
 		break;
 	case PFRW_GET_ADDRS:
 		if (w->pfrw_free-- > 0) {
@@ -1089,7 +1081,7 @@ pfr_walktree(struct radix_node *rn, void *arg)
 	case PFRW_POOL_GET:
 		if (ke->pfrke_not)
 			break; /* negative entries are ignored */
-		if (!w->pfrw_cnt--) {
+		if (!w->pfrw_free--) {
 			w->pfrw_kentry = ke;
 			return (1); /* finish search */
 		}
@@ -2152,6 +2144,44 @@ pfr_update_stats(struct pfr_ktable *kt, struct pf_addr *a, sa_family_t af,
 }
 
 struct pfr_ktable *
+pfr_eth_attach_table(struct pf_keth_ruleset *rs, char *name)
+{
+	struct pfr_ktable	*kt, *rt;
+	struct pfr_table	 tbl;
+	struct pf_keth_anchor	*ac = rs->anchor;
+
+	PF_RULES_WASSERT();
+
+	bzero(&tbl, sizeof(tbl));
+	strlcpy(tbl.pfrt_name, name, sizeof(tbl.pfrt_name));
+	if (ac != NULL)
+		strlcpy(tbl.pfrt_anchor, ac->path, sizeof(tbl.pfrt_anchor));
+	kt = pfr_lookup_table(&tbl);
+	if (kt == NULL) {
+		kt = pfr_create_ktable(&tbl, time_second, 1);
+		if (kt == NULL)
+			return (NULL);
+		if (ac != NULL) {
+			bzero(tbl.pfrt_anchor, sizeof(tbl.pfrt_anchor));
+			rt = pfr_lookup_table(&tbl);
+			if (rt == NULL) {
+				rt = pfr_create_ktable(&tbl, 0, 1);
+				if (rt == NULL) {
+					pfr_destroy_ktable(kt, 0);
+					return (NULL);
+				}
+				pfr_insert_ktable(rt);
+			}
+			kt->pfrkt_root = rt;
+		}
+		pfr_insert_ktable(kt);
+	}
+	if (!kt->pfrkt_refcnt[PFR_REFCNT_RULE]++)
+		pfr_setflags_ktable(kt, kt->pfrkt_flags|PFR_TFLAG_REFERENCED);
+	return (kt);
+}
+
+struct pfr_ktable *
 pfr_attach_table(struct pf_kruleset *rs, char *name)
 {
 	struct pfr_ktable	*kt, *rt;
@@ -2309,7 +2339,7 @@ pfr_kentry_byidx(struct pfr_ktable *kt, int idx, int af)
 
 	bzero(&w, sizeof(w));
 	w.pfrw_op = PFRW_POOL_GET;
-	w.pfrw_cnt = idx;
+	w.pfrw_free = idx;
 
 	switch (af) {
 #ifdef INET

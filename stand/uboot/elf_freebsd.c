@@ -25,16 +25,9 @@
  * SUCH DAMAGE.
  */
 
-#include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 90e0d7af90239a0fe4768cfc478f8825b7a435d4 $");
-
 #include <sys/param.h>
 #include <sys/linker.h>
 
-#ifdef __mips__
-#include <sys/proc.h>
-#include <machine/frame.h>
-#endif
 #include <machine/md_var.h>
 #include <machine/metadata.h>
 #include <machine/elf.h>

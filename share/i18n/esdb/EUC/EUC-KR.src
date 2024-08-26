@@ -1,4 +1,3 @@
-# $FreeBSD: 0feeba0dbff6fc6e42d09110a526412d8543b9e4 $ 
 # $NetBSD: EUC-KR.src,v 1.1 2003/06/27 08:40:54 tshiozak Exp $
 
 NAME		"EUC-KR"

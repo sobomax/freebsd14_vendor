@@ -1,5 +1,4 @@
 #!/bin/sh
-# $FreeBSD: 9247abddd82653d6cb4ab65e15db683e9ea9fc48 $
 
 # Test handling of read errors.
 

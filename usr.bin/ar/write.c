@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2007 Kai Wang
  * All rights reserved.
@@ -27,8 +27,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 2e5620d287325bf2ea3e48dbb4c876fd8cd3bd37 $");
-
 #include <sys/endian.h>
 #include <sys/mman.h>
 #include <sys/queue.h>
@@ -132,7 +130,7 @@ create_obj_from_file(struct bsdar *bsdar, const char *name, time_t mtime)
 
 	/*
 	 * When option '-D' is specified, mtime and UID / GID from the file
-	 * will be replaced with 0, and file mode with 644. This ensures that 
+	 * will be replaced with 0, and file mode with 644. This ensures that
 	 * checksums will match for two archives containing the exact same
 	 * files.
 	 */
@@ -612,7 +610,7 @@ write_objs(struct bsdar *bsdar)
 	/*
 	 * Archive string table is padded by a "\n" as the normal members.
 	 * The difference is that the size of archive string table counts
-	 * in the pad bit, while normal members' size fileds do not.
+	 * in the pad bit, while normal members' size fields do not.
 	 */
 	if (bsdar->as != NULL && bsdar->as_sz % 2 != 0)
 		bsdar->as[bsdar->as_sz++] = '\n';

@@ -2,7 +2,6 @@
 # Hungarian keyboard standard (after M$'s W*).  There are so many PCs in
 # Hungary with that type of keyboard.
 # 
-# $FreeBSD: 3166a6719a13405db5c6b9b8ff4b9dc08cf55093 $
 #                                                         alt
 # scan                       cntrl          alt    alt   cntrl lock
 # code  base   shift  cntrl  shift  alt    shift  cntrl  shift state

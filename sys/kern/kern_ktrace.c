@@ -34,8 +34,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 9221a9ceb7659b8ff97b6e10f926d09ca293ed16 $");
-
 #include "opt_ktrace.h"
 
 #include <sys/param.h>
@@ -112,7 +110,7 @@ struct ktr_request {
 	STAILQ_ENTRY(ktr_request) ktr_list;
 };
 
-static int data_lengths[] = {
+static const int data_lengths[] = {
 	[KTR_SYSCALL] = offsetof(struct ktr_syscall, ktr_args),
 	[KTR_SYSRET] = sizeof(struct ktr_sysret),
 	[KTR_NAMEI] = 0,
@@ -210,6 +208,12 @@ ktrace_assert(struct thread *td)
 }
 
 static void
+ast_ktrace(struct thread *td, int tda __unused)
+{
+	KTRUSERRET(td);
+}
+
+static void
 ktrace_init(void *dummy)
 {
 	struct ktr_request *req;
@@ -223,6 +227,7 @@ ktrace_init(void *dummy)
 		    M_ZERO);
 		STAILQ_INSERT_HEAD(&ktr_free, req, ktr_list);
 	}
+	ast_register(TDA_KTRACE, ASTR_ASTF_REQUIRED, 0, ast_ktrace);
 }
 SYSINIT(ktrace_init, SI_SUB_KTRACE, SI_ORDER_ANY, ktrace_init, NULL);
 
@@ -322,9 +327,12 @@ ktr_getrequest_entered(struct thread *td, int type)
 			p->p_traceflag &= ~KTRFAC_DROP;
 		}
 		mtx_unlock(&ktrace_mtx);
-		microtime(&req->ktr_header.ktr_time);
+		nanotime(&req->ktr_header.ktr_time);
+		req->ktr_header.ktr_type |= KTR_VERSIONED;
 		req->ktr_header.ktr_pid = p->p_pid;
 		req->ktr_header.ktr_tid = td->td_tid;
+		req->ktr_header.ktr_cpu = PCPU_GET(cpuid);
+		req->ktr_header.ktr_version = KTR_VERSION1;
 		bcopy(td->td_name, req->ktr_header.ktr_comm,
 		    sizeof(req->ktr_header.ktr_comm));
 		req->ktr_buffer = NULL;
@@ -367,9 +375,7 @@ ktr_enqueuerequest(struct thread *td, struct ktr_request *req)
 	mtx_lock(&ktrace_mtx);
 	STAILQ_INSERT_TAIL(&td->td_proc->p_ktr, req, ktr_list);
 	mtx_unlock(&ktrace_mtx);
-	thread_lock(td);
-	td->td_flags |= TDF_ASTPENDING;
-	thread_unlock(td);
+	ast_sched(td, TDA_KTRACE);
 }
 
 /*
@@ -524,7 +530,7 @@ ktr_get_tracevp(struct proc *p, bool ref)
 }
 
 void
-ktrsyscall(int code, int narg, register_t args[])
+ktrsyscall(int code, int narg, syscallarg_t args[])
 {
 	struct ktr_request *req;
 	struct ktr_syscall *ktp;
@@ -587,7 +593,7 @@ ktrprocexec(struct proc *p)
 	PROC_LOCK_ASSERT(p, MA_OWNED);
 
 	kiop = p->p_ktrioparms;
-	if (kiop == NULL || priv_check_cred(kiop->cr, PRIV_DEBUG_DIFFCRED))
+	if (kiop == NULL || priv_check_cred(kiop->cr, PRIV_DEBUG_DIFFCRED) == 0)
 		return (NULL);
 
 	mtx_lock(&ktrace_mtx);
@@ -699,8 +705,7 @@ ktruserret(struct thread *td)
 }
 
 void
-ktrnamei(path)
-	char *path;
+ktrnamei(const char *path)
 {
 	struct ktr_request *req;
 	int namelen;
@@ -764,8 +769,8 @@ ktrgenio(int fd, enum uio_rw rw, struct uio *uio, int error)
 	int datalen;
 	char *buf;
 
-	if (error) {
-		free(uio, M_IOV);
+	if (error != 0 && (rw == UIO_READ || error == EFAULT)) {
+		freeuio(uio);
 		return;
 	}
 	uio->uio_offset = 0;
@@ -773,7 +778,7 @@ ktrgenio(int fd, enum uio_rw rw, struct uio *uio, int error)
 	datalen = MIN(uio->uio_resid, ktr_geniosize);
 	buf = malloc(datalen, M_KTRACE, M_WAITOK);
 	error = uiomove(buf, datalen, uio);
-	free(uio, M_IOV);
+	freeuio(uio);
 	if (error) {
 		free(buf, M_KTRACE);
 		return;
@@ -1008,7 +1013,7 @@ sys_ktrace(struct thread *td, struct ktrace_args *uap)
 	int facs = uap->facs & ~KTRFAC_ROOT;
 	int ops = KTROP(uap->ops);
 	int descend = uap->ops & KTRFLAG_DESCEND;
-	int nfound, ret = 0;
+	int ret = 0;
 	int flags, error = 0;
 	struct nameidata nd;
 	struct ktr_io_params *kiop, *old_kiop;
@@ -1020,31 +1025,29 @@ sys_ktrace(struct thread *td, struct ktrace_args *uap)
 		return (EINVAL);
 
 	kiop = NULL;
-	ktrace_enter(td);
 	if (ops != KTROP_CLEAR) {
 		/*
 		 * an operation which requires a file argument.
 		 */
-		NDINIT(&nd, LOOKUP, NOFOLLOW, UIO_USERSPACE, uap->fname, td);
+		NDINIT(&nd, LOOKUP, NOFOLLOW, UIO_USERSPACE, uap->fname);
 		flags = FREAD | FWRITE | O_NOFOLLOW;
 		error = vn_open(&nd, &flags, 0, NULL);
-		if (error) {
-			ktrace_exit(td);
+		if (error)
 			return (error);
-		}
-		NDFREE(&nd, NDF_ONLY_PNBUF);
+		NDFREE_PNBUF(&nd);
 		vp = nd.ni_vp;
 		VOP_UNLOCK(vp);
 		if (vp->v_type != VREG) {
-			(void) vn_close(vp, FREAD|FWRITE, td->td_ucred, td);
-			ktrace_exit(td);
+			(void)vn_close(vp, FREAD|FWRITE, td->td_ucred, td);
 			return (EACCES);
 		}
 		kiop = ktr_io_params_alloc(td, vp);
 	}
+
 	/*
 	 * Clear all uses of the tracefile.
 	 */
+	ktrace_enter(td);
 	if (ops == KTROP_CLEARFILE) {
 restart:
 		sx_slock(&allproc_lock);
@@ -1084,42 +1087,31 @@ restart:
 			error = ESRCH;
 			goto done;
 		}
+
 		/*
 		 * ktrops() may call vrele(). Lock pg_members
 		 * by the proctree_lock rather than pg_mtx.
 		 */
 		PGRP_UNLOCK(pg);
-		nfound = 0;
+		if (LIST_EMPTY(&pg->pg_members)) {
+			sx_sunlock(&proctree_lock);
+			error = ESRCH;
+			goto done;
+		}
 		LIST_FOREACH(p, &pg->pg_members, p_pglist) {
 			PROC_LOCK(p);
-			if (p->p_state == PRS_NEW ||
-			    p_cansee(td, p) != 0) {
-				PROC_UNLOCK(p); 
-				continue;
-			}
-			nfound++;
 			if (descend)
 				ret |= ktrsetchildren(td, p, ops, facs, kiop);
 			else
 				ret |= ktrops(td, p, ops, facs, kiop);
-		}
-		if (nfound == 0) {
-			sx_sunlock(&proctree_lock);
-			error = ESRCH;
-			goto done;
 		}
 	} else {
 		/*
 		 * by pid
 		 */
 		p = pfind(uap->pid);
-		if (p == NULL)
+		if (p == NULL) {
 			error = ESRCH;
-		else
-			error = p_cansee(td, p);
-		if (error) {
-			if (p != NULL)
-				PROC_UNLOCK(p);
 			sx_sunlock(&proctree_lock);
 			goto done;
 		}
@@ -1191,8 +1183,21 @@ ktrops(struct thread *td, struct proc *p, int ops, int facs,
 		PROC_UNLOCK(p);
 		return (0);
 	}
-	if (p->p_flag & P_WEXIT) {
-		/* If the process is exiting, just ignore it. */
+	if ((ops == KTROP_SET && p->p_state == PRS_NEW) ||
+	    p_cansee(td, p) != 0) {
+		/*
+		 * Disallow setting trace points if the process is being born.
+		 * This avoids races with trace point inheritance in
+		 * ktrprocfork().
+		 */
+		PROC_UNLOCK(p);
+		return (0);
+	}
+	if ((p->p_flag & P_WEXIT) != 0) {
+		/*
+		 * There's nothing to do if the process is exiting, but avoid
+		 * signaling an error.
+		 */
 		PROC_UNLOCK(p);
 		return (1);
 	}
@@ -1302,9 +1307,9 @@ ktr_writerequest(struct thread *td, struct ktr_request *req)
 	mtx_unlock(&ktrace_mtx);
 
 	kth = &req->ktr_header;
-	KASSERT(((u_short)kth->ktr_type & ~KTR_DROP) < nitems(data_lengths),
+	KASSERT(((u_short)kth->ktr_type & ~KTR_TYPE) < nitems(data_lengths),
 	    ("data_lengths array overflow"));
-	datalen = data_lengths[(u_short)kth->ktr_type & ~KTR_DROP];
+	datalen = data_lengths[(u_short)kth->ktr_type & ~KTR_TYPE];
 	buflen = kth->ktr_len;
 	auio.uio_iov = &aiov[0];
 	auio.uio_offset = 0;

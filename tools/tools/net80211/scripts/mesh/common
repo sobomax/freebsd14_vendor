@@ -2,7 +2,6 @@
 #
 # Common setup.
 #
-# $FreeBSD: a8816a2cf1905d6f9acf04d6f1ec0dc6bb4c73cd $
 #
 PATH=../:.:$PATH
 . config

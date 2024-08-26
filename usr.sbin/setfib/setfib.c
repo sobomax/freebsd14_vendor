@@ -33,8 +33,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 0783a07f459778d0ceb30530885acc3c04b343a5 $");
-
 #include <ctype.h>
 #include <err.h>
 #include <errno.h>
@@ -45,7 +43,7 @@ __FBSDID("$FreeBSD: 0783a07f459778d0ceb30530885acc3c04b343a5 $");
 #include <sys/socket.h>
 #include <sys/sysctl.h>
 
-static void usage(void);
+static void usage(void) __dead2;
 
 int
 main(int argc, char *argv[])

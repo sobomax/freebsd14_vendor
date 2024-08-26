@@ -1,4 +1,3 @@
-.\" $FreeBSD: f35a7653aa3bea00fd10691e2ae673ba0d5f7f6d $
 Do not build all binaries with the
 .Dv DF_BIND_NOW
 flag set.

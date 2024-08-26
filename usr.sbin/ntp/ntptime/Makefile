@@ -1,4 +1,3 @@
-# $FreeBSD: 1111434541cef369ecccb2c235cb8071856b82c4 $
 
 .PATH: ${SRCTOP}/contrib/ntp/util
 
@@ -6,9 +5,9 @@ PROG=	ntptime
 MAN=
 
 CFLAGS+= -I${SRCTOP}/contrib/ntp/include \
-	-I${SRCTOP}/contrib/ntp/lib/isc/include/ \
-	-I${SRCTOP}/contrib/ntp/lib/isc/unix/include/ \
-	-I${SRCTOP}/contrib/ntp/lib/isc/pthreads/include \
+	-I${SRCTOP}/contrib/ntp/libntp/lib/isc/include/ \
+	-I${SRCTOP}/contrib/ntp/libntp/lib/isc/unix/include/ \
+	-I${SRCTOP}/contrib/ntp/libntp/lib/isc/pthreads/include \
 	-I${.CURDIR:H}
 
 LIBADD=	m ntp pthread

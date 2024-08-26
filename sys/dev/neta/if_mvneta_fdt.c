@@ -27,8 +27,6 @@
 
 #include "opt_platform.h"
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: df7840845fcd13cc9d251b415805b13990517388 $");
-
 #include <sys/param.h>
 #include <sys/systm.h>
 #include <sys/kernel.h>
@@ -58,11 +56,18 @@ __FBSDID("$FreeBSD: df7840845fcd13cc9d251b415805b13990517388 $");
 #include "if_mvnetareg.h"
 #include "if_mvnetavar.h"
 
+#ifdef MVNETA_DEBUG
+#define	STATIC /* nothing */
+#else
+#define	STATIC static
+#endif
+
 #define	PHY_MODE_MAXLEN	10
 #define	INBAND_STATUS_MAXLEN 16
 
 static int mvneta_fdt_probe(device_t);
 static int mvneta_fdt_attach(device_t);
+STATIC boolean_t mvneta_find_ethernet_prop_switch(phandle_t, phandle_t);
 
 static device_method_t mvneta_fdt_methods[] = {
 	/* Device interface */
@@ -76,10 +81,8 @@ static device_method_t mvneta_fdt_methods[] = {
 DEFINE_CLASS_1(mvneta, mvneta_fdt_driver, mvneta_fdt_methods,
     sizeof(struct mvneta_softc), mvneta_driver);
 
-static devclass_t mvneta_fdt_devclass;
-
-DRIVER_MODULE(mvneta, ofwbus, mvneta_fdt_driver, mvneta_fdt_devclass, 0, 0);
-DRIVER_MODULE(mvneta, simplebus, mvneta_fdt_driver, mvneta_fdt_devclass, 0, 0);
+DRIVER_MODULE(mvneta, ofwbus, mvneta_fdt_driver, 0, 0);
+DRIVER_MODULE(mvneta, simplebus, mvneta_fdt_driver, 0, 0);
 
 static int mvneta_fdt_phy_acquire(device_t);
 
@@ -88,6 +91,8 @@ static struct ofw_compat_data compat_data[] = {
 	{"marvell,armada-3700-neta",	true},
 	{NULL,				false}
 };
+
+SIMPLEBUS_PNP_INFO(compat_data);
 
 static int
 mvneta_fdt_probe(device_t dev)
@@ -124,7 +129,7 @@ mvneta_fdt_attach(device_t dev)
 	}
 
 	if (ofw_bus_has_prop(dev, "tx-csum-limit")) {
-		err = OF_getprop(ofw_bus_get_node(dev), "tx-csum-limit",
+		err = OF_getencprop(ofw_bus_get_node(dev), "tx-csum-limit",
 			    &tx_csum_limit, sizeof(tx_csum_limit));
 		if (err <= 0) {
 			device_printf(dev,
@@ -249,4 +254,40 @@ mvneta_fdt_mac_address(struct mvneta_softc *sc, uint8_t *addr)
 	memcpy(addr, lmac, ETHER_ADDR_LEN);
 
 	return (0);
+}
+
+STATIC boolean_t
+mvneta_find_ethernet_prop_switch(phandle_t ethernet, phandle_t node)
+{
+	boolean_t ret;
+	phandle_t child, switch_eth_handle, switch_eth;
+
+	for (child = OF_child(node); child != 0; child = OF_peer(child)) {
+		if (OF_getencprop(child, "ethernet", (void*)&switch_eth_handle,
+		    sizeof(switch_eth_handle)) > 0) {
+			if (switch_eth_handle > 0) {
+				switch_eth = OF_node_from_xref(
+				    switch_eth_handle);
+
+				if (switch_eth == ethernet)
+					return (true);
+			}
+		}
+
+		ret = mvneta_find_ethernet_prop_switch(ethernet, child);
+		if (ret != 0)
+			return (ret);
+	}
+
+	return (false);
+}
+
+boolean_t
+mvneta_has_switch_fdt(device_t self)
+{
+	phandle_t node;
+
+	node = ofw_bus_get_node(self);
+
+	return mvneta_find_ethernet_prop_switch(node, OF_finddevice("/"));
 }

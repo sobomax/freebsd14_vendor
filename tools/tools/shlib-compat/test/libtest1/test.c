@@ -1,5 +1,4 @@
 /*
- * $FreeBSD: dc3a561d6782015fba199d5d92d1f4028937bc76 $
  */
 
 #include <sys/types.h>

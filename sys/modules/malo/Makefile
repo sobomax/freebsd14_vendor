@@ -1,4 +1,3 @@
-# $FreeBSD: 6173fc59b8b68d7927784008df176c46f3f12d0b $
 
 .PATH: ${SRCTOP}/sys/dev/malo
 

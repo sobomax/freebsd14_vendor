@@ -43,8 +43,6 @@
  * Undefined instruction types, symbols and prototypes
  *
  * Created      : 08/02/95
- *
- * $FreeBSD: 139448be4c0ef3ba63941e663cc6dda6ce333233 $
  */
 
 #ifndef _MACHINE_UNDEFINED_H_

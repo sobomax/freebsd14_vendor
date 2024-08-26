@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2007 Scott Long
  * All rights reserved.
@@ -32,8 +32,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 6b6e65a39f75a0b08ad068fdf9711c2935f42b47 $");
-
 #include <sys/param.h>
 #include <sys/systm.h>
 #include <sys/kernel.h>
@@ -106,7 +104,6 @@ struct sg_softc {
 	int			sg_timeout;
 	int			sg_user_timeout;
 	uint8_t			pd_type;
-	union ccb		saved_ccb;
 };
 
 static d_open_t		sgopen;
@@ -406,7 +403,6 @@ sgdone(struct cam_periph *periph, union ccb *done_ccb)
 	case SG_CCB_RDWR_IO:
 	{
 		struct sg_rdwr *rdwr;
-		int state;
 
 		devstat_end_transaction(softc->device_stats,
 					csio->dxfer_len,
@@ -418,7 +414,6 @@ sgdone(struct cam_periph *periph, union ccb *done_ccb)
 					NULL, NULL);
 
 		rdwr = done_ccb->ccb_h.ccb_rdwr;
-		state = rdwr->state;
 		rdwr->state = SG_RDWR_DONE;
 		wakeup(rdwr);
 		break;
@@ -888,7 +883,7 @@ sgsendccb(struct cam_periph *periph, union ccb *ccb)
 {
 	struct sg_softc *softc;
 	struct cam_periph_map_info mapinfo;
-	int error;
+	int error, error1;
 
 	softc = periph->softc;
 	bzero(&mapinfo, sizeof(mapinfo));
@@ -913,7 +908,9 @@ sgsendccb(struct cam_periph *periph, union ccb *ccb)
 				  softc->device_stats);
 
 	cam_periph_unlock(periph);
-	cam_periph_unmapmem(ccb, &mapinfo);
+	error1 = cam_periph_unmapmem(ccb, &mapinfo);
+	if (error == 0)
+		error = error1;
 	cam_periph_lock(periph);
 
 	return (error);
@@ -933,11 +930,6 @@ sgsendrdwr(struct cam_periph *periph, union ccb *ccb)
 static int
 sgerror(union ccb *ccb, uint32_t cam_flags, uint32_t sense_flags)
 {
-	struct cam_periph *periph;
-	struct sg_softc *softc;
-
-	periph = xpt_path_periph(ccb->ccb_h.path);
-	softc = (struct sg_softc *)periph->softc;
 
 	return (cam_periph_error(ccb, cam_flags, sense_flags));
 }

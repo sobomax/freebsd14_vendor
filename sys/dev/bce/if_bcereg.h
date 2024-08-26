@@ -23,8 +23,6 @@
  * CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF
  * THE POSSIBILITY OF SUCH DAMAGE.
- *
- * $FreeBSD: 0aa3eda3a97d43237d22f1aa6a010669e0e52f2d $
  */
 
 #ifndef	_BCEREG_H_DEFINED
@@ -6298,7 +6296,7 @@ struct bce_softc
 	struct mtx		bce_mtx;
 
 	/* Interface info */
-	struct ifnet		*bce_ifp;
+	if_t			bce_ifp;
 
 	/* Parent device handle */
 	device_t		bce_dev;

@@ -23,9 +23,6 @@
  * ChaCha based random number generator for OpenBSD.
  */
 
-#include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 07e31e64e75850d3cff7149457fb9ecc26e1bdbd $");
-
 #include "namespace.h"
 #if defined(__FreeBSD__)
 #include <assert.h>

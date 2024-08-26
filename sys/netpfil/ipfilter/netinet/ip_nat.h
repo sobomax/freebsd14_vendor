@@ -1,4 +1,3 @@
-/*	$FreeBSD: aac8c326aa05088288ddabbaf356839a6fd038c4 $	*/
 
 /*
  * Copyright (C) 2012 by Darren Reed.
@@ -6,7 +5,6 @@
  * See the IPFILTER.LICENCE file for details on licencing.
  *
  * @(#)ip_nat.h	1.5 2/4/96
- * $FreeBSD: aac8c326aa05088288ddabbaf356839a6fd038c4 $
  * Id: ip_nat.h,v 2.90.2.20 2007/09/25 08:27:32 darrenr Exp $
  */
 

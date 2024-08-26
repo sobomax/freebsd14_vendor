@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2013 Rui Paulo <rpaulo@FreeBSD.org>
  * All rights reserved.
@@ -26,8 +26,6 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: abd3e5ad25accf20fb18125f8afd0825804a5fb6 $");
-
 #include <sys/param.h>
 #include <sys/systm.h>
 #include <sys/bus.h>
@@ -99,9 +97,7 @@ static driver_t ti_mbox_driver = {
 	sizeof(struct ti_mbox_softc)
 };
 
-static devclass_t ti_mbox_devclass;
-
-DRIVER_MODULE(ti_mbox, simplebus, ti_mbox_driver, ti_mbox_devclass, 0, 0);
+DRIVER_MODULE(ti_mbox, simplebus, ti_mbox_driver, 0, 0);
 MODULE_DEPEND(ti_mbox, ti_sysc, 1, 1, 1);
 
 static __inline uint32_t
@@ -225,10 +221,7 @@ ti_mbox_detach(device_t dev)
 static void
 ti_mbox_intr(void *arg)
 {
-	struct ti_mbox_softc *sc;
-
-	sc = arg;
-	DPRINTF("interrupt %p", sc);
+	DPRINTF("interrupt %p", arg);
 }
 
 static int

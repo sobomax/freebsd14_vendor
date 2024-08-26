@@ -1,4 +1,3 @@
-# $FreeBSD: 2d03e503387dfebbe2849928d6c1dee8a4df110e $
 
 v=$( (eval ': $((08))') 2>&1 >/dev/null)
 [ $? -ne 0 ] && [ -n "$v" ]

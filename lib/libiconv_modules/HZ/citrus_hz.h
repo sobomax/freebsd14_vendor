@@ -1,4 +1,3 @@
-/* $FreeBSD: 6fc36d5a17438bb9dfcc2b9626aa4420c8dd7406 $ */
 /* $NetBSD: citrus_hz.h,v 1.1 2006/11/22 23:38:27 tnozaki Exp $ */
 
 /*-

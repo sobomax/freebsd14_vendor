@@ -1,4 +1,3 @@
-# $FreeBSD: c5e456437946be2fe9a7702c5320048e54ab4205 $
 command -v not-here && exit 1
 command -v /not-here && exit 1
 command -V not-here && exit 1

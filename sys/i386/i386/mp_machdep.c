@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 1996, by Steve Passe
  * All rights reserved.
@@ -26,8 +26,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: bf1c7faf6182c39b97c38da21ffd6bca92ad0bab $");
-
 #include "opt_acpi.h"
 #include "opt_apic.h"
 #include "opt_cpu.h"
@@ -51,9 +49,6 @@ __FBSDID("$FreeBSD: bf1c7faf6182c39b97c38da21ffd6bca92ad0bab $");
 #include <sys/bus.h>
 #include <sys/cons.h>	/* cngetc() */
 #include <sys/cpuset.h>
-#ifdef GPROF 
-#include <sys/gmon.h>
-#endif
 #include <sys/kdb.h>
 #include <sys/kernel.h>
 #include <sys/ktr.h>
@@ -393,9 +388,9 @@ start_all_aps(void)
 		apic_id = cpu_apic_ids[cpu];
 
 		/* allocate and set up a boot stack data page */
-		bootstacks[cpu] = (char *)kmem_malloc(kstack_pages * PAGE_SIZE,
+		bootstacks[cpu] = kmem_malloc(kstack_pages * PAGE_SIZE,
 		    M_WAITOK | M_ZERO);
-		dpcpu = (void *)kmem_malloc(DPCPU_SIZE, M_WAITOK | M_ZERO);
+		dpcpu = kmem_malloc(DPCPU_SIZE, M_WAITOK | M_ZERO);
 		/* setup a vector to our boot code */
 		*((volatile u_short *) WARMBOOT_OFF) = WARMBOOT_TARGET;
 		*((volatile u_short *) WARMBOOT_SEG) = (boot_address >> 4);

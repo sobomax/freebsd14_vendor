@@ -32,8 +32,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: f3d8af4971a420603a7998241f66bbb7f4c6bc2d $");
-
 #include <sys/param.h>
 #include <sys/kernel.h>
 #include <sys/systm.h>
@@ -882,17 +880,33 @@ static int
 ntb_plx_spad_write(device_t dev, unsigned int idx, uint32_t val)
 {
 	struct ntb_plx_softc *sc = device_get_softc(dev);
-	u_int off;
+	u_int off, t;
 
 	if (idx >= sc->spad_count1 + sc->spad_count2)
 		return (EINVAL);
 
-	if (idx < sc->spad_count1)
+	if (idx < sc->spad_count1) {
 		off = sc->spad_off1 + idx * 4;
-	else
+		bus_write_4(sc->conf_res, off, val);
+		return (0);
+	} else {
 		off = sc->spad_off2 + (idx - sc->spad_count1) * 4;
-	bus_write_4(sc->conf_res, off, val);
-	return (0);
+		/*
+		 * For some reason when link goes down Test Pattern registers
+		 * we use as additional scratchpad become read-only for about
+		 * 100us.  I see no explanation in specs, so just wait a bit.
+		 */
+		for (t = 0; t <= 1000; t++) {
+			bus_write_4(sc->conf_res, off, val);
+			if (bus_read_4(sc->conf_res, off) == val)
+				return (0);
+			DELAY(1);
+		}
+		device_printf(dev,
+		    "Can't write Physical Layer User Test Pattern (0x%x)\n",
+		    off);
+		return (EIO);
+	}
 }
 
 static void
@@ -1053,7 +1067,7 @@ static device_method_t ntb_plx_methods[] = {
 	DEVMETHOD(device_attach,	ntb_plx_attach),
 	DEVMETHOD(device_detach,	ntb_plx_detach),
 	/* Bus interface */
-	DEVMETHOD(bus_child_location_str, ntb_child_location_str),
+	DEVMETHOD(bus_child_location,	ntb_child_location),
 	DEVMETHOD(bus_print_child,	ntb_print_child),
 	DEVMETHOD(bus_get_dma_tag,	ntb_get_dma_tag),
 	/* NTB interface */
@@ -1091,6 +1105,6 @@ static device_method_t ntb_plx_methods[] = {
 
 static DEFINE_CLASS_0(ntb_hw, ntb_plx_driver, ntb_plx_methods,
     sizeof(struct ntb_plx_softc));
-DRIVER_MODULE(ntb_hw_plx, pci, ntb_plx_driver, ntb_hw_devclass, NULL, NULL);
+DRIVER_MODULE(ntb_hw_plx, pci, ntb_plx_driver, NULL, NULL);
 MODULE_DEPEND(ntb_hw_plx, ntb, 1, 1, 1);
 MODULE_VERSION(ntb_hw_plx, 1);

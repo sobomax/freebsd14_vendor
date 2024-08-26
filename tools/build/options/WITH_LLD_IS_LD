@@ -1,2 +1,1 @@
-.\" $FreeBSD: 05f9c1d6ffe34aa0af3148d6d2de54284308cd8b $
 Use LLVM's LLD as the system linker.

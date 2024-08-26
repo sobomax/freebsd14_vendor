@@ -1,4 +1,3 @@
-# $FreeBSD: 931a57b6dde4b549c93f23f5859f08d414d0a60c $
 
 use strict;
 use warnings;

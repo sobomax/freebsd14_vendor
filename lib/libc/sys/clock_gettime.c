@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2012 Konstantin Belousov <kib@FreeBSD.org>
  *
@@ -25,9 +25,6 @@
  * SUCH DAMAGE.
  */
 
-#include <sys/cdefs.h>
-__FBSDID("$FreeBSD: cf95986973e240c585d9741748ef4a654dc1ac3c $");
-
 #include <sys/syscall.h>
 #include <sys/time.h>
 #include <sys/vdso.h>
@@ -48,7 +45,11 @@ __clock_gettime(clockid_t clock_id, struct timespec *ts)
 		error = __vdso_clock_gettime(clock_id, ts);
 	else
 		error = ENOSYS;
-	if (error == ENOSYS)
+	if (error == ENOSYS) {
 		error = __sys_clock_gettime(clock_id, ts);
+	} else if (error != 0) {
+		errno = error;
+		error = -1;
+	}
 	return (error);
 }

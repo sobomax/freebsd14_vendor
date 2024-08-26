@@ -30,8 +30,6 @@
  * This file should be kept in sync with src/lib/libmd/md5c.c
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 3e0165a453374b70728b17e586aba739efea7614 $");
-
 #include <sys/types.h>
 
 #ifdef _KERNEL
@@ -44,7 +42,7 @@ __FBSDID("$FreeBSD: 3e0165a453374b70728b17e586aba739efea7614 $");
 #include <sys/endian.h>
 #include <sys/md5.h>
 
-static void MD5Transform(u_int32_t [4], const unsigned char [64]);
+static void MD5Transform(uint32_t [4], const unsigned char [64]);
 
 #if (BYTE_ORDER == LITTLE_ENDIAN)
 #define Encode memcpy
@@ -52,12 +50,12 @@ static void MD5Transform(u_int32_t [4], const unsigned char [64]);
 #else 
 
 /*
- * Encodes input (u_int32_t) into output (unsigned char). Assumes len is
+ * Encodes input (uint32_t) into output (unsigned char). Assumes len is
  * a multiple of 4.
  */
 
 static void
-Encode (unsigned char *output, u_int32_t *input, unsigned int len)
+Encode (unsigned char *output, uint32_t *input, unsigned int len)
 {
 	unsigned int i;
 	uint32_t ip;
@@ -72,12 +70,12 @@ Encode (unsigned char *output, u_int32_t *input, unsigned int len)
 }
 
 /*
- * Decodes input (unsigned char) into output (u_int32_t). Assumes len is
+ * Decodes input (unsigned char) into output (uint32_t). Assumes len is
  * a multiple of 4.
  */
 
 static void
-Decode (u_int32_t *output, const unsigned char *input, unsigned int len)
+Decode (uint32_t *output, const unsigned char *input, unsigned int len)
 {
 	unsigned int i;
 
@@ -108,22 +106,22 @@ static unsigned char PADDING[64] = {
  * Rotation is separate from addition to prevent recomputation.
  */
 #define FF(a, b, c, d, x, s, ac) { \
-	(a) += F ((b), (c), (d)) + (x) + (u_int32_t)(ac); \
+	(a) += F ((b), (c), (d)) + (x) + (uint32_t)(ac); \
 	(a) = ROTATE_LEFT ((a), (s)); \
 	(a) += (b); \
 	}
 #define GG(a, b, c, d, x, s, ac) { \
-	(a) += G ((b), (c), (d)) + (x) + (u_int32_t)(ac); \
+	(a) += G ((b), (c), (d)) + (x) + (uint32_t)(ac); \
 	(a) = ROTATE_LEFT ((a), (s)); \
 	(a) += (b); \
 	}
 #define HH(a, b, c, d, x, s, ac) { \
-	(a) += H ((b), (c), (d)) + (x) + (u_int32_t)(ac); \
+	(a) += H ((b), (c), (d)) + (x) + (uint32_t)(ac); \
 	(a) = ROTATE_LEFT ((a), (s)); \
 	(a) += (b); \
 	}
 #define II(a, b, c, d, x, s, ac) { \
-	(a) += I ((b), (c), (d)) + (x) + (u_int32_t)(ac); \
+	(a) += I ((b), (c), (d)) + (x) + (uint32_t)(ac); \
 	(a) = ROTATE_LEFT ((a), (s)); \
 	(a) += (b); \
 	}
@@ -131,8 +129,7 @@ static unsigned char PADDING[64] = {
 /* MD5 initialization. Begins an MD5 operation, writing a new context. */
 
 void
-MD5Init (context)
-	MD5_CTX *context;
+MD5Init(MD5_CTX *context)
 {
 
 	context->count[0] = context->count[1] = 0;
@@ -151,10 +148,7 @@ MD5Init (context)
  */
 
 void
-MD5Update (context, in, inputLen)
-	MD5_CTX *context;
-	const void *in;
-	unsigned int inputLen;
+MD5Update(MD5_CTX *context, const void *in, unsigned int inputLen)
 {
 	unsigned int i, index, partLen;
 	const unsigned char *input = in;
@@ -163,10 +157,10 @@ MD5Update (context, in, inputLen)
 	index = (unsigned int)((context->count[0] >> 3) & 0x3F);
 
 	/* Update number of bits */
-	if ((context->count[0] += ((u_int32_t)inputLen << 3))
-	    < ((u_int32_t)inputLen << 3))
+	if ((context->count[0] += ((uint32_t)inputLen << 3))
+	    < ((uint32_t)inputLen << 3))
 		context->count[1]++;
-	context->count[1] += ((u_int32_t)inputLen >> 29);
+	context->count[1] += ((uint32_t)inputLen >> 29);
 
 	partLen = 64 - index;
 
@@ -194,7 +188,7 @@ MD5Update (context, in, inputLen)
  */
 
 static void
-MD5Pad (MD5_CTX *context)
+MD5Pad(MD5_CTX *context)
 {
 	unsigned char bits[8];
 	unsigned int index, padLen;
@@ -232,11 +226,9 @@ MD5Final(unsigned char digest[static MD5_DIGEST_LENGTH], MD5_CTX *context)
 /* MD5 basic transformation. Transforms state based on block. */
 
 static void
-MD5Transform (state, block)
-	u_int32_t state[4];
-	const unsigned char block[64];
+MD5Transform(uint32_t state[4], const unsigned char block[64])
 {
-	u_int32_t a = state[0], b = state[1], c = state[2], d = state[3], x[16];
+	uint32_t a = state[0], b = state[1], c = state[2], d = state[3], x[16];
 
 	Decode (x, block, 64);
 

@@ -29,7 +29,6 @@
 # * Author : David C Somayajulu, Qlogic Corporation, Aliso Viejo, CA 92656.
 # */
 #
-# $FreeBSD: 3a83bd96708207bb9c6be644ee9b63c79f59e4ad $
 #
 
 .PATH: ${SRCTOP}/sys/dev/qlxgbe

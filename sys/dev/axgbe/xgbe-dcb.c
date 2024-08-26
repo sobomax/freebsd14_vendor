@@ -114,8 +114,6 @@
  *     THE POSSIBILITY OF SUCH DAMAGE.
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: c64a31f0696fd269568c53485d74f6f266132136 $");
-
 #include "xgbe.h"
 
 #if 0

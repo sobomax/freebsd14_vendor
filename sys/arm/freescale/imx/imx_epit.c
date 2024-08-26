@@ -25,8 +25,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 1295bc75c783e4ce816215c656d3acf9fb1e5360 $");
-
 /*
  * Driver for imx Enhanced Programmable Interval Timer, a simple free-running
  * counter device that can be used as the system timecounter.  On imx5 a second
@@ -485,7 +483,4 @@ static driver_t epit_driver = {
 	sizeof(struct epit_softc),
 };
 
-static devclass_t epit_devclass;
-
-EARLY_DRIVER_MODULE(imx_epit, simplebus, epit_driver, epit_devclass, 0,
-    0, BUS_PASS_TIMER);
+EARLY_DRIVER_MODULE(imx_epit, simplebus, epit_driver, 0, 0, BUS_PASS_TIMER);

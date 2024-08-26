@@ -25,8 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 0aa751ec886ee041aa7f28c063f881eca7979335 $");
-
+#include <linux/compat.h>
 #include <linux/slab.h>
 #include <linux/rcupdate.h>
 #include <linux/kernel.h>
@@ -96,7 +95,7 @@ linux_kmem_ctor(void *mem, int size, void *arg, int flags)
 	return (0);
 }
 
-void
+static void
 linux_kmem_cache_free_rcu_callback(struct rcu_head *head)
 {
 	struct linux_kmem_rcu *rcu =
@@ -145,8 +144,8 @@ linux_kmem_cache_create(const char *name, size_t size, size_t align,
 	return (c);
 }
 
-void
-linux_kmem_cache_free_rcu(struct linux_kmem_cache *c, void *m)
+static inline void
+lkpi_kmem_cache_free_rcu(struct linux_kmem_cache *c, void *m)
 {
 	struct linux_kmem_rcu *rcu = LINUX_KMEM_TO_RCU(c, m);
 
@@ -183,7 +182,7 @@ void
 lkpi_kmem_cache_free(struct linux_kmem_cache *c, void *m)
 {
 	if (unlikely(c->cache_flags & SLAB_TYPESAFE_BY_RCU))
-		linux_kmem_cache_free_rcu(c, m);
+		lkpi_kmem_cache_free_rcu(c, m);
 	else if (unlikely(curthread->td_critnest != 0))
 		lkpi_kmem_cache_free_async(c, m);
 	else
@@ -206,6 +205,29 @@ linux_kmem_cache_destroy(struct linux_kmem_cache *c)
 	taskqueue_drain(linux_irq_work_tq, &c->cache_task);
 	uma_zdestroy(c->cache_zone);
 	free(c, M_KMALLOC);
+}
+
+struct lkpi_kmalloc_ctx {
+	size_t size;
+	gfp_t flags;
+	void *addr;
+};
+
+static void
+lkpi_kmalloc_cb(void *ctx)
+{
+	struct lkpi_kmalloc_ctx *lmc = ctx;
+
+	lmc->addr = __kmalloc(lmc->size, lmc->flags);
+}
+
+void *
+lkpi_kmalloc(size_t size, gfp_t flags)
+{
+	struct lkpi_kmalloc_ctx lmc = { .size = size, .flags = flags };
+
+	lkpi_fpu_safe_exec(&lkpi_kmalloc_cb, &lmc);
+	return(lmc.addr);
 }
 
 static void

@@ -36,8 +36,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 71bd215d3d24f52988e9e0b05e74ee9e2ee4a35b $");
-
 #include "opt_inet.h"
 #include "opt_inet6.h"
 
@@ -50,6 +48,7 @@ __FBSDID("$FreeBSD: 71bd215d3d24f52988e9e0b05e74ee9e2ee4a35b $");
 
 #include <net/if.h>
 #include <net/if_var.h>
+#include <net/if_private.h>
 #include <net/vnet.h>
 #include <net/pfvar.h>
 #include <net/route.h>

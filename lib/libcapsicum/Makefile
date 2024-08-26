@@ -1,4 +1,3 @@
-# $FreeBSD: c3c6330cbcbdc9c1f46eb0d4b8c3d4af5f236fb5 $
 
 INCS=	capsicum_helpers.h
 

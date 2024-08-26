@@ -29,7 +29,6 @@
 # * Author : David C Somayajulu, Cavium, Inc., San Jose, CA 95131.
 # */
 #
-# $FreeBSD: e5dbaa01ba7625c7c98d299215ffc1e07baf59a8 $
 #
 
 SYSDIR?=${SRCTOP}/sys

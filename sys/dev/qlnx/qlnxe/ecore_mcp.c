@@ -28,8 +28,6 @@
  * File : ecore_mcp.c
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 65a854293e2d0b4955c390a2fe19eed700e551d5 $");
-
 #include "bcm_osal.h"
 #include "ecore.h"
 #include "ecore_status.h"

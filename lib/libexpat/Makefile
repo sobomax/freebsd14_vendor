@@ -1,4 +1,3 @@
-# $FreeBSD: 5cbbca25370056df5cf98cd5b8961fe45717f2c8 $
 
 PACKAGE=	runtime
 EXPAT=		${SRCTOP}/contrib/expat

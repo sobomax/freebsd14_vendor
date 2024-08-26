@@ -25,7 +25,6 @@
  */
 
 #include "test.h"
-__FBSDID("$FreeBSD: 9e089c0dfdb58dceb083bcb684a6ca52c92b860b $");
 
 /*
  * A basic exercise of bzip2 reading and writing.

@@ -1,4 +1,3 @@
-# $FreeBSD: 255275b1e7a3c9d107eabaf27884388eb03d398f $
 
 .include <bsd.init.mk>
 

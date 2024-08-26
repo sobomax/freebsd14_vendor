@@ -32,7 +32,6 @@
  *	from: @(#)auth.h 1.17 88/02/08 SMI
  *	from: @(#)auth.h	2.3 88/08/07 4.0 RPCSRC
  *	from: @(#)auth.h	1.43 	98/02/02 SMI
- * $FreeBSD: 0752e72de95e8a2a44a912d6b7c2ef5bd7664f6d $
  */
 
 /*

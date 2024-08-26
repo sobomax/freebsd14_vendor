@@ -28,8 +28,6 @@
  */
 
 #include <machine/asm.h>
-__FBSDID("$FreeBSD: 4dc80c2643626545ab200a9d5bc590894411a8ba $");
-
 #define BLOCK_SIZE_BITS			6
 #define BLOCK_SIZE			(1 << BLOCK_SIZE_BITS)
 #define BLOCK_SIZE_MASK			(BLOCK_SIZE - 1)

@@ -1,4 +1,3 @@
-/* $FreeBSD: c6d69006c9a35c5500317eb3dcf520a5693a8f3c $ */
 /* Do not modify. This file is auto-generated from ppc.pl. */
 
 

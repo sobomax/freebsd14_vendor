@@ -43,8 +43,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 240d801e5b12e2181ab230a6963485009f0c1be1 $");
-
 /*
  * Driver for various Hifn encryption processors.
  */
@@ -125,14 +123,14 @@ static device_method_t hifn_methods[] = {
 
 	DEVMETHOD_END
 };
+
 static driver_t hifn_driver = {
 	"hifn",
 	hifn_methods,
 	sizeof (struct hifn_softc)
 };
-static devclass_t hifn_devclass;
 
-DRIVER_MODULE(hifn, pci, hifn_driver, hifn_devclass, 0, 0);
+DRIVER_MODULE(hifn, pci, hifn_driver, 0, 0);
 MODULE_DEPEND(hifn, crypto, 1, 1, 1);
 #ifdef HIFN_RNDTEST
 MODULE_DEPEND(hifn, rndtest, 1, 1, 1);
@@ -880,7 +878,7 @@ hifn_set_retry(struct hifn_softc *sc)
 }
 
 /*
- * Resets the board.  Values in the regesters are left as is
+ * Resets the board.  Values in the registers are left as is
  * from the reset (i.e. initial values are assigned elsewhere).
  */
 static void
@@ -2252,7 +2250,7 @@ hifn_intr(void *arg)
 	HIFN_UNLOCK(sc);
 
 	if (sc->sc_needwakeup) {		/* XXX check high watermark */
-		int wakeup = sc->sc_needwakeup & (CRYPTO_SYMQ|CRYPTO_ASYMQ);
+		int wakeup = sc->sc_needwakeup & CRYPTO_SYMQ;
 #ifdef HIFN_DEBUG
 		if (hifn_debug)
 			device_printf(sc->sc_dev,

@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2012 Olivier Houchard.  All rights reserved.
  *
@@ -25,7 +25,6 @@
  */
 
 /*
- * $FreeBSD: 8db0333fc2fbc509cf223fc1924dc5ec4a973148 $
  */
 
 #ifndef TI_SMC_H_

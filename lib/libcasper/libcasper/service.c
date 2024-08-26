@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2013 The FreeBSD Foundation
  * Copyright (c) 2015 Mariusz Zaborski <oshogbo@FreeBSD.org>
@@ -31,8 +31,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: e87d0640347cfde8a0c779e33438cbc59c79b06d $");
-
 #include <sys/types.h>
 #include <sys/queue.h>
 #include <sys/socket.h>
@@ -61,7 +59,7 @@ __FBSDID("$FreeBSD: e87d0640347cfde8a0c779e33438cbc59c79b06d $");
  * The problem is that we may restrict/sandbox service instance according
  * to the limits provided. When new connection comes in with different
  * limits we won't be able to access requested resources.
- * Not to mention one process will serve to mutiple mutually untrusted
+ * Not to mention one process will serve to multiple mutually untrusted
  * clients and compromise of this service instance by one of its clients
  * can lead to compromise of the other clients.
  */

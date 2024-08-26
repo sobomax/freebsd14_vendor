@@ -10,9 +10,6 @@
  * ====================================================
  */
 
-#include <sys/cdefs.h>
-__FBSDID("$FreeBSD: f56758b189177e4b6828af63874cd17a8b929660 $");
-
 /*
  * See e_lgamma_r.c for complete comments.
  *

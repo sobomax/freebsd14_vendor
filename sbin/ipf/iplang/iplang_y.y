@@ -1,4 +1,3 @@
-/*	$FreeBSD: e6c88ddcd9bcc226545f5d6b1d28c6712d3d24c2 $	*/
 
 %{
 /*
@@ -7,7 +6,6 @@
  * See the IPFILTER.LICENCE file for details on licencing.
  *
  * Id: iplang_y.y,v 2.9.2.4 2006/03/17 12:11:29 darrenr Exp $
- * $FreeBSD: e6c88ddcd9bcc226545f5d6b1d28c6712d3d24c2 $
  */
 
 #include <stdio.h>

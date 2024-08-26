@@ -1,4 +1,3 @@
-# $FreeBSD: b0849962aa01708c95f539d4303689e517a12b40 $
 
 PACKAGE=	tests
 
@@ -6,6 +5,8 @@ TESTSDIR=	${TESTSBASE}/sys/geom/class/${.CURDIR:T}
 
 TAP_TESTS_SH+=	1_test
 TAP_TESTS_SH+=	2_test
+TAP_TESTS_SH+=	append1
+TAP_TESTS_SH+=	append2
 
 ${PACKAGE}FILES+=		conf.sh
 

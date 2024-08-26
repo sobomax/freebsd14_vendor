@@ -1,5 +1,4 @@
 /* Generated file */
-/* $FreeBSD: d359afae4d31f1969b2ca560ac413994ceb059a5 $ */
 #include <gssapi/gssapi.h>
 #include <roken.h>
 #include "config.h"

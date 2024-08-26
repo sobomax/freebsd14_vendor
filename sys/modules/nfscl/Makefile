@@ -1,4 +1,3 @@
-# $FreeBSD: f75965af224ff66802396ef6be2ee4aeadf3e84c $
 
 .PATH: ${SRCTOP}/sys/fs/nfsclient ${SRCTOP}/sys/nfs
 KMOD=	nfscl

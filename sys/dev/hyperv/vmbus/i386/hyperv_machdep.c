@@ -25,10 +25,8 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: b12bff855f6358a722151df1fa49257a516f70dd $");
-
 #include <sys/param.h>
-#include <dev/hyperv/vmbus/hyperv_machdep.h>
+#include <dev/hyperv/vmbus/x86/hyperv_machdep.h>
 
 uint64_t
 hypercall_md(volatile void *hc_addr, uint64_t in_val,

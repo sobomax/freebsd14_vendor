@@ -41,8 +41,6 @@
  * POSSIBILITY OF SUCH DAMAGES.
  *
  * $Id: //depot/aic7xxx/aic7xxx/aicasm/aicasm_gram.y#29 $
- *
- * $FreeBSD: d32793f4c12bb2524136cd0b47b9154ea90579fa $
  */
 
 #include <sys/types.h>

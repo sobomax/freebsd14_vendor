@@ -30,8 +30,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: c85c15a90caa0e677d524180eba8c4680eaa4a54 $");
-
 #include "ql_os.h"
 
 unsigned int ql83xx_minidump_version_major = 5;

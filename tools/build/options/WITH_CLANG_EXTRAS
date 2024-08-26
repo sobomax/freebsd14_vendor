@@ -1,3 +1,2 @@
-.\" $FreeBSD: 389c994f086ad44582e8c53f3238e80a009e1b48 $
 Build additional clang and llvm tools, such as bugpoint and
 clang-format.

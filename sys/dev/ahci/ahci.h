@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 1998 - 2008 Søren Schmidt <sos@FreeBSD.org>
  * Copyright (c) 2009-2012 Alexander Motin <mav@FreeBSD.org>
@@ -25,8 +25,6 @@
  * THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- *
- * $FreeBSD: e28c02d6678e81274b388a6f324af2fca28319bf $
  */
 
 /* ATA register defines */
@@ -665,8 +663,7 @@ int ahci_setup_intr(device_t dev, device_t child, struct resource *irq,
     void *argument, void **cookiep);
 int ahci_teardown_intr(device_t dev, device_t child, struct resource *irq,
     void *cookie);
-int ahci_child_location_str(device_t dev, device_t child, char *buf,
-    size_t buflen);
+int ahci_child_location(device_t dev, device_t child, struct sbuf *sb);
 bus_dma_tag_t ahci_get_dma_tag(device_t dev, device_t child);
 int ahci_ctlr_reset(device_t dev);
 int ahci_ctlr_setup(device_t dev);
@@ -677,5 +674,3 @@ void ahci_attached(device_t dev, struct ahci_channel *ch);
 void ahci_detached(device_t dev, struct ahci_channel *ch);
 struct ahci_channel * ahci_getch(device_t dev, int n);
 void ahci_putch(struct ahci_channel *ch);
-
-extern devclass_t ahci_devclass;

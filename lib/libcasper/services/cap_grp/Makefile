@@ -1,6 +1,5 @@
-# $FreeBSD: 83e24fcc8e76abfc064f34d9b5e40d99eb6c8bb5 $
 
-SHLIBDIR?=	/lib/casper
+SHLIBDIR?=	/lib
 
 .include <src.opts.mk>
 
@@ -41,3 +40,6 @@ MLINKS+=cap_grp.3 cap_grp_limit_fields.3
 MLINKS+=cap_grp.3 cap_grp_limit_groups.3
 
 .include <bsd.lib.mk>
+
+# GCC 13 complains incorrectly about free after failed realloc: GCC bug #110501
+CFLAGS.cap_grp.c+= ${NO_WUSE_AFTER_FREE}

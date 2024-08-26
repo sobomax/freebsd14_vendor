@@ -1,4 +1,6 @@
-# $FreeBSD: 8e10a654a7547a5aa908ad22b84fa1c56d1199b0 $ 
+
+# we do not need this
+MK_host_egacy= no
 
 .sinclude <src.opts.mk>
 
@@ -13,10 +15,6 @@ PROG= make
 LINKS= ${BINDIR}/make ${BINDIR}/bmake
 MLINKS= ${MAN} b${MAN}
 .endif
-.endif
-
-.if !defined(MK_SHARED_TOOLCHAIN) || ${MK_SHARED_TOOLCHAIN} == "no"
-NO_SHARED?=     YES
 .endif
 
 # hack to not add tests to tests subdir since this is included from

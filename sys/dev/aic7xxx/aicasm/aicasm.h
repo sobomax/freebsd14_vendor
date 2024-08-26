@@ -40,8 +40,6 @@
  * POSSIBILITY OF SUCH DAMAGES.
  *
  * $Id: //depot/aic7xxx/aic7xxx/aicasm/aicasm.h#14 $
- *
- * $FreeBSD: 705c22f77f8b170bd91c924d15e205969040acd4 $
  */
 
 #include <sys/queue.h>

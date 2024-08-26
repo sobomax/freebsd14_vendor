@@ -26,8 +26,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: b19e62474bbb592e7127155e9203d4f9777215ae $");
-
 #include "opt_inet.h"
 #include "opt_inet6.h"
 #include "opt_ratelimit.h"
@@ -43,7 +41,6 @@ __FBSDID("$FreeBSD: b19e62474bbb592e7127155e9203d4f9777215ae $");
 #include "common/t4_regs.h"
 #include "common/t4_regs_values.h"
 #include "common/t4_msg.h"
-
 
 static int
 in_range(int val, int lo, int hi)
@@ -178,7 +175,7 @@ set_sched_class_params(struct adapter *sc, struct t4_sched_class_params *p,
 	if (check_pktsize) {
 		if (p->pktsize < 0)
 			return (EINVAL);
-		if (!in_range(p->pktsize, 64, pi->vi[0].ifp->if_mtu))
+		if (!in_range(p->pktsize, 64, if_getmtu(pi->vi[0].ifp)))
 			return (ERANGE);
 	}
 
@@ -509,7 +506,7 @@ t4_reserve_cl_rl_kbps(struct adapter *sc, int port_id, u_int maxrate,
 	if (pi->sched_params->pktsize > 0)
 		pktsize = pi->sched_params->pktsize;
 	else
-		pktsize = pi->vi[0].ifp->if_mtu;
+		pktsize = if_getmtu(pi->vi[0].ifp);
 	if (pi->sched_params->burstsize > 0)
 		burstsize = pi->sched_params->burstsize;
 	else
@@ -785,12 +782,25 @@ free_etid(struct adapter *sc, int etid)
 	mtx_unlock(&t->etid_lock);
 }
 
+static int cxgbe_rate_tag_modify(struct m_snd_tag *,
+    union if_snd_tag_modify_params *);
+static int cxgbe_rate_tag_query(struct m_snd_tag *,
+    union if_snd_tag_query_params *);
+static void cxgbe_rate_tag_free(struct m_snd_tag *);
+
+static const struct if_snd_tag_sw cxgbe_rate_tag_sw = {
+	.snd_tag_modify = cxgbe_rate_tag_modify,
+	.snd_tag_query = cxgbe_rate_tag_query,
+	.snd_tag_free = cxgbe_rate_tag_free,
+	.type = IF_SND_TAG_TYPE_RATE_LIMIT
+};
+
 int
-cxgbe_rate_tag_alloc(struct ifnet *ifp, union if_snd_tag_alloc_params *params,
+cxgbe_rate_tag_alloc(if_t ifp, union if_snd_tag_alloc_params *params,
     struct m_snd_tag **pt)
 {
 	int rc, schedcl;
-	struct vi_info *vi = ifp->if_softc;
+	struct vi_info *vi = if_getsoftc(ifp);
 	struct port_info *pi = vi->pi;
 	struct adapter *sc = pi->adapter;
 	struct cxgbe_rate_tag *cst;
@@ -819,7 +829,7 @@ failed:
 	mtx_init(&cst->lock, "cst_lock", NULL, MTX_DEF);
 	mbufq_init(&cst->pending_tx, INT_MAX);
 	mbufq_init(&cst->pending_fwack, INT_MAX);
-	m_snd_tag_init(&cst->com, ifp, IF_SND_TAG_TYPE_RATE_LIMIT);
+	m_snd_tag_init(&cst->com, ifp, &cxgbe_rate_tag_sw);
 	cst->flags |= EO_FLOWC_PENDING | EO_SND_TAG_REF;
 	cst->adapter = sc;
 	cst->port_id = pi->port_id;
@@ -843,7 +853,7 @@ failed:
 /*
  * Change in parameters, no change in ifp.
  */
-int
+static int
 cxgbe_rate_tag_modify(struct m_snd_tag *mst,
     union if_snd_tag_modify_params *params)
 {
@@ -869,7 +879,7 @@ cxgbe_rate_tag_modify(struct m_snd_tag *mst,
 	return (0);
 }
 
-int
+static int
 cxgbe_rate_tag_query(struct m_snd_tag *mst,
     union if_snd_tag_query_params *params)
 {
@@ -908,7 +918,7 @@ cxgbe_rate_tag_free_locked(struct cxgbe_rate_tag *cst)
 	free(cst, M_CXGBE);
 }
 
-void
+static void
 cxgbe_rate_tag_free(struct m_snd_tag *mst)
 {
 	struct cxgbe_rate_tag *cst = mst_to_crt(mst);
@@ -935,16 +945,16 @@ cxgbe_rate_tag_free(struct m_snd_tag *mst)
 }
 
 void
-cxgbe_ratelimit_query(struct ifnet *ifp, struct if_ratelimit_query_results *q)
+cxgbe_ratelimit_query(if_t ifp, struct if_ratelimit_query_results *q)
 {
-	struct vi_info *vi = ifp->if_softc;
+	struct vi_info *vi = if_getsoftc(ifp);
 	struct adapter *sc = vi->adapter;
 
 	q->rate_table = NULL;
 	q->flags = RT_IS_SELECTABLE;
 	/*
 	 * Absolute max limits from the firmware configuration.  Practical
-	 * limits depend on the burstsize, pktsize (ifp->if_mtu ultimately) and
+	 * limits depend on the burstsize, pktsize (if_getmtu(ifp) ultimately) and
 	 * the card's cclk.
 	 */
 	q->max_flows = sc->tids.netids;

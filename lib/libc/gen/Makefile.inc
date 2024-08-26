@@ -1,5 +1,4 @@
 #	@(#)Makefile.inc	8.6 (Berkeley) 5/4/95
-# $FreeBSD: 22573d8ec36c773658272603c6f48c5fa119d3dd $
 
 # machine-independent gen sources
 .PATH: ${LIBC_SRCTOP}/${LIBC_ARCH}/gen ${LIBC_SRCTOP}/gen ${SRCTOP}/etc
@@ -16,6 +15,8 @@ SRCS+=	__getosreldate.c \
 	_rand48.c \
 	_spinlock_stub.c \
 	_thread_init.c \
+	aio_read2.c \
+	aio_write2.c \
 	alarm.c \
 	arc4random.c \
 	arc4random-compat.c \
@@ -97,11 +98,13 @@ SRCS+=	__getosreldate.c \
 	isinf.c \
 	isnan.c \
 	jrand48.c \
+	kqueue1.c \
 	lcong48.c \
 	libc_dlopen.c \
 	lockf.c \
 	lrand48.c \
 	memalign.c \
+	memfd_create.c \
 	mrand48.c \
 	nftw.c \
 	nftw-compat11.c \
@@ -156,6 +159,7 @@ SRCS+=	__getosreldate.c \
 	time.c \
 	times.c \
 	timespec_get.c \
+	timespec_getres.c \
 	timezone.c \
 	tls.c \
 	ttyname.c \
@@ -319,6 +323,7 @@ MAN+=	alarm.3 \
 	time.3 \
 	times.3 \
 	timespec_get.3 \
+	timespec_getres.3 \
 	timezone.3 \
 	ttyname.3 \
 	tzset.3 \
@@ -547,7 +552,6 @@ MLINKS+=tcsetattr.3 cfgetispeed.3 \
 	tcsetattr.3 tcgetattr.3
 MLINKS+=ttyname.3 isatty.3 \
 	ttyname.3 ttyname_r.3
-MLINKS+=tzset.3 tzsetwall.3
 MLINKS+=unvis.3 strunvis.3 \
 	unvis.3 strunvisx.3
 MLINKS+=vis.3 nvis.3 \
@@ -578,8 +582,8 @@ install-passwd: .PHONY
 	${PWD_MKDB_CMD} -i -p -d ${DESTDIR}/etc ${DESTDIR}/etc/master.passwd
 .if defined(NO_ROOT) && defined(METALOG)
 	( \
-		echo "./etc/pwd.db type=file mode=0644 uname=root gname=wheel"; \
-		echo "./etc/spwd.db type=file mode=0600 uname=root gname=wheel"; \
-		echo "./etc/passwd type=file mode=0644 uname=root gname=wheel"; \
+		echo ".${DISTBASE}/etc/pwd.db type=file mode=0644 uname=root gname=wheel"; \
+		echo ".${DISTBASE}/etc/spwd.db type=file mode=0600 uname=root gname=wheel"; \
+		echo ".${DISTBASE}/etc/passwd type=file mode=0644 uname=root gname=wheel"; \
 	) | cat -l >> ${METALOG}
 .endif

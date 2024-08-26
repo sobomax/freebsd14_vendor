@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 1999 Doug Rabson
  * All rights reserved.
@@ -24,8 +24,6 @@
  * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
- *
- * $FreeBSD: 8bffbd8fea28cffcd4d5818cd8b51e2eda6cde64 $
  */
 
 /*
@@ -77,4 +75,3 @@ extern int isa_release_resource(device_t bus, device_t child,
     int type, int rid, struct resource *r);
 
 extern driver_t isa_driver;
-extern devclass_t isa_devclass;

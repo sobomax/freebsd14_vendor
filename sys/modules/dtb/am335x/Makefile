@@ -1,4 +1,3 @@
-# $FreeBSD: 31a11e171af8022c10aa039f56dcc53ecf5df965 $
 # All the dts files for am335x systems we support.
 DTS=	\
 	am335x-bone.dts \

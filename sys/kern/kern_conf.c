@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 1999-2002 Poul-Henning Kamp
  * All rights reserved.
@@ -27,8 +27,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 1cd5bc2635c13f7e9096d95d454116f55e7864af $");
-
 #include <sys/param.h>
 #include <sys/kernel.h>
 #include <sys/systm.h>
@@ -121,6 +119,8 @@ dev_free_devlocked(struct cdev *cdev)
 	cdp = cdev2priv(cdev);
 	KASSERT((cdp->cdp_flags & CDP_UNREF_DTR) == 0,
 	    ("destroy_dev() was not called after delist_dev(%p)", cdev));
+	KASSERT((cdp->cdp_flags & CDP_ON_ACTIVE_LIST) == 0,
+	    ("%s: cdp %p (%s) on active list", __func__, cdp, cdev->si_name));
 	TAILQ_INSERT_HEAD(&cdevp_free_list, cdp, cdp_list);
 }
 
@@ -665,7 +665,7 @@ prep_cdevsw(struct cdevsw *devsw, int flags)
 		if ((devsw->d_flags & D_GIANTOK) == 0) {
 			printf(
 			    "WARNING: Device \"%s\" is Giant locked and may be "
-			    "deleted before FreeBSD 14.0.\n",
+			    "deleted before FreeBSD 15.0.\n",
 			    devsw->d_name == NULL ? "???" : devsw->d_name);
 		}
 		if (devsw->d_gianttrick == NULL) {
@@ -1521,14 +1521,6 @@ destroy_dev_drain(struct cdevsw *csw)
 		msleep(&csw->d_devs, &devmtx, PRIBIO, "devscd", hz/10);
 	}
 	dev_unlock();
-}
-
-void
-drain_dev_clone_events(void)
-{
-
-	sx_xlock(&clone_drain_lock);
-	sx_xunlock(&clone_drain_lock);
 }
 
 #include "opt_ddb.h"

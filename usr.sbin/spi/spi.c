@@ -26,8 +26,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 0407f40a35211474298616eca6fa15784ae48938 $");
-
 #include <sys/types.h>
 #include <sys/ioccom.h>
 #include <sys/spigenio.h>

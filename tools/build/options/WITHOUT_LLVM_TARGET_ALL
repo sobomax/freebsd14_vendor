@@ -1,3 +1,2 @@
-.\" $FreeBSD: 0b399aac209ea2f88d78f0d9c3ff7827480ec4a5 $
 Only build the required LLVM target support.
 This option is preferred to specific target support options.

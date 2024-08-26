@@ -31,12 +31,7 @@
  * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
- *
- * @(#) Header: net.c,v 1.9 93/08/06 19:32:15 leres Exp  (LBL)
  */
-
-#include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 3616777e79554b74fd016eac5d708defa51be9cd $");
 
 #include <sys/param.h>
 #include <sys/socket.h>

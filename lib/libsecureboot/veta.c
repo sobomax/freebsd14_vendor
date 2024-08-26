@@ -23,8 +23,6 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: f052f41792bf1c817a4c8638652d37ec7613a289 $");
-
 /**
  * @file veta.c - add to trust anchors
  *

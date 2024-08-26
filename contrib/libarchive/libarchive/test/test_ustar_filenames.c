@@ -23,7 +23,6 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 #include "test.h"
-__FBSDID("$FreeBSD: c84dd67aa039510c65ae78385d213ad90b989db7 $");
 
 /*
  * Exercise various lengths of filenames in ustar archives.

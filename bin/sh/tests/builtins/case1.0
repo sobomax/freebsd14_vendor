@@ -1,4 +1,3 @@
-#$FreeBSD: 860fc67dacdac9ba412199fd8e225dd75570bfcf $
 f()
 {
 	false

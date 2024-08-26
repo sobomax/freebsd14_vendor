@@ -32,8 +32,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 6d3993a3bce6bc7795fff40763b28801a7e21481 $");
-
 #include "opt_inet.h"
 #include "opt_inet6.h"
 
@@ -56,6 +54,7 @@ __FBSDID("$FreeBSD: 6d3993a3bce6bc7795fff40763b28801a7e21481 $");
 
 #include <net/if.h>
 #include <net/if_var.h>
+#include <net/if_private.h>
 #include <net/if_types.h>
 #include <net/if_dl.h>
 #include <net/route.h>
@@ -674,30 +673,21 @@ pfxrtr_del(struct nd_pfxrouter *pfr)
 static void
 defrouter_addreq(struct nd_defrouter *new)
 {
-	struct sockaddr_in6 def, mask, gate;
-	struct rt_addrinfo info;
-	struct rib_cmd_info rc;
-	unsigned int fibnum;
-	int error;
-
-	bzero(&def, sizeof(def));
-	bzero(&mask, sizeof(mask));
-	bzero(&gate, sizeof(gate));
-
-	def.sin6_len = mask.sin6_len = gate.sin6_len =
-	    sizeof(struct sockaddr_in6);
-	def.sin6_family = gate.sin6_family = AF_INET6;
-	gate.sin6_addr = new->rtaddr;
-	fibnum = new->ifp->if_fib;
-
-	bzero((caddr_t)&info, sizeof(info));
-	info.rti_flags = RTF_GATEWAY;
-	info.rti_info[RTAX_DST] = (struct sockaddr *)&def;
-	info.rti_info[RTAX_GATEWAY] = (struct sockaddr *)&gate;
-	info.rti_info[RTAX_NETMASK] = (struct sockaddr *)&mask;
+	uint32_t fibnum = new->ifp->if_fib;
+	struct rib_cmd_info rc = {};
+	int error = 0;
 
 	NET_EPOCH_ASSERT();
-	error = rib_action(fibnum, RTM_ADD, &info, &rc);
+
+	struct sockaddr_in6 gw = {
+		.sin6_family = AF_INET6,
+		.sin6_len = sizeof(struct sockaddr_in6),
+		.sin6_addr = new->rtaddr,
+	};
+
+	error = rib_add_default_route(fibnum, AF_INET6, new->ifp,
+	    (struct sockaddr *)&gw, &rc);
+
 	if (error == 0) {
 		struct nhop_object *nh = nhop_select_func(rc.rc_nh_new, 0);
 		rt_routemsg(RTM_ADD, rc.rc_rt, nh, fibnum);
@@ -713,31 +703,25 @@ defrouter_addreq(struct nd_defrouter *new)
 static void
 defrouter_delreq(struct nd_defrouter *dr)
 {
-	struct sockaddr_in6 def, mask, gate;
-	struct rt_addrinfo info;
-	struct rib_cmd_info rc;
+	uint32_t fibnum = dr->ifp->if_fib;
 	struct epoch_tracker et;
-	unsigned int fibnum;
+	struct rib_cmd_info rc;
 	int error;
 
-	bzero(&def, sizeof(def));
-	bzero(&mask, sizeof(mask));
-	bzero(&gate, sizeof(gate));
+	struct sockaddr_in6 dst = {
+		.sin6_family = AF_INET6,
+		.sin6_len = sizeof(struct sockaddr_in6),
+	};
 
-	def.sin6_len = mask.sin6_len = gate.sin6_len =
-	    sizeof(struct sockaddr_in6);
-	def.sin6_family = gate.sin6_family = AF_INET6;
-	gate.sin6_addr = dr->rtaddr;
-	fibnum = dr->ifp->if_fib;
-
-	bzero((caddr_t)&info, sizeof(info));
-	info.rti_flags = RTF_GATEWAY;
-	info.rti_info[RTAX_DST] = (struct sockaddr *)&def;
-	info.rti_info[RTAX_GATEWAY] = (struct sockaddr *)&gate;
-	info.rti_info[RTAX_NETMASK] = (struct sockaddr *)&mask;
+	struct sockaddr_in6 gw = {
+		.sin6_family = AF_INET6,
+		.sin6_len = sizeof(struct sockaddr_in6),
+		.sin6_addr = dr->rtaddr,
+	};
 
 	NET_EPOCH_ENTER(et);
-	error = rib_action(fibnum, RTM_DELETE, &info, &rc);
+	error = rib_del_route_px(fibnum, (struct sockaddr *)&dst, 0,
+		    rib_match_gw, (struct sockaddr *)&gw, 0, &rc);
 	if (error == 0) {
 		struct nhop_object *nh = nhop_select_func(rc.rc_nh_old, 0);
 		rt_routemsg(RTM_DELETE, rc.rc_rt, nh, fibnum);
@@ -2420,18 +2404,21 @@ rt6_flush(struct in6_addr *gateway, struct ifnet *ifp)
 int
 nd6_setdefaultiface(int ifindex)
 {
-	int error = 0;
-
-	if (ifindex < 0 || V_if_index < ifindex)
-		return (EINVAL);
-	if (ifindex != 0 && !ifnet_byindex(ifindex))
-		return (EINVAL);
 
 	if (V_nd6_defifindex != ifindex) {
 		V_nd6_defifindex = ifindex;
-		if (V_nd6_defifindex > 0)
+		if (V_nd6_defifindex != 0) {
+			struct epoch_tracker et;
+
+			/*
+			 * XXXGL: this function should use ifnet_byindex_ref!
+			 */
+			NET_EPOCH_ENTER(et);
 			V_nd6_defifp = ifnet_byindex(V_nd6_defifindex);
-		else
+			NET_EPOCH_EXIT(et);
+			if (V_nd6_defifp == NULL)
+				return (EINVAL);
+		} else
 			V_nd6_defifp = NULL;
 
 		/*
@@ -2442,7 +2429,7 @@ nd6_setdefaultiface(int ifindex)
 		scope6_setdefault(V_nd6_defifp);
 	}
 
-	return (error);
+	return (0);
 }
 
 bool

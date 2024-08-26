@@ -1,4 +1,3 @@
-.\" $FreeBSD: 84ca9e8a5a0dc8ac62a1d71fd23f2dd3832bf87a $
 Do not build the
 .Xr llvm-cov 1
 tool.

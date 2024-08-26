@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2011 Ed Schouten <ed@FreeBSD.org>
  * All rights reserved.
@@ -24,13 +24,9 @@
  * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
- *
- * $FreeBSD: 846ea7d4e2688d315b9b246b37cd5c9f4c6b8b97 $
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 846ea7d4e2688d315b9b246b37cd5c9f4c6b8b97 $");
-
 #include <pthread.h>
 
 #include "threads.h"

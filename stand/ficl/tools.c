@@ -54,7 +54,6 @@
 ** Specify breakpoint default action
 */
 
-/* $FreeBSD: db1e94850f5e46033786558c0a85587a05f4853b $ */
 
 #ifdef TESTMAIN
 #include <stdlib.h>

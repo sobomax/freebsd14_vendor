@@ -1,6 +1,5 @@
 #!/bin/sh
 #
-# $FreeBSD: c5c5c220be65d16c46be05ca2f04ea651cc72212 $
 #
 
 # PROVIDE: pwcheck

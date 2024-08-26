@@ -1,4 +1,3 @@
-/* $FreeBSD: 9dd23f9d34b8ce7c07c580231cb1c305d3cc0f86 $ */
 
 #include <errno.h>
 #include <stdlib.h>

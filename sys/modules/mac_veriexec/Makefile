@@ -1,4 +1,3 @@
-# $FreeBSD: 7ec061b075289063c2121508e4dd9add14bebe77 $
 
 .PATH: ${.PARSEDIR:H:H}/security/mac_veriexec
 
@@ -19,7 +18,7 @@ SRCS += \
 
 EXPORT_SYMS+= ve_mutex \
 	mac_veriexec_in_state \
-	mac_veriexec_get_executable_flags
+	mac_veriexec_metadata_get_executable_flags
 
 .if defined(KERNBUILDDIR)
 MKDEP=		-include ${KERNBUILDDIR}/opt_global.h

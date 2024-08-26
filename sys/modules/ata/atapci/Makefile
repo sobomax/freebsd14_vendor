@@ -1,4 +1,3 @@
-# $FreeBSD: bc00b57728ee52f267550b3de4ee477f1a187f9f $
 
 SUBDIR += chipsets
 

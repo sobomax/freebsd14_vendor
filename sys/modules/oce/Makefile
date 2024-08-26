@@ -1,5 +1,4 @@
 #
-# $FreeBSD: f5ea74b979ea7f9c3941a41e8b354bbe8de0ad9d $
 #
 
 .PATH:	${SRCTOP}/sys/dev/oce

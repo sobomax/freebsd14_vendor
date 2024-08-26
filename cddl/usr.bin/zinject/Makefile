@@ -1,4 +1,3 @@
-# $FreeBSD: 1e25b38d4eea480611b5b091292145fea21f86a5 $
 
 ZFSTOP=	${SRCTOP}/sys/contrib/openzfs
 

@@ -23,8 +23,6 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: da8f149b2d10f749fb5b3b1e2193c60b0944270e $
- *
  * Translators and flags for the socket structure.  FreeBSD specific code.
  */
 

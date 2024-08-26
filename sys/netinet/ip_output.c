@@ -32,8 +32,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 595957afe1466ebac3873611220c065d1356d1b2 $");
-
 #include "opt_inet.h"
 #include "opt_ipsec.h"
 #include "opt_kern_tls.h"
@@ -53,7 +51,6 @@ __FBSDID("$FreeBSD: 595957afe1466ebac3873611220c065d1356d1b2 $");
 #include <sys/priv.h>
 #include <sys/proc.h>
 #include <sys/protosw.h>
-#include <sys/rmlock.h>
 #include <sys/sdt.h>
 #include <sys/socket.h>
 #include <sys/socketvar.h>
@@ -62,6 +59,7 @@ __FBSDID("$FreeBSD: 595957afe1466ebac3873611220c065d1356d1b2 $");
 
 #include <net/if.h>
 #include <net/if_var.h>
+#include <net/if_private.h>
 #include <net/if_vlan_var.h>
 #include <net/if_llatbl.h>
 #include <net/ethernet.h>
@@ -107,7 +105,6 @@ SYSCTL_INT(_net_inet_ip, OID_AUTO, mbuf_frag_size, CTLFLAG_RW,
 static void	ip_mloopback(struct ifnet *, const struct mbuf *, int);
 
 extern int in_mcast_loop;
-extern	struct protosw inetsw[];
 
 static inline int
 ip_output_pfil(struct mbuf **mp, struct ifnet *ifp, int flags,
@@ -117,17 +114,13 @@ ip_output_pfil(struct mbuf **mp, struct ifnet *ifp, int flags,
 	struct mbuf *m;
 	struct in_addr odst;
 	struct ip *ip;
-	int pflags = PFIL_OUT;
-
-	if (flags & IP_FORWARDING)
-		pflags |= PFIL_FWD;
 
 	m = *mp;
 	ip = mtod(m, struct ip *);
 
 	/* Run through list of hooks for output packets. */
 	odst.s_addr = ip->ip_dst.s_addr;
-	switch (pfil_run_hooks(V_inet_pfil_head, mp, ifp, pflags, inp)) {
+	switch (pfil_mbuf_out(V_inet_pfil_head, mp, ifp, inp)) {
 	case PFIL_DROPPED:
 		*error = EACCES;
 		/* FALLTHROUGH */
@@ -321,7 +314,6 @@ int
 ip_output(struct mbuf *m, struct mbuf *opt, struct route *ro, int flags,
     struct ip_moptions *imo, struct inpcb *inp)
 {
-	struct rm_priotracker in_ifa_tracker;
 	struct ip *ip;
 	struct ifnet *ifp = NULL;	/* keep compiler happy */
 	struct mbuf *m0;
@@ -463,7 +455,7 @@ again:
 		 */
 		ifp = imo->imo_multicast_ifp;
 		mtu = ifp->if_mtu;
-		IFP_TO_IA(ifp, ia, &in_ifa_tracker);
+		IFP_TO_IA(ifp, ia);
 		isbroadcast = 0;	/* fool gcc */
 		/* Interface may have no addresses. */
 		if (ia != NULL)
@@ -677,6 +669,12 @@ again:
 sendit:
 #if defined(IPSEC) || defined(IPSEC_SUPPORT)
 	if (IPSEC_ENABLED(ipv4)) {
+		m = mb_unmapped_to_ext(m);
+		if (m == NULL) {
+			IPSTAT_INC(ips_odropped);
+			error = ENOBUFS;
+			goto bad;
+		}
 		if ((error = IPSEC_OUTPUT(ipv4, m, inp)) != 0) {
 			if (error == EINPROGRESS)
 				error = 0;
@@ -705,6 +703,7 @@ sendit:
 
 		case 0: /* Continue normally */
 			ip = mtod(m, struct ip *);
+			ip_len = ntohs(ip->ip_len);
 			break;
 
 		case -1: /* Need to try again */
@@ -874,16 +873,14 @@ ip_fragment(struct ip *ip, struct mbuf **m_frag, int mtu,
 	ip_len = ntohs(ip->ip_len);
 	ip_off = ntohs(ip->ip_off);
 
-	if (ip_off & IP_DF) {	/* Fragmentation not allowed */
-		IPSTAT_INC(ips_cantfrag);
-		return EMSGSIZE;
-	}
-
 	/*
-	 * Must be able to put at least 8 bytes per fragment.
+	 * Packet shall not have "Don't Fragment" flag and have at least 8
+	 * bytes of payload.
 	 */
-	if (len < 8)
-		return EMSGSIZE;
+	if (__predict_false((ip_off & IP_DF) || len < 8)) {
+		IPSTAT_INC(ips_cantfrag);
+		return (EMSGSIZE);
+	}
 
 	/*
 	 * If the interface will not calculate checksums on
@@ -1085,33 +1082,6 @@ ip_ctloutput(struct socket *so, struct sockopt *sopt)
 		if (sopt->sopt_level == SOL_SOCKET &&
 		    sopt->sopt_dir == SOPT_SET) {
 			switch (sopt->sopt_name) {
-			case SO_REUSEADDR:
-				INP_WLOCK(inp);
-				if ((so->so_options & SO_REUSEADDR) != 0)
-					inp->inp_flags2 |= INP_REUSEADDR;
-				else
-					inp->inp_flags2 &= ~INP_REUSEADDR;
-				INP_WUNLOCK(inp);
-				error = 0;
-				break;
-			case SO_REUSEPORT:
-				INP_WLOCK(inp);
-				if ((so->so_options & SO_REUSEPORT) != 0)
-					inp->inp_flags2 |= INP_REUSEPORT;
-				else
-					inp->inp_flags2 &= ~INP_REUSEPORT;
-				INP_WUNLOCK(inp);
-				error = 0;
-				break;
-			case SO_REUSEPORT_LB:
-				INP_WLOCK(inp);
-				if ((so->so_options & SO_REUSEPORT_LB) != 0)
-					inp->inp_flags2 |= INP_REUSEPORT_LB;
-				else
-					inp->inp_flags2 &= ~INP_REUSEPORT_LB;
-				INP_WUNLOCK(inp);
-				error = 0;
-				break;
 			case SO_SETFIB:
 				INP_WLOCK(inp);
 				inp->inp_inc.inc_fibnum = so->so_fibnum;
@@ -1174,10 +1144,6 @@ ip_ctloutput(struct socket *so, struct sockopt *sopt)
 					break;
 			}
 			/* FALLTHROUGH */
-		case IP_BINDMULTI:
-#ifdef	RSS
-		case IP_RSS_LISTEN_BUCKET:
-#endif
 		case IP_TOS:
 		case IP_TTL:
 		case IP_MINTTL:
@@ -1270,22 +1236,10 @@ ip_ctloutput(struct socket *so, struct sockopt *sopt)
 			case IP_RECVTOS:
 				OPTSET(INP_RECVTOS);
 				break;
-			case IP_BINDMULTI:
-				OPTSET2(INP_BINDMULTI, optval);
-				break;
 			case IP_RECVFLOWID:
 				OPTSET2(INP_RECVFLOWID, optval);
 				break;
-#ifdef	RSS
-			case IP_RSS_LISTEN_BUCKET:
-				if ((optval >= 0) &&
-				    (optval < rss_getnumbuckets())) {
-					inp->inp_rss_listen_bucket = optval;
-					OPTSET2(INP_RSS_BUCKET_SET, 1);
-				} else {
-					error = EINVAL;
-				}
-				break;
+#ifdef RSS
 			case IP_RECVRSSBUCKETID:
 				OPTSET2(INP_RECVRSSBUCKETID, optval);
 				break;
@@ -1424,7 +1378,6 @@ ip_ctloutput(struct socket *so, struct sockopt *sopt)
 		case IP_DONTFRAG:
 		case IP_BINDANY:
 		case IP_RECVTOS:
-		case IP_BINDMULTI:
 		case IP_FLOWID:
 		case IP_FLOWTYPE:
 		case IP_RECVFLOWID:
@@ -1517,9 +1470,6 @@ ip_ctloutput(struct socket *so, struct sockopt *sopt)
 				optval = OPTBIT2(INP_RECVRSSBUCKETID);
 				break;
 #endif
-			case IP_BINDMULTI:
-				optval = OPTBIT2(INP_BINDMULTI);
-				break;
 			case IP_VLAN_PCP:
 				if (OPTBIT2(INP_2PCP_SET)) {
 					optval = (inp->inp_flags2 &

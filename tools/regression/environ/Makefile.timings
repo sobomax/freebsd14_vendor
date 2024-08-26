@@ -1,5 +1,4 @@
 #
-# $FreeBSD: adc2a987d5345f596e22e1483f00dd0b8eec9d6b $
 #
 SRCS=	timings.c
 PROG=	timings

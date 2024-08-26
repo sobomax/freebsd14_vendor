@@ -19,8 +19,6 @@
  * CDDL HEADER END
  *
  * Portions Copyright 2010 The FreeBSD Foundation
- *
- * $FreeBSD: c40b4b94e38d23a73b3f8debb730b61ff36d8faf $
  */
 
 /*

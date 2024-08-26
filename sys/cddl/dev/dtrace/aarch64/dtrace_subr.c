@@ -19,8 +19,6 @@
  *
  * CDDL HEADER END
  *
- * $FreeBSD: 694e3c70ae2d41640e7ce4662422fbf96ef6a70c $
- *
  */
 /*
  * Copyright 2005 Sun Microsystems, Inc.  All rights reserved.
@@ -208,7 +206,7 @@ dtrace_trap(struct trapframe *frame, u_int type)
 		case EXCP_DATA_ABORT:
 			/* Flag a bad address. */
 			cpu_core[curcpu].cpuc_dtrace_flags |= CPU_DTRACE_BADADDR;
-			cpu_core[curcpu].cpuc_dtrace_illval = 0;
+			cpu_core[curcpu].cpuc_dtrace_illval = frame->tf_far;
 
 			/*
 			 * Offset the instruction pointer to the instruction

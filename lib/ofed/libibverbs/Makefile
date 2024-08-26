@@ -1,4 +1,3 @@
-# $FreeBSD: bf41ddfb6a36f30d2cff537e1ff8e097a4f59f5d $
 
 _spath=	${SRCTOP}/contrib/ofed/libibverbs
 .PATH: ${_spath} ${_spath}/man

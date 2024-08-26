@@ -1,4 +1,3 @@
-.\" $FreeBSD: 0ad24a169db2412adb6e893651490ce23e587b8d $
 Build and install
 .Lb libstats
 and dependent binaries.

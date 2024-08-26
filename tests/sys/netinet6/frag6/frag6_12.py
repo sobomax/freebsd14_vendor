@@ -25,7 +25,6 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: a683782f2b691dc07c94b01e9106551672f85272 $
 #
 
 import argparse
@@ -101,7 +100,7 @@ def main():
 	sp.sendp(ip6f01, iface=args.sendif[0], verbose=False)
 
 	# Wait for ICMPv6 error generation on timeout.
-	sleep(75)
+	sleep(3)
 	sniffer.setEnd()
 	sniffer.join()
 	if not sniffer.foundCorrectPacket:

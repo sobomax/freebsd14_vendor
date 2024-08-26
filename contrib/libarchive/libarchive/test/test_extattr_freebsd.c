@@ -23,7 +23,6 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 #include "test.h"
-__FBSDID("$FreeBSD: ff05aa4a04b150e8f91c930c76baffa571b75296 $");
 
 #if defined(__FreeBSD__) && __FreeBSD__ > 4
 #include <sys/extattr.h>

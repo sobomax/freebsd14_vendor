@@ -34,8 +34,6 @@
  */
 
 #include <machine/asm.h>
-__FBSDID("$FreeBSD: 5a171f5a5e17f6b44cb3ba1c1813f9f3e48d904f $");
-
 #include <machine/riscvreg.h>
 #include <sys/errno.h>
 

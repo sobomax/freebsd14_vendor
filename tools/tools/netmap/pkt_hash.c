@@ -25,7 +25,6 @@
  ** ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  ** POSSIBILITY OF SUCH DAMAGE.
  **/
-/* $FreeBSD: eb9704fd20588227f9628e4543874309b4d3699e $ */
 
 /* for func prototypes */
 #include "pkt_hash.h"

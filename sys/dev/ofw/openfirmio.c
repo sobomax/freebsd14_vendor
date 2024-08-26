@@ -1,8 +1,6 @@
 /*	$NetBSD: openfirmio.c,v 1.4 2002/09/06 13:23:19 gehenna Exp $ */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 30afb85baf8acab3518a30b69820bd11b18ab558 $");
-
 /*-
  * SPDX-License-Identifier: BSD-3-Clause
  *

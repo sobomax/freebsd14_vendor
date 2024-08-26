@@ -1,4 +1,3 @@
-# $FreeBSD: c6f6124feeb30efa017ff24b2d6e38a9f9d1992e $
 
 .PATH: ${SRCTOP}/sys/dev/xl
 

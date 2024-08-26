@@ -1,3 +1,2 @@
-.\" $FreeBSD: 88fb243eafac51736752571fb4fde3c4297ae981 $
 Avoid installing examples to
 .Pa /usr/share/examples/ .

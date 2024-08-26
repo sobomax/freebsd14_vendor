@@ -1,6 +1,6 @@
 #! /bin/sh
 #
-# SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+# SPDX-License-Identifier: BSD-2-Clause
 #
 # Copyright (c) 2002 Gordon Tetlow. All rights reserved.
 # Copyright (c) 2012 Sandvine Incorporated. All rights reserved.
@@ -26,7 +26,6 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: 849d7a37771425f9f2b77a2fc47453ad93bb8e6f $
 
 append="NO"
 delete="NO"
@@ -109,7 +108,7 @@ fi
 
 zfs=$(df -Tn "/boot/" 2>/dev/null | while read _fs _type _other ; do
 	[ "zfs" = "${_type}" ] || continue
-	echo "${_fs%/ROOT/*}"
+	echo "${_fs%%/*}"
 done)
 
 set -e

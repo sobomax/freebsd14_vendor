@@ -22,8 +22,6 @@
  * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
  * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- *
- * $FreeBSD: 77add7574fa809430448b4fec0f800790dc0fdf9 $
  */
 
 #pragma once
@@ -83,3 +81,6 @@ int ifconfig_socket(ifconfig_handle_t *h, const int addressfamily, int *s);
 /** Function to wrap ioctl() and automatically populate ifconfig_errstate when appropriate.*/
 int ifconfig_ioctlwrap(ifconfig_handle_t *h, const int addressfamily,
     unsigned long request, void *data);
+
+void ifconfig_error_clear(ifconfig_handle_t *h);
+void ifconfig_error(ifconfig_handle_t *h, ifconfig_errtype type, int error);

@@ -1,4 +1,3 @@
-# $FreeBSD: 797e9fc43fda9fde9a90e7ca5a8b63bdeb33af33 $
 
 .PATH: ${SRCTOP}/sys/dev/ftwd
 

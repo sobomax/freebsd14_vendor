@@ -23,7 +23,6 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 #include "test.h"
-__FBSDID("$FreeBSD: a57da1a537bfb05ba5525205e9c59ad3784de94a $");
 
 static void
 gname_cleanup(void *d)

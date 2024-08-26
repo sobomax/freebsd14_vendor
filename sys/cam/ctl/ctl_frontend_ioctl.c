@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2003-2009 Silicon Graphics International Corp.
  * Copyright (c) 2012 The FreeBSD Foundation
@@ -30,8 +30,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: f53dae6948679cd9d3f9a795612b83608bc1c22b $");
-
 #include <sys/param.h>
 #include <sys/systm.h>
 #include <sys/kernel.h>
@@ -632,8 +630,9 @@ ctl_ioctl_io(struct cdev *dev, u_long cmd, caddr_t addr, int flag,
 	 */
 	io->io_hdr.nexus.targ_port = cfi->port.targ_port;
 	io->io_hdr.flags |= CTL_FLAG_USER_REQ;
-	if ((io->io_hdr.io_type == CTL_IO_SCSI) &&
-	    (io->scsiio.tag_type != CTL_TAG_UNTAGGED))
+	if ((io->io_hdr.flags & CTL_FLAG_USER_TAG) == 0 &&
+	    io->io_hdr.io_type == CTL_IO_SCSI &&
+	    io->scsiio.tag_type != CTL_TAG_UNTAGGED)
 		io->scsiio.tag_num = atomic_fetchadd_int(&cfi->cur_tag_num, 1);
 
 	retval = cfi_submit_wait(io);

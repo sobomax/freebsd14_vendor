@@ -1,5 +1,5 @@
 /*	$OpenBSD: filter.c,v 1.1 2005/12/28 19:07:07 jcs Exp $ */
-/*	$FreeBSD: 1689d3465fd38ba1d8637f63ee1b1b70f4d2035d $ */
+/*	$FreeBSD: 966628464d28a8a2f4ab21cd2bf6dff64967b92c $ */
 
 /*
  * Copyright (c) 2004, 2005 Camiel Dobbelaar, <cd@sentia.nl>
@@ -173,7 +173,7 @@ do_rollback(void)
 void
 init_filter(char *opt_qname, int opt_verbose)
 {
-	struct pf_status status;
+	struct pfctl_status *status;
 
 	qname = opt_qname;
 
@@ -187,14 +187,17 @@ init_filter(char *opt_qname, int opt_verbose)
 		syslog(LOG_ERR, "can't open /dev/pf");
 		exit(1);
 	}
-	if (ioctl(dev, DIOCGETSTATUS, &status) == -1) {
+	status = pfctl_get_status(dev);
+	if (status == NULL) {
 		syslog(LOG_ERR, "DIOCGETSTATUS");
 		exit(1);
 	}
-	if (!status.running) {
+	if (!status->running) {
 		syslog(LOG_ERR, "pf is disabled");
 		exit(1);
 	}
+
+	pfctl_free_status(status);
 }
 
 int

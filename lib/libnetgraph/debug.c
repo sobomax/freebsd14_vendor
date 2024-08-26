@@ -39,8 +39,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: f44504140b8baab9086a86ee61809aba1599d3d4 $");
-
 #include <sys/types.h>
 #include <sys/time.h>
 #include <sys/ioctl.h>
@@ -59,7 +57,6 @@ __FBSDID("$FreeBSD: f44504140b8baab9086a86ee61809aba1599d3d4 $");
 
 #include <netgraph/ng_UI.h>
 #include <netgraph/ng_async.h>
-#include <netgraph/ng_atmllc.h>
 #include <netgraph/ng_bpf.h>
 #include <netgraph/ng_bridge.h>
 #include <netgraph/ng_car.h>
@@ -96,7 +93,6 @@ __FBSDID("$FreeBSD: f44504140b8baab9086a86ee61809aba1599d3d4 $");
 #include <netgraph/ng_socket.h>
 #include <netgraph/ng_source.h>
 #include <netgraph/ng_split.h>
-#include <netgraph/ng_sppp.h>
 #include <netgraph/ng_tag.h>
 #include <netgraph/ng_tcpmss.h>
 #include <netgraph/ng_tee.h>
@@ -134,7 +130,6 @@ struct ng_cookie {
 static const struct ng_cookie cookies[] = {
 	COOKIE(UI),
 	COOKIE(ASYNC),
-	COOKIE(ATMLLC),
 	COOKIE(BPF),
 	COOKIE(BRIDGE),
 	COOKIE(CAR),
@@ -172,7 +167,6 @@ static const struct ng_cookie cookies[] = {
 	COOKIE(SOCKET),
 	COOKIE(SOURCE),
 	COOKIE(SPLIT),
-	COOKIE(SPPP),
 	COOKIE(TAG),
 	COOKIE(TCPMSS),
 	COOKIE(TEE),

@@ -31,7 +31,6 @@
  * SUCH DAMAGE.
  *
  *	@(#)if_llc.h	8.1 (Berkeley) 6/10/93
- * $FreeBSD: b1bd76863032b902fa9791d886f42f8e3dbb96ce $
  */
 
 #ifndef _NET_IF_LLC_H_

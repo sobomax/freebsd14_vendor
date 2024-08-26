@@ -1,4 +1,3 @@
-# $FreeBSD: 6cffacef5d7a08a3b15d95ed3a02f599121d8a0c $
 .PATH:  ${SRCTOP}/sys/dev/mlx4/mlx4_core
 
 KMOD=	mlx4

@@ -29,7 +29,6 @@
  * SUCH DAMAGE.
  *
  *	@(#)extern.h	8.3 (Berkeley) 4/16/94
- *	$FreeBSD: 9abd97099ce956f3e275eb6f8373d9c27a060e4b $
  */
 
 #include <sys/cdefs.h>
@@ -89,6 +88,7 @@ exec_f	f_delete;
 exec_f	f_depth;
 exec_f	f_empty;
 exec_f	f_exec;
+exec_f	f_executable;
 exec_f	f_expr;
 exec_f	f_false;
 exec_f	f_flags;
@@ -110,11 +110,13 @@ exec_f	f_print;
 exec_f	f_print0;
 exec_f	f_prune;
 exec_f	f_quit;
+exec_f	f_readable;
 exec_f	f_regex;
 exec_f	f_size;
 exec_f	f_sparse;
 exec_f	f_type;
 exec_f	f_user;
+exec_f	f_writable;
 
 extern int ftsoptions, ignore_readdir_race, isdepth, isoutput;
 extern int issort, isxargs;

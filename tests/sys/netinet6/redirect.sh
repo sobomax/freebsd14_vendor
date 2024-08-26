@@ -25,7 +25,6 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: f2c869544dff34e2f06e14467bd8b42c33e5921f $
 #
 
 . $(atf_get_srcdir)/../common/vnet.subr

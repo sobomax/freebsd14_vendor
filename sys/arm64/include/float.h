@@ -27,8 +27,11 @@
  * SUCH DAMAGE.
  *
  *	from: @(#)float.h	7.1 (Berkeley) 5/8/90
- * $FreeBSD: 0829f6f52aa91c2047d4c3227886734ccdd9eb3f $
  */
+
+#ifdef __arm__
+#include <arm/float.h>
+#else /* !__arm__ */
 
 #ifndef _MACHINE_FLOAT_H_
 #define	_MACHINE_FLOAT_H_
@@ -92,3 +95,5 @@ __END_DECLS
 #endif /* __ISO_C_VISIBLE >= 2011 */
 
 #endif /* _MACHINE_FLOAT_H_ */
+
+#endif /* !__arm__ */

@@ -31,12 +31,7 @@
  * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
- *
- * @(#) Header: arp.c,v 1.5 93/07/15 05:52:26 leres Exp  (LBL)
  */
-
-#include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 9152cb2773ddb7ce211bf9be5ffcec7df9b128c9 $");
 
 #include <sys/types.h>
 #include <sys/socket.h>

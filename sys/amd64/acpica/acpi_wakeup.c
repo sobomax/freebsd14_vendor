@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2001 Takanori Watanabe <takawata@jp.freebsd.org>
  * Copyright (c) 2001-2012 Mitsuru IWASAKI <iwasaki@jp.freebsd.org>
@@ -30,8 +30,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 62e11f5797f6bcce7047574211767102ca507d89 $");
-
 #include <sys/param.h>
 #include <sys/bus.h>
 #include <sys/eventhandler.h>
@@ -308,6 +306,7 @@ acpi_wakeup_machdep(struct acpi_softc *sc, int state, int sleep_result,
 		amd64_syscall_ret_flush_l1d_recalc();
 		hw_ssb_recalculate(true);
 		x86_rngds_mitg_recalculate(true);
+		zenbleed_check_and_apply(true);
 
 		AcpiSetFirmwareWakingVector(0, 0);
 	} else {

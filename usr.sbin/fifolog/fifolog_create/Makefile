@@ -1,4 +1,3 @@
-# $FreeBSD: 04370e6e358c61aaf18fa97460a7a6ba9f2937c5 $
 
 PROG=	fifolog_create
 

@@ -1,4 +1,3 @@
-# $FreeBSD: e789793a68b8a3606a73f65de7999708535d9936 $
 
 PACKAGE=geom
 .PATH: ${.CURDIR:H:H}/misc

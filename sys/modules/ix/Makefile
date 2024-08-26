@@ -1,4 +1,3 @@
-#$FreeBSD: 1affdeb1d024fc3e63134eb7a587928bb3046ba6 $
 
 .PATH:  ${SRCTOP}/sys/dev/ixgbe
 

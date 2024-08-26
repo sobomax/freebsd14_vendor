@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (C) 2019 Netflix, Inc
  *
@@ -26,8 +26,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 0c53c54b9818992c7781e29494b6fa72a7fa4692 $");
-
 #include <sys/param.h>
 #include <sys/ioccom.h>
 

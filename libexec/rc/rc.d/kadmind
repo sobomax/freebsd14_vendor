@@ -1,6 +1,5 @@
 #!/bin/sh
 #
-# $FreeBSD: 773b2d0e4995a87cdf907bacda449573d17152e1 $
 #
 
 # PROVIDE: kadmind

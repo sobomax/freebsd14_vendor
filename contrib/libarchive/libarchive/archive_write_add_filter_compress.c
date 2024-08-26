@@ -58,8 +58,6 @@
 
 #include "archive_platform.h"
 
-__FBSDID("$FreeBSD: d404fae7dba48b9fddf986dcded5a7e2672e5b39 $");
-
 #ifdef HAVE_ERRNO_H
 #include <errno.h>
 #endif
@@ -352,7 +350,7 @@ archive_compressor_compress_write(struct archive_write_filter *f,
 	while (length--) {
 		c = *bp++;
 		state->in_count++;
-		state->cur_fcode = (c << 16) + state->cur_code;
+		state->cur_fcode = (c << 16) | state->cur_code;
 		i = ((c << HSHIFT) ^ state->cur_code);	/* Xor hashing. */
 
 		if (state->hashtab[i] == state->cur_fcode) {

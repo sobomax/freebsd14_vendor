@@ -32,7 +32,6 @@
  * SUCH DAMAGE.
  *
  *	@(#)mystring.h	8.2 (Berkeley) 5/4/95
- * $FreeBSD: ff4384d21c35e4e0e990cdc52d506034363b587d $
  */
 
 #include <string.h>

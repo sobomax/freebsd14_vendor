@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2005-2009 Ariff Abdullah <ariff@FreeBSD.org>
  * Portions Copyright (c) Ryan Beasley <ryan.beasley@gmail.com> - GSoC 2006
@@ -39,8 +39,6 @@
 #define SND_USE_FXDIV
 #define	SND_DECLARE_FXDIV
 #include "snd_fxdiv_gen.h"
-
-SND_DECLARE_FILE("$FreeBSD: b86b67e44344e5c9fe6bf72349ac1755a74a0068 $");
 
 struct snd_dbuf *
 sndbuf_create(device_t dev, char *drv, char *desc, struct pcm_channel *channel)
@@ -107,7 +105,7 @@ sndbuf_alloc(struct snd_dbuf *b, bus_dma_tag_t dmatag, int dmaflags,
 		return (ENOMEM);
 	}
 	if (bus_dmamap_load(b->dmatag, b->dmamap, b->buf, b->maxsize,
-	    sndbuf_setmap, b, 0) != 0 || b->buf_addr == 0) {
+	    sndbuf_setmap, b, BUS_DMA_NOWAIT) != 0 || b->buf_addr == 0) {
 		sndbuf_free(b);
 		return (ENOMEM);
 	}
@@ -149,6 +147,7 @@ sndbuf_free(struct snd_dbuf *b)
 		} else
 			free(b->buf, M_DEVBUF);
 	}
+	seldrain(sndbuf_getsel(b));
 
 	b->tmpbuf = NULL;
 	b->shadbuf = NULL;

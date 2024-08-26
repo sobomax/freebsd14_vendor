@@ -25,7 +25,6 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: 49cd771ed064ef5bc6a5f4732cdec51b523b00ea $
 
 function die(msg) {
 	print msg;

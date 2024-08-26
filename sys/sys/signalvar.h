@@ -29,7 +29,6 @@
  * SUCH DAMAGE.
  *
  *	@(#)signalvar.h	8.6 (Berkeley) 2/19/95
- * $FreeBSD: 70f4f1bdaa50addef10be8e9761d6b689d4f9ad3 $
  */
 
 #ifndef _SYS_SIGNALVAR_H_
@@ -272,7 +271,6 @@ int __sys_sigfastblock(int cmd, void *ptr);
 #endif
 
 #ifdef _KERNEL
-extern sigset_t fastblock_mask;
 extern bool sigfastblock_fetch_always;
 
 /* Return nonzero if process p has an unmasked pending signal. */
@@ -301,14 +299,14 @@ sigsetmasked(sigset_t *set, sigset_t *mask)
 #define	ksiginfo_init(ksi)			\
 do {						\
 	bzero(ksi, sizeof(ksiginfo_t));		\
-} while(0)
+} while (0)
 
 #define	ksiginfo_init_trap(ksi)			\
 do {						\
 	ksiginfo_t *kp = ksi;			\
 	bzero(kp, sizeof(ksiginfo_t));		\
 	kp->ksi_flags |= KSI_TRAP;		\
-} while(0)
+} while (0)
 
 static __inline void
 ksiginfo_copy(ksiginfo_t *src, ksiginfo_t *dst)
@@ -383,7 +381,6 @@ sigallowstop(int prev)
 
 int	cursig(struct thread *td);
 void	execsigs(struct proc *p);
-void	gsignal(int pgid, int sig, ksiginfo_t *ksi);
 void	killproc(struct proc *p, const char *why);
 ksiginfo_t *ksiginfo_alloc(int mwait);
 void	ksiginfo_free(ksiginfo_t *ksi);
@@ -406,7 +403,6 @@ void	sigexit(struct thread *td, int sig) __dead2;
 int	sigev_findtd(struct proc *p, struct sigevent *sigev, struct thread **);
 void	sigfastblock_clear(struct thread *td);
 void	sigfastblock_fetch(struct thread *td);
-void	sigfastblock_setpend(struct thread *td, bool resched);
 int	sig_intr(void);
 void	siginit(struct proc *p);
 void	signotify(struct thread *td);

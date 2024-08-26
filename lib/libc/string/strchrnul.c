@@ -22,9 +22,6 @@
  * TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-#include <sys/cdefs.h>
-__FBSDID("$FreeBSD: e1fb838860426aa037b03f9705af2fd4ca67fc8b $");
-
 #include <limits.h>
 #include <stdint.h>
 #include <string.h>

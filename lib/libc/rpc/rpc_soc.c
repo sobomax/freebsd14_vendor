@@ -42,9 +42,6 @@
 #if defined(LIBC_SCCS) && !defined(lint)
 static char sccsid[] = "@(#)rpc_soc.c 1.41 89/05/02 Copyr 1988 Sun Micro";
 #endif
-#include <sys/cdefs.h>
-__FBSDID("$FreeBSD: ae23442e9a1659e22a9d4161b5c6c13769be2238 $");
-
 #ifdef PORTMAP
 /*
  * rpc_soc.c

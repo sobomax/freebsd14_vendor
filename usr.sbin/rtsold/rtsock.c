@@ -1,5 +1,4 @@
 /*	$KAME: rtsock.c,v 1.3 2000/10/10 08:46:45 itojun Exp $	*/
-/*	$FreeBSD: 4dfbf61f47db30ffaf6ed2acdab70370e8ae3664 $	*/
 
 /*-
  * SPDX-License-Identifier: BSD-3-Clause

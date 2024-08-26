@@ -3,8 +3,6 @@
 --
 -- FreeBSD SMI { enterprises 2238 }
 --
--- $FreeBSD: 0a745c3a37547b4d71fe99eb5bbb3f5ef4fb549b $
---
 -- *****************************************************************
 
 FREEBSD-MIB DEFINITIONS ::= BEGIN

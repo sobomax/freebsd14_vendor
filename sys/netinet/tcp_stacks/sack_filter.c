@@ -24,7 +24,6 @@
  *
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 96728f360463d097a40fe7e81153e7d7d76f027a $");
 #ifndef _KERNEL
 #define _WANT_TCPCB 1
 #endif
@@ -35,6 +34,8 @@ __FBSDID("$FreeBSD: 96728f360463d097a40fe7e81153e7d7d76f027a $");
 #include <sys/mbuf.h>
 #include <sys/sockopt.h>
 #endif
+#include <netinet/in.h>
+#include <netinet/in_pcb.h>
 #include <netinet/tcp.h>
 #include <netinet/tcp_var.h>
 #include <netinet/tcp_seq.h>

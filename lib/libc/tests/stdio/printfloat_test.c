@@ -28,9 +28,6 @@
  * Test for printf() floating point formats.
  */
 
-#include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 736ba1b493efd3ed5b212fc2d636d813e696c04f $");
-
 #include <err.h>
 #include <fenv.h>
 #include <float.h>

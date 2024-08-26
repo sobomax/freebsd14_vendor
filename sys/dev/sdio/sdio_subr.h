@@ -53,8 +53,6 @@
  * or the SD Card Association to disclose or distribute any technical
  * information, know-how or other confidential information to any third party.
  *
- *
- * $FreeBSD: 43a5b10857cc477e77dffcdfc7c950c14849fe2a $
  */
 
 #ifndef _SDIO_SUBR_H_

@@ -25,8 +25,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 17a7ac2a9fb74b5680b669891385616e2899a485 $");
-
 /*
  * Tegra GPIO driver.
  */
@@ -882,8 +880,6 @@ static device_method_t tegra_gpio_methods[] = {
 	DEVMETHOD_END
 };
 
-static devclass_t tegra_gpio_devclass;
 static DEFINE_CLASS_0(gpio, tegra_gpio_driver, tegra_gpio_methods,
     sizeof(struct tegra_gpio_softc));
-EARLY_DRIVER_MODULE(tegra_gpio, simplebus, tegra_gpio_driver,
-    tegra_gpio_devclass, NULL, NULL, 70);
+EARLY_DRIVER_MODULE(tegra_gpio, simplebus, tegra_gpio_driver, NULL, NULL, 70);

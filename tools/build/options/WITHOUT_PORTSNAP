@@ -1,4 +1,0 @@
-.\" $FreeBSD: 8b023fd65251722433d1b0a2f822cf5968434453 $
-Do not build or install
-.Xr portsnap 8
-and related files.

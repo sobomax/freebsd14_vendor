@@ -37,8 +37,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 340de78d6ae20decef76c95b149f2b161f95fbf1 $");
-
 #include "opt_inet.h"
 #include "opt_bwi.h"
 #include "opt_wlan.h"
@@ -1505,7 +1503,6 @@ bwi_stop_locked(struct bwi_softc *sc, int statechg)
 void
 bwi_intr(void *xsc)
 {
-	struct epoch_tracker et;
 	struct bwi_softc *sc = xsc;
 	struct bwi_mac *mac;
 	uint32_t intr_status;
@@ -1625,9 +1622,7 @@ bwi_intr(void *xsc)
 		device_printf(sc->sc_dev, "intr noise\n");
 
 	if (txrx_intr_status[0] & BWI_TXRX_INTR_RX) {
-		NET_EPOCH_ENTER(et);
 		rx_data = sc->sc_rxeof(sc);
-		NET_EPOCH_EXIT(et);
 		if (sc->sc_flags & BWI_F_STOP) {
 			BWI_UNLOCK(sc);
 			return;
@@ -3394,7 +3389,7 @@ bwi_txeof(struct bwi_softc *sc)
 {
 
 	for (;;) {
-		uint32_t tx_status0, tx_status1;
+		uint32_t tx_status0, tx_status1 __unused;
 		uint16_t tx_id;
 		int data_txcnt;
 

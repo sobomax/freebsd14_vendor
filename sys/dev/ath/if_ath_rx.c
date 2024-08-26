@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2002-2009 Sam Leffler, Errno Consulting
  * All rights reserved.
@@ -30,8 +30,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 58da21f096389a2d1f568d7194987cb8d89321f2 $");
-
 /*
  * Driver for the Atheros Wireless LAN controller.
  *
@@ -463,6 +461,7 @@ ath_recv_mgmt(struct ieee80211_node *ni, struct mbuf *m,
 			    sc->sc_syncbeacon &&
 			    (!sc->sc_swbmiss) &&
 			    ni == vap->iv_bss &&
+			    ((vap->iv_flags_ext & IEEE80211_FEXT_SWBMISS) == 0) &&
 			    (vap->iv_state == IEEE80211_S_RUN || vap->iv_state == IEEE80211_S_SLEEP)) {
 				DPRINTF(sc, ATH_DEBUG_BEACON,
 				    "%s: syncbeacon=1; syncing\n",
@@ -667,8 +666,6 @@ ath_rx_pkt(struct ath_softc *sc, struct ath_rx_status *rs, HAL_STATUS status,
 	struct ieee80211_node *ni;
 	int is_good = 0;
 	struct ath_rx_edma *re = &sc->sc_rxedma[qtype];
-
-	NET_EPOCH_ASSERT();
 
 	/*
 	 * Calculate the correct 64 bit TSF given
@@ -1091,8 +1088,6 @@ ath_rx_proc(struct ath_softc *sc, int resched)
 	int kickpcu = 0;
 	int ret;
 
-	NET_EPOCH_ASSERT();
-
 	/* XXX we must not hold the ATH_LOCK here */
 	ATH_UNLOCK_ASSERT(sc);
 	ATH_PCU_UNLOCK_ASSERT(sc);
@@ -1312,7 +1307,6 @@ static void
 ath_legacy_rx_tasklet(void *arg, int npending)
 {
 	struct ath_softc *sc = arg;
-	struct epoch_tracker et;
 
 	ATH_KTR(sc, ATH_KTR_RXPROC, 1, "ath_rx_proc: pending=%d", npending);
 	DPRINTF(sc, ATH_DEBUG_RX_PROC, "%s: pending %u\n", __func__, npending);
@@ -1325,18 +1319,14 @@ ath_legacy_rx_tasklet(void *arg, int npending)
 	}
 	ATH_PCU_UNLOCK(sc);
 
-	NET_EPOCH_ENTER(et);
 	ath_rx_proc(sc, 1);
-	NET_EPOCH_EXIT(et);
 }
 
 static void
 ath_legacy_flushrecv(struct ath_softc *sc)
 {
-	struct epoch_tracker et;
-	NET_EPOCH_ENTER(et);
+
 	ath_rx_proc(sc, 0);
-	NET_EPOCH_EXIT(et);
 }
 
 static void

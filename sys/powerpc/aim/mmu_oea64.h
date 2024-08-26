@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (C) 2010 Nathan Whitehorn
  * All rights reserved.
@@ -23,8 +23,6 @@
  * WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR
  * OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- *
- * $FreeBSD: e0b47bad8eed6175693c60090e868a1bc01605bd $
  */
 
 #ifndef _POWERPC_AIM_MMU_OEA64_H
@@ -76,6 +74,9 @@ void		moea64_mid_bootstrap(vm_offset_t kernelstart,
 		    vm_offset_t kernelend);
 void		moea64_late_bootstrap(vm_offset_t kernelstart,
 		    vm_offset_t kernelend);
+
+/* "base" install method for initializing moea64 pmap ifuncs */
+void		moea64_install(void);
 
 int64_t		moea64_pte_replace(struct pvo_entry *, int);
 int64_t		moea64_pte_insert(struct pvo_entry *);

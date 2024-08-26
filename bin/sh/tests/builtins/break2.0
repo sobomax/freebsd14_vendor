@@ -1,4 +1,3 @@
-# $FreeBSD: ff52dd32146919c32ba4e62fdb4f07211ea30ea8 $
 
 # It is not immediately obvious that this should work, and someone probably
 # relies on it.

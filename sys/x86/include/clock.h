@@ -2,8 +2,6 @@
  * Kernel interface to machine-dependent clock driver.
  * Garrett Wollman, September 1994.
  * This file is in the public domain.
- *
- * $FreeBSD: 9aeccadf89aac7efd86c6db7a6adcaad4732645e $
  */
 
 #ifndef _MACHINE_CLOCK_H_

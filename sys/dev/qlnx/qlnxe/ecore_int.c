@@ -28,8 +28,6 @@
  * File : ecore_int.c
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 16d3fcb3b1e65be73e10a877cb7b14e3fb27b96b $");
-
 #include "bcm_osal.h"
 #include "ecore.h"
 #include "ecore_spq.h"

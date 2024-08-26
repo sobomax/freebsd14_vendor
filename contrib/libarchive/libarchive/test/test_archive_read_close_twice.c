@@ -24,8 +24,6 @@
  */
 
 #include "test.h"
-__FBSDID("$FreeBSD: 16cc805fe027baeedff5fb5c1ffdcb1925057597 $");
-
 
 DEFINE_TEST(test_archive_read_close_twice)
 {

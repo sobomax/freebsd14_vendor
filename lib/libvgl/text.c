@@ -29,8 +29,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 18633f8d4be03cb2c864b7a5e136e526f5b41131 $");
-
 #include <stdio.h>
 #include <sys/fbio.h>
 #include "vgl.h"

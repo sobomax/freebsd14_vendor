@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2012 Robert N. M. Watson
  * All rights reserved.
@@ -31,8 +31,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: bf60f3a8973c7dfc484b70eb374b6cd883526fcf $");
-
 #include <sys/param.h>
 #include <sys/bus.h>
 #include <sys/condvar.h>
@@ -55,7 +53,8 @@ __FBSDID("$FreeBSD: bf60f3a8973c7dfc484b70eb374b6cd883526fcf $");
 #include <dev/altera/sdcard/altera_sdcard.h>
 
 static int
-altera_sdcard_disk_dump(void *arg, void *virtual, off_t offset, size_t length)
+altera_sdcard_disk_dump(void *arg, void *virtual, vm_offset_t physical,
+    off_t offset, size_t length)
 {
 
 	panic("%s: not yet", __func__);

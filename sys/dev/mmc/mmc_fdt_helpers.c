@@ -26,8 +26,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 5c7074faa97b32d3f010b0061bc11f339520b458 $");
-
 #include <sys/param.h>
 #include <sys/bus.h>
 #include <sys/kernel.h>
@@ -69,7 +67,7 @@ mmc_fdt_parse(device_t dev, phandle_t node, struct mmc_helper *helper,
 			device_printf(dev, "vmmc-supply regulator found\n");
 	}
 	if (regulator_get_by_ofw_property(dev, 0, "vqmmc-supply",
-	    &helper->vqmmc_supply) == 0 && bootverbose) {
+	    &helper->vqmmc_supply) == 0) {
 		if (bootverbose)
 			device_printf(dev, "vqmmc-supply regulator found\n");
 	}
@@ -319,7 +317,7 @@ mmc_fdt_gpio_get_present(struct mmc_helper *helper)
 
 	gpio_pin_is_active(helper->cd_pin, &pinstate);
 
-	return (pinstate ^ (helper->props & MMC_PROP_CD_INVERTED));
+	return (pinstate ^ (bool)(helper->props & MMC_PROP_CD_INVERTED));
 }
 
 bool
@@ -335,7 +333,7 @@ mmc_fdt_gpio_get_readonly(struct mmc_helper *helper)
 
 	gpio_pin_is_active(helper->wp_pin, &pinstate);
 
-	return (pinstate ^ (helper->props & MMC_PROP_WP_INVERTED));
+	return (pinstate ^ (bool)(helper->props & MMC_PROP_WP_INVERTED));
 }
 
 void

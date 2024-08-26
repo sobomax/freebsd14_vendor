@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2000 Mark R. V. Murray & Jeroen C. van Gelderen
  * Copyright (c) 2001-2004 Mark R. V. Murray
@@ -30,8 +30,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 54b648bbf0861bb3ff147feae68cd541ad497b3f $");
-
 #include <sys/param.h>
 #include <sys/systm.h>
 #include <sys/conf.h>
@@ -109,12 +107,6 @@ null_ioctl(struct cdev *dev __unused, u_long cmd, caddr_t data __unused,
 
 	error = 0;
 	switch (cmd) {
-#ifdef COMPAT_FREEBSD12
-	case DIOCSKERNELDUMP_FREEBSD12:
-		if (cmd == DIOCSKERNELDUMP_FREEBSD12)
-			gone_in(14, "FreeBSD 12.x ABI compat");
-		/* FALLTHROUGH */
-#endif
 	case DIOCSKERNELDUMP:
 		bzero(&kda, sizeof(kda));
 		kda.kda_index = KDA_REMOVE_ALL;

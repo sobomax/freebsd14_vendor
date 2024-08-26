@@ -31,8 +31,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 340951089248fd676922e6b9cfead45069e30fac $");
-
 #include <sys/param.h>
 #include <sys/systm.h>
 
@@ -125,7 +123,7 @@ db_unary(db_expr_t *valuep)
 	    return (true);
 	}
 	if (t == tEXCL) {
-	    if(!db_unary(valuep)) {
+	    if (!db_unary(valuep)) {
 		db_printf("Expression syntax error after '%c'\n", '!');
 		db_error(NULL);
 		/* NOTREACHED  */
@@ -134,7 +132,7 @@ db_unary(db_expr_t *valuep)
 	    return (true);
 	}
 	if (t == tBIT_NOT) {
-	    if(!db_unary(valuep)) {
+	    if (!db_unary(valuep)) {
 		db_printf("Expression syntax error after '%c'\n", '~');
 		db_error(NULL);
 		/* NOTREACHED */

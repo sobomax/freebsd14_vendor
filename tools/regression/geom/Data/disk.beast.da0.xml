@@ -1,7 +1,6 @@
 <?xml version="1.0"?>
 <DISKIMAGE>
   <comment>
-    $FreeBSD: 96ad5f74ddef765ebd153c8f5e821ee3585797f1 $
     alpha BSD label from beast.freebsd.org
   </comment>
   <sectorsize>512</sectorsize>

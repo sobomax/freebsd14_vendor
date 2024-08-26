@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 1997, 1998 Justin T. Gibbs.
  * Copyright (c) 2013 The FreeBSD Foundation
@@ -31,8 +31,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: ae62f83ea30007c65a829d1fff3724e204197ff5 $");
-
 #include "opt_acpi.h"
 
 #include <sys/param.h>
@@ -54,41 +52,6 @@ __FBSDID("$FreeBSD: ae62f83ea30007c65a829d1fff3724e204197ff5 $");
 #include <vm/pmap.h>
 #include <machine/bus.h>
 #include <x86/include/busdma_impl.h>
-
-/*
- * Convenience function for manipulating driver locks from busdma (during
- * busdma_swi, for example).
- */
-void
-busdma_lock_mutex(void *arg, bus_dma_lock_op_t op)
-{
-	struct mtx *dmtx;
-
-	dmtx = (struct mtx *)arg;
-	switch (op) {
-	case BUS_DMA_LOCK:
-		mtx_lock(dmtx);
-		break;
-	case BUS_DMA_UNLOCK:
-		mtx_unlock(dmtx);
-		break;
-	default:
-		panic("Unknown operation 0x%x for busdma_lock_mutex!", op);
-	}
-}
-
-/*
- * dflt_lock should never get called.  It gets put into the dma tag when
- * lockfunc == NULL, which is only valid if the maps that are associated
- * with the tag are meant to never be defered.
- * XXX Should have a way to identify which driver is responsible here.
- */
-void
-bus_dma_dflt_lock(void *arg, bus_dma_lock_op_t op)
-{
-
-	panic("driver error: busdma dflt_lock called");
-}
 
 /*
  * Return true if a match is made.
@@ -161,7 +124,7 @@ common_bus_dma_tag_create(struct bus_dma_tag_common *parent,
 		common->lockfunc = lockfunc;
 		common->lockfuncarg = lockfuncarg;
 	} else {
-		common->lockfunc = bus_dma_dflt_lock;
+		common->lockfunc = _busdma_dflt_lock;
 		common->lockfuncarg = NULL;
 	}
 
@@ -220,6 +183,10 @@ bus_dma_tag_create(bus_dma_tag_t parent, bus_size_t alignment,
 {
 	struct bus_dma_tag_common *tc;
 	int error;
+
+	/* Filters are deprecated, emit a warning. */
+	if (filter != NULL || filterarg != NULL)
+		printf("Warning: use of filters is deprecated; see busdma(9)\n");
 
 	if (parent == NULL) {
 		error = bus_dma_bounce_impl.tag_create(parent, alignment,

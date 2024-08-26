@@ -1,7 +1,6 @@
 #!/usr/bin/perl -w
 
 #
-# $FreeBSD: a8baf4ee6a783c0057af57e938169c80d5cede5f $
 #
 # This script compares the file iso3166 (from head/share/misc) with the files
 # list-en1-semic-3.txt (from

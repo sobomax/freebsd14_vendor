@@ -1,5 +1,4 @@
 #	from: @(#)sys.mk	8.2 (Berkeley) 3/21/94
-# $FreeBSD: 89ac2c54965638918340db31eaecb42708948ee6 $
 
 unix		?=	We run FreeBSD, not UNIX.
 .FreeBSD	?=	true
@@ -13,7 +12,7 @@ unix		?=	We run FreeBSD, not UNIX.
 # and/or endian.  This is called MACHINE_CPU in NetBSD, but that's used
 # for something different in FreeBSD.
 #
-__TO_CPUARCH=C/mips(n32|64)?(el)?(hf)?/mips/:C/arm(v[67])?(eb)?/arm/:C/powerpc(64|64le|spe)/powerpc/:C/riscv64(sf)?/riscv/
+__TO_CPUARCH=C/arm(v[67])?/arm/:C/powerpc(64|64le|spe)/powerpc/:C/riscv64/riscv/
 MACHINE_CPUARCH=${MACHINE_ARCH:${__TO_CPUARCH}}
 .endif
 
@@ -33,6 +32,7 @@ __DEFAULT_NO_OPTIONS= \
 
 __DEFAULT_DEPENDENT_OPTIONS= \
 	AUTO_OBJ/DIRDEPS_BUILD \
+	META_ERROR_TARGET/DIRDEPS_BUILD \
 	META_MODE/DIRDEPS_BUILD \
 	STAGING/DIRDEPS_BUILD \
 	SYSROOT/DIRDEPS_BUILD
@@ -57,27 +57,13 @@ MK_META_MODE=	no
 .endif
 
 .if ${MK_DIRDEPS_BUILD} == "yes"
-.sinclude <meta.sys.mk>
-.elif ${MK_META_MODE} == "yes"
-META_MODE+=	meta
-.if empty(.MAKEFLAGS:M-s)
-# verbose will show .MAKE.META.PREFIX for each target.
-META_MODE+=	verbose
+.-include <sys.dirdeps.mk>
 .endif
-.if !defined(NO_META_MISSING)
-META_MODE+=	missing-meta=yes
-.endif
-# silent will hide command output if a .meta file is created.
-.if !defined(NO_SILENT)
-META_MODE+=	silent=yes
-.endif
+.if ${MK_META_MODE} == "yes"
 .if !exists(/dev/filemon) || defined(NO_FILEMON)
 META_MODE+= nofilemon
 .endif
-# Require filemon data with bmake
-.if empty(META_MODE:Mnofilemon)
-META_MODE+= missing-filemon=yes
-.endif
+.-include <meta.sys.mk>
 .endif
 META_MODE?= normal
 .export META_MODE
@@ -242,7 +228,7 @@ LFLAGS		?=
 # compiler driver flags (e.g. -mabi=*) that conflict with flags to LD.
 LD		?=	ld
 LDFLAGS		?=
-_LDFLAGS	=	${LDFLAGS:S/-Wl,//g:N-mabi=*:N-fuse-ld=*:N--ld-path=*}
+_LDFLAGS	=	${LDFLAGS:S/-Wl,//g:N-mabi=*:N-fuse-ld=*:N--ld-path=*:N-fsanitize=*:N-fno-sanitize=*}
 
 MAKE		?=	make
 

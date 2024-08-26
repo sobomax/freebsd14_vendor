@@ -7,8 +7,6 @@
  *
  *  Copyright (c) 1984, 1989, William LeFebvre, Rice University
  *  Copyright (c) 1989, 1990, 1992, William LeFebvre, Northwestern University
- *
- * $FreeBSD: 5325dde87c24ec30d0f94fdac5471af6001bc84b $
  */
 
 /*

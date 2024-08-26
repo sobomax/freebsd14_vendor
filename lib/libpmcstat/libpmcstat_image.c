@@ -25,8 +25,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 7e021666aa58e8df452bf182bfbd5d3c5c50eeab $");
-
 #include <sys/types.h>
 #include <sys/cpuset.h>
 #include <sys/param.h>
@@ -43,6 +41,7 @@ __FBSDID("$FreeBSD: 7e021666aa58e8df452bf182bfbd5d3c5c50eeab $");
 #include <fcntl.h>
 #include <pmc.h>
 #include <pmclog.h>
+#include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -305,6 +304,7 @@ pmcstat_image_get_elf_params(struct pmcstat_image *image,
 	size_t i, nph, nsh;
 	const char *path, *elfbase;
 	char *p, *endp;
+	bool first_exec_segment;
 	uintfptr_t minva, maxva;
 	Elf *e;
 	Elf_Scn *scn;
@@ -313,7 +313,6 @@ pmcstat_image_get_elf_params(struct pmcstat_image *image,
 	GElf_Shdr sh;
 	enum pmcstat_image_type image_type;
 	char buffer[PATH_MAX];
-	char buffer_modules[PATH_MAX];
 
 	assert(image->pi_type == PMCSTAT_IMAGE_UNKNOWN);
 
@@ -328,32 +327,19 @@ pmcstat_image_get_elf_params(struct pmcstat_image *image,
 	assert(path != NULL);
 
 	/*
-	 * Look for kernel modules under FSROOT/KERNELPATH/NAME and
-	 * FSROOT/boot/modules/NAME, and user mode executable objects
-	 * under FSROOT/PATHNAME.
+	 * Look for files under FSROOT/PATHNAME.
 	 */
-	if (image->pi_iskernelmodule) {
-		(void) snprintf(buffer, sizeof(buffer), "%s%s/%s",
-		    args->pa_fsroot, args->pa_kernel, path);
-		(void) snprintf(buffer_modules, sizeof(buffer_modules),
-		    "%s/boot/modules/%s", args->pa_fsroot, path);
-	} else {
-		(void) snprintf(buffer, sizeof(buffer), "%s%s",
-		    args->pa_fsroot, path);
-	}
+	(void) snprintf(buffer, sizeof(buffer), "%s%s",
+	    args->pa_fsroot, path);
 
 	e = NULL;
 	fd = open(buffer, O_RDONLY, 0);
-	if (fd < 0 && !image->pi_iskernelmodule) {
+	if (fd < 0) {
 		warnx("WARNING: Cannot open \"%s\".",
 		    buffer);
 		goto done;
 	}
-	if (fd < 0 && (fd = open(buffer_modules, O_RDONLY, 0)) < 0) {
-		warnx("WARNING: Cannot open \"%s\" or \"%s\".",
-		    buffer, buffer_modules);
-		goto done;
-	}
+
 	if (elf_version(EV_CURRENT) == EV_NONE) {
 		warnx("WARNING: failed to init elf\n");
 		goto done;
@@ -394,7 +380,7 @@ pmcstat_image_get_elf_params(struct pmcstat_image *image,
 	 * loaded.  Additionally, for dynamically linked executables,
 	 * save the pathname to the runtime linker.
 	 */
-	if (eh.e_type == ET_EXEC) {
+	if (eh.e_type != ET_REL) {
 		if (elf_getphnum(e, &nph) == 0) {
 			warnx(
 "WARNING: Could not determine the number of program headers in \"%s\": %s.",
@@ -402,6 +388,7 @@ pmcstat_image_get_elf_params(struct pmcstat_image *image,
 			    elf_errmsg(-1));
 			goto done;
 		}
+		first_exec_segment = true;
 		for (i = 0; i < eh.e_phnum; i++) {
 			if (gelf_getphdr(e, i, &ph) != &ph) {
 				warnx(
@@ -426,8 +413,10 @@ pmcstat_image_get_elf_params(struct pmcstat_image *image,
 				break;
 			case PT_LOAD:
 				if ((ph.p_flags & PF_X) != 0 &&
-				    (ph.p_offset & (-ph.p_align)) == 0)
+				    first_exec_segment) {
 					image->pi_vaddr = ph.p_vaddr & (-ph.p_align);
+					first_exec_segment = false;
+				}
 				break;
 			}
 		}

@@ -1,5 +1,5 @@
 #-
-# SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+# SPDX-License-Identifier: BSD-2-Clause
 #
 # Copyright (c) 2014 The FreeBSD Foundation
 #
@@ -27,7 +27,6 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: 1b424b0b0f31ccdbe085acf957b65ee5756e8781 $
 #
 
 #include <sys/bio.h>
@@ -134,6 +133,7 @@ METHOD void task_done {
 
 METHOD int transfer_setup {
 	struct icl_conn *_ic;
+	struct icl_pdu *_ip;
 	union ctl_io *_io;
 	uint32_t *_transfer_tag;
 	void **_prvp;

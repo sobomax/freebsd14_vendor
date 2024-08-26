@@ -1,4 +1,3 @@
-# $FreeBSD: aa0770227c928390bb97f29fb6342f33e2e4afcb $
 
 PROG=	testuid
 MAN=

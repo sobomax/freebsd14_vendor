@@ -58,8 +58,6 @@
  * IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF
  * THE POSSIBILITY OF SUCH DAMAGES.
- *
- * $FreeBSD: e3102a9926d2b2b48dd2226c16763a39a03d213a $
  */
 
 /*
@@ -175,6 +173,8 @@ static const struct alg {
 	const EVP_MD *(*evp_md)(void);
 	int pkey;
 } algs[] = {
+	{ .name = "ripemd160", .mac = CRYPTO_RIPEMD160, .type = T_HASH,
+	  .evp_md = EVP_ripemd160 },
 	{ .name = "sha1", .mac = CRYPTO_SHA1, .type = T_HASH,
 	  .evp_md = EVP_sha1 },
 	{ .name = "sha224", .mac = CRYPTO_SHA2_224, .type = T_HASH,

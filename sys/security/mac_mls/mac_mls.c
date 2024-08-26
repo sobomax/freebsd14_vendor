@@ -37,8 +37,6 @@
  * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
- *
- * $FreeBSD: da9ed8a3e141b07e0aae74a4a4ec1451e44691dd $
  */
 
 /*
@@ -1024,7 +1022,7 @@ mls_ifnet_create(struct ifnet *ifp, struct label *ifplabel)
 
 	dest = SLOT(ifplabel);
 
-	if (ifp->if_type == IFT_LOOP)
+	if (if_gettype(ifp) == IFT_LOOP)
 		type = MAC_MLS_TYPE_EQUAL;
 	else
 		type = MAC_MLS_TYPE_LOW;

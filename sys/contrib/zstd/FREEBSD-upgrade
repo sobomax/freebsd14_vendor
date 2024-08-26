@@ -1,4 +1,4 @@
-$FreeBSD: dfcad88572b2f4b4aeee548fdf24d6f53f58c99f $
+$FreeBSD: fb46da0590042927a973affd42bb364c256a6f67 $
 
 zstd
 
@@ -11,4 +11,4 @@ we don't want.
 
 Please find instructions for importing new releases and merging to HEAD here:
 
-https://www.freebsd.org/doc/en_US.ISO8859-1/articles/committers-guide/subversion-primer.html#idp45937784
+https://docs.freebsd.org/en/articles/committers-guide/#vendor-import-git

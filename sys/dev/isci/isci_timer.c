@@ -31,8 +31,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 9bba29c852421824aa6642c12faa6617423af8a0 $");
-
 #include <dev/isci/isci.h>
 
 #include <dev/isci/scil/scif_user_callback.h>

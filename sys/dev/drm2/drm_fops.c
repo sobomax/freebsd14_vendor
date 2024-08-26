@@ -35,8 +35,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 3b3be06345e5442c9be1cd6455a189b49fb32a02 $");
-
 #include <dev/drm2/drmP.h>
 
 static int drm_open_helper(struct cdev *kdev, int flags, int fmt,
@@ -157,9 +155,7 @@ int drm_open(struct cdev *kdev, int flags, int fmt, DRM_STRUCTPROC *p)
 	return 0;
 
 err_undo:
-	mtx_lock(&Giant); /* FIXME: Giant required? */
 	device_unbusy(dev->dev);
-	mtx_unlock(&Giant);
 	dev->open_count--;
 	sx_xunlock(&drm_global_mutex);
 	return -retcode;
@@ -273,9 +269,7 @@ static int drm_open_helper(struct cdev *kdev, int flags, int fmt,
 	list_add(&priv->lhead, &dev->filelist);
 	DRM_UNLOCK(dev);
 
-	mtx_lock(&Giant); /* FIXME: Giant required? */
 	device_busy(dev->dev);
-	mtx_unlock(&Giant);
 
 	ret = devfs_set_cdevpriv(priv, drm_release);
 	if (ret != 0)
@@ -453,9 +447,7 @@ void drm_release(void *data)
 	 */
 
 	atomic_inc(&dev->counts[_DRM_STAT_CLOSES]);
-	mtx_lock(&Giant);
 	device_unbusy(dev->dev);
-	mtx_unlock(&Giant);
 	if (!--dev->open_count) {
 		if (atomic_read(&dev->ioctl_count)) {
 			DRM_ERROR("Device busy: %d\n",
@@ -544,7 +536,7 @@ void
 drm_event_wakeup(struct drm_pending_event *e)
 {
 	struct drm_file *file_priv;
-	struct drm_device *dev;
+	struct drm_device *dev __diagused;
 
 	file_priv = e->file_priv;
 	dev = file_priv->minor->dev;

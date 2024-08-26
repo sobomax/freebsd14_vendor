@@ -1,6 +1,7 @@
-# $FreeBSD: b1b9555962e75b9d94c7b72a21359452ef130fd5 $
 
 .include <src.opts.mk>
+
+PACKAGE=	elftoolchain
 
 ELFTCDIR=	${SRCTOP}/contrib/elftoolchain
 NMDIR=		${ELFTCDIR}/nm

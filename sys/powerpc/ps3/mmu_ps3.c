@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (C) 2010 Nathan Whitehorn
  * All rights reserved.
@@ -26,8 +26,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 2d9fdd06c5ac158056ecac093016b3fa76221359 $");
-
 #include <sys/param.h>
 #include <sys/kernel.h>
 #include <sys/ktr.h>
@@ -91,9 +89,10 @@ MMU_DEF_INHERIT(ps3_mmu, "mmu_ps3", mps3_methods, oea64_mmu);
 static struct mtx mps3_table_lock;
 
 static void
-mps3_install()
+mps3_install(void)
 {
 	moea64_ops = &mps3_funcs;
+	moea64_install();
 }
 
 static void

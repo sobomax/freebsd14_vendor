@@ -112,8 +112,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: f74d600b301ff37edfdda02ffee60ae7d0236d9d $");
-
 #include "xgbe.h"
 #include "xgbe-common.h"
 

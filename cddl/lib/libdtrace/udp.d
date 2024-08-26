@@ -17,8 +17,6 @@
  * information: Portions Copyright [yyyy] [name of copyright owner]
  *
  * CDDL HEADER END
- *
- * $FreeBSD: 603bbbd29617d615b90767dadaaecf24610ac8a7 $
  */
 /*
  * Copyright (c) 2010, Oracle and/or its affiliates. All rights reserved.

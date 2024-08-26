@@ -1,2 +1,1 @@
-/* $FreeBSD: bec57f161698abae51dcbca8e76d2e9e6197ca5b $ */
 GROUP ( @@SHLIB@@ @@LIBDIR@@/libcxxrt.so )

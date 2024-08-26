@@ -23,7 +23,6 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: 77819aeff697478c84b7537d01c6de4291bb8c24 $
 
 SUBDIR=	atf-check atf-pytest-wrapper atf-sh tests
 

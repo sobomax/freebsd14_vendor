@@ -1,4 +1,3 @@
-# $FreeBSD: a3c75df0c5e17ecfe4142d2f1f5d59bf7472f2b4 $
 
 .PATH: ${SRCTOP}/sys/arm/ti/cpsw
 

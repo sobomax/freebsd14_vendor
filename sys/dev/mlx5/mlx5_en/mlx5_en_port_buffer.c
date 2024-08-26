@@ -21,8 +21,6 @@
  * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
- *
- * $FreeBSD: 9fa18f50b9c4b0063ab3dad0df04f113e8417050 $
  */
 
 #include "opt_rss.h"
@@ -181,7 +179,7 @@ static int update_xoff_threshold(struct mlx5e_priv *priv,
  *   port_buffer: <output> port receive buffer configuration
  *   change: <output>
  *
- *   Update buffer configuration based on pfc configuraiton and priority
+ *   Update buffer configuration based on pfc configuration and priority
  *   to buffer mapping.
  *   Buffer's lossy bit is changed to:
  *     lossless if there is at least one PFC enabled priority mapped to this buffer

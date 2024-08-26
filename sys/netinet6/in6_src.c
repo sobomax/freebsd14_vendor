@@ -63,8 +63,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: da536a3424b9d16e44cb7808aaf3cf18b4c62888 $");
-
 #include "opt_inet.h"
 #include "opt_inet6.h"
 #include <sys/param.h>
@@ -88,6 +86,7 @@ __FBSDID("$FreeBSD: da536a3424b9d16e44cb7808aaf3cf18b4c62888 $");
 #include <net/if.h>
 #include <net/if_var.h>
 #include <net/if_dl.h>
+#include <net/if_private.h>
 #include <net/route.h>
 #include <net/route/nhop.h>
 #include <net/if_llatbl.h>
@@ -864,48 +863,6 @@ in6_selecthlim(struct inpcb *inp, struct ifnet *ifp)
 		}
 	}
 	return (V_ip6_defhlim);
-}
-
-/*
- * XXX: this is borrowed from in6_pcbbind(). If possible, we should
- * share this function by all *bsd*...
- */
-int
-in6_pcbsetport(struct in6_addr *laddr, struct inpcb *inp, struct ucred *cred)
-{
-	struct socket *so = inp->inp_socket;
-	u_int16_t lport = 0;
-	int error, lookupflags = 0;
-#ifdef INVARIANTS
-	struct inpcbinfo *pcbinfo = inp->inp_pcbinfo;
-#endif
-
-	INP_WLOCK_ASSERT(inp);
-	INP_HASH_WLOCK_ASSERT(pcbinfo);
-
-	error = prison_local_ip6(cred, laddr,
-	    ((inp->inp_flags & IN6P_IPV6_V6ONLY) != 0));
-	if (error)
-		return(error);
-
-	/* XXX: this is redundant when called from in6_pcbbind */
-	if ((so->so_options & (SO_REUSEADDR|SO_REUSEPORT|SO_REUSEPORT_LB)) == 0)
-		lookupflags = INPLOOKUP_WILDCARD;
-
-	inp->inp_flags |= INP_ANONPORT;
-
-	error = in_pcb_lport(inp, NULL, &lport, cred, lookupflags);
-	if (error != 0)
-		return (error);
-
-	inp->inp_lport = lport;
-	if (in_pcbinshash(inp) != 0) {
-		inp->in6p_laddr = in6addr_any;
-		inp->inp_lport = 0;
-		return (EAGAIN);
-	}
-
-	return (0);
 }
 
 void

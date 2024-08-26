@@ -1,6 +1,5 @@
 #!/bin/sh
 #
-# $FreeBSD: a2875bf15155bd2c9d39166799b5ad52c13a7f20 $
 #
 
 # PROVIDE: kpasswdd

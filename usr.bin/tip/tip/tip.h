@@ -1,6 +1,5 @@
 /*	$OpenBSD: tip.h,v 1.27 2006/08/18 03:06:18 jason Exp $	*/
 /*	$NetBSD: tip.h,v 1.7 1997/04/20 00:02:46 mellon Exp $	*/
-/*	$FreeBSD: 51178cb0836534ec4bc238265503cdd0cd60004b $	*/
 
 /*-
  * SPDX-License-Identifier: BSD-3-Clause
@@ -153,17 +152,15 @@ typedef
  */
 
 #define value(v)	vtable[v].v_value
-#define lvalue(v)	(long)vtable[v].v_value
+#define lvalue(v)	(long)(intptr_t)vtable[v].v_value
 
-#define	number(v)	((long)(v))
-#define	boolean(v)      ((short)(long)(v))
-#define	character(v)    ((char)(long)(v))
-#define	address(v)      ((long *)(v))
+#define	number(v)	((long)(intptr_t)(v))
+#define	boolean(v)	((short)(intptr_t)(v))
+#define	character(v)	((char)(intptr_t)(v))
 
-#define	setnumber(v,n)		do { (v) = (char *)(long)(n); } while (0)
-#define	setboolean(v,n)		do { (v) = (char *)(long)(n); } while (0)
-#define	setcharacter(v,n)	do { (v) = (char *)(long)(n); } while (0)
-#define	setaddress(v,n)		do { (v) = (char *)(n); } while (0)
+#define	setnumber(v,n)		do { (v) = (char *)(intptr_t)(n); } while (0)
+#define	setboolean(v,n)		do { (v) = (char *)(intptr_t)(n); } while (0)
+#define	setcharacter(v,n)	do { (v) = (char *)(intptr_t)(n); } while (0)
 
 /*
  * Escape command table definitions --

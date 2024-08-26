@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2000-2015, 2017 Mark R. V. Murray
  * All rights reserved.
@@ -24,8 +24,6 @@
  * THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- *
- * $FreeBSD: 2786cfad4b8fb4fb79357b20c6750c4090ad12b7 $
  */
 
 #ifndef	_SYS_RANDOM_H_
@@ -86,7 +84,8 @@ enum random_entropy_source {
 	RANDOM_SWI,
 	RANDOM_FS_ATIME,
 	RANDOM_UMA,	/* Special!! UMA/SLAB Allocator */
-	RANDOM_ENVIRONMENTAL_END = RANDOM_UMA,
+	RANDOM_CALLOUT,
+	RANDOM_ENVIRONMENTAL_END = RANDOM_CALLOUT,
 	/* Fast hardware random-number sources from here on. */
 	RANDOM_PURE_START,
 	RANDOM_PURE_OCTEON = RANDOM_PURE_START,
@@ -102,6 +101,7 @@ enum random_entropy_source {
 	RANDOM_PURE_DARN,
 	RANDOM_PURE_TPM,
 	RANDOM_PURE_VMGENID,
+	RANDOM_PURE_QUALCOMM,
 	ENTROPYSOURCE
 };
 _Static_assert(ENTROPYSOURCE <= 32,

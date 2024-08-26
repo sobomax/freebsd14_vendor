@@ -1,7 +1,6 @@
-/* $FreeBSD: 3c50ca58a6dc2d69f99e480e64946ab1f07a353d $ */
 
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2010,2011 Aleksandr Rybalko. All rights reserved.
  *

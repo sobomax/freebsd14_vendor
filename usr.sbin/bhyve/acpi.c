@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2012 NetApp, Inc.
  * All rights reserved.
@@ -24,8 +24,6 @@
  * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
- *
- * $FreeBSD: bdb0e97076adc38cd1b7b0c3092ab564e923a82c $
  */
 
 /*
@@ -39,8 +37,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: bdb0e97076adc38cd1b7b0c3092ab564e923a82c $");
-
 #include <sys/param.h>
 #include <sys/endian.h>
 #include <sys/errno.h>
@@ -75,7 +71,6 @@ __FBSDID("$FreeBSD: bdb0e97076adc38cd1b7b0c3092ab564e923a82c $");
 static int basl_keep_temps;
 static int basl_verbose_iasl;
 static int basl_ncpu;
-static uint32_t hpet_capabilities;
 
 /*
  * Contains the full pathname of the template to be passed
@@ -91,9 +86,6 @@ static FILE *dsdt_fp;
 static int dsdt_indent_level;
 static int dsdt_error;
 
-static struct basl_table *rsdt;
-static struct basl_table *xsdt;
-
 struct basl_fio {
 	int	fd;
 	FILE	*fp;
@@ -101,10 +93,34 @@ struct basl_fio {
 };
 
 #define EFPRINTF(...) \
-	if (fprintf(__VA_ARGS__) < 0) goto err_exit;
+	if (fprintf(__VA_ARGS__) < 0) goto err_exit
 
 #define EFFLUSH(x) \
-	if (fflush(x) != 0) goto err_exit;
+	if (fflush(x) != 0) goto err_exit
+
+/*
+ * A list for additional ACPI devices like a TPM.
+ */
+struct acpi_device_list_entry {
+	SLIST_ENTRY(acpi_device_list_entry) chain;
+	const struct acpi_device *dev;
+};
+static SLIST_HEAD(acpi_device_list,
+    acpi_device_list_entry) acpi_devices = SLIST_HEAD_INITIALIZER(acpi_devices);
+
+int
+acpi_tables_add_device(const struct acpi_device *const dev)
+{
+	struct acpi_device_list_entry *const entry = calloc(1, sizeof(*entry));
+	if (entry == NULL) {
+		return (ENOMEM);
+	}
+
+	entry->dev = dev;
+	SLIST_INSERT_HEAD(&acpi_devices, entry, chain);
+
+	return (0);
+}
 
 /*
  * Helper routines for writing to the DSDT from other modules.
@@ -201,6 +217,7 @@ basl_fwrite_dsdt(FILE *fp)
 
 	pci_write_dsdt();
 
+#ifdef __amd64__
 	dsdt_line("");
 	dsdt_line("  Scope (_SB.PC00)");
 	dsdt_line("  {");
@@ -216,8 +233,14 @@ basl_fwrite_dsdt(FILE *fp)
 	dsdt_line("      })");
 	dsdt_line("    }");
 	dsdt_line("  }");
+#endif
 
 	vmgenc_write_dsdt();
+
+	const struct acpi_device_list_entry *entry;
+	SLIST_FOREACH(entry, &acpi_devices, chain) {
+		BASL_EXEC(acpi_device_write_dsdt(entry->dev));
+	}
 
 	dsdt_line("}");
 
@@ -304,7 +327,7 @@ basl_load(struct vmctx *ctx, int fd)
 
 	addr = calloc(1, sb.st_size);
 	if (addr == NULL)
-		return (EFAULT);
+		return (ENOMEM);
 
 	if (read(fd, addr, sb.st_size) < 0)
 		return (errno);
@@ -316,6 +339,7 @@ basl_load(struct vmctx *ctx, int fd)
 	BASL_EXEC(basl_table_create(&table, ctx, name, BASL_TABLE_ALIGNMENT));
 	BASL_EXEC(basl_table_append_bytes(table, addr, sb.st_size));
 
+	free(addr);
 	return (0);
 }
 
@@ -393,7 +417,7 @@ basl_make_templates(void)
 
 	if (!err) {
 		/*
-		 * len has been intialized (and maybe adjusted) above
+		 * len has been initialized (and maybe adjusted) above
 		 */
 		if ((len + sizeof(BHYVE_ASL_TEMPLATE) + 1 +
 		     sizeof(BHYVE_ASL_SUFFIX)) < MAXPATHLEN) {
@@ -503,19 +527,23 @@ build_fadt(struct vmctx *const ctx)
 	BASL_EXEC(basl_table_add_pointer(table, ACPI_SIG_DSDT,
 	    offsetof(ACPI_TABLE_FADT, XDsdt), sizeof(fadt.XDsdt)));
 
-	BASL_EXEC(basl_table_append_pointer(rsdt, ACPI_SIG_FADT,
-	    ACPI_RSDT_ENTRY_SIZE));
-	BASL_EXEC(basl_table_append_pointer(xsdt, ACPI_SIG_FADT,
-	    ACPI_XSDT_ENTRY_SIZE));
+	BASL_EXEC(basl_table_register_to_rsdt(table));
 
 	return (0);
 }
 
+#ifdef __amd64__
 static int
 build_hpet(struct vmctx *const ctx)
 {
 	ACPI_TABLE_HPET hpet;
 	struct basl_table *table;
+	uint32_t hpet_capabilities;
+	int err;
+
+	err = vm_get_hpet_capabilities(ctx, &hpet_capabilities);
+	if (err != 0)
+		return (err);
 
 	BASL_EXEC(basl_table_create(&table, ctx, ACPI_SIG_HPET,
 	    BASL_TABLE_ALIGNMENT));
@@ -528,13 +556,11 @@ build_hpet(struct vmctx *const ctx)
 	hpet.Flags = ACPI_HPET_PAGE_PROTECT4;
 	BASL_EXEC(basl_table_append_content(table, &hpet, sizeof(hpet)));
 
-	BASL_EXEC(basl_table_append_pointer(rsdt, ACPI_SIG_HPET,
-	    ACPI_RSDT_ENTRY_SIZE));
-	BASL_EXEC(basl_table_append_pointer(xsdt, ACPI_SIG_HPET,
-	    ACPI_XSDT_ENTRY_SIZE));
+	BASL_EXEC(basl_table_register_to_rsdt(table));
 
 	return (0);
 }
+#endif
 
 static int
 build_madt(struct vmctx *const ctx)
@@ -606,10 +632,7 @@ build_madt(struct vmctx *const ctx)
 	BASL_EXEC(basl_table_append_bytes(table, &madt_lapic_nmi,
 	    sizeof(madt_lapic_nmi)));
 
-	BASL_EXEC(basl_table_append_pointer(rsdt, ACPI_SIG_MADT,
-	    ACPI_RSDT_ENTRY_SIZE));
-	BASL_EXEC(basl_table_append_pointer(xsdt, ACPI_SIG_MADT,
-	    ACPI_XSDT_ENTRY_SIZE));
+	BASL_EXEC(basl_table_register_to_rsdt(table));
 
 	return (0);
 }
@@ -634,10 +657,7 @@ build_mcfg(struct vmctx *const ctx)
 	BASL_EXEC(basl_table_append_bytes(table, &mcfg_allocation,
 	    sizeof(mcfg_allocation)));
 
-	BASL_EXEC(basl_table_append_pointer(rsdt, ACPI_SIG_MCFG,
-	    ACPI_RSDT_ENTRY_SIZE));
-	BASL_EXEC(basl_table_append_pointer(xsdt, ACPI_SIG_MCFG,
-	    ACPI_XSDT_ENTRY_SIZE));
+	BASL_EXEC(basl_table_register_to_rsdt(table));
 
 	return (0);
 }
@@ -680,19 +700,6 @@ build_rsdp(struct vmctx *const ctx)
 }
 
 static int
-build_rsdt(struct vmctx *const ctx)
-{
-	BASL_EXEC(
-	    basl_table_create(&rsdt, ctx, ACPI_SIG_RSDT, BASL_TABLE_ALIGNMENT));
-
-	/* Header */
-	BASL_EXEC(basl_table_append_header(rsdt, ACPI_SIG_RSDT, 1, 1));
-	/* Pointers (added by other build_XXX funcs) */
-
-	return (0);
-}
-
-static int
 build_spcr(struct vmctx *const ctx)
 {
 	ACPI_TABLE_SPCR spcr;
@@ -715,23 +722,7 @@ build_spcr(struct vmctx *const ctx)
 	spcr.TerminalType = ACPI_SPCR_TERMINAL_TYPE_VT_UTF8;
 	BASL_EXEC(basl_table_append_content(table, &spcr, sizeof(spcr)));
 
-	BASL_EXEC(basl_table_append_pointer(rsdt, ACPI_SIG_SPCR,
-	    ACPI_RSDT_ENTRY_SIZE));
-	BASL_EXEC(basl_table_append_pointer(xsdt, ACPI_SIG_SPCR,
-	    ACPI_XSDT_ENTRY_SIZE));
-
-	return (0);
-}
-
-static int
-build_xsdt(struct vmctx *const ctx)
-{
-	BASL_EXEC(
-	    basl_table_create(&xsdt, ctx, ACPI_SIG_XSDT, BASL_TABLE_ALIGNMENT));
-
-	/* Header */
-	BASL_EXEC(basl_table_append_header(xsdt, ACPI_SIG_XSDT, 1, 1));
-	/* Pointers (added by other build_XXX funcs) */
+	BASL_EXEC(basl_table_register_to_rsdt(table));
 
 	return (0);
 }
@@ -739,13 +730,7 @@ build_xsdt(struct vmctx *const ctx)
 int
 acpi_build(struct vmctx *ctx, int ncpu)
 {
-	int err;
-
 	basl_ncpu = ncpu;
-
-	err = vm_get_hpet_capabilities(ctx, &hpet_capabilities);
-	if (err != 0)
-		return (err);
 
 	/*
 	 * For debug, allow the user to have iasl compiler output sent
@@ -761,7 +746,7 @@ acpi_build(struct vmctx *ctx, int ncpu)
 	if (getenv("BHYVE_ACPI_KEEPTMPS"))
 		basl_keep_temps = 1;
 
-	BASL_EXEC(basl_init());
+	BASL_EXEC(basl_init(ctx));
 
 	BASL_EXEC(basl_make_templates());
 
@@ -773,14 +758,21 @@ acpi_build(struct vmctx *ctx, int ncpu)
 	 * first table after XSDT.
 	 */
 	BASL_EXEC(build_rsdp(ctx));
-	BASL_EXEC(build_rsdt(ctx));
-	BASL_EXEC(build_xsdt(ctx));
 	BASL_EXEC(build_fadt(ctx));
 	BASL_EXEC(build_madt(ctx));
+#ifdef __amd64__
 	BASL_EXEC(build_hpet(ctx));
+#endif
 	BASL_EXEC(build_mcfg(ctx));
 	BASL_EXEC(build_facs(ctx));
 	BASL_EXEC(build_spcr(ctx));
+
+	/* Build ACPI device-specific tables such as a TPM2 table. */
+	const struct acpi_device_list_entry *entry;
+	SLIST_FOREACH(entry, &acpi_devices, chain) {
+		BASL_EXEC(acpi_device_build_table(entry->dev));
+	}
+
 	BASL_EXEC(build_dsdt(ctx));
 
 	BASL_EXEC(basl_finish());

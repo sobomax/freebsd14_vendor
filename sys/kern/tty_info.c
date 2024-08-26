@@ -43,8 +43,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 237aa47a18da0f8287b450a4c672249243801947 $");
-
 #include "opt_stack.h"
 
 #include <sys/param.h>
@@ -239,7 +237,11 @@ sbuf_tty_drain(void *a, const char *d, int len)
 }
 
 #ifdef STACK
+#ifdef INVARIANTS
 static int tty_info_kstacks = STACK_SBUF_FMT_COMPACT;
+#else
+static int tty_info_kstacks = STACK_SBUF_FMT_NONE;
+#endif
 
 static int
 sysctl_tty_info_kstacks(SYSCTL_HANDLER_ARGS)

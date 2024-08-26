@@ -58,8 +58,6 @@
  *
  * any improvements or extensions that they make and grant Carnegie the
  * rights to redistribute these changes.
- *
- * $FreeBSD: c02db5ee52fcf8a9cf894528a4c1195afc470572 $
  */
 
 /*
@@ -541,15 +539,22 @@ vm_page_t PHYS_TO_VM_PAGE(vm_paddr_t pa);
 #define	VM_ALLOC_WIRED		0x0020	/* (acgnp) Allocate a wired page */
 #define	VM_ALLOC_ZERO		0x0040	/* (acgnp) Allocate a zeroed page */
 #define	VM_ALLOC_NORECLAIM	0x0080	/* (c) Do not reclaim after failure */
-#define	VM_ALLOC_NOOBJ		0x0100	/* (acg) No associated object */
+#define	VM_ALLOC_AVAIL0		0x0100
 #define	VM_ALLOC_NOBUSY		0x0200	/* (acgp) Do not excl busy the page */
 #define	VM_ALLOC_NOCREAT	0x0400	/* (gp) Don't create a page */
+#define	VM_ALLOC_AVAIL1		0x0800
 #define	VM_ALLOC_IGN_SBUSY	0x1000	/* (gp) Ignore shared busy flag */
 #define	VM_ALLOC_NODUMP		0x2000	/* (ag) don't include in dump */
 #define	VM_ALLOC_SBUSY		0x4000	/* (acgp) Shared busy the page */
 #define	VM_ALLOC_NOWAIT		0x8000	/* (acgnp) Do not sleep */
+#define	VM_ALLOC_COUNT_MAX	0xffff
 #define	VM_ALLOC_COUNT_SHIFT	16
-#define	VM_ALLOC_COUNT(count)	((count) << VM_ALLOC_COUNT_SHIFT)
+#define	VM_ALLOC_COUNT_MASK	(VM_ALLOC_COUNT(VM_ALLOC_COUNT_MAX))
+#define	VM_ALLOC_COUNT(count)	({				\
+	KASSERT((count) <= VM_ALLOC_COUNT_MAX,			\
+	    ("%s: invalid VM_ALLOC_COUNT value", __func__));	\
+	(count) << VM_ALLOC_COUNT_SHIFT;			\
+})
 
 #ifdef M_NOWAIT
 static inline int
@@ -661,6 +666,9 @@ bool vm_page_reclaim_contig(int req, u_long npages, vm_paddr_t low,
     vm_paddr_t high, u_long alignment, vm_paddr_t boundary);
 bool vm_page_reclaim_contig_domain(int domain, int req, u_long npages,
     vm_paddr_t low, vm_paddr_t high, u_long alignment, vm_paddr_t boundary);
+bool vm_page_reclaim_contig_domain_ext(int domain, int req, u_long npages,
+    vm_paddr_t low, vm_paddr_t high, u_long alignment, vm_paddr_t boundary,
+    int desired_runs);
 void vm_page_reference(vm_page_t m);
 #define	VPR_TRYFREE	0x01
 #define	VPR_NOREUSE	0x02
@@ -673,8 +681,6 @@ int vm_page_rename(vm_page_t, vm_object_t, vm_pindex_t);
 void vm_page_replace(vm_page_t mnew, vm_object_t object,
     vm_pindex_t pindex, vm_page_t mold);
 int vm_page_sbusied(vm_page_t m);
-vm_page_t vm_page_scan_contig(u_long npages, vm_page_t m_start,
-    vm_page_t m_end, u_long alignment, vm_paddr_t boundary, int options);
 vm_page_bits_t vm_page_set_dirty(vm_page_t m);
 void vm_page_set_valid_range(vm_page_t m, int base, int size);
 vm_offset_t vm_page_startup(vm_offset_t vaddr);

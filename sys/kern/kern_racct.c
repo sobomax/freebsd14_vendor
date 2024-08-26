@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2010 The FreeBSD Foundation
  *
@@ -26,13 +26,9 @@
  * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
- *
- * $FreeBSD: 94624e88af51942622c14e5524af0a6886ad143f $
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 94624e88af51942622c14e5524af0a6886ad143f $");
-
 #include "opt_sched.h"
 
 #include <sys/param.h>
@@ -62,8 +58,6 @@ __FBSDID("$FreeBSD: 94624e88af51942622c14e5524af0a6886ad143f $");
 #ifdef RCTL
 #include <sys/rctl.h>
 #endif
-
-#ifdef RACCT
 
 FEATURE(racct, "Resource Accounting");
 
@@ -1098,11 +1092,16 @@ racct_move(struct racct *dest, struct racct *src)
 	RACCT_UNLOCK();
 }
 
-void
-racct_proc_throttled(struct proc *p)
+static void
+ast_racct(struct thread *td, int tda __unused)
 {
+	struct proc *p;
 
 	ASSERT_RACCT_ENABLED();
+
+	p = td->td_proc;
+	if (p->p_throttled == 0)
+		return;
 
 	PROC_LOCK(p);
 	while (p->p_throttled != 0) {
@@ -1144,24 +1143,24 @@ racct_proc_throttle(struct proc *p, int timeout)
 
 	FOREACH_THREAD_IN_PROC(p, td) {
 		thread_lock(td);
-		td->td_flags |= TDF_ASTPENDING;
+		ast_sched_locked(td, TDA_RACCT);
 
-		switch (td->td_state) {
+		switch (TD_GET_STATE(td)) {
 		case TDS_RUNQ:
 			/*
 			 * If the thread is on the scheduler run-queue, we can
 			 * not just remove it from there.  So we set the flag
-			 * TDF_NEEDRESCHED for the thread, so that once it is
+			 * TDA_SCHED for the thread, so that once it is
 			 * running, it is taken off the cpu as soon as possible.
 			 */
-			td->td_flags |= TDF_NEEDRESCHED;
+			ast_sched_locked(td, TDA_SCHED);
 			break;
 		case TDS_RUNNING:
 			/*
 			 * If the thread is running, we request a context
-			 * switch for it by setting the TDF_NEEDRESCHED flag.
+			 * switch for it by setting the TDA_SCHED flag.
 			 */
-			td->td_flags |= TDF_NEEDRESCHED;
+			ast_sched_locked(td, TDA_SCHED);
 #ifdef SMP
 			cpuid = td->td_oncpu;
 			if ((cpuid != NOCPU) && (td != curthread))
@@ -1355,11 +1354,11 @@ racct_init(void)
 
 	racct_zone = uma_zcreate("racct", sizeof(struct racct),
 	    NULL, NULL, NULL, NULL, UMA_ALIGN_PTR, 0);
+	ast_register(TDA_RACCT, ASTR_ASTF_REQUIRED, 0, ast_racct);
+
 	/*
 	 * XXX: Move this somewhere.
 	 */
 	prison0.pr_prison_racct = prison_racct_find("0");
 }
 SYSINIT(racct, SI_SUB_RACCT, SI_ORDER_FIRST, racct_init, NULL);
-
-#endif /* !RACCT */

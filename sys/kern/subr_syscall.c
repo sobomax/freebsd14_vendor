@@ -42,9 +42,6 @@
 
 #include "opt_capsicum.h"
 #include "opt_ktrace.h"
-
-__FBSDID("$FreeBSD: a61003ec7203d1dd8781382770fd6d5dc75fc8d8 $");
-
 #include <sys/capsicum.h>
 #include <sys/ktr.h>
 #include <sys/vmmeter.h>
@@ -68,7 +65,7 @@ syscallenter(struct thread *td)
 	sa = &td->td_sa;
 
 	td->td_pticks = 0;
-	if (__predict_false(td->td_cowgen != p->p_cowgen))
+	if (__predict_false(td->td_cowgen != atomic_load_int(&p->p_cowgen)))
 		thread_cow_update(td);
 	traced = (p->p_flag & P_TRACED) != 0;
 	if (__predict_false(traced || td->td_dbgflags & TDB_USERWR)) {
@@ -147,7 +144,8 @@ syscallenter(struct thread *td)
 	    AUDIT_SYSCALL_ENTER(sa->code, td) ||
 	    !sy_thr_static)) {
 		if (!sy_thr_static) {
-			error = syscall_thread_enter(td, se);
+			error = syscall_thread_enter(td, &se);
+			sy_thr_static = (se->sy_thrcnt & SY_THR_STATIC) != 0;
 			if (error != 0) {
 				td->td_errno = error;
 				goto retval;
@@ -216,8 +214,6 @@ syscallret(struct thread *td)
 	ksiginfo_t ksi;
 	int traced;
 
-	KASSERT((td->td_pflags & TDP_FORKING) == 0,
-	    ("fork() did not clear TDP_FORKING upon completion"));
 	KASSERT(td->td_errno != ERELOOKUP,
 	    ("ERELOOKUP not consumed syscall %d", td->td_sa.code));
 
@@ -231,6 +227,7 @@ syscallret(struct thread *td)
 			ksi.ksi_signo = SIGTRAP;
 			ksi.ksi_errno = td->td_errno;
 			ksi.ksi_code = TRAP_CAP;
+			ksi.ksi_info.si_syscall = sa->original_code;
 			trapsignal(td, &ksi);
 		}
 	}
@@ -291,7 +288,4 @@ syscallret(struct thread *td)
 		    TDB_BOUNDARY);
 		PROC_UNLOCK(p);
 	}
-
-	if (__predict_false(td->td_pflags & TDP_RFPPWAIT))
-		fork_rfppwait(td);
 }

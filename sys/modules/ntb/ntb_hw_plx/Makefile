@@ -1,4 +1,3 @@
-# $FreeBSD: 4852e7a30fe6173ec0a2387613cd3b6f7e610ca4 $
 
 .PATH:  ${SRCTOP}/sys/dev/ntb/ntb_hw
 

@@ -25,8 +25,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 0f3aca4ddc94807ebf78f36f637094e4822225c4 $");
-
 #include <sys/param.h>
 #include <sys/ctype.h>
 #include <sys/exec.h>
@@ -165,7 +163,7 @@ imgact_binmisc_populate_interp(char *str, imgact_binmisc_entry_t *ibe, int flags
 			tp++;
 		}
 		*tp = '\0';
-		NDINIT(&nd, LOOKUP, FOLLOW | ISOPEN, UIO_SYSSPACE, t, curthread);
+		NDINIT(&nd, LOOKUP, FOLLOW | ISOPEN, UIO_SYSSPACE, t);
 
 		/*
 		 * If there is an error, just stop now and fall back

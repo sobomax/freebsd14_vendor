@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2021 Miguel Gocobachi
  *
@@ -28,8 +28,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 352fe7d4c2963ebc60577d10535582c85d31c506 $");
-
 #include <stdint.h>
 #include <stdio.h>
 #include <stdlib.h>

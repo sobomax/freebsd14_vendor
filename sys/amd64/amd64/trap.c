@@ -40,14 +40,11 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 888ecf5d02556b612e58d33e7a22cb152a6835a2 $");
-
 /*
  * AMD64 Trap and System call handling
  */
 
 #include "opt_clock.h"
-#include "opt_compat.h"
 #include "opt_cpu.h"
 #include "opt_hwpmc_hooks.h"
 #include "opt_isa.h"
@@ -63,6 +60,7 @@ __FBSDID("$FreeBSD: 888ecf5d02556b612e58d33e7a22cb152a6835a2 $");
 #include <sys/kernel.h>
 #include <sys/ktr.h>
 #include <sys/lock.h>
+#include <sys/msan.h>
 #include <sys/mutex.h>
 #include <sys/resourcevar.h>
 #include <sys/signalvar.h>
@@ -229,6 +227,7 @@ trap(struct trapframe *frame)
 	dr6 = 0;
 
 	kasan_mark(frame, sizeof(*frame), sizeof(*frame), 0);
+	kmsan_mark(frame, sizeof(*frame), KMSAN_STATE_INITED);
 
 	VM_CNT_INC(v_trap);
 	type = frame->tf_trapno;
@@ -309,7 +308,7 @@ trap(struct trapframe *frame)
 		td->td_pticks = 0;
 		td->td_frame = frame;
 		addr = frame->tf_rip;
-		if (td->td_cowgen != p->p_cowgen)
+		if (td->td_cowgen != atomic_load_int(&p->p_cowgen))
 			thread_cow_update(td);
 
 		switch (type) {
@@ -627,7 +626,7 @@ trap(struct trapframe *frame)
 	ksi.ksi_addr = (void *)addr;
 	if (uprintf_signal) {
 		uprintf("pid %d comm %s: signal %d err %#lx code %d type %d "
-		    "addr %#lx rsp %#lx rip %#lx rax %#lx"
+		    "addr %#lx rsp %#lx rip %#lx rax %#lx "
 		    "<%02x %02x %02x %02x %02x %02x %02x %02x>\n",
 		    p->p_pid, p->p_comm, signo, frame->tf_err, ucode, type,
 		    addr, frame->tf_rsp, frame->tf_rip, frame->tf_rax,
@@ -929,6 +928,17 @@ trap_fatal(struct trapframe *frame, vm_offset_t eva)
 	printf("current process		= %d (%s)\n",
 	    curproc->p_pid, curthread->td_name);
 
+	printf("rdi: %016lx rsi: %016lx rdx: %016lx\n", frame->tf_rdi,
+	    frame->tf_rsi, frame->tf_rdx);
+	printf("rcx: %016lx  r8: %016lx  r9: %016lx\n", frame->tf_rcx,
+	    frame->tf_r8, frame->tf_r9);
+	printf("rax: %016lx rbx: %016lx rbp: %016lx\n", frame->tf_rax,
+	    frame->tf_rbx, frame->tf_rbp);
+	printf("r10: %016lx r11: %016lx r12: %016lx\n", frame->tf_r10,
+	    frame->tf_r11, frame->tf_r12);
+	printf("r13: %016lx r14: %016lx r15: %016lx\n", frame->tf_r13,
+	    frame->tf_r14, frame->tf_r15);
+
 #ifdef KDB
 	if (debugger_on_trap) {
 		kdb_why = KDB_WHY_TRAP;
@@ -971,6 +981,7 @@ trap_user_dtrace(struct trapframe *frame, int (**hookp)(struct trapframe *))
 void
 dblfault_handler(struct trapframe *frame)
 {
+	kmsan_mark(frame, sizeof(*frame), KMSAN_STATE_INITED);
 #ifdef KDTRACE_HOOKS
 	if (dtrace_doubletrap_func != NULL)
 		(*dtrace_doubletrap_func)();
@@ -1006,7 +1017,7 @@ cpu_fetch_syscall_args_fallback(struct thread *td, struct syscall_args *sa)
 {
 	struct proc *p;
 	struct trapframe *frame;
-	register_t *argp;
+	syscallarg_t *argp;
 	caddr_t params;
 	int reg, regcnt, error;
 
@@ -1021,10 +1032,10 @@ cpu_fetch_syscall_args_fallback(struct thread *td, struct syscall_args *sa)
 		regcnt--;
 	}
 
- 	if (sa->code >= p->p_sysent->sv_size)
- 		sa->callp = &p->p_sysent->sv_table[0];
-  	else
- 		sa->callp = &p->p_sysent->sv_table[sa->code];
+	if (sa->code >= p->p_sysent->sv_size)
+		sa->callp = &nosys_sysent;
+	else
+		sa->callp = &p->p_sysent->sv_table[sa->code];
 
 	KASSERT(sa->callp->sy_narg <= nitems(sa->args),
 	    ("Too many syscall arguments!"));
@@ -1034,7 +1045,7 @@ cpu_fetch_syscall_args_fallback(struct thread *td, struct syscall_args *sa)
 	if (sa->callp->sy_narg > regcnt) {
 		params = (caddr_t)frame->tf_rsp + sizeof(register_t);
 		error = copyin(params, &sa->args[regcnt],
-	    	    (sa->callp->sy_narg - regcnt) * sizeof(sa->args[0]));
+		    (sa->callp->sy_narg - regcnt) * sizeof(sa->args[0]));
 		if (__predict_false(error != 0))
 			return (error);
 	}
@@ -1057,6 +1068,7 @@ cpu_fetch_syscall_args(struct thread *td)
 	sa = &td->td_sa;
 
 	sa->code = frame->tf_rax;
+	sa->original_code = sa->code;
 
 	if (__predict_false(sa->code == SYS_syscall ||
 	    sa->code == SYS___syscall ||
@@ -1174,12 +1186,11 @@ amd64_syscall(struct thread *td, int traced)
 {
 	ksiginfo_t ksi;
 
-#ifdef DIAGNOSTIC
-	if (!TRAPF_USERMODE(td->td_frame)) {
-		panic("syscall");
-		/* NOT REACHED */
-	}
-#endif
+	kmsan_mark(td->td_frame, sizeof(*td->td_frame), KMSAN_STATE_INITED);
+
+	KASSERT(TRAPF_USERMODE(td->td_frame),
+	    ("%s: not from user mode", __func__));
+
 	syscallenter(td);
 
 	/*

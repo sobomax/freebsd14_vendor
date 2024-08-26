@@ -29,8 +29,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 133be81093eb5f7b55697a9093f9aa33ce9ba208 $");
-
 /* TODO Move headers to mprvar */
 #include <sys/types.h>
 #include <sys/param.h>

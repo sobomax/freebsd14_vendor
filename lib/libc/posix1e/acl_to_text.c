@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 1999-2002 Robert N. M. Watson
  * All rights reserved.
@@ -29,9 +29,6 @@
  * acl_to_text - return a text string with a text representation of the acl
  * in it.
  */
-
-#include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 009ceaceabf695d8d9f1184ababb34d65220f1d2 $");
 
 #include <sys/types.h>
 #include "namespace.h"

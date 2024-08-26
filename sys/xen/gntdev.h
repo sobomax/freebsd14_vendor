@@ -106,8 +106,6 @@
  *  - UNMAP_NOTIFY_SEND_EVENT sends an event channel notification on
  *    `event_channel_port`
  * In case of multiple notify ioctls, only the last one survives.
- *
- * $FreeBSD: fec929e6f666d892d1f3ade35b17884fbe223dc1 $
  */
 
 #ifndef __XEN_GNTDEV_H__

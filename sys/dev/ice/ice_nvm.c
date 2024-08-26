@@ -1,5 +1,5 @@
 /* SPDX-License-Identifier: BSD-3-Clause */
-/*  Copyright (c) 2022, Intel Corporation
+/*  Copyright (c) 2024, Intel Corporation
  *  All rights reserved.
  *
  *  Redistribution and use in source and binary forms, with or without
@@ -28,7 +28,6 @@
  *  ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  *  POSSIBILITY OF SUCH DAMAGE.
  */
-/*$FreeBSD: b324e92f180ffce27bb8aac824974eb4e5073b9c $*/
 
 #include "ice_common.h"
 
@@ -297,7 +296,7 @@ ice_aq_write_nvm_cfg(struct ice_hw *hw, u8 cmd_flags, void *data, u16 buf_size,
 }
 
 /**
- * ice_check_sr_access_params - verify params for Shadow RAM R/W operations.
+ * ice_check_sr_access_params - verify params for Shadow RAM R/W operations
  * @hw: pointer to the HW structure
  * @offset: offset in words from module start
  * @words: number of words to access
@@ -357,7 +356,7 @@ enum ice_status ice_read_sr_word_aq(struct ice_hw *hw, u16 offset, u16 *data)
 }
 
 /**
- * ice_write_sr_aq - Writes Shadow RAM.
+ * ice_write_sr_aq - Writes Shadow RAM
  * @hw: pointer to the HW structure
  * @offset: offset in words from module start
  * @words: number of words to write
@@ -426,7 +425,6 @@ enum ice_status
 ice_acquire_nvm(struct ice_hw *hw, enum ice_aq_res_access_type access)
 {
 	ice_debug(hw, ICE_DBG_TRACE, "%s\n", __func__);
-
 	if (hw->flash.blank_nvm_mode)
 		return ICE_SUCCESS;
 
@@ -874,7 +872,7 @@ static enum ice_status ice_get_nvm_srev(struct ice_hw *hw, enum ice_bank_select 
  * @nvm: pointer to NVM info structure
  *
  * Read the NVM EETRACK ID and map version of the main NVM image bank, filling
- * in the nvm info structure.
+ * in the NVM info structure.
  */
 static enum ice_status
 ice_get_nvm_ver_info(struct ice_hw *hw, enum ice_bank_select bank, struct ice_nvm_info *nvm)
@@ -982,44 +980,70 @@ static enum ice_status
 ice_get_orom_civd_data(struct ice_hw *hw, enum ice_bank_select bank,
 		       struct ice_orom_civd_info *civd)
 {
-	struct ice_orom_civd_info tmp;
+	u8 *orom_data;
+	enum ice_status status;
 	u32 offset;
 
 	/* The CIVD section is located in the Option ROM aligned to 512 bytes.
 	 * The first 4 bytes must contain the ASCII characters "$CIV".
 	 * A simple modulo 256 sum of all of the bytes of the structure must
 	 * equal 0.
+	 *
+	 * The exact location is unknown and varies between images but is
+	 * usually somewhere in the middle of the bank. We need to scan the
+	 * Option ROM bank to locate it.
+	 *
+	 * It's significantly faster to read the entire Option ROM up front
+	 * using the maximum page size, than to read each possible location
+	 * with a separate firmware command.
 	 */
+	orom_data = (u8 *)ice_calloc(hw, hw->flash.banks.orom_size, sizeof(u8));
+	if (!orom_data)
+		return ICE_ERR_NO_MEMORY;
+
+	status = ice_read_flash_module(hw, bank, ICE_SR_1ST_OROM_BANK_PTR, 0,
+				       orom_data, hw->flash.banks.orom_size);
+	if (status) {
+		ice_debug(hw, ICE_DBG_NVM, "Unable to read Option ROM data\n");
+		goto exit_error;
+	}
+
+	/* Scan the memory buffer to locate the CIVD data section */
 	for (offset = 0; (offset + 512) <= hw->flash.banks.orom_size; offset += 512) {
-		enum ice_status status;
+		struct ice_orom_civd_info *tmp;
 		u8 sum = 0, i;
 
-		status = ice_read_flash_module(hw, bank, ICE_SR_1ST_OROM_BANK_PTR,
-					       offset, (u8 *)&tmp, sizeof(tmp));
-		if (status) {
-			ice_debug(hw, ICE_DBG_NVM, "Unable to read Option ROM CIVD data\n");
-			return status;
-		}
+		tmp = (struct ice_orom_civd_info *)&orom_data[offset];
 
 		/* Skip forward until we find a matching signature */
-		if (memcmp("$CIV", tmp.signature, sizeof(tmp.signature)) != 0)
+		if (memcmp("$CIV", tmp->signature, sizeof(tmp->signature)) != 0)
 			continue;
 
+		ice_debug(hw, ICE_DBG_NVM, "Found CIVD section at offset %u\n",
+			  offset);
+
 		/* Verify that the simple checksum is zero */
-		for (i = 0; i < sizeof(tmp); i++)
-			sum += ((u8 *)&tmp)[i];
+		for (i = 0; i < sizeof(*tmp); i++)
+			sum += ((u8 *)tmp)[i];
 
 		if (sum) {
 			ice_debug(hw, ICE_DBG_NVM, "Found CIVD data with invalid checksum of %u\n",
 				  sum);
-			return ICE_ERR_NVM;
+			status = ICE_ERR_NVM;
+			goto exit_error;
 		}
 
-		*civd = tmp;
+		*civd = *tmp;
+		ice_free(hw, orom_data);
 		return ICE_SUCCESS;
 	}
 
-	return ICE_ERR_NVM;
+	status = ICE_ERR_NVM;
+	ice_debug(hw, ICE_DBG_NVM, "Unable to locate CIVD data within the Option ROM\n");
+
+exit_error:
+	ice_free(hw, orom_data);
+	return status;
 }
 
 /**
@@ -1177,7 +1201,7 @@ enum ice_status ice_get_inactive_netlist_ver(struct ice_hw *hw, struct ice_netli
 }
 
 /**
- * ice_discover_flash_size - Discover the available flash size.
+ * ice_discover_flash_size - Discover the available flash size
  * @hw: pointer to the HW struct
  *
  * The device flash could be up to 16MB in size. However, it is possible that
@@ -1434,6 +1458,7 @@ enum ice_status ice_init_nvm(struct ice_hw *hw)
 	status = ice_get_netlist_info(hw, ICE_ACTIVE_FLASH_BANK, &flash->netlist);
 	if (status)
 		ice_debug(hw, ICE_DBG_INIT, "Failed to read netlist info.\n");
+
 	return ICE_SUCCESS;
 }
 
@@ -1685,7 +1710,6 @@ enum ice_status ice_nvm_validate_checksum(struct ice_hw *hw)
 	cmd->flags = ICE_AQC_NVM_CHECKSUM_VERIFY;
 
 	status = ice_aq_send_cmd(hw, &desc, NULL, 0, NULL);
-
 	ice_release_nvm(hw);
 
 	if (!status)
@@ -1748,19 +1772,19 @@ ice_nvm_write_activate(struct ice_hw *hw, u16 cmd_flags, u8 *response_flags)
 {
 	struct ice_aqc_nvm *cmd;
 	struct ice_aq_desc desc;
-	enum ice_status status;
+	enum ice_status err;
 
 	cmd = &desc.params.nvm;
 	ice_fill_dflt_direct_cmd_desc(&desc, ice_aqc_opc_nvm_write_activate);
 
-	cmd->cmd_flags = ICE_LO_BYTE(cmd_flags);
-	cmd->offset_high = ICE_HI_BYTE(cmd_flags);
+	cmd->cmd_flags = (u8)(cmd_flags & 0xFF);
+	cmd->offset_high = (u8)((cmd_flags >> 8) & 0xFF);
 
-	status = ice_aq_send_cmd(hw, &desc, NULL, 0, NULL);
-	if (!status && response_flags)
+	err = ice_aq_send_cmd(hw, &desc, NULL, 0, NULL);
+	if (!err && response_flags)
 		*response_flags = cmd->cmd_flags;
 
-	return status;
+	return err;
 }
 
 /**

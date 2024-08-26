@@ -1,6 +1,5 @@
 #!/bin/sh
 #
-# $FreeBSD: f1b001a6ad79c76d3529c2b431e77b4dee956c95 $
 #
 
 # PROVIDE: rctl

@@ -1,4 +1,3 @@
-# $FreeBSD: d994c289a04c6f0c3ab589d63b3053b65a25f684 $
 
 PACKAGE= runtime
 PROG=	pw

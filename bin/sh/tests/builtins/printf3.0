@@ -1,4 +1,3 @@
-# $FreeBSD: 0e7ea85cddb479251460877bb9928f6c689192fb $
 
 set -e
 v=$(! printf "%d" @wrong 2>/dev/null)

@@ -1,4 +1,3 @@
-# $FreeBSD: 2923e50aafd9e58f242658ecadc4c78a6b5dea1f $
 
 PACKAGE=lib${LIB}
 LIB=		lzma
@@ -157,7 +156,6 @@ LIBADD+=	md pthread
 
 VERSION_DEF=	${.CURDIR}/Versions.def
 SYMBOL_MAPS=	${.CURDIR}/Symbol.map
-CFLAGS+=	-DSYMBOL_VERSIONING
 
 CLEANFILES+=	liblzma.pc
 
@@ -166,8 +164,9 @@ PCFILES=	liblzma.pc
 liblzma.pc: liblzma.pc.in
 	sed -e 's,@prefix@,/usr,g ; \
 		s,@exec_prefix@,/usr,g ; \
-		s,@libdir@,/usr/lib,g ; \
-		s,@includedir@,/usr/include,g ; \
+		s,@libdir@,${LIBDIR},g ; \
+		s,@sharedlibdir@,${SHLIBDIR},g ; \
+		s,@includedir@,${INCLUDEDIR},g ; \
 		s,@LIBS@,-pthread -lmd,g ; \
 		s,@PACKAGE_URL@,https://tukaani.org/xz/,g ; \
 		s,@PACKAGE_VERSION@,${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_PATCH},g ; \

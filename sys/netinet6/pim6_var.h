@@ -29,7 +29,6 @@
  * SUCH DAMAGE.
  *
  *	$KAME: pim6_var.h,v 1.8 2000/06/06 08:07:43 jinmei Exp $
- * $FreeBSD: 7288c67eee22b46cc2269409942b169ce5817b58 $
  */
 
 /*

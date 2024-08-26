@@ -1,9 +1,6 @@
-#include <sys/cdefs.h>
-__FBSDID("$FreeBSD: a775a2525d4cfd3321fded2fefa80cd493801163 $");
-
 #include <sys/param.h>
-#include <sys/assym.h>
 #include <sys/systm.h>
+#include <sys/assym.h>
 
 #include <i386/linux/linux.h>
 #include <compat/linux/linux_mib.h>

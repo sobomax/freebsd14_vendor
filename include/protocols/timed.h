@@ -29,8 +29,6 @@
  * SUCH DAMAGE.
  *
  *	@(#)timed.h	8.1 (Berkeley) 6/2/93
- *
- * $FreeBSD: de4243c576fe9f4d8c7f399af2e0855df461d572 $
  */
 
 #ifndef	_PROTOCOLS_TIMED_H_

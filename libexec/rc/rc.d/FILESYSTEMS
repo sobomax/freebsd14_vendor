@@ -1,6 +1,5 @@
 #!/bin/sh
 #
-# $FreeBSD: 996d8ada987a65aaec9b28cd635144572b7ac833 $
 #
 
 # PROVIDE: FILESYSTEMS

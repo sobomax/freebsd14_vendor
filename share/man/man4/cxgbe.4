@@ -29,9 +29,7 @@
 .\"
 .\" * Other names and brands may be claimed as the property of others.
 .\"
-.\" $FreeBSD: b0f8af93b3b6f56f25de0d0cb60587c7f51879b3 $
-.\"
-.Dd September 12, 2022
+.Dd November 10, 2022
 .Dt CXGBE 4
 .Os
 .Sh NAME
@@ -263,7 +261,7 @@ The default is 1.
 Number of padding bytes inserted before the beginning of an Ethernet
 frame in the receive buffer.
 The default value is 0.
-A value of of 2 would ensure that the Ethernet payload (usually the IP header)
+A value of 2 would ensure that the Ethernet payload (usually the IP header)
 is at a 4 byte aligned address.
 0-7 are all valid values.
 .It Va hw.cxgbe.fl_pad
@@ -398,7 +396,6 @@ If an issue is identified with this driver with a supported adapter,
 email all the specific information related to the issue to
 .Aq Mt support@chelsio.com .
 .Sh SEE ALSO
-.Xr altq 4 ,
 .Xr arp 4 ,
 .Xr ccr 4 ,
 .Xr cxgb 4 ,

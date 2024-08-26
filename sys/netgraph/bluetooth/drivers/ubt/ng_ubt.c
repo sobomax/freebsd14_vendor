@@ -3,7 +3,7 @@
  */
 
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2001-2009 Maksim Yevmenkin <m_evmenkin@yahoo.com>
  * All rights reserved.
@@ -30,7 +30,6 @@
  * SUCH DAMAGE.
  *
  * $Id: ng_ubt.c,v 1.16 2003/10/10 19:15:06 max Exp $
- * $FreeBSD: 9250af43566efff27bca31b2499d96e31e16f45c $
  */
 
 /*
@@ -2005,8 +2004,6 @@ ubt_modevent(module_t mod, int event, void *data)
 	return (error);
 } /* ubt_modevent */
 
-devclass_t	ubt_devclass;
-
 static device_method_t	ubt_methods[] =
 {
 	DEVMETHOD(device_probe,	ubt_probe),
@@ -2022,7 +2019,7 @@ driver_t		ubt_driver =
 	.size =	   sizeof(struct ubt_softc),
 };
 
-DRIVER_MODULE(ng_ubt, uhub, ubt_driver, ubt_devclass, ubt_modevent, 0);
+DRIVER_MODULE(ng_ubt, uhub, ubt_driver, ubt_modevent, 0);
 MODULE_VERSION(ng_ubt, NG_BLUETOOTH_VERSION);
 MODULE_DEPEND(ng_ubt, netgraph, NG_ABI_VERSION, NG_ABI_VERSION, NG_ABI_VERSION);
 MODULE_DEPEND(ng_ubt, ng_hci, NG_BLUETOOTH_VERSION, NG_BLUETOOTH_VERSION, NG_BLUETOOTH_VERSION);

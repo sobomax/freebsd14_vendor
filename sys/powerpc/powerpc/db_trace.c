@@ -1,4 +1,3 @@
-/*	$FreeBSD: 3103399f06b44c952a26d3e89718bdb3ec866efc $ */
 /*	$NetBSD: db_trace.c,v 1.20 2002/05/13 20:30:09 matt Exp $	*/
 /*	$OpenBSD: db_trace.c,v 1.3 1997/03/21 02:10:48 niklas Exp $	*/
 

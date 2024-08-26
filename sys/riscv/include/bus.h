@@ -61,8 +61,6 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
  * From: sys/arm/include/bus.h
- *
- * $FreeBSD: 980aa2af30a876cdeb98e2123dc2e1122dfa8c0f $
  */
 
 #ifndef _MACHINE_BUS_H_

@@ -3,7 +3,7 @@
  */
 
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) Maksim Yevmenkin <m_evmenkin@yahoo.com>
  * All rights reserved.
@@ -30,7 +30,6 @@
  * SUCH DAMAGE.
  *
  * $Id: ng_l2cap_llpi.h,v 1.2 2003/04/28 21:44:59 max Exp $
- * $FreeBSD: 36c118c2dd572b4e69e838da31d3ba4d51e9c87c $
  */
 
 #ifndef _NETGRAPH_L2CAP_LLPI_H_

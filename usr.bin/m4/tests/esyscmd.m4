@@ -1,4 +1,3 @@
-dnl $FreeBSD: 7b1342d39d856abfecba604b7a840b4f0f97e62f $
 changequote(`{',`}')dnl
 dnl
 esyscmd({sh -c "m4<<EOF

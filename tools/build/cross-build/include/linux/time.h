@@ -32,8 +32,6 @@
  * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
- *
- * $FreeBSD: 189f1f2669162cd1adc332e3fd3947b1e1349cef $
  */
 /* We can't use #pragma once here since at least the version of time.h
  * shipped with glibc must be included more than once with different

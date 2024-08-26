@@ -28,8 +28,6 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 61c1eb43814240b4740125907d64a103b1638a2f $
- *
  * Private definitions for libc, libc_r and libpthread.
  *
  */
@@ -38,6 +36,14 @@
 #define _LIBC_PRIVATE_H_
 #include <sys/_types.h>
 #include <sys/_pthreadtypes.h>
+
+extern char **environ;
+
+/*
+ * The kernel doesn't expose PID_MAX to the user space. Save it here
+ * to allow to run a newer world on a pre-1400079 kernel.
+ */
+#define	_PID_MAX	99999
 
 /*
  * This global flag is non-zero when a process has created one
@@ -178,6 +184,7 @@ typedef enum {
 	PJT_MUTEXATTR_SETROBUST,
 	PJT_GETTHREADID_NP,
 	PJT_ATTR_GET_NP,
+	PJT_GETNAME_NP,
 	PJT_MAX
 } pjt_index_t;
 
@@ -249,6 +256,12 @@ enum {
 int _yp_check(char **);
 #endif
 
+void __libc_start1(int, char *[], char *[],
+    void (*)(void), int (*)(int, char *[], char *[])) __dead2;
+void __libc_start1_gcrt(int, char *[], char *[],
+    void (*)(void), int (*)(int, char *[], char *[]),
+    int *, int *) __dead2;
+
 /*
  * Initialise TLS for static programs
  */
@@ -259,12 +272,6 @@ void _init_tls(void);
  * and multi-threaded applications.
  */
 int _once(pthread_once_t *, void (*)(void));
-
-/*
- * Get/set the TLS thread pointer
- */
-void *_get_tp(void);
-void _set_tp(void *tp);
 
 /*
  * This is a pointer in the C run-time startup code. It is used
@@ -415,9 +422,6 @@ int		__sys_futimens(int fd, const struct timespec *times) __hidden;
 int		__sys_utimensat(int fd, const char *path,
 		    const struct timespec *times, int flag) __hidden;
 
-/* execve() with PATH processing to implement posix_spawnp() */
-int _execvpe(const char *, char * const *, char * const *);
-
 int _elf_aux_info(int aux, void *buf, int buflen);
 struct dl_phdr_info;
 int __elf_phdr_match_addr(struct dl_phdr_info *, void *);
@@ -439,6 +443,8 @@ void __throw_constraint_handler_s(const char * restrict msg, int error);
 struct __nl_cat_d;
 struct _xlocale;
 struct __nl_cat_d *__catopen_l(const char *name, int type,
+	    struct _xlocale *locale);
+int __strerror_rl(int errnum, char *strerrbuf, __size_t buflen,
 	    struct _xlocale *locale);
 
 #endif /* _LIBC_PRIVATE_H_ */

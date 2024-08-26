@@ -29,7 +29,6 @@
  * SUCH DAMAGE.
  *
  *	@(#)termios.h	8.3 (Berkeley) 3/28/94
- * $FreeBSD: 9b808329a426e81572a0e583906dac6f792b5abc $
  */
 
 #ifndef _TERMIOS_H_

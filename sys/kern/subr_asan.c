@@ -31,7 +31,6 @@
 #define	SAN_RUNTIME
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 2f0334cf52be9a54551051a13873e8a8913a9629 $");
 #if 0
 __KERNEL_RCSID(0, "$NetBSD: subr_asan.c,v 1.26 2020/09/10 14:10:46 maxv Exp $");
 #endif
@@ -93,7 +92,10 @@ SYSCTL_INT(_debug_kasan, OID_AUTO, panic_on_violation, CTLFLAG_RDTUN,
     &panic_on_violation, 0,
     "Panic if an invalid access is detected");
 
-static bool kasan_enabled __read_mostly = false;
+#define kasan_enabled (!kasan_disabled)
+static bool kasan_disabled __read_mostly = true;
+SYSCTL_BOOL(_debug_kasan, OID_AUTO, disabled, CTLFLAG_RDTUN | CTLFLAG_NOFETCH,
+    &kasan_disabled, 0, "KASAN is disabled");
 
 /* -------------------------------------------------------------------------- */
 
@@ -120,7 +122,7 @@ kasan_shadow_map(vm_offset_t addr, size_t size)
 	    ("%s: invalid address range %#lx-%#lx", __func__, sva, eva));
 
 	for (i = 0; i < npages; i++)
-		pmap_kasan_enter(sva + ptoa(i));
+		pmap_san_enter(sva + ptoa(i));
 }
 
 void
@@ -137,7 +139,13 @@ kasan_init(void)
 	kasan_md_init();
 
 	/* Now officially enabled. */
-	kasan_enabled = true;
+	kasan_disabled = false;
+}
+
+void
+kasan_init_early(vm_offset_t stack, size_t size)
+{
+	kasan_md_init_early(stack, size);
 }
 
 static inline const char *
@@ -175,7 +183,7 @@ kasan_code_name(uint8_t code)
 
 #define	REPORT(f, ...) do {				\
 	if (panic_on_violation) {			\
-		kasan_enabled = false;			\
+		kasan_disabled = true;			\
 		panic(f, __VA_ARGS__);			\
 	} else {					\
 		struct stack st;			\
@@ -526,6 +534,89 @@ kasan_copyout(const void *kaddr, void *uaddr, size_t len)
 
 /* -------------------------------------------------------------------------- */
 
+int
+kasan_fubyte(volatile const void *base)
+{
+	return (fubyte(base));
+}
+
+int
+kasan_fuword16(volatile const void *base)
+{
+	return (fuword16(base));
+}
+
+int
+kasan_fueword(volatile const void *base, long *val)
+{
+	kasan_shadow_check((unsigned long)val, sizeof(*val), true, __RET_ADDR);
+	return (fueword(base, val));
+}
+
+int
+kasan_fueword32(volatile const void *base, int32_t *val)
+{
+	kasan_shadow_check((unsigned long)val, sizeof(*val), true, __RET_ADDR);
+	return (fueword32(base, val));
+}
+
+int
+kasan_fueword64(volatile const void *base, int64_t *val)
+{
+	kasan_shadow_check((unsigned long)val, sizeof(*val), true, __RET_ADDR);
+	return (fueword64(base, val));
+}
+
+int
+kasan_subyte(volatile void *base, int byte)
+{
+	return (subyte(base, byte));
+}
+
+int
+kasan_suword(volatile void *base, long word)
+{
+	return (suword(base, word));
+}
+
+int
+kasan_suword16(volatile void *base, int word)
+{
+	return (suword16(base, word));
+}
+
+int
+kasan_suword32(volatile void *base, int32_t word)
+{
+	return (suword32(base, word));
+}
+
+int
+kasan_suword64(volatile void *base, int64_t word)
+{
+	return (suword64(base, word));
+}
+
+int
+kasan_casueword32(volatile uint32_t *base, uint32_t oldval, uint32_t *oldvalp,
+    uint32_t newval)
+{
+	kasan_shadow_check((unsigned long)oldvalp, sizeof(*oldvalp), true,
+	    __RET_ADDR);
+	return (casueword32(base, oldval, oldvalp, newval));
+}
+
+int
+kasan_casueword(volatile u_long *base, u_long oldval, u_long *oldvalp,
+    u_long newval)
+{
+	kasan_shadow_check((unsigned long)oldvalp, sizeof(*oldvalp), true,
+	    __RET_ADDR);
+	return (casueword(base, oldval, oldvalp, newval));
+}
+
+/* -------------------------------------------------------------------------- */
+
 #include <machine/atomic.h>
 #include <sys/atomic_san.h>
 
@@ -868,6 +959,13 @@ ASAN_BUS_READ_PTR_FUNC(region, 4, uint32_t)
 ASAN_BUS_READ_PTR_FUNC(region_stream, 4, uint32_t)
 
 ASAN_BUS_READ_FUNC(, 8, uint64_t)
+#if defined(__aarch64__)
+ASAN_BUS_READ_FUNC(_stream, 8, uint64_t)
+ASAN_BUS_READ_PTR_FUNC(multi, 8, uint64_t)
+ASAN_BUS_READ_PTR_FUNC(multi_stream, 8, uint64_t)
+ASAN_BUS_READ_PTR_FUNC(region, 8, uint64_t)
+ASAN_BUS_READ_PTR_FUNC(region_stream, 8, uint64_t)
+#endif
 
 #define	ASAN_BUS_WRITE_FUNC(func, width, type)				\
 	void kasan_bus_space_write##func##_##width(bus_space_tag_t tag,	\

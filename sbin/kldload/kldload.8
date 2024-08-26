@@ -23,9 +23,7 @@
 .\" OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 .\" SUCH DAMAGE.
 .\"
-.\" $FreeBSD: 9401c22819d5094496d512253dcd0ec6cf030b63 $
-.\"
-.Dd April 27, 2017
+.Dd December 20, 2023
 .Dt KLDLOAD 8
 .Os
 .Sh NAME
@@ -108,8 +106,15 @@ time when the corresponding
 .Xr rc.conf 5
 statement is used.
 Modules may also be auto-loaded through their addition to
+.Xr loader.conf 5
+or kld_list in
+.Xr rc.conf 5 .
+.Pp
+Only those modules necessary for booting the system, including those
+required for mounting the root filesystem, should be handled by
 .Xr loader.conf 5 .
 .Sh SEE ALSO
+.Xr kenv 1 ,
 .Xr kldload 2 ,
 .Xr loader.conf 5 ,
 .Xr rc.conf 5 ,

@@ -30,8 +30,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 861ad5ad4c35c46d23e8f2f6048d92cb2ea3f313 $");
-
 #if defined(LIBC_SCCS) && !defined(lint)
 static char sccsid[] = "@(#)yyerror.c	8.1 (Berkeley) 6/4/93";
 #endif /* LIBC_SCCS and not lint */

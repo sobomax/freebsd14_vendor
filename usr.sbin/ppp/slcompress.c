@@ -37,8 +37,6 @@
  *
  * Van Jacobson (van@helios.ee.lbl.gov), Dec 31, 1989:
  *	- Initial distribution.
- *
- * $FreeBSD: adfdcd6da796cd2f48b48849b2ed90a447860140 $
  */
 
 #include <sys/param.h>

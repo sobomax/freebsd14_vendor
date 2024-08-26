@@ -1,4 +1,3 @@
-# $FreeBSD: 4fa9c220747c5b971b659d38e846f09e74f1fe95 $
 
 PACKAGE=	bhyve
 FILESDIR=	${SHAREDIR}/bhyve/kbdlayout

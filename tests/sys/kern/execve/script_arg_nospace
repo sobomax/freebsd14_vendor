@@ -1,4 +1,3 @@
 #!/bin/sh -x
-# $FreeBSD: 6731ad50f4ac6f3813d341e5a659958f6ac6e665 $
 
 echo succeeded

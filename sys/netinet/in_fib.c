@@ -28,8 +28,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 957262fc70b992020ac880ef1c8eeaf32e0267fd $");
-
 #include "opt_inet.h"
 #include "opt_route.h"
 
@@ -46,6 +44,7 @@ __FBSDID("$FreeBSD: 957262fc70b992020ac880ef1c8eeaf32e0267fd $");
 #include <net/if.h>
 #include <net/if_var.h>
 #include <net/if_dl.h>
+#include <net/if_private.h>
 #include <net/route.h>
 #include <net/route/route_ctl.h>
 #include <net/route/route_var.h>
@@ -60,7 +59,7 @@ __FBSDID("$FreeBSD: 957262fc70b992020ac880ef1c8eeaf32e0267fd $");
 
 #ifdef INET
 
-/* Verify struct route compatiblity */
+/* Verify struct route compatibility */
 /* Assert 'struct route_in' is compatible with 'struct route' */
 CHK_STRUCT_ROUTE_COMPAT(struct route_in, ro_dst4);
 

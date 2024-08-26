@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2006 Stephane E. Potvin <sepotvin@videotron.ca>
  * Copyright (c) 2006 Ariff Abdullah <ariff@FreeBSD.org>
@@ -50,8 +50,6 @@
 #include <dev/sound/pci/hda/hdac.h>
 
 #define HDA_DRV_TEST_REV	"20120126_0002"
-
-SND_DECLARE_FILE("$FreeBSD: 9aa0e4bffdc8379b27f761ece61866d11a144866 $");
 
 #define hdac_lock(sc)		snd_mtxlock((sc)->lock)
 #define hdac_unlock(sc)		snd_mtxunlock((sc)->lock)
@@ -120,6 +118,10 @@ static const struct {
 	{ HDA_INTEL_ALLKPS,  "Intel Alder Lake-PS",	0, 0 },
 	{ HDA_INTEL_RPTLK1,  "Intel Raptor Lake-P",	0, 0 },
 	{ HDA_INTEL_RPTLK2,  "Intel Raptor Lake-P",	0, 0 },
+	{ HDA_INTEL_MTL,     "Intel Meteor Lake-P",	0, 0 },
+	{ HDA_INTEL_ARLS,    "Intel Arrow Lake-S",	0, 0 },
+	{ HDA_INTEL_ARL,     "Intel Arrow Lake",	0, 0 },
+	{ HDA_INTEL_LNLP,    "Intel Lunar Lake-P",	0, 0 },
 	{ HDA_INTEL_82801F,  "Intel 82801F",	0, 0 },
 	{ HDA_INTEL_63XXESB, "Intel 631x/632xESB",	0, 0 },
 	{ HDA_INTEL_82801G,  "Intel 82801G",	0, 0 },
@@ -203,6 +205,7 @@ static const struct {
 	{ HDA_VMWARE,        "VMware",		0, 0 },
 	{ HDA_SIS_966,       "SiS 966/968",	0, 0 },
 	{ HDA_ULI_M5461,     "ULI M5461",	0, 0 },
+	{ HDA_CREATIVE_SB1570,	"Creative SB Audigy FX", 0, HDAC_QUIRK_64BIT },
 	/* Unknown */
 	{ HDA_INTEL_ALL,  "Intel",		0, 0 },
 	{ HDA_NVIDIA_ALL, "NVIDIA",		0, 0 },
@@ -1103,10 +1106,8 @@ hdac_probe(device_t dev)
 		snprintf(desc, sizeof(desc), "Generic (0x%08x)", model);
 		result = BUS_PROBE_GENERIC;
 	}
-	if (result != ENXIO) {
-		strlcat(desc, " HDA Controller", sizeof(desc));
-		device_set_desc_copy(dev, desc);
-	}
+	if (result != ENXIO)
+		device_set_descf(dev, "%s HDA Controller", desc);
 
 	return (result);
 }
@@ -1274,9 +1275,6 @@ hdac_attach(device_t dev)
 	result = hdac_mem_alloc(sc);
 	if (result != 0)
 		goto hdac_attach_fail;
-	result = hdac_irq_alloc(sc);
-	if (result != 0)
-		goto hdac_attach_fail;
 
 	/* Get Capabilities */
 	result = hdac_get_capabilities(sc);
@@ -1349,6 +1347,10 @@ hdac_attach(device_t dev)
 	hdac_corb_init(sc);
 	hdac_rirb_init(sc);
 
+	result = hdac_irq_alloc(sc);
+	if (result != 0)
+		goto hdac_attach_fail;
+
 	/* Defer remaining of initialization until interrupts are enabled */
 	sc->intrhook.ich_func = hdac_attach2;
 	sc->intrhook.ich_arg = (void *)sc;
@@ -1399,12 +1401,20 @@ sysctl_hdac_pindump(SYSCTL_HANDLER_ARGS)
 		return (0);
 	}
 
-	if ((err = device_get_children(dev, &devlist, &devcount)) != 0)
+	bus_topo_lock();
+
+	if ((err = device_get_children(dev, &devlist, &devcount)) != 0) {
+		bus_topo_unlock();
 		return (err);
+	}
+
 	hdac_lock(sc);
 	for (i = 0; i < devcount; i++)
 		HDAC_PINDUMP(devlist[i]);
 	hdac_unlock(sc);
+
+	bus_topo_unlock();
+
 	free(devlist, M_TEMP);
 	return (0);
 }
@@ -1619,11 +1629,11 @@ hdac_attach2(void *arg)
 
 	SYSCTL_ADD_PROC(device_get_sysctl_ctx(sc->dev),
 	    SYSCTL_CHILDREN(device_get_sysctl_tree(sc->dev)), OID_AUTO,
-	    "pindump", CTLTYPE_INT | CTLFLAG_RW | CTLFLAG_NEEDGIANT, sc->dev,
+	    "pindump", CTLTYPE_INT | CTLFLAG_RW, sc->dev,
 	    sizeof(sc->dev), sysctl_hdac_pindump, "I", "Dump pin states/data");
 	SYSCTL_ADD_PROC(device_get_sysctl_ctx(sc->dev),
 	    SYSCTL_CHILDREN(device_get_sysctl_tree(sc->dev)), OID_AUTO,
-	    "polling", CTLTYPE_INT | CTLFLAG_RW | CTLFLAG_NEEDGIANT, sc->dev,
+	    "polling", CTLTYPE_INT | CTLFLAG_RW, sc->dev,
 	    sizeof(sc->dev), sysctl_hdac_polling, "I", "Enable polling mode");
 }
 
@@ -1787,21 +1797,20 @@ hdac_print_child(device_t dev, device_t child)
 }
 
 static int
-hdac_child_location_str(device_t dev, device_t child, char *buf, size_t buflen)
+hdac_child_location(device_t dev, device_t child, struct sbuf *sb)
 {
 
-	snprintf(buf, buflen, "cad=%d", (int)(intptr_t)device_get_ivars(child));
+	sbuf_printf(sb, "cad=%d", (int)(intptr_t)device_get_ivars(child));
 	return (0);
 }
 
 static int
-hdac_child_pnpinfo_str_method(device_t dev, device_t child, char *buf,
-    size_t buflen)
+hdac_child_pnpinfo_method(device_t dev, device_t child, struct sbuf *sb)
 {
 	struct hdac_softc *sc = device_get_softc(dev);
 	nid_t cad = (uintptr_t)device_get_ivars(child);
 
-	snprintf(buf, buflen,
+	sbuf_printf(sb,
 	    "vendor=0x%04x device=0x%04x revision=0x%02x stepping=0x%02x",
 	    sc->codecs[cad].vendor_id, sc->codecs[cad].device_id,
 	    sc->codecs[cad].revision_id, sc->codecs[cad].stepping_id);
@@ -2150,8 +2159,8 @@ static device_method_t hdac_methods[] = {
 	/* Bus interface */
 	DEVMETHOD(bus_get_dma_tag,	hdac_get_dma_tag),
 	DEVMETHOD(bus_print_child,	hdac_print_child),
-	DEVMETHOD(bus_child_location_str, hdac_child_location_str),
-	DEVMETHOD(bus_child_pnpinfo_str, hdac_child_pnpinfo_str_method),
+	DEVMETHOD(bus_child_location,	hdac_child_location),
+	DEVMETHOD(bus_child_pnpinfo,	hdac_child_pnpinfo_method),
 	DEVMETHOD(bus_read_ivar,	hdac_read_ivar),
 	DEVMETHOD(hdac_get_mtx,		hdac_get_mtx),
 	DEVMETHOD(hdac_codec_command,	hdac_codec_command),
@@ -2172,6 +2181,4 @@ static driver_t hdac_driver = {
 	sizeof(struct hdac_softc),
 };
 
-static devclass_t hdac_devclass;
-
-DRIVER_MODULE(snd_hda, pci, hdac_driver, hdac_devclass, NULL, NULL);
+DRIVER_MODULE(snd_hda, pci, hdac_driver, NULL, NULL);

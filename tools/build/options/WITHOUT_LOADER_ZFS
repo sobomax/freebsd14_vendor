@@ -1,2 +1,1 @@
-.\" $FreeBSD: 78d1f1ae6e756ad89bdecbb848b84c4d7a1858a5 $
 Do not build ZFS file system boot loader support.

@@ -58,13 +58,9 @@
  * SUCH DAMAGE.
  *
  * Avago Technologies (LSI) MPT-Fusion Host Adapter FreeBSD
- *
- * $FreeBSD: a16201cde131db73593d1a16c816b61fd594d7db $
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: a16201cde131db73593d1a16c816b61fd594d7db $");
-
 /* TODO Move headers to mpsvar */
 #include <sys/types.h>
 #include <sys/param.h>
@@ -468,12 +464,6 @@ mpi_pre_fw_download(struct mps_command *cm, struct mps_usr_command *cmd)
 	MPI2_FW_DOWNLOAD_TCSGE tc;
 	int error;
 
-	/*
-	 * This code assumes there is room in the request's SGL for
-	 * the TransactionContext plus at least a SGL chain element.
-	 */
-	CTASSERT(sizeof req->SGL >= sizeof tc + MPS_SGC_SIZE);
-
 	if (cmd->req_len != sizeof *req)
 		return (EINVAL);
 	if (cmd->rpl_len != sizeof *rpl)
@@ -520,12 +510,6 @@ mpi_pre_fw_upload(struct mps_command *cm, struct mps_usr_command *cmd)
 	MPI2_FW_UPLOAD_REQUEST *req = (void *)cm->cm_req;
 	MPI2_FW_UPLOAD_REPLY *rpl;
 	MPI2_FW_UPLOAD_TCSGE tc;
-
-	/*
-	 * This code assumes there is room in the request's SGL for
-	 * the TransactionContext plus at least a SGL chain element.
-	 */
-	CTASSERT(sizeof req->SGL >= sizeof tc + MPS_SGC_SIZE);
 
 	if (cmd->req_len != sizeof *req)
 		return (EINVAL);
@@ -731,9 +715,9 @@ mps_user_command(struct mps_softc *sc, struct mps_usr_command *cmd)
 	}	
 
 	mps_unlock(sc);
-	copyout(rpl, cmd->rpl, sz);
-	if (buf != NULL)
-		copyout(buf, cmd->buf, cmd->len);
+	err = copyout(rpl, cmd->rpl, sz);
+	if (buf != NULL && err == 0)
+		err = copyout(buf, cmd->buf, cmd->len);
 	mps_dprint(sc, MPS_USER, "%s: reply size %d\n", __func__, sz);
 
 RetFreeUnlocked:
@@ -863,18 +847,21 @@ mps_user_pass_thru(struct mps_softc *sc, mps_pass_thru_t *data)
 		/*
 		 * Copy the reply data and sense data to user space.
 		 */
-		if ((cm != NULL) && (cm->cm_reply != NULL)) {
+		if (err == 0 && cm != NULL && cm->cm_reply != NULL) {
 			rpl = (MPI2_DEFAULT_REPLY *)cm->cm_reply;
 			sz = rpl->MsgLength * 4;
 
-			if (sz > data->ReplySize) {
+			if (bootverbose && sz > data->ReplySize) {
 				mps_printf(sc, "%s: user reply buffer (%d) "
 				    "smaller than returned buffer (%d)\n",
 				    __func__, data->ReplySize, sz);
 			}
 			mps_unlock(sc);
-			copyout(cm->cm_reply, PTRIN(data->PtrReply),
-			    data->ReplySize);
+			err = copyout(cm->cm_reply, PTRIN(data->PtrReply),
+			    MIN(sz, data->ReplySize));
+			if (err != 0)
+				mps_dprint(sc, MPS_FAULT,
+				    "%s: copyout failed\n", __func__);
 			mps_lock(sc);
 		}
 		mpssas_free_tm(sc, cm);
@@ -1017,21 +1004,26 @@ mps_user_pass_thru(struct mps_softc *sc, mps_pass_thru_t *data)
 	/*
 	 * Copy the reply data and sense data to user space.
 	 */
-	if (cm->cm_reply != NULL) {
+	if (err == 0 && cm->cm_reply != NULL) {
 		rpl = (MPI2_DEFAULT_REPLY *)cm->cm_reply;
 		sz = rpl->MsgLength * 4;
 
-		if (sz > data->ReplySize) {
+		if (bootverbose && sz > data->ReplySize) {
 			mps_printf(sc, "%s: user reply buffer (%d) smaller "
 			    "than returned buffer (%d)\n", __func__,
 			    data->ReplySize, sz);
 		}
 		mps_unlock(sc);
-		copyout(cm->cm_reply, PTRIN(data->PtrReply), data->ReplySize);
+		err = copyout(cm->cm_reply, PTRIN(data->PtrReply),
+		    MIN(sz, data->ReplySize));
 		mps_lock(sc);
+		if (err != 0)
+			mps_dprint(sc, MPS_FAULT, "%s: failed to copy "
+			    "IOCTL data to user space\n", __func__);
 
-		if ((function == MPI2_FUNCTION_SCSI_IO_REQUEST) ||
-		    (function == MPI2_FUNCTION_RAID_SCSI_IO_PASSTHROUGH)) {
+		if (err == 0 &&
+		    (function == MPI2_FUNCTION_SCSI_IO_REQUEST ||
+		    function == MPI2_FUNCTION_RAID_SCSI_IO_PASSTHROUGH)) {
 			if (((MPI2_SCSI_IO_REPLY *)rpl)->SCSIState &
 			    MPI2_SCSI_STATE_AUTOSENSE_VALID) {
 				sense_len =
@@ -1039,9 +1031,13 @@ mps_user_pass_thru(struct mps_softc *sc, mps_pass_thru_t *data)
 				    SenseCount)), sizeof(struct
 				    scsi_sense_data));
 				mps_unlock(sc);
-				copyout(cm->cm_sense, (PTRIN(data->PtrReply +
+				err = copyout(cm->cm_sense, (PTRIN(data->PtrReply +
 				    sizeof(MPI2_SCSI_IO_REPLY))), sense_len);
 				mps_lock(sc);
+				if (err != 0)
+					mps_dprint(sc, MPS_FAULT,
+					    "%s: failed to copy IOCTL data to "
+					    "user space\n", __func__);
 			}
 		}
 	}
@@ -1967,7 +1963,7 @@ mps_user_event_report(struct mps_softc *sc, mps_event_report_t *data)
 	if ((size >= sizeof(sc->recorded_events)) && (status == 0)) {
 		mps_unlock(sc);
 		if (copyout((void *)sc->recorded_events,
-		    PTRIN(data->PtrEvents), size) != 0)
+		    PTRIN(data->PtrEvents), sizeof(sc->recorded_events)) != 0)
 			status = EFAULT;
 		mps_lock(sc);
 	} else {

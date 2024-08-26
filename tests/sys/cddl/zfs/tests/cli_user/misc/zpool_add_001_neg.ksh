@@ -1,7 +1,5 @@
 #!/usr/local/bin/ksh93 -p
 
-# $FreeBSD: 36b149799dbe166f9a057a1b7708d25e2f078574 $
-
 # CDDL HEADER START
 #
 # The contents of this file are subject to the terms of the

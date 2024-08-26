@@ -25,9 +25,6 @@
  * IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include <sys/cdefs.h>
-__FBSDID("$FreeBSD: e50f8f25e16a45ea7d663ba4ce4c36dcae9c1573 $");
-
 /*
  * Readonly filesystem for Microsoft FAT12/FAT16/FAT32 filesystems,
  * also supports VFAT.

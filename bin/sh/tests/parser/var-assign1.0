@@ -1,4 +1,3 @@
-# $FreeBSD: 1fd3b26f8a26475473d52678b9f4fd21dfe65dac $
 # In a variable assignment, both the name and the equals sign must be entirely
 # unquoted. Therefore, there is only one assignment below; the other words
 # containing equals signs are command words.

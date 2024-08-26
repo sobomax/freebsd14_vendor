@@ -1,4 +1,3 @@
-# $FreeBSD: 06a68faa32a30e29d7b3c809b421237e77bdb10b $
 set -e
 
 echo "1 2 3"		| { read a; echo "x${a}x"; }

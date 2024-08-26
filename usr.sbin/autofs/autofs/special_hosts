@@ -1,6 +1,5 @@
 #!/bin/sh
 #
-# $FreeBSD: c49854681451b2a6771bd2237c9ad249cf9013ae $
 #
 
 if [ $# -eq 0 ]; then

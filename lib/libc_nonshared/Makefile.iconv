@@ -1,4 +1,3 @@
-# $FreeBSD: 8fb1ad9532845f59a0c97a701dbb200bde4c70cb $
 
 .if ${MK_ICONV} == "yes"
 LIBC_NONSHARED_SRCS+=	\

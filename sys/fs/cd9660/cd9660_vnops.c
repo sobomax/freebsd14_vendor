@@ -37,8 +37,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 0ddf73548e3fdab0c57c5d3eaea36b67f7e90893 $");
-
 #include <sys/param.h>
 #include <sys/systm.h>
 #include <sys/namei.h>
@@ -61,6 +59,7 @@ __FBSDID("$FreeBSD: 0ddf73548e3fdab0c57c5d3eaea36b67f7e90893 $");
 
 #include <fs/cd9660/iso.h>
 #include <fs/cd9660/cd9660_node.h>
+#include <fs/cd9660/cd9660_mount.h>
 #include <fs/cd9660/iso_rrip.h>
 
 static vop_setattr_t	cd9660_setattr;
@@ -83,13 +82,7 @@ static vop_getpages_t	cd9660_getpages;
  * Setattr call. Only allowed for block and character special devices.
  */
 static int
-cd9660_setattr(ap)
-	struct vop_setattr_args /* {
-		struct vnodeop_desc *a_desc;
-		struct vnode *a_vp;
-		struct vattr *a_vap;
-		struct ucred *a_cred;
-	} */ *ap;
+cd9660_setattr(struct vop_setattr_args *ap)
 {
 	struct vnode *vp = ap->a_vp;
 	struct vattr *vap = ap->a_vap;
@@ -125,17 +118,14 @@ cd9660_setattr(ap)
  */
 /* ARGSUSED */
 static int
-cd9660_access(ap)
-	struct vop_access_args /* {
-		struct vnode *a_vp;
-		accmode_t a_accmode;
-		struct ucred *a_cred;
-		struct thread *a_td;
-	} */ *ap;
+cd9660_access(struct vop_access_args *ap)
 {
 	struct vnode *vp = ap->a_vp;
 	struct iso_node *ip = VTOI(vp);
 	accmode_t accmode = ap->a_accmode;
+	accmode_t file_mode;
+	uid_t uid;
+	gid_t gid;
 
 	if (vp->v_type == VCHR || vp->v_type == VBLK)
 		return (EOPNOTSUPP);
@@ -157,19 +147,20 @@ cd9660_access(ap)
 		}
 	}
 
-	return (vaccess(vp->v_type, ip->inode.iso_mode, ip->inode.iso_uid,
-	    ip->inode.iso_gid, ap->a_accmode, ap->a_cred));
+	file_mode = ip->inode.iso_mode;
+	file_mode &= (vp->v_type == VDIR) ? ip->i_mnt->im_dmask : ip->i_mnt->im_fmask;
+
+	uid = (ip->i_mnt->im_flags & ISOFSMNT_UID) ?
+		ip->i_mnt->im_uid : ip->inode.iso_uid;
+	gid = (ip->i_mnt->im_flags & ISOFSMNT_GID) ?
+		ip->i_mnt->im_gid : ip->inode.iso_gid;
+
+	return (vaccess(vp->v_type, file_mode, uid,
+	    gid, ap->a_accmode, ap->a_cred));
 }
 
 static int
-cd9660_open(ap)
-	struct vop_open_args /* {
-		struct vnode *a_vp;
-		int a_mode;
-		struct ucred *a_cred;
-		struct thread *a_td;
-		struct file *a_fp;
-	} */ *ap;
+cd9660_open(struct vop_open_args *ap)
 {
 	struct vnode *vp = ap->a_vp;
 	struct iso_node *ip = VTOI(vp);
@@ -182,12 +173,7 @@ cd9660_open(ap)
 }
 
 static int
-cd9660_getattr(ap)
-	struct vop_getattr_args /* {
-		struct vnode *a_vp;
-		struct vattr *a_vap;
-		struct ucred *a_cred;
-	} */ *ap;
+cd9660_getattr(struct vop_getattr_args *ap)
 
 {
 	struct vnode *vp = ap->a_vp;
@@ -198,9 +184,13 @@ cd9660_getattr(ap)
 	vap->va_fileid	= ip->i_number;
 
 	vap->va_mode	= ip->inode.iso_mode;
+	vap->va_mode &= (vp->v_type == VDIR) ? ip->i_mnt->im_dmask : ip->i_mnt->im_fmask;
+
 	vap->va_nlink	= ip->inode.iso_links;
-	vap->va_uid	= ip->inode.iso_uid;
-	vap->va_gid	= ip->inode.iso_gid;
+	vap->va_uid	= (ip->i_mnt->im_flags & ISOFSMNT_UID) ?
+			ip->i_mnt->im_uid : ip->inode.iso_uid;
+	vap->va_gid	= (ip->i_mnt->im_flags & ISOFSMNT_GID) ?
+			ip->i_mnt->im_gid : ip->inode.iso_gid;
 	vap->va_atime	= ip->inode.iso_atime;
 	vap->va_mtime	= ip->inode.iso_mtime;
 	vap->va_ctime	= ip->inode.iso_ctime;
@@ -243,15 +233,7 @@ cd9660_getattr(ap)
  * Vnode op for ioctl.
  */
 static int
-cd9660_ioctl(ap)
-	struct vop_ioctl_args /* {
-		struct vnode *a_vp;
-		u_long  a_command;
-		caddr_t  a_data;
-		int  a_fflag;
-		struct ucred *a_cred;
-		struct thread *a_td;
-	} */ *ap;
+cd9660_ioctl(struct vop_ioctl_args *ap)
 {
 	struct vnode *vp;
 	struct iso_node *ip;
@@ -288,13 +270,7 @@ cd9660_ioctl(ap)
  * Vnode op for reading.
  */
 static int
-cd9660_read(ap)
-	struct vop_read_args /* {
-		struct vnode *a_vp;
-		struct uio *a_uio;
-		int a_ioflag;
-		struct ucred *a_cred;
-	} */ *ap;
+cd9660_read(struct vop_read_args *ap)
 {
 	struct vnode *vp = ap->a_vp;
 	struct uio *uio = ap->a_uio;
@@ -367,15 +343,12 @@ struct isoreaddir {
 	struct uio *uio;
 	off_t uio_off;
 	int eofflag;
-	u_long *cookies;
+	uint64_t *cookies;
 	int ncookies;
 };
 
 static int
-iso_uiodir(idp,dp,off)
-	struct isoreaddir *idp;
-	struct dirent *dp;
-	off_t off;
+iso_uiodir(struct isoreaddir *idp, struct dirent *dp, off_t off)
 {
 	int error;
 
@@ -404,8 +377,7 @@ iso_uiodir(idp,dp,off)
 }
 
 static int
-iso_shipdir(idp)
-	struct isoreaddir *idp;
+iso_shipdir(struct isoreaddir *idp)
 {
 	struct dirent *dp;
 	int cl, sl, assoc;
@@ -457,15 +429,7 @@ iso_shipdir(idp)
  * Vnode op for readdir
  */
 static int
-cd9660_readdir(ap)
-	struct vop_readdir_args /* {
-		struct vnode *a_vp;
-		struct uio *a_uio;
-		struct ucred *a_cred;
-		int *a_eofflag;
-		int *a_ncookies;
-		u_long **a_cookies;
-	} */ *ap;
+cd9660_readdir(struct vop_readdir_args *ap)
 {
 	struct uio *uio = ap->a_uio;
 	struct isoreaddir *idp;
@@ -481,7 +445,7 @@ cd9660_readdir(ap)
 	int reclen;
 	u_short namelen;
 	u_int ncookies = 0;
-	u_long *cookies = NULL;
+	uint64_t *cookies = NULL;
 	cd_ino_t ino;
 
 	dp = VTOI(vdp);
@@ -504,8 +468,7 @@ cd9660_readdir(ap)
 		 * Guess the number of cookies needed.
 		 */
 		ncookies = uio->uio_resid / 16;
-		cookies = malloc(ncookies * sizeof(u_long),
-		    M_TEMP, M_WAITOK);
+		cookies = malloc(ncookies * sizeof(*cookies), M_TEMP, M_WAITOK);
 		idp->cookies = cookies;
 		idp->ncookies = ncookies;
 	}
@@ -657,12 +620,7 @@ typedef struct iso_directory_record ISODIR;
 typedef struct iso_node		    ISONODE;
 typedef struct iso_mnt		    ISOMNT;
 static int
-cd9660_readlink(ap)
-	struct vop_readlink_args /* {
-		struct vnode *a_vp;
-		struct uio *a_uio;
-		struct ucred *a_cred;
-	} */ *ap;
+cd9660_readlink(struct vop_readlink_args *ap)
 {
 	ISONODE	*ip;
 	ISODIR	*dirp;
@@ -748,11 +706,7 @@ cd9660_readlink(ap)
  * then call the device strategy routine.
  */
 static int
-cd9660_strategy(ap)
-	struct vop_strategy_args /* {
-		struct buf *a_vp;
-		struct buf *a_bp;
-	} */ *ap;
+cd9660_strategy(struct vop_strategy_args *ap)
 {
 	struct buf *bp = ap->a_bp;
 	struct vnode *vp = ap->a_vp;
@@ -776,12 +730,7 @@ cd9660_strategy(ap)
  * Return POSIX pathconf information applicable to cd9660 filesystems.
  */
 static int
-cd9660_pathconf(ap)
-	struct vop_pathconf_args /* {
-		struct vnode *a_vp;
-		int a_name;
-		register_t *a_retval;
-	} */ *ap;
+cd9660_pathconf(struct vop_pathconf_args *ap)
 {
 
 	switch (ap->a_name) {
@@ -816,11 +765,7 @@ cd9660_pathconf(ap)
  * Vnode pointer to File handle
  */
 static int
-cd9660_vptofh(ap)
-	struct vop_vptofh_args /* {
-		struct vnode *a_vp;
-		struct fid *a_fhp;
-	} */ *ap;
+cd9660_vptofh(struct vop_vptofh_args *ap)
 {
 	struct ifid ifh;
 	struct iso_node *ip = VTOI(ap->a_vp);

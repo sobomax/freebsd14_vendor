@@ -1,5 +1,4 @@
 #
-# $FreeBSD: 3350791703782de9346f511dddd4a5b71e3e1e5d $
 #
 #    Name:     cp949 to Unicode table
 #    Unicode version: 2.0

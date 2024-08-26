@@ -32,8 +32,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 448ee03a8e20a567d52218dc213eec24f25763d2 $");
-
 #include "opt_ddb.h"
 
 #include <sys/param.h>
@@ -65,6 +63,7 @@ __FBSDID("$FreeBSD: 448ee03a8e20a567d52218dc213eec24f25763d2 $");
 #include <net/if_dl.h>
 #include <net/if_types.h>
 #include <net/if_var.h>
+#include <net/if_private.h>
 #include <net/debugnet.h>
 
 #include <netinet/in.h>
@@ -452,6 +451,8 @@ netdump_configure(struct diocskerneldump_arg *conf, struct thread *td)
 		CURVNET_SET(vnet0);
 		ifp = ifunit_ref(conf->kda_iface);
 		CURVNET_RESTORE();
+		if (ifp == NULL)
+			return (ENODEV);
 		if (!DEBUGNET_SUPPORTED_NIC(ifp)) {
 			if_rele(ifp);
 			return (ENODEV);
@@ -498,62 +499,16 @@ static int
 netdump_ioctl(struct cdev *dev __unused, u_long cmd, caddr_t addr,
     int flags __unused, struct thread *td)
 {
-	struct diocskerneldump_arg kda_copy, *conf;
+	struct diocskerneldump_arg *conf;
 	struct dumperinfo dumper;
 	uint8_t *encryptedkey;
 	int error;
-#ifdef COMPAT_FREEBSD12
-	struct diocskerneldump_arg_freebsd12 *kda12;
-	struct netdump_conf_freebsd12 *conf12;
-#endif
 
 	conf = NULL;
 	error = 0;
 	NETDUMP_WLOCK();
 
 	switch (cmd) {
-#ifdef COMPAT_FREEBSD12
-		/*
-		 * Used by dumpon(8) in 12.x for clearing previous
-		 * configuration -- then NETDUMPSCONF_FREEBSD12 is used to
-		 * actually configure netdump.
-		 */
-	case DIOCSKERNELDUMP_FREEBSD12:
-		gone_in(14, "12.x ABI compatibility");
-
-		kda12 = (void *)addr;
-		if (kda12->kda12_enable) {
-			error = ENXIO;
-			break;
-		}
-		if (netdump_enabled())
-			netdump_unconfigure();
-		break;
-
-	case NETDUMPGCONF_FREEBSD12:
-		gone_in(14, "FreeBSD 12.x ABI compat");
-		conf12 = (void *)addr;
-
-		if (!netdump_enabled()) {
-			error = ENXIO;
-			break;
-		}
-		if (nd_conf.ndc_af != AF_INET) {
-			error = EOPNOTSUPP;
-			break;
-		}
-
-		if (nd_ifp != NULL)
-			strlcpy(conf12->ndc12_iface, nd_ifp->if_xname,
-			    sizeof(conf12->ndc12_iface));
-		memcpy(&conf12->ndc12_server, &nd_server,
-		    sizeof(conf12->ndc12_server));
-		memcpy(&conf12->ndc12_client, &nd_client,
-		    sizeof(conf12->ndc12_client));
-		memcpy(&conf12->ndc12_gateway, &nd_gateway,
-		    sizeof(conf12->ndc12_gateway));
-		break;
-#endif
 	case DIOCGKERNELDUMP:
 		conf = (void *)addr;
 		/*
@@ -575,43 +530,10 @@ netdump_ioctl(struct cdev *dev __unused, u_long cmd, caddr_t addr,
 		conf->kda_af = nd_conf.ndc_af;
 		conf = NULL;
 		break;
-
-#ifdef COMPAT_FREEBSD12
-	case NETDUMPSCONF_FREEBSD12:
-		gone_in(14, "FreeBSD 12.x ABI compat");
-
-		conf12 = (struct netdump_conf_freebsd12 *)addr;
-
-		_Static_assert(offsetof(struct diocskerneldump_arg, kda_server)
-		    == offsetof(struct netdump_conf_freebsd12, ndc12_server),
-		    "simplifying assumption");
-
-		memset(&kda_copy, 0, sizeof(kda_copy));
-		memcpy(&kda_copy, conf12,
-		    offsetof(struct diocskerneldump_arg, kda_server));
-
-		/* 12.x ABI could only configure IPv4 (INET) netdump. */
-		kda_copy.kda_af = AF_INET;
-		memcpy(&kda_copy.kda_server.in4, &conf12->ndc12_server,
-		    sizeof(struct in_addr));
-		memcpy(&kda_copy.kda_client.in4, &conf12->ndc12_client,
-		    sizeof(struct in_addr));
-		memcpy(&kda_copy.kda_gateway.in4, &conf12->ndc12_gateway,
-		    sizeof(struct in_addr));
-
-		kda_copy.kda_index =
-		    (conf12->ndc12_kda.kda12_enable ? 0 : KDA_REMOVE_ALL);
-
-		conf = &kda_copy;
-		explicit_bzero(conf12, sizeof(*conf12));
-		/* FALLTHROUGH */
-#endif
 	case DIOCSKERNELDUMP:
 		encryptedkey = NULL;
-		if (cmd == DIOCSKERNELDUMP) {
-			conf = (void *)addr;
-			memcpy(&kda_copy, conf, sizeof(kda_copy));
-		}
+		conf = (void *)addr;
+
 		/* Netdump only supports IP4 at this time. */
 		if (conf->kda_af != AF_INET) {
 			error = EPROTONOSUPPORT;
@@ -671,7 +593,6 @@ netdump_ioctl(struct cdev *dev __unused, u_long cmd, caddr_t addr,
 		error = ENOTTY;
 		break;
 	}
-	explicit_bzero(&kda_copy, sizeof(kda_copy));
 	if (conf != NULL)
 		explicit_bzero(conf, sizeof(*conf));
 	NETDUMP_WUNLOCK();

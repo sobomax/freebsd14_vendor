@@ -1,7 +1,6 @@
-# $FreeBSD: 49c0dfce84e005d0c10575d9e789653b25e3cfd8 $
 
 .PATH: ${SRCTOP}/sys/netinet/cc
 KMOD=	cc_hd
-SRCS=	cc_hd.c
+SRCS=	cc_hd.c opt_kern_tls.h
 
 .include <bsd.kmod.mk>

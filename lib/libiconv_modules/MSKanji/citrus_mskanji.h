@@ -1,4 +1,3 @@
-/* $FreeBSD: 36f79f26ce6b9642af6471ac4cacec438fc85d3a $ */
 /*	$NetBSD: citrus_mskanji.h,v 1.2 2003/06/25 09:51:48 tshiozak Exp $	*/
 
 /*-

@@ -45,8 +45,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: b4a0abd7a6f11319cb47bceb0a102f352499c668 $");
-
 #include <sys/param.h>
 #include <sys/systm.h>
 #include <sys/jail.h>

@@ -1,4 +1,3 @@
-/* $FreeBSD: 07eff28b7a504dce91e2c5b817bf18954c13dcf4 $ */
 /*	$NetBSD: shm.h,v 1.15 1994/06/29 06:45:17 cgd Exp $	*/
 
 /*-

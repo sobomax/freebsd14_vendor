@@ -1,6 +1,5 @@
 #! /bin/sh -
 #
-# $FreeBSD: 1d073dabb1b7b62ea0f6fa9f81b30fe321230a4a $
 
 set -e
 
@@ -82,7 +81,7 @@ s/\$//g
 		printf "struct msqid_ds_old;\n"
 		printf "struct shmid_ds_old;\n"
 		# TODO
-		printf "struct ucontext4;\n"
+		printf "struct freebsd4_ucontext;\n"
 		printf "struct sctp_sndrcvinfo;\n"
 		printf "\n"
 	}

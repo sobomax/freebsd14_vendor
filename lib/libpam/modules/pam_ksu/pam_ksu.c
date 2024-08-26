@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2002 Jacques A. Vidrine <nectar@FreeBSD.org>
  * All rights reserved.
@@ -26,8 +26,6 @@
  * SUCH DAMAGE.
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 1a4ebc39f65ac9ea5a22658319ecbb9a8eb480c0 $");
-
 #include <sys/param.h>
 #include <errno.h>
 #include <stdio.h>

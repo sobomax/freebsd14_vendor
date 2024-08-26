@@ -32,9 +32,6 @@
 #if defined(LIBC_SCCS) && !defined(lint)
 static char sccsid[] = "@(#)db.c	8.4 (Berkeley) 2/21/94";
 #endif /* LIBC_SCCS and not lint */
-#include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 7158cc80e44e5ee1f5142f5a1a33961095c195a6 $");
-
 #include <sys/types.h>
 
 #include <errno.h>

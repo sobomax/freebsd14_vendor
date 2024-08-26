@@ -1,5 +1,4 @@
 # $Id: Makefile,v 1.5 2003/07/22 18:38:04 max Exp $
-# $FreeBSD: 5a87f3bacd13d7d14e96300efe3796cf3f0a83bc $
 
 PACKAGE=	bluetooth
 CONFS=		hosts protocols

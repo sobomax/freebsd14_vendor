@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2000 Alfred Perlstein <alfred@FreeBSD.org>
  * All rights reserved.
@@ -27,8 +27,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 951507123c00f17d5845f5bd7900548793cbdc24 $");
-
 #define ACCEPT_FILTER_MOD
 
 #include <sys/param.h>

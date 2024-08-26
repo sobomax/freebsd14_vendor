@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2009, 2013 The FreeBSD Foundation
  *
@@ -29,8 +29,6 @@
  * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
- *
- * $FreeBSD: 977372f04a7d718625c92bee96eef13e88676641 $
  */
 
 #ifndef _DEV_VT_VT_H_
@@ -91,8 +89,8 @@ SYSCTL_INT(_kern_vt, OID_AUTO, _name, CTLFLAG_RWTUN, &vt_##_name, 0, _descr)
 
 struct vt_driver;
 
-void vt_allocate(const struct vt_driver *, void *);
-void vt_deallocate(const struct vt_driver *, void *);
+int vt_allocate(const struct vt_driver *, void *);
+int vt_deallocate(const struct vt_driver *, void *);
 
 typedef unsigned int	vt_axis_t;
 
@@ -167,6 +165,9 @@ struct vt_device {
 	term_char_t		*vd_drawn;	/* (?) Most recent char drawn. */
 	term_color_t		*vd_drawnfg;	/* (?) Most recent fg color drawn. */
 	term_color_t		*vd_drawnbg;	/* (?) Most recent bg color drawn. */
+
+	struct mtx		 vd_flush_lock;	/* (?) vt_flush() lock. */
+	bool			*vd_pos_to_flush;/* (?) Positions to flush. */
 };
 
 #define	VD_PASTEBUF(vd)	((vd)->vd_pastebuf.vpb_buf)
@@ -176,6 +177,14 @@ struct vt_device {
 #define	VT_LOCK(vd)	mtx_lock(&(vd)->vd_lock)
 #define	VT_UNLOCK(vd)	mtx_unlock(&(vd)->vd_lock)
 #define	VT_LOCK_ASSERT(vd, what)	mtx_assert(&(vd)->vd_lock, what)
+
+#define	VT_FLUSH_LOCK(vd)	\
+    if ((vd)->vd_driver->vd_bitblt_after_vtbuf_unlock) \
+	    mtx_lock(&(vd)->vd_flush_lock)
+
+#define	VT_FLUSH_UNLOCK(vd)	\
+    if ((vd)->vd_driver->vd_bitblt_after_vtbuf_unlock) \
+	    mtx_unlock(&(vd)->vd_flush_lock)
 
 void vt_resume(struct vt_device *vd);
 void vt_resume_flush_timer(struct vt_window *vw, int ms);
@@ -378,6 +387,14 @@ struct vt_driver {
 #define	VD_PRIORITY_DUMB	10
 #define	VD_PRIORITY_GENERIC	100
 #define	VD_PRIORITY_SPECIFIC	1000
+
+	/*
+	 * Should vd_bitblt_text() be called after unlocking vtbuf? If true,
+	 * characters are copied before vd_bitblt_bmp() is called.
+	 *
+	 * This is only valid when the default bitblt_text callback is used.
+	 */
+	bool		vd_bitblt_after_vtbuf_unlock;
 };
 
 /*

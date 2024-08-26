@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2021 Beckhoff Automation GmbH & Co. KG
  * All rights reserved.
@@ -32,8 +32,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 00ec86a70db049b761795f81564973571e138e1f $");
-
 #include <sys/param.h>
 #ifndef WITHOUT_CAPSICUM
 #include <sys/capsicum.h>
@@ -567,8 +565,6 @@ done:
 	/* clear queue and send interrupt to guest */
 	vtinput_eventqueue_clear(queue);
 	vq_endchains(vq, 1);
-
-	return;
 }
 
 static int

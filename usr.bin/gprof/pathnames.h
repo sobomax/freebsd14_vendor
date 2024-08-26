@@ -29,7 +29,6 @@
  * SUCH DAMAGE.
  *
  *	@(#)pathnames.h	8.1 (Berkeley) 6/6/93
- *  $FreeBSD: fd152db3f600b0c5257078f94d4df9eb848bb3ac $
  */
 
 #define	_PATH_FLAT_BLURB	"/usr/share/misc/gprof.flat"

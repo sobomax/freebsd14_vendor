@@ -1,4 +1,3 @@
-/* $FreeBSD: cdc7b0e3375eb250adcd0d0183ecbfc18d830f2e $ */
 /*	$NetBSD: citrus_csmapper.h,v 1.3 2013/06/24 17:28:35 joerg Exp $	*/
 
 /*-

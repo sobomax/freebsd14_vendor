@@ -22,8 +22,6 @@
  * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
- *
- * $FreeBSD: 3ddf8fc574de46ca6cff666c42b472dfbac3854d $
  */
 
 #ifndef _DEV_EXTRES_CLK_H_
@@ -115,6 +113,8 @@ struct clknode *clknode_find_by_id(struct clkdom *clkdom, intptr_t id);
 int clknode_get_freq(struct clknode *clknode, uint64_t *freq);
 int clknode_set_freq(struct clknode *clknode, uint64_t freq, int flags,
     int enablecnt);
+int clknode_test_freq(struct clknode *clknode, uint64_t freq, int flags,
+    int enablecnt, uint64_t *out_freq);
 int clknode_enable(struct clknode *clknode);
 int clknode_disable(struct clknode *clknode);
 int clknode_stop(struct clknode *clknode, int depth);

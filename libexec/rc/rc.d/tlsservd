@@ -1,12 +1,11 @@
 #!/bin/sh
 #
-# $FreeBSD: cca28ed60ffec5d21141553dec29394add0b5968 $
 #
 
 # PROVIDE: tlsservd
 # REQUIRE: NETWORKING root mountcritlocal sysctl
 # BEFORE: nfsd
-# KEYWORD: nojail shutdown
+# KEYWORD: nojailvnet shutdown
 
 . /etc/rc.subr
 

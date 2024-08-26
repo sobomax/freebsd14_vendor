@@ -32,9 +32,6 @@
  * $Id: nls.c,v 1.10 2002/07/22 08:33:59 bp Exp $
  */
 
-#include <sys/cdefs.h>
-__FBSDID("$FreeBSD: b79d49c29c5893dec89022079a6fb52abd2ed726 $");
-
 #include <sys/types.h>
 #include <sys/sysctl.h>
 #include <ctype.h>

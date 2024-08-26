@@ -34,8 +34,6 @@
  */
 
 #include <machine/asm.h>
-__FBSDID("$FreeBSD: 9951ab0674aa383f7b195c82d6020ef604780776 $")
-
 ENTRY(cos)
 	fldl	4(%esp)
 	fcos

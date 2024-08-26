@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2017 Dell EMC
  * Copyright (c) 2007 Sandvine Incorporated
@@ -29,8 +29,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: b01adb9a73b4669322865c3b3218879032fac1e9 $");
-
 #include <sys/endian.h>
 #include <sys/param.h>
 #include <sys/procfs.h>

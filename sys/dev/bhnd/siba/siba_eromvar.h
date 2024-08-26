@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2018 Landon Fuller <landonf@FreeBSD.org>
  * All rights reserved.
@@ -25,7 +25,6 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  * 
- * $FreeBSD: fa0f60011a02d4a830e1650cce8bf67d1d0530c1 $
  */
 
 #ifndef	_SIBA_SIBA_EROMVAR_H_

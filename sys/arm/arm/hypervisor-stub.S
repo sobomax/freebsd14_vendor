@@ -29,9 +29,7 @@
 #include <machine/asm.h>
 #include <machine/asmacros.h>
 #include <machine/armreg.h>
-
-__FBSDID("$FreeBSD: e7268e6465c43811da9f813c1813e5629cb3d147 $");
-
+#include <machine/sysreg.h>
 #if __ARM_ARCH >= 7
 #if defined(__ARM_ARCH_7VE__) || defined(__clang__)
 .arch_extension virt

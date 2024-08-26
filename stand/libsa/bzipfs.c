@@ -25,9 +25,6 @@
  * SUCH DAMAGE.
  */
 
-#include <sys/cdefs.h>
-__FBSDID("$FreeBSD: efa2806ce1d49e004f1de822324ec78602859ae8 $");
-
 #ifndef REGRESSION
 #include "stand.h"
 #else
@@ -368,7 +365,7 @@ bz_internal_error(int errorcode)
 
 #ifdef REGRESSION
 /* Small test case, open and decompress test.bz2 */
-int main()
+int main(void)
 {
     struct open_file f;
     char buf[1024];

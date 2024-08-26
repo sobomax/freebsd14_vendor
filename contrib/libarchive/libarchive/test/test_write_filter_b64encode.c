@@ -25,7 +25,6 @@
  */
 
 #include "test.h"
-__FBSDID("$FreeBSD: 5b917e92a30a6b18f04fa269902cc2f3ac6f973a $");
 
 /*
  * A basic exercise of b64encode reading and writing.

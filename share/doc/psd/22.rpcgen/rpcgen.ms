@@ -2,7 +2,6 @@
 .\" Must use  --  tbl -- for this one
 .\"
 .\" @(#)rpcgen.ms	2.2 88/08/04 4.0 RPCSRC
-.\" $FreeBSD: e663e7fd4f941a4a21a566353bf38d06a0457399 $
 .\"
 .de BT
 .if \\n%=1 .tl ''- % -''

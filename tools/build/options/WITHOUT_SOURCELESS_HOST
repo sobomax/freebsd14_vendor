@@ -1,2 +1,1 @@
-.\" $FreeBSD: 26e043fc11e5e633d75911a13ec66f1687eb6deb $
 Do not build kernel modules that include sourceless native code for host CPU.

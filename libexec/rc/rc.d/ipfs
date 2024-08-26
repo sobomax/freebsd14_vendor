@@ -1,6 +1,5 @@
 #!/bin/sh
 #
-# $FreeBSD: 448b8ce8a222d12657a1c85253b516398ce0c8ff $
 #
 
 # PROVIDE: ipfs

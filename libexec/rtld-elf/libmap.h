@@ -1,5 +1,4 @@
 /*
- * $FreeBSD: 2998b7b27cc97fa3126859a6a55ae872c945d70f $
  */
 
 #ifndef LIBMAP_H

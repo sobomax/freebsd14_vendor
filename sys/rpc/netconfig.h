@@ -1,5 +1,4 @@
 /*	$NetBSD: netconfig.h,v 1.1 2000/06/02 22:57:54 fvdl Exp $	*/
-/*	$FreeBSD: d49b925749aedc70cdc2c902005e85e1bee739a4 $ */
 
 
 #ifndef _NETCONFIG_H_

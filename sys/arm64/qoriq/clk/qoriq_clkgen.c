@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2020 Alstom Group.
  * Copyright (c) 2020 Semihalf.
@@ -27,8 +27,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 6b67842bc9b7b57421d83ba313fae4e534c843ae $");
-
 #include <sys/param.h>
 #include <sys/systm.h>
 #include <sys/bus.h>

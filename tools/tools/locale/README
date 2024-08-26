@@ -1,12 +1,12 @@
-# $FreeBSD: 380786929b7c4d4c0bb1ca45c431b1c2522e6b64 $
-
 Files in this directory are used to generate locale source files
-from files in CLDR (Unicode Common Locale Data Repository). 
+from files in CLDR (Unicode Common Locale Data Repository).
 
 To generate the files, do the following:
 
 	cd /usr/src/tools/tools/locale
 	make obj	(mandatory)
+	make fetch	(download the CLDR source)
+	make extract	(and extract it)
 	make -j16	(-jN recommended)
 	make diff	(check if the changes are reasonable)
 	make install

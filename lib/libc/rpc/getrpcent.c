@@ -33,9 +33,6 @@
 #if defined(LIBC_SCCS) && !defined(lint)
 static char *sccsid = "@(#)getrpcent.c 1.14 91/03/11 Copyr 1984 Sun Micro";
 #endif
-#include <sys/cdefs.h>
-__FBSDID("$FreeBSD: e4770e4e88c59b4d04ee51b062ca9223a61c5ea9 $");
-
 /*
  * Copyright (c) 1984 by Sun Microsystems, Inc.
  */

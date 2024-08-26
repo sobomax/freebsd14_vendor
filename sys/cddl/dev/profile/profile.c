@@ -20,8 +20,6 @@
  *
  * Portions Copyright 2006-2008 John Birrell jb@freebsd.org
  *
- * $FreeBSD: 99381ea7d745536382127a188943062df16d593b $
- *
  */
 
 /*
@@ -60,6 +58,8 @@
 #include <sys/dtrace.h>
 #include <sys/dtrace_bsd.h>
 
+#include <cddl/dev/dtrace/dtrace_cddl.h>
+
 #define	PROF_NAMELEN		15
 
 #define	PROF_PROFILE		0
@@ -97,13 +97,6 @@
 #endif
 #endif
 
-#ifdef __mips
-/*
- * This value is bogus just to make module compilable on mips
- */
-#define	PROF_ARTIFICIAL_FRAMES	3
-#endif
-
 #ifdef __powerpc__
 /*
  * This value is bogus just to make module compilable on powerpc
@@ -112,11 +105,6 @@
 #endif
 
 struct profile_probe_percpu;
-
-#ifdef __mips
-/* bogus */
-#define	PROF_ARTIFICIAL_FRAMES	3
-#endif
 
 #ifdef __arm__
 #define	PROF_ARTIFICIAL_FRAMES	3
@@ -154,7 +142,6 @@ typedef struct profile_probe_percpu {
 #endif
 } profile_probe_percpu_t;
 
-static d_open_t	profile_open;
 static int	profile_unload(void);
 static void	profile_create(hrtime_t, char *, int);
 static void	profile_destroy(void *, dtrace_id_t, void *);
@@ -188,12 +175,6 @@ static uint32_t profile_max = PROFILE_MAX_DEFAULT;
 					/* maximum number of profile probes */
 static uint32_t profile_total;		/* current number of profile probes */
 
-static struct cdevsw profile_cdevsw = {
-	.d_version	= D_VERSION,
-	.d_open		= profile_open,
-	.d_name		= "profile",
-};
-
 static dtrace_pattr_t profile_attr = {
 { DTRACE_STABILITY_EVOLVING, DTRACE_STABILITY_EVOLVING, DTRACE_CLASS_COMMON },
 { DTRACE_STABILITY_PRIVATE, DTRACE_STABILITY_PRIVATE, DTRACE_CLASS_UNKNOWN },
@@ -215,7 +196,6 @@ static dtrace_pops_t profile_pops = {
 	.dtps_destroy =		profile_destroy
 };
 
-static struct cdev		*profile_cdev;
 static dtrace_provider_id_t	profile_id;
 static hrtime_t			profile_interval_min = NANOSEC / 5000;	/* 5000 hz */
 static int			profile_aframes = PROF_ARTIFICIAL_FRAMES;
@@ -268,12 +248,15 @@ profile_probe(profile_probe_t *prof, hrtime_t late)
 	if (frame != NULL) {
 		if (TRAPF_USERMODE(frame))
 			upc = TRAPF_PC(frame);
-		else
+		else {
 			pc = TRAPF_PC(frame);
+			td->t_dtrace_trapframe = frame;
+		}
 	} else if (TD_IS_IDLETHREAD(td))
 		pc = (uintfptr_t)&cpu_idle;
 
 	dtrace_probe(prof->prof_id, pc, upc, late, 0, 0);
+	td->t_dtrace_trapframe = NULL;
 }
 
 static void
@@ -637,10 +620,6 @@ profile_disable(void *arg, dtrace_id_t id, void *parg)
 static void
 profile_load(void *dummy)
 {
-	/* Create the /dev/dtrace/profile entry. */
-	profile_cdev = make_dev(&profile_cdevsw, 0, UID_ROOT, GID_WHEEL, 0600,
-	    "dtrace/profile");
-
 	if (dtrace_register("profile", &profile_attr, DTRACE_PRIV_USER,
 	    NULL, &profile_pops, NULL, &profile_id) != 0)
 		return;
@@ -654,8 +633,6 @@ profile_unload(void)
 
 	if ((error = dtrace_unregister(profile_id)) != 0)
 		return (error);
-
-	destroy_dev(profile_cdev);
 
 	return (error);
 }
@@ -682,13 +659,6 @@ profile_modevent(module_t mod __unused, int type, void *data __unused)
 
 	}
 	return (error);
-}
-
-/* ARGSUSED */
-static int
-profile_open(struct cdev *dev __unused, int oflags __unused, int devtype __unused, struct thread *td __unused)
-{
-	return (0);
 }
 
 SYSINIT(profile_load, SI_SUB_DTRACE_PROVIDER, SI_ORDER_ANY, profile_load, NULL);

@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (C) 2018 Universita` di Pisa
  * All rights reserved.
@@ -25,8 +25,6 @@
  * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
- *
- * $FreeBSD: 5f2c8c32febd60b1fbf2b393f5c3b89ae30f81fd $
  */
 
 #include <sys/types.h>
@@ -47,6 +45,7 @@
 static void
 nmctx_default_error(struct nmctx *ctx, const char *errmsg)
 {
+	(void)ctx;
 	fprintf(stderr, "%s\n", errmsg);
 }
 

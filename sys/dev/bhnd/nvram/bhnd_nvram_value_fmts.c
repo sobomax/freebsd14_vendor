@@ -28,8 +28,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: c5fdfbcc51f77482d02255463e4d0c8a2ddf6a3e $");
-
 #include <sys/param.h>
 
 #include <net/ethernet.h>

@@ -29,9 +29,6 @@
  * SUCH DAMAGE.
  */
 
-#include <sys/cdefs.h>
-__FBSDID("$FreeBSD: b9d81787c3bb899398a8aef69a84eca167f63621 $");
-
 #include "namespace.h"
 #include <errno.h>
 #ifdef _PTHREAD_FORCED_UNWIND

@@ -29,8 +29,6 @@
 /* Simple UART console driver for Freescale i.MX515 */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: b497b9cf3a14d34bb3c35a31149b766a849b563f $");
-
 #include <sys/types.h>
 #include <sys/param.h>
 #include <sys/systm.h>

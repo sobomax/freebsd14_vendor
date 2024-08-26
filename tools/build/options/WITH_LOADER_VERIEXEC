@@ -1,4 +1,3 @@
-.\" $FreeBSD: e44732075525f0fddf86f7ae67028f1e1a67da58 $
 Enable building
 .Xr loader 8
 with support for verification similar to Verified Exec.

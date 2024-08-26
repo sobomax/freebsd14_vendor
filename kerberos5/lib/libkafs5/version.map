@@ -1,5 +1,4 @@
 #
-# $FreeBSD: 1e7b0a8720a55b9c3e201515683fb9d75205d1c7 $
 #
 HEIMDAL_KAFS5_1.0 {
 	global:

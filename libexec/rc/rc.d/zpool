@@ -1,6 +1,5 @@
 #!/bin/sh
 #
-# $FreeBSD: e73c2b7e5b7374ace2d422a9057fbaee22a5472c $
 #
 
 # PROVIDE: zpool

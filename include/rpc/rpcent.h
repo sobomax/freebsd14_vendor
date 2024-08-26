@@ -1,5 +1,4 @@
 /*	$NetBSD: rpcent.h,v 1.1 2000/06/02 22:57:56 fvdl Exp $	*/
-/*	$FreeBSD: 15c4ae4d00a63d80913272db98731857f09ea263 $ */
 
 /*-
  * SPDX-License-Identifier: BSD-3-Clause

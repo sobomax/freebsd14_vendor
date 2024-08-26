@@ -13,9 +13,6 @@
  * purpose.
  */
 
-#include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 6b8c72ea0fb8eb15dc88944c8af69bee76342430 $");
-
 #include <stand.h>
 
 #include <sys/param.h>

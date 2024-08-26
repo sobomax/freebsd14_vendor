@@ -25,8 +25,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 71af45b5815d06dea7d93abee3a2e8097504aac8 $");
-
 #include <sys/param.h>
 #include <sys/stat.h>
 #include <errno.h>
@@ -558,6 +556,7 @@ mkimg(void)
 int
 main(int argc, char *argv[])
 {
+	const char *format_name;
 	int bcfd, outfd;
 	int c, error;
 
@@ -702,6 +701,7 @@ main(int argc, char *argv[])
 			errc(EX_DATAERR, error, "boot code");
 	}
 
+	format_name = format_selected()->name;
 	if (verbose) {
 		fprintf(stderr, "Logical sector size: %u\n", secsz);
 		fprintf(stderr, "Physical block size: %u\n", blksz);
@@ -712,9 +712,19 @@ main(int argc, char *argv[])
 			fprintf(stderr, "Partitioning scheme: %s\n",
 			    scheme_selected()->name);
 		fprintf(stderr, "Output file format:  %s\n",
-		    format_selected()->name);
+		    format_name);
 		fputc('\n', stderr);
 	}
+
+#if defined(SPARSE_WRITE)
+	/*
+	 * sparse_write() fails if output is not seekable so fail early
+	 * not wasting some load unless output format is raw
+	 */
+	if (strcmp("raw", format_name) &&
+	    lseek(outfd, (off_t)0, SEEK_CUR) == -1 && errno == ESPIPE)
+		errx(EX_USAGE, "%s: output must be seekable", format_name);
+#endif
 
 	error = image_init();
 	if (error)

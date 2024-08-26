@@ -1,4 +1,3 @@
-# $FreeBSD: de696c7dca41201788316afd7e9ced0124570165 $
 
 PACKAGE=lib${LIB}
 LIB=	stdthreads

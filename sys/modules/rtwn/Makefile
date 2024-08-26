@@ -1,4 +1,3 @@
-# $FreeBSD: 8f72a28a1e05e9799918fddcc0a14dcfbd605613 $
 
 .PATH: ${SRCTOP}/sys/dev/rtwn
 

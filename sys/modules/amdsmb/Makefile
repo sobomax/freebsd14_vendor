@@ -1,4 +1,3 @@
-# $FreeBSD: 112ca990596ad8862ea5bbd01ce2b6ca8a947cef $
 
 .PATH:	${SRCTOP}/sys/dev/amdsmb
 

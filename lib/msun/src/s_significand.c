@@ -10,9 +10,6 @@
  * ====================================================
  */
 
-#include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 356e3001f7ca548ea772a9192ffadc5021dbfc40 $");
-
 /*
  * significand(x) computes just
  * 	scalb(x, (double) -ilogb(x)),
@@ -25,5 +22,5 @@ __FBSDID("$FreeBSD: 356e3001f7ca548ea772a9192ffadc5021dbfc40 $");
 double
 significand(double x)
 {
-	return __ieee754_scalb(x,(double) -ilogb(x));
+	return scalb(x,(double) -ilogb(x));
 }

@@ -1,4 +1,3 @@
-# $FreeBSD: daade986de91d66a00feeddeb1111250b3f32378 $
 
 PROG=	ac
 PACKAGE=	acct

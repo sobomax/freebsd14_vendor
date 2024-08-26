@@ -36,8 +36,6 @@
  * OF SUCH DAMAGE.
  *
  * Author: Archie Cobbs <archie@freebsd.org>
- *
- * $FreeBSD: aa224e78bb9d8ed61b9aedddea17489356516318 $
  */
 
 /*

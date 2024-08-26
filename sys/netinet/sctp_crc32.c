@@ -33,8 +33,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 816a72bbea7b3751d6b1137d618d97f86722353f $");
-
 #include "opt_sctp.h"
 
 #include <sys/param.h>

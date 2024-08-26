@@ -1,5 +1,4 @@
 #
-# $FreeBSD: b8397f810a0f6c8550c51f9b059460040175d95f $
 #
 
 _ALL!=	cd ${.CURDIR} && ls Doxyfile-*

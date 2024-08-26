@@ -24,9 +24,6 @@
  * SUCH DAMAGE.
  */
 
-#include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 30762563d135ddfd3f436b79985c834e4c85d500 $");
-
 #include "stand.h"
 
 #define NTRIES		(3)

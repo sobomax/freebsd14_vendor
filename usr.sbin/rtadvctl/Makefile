@@ -1,4 +1,3 @@
-# $FreeBSD: a8dcad1636515aac0e31e0de76f4086e896e5897 $
 #
 .PATH:	${.CURDIR:H}/rtadvd
 

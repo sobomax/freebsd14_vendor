@@ -52,8 +52,6 @@
 
 #include "vdev.h"
 #include "zfsd_exception.h"
-
-__FBSDID("$FreeBSD: 7ebb74ca8c6a79775167671022fb0e3f8088f902 $");
 /*============================ Namespace Control =============================*/
 using std::endl;
 using std::string;
@@ -106,7 +104,7 @@ ZfsdException::Log() const
 
 		output << "Pool ";
 
-		char *poolName;
+		const char *poolName;
 		if (nvlist_lookup_string(m_poolConfig, ZPOOL_CONFIG_POOL_NAME,
 				     &poolName) == 0)
 			output << poolName;

@@ -1,6 +1,0 @@
-# $FreeBSD: ffb275fd68d90adde5a1d1db0c1d5b2b50e1def0 $
-
-include LINT
-ident LINT-NOINET6
-makeoptions MKMODULESENV+="WITHOUT_INET6_SUPPORT="
-nooptions INET6

@@ -30,8 +30,6 @@
 #include "opt_ktrace.h"
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 7bd5780af338e8359f9dc8d328907de10329ae91 $");
-
 #include <sys/param.h>
 #include <sys/bus.h>
 #include <sys/systm.h>
@@ -418,7 +416,7 @@ abort_handler(struct trapframe *tf, int prefetch)
 	p = td->td_proc;
 	if (usermode) {
 		td->td_pticks = 0;
-		if (td->td_cowgen != p->p_cowgen)
+		if (td->td_cowgen != atomic_load_int(&p->p_cowgen))
 			thread_cow_update(td);
 	}
 

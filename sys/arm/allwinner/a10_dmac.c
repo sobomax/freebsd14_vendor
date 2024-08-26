@@ -30,8 +30,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 28292ba7e5a473ebfad45a6bc89fb5007fc2198d $");
-
 #include <sys/param.h>
 #include <sys/systm.h>
 #include <sys/bus.h>
@@ -468,6 +466,4 @@ static driver_t a10dmac_driver = {
 	sizeof(struct a10dmac_softc)
 };
 
-static devclass_t a10dmac_devclass;
-
-DRIVER_MODULE(a10dmac, simplebus, a10dmac_driver, a10dmac_devclass, 0, 0);
+DRIVER_MODULE(a10dmac, simplebus, a10dmac_driver, 0, 0);

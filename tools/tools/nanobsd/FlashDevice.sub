@@ -24,7 +24,6 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: 90b3f6db3645e950e6eed8d2768b7d1d461a1177 $
 #
 # Convenience function for commonly used Flash devices.
 #

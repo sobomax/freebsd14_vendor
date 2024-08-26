@@ -1,4 +1,3 @@
-# $FreeBSD: 23c98698b45e603a5efee70706b87b0f285a0ef0 $
 # $NetBSD: Makefile.inc,v 1.4 2008/10/25 22:35:36 apb Exp $
 
 CODE=	ISO-8859

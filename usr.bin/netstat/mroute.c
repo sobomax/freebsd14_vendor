@@ -40,8 +40,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 04b7ead03b7b8ad42381409f170736acc162140c $");
-
 /*
  * Print multicast routing structures and statistics.
  *
@@ -62,9 +60,9 @@ __FBSDID("$FreeBSD: 04b7ead03b7b8ad42381409f170736acc162140c $");
 #include <netinet/igmp.h>
 #include <net/route.h>
 
-#define _KERNEL 1
+#define _NETSTAT 1
 #include <netinet/ip_mroute.h>
-#undef _KERNEL
+#undef _NETSTAT_
 
 #include <err.h>
 #include <stdint.h>
@@ -213,7 +211,16 @@ print_mfc(struct mfc *m, int maxvif, int *banner_printed)
 	 * XXX We break the rules and try to use KVM to read the
 	 * bandwidth meters, they are not retrievable via sysctl yet.
 	 */
-	bwm = m->mfc_bw_meter;
+	bwm = m->mfc_bw_meter_leq;
+	while (bwm != NULL) {
+		error = kread((u_long)bwm, (char *)&bw_meter,
+		    sizeof(bw_meter));
+		if (error)
+			break;
+		print_bw_meter(&bw_meter, &bw_banner_printed);
+		bwm = bw_meter.bm_mfc_next;
+	}
+	bwm = m->mfc_bw_meter_geq;
 	while (bwm != NULL) {
 		error = kread((u_long)bwm, (char *)&bw_meter,
 		    sizeof(bw_meter));
@@ -227,7 +234,7 @@ print_mfc(struct mfc *m, int maxvif, int *banner_printed)
 }
 
 void
-mroutepr()
+mroutepr(void)
 {
 	struct sockaddr_in sin;
 	struct sockaddr *sa = (struct sockaddr *)&sin;
@@ -402,7 +409,7 @@ mroutepr()
 }
 
 void
-mrt_stats()
+mrt_stats(void)
 {
 	struct mrtstat mrtstat;
 	u_long mstaddr;

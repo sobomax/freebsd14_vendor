@@ -30,8 +30,6 @@
 /* #pragma ident	"@(#)rpc_sample.c	1.9	94/04/25 SMI" */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 5d6c9a9a9b0cd252a3a16ce6b6b5e476febc6aaa $");
-
 /*
  * rpc_sample.c, Sample client-server code outputter for the RPC protocol compiler
  * Copyright (C) 1987, Sun Microsystems, Inc.

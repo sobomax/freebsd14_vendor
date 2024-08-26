@@ -29,12 +29,10 @@
  * SUCH DAMAGE.
  *
  *	@(#)extern.h	8.1 (Berkeley) 6/6/93
- * $FreeBSD: 26e5652d0fdd3cdefb2b2c9b9b837a516eb98fd8 $
  */
 
-void	recvfile(int peer, char *port, int fd, char *name, char *mode);
-void	xmitfile(int peer, char *port, int fd, char *name, char *mode);
+int	recvfile(int peer, char *port, int fd, char *name, char *mode);
+int	xmitfile(int peer, char *port, int fd, char *name, char *mode);
 
 extern int	verbose;
 extern int	maxtimeout;
-extern volatile int txrx_error;

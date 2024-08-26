@@ -28,8 +28,6 @@
  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
  * IN THE SOFTWARE.
- *
- * $FreeBSD: 55a1cdc8647190523b2364dd97a81be229c6d375 $
  */
 
 #ifndef __XEN_PRIVCMD_H__
@@ -79,7 +77,7 @@ struct ioctl_privcmd_dmop {
 #define IOCTL_PRIVCMD_MMAPBATCH					\
 	_IOWR('E', 1, struct ioctl_privcmd_mmapbatch)
 #define IOCTL_PRIVCMD_MMAP_RESOURCE				\
-	_IOW('E', 2, struct ioctl_privcmd_mmapresource)
+	_IOWR('E', 2, struct ioctl_privcmd_mmapresource)
 #define IOCTL_PRIVCMD_DM_OP					\
 	_IOW('E', 3, struct ioctl_privcmd_dmop)
 #define IOCTL_PRIVCMD_RESTRICT					\

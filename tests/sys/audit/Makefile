@@ -1,4 +1,3 @@
-# $FreeBSD: 4cacd86d009a8814d50d14e445f85bdf10585489 $
 
 TESTSDIR=	${TESTSBASE}/sys/audit
 

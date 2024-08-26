@@ -1,4 +1,3 @@
-# $FreeBSD: c7f1342f45aefefbc9367b06550acf5d3e247b76 $
 
 .PATH: ${SRCTOP}/sys/geom/eli ${SRCTOP}/sys/crypto/sha2
 
@@ -36,6 +35,9 @@ SRCS.pbkdf2_test=	\
 		sha256c.c
 
 LIBADD.pbkdf2_test= crypto
+
+PROGS+= unaligned_io
+BINDIR?= ${TESTSDIR}
 
 testvect.h:
 	python gentestvect.py > ${.TARGET}

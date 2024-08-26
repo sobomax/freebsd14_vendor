@@ -25,8 +25,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: c44758979d72e90925c8a7856aa46b37a63c794f $");
-
 /*
  * Interface to new debugger.
  */

@@ -25,8 +25,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 269d46d46afada9591e02ae941765493ae76de38 $");
-
 #include "opt_stack.h"
 #include "opt_ddb.h"
 
@@ -69,19 +67,16 @@ extern void
 stack_capture(struct stack *st, register_t rbp);
 
 static int
-xendebug_filter(void *arg)
+xendebug_filter(void *arg __unused)
 {
 #if defined(STACK) && defined(DDB)
 	struct stack st;
-	struct trapframe *frame;
 
-	frame = arg;
-	stack_zero(&st);
 	stack_save(&st);
 
 	mtx_lock_spin(&lock);
 	sbuf_clear(buf);
-	xc_printf("Printing stack trace vCPU%d\n", PCPU_GET(vcpu_id));
+	xc_printf("Printing stack trace vCPU%u\n", XEN_VCPUID());
 	stack_sbuf_print_ddb(buf, &st);
 	sbuf_finish(buf);
 	mtx_unlock_spin(&lock);
@@ -97,7 +92,7 @@ xendebug_identify(driver_t *driver, device_t parent)
 	KASSERT(xen_domain(),
 	    ("Trying to add Xen debug device to non-xen guest"));
 
-	if (xen_hvm_domain() && !xen_vector_callback_enabled)
+	if (!xen_has_percpu_evtchn())
 		return;
 
 	if (BUS_ADD_CHILD(parent, 0, "debug", 0) == NULL)
@@ -153,7 +148,5 @@ static driver_t xendebug_driver = {
 	0,
 };
 
-devclass_t xendebug_devclass;
-
-DRIVER_MODULE(xendebug, xenpv, xendebug_driver, xendebug_devclass, 0, 0);
+DRIVER_MODULE(xendebug, xenpv, xendebug_driver, 0, 0);
 MODULE_DEPEND(xendebug, xenpv, 1, 1, 1);

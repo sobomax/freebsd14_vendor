@@ -1,5 +1,4 @@
 /*	$NetBSD: ifconfig.c,v 1.34 1997/04/21 01:17:58 lukem Exp $	*/
-/* $FreeBSD: 03ed4e56ab792a531931a875609b0352a97b278a $ */
 
 /*-
  * SPDX-License-Identifier: BSD-4-Clause

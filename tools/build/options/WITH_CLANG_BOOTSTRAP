@@ -1,2 +1,1 @@
-.\" $FreeBSD: 0dfeaf9009be2f749e95220b8cc353602e73105b $
 Build the Clang C/C++ compiler during the bootstrap phase of the build.

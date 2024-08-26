@@ -1,10 +1,9 @@
-# $FreeBSD: c8139ec376c331630ba629a275b5c08682c9128b $
 
 .include <src.opts.mk>
 .include "${SRCTOP}/secure/ssh.mk"
 
 PROG=	ssh-agent
-SRCS=	ssh-agent.c
+SRCS=	ssh-agent.c ssh-pkcs11-client.c
 PACKAGE=	ssh
 
 LIBADD=	ssh

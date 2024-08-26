@@ -31,7 +31,6 @@
  * SUCH DAMAGE.
  *
  *	@(#)user.h	8.2 (Berkeley) 9/23/93
- * $FreeBSD: 6309c708be9568c822f3ffcc4caf85a658ff847c $
  */
 
 #ifndef _SYS_USER_H_
@@ -265,6 +264,7 @@ struct user {
 #define	KF_TYPE_PROCDESC	11
 #define	KF_TYPE_DEV	12
 #define	KF_TYPE_EVENTFD	13
+#define	KF_TYPE_TIMERFD	14
 #define	KF_TYPE_UNKNOWN	255
 
 #define	KF_VTYPE_VNON	0
@@ -349,7 +349,7 @@ struct kinfo_file {
 	int64_t		kf_offset;		/* Seek location. */
 	union {
 		struct {
-			/* API compatiblity with FreeBSD < 12. */
+			/* API compatibility with FreeBSD < 12. */
 			int		kf_vnode_type;
 			int		kf_sock_domain;
 			int		kf_sock_type;
@@ -447,6 +447,11 @@ struct kinfo_file {
 				uint64_t	kf_eventfd_addr;
 			} kf_eventfd;
 			struct {
+				uint32_t	kf_timerfd_clockid;
+				uint32_t	kf_timerfd_flags;
+				uint64_t	kf_timerfd_addr;
+			} kf_timerfd;
+			struct {
 				uint64_t	kf_kqueue_addr;
 				int32_t		kf_kqueue_count;
 				int32_t		kf_kqueue_state;
@@ -489,7 +494,7 @@ struct kinfo_lockf {
  * another process as a series of entries.
  */
 #define	KVME_TYPE_NONE		0
-#define	KVME_TYPE_DEFAULT	1
+#define	KVME_TYPE_DEFAULT	1		/* no longer returned */
 #define	KVME_TYPE_VNODE		2
 #define	KVME_TYPE_SWAP		3
 #define	KVME_TYPE_DEVICE	4
@@ -628,6 +633,28 @@ struct kinfo_sigtramp {
 	void	*ksigtramp_start;
 	void	*ksigtramp_end;
 	void	*ksigtramp_spare[4];
+};
+
+#define	KMAP_FLAG_WIREFUTURE	0x01	/* all future mappings wil be wired */
+#define	KMAP_FLAG_ASLR		0x02	/* ASLR is applied to mappings */
+#define	KMAP_FLAG_ASLR_IGNSTART	0x04	/* ASLR may map into sbrk grow region */
+#define	KMAP_FLAG_WXORX		0x08	/* W^X mapping policy is enforced */
+#define	KMAP_FLAG_ASLR_STACK	0x10	/* the stack location is randomized */
+#define	KMAP_FLAG_ASLR_SHARED_PAGE 0x20	/* the shared page location is randomized */
+
+struct kinfo_vm_layout {
+	uintptr_t	kvm_min_user_addr;
+	uintptr_t	kvm_max_user_addr;
+	uintptr_t	kvm_text_addr;
+	size_t		kvm_text_size;
+	uintptr_t	kvm_data_addr;
+	size_t		kvm_data_size;
+	uintptr_t	kvm_stack_addr;
+	size_t		kvm_stack_size;
+	int		kvm_map_flags;
+	uintptr_t	kvm_shp_addr;
+	size_t		kvm_shp_size;
+	uintptr_t	kvm_spare[12];
 };
 
 #ifdef _KERNEL

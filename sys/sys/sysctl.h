@@ -32,7 +32,6 @@
  * SUCH DAMAGE.
  *
  *	@(#)sysctl.h	8.1 (Berkeley) 6/2/93
- * $FreeBSD: ecf40cc1bfb5ac1145111bd6e41103c3982d07b1 $
  */
 
 #ifndef _SYS_SYSCTL_H_
@@ -40,9 +39,9 @@
 
 #ifdef _KERNEL
 #include <sys/queue.h>
+#include <sys/tree.h>
 #endif
 
-struct thread;
 /*
  * Definitions for sysctl call.  The sysctl call uses a hierarchical name
  * for objects that can be examined or modified.  The name is expressed as
@@ -50,21 +49,15 @@ struct thread;
  * component depends on its place in the hierarchy.  The top-level and kern
  * identifiers are defined here, and other identifiers are defined in the
  * respective subsystem header files.
+ *
+ * Each subsystem defined by sysctl defines a list of variables for that
+ * subsystem. Each name is either a node with further levels defined below it,
+ * or it is a leaf of some particular type given below. Each sysctl level
+ * defines a set of name/type pairs to be used by sysctl(8) in manipulating the
+ * subsystem.
  */
 
 #define	CTL_MAXNAME	24	/* largest number of components supported */
-
-/*
- * Each subsystem defined by sysctl defines a list of variables
- * for that subsystem. Each name is either a node with further
- * levels defined below it, or it is a leaf of some particular
- * type given below. Each sysctl level defines a set of name/type
- * pairs to be used by sysctl(8) in manipulating the subsystem.
- */
-struct ctlname {
-	char	*ctl_name;	/* subsystem name */
-	int	 ctl_type;	/* type of name */
-};
 
 #define	CTLTYPE		0xf	/* mask for the type */
 #define	CTLTYPE_NODE	1	/* name is a node */
@@ -164,6 +157,7 @@ struct ctlname {
  * This describes the access space for a sysctl request.  This is needed
  * so that we can use the interface from the kernel or from user-space.
  */
+struct thread;
 struct sysctl_req {
 	struct thread	*td;		/* used for access checking */
 	int		 lock;		/* wiring state */
@@ -179,20 +173,25 @@ struct sysctl_req {
 	int		 flags;
 };
 
-SLIST_HEAD(sysctl_oid_list, sysctl_oid);
+struct sysctl_oid;
+
+/* RB Tree handling */
+RB_HEAD(sysctl_oid_list, sysctl_oid);
 
 /*
  * This describes one "oid" in the MIB tree.  Potentially more nodes can
  * be hidden behind it, expanded by the handler.
  */
 struct sysctl_oid {
-	struct sysctl_oid_list oid_children;
-	struct sysctl_oid_list *oid_parent;
-	SLIST_ENTRY(sysctl_oid) oid_link;
+	struct sysctl_oid_list	oid_children;
+	struct sysctl_oid_list*	oid_parent;
+	RB_ENTRY(sysctl_oid) oid_link;
+	/* Sort key for all siblings, and lookup key for userland */
 	int		 oid_number;
 	u_int		 oid_kind;
 	void		*oid_arg1;
 	intmax_t	 oid_arg2;
+	/* Must be unique amongst all siblings. */
 	const char	*oid_name;
 	int		(*oid_handler)(SYSCTL_HANDLER_ARGS);
 	const char	*oid_fmt;
@@ -201,6 +200,19 @@ struct sysctl_oid {
 	const char	*oid_descr;
 	const char	*oid_label;
 };
+
+static inline int
+cmp_sysctl_oid(struct sysctl_oid *a, struct sysctl_oid *b)
+{
+	if (a->oid_number > b->oid_number)
+		return (1);
+	else if (a->oid_number < b->oid_number)
+		return (-1);
+	else
+		return (0);
+}
+
+RB_PROTOTYPE(sysctl_oid_list, sysctl_oid, oid_link, cmp_sysctl_oid);
 
 #define	SYSCTL_IN(r, p, l)	(r->newfunc)(r, p, l)
 #define	SYSCTL_OUT(r, p, l)	(r->oldfunc)(r, p, l)
@@ -281,7 +293,7 @@ TAILQ_HEAD(sysctl_ctx_list, sysctl_ctx_entry);
 #define	SYSCTL_OID_RAW(id, parent_child_head, nbr, name, kind, a1, a2, handler, fmt, descr, label) \
 	struct sysctl_oid id = {					\
 		.oid_parent = (parent_child_head),			\
-		.oid_children = SLIST_HEAD_INITIALIZER(&id.oid_children), \
+		.oid_children = RB_INITIALIZER(&id.oid_children), \
 		.oid_number = (nbr),					\
 		.oid_kind = (kind),					\
 		.oid_arg1 = (a1),					\
@@ -744,8 +756,8 @@ TAILQ_HEAD(sysctl_ctx_list, sysctl_ctx_entry);
 /* Oid for an array of counter(9)s.  The pointer and length must be non zero. */
 #define	SYSCTL_COUNTER_U64_ARRAY(parent, nbr, name, access, ptr, len, descr) \
 	SYSCTL_OID(parent, nbr, name,					\
-	    CTLTYPE_OPAQUE | CTLFLAG_MPSAFE | CTLFLAG_STATS | (access),	\
-	    (ptr), (len), sysctl_handle_counter_u64_array, "S", descr);	\
+	    CTLTYPE_U64 | CTLFLAG_MPSAFE | CTLFLAG_STATS | (access),	\
+	    (ptr), (len), sysctl_handle_counter_u64_array, "QU", descr);\
 	CTASSERT((((access) & CTLTYPE) == 0 ||				\
 	    ((access) & SYSCTL_CT_ASSERT_MASK) == CTLTYPE_OPAQUE) &&	\
 	    sizeof(counter_u64_t) == sizeof(*(ptr)) &&			\
@@ -906,7 +918,7 @@ TAILQ_HEAD(sysctl_ctx_list, sysctl_ctx_entry);
 })
 
 #define	SYSCTL_FOREACH(oidp, list) \
-	SLIST_FOREACH(oidp, list, oid_link)
+	RB_FOREACH(oidp, sysctl_oid_list, list)
 
 /*
  * A macro to generate a read-only sysctl to indicate the presence of optional
@@ -915,6 +927,12 @@ TAILQ_HEAD(sysctl_ctx_list, sysctl_ctx_entry);
 #define	FEATURE(name, desc)						\
 	SYSCTL_INT_WITH_LABEL(_kern_features, OID_AUTO, name,		\
 	    CTLFLAG_RD | CTLFLAG_CAPRD, SYSCTL_NULL_INT_PTR, 1, desc, "feature")
+/* Same for the dynamic registration. */
+#define	FEATURE_ADD(name, desc)						\
+	sysctl_add_oid(NULL, SYSCTL_CHILDREN(&sysctl___kern_features),	\
+	    OID_AUTO, name,						\
+	    CTLFLAG_RD | CTLFLAG_CAPRD | CTLTYPE_INT | CTLFLAG_MPSAFE,	\
+	    NULL, 1, sysctl_handle_int, "I", desc, "feature");
 
 #endif /* _KERNEL */
 
@@ -959,7 +977,7 @@ TAILQ_HEAD(sysctl_ctx_list, sysctl_ctx_entry);
 #define	KERN_HOSTNAME		10	/* string: hostname */
 #define	KERN_HOSTID		11	/* int: host identifier */
 #define	KERN_CLOCKRATE		12	/* struct: struct clockrate */
-#define	KERN_VNODE		13	/* struct: vnode structures */
+/* was: #define	KERN_VNODE	13	; disabled in 2003 and removed in 2023 */
 #define	KERN_PROC		14	/* struct: process entries */
 #define	KERN_FILE		15	/* struct: file entries */
 #define	KERN_PROF		16	/* node: kernel profiling info */
@@ -1023,6 +1041,7 @@ TAILQ_HEAD(sysctl_ctx_list, sysctl_ctx_entry);
 #define	KERN_PROC_CWD		42	/* process current working directory */
 #define	KERN_PROC_NFDS		43	/* number of open file descriptors */
 #define	KERN_PROC_SIGFASTBLK	44	/* address of fastsigblk magic word */
+#define	KERN_PROC_VM_LAYOUT	45	/* virtual address space layout info */
 
 /*
  * KERN_IPC identifiers
@@ -1184,9 +1203,14 @@ struct sbuf *sbuf_new_for_sysctl(struct sbuf *, char *, int,
 	    struct sysctl_req *);
 #else	/* !_KERNEL */
 #include <sys/cdefs.h>
+#include <sys/_types.h>
+#ifndef _SIZE_T_DECLARED
+typedef	__size_t	size_t;
+#define	_SIZE_T_DECLARED
+#endif
 
 __BEGIN_DECLS
-int	sysctl(const int *, u_int, void *, size_t *, const void *, size_t);
+int	sysctl(const int *, unsigned int, void *, size_t *, const void *, size_t);
 int	sysctlbyname(const char *, void *, size_t *, const void *, size_t);
 int	sysctlnametomib(const char *, int *, size_t *);
 __END_DECLS

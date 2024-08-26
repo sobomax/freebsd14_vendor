@@ -31,8 +31,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 61de05d4a41f3046592d68ab48733dc6159d5e09 $");
-
 /*
  * Pseudo-nulmodem driver
  * Mighty handy for use with serial console in Vmware

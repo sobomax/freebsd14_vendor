@@ -37,9 +37,6 @@
 static char *sccsid2 = "@(#)xdr_reference.c 1.11 87/08/11 SMI";
 static char *sccsid = "@(#)xdr_reference.c	2.1 88/07/29 4.0 RPCSRC";
 #endif
-#include <sys/cdefs.h>
-__FBSDID("$FreeBSD: d18670f28ea6a640ed3a338e8b0114901dc2622f $");
-
 /*
  * xdr_reference.c, Generic XDR routines implementation.
  *

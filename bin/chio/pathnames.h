@@ -1,4 +1,3 @@
-/* $FreeBSD: 5b9b1e429dc21dfd4a46d6e10c4f4d63f18c574c $	*/
 
 /*-
  * Copyright (c) 1996 Jason R. Thorpe <thorpej@and.com>

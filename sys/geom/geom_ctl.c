@@ -37,8 +37,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: f246891d4626fa4380e4107a33beb2e066bfea83 $");
-
 #include <sys/param.h>
 #include <sys/systm.h>
 #include <sys/conf.h>
@@ -91,18 +89,79 @@ gctl_error(struct gctl_req *req, const char *fmt, ...)
 	if (sbuf_done(req->serror)) {
 		if (!req->nerror)
 			req->nerror = EEXIST;
+#ifdef DIAGNOSTIC
+		printf("gctl_error: buffer closed, message discarded.\n");
+#endif
 		return (req->nerror);
 	}
 	if (!req->nerror)
 		req->nerror = EINVAL;
 
+	/* If this is the last of several messages, indent it on a new line */
+	if (sbuf_len(req->serror) > 0)
+		sbuf_cat(req->serror, "\n\t");
 	va_start(ap, fmt);
 	sbuf_vprintf(req->serror, fmt, ap);
 	va_end(ap);
+	gctl_post_messages(req);
+	return (req->nerror);
+}
+
+/*
+ * The gctl_error() function will only report a single message.
+ * Commands that handle multiple devices may want to report a
+ * message for each of the devices. The gctl_msg() function
+ * can be called multiple times to post messages. When done
+ * the application must either call gctl_post_messages() or
+ * call gctl_error() to cause the messages to be reported to
+ * the calling process.
+ *
+ * The errno argument should be zero if it is an informational
+ * message or an errno value (EINVAL, EBUSY, etc) if it is an error.
+ * If any of the messages has a non-zero errno, the utility will
+ * EXIT_FAILURE. If only informational messages (with zero errno)
+ * are posted, the utility will EXIT_SUCCESS.
+ */
+void
+gctl_msg(struct gctl_req *req, int errno, const char *fmt, ...)
+{
+	va_list ap;
+
+	if (req == NULL)
+		return;
+	if (sbuf_done(req->serror)) {
+#ifdef DIAGNOSTIC
+		printf("gctl_msg: buffer closed, message discarded.\n");
+#endif
+		return;
+	}
+	if (req->nerror == 0)
+		req->nerror = errno;
+	/* Put second and later messages indented on a new line */
+	if (sbuf_len(req->serror) > 0)
+		sbuf_cat(req->serror, "\n\t");
+	va_start(ap, fmt);
+	sbuf_vprintf(req->serror, fmt, ap);
+	va_end(ap);
+}
+
+/*
+ * Post the messages to the user.
+ */
+void
+gctl_post_messages(struct gctl_req *req)
+{
+
+	if (sbuf_done(req->serror)) {
+#ifdef DIAGNOSTIC
+		printf("gctl_post_messages: message buffer already closed.\n");
+#endif
+		return;
+	}
 	sbuf_finish(req->serror);
 	if (g_debugflags & G_F_CTLDUMP)
-		printf("gctl %p error \"%s\"\n", req, sbuf_data(req->serror));
-	return (req->nerror);
+		printf("gctl %p message(s) \"%s\"\n", req,
+		    sbuf_data(req->serror));
 }
 
 /*
@@ -558,8 +617,10 @@ g_ctl_ioctl_ctl(struct cdev *dev, u_long cmd, caddr_t data, int fflag, struct th
 		}
 	}
 	if (sbuf_done(req->serror)) {
-		copyout(sbuf_data(req->serror), req->error,
+		nerror = copyout(sbuf_data(req->serror), req->error,
 		    imin(req->lerror, sbuf_len(req->serror) + 1));
+		if (nerror != 0 && req->nerror == 0)
+			req->nerror = nerror;
 	}
 
 	nerror = req->nerror;

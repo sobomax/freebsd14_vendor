@@ -29,8 +29,6 @@
  * File : ecore_init_fw_funcs.c
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 5adc1f29b0acceedc2b44570a7c614c2d398608e $");
-
 #include "bcm_osal.h"
 #include "ecore_hw.h"
 #include "ecore_init_ops.h"

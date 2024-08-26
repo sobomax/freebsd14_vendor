@@ -58,8 +58,6 @@
  * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
- *
- * $FreeBSD: 05edede50cc78948f05d9e0dc938ec222984ecb9 $
  */
 
 #ifndef _FUSE_NODE_H_
@@ -68,6 +66,7 @@
 #include <sys/fnv_hash.h>
 #include <sys/types.h>
 #include <sys/mutex.h>
+#include <sys/buf.h>
 
 #include "fuse_file.h"
 
@@ -124,7 +123,8 @@ struct fuse_vnode_data {
 	struct timespec	last_local_modify;
 	struct vattr	cached_attrs;
 	uint64_t	nlookup;
-	enum vtype	vtype;
+	__enum_uint8(vtype)	vtype;
+	struct vn_clusterw clusterw;
 };
 
 /*
@@ -199,7 +199,7 @@ void fuse_vnode_destroy(struct vnode *vp);
 
 int fuse_vnode_get(struct mount *mp, struct fuse_entry_out *feo,
     uint64_t nodeid, struct vnode *dvp, struct vnode **vpp,
-    struct componentname *cnp, enum vtype vtyp);
+    struct componentname *cnp, __enum_uint8(vtype) vtyp);
 
 void fuse_vnode_open(struct vnode *vp, int32_t fuse_open_flags,
     struct thread *td);

@@ -30,8 +30,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: a264b5d2c9655380c25e5a7455721e96557a7f29 $");
-
 #include <sys/param.h>
 #include <sys/systm.h>
 #include <sys/bus.h>
@@ -288,6 +286,4 @@ static driver_t spi_driver = {
 	sizeof(struct spi_softc),
 };
 
-static devclass_t spi_devclass;
-
-DRIVER_MODULE(spi, simplebus, spi_driver, spi_devclass, 0, 0);
+DRIVER_MODULE(spi, simplebus, spi_driver, 0, 0);

@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2010 Nathan Whitehorn
  * All rights reserved.
@@ -28,8 +28,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: a7df8b9227c81a5582b644376624c1a15e3366cd $");
-
 #include <sys/param.h>
 #include <sys/systm.h>
 #include <sys/module.h>
@@ -88,9 +86,7 @@ static driver_t smusat_driver = {
 	sizeof(struct smusat_softc)
 };
 
-static devclass_t smusat_devclass;
-
-DRIVER_MODULE(smusat, iicbus, smusat_driver, smusat_devclass, 0, 0);
+DRIVER_MODULE(smusat, iicbus, smusat_driver, 0, 0);
 
 static int
 smusat_probe(device_t dev)

@@ -32,8 +32,6 @@
 static const char sccsid[] = "@(#)ring.c	8.2 (Berkeley) 5/30/95";
 #endif
 #endif
-#include <sys/cdefs.h>
-__FBSDID("$FreeBSD: efae2e18c1b7c8419fc0ddd4443ed8bfd9e39fa5 $");
 
 /*
  * This defines a structure for a ring buffer.
@@ -306,9 +304,8 @@ ring_encrypt(Ring *ring, void (*encryptor)(unsigned char *, int))
     ring->clearto = ring->supply;
 }
 
-    void
-ring_clearto(ring)
-    Ring *ring;
+void
+ring_clearto(Ring *ring)
 {
     if (!ring_empty(ring))
 	ring->clearto = ring->supply;

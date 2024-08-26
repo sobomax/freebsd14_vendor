@@ -25,7 +25,6 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: acd33742b791365382292557894e1b879f37e2e7 $
 #
 
 . $(atf_get_srcdir)/../common/vnet.subr
@@ -135,7 +134,8 @@ ipdivert_ip_input_local_success_body() {
 	jexec ${jname} ifconfig ${epair}b inet ${ip4b}/30
 
 	atf_check -s exit:0 jexec ${jname} $(atf_get_srcdir)/${script_name} \
-		--dip ${ip4b} --test_name ipdivert_ip_input_local_success
+	    --sip ${ip4a} --dip ${ip4b} \
+	    --test_name ipdivert_ip_input_local_success
 	
 	count=`jexec ${jname} netstat -s -p icmp  | grep 'Input histogram:' -A8 | grep -c 'echo: '`
 	# Verify redirect got installed

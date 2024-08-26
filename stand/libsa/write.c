@@ -31,8 +31,6 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- *	@(#)write.c	8.1 (Berkeley) 6/11/93
- *
  *
  * Copyright (c) 1989, 1990, 1991 Carnegie Mellon University
  * All Rights Reserved.
@@ -59,9 +57,6 @@
  * any improvements or extensions that they make and grant Carnegie the
  * rights to redistribute these changes.
  */
-
-#include <sys/cdefs.h>
-__FBSDID("$FreeBSD: db82d7eaf4f622e46d53d50df5ed9659358678f1 $");
 
 #include <sys/param.h>
 #include "stand.h"

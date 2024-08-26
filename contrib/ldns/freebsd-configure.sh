@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# $FreeBSD: 4e141140fa5d7780de136be0b02d0d0c42c5da09 $
+# $FreeBSD: d1a3a73591e367d41ff3b10935215bcd16b0087f $
 #
 
 set -e
@@ -14,8 +14,7 @@ ldns=$(dirname $(realpath $0))
 cd $ldns
 
 # Run autotools before we drop LOCALBASE out of PATH
-(cd $ldns && libtoolize --copy && autoheader && autoconf)
-(cd $ldns/drill && aclocal && autoheader && autoconf)
+libtoolize --copy && autoheader && autoconf
 
 # Ensure we use the correct toolchain and clean our environment
 export CC=$(echo ".include <bsd.lib.mk>" | make -f /dev/stdin -VCC)
@@ -23,8 +22,4 @@ export CPP=$(echo ".include <bsd.lib.mk>" | make -f /dev/stdin -VCPP)
 unset CFLAGS CPPFLAGS LDFLAGS LD_LIBRARY_PATH LIBS
 export PATH=/bin:/sbin:/usr/bin:/usr/sbin
 
-cd $ldns
-./configure --prefix= --exec-prefix=/usr
-
-cd $ldns/drill
-./configure --prefix= --exec-prefix=/usr
+./configure --prefix= --exec-prefix=/usr --with-drill --with-ssl

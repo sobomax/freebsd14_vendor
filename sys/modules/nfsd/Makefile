@@ -1,4 +1,3 @@
-# $FreeBSD: ad75bf1479b9e6e769427a9aa5c55d8b57eaf0cd $
 
 .PATH: ${SRCTOP}/sys/fs/nfsserver
 KMOD=	nfsd

@@ -23,8 +23,6 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- *	$FreeBSD: edfafa7780156b2cd9db035d09ff88300659fde2 $
- *
  */
 
 #include <stdint.h>

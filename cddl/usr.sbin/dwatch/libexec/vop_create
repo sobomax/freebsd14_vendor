@@ -4,7 +4,6 @@
 #
 # $Title: dwatch(8) module for VOP_CREATE(9) [or similar] entry $
 # $Copyright: 2014-2018 Devin Teske. All rights reserved. $
-# $FreeBSD: 3c544815b7584011fac279095a8942e387b1febc $
 #
 ############################################################ DESCRIPTION
 #

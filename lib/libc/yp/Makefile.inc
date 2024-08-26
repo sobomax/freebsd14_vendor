@@ -1,5 +1,4 @@
 #	from: @(#)Makefile.inc	5.3 (Berkeley) 2/20/91
-# $FreeBSD: 166c9d79caa7413223173641f5677d979e855fb2 $
 
 # yp sources
 .PATH: ${LIBC_SRCTOP}/yp

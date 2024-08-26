@@ -1,6 +1,4 @@
-#$FreeBSD: 62f1a79fe314e51840b85f033ad5223ebaee76e8 $
-ARMV6			opt_global.h
-ARMV7			opt_global.h
+ARM_FORCE_DBG_MONITOR_DISABLE	opt_ddb.h
 CPSW_ETHERSWITCH	opt_cpsw.h
 CPU_ARM1176		opt_global.h
 CPU_CORTEXA		opt_global.h

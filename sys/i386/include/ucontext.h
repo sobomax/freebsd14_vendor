@@ -26,15 +26,13 @@
  * THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- *
- * $FreeBSD: 6a72e568c9cdab2040882ef303458e7167cd3668 $
  */
 
 #ifndef _MACHINE_UCONTEXT_H_
 #define	_MACHINE_UCONTEXT_H_
 
 #if defined(_KERNEL) && defined(COMPAT_FREEBSD4)
-struct mcontext4 {
+struct freebsd4_mcontext {
 	__register_t	mc_onstack;	/* XXX - sigcontext compat. */
 	__register_t	mc_gs;		/* machine state (struct trapframe) */
 	__register_t	mc_fs;
@@ -57,6 +55,14 @@ struct mcontext4 {
 	__register_t	mc_ss;
 	__register_t	mc_fpregs[28];	/* env87 + fpacc87 + u_long */
 	__register_t	__spare__[17];
+};
+
+struct freebsd4_ucontext {
+	sigset_t	uc_sigmask;
+	struct freebsd4_mcontext uc_mcontext;
+	struct freebsd4_ucontext *uc_link;
+	stack_t		uc_stack;
+	int		__spare__[8];
 };
 #endif
 

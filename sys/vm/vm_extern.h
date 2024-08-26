@@ -29,7 +29,6 @@
  * SUCH DAMAGE.
  *
  *	@(#)vm_extern.h	8.2 (Berkeley) 1/12/94
- * $FreeBSD: 93c7118353ba4ddd15a33ed2b0e32841ce816cc6 $
  */
 
 #ifndef _VM_EXTERN_H_
@@ -57,20 +56,20 @@ vm_offset_t kmap_alloc_wait(vm_map_t, vm_size_t);
 void kmap_free_wakeup(vm_map_t, vm_offset_t, vm_size_t);
 
 /* These operate on virtual addresses backed by memory. */
-vm_offset_t kmem_alloc_attr(vm_size_t size, int flags,
+void *kmem_alloc_attr(vm_size_t size, int flags,
     vm_paddr_t low, vm_paddr_t high, vm_memattr_t memattr);
-vm_offset_t kmem_alloc_attr_domainset(struct domainset *ds, vm_size_t size,
+void *kmem_alloc_attr_domainset(struct domainset *ds, vm_size_t size,
     int flags, vm_paddr_t low, vm_paddr_t high, vm_memattr_t memattr);
-vm_offset_t kmem_alloc_contig(vm_size_t size, int flags,
+void *kmem_alloc_contig(vm_size_t size, int flags,
     vm_paddr_t low, vm_paddr_t high, u_long alignment, vm_paddr_t boundary,
     vm_memattr_t memattr);
-vm_offset_t kmem_alloc_contig_domainset(struct domainset *ds, vm_size_t size,
+void *kmem_alloc_contig_domainset(struct domainset *ds, vm_size_t size,
     int flags, vm_paddr_t low, vm_paddr_t high, u_long alignment,
     vm_paddr_t boundary, vm_memattr_t memattr);
-vm_offset_t kmem_malloc(vm_size_t size, int flags);
-vm_offset_t kmem_malloc_domainset(struct domainset *ds, vm_size_t size,
+void *kmem_malloc(vm_size_t size, int flags);
+void *kmem_malloc_domainset(struct domainset *ds, vm_size_t size,
     int flags);
-void kmem_free(vm_offset_t addr, vm_size_t size);
+void kmem_free(void *addr, vm_size_t size);
 
 /* This provides memory for previously allocated address space. */
 int kmem_back(vm_object_t, vm_offset_t, vm_size_t, int);
@@ -122,6 +121,7 @@ void vmspace_free(struct vmspace *);
 void vmspace_exitfree(struct proc *);
 void vmspace_switch_aio(struct vmspace *);
 void vnode_pager_setsize(struct vnode *, vm_ooffset_t);
+void vnode_pager_purge_range(struct vnode *, vm_ooffset_t, vm_ooffset_t);
 int vslock(void *, size_t);
 void vsunlock(void *, size_t);
 struct sf_buf *vm_imgact_map_page(vm_object_t object, vm_ooffset_t offset);
@@ -141,11 +141,8 @@ u_int vm_wait_count(void);
 static inline bool
 vm_addr_align_ok(vm_paddr_t pa, u_long alignment)
 {
-#ifdef INVARIANTS
-	if (!powerof2(alignment))
-		panic("%s: alignment is not a power of 2: %#lx",
-		    __func__, alignment);
-#endif
+	KASSERT(powerof2(alignment), ("%s: alignment is not a power of 2: %#lx",
+	    __func__, alignment));
 	return ((pa & (alignment - 1)) == 0);
 }
 
@@ -156,11 +153,8 @@ vm_addr_align_ok(vm_paddr_t pa, u_long alignment)
 static inline bool
 vm_addr_bound_ok(vm_paddr_t pa, vm_paddr_t size, vm_paddr_t boundary)
 {
-#ifdef INVARIANTS
-	if (!powerof2(boundary))
-		panic("%s: boundary is not a power of 2: %#jx",
-		    __func__, (uintmax_t)boundary);
-#endif
+	KASSERT(powerof2(boundary), ("%s: boundary is not a power of 2: %#jx",
+	    __func__, (uintmax_t)boundary));
 	return (((pa ^ (pa + size - 1)) & -boundary) == 0);
 }
 

@@ -1,4 +1,3 @@
-/* $FreeBSD: 93712e44c520cdb2d9031ca6c67099ba3f5256b7 $ */
 /*	$NetBSD: denode.h,v 1.25 1997/11/17 15:36:28 ws Exp $	*/
 
 /*-
@@ -142,6 +141,7 @@ struct fatcache {
  */
 struct denode {
 	struct vnode *de_vnode;	/* addr of vnode we are part of */
+	struct vn_clusterw de_clusterw;	/* buffer clustering information */
 	u_long de_flag;		/* flag bits */
 	u_long de_dirclust;	/* cluster of the directory file containing this entry */
 	u_long de_diroffset;	/* offset of this entry in the directory cluster */
@@ -162,7 +162,7 @@ struct denode {
 	u_long de_FileSize;	/* size of file in bytes */
 	struct fatcache de_fc[FC_SIZE];	/* FAT cache */
 	u_quad_t de_modrev;	/* Revision level for lease. */
-	uint64_t de_inode;	/* Inode number (really byte offset of direntry) */
+	uint64_t de_inode;	/* Inode number (really index of DOS style direntry) */
 };
 
 /*
@@ -216,6 +216,12 @@ struct denode {
 
 #define	VTODE(vp)	((struct denode *)(vp)->v_data)
 #define	DETOV(de)	((de)->de_vnode)
+
+#define DETOI(pmp, cn, off)						\
+	((cn) == MSDOSFSROOT						\
+	    ? (((uint64_t)(off) >> 5))					\
+	    : (((((uint64_t)pmp->pm_bpcluster * ((cn) - 2) + (off))) >> 5) \
+		+ pmp->pm_RootDirEnts))
 
 #define	DETIMES(dep, acc, mod, cre) do {				\
 	if ((dep)->de_flag & DE_UPDATE) {				\
@@ -272,6 +278,7 @@ int msdosfs_lookup_ino(struct vnode *vdp, struct vnode **vpp,
 /*
  * Internal service routine prototypes.
  */
+struct componentname;
 int deget(struct msdosfsmount *, u_long, u_long, int, struct denode **);
 int uniqdosname(struct denode *, struct componentname *, u_char *);
 

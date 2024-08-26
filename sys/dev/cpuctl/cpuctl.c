@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2006-2008 Stanislav Sedov <stas@FreeBSD.org>
  * All rights reserved.
@@ -28,8 +28,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: b24c25444014856daf7c91dcab20e43299e33c01 $");
-
 #include <sys/param.h>
 #include <sys/systm.h>
 #include <sys/conf.h>
@@ -548,6 +546,7 @@ cpuctl_do_eval_cpu_features(int cpu, struct thread *td)
 	hw_mds_recalculate();
 	x86_taa_recalculate();
 	x86_rngds_mitg_recalculate(true);
+	zenbleed_check_and_apply(true);
 	printcpuinfo();
 	return (0);
 }

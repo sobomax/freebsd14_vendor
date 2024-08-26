@@ -33,8 +33,6 @@
 
 #include <sys/cdefs.h>
 __SCCSID("@(#)fts.c	8.6 (Berkeley) 8/14/94");
-__FBSDID("$FreeBSD: 5186ae047a3bd8e1869e8b4b15212acf51c02411 $");
-
 #include "namespace.h"
 #include <sys/param.h>
 #include <sys/mount.h>

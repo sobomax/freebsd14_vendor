@@ -23,15 +23,15 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 496fc58d7c7bf40a41ef234d80f4db2d1780bcd6 $
+ * $FreeBSD: 2daa6de1af08607699c939db82d519256056f786 $
  */
 
 #ifndef _OPENSOLARIS_SYS_SDT_H_
 #define	_OPENSOLARIS_SYS_SDT_H_
 
 #include_next <sys/sdt.h>
-/* BEGIN CSTYLED */
 #ifdef KDTRACE_HOOKS
+/* CSTYLED */
 SDT_PROBE_DECLARE(sdt, , , set__error);
 
 #define	SET_ERROR(err) \

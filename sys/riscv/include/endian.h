@@ -27,7 +27,6 @@
  *
  *	@(#)endian.h	8.1 (Berkeley) 6/10/93
  * $NetBSD: endian.h,v 1.7 1999/08/21 05:53:51 simonb Exp $
- * $FreeBSD: 0f06010b7e4b77e07c721c6d177720b7519dcff9 $
  */
 
 #ifndef _MACHINE_ENDIAN_H_

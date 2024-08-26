@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2012 The FreeBSD Foundation
  *
@@ -30,17 +30,17 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 0c1967e0a5953c57ea6c0598835f260823ad8099 $");
-
 #include <sys/types.h>
 #include <sys/time.h>
 #include <sys/ioctl.h>
 #include <sys/param.h>
 #include <sys/linker.h>
 #include <sys/socket.h>
+#include <sys/sysctl.h>
 #include <sys/capsicum.h>
 #include <sys/wait.h>
 #include <netinet/in.h>
+#include <netinet/tcp.h>
 #include <assert.h>
 #include <capsicum_helpers.h>
 #include <errno.h>
@@ -349,6 +349,34 @@ connection_new(int iscsi_fd, const struct iscsi_daemon_request *request)
 				    "failed for %s",
 				    from_addr);
 		}
+	}
+	/*
+	 * Reduce TCP SYN_SENT timeout while
+	 * no connectivity exists, to allow
+	 * rapid reuse of the available slots.
+	 */
+	int keepinit = 0;
+	if (conn->conn_conf.isc_login_timeout > 0) {
+		keepinit = conn->conn_conf.isc_login_timeout;
+		log_debugx("session specific LoginTimeout at %d sec",
+			keepinit);
+	}
+	if (conn->conn_conf.isc_login_timeout == -1) {
+		int value;
+		size_t size = sizeof(value);
+		if (sysctlbyname("kern.iscsi.login_timeout",
+		    &value, &size, NULL, 0) == 0) {
+			keepinit = value;
+			log_debugx("global login_timeout at %d sec",
+				keepinit);
+		}
+	}
+	if (keepinit > 0) {
+		if (setsockopt(conn->conn.conn_socket,
+		    IPPROTO_TCP, TCP_KEEPINIT,
+		    &keepinit, sizeof(keepinit)) == -1)
+			log_warnx("setsockopt(TCP_KEEPINIT) "
+			    "failed for %s", to_addr);
 	}
 	if (from_ai != NULL) {
 		error = bind(conn->conn.conn_socket, from_ai->ai_addr,

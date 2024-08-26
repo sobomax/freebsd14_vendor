@@ -1,4 +1,3 @@
-.\" $FreeBSD: 975f56331ab18abc86df61b267699da0f2c8dc02 $
 Do not build
 .Xr hastd 8
 and related utilities.

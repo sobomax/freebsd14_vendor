@@ -1,5 +1,4 @@
 /*
- * $FreeBSD: f2f21a0811d03d67f8fb1a2a30a4fe36e60a493e $
  *
  * userspace compatibility code for dummynet schedulers
  */

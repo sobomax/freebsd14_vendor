@@ -1,5 +1,4 @@
 #!/bin/sh
-# $FreeBSD: 999090f22d0e2db90b2f1548ba69c911cbeed35d $
 
 usage()
 {

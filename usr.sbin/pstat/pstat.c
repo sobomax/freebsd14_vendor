@@ -48,8 +48,6 @@ static char sccsid[] = "@(#)pstat.c	8.16 (Berkeley) 5/9/95";
 #endif /* not lint */
 #endif
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: bcb3df20b8bdc1185d8747e48ee9d41f5e928440 $");
-
 #include <sys/param.h>
 #include <sys/time.h>
 #include <sys/file.h>

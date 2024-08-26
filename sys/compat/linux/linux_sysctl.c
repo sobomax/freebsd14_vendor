@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2001 Marcel Moolenaar
  * All rights reserved.
@@ -26,21 +26,13 @@
  * SUCH DAMAGE.
  */
 
-#include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 36f76c088ca3e31f5c1d9613ffe79c0210f7b33b $");
-
-#include "opt_compat.h"
-
 #include <sys/param.h>
-#include <sys/kernel.h>
 #include <sys/lock.h>
 #include <sys/malloc.h>
 #include <sys/mutex.h>
-#include <sys/proc.h>
-#include <sys/sdt.h>
 #include <sys/sysctl.h>
-#include <sys/systm.h>
 #include <sys/sbuf.h>
+#include <sys/vnode.h>
 
 #ifdef COMPAT_LINUX32
 #include <machine/../linux32/linux.h>

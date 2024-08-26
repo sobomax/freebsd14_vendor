@@ -25,8 +25,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 56adb94ba091659526ade5c73d0807a98aa28327 $");
-
 #include "opt_platform.h"
 #include "opt_kbd.h"
 #include "opt_evdev.h"
@@ -894,12 +892,15 @@ gpiokeys_ioctl_locked(keyboard_t *kbd, u_long cmd, caddr_t arg)
 		return (gpiokeys_set_typematic(kbd, *(int *)arg));
 
 	case PIO_KEYMAP:		/* set keyboard translation table */
-	case OPIO_KEYMAP:		/* set keyboard translation table
-					 * (compat) */
 	case PIO_KEYMAPENT:		/* set keyboard translation table
 					 * entry */
 	case PIO_DEADKEYMAP:		/* set accent key translation table */
-	case OPIO_DEADKEYMAP:		/* set accent key translation table (compat) */
+#ifdef COMPAT_FREEBSD13
+	case OPIO_KEYMAP:		/* set keyboard translation table
+					 * (compat) */
+	case OPIO_DEADKEYMAP:		/* set accent key translation table
+					 * (compat) */
+#endif /* COMPAT_FREEBSD13 */
 		sc->sc_accents = 0;
 		/* FALLTHROUGH */
 	default:
@@ -972,17 +973,11 @@ gpiokeys_poll(keyboard_t *kbd, int on)
 static int
 gpiokeys_set_typematic(keyboard_t *kbd, int code)
 {
-	static const int delays[] = {250, 500, 750, 1000};
-	static const int rates[] = {34, 38, 42, 46, 50, 55, 59, 63,
-		68, 76, 84, 92, 100, 110, 118, 126,
-		136, 152, 168, 184, 200, 220, 236, 252,
-	272, 304, 336, 368, 400, 440, 472, 504};
-
 	if (code & ~0x7f) {
 		return (EINVAL);
 	}
-	kbd->kb_delay1 = delays[(code >> 5) & 3];
-	kbd->kb_delay2 = rates[code & 0x1f];
+	kbd->kb_delay1 = kbdelays[(code >> 5) & 3];
+	kbd->kb_delay2 = kbrates[code & 0x1f];
 	return (0);
 }
 
@@ -1043,8 +1038,6 @@ gpiokeys_driver_load(module_t mod, int what, void *arg)
 	return (0);
 }
 
-static devclass_t gpiokeys_devclass;
-
 static device_method_t gpiokeys_methods[] = {
 	DEVMETHOD(device_probe,		gpiokeys_probe),
 	DEVMETHOD(device_attach,	gpiokeys_attach),
@@ -1059,5 +1052,5 @@ static driver_t gpiokeys_driver = {
 	sizeof(struct gpiokeys_softc),
 };
 
-DRIVER_MODULE(gpiokeys, simplebus, gpiokeys_driver, gpiokeys_devclass, gpiokeys_driver_load, 0);
+DRIVER_MODULE(gpiokeys, simplebus, gpiokeys_driver, gpiokeys_driver_load, NULL);
 MODULE_VERSION(gpiokeys, 1);

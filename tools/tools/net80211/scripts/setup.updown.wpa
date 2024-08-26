@@ -4,7 +4,6 @@
 # Also used to verify resources are reclaimed properly
 # on vap destroy.
 #
-# $FreeBSD: 36580b56e22f657167f5162663b48593aa90422c $
 #
 PATH=.:$PATH
 . config

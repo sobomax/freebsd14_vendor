@@ -35,15 +35,13 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 2889f802775d2f6f3585762fda30228ce2e1fe09 $");
-
 #include <sys/param.h>
 #include <sys/user.h>
 #include <sys/stat.h>
 #include <sys/vnode.h>
 #include <sys/conf.h>
-#define	_KERNEL
 #include <sys/pipe.h>
+#define	_WANT_MOUNT
 #include <sys/mount.h>
 #include <ufs/ufs/quota.h>
 #include <ufs/ufs/inode.h>
@@ -51,7 +49,6 @@ __FBSDID("$FreeBSD: 2889f802775d2f6f3585762fda30228ce2e1fe09 $");
 #include <ufs/ufs/ufsmount.h>
 #include <fs/devfs/devfs.h>
 #include <fs/devfs/devfs_int.h>
-#undef _KERNEL
 #include <nfs/nfsproto.h>
 #include <nfsclient/nfs.h>
 #include <nfsclient/nfsnode.h>

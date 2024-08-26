@@ -29,8 +29,6 @@
  * File : ecore_sp_commands.c
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 09cd19cd9f3b3c44e780e6ada70442f223c0cc2b $");
-
 #include "bcm_osal.h"
 
 #include "ecore.h"

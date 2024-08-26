@@ -16,9 +16,6 @@
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  */
 
-#include <sys/cdefs.h>
-__FBSDID("$FreeBSD: f85d40993a911c505aff683810e77119aa789e47 $");
-
 #include <errno.h>
 #include <libgen.h>
 #include <stdlib.h>

@@ -1,4 +1,3 @@
-/* $FreeBSD: 3b7c8a2cde78c0330fbb7dbf4dc9899963e68b74 $ */
 /*-
  * Copyright (c) 2007 Luigi Rizzo - Universita` di Pisa. All rights reserved.
  * Copyright (c) 2007 Hans Petter Selasky. All rights reserved.

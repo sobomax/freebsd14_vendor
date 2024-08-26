@@ -68,8 +68,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 1911f75fb4fd190d6c46398f4341353f7a78bd39 $");
-
 #if HAVE_NBTOOL_CONFIG_H
 #include "nbtool_config.h"
 #endif
@@ -90,9 +88,6 @@ __FBSDID("$FreeBSD: 1911f75fb4fd190d6c46398f4341353f7a78bd39 $");
 #include <unistd.h>
 #include <util.h>
 
-#include "makefs.h"
-#include "ffs.h"
-
 #if HAVE_STRUCT_STATVFS_F_IOSIZE && HAVE_FSTATVFS
 #include <sys/statvfs.h>
 #endif
@@ -101,11 +96,14 @@ __FBSDID("$FreeBSD: 1911f75fb4fd190d6c46398f4341353f7a78bd39 $");
 #include <ufs/ufs/dir.h>
 #include <ufs/ffs/fs.h>
 
-
 #include "ffs/ufs_bswap.h"
 #include "ffs/ufs_inode.h"
 #include "ffs/newfs_extern.h"
 #include "ffs/ffs_extern.h"
+
+#undef clrbuf
+#include "makefs.h"
+#include "ffs.h"
 
 #undef DIP
 #define DIP(dp, field) \
@@ -342,6 +340,9 @@ ffs_validate(const char *dir, fsnode *root, fsinfo_t *fsopts)
 		/* set FFS defaults */
 	if (fsopts->sectorsize == -1)
 		fsopts->sectorsize = DFL_SECSIZE;
+	if (fsopts->sectorsize != DFL_SECSIZE)
+		warnx("sectorsize %d may produce nonfunctional image",
+		    fsopts->sectorsize);
 	if (ffs_opts->fsize == -1)
 		ffs_opts->fsize = MAX(DFL_FRAGSIZE, fsopts->sectorsize);
 	if (ffs_opts->bsize == -1)
@@ -912,9 +913,9 @@ ffs_write_file(union dinode *din, uint32_t ino, void *buf, fsinfo_t *fsopts)
 	off_t	bufleft, chunk, offset;
 	ssize_t nread;
 	struct inode	in;
-	struct buf *	bp;
+	struct m_buf *	bp;
 	ffs_opt_t	*ffs_opts = fsopts->fs_specific;
-	struct vnode vp = { fsopts, NULL };
+	struct m_vnode vp = { fsopts, NULL };
 
 	assert (din != NULL);
 	assert (buf != NULL);
@@ -927,7 +928,7 @@ ffs_write_file(union dinode *din, uint32_t ino, void *buf, fsinfo_t *fsopts)
 	p = NULL;
 
 	in.i_fs = (struct fs *)fsopts->superblock;
-	in.i_devvp = &vp;
+	in.i_devvp = (void *)&vp;
 
 	if (debug & DEBUG_FS_WRITE_FILE) {
 		printf(
@@ -954,7 +955,7 @@ ffs_write_file(union dinode *din, uint32_t ino, void *buf, fsinfo_t *fsopts)
 
 	if (isfile) {
 		fbuf = emalloc(ffs_opts->bsize);
-		if ((ffd = open((char *)buf, O_RDONLY, 0444)) == -1) {
+		if ((ffd = open((char *)buf, O_RDONLY)) == -1) {
 			err(EXIT_FAILURE, "Can't open `%s' for reading", (char *)buf);
 		}
 	} else {
@@ -1002,7 +1003,6 @@ ffs_write_file(union dinode *din, uint32_t ino, void *buf, fsinfo_t *fsopts)
 		errno = bwrite(bp);
 		if (errno != 0)
 			goto bad_ffs_write_file;
-		brelse(bp);
 		if (!isfile)
 			p += chunk;
 	}

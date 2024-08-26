@@ -34,7 +34,6 @@
  * SUCH DAMAGE.
  *
  *	from: @(#)swap_pager.h	7.1 (Berkeley) 12/5/90
- * $FreeBSD: 616f6c46164a4053befc292f3af3246131af8422 $
  */
 
 #ifndef	_VM_SWAP_PAGER_H_
@@ -44,6 +43,7 @@
 
 struct buf;
 struct swdevt;
+struct thread;
 typedef void sw_strategy_t(struct buf *, struct swdevt *);
 typedef void sw_close_t(struct thread *, struct swdevt *);
 
@@ -71,6 +71,7 @@ struct swdevt {
 #ifdef _KERNEL
 
 extern int swap_pager_avail;
+extern int nsw_cluster_max;
 
 struct xswdev;
 int swap_dev_info(int name, struct xswdev *xs, char *devname, size_t len);

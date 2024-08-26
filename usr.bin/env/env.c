@@ -42,8 +42,6 @@ static char sccsid[] = "@(#)env.c	8.3 (Berkeley) 4/2/94";
 #endif
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: a0f55d665a9ae1fc36ea22a78e21157dc1eb801f $");
-
 #include <sys/types.h>
 
 #include <err.h>
@@ -62,7 +60,7 @@ extern char **environ;
 
 int	 env_verbosity;
 
-static void usage(void);
+static void usage(void) __dead2;
 
 /*
  * Exit codes.

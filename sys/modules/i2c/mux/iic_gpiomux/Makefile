@@ -1,4 +1,3 @@
-# $FreeBSD: f1ec74efd4cb391129e2e861f64abec9824aad6e $
 
 .PATH:		${SRCTOP}/sys/dev/iicbus/mux
 

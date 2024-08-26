@@ -1,4 +1,3 @@
-#	$FreeBSD: d8445ded087abba1fe8c8f73fe1e4d256212c6c3 $
 #
 # Copyright (c) 2018		Conrad Meyer <cem@FreeBSD.org>
 # Copyright (c) 2002, 2003	Sam Leffler, Errno Consulting
@@ -26,16 +25,13 @@
 # SUCH DAMAGE.
 #
 
-PROGS=	cryptocheck cryptotest cryptokeytest cryptostats \
+PROGS=	cryptocheck cryptotest cryptostats \
 	hifnstats ipsecstats safestats
 MAN=
 BINDIR?=	/usr/local/bin
 
 # cryptocheck: test symmetric crypto functions
 LIBADD.cryptocheck+=	crypto util
-
-# cryptokeytest: test asymmetric crypto functions
-LIBADD.cryptokeytest+=	crypto
 
 # cryptostats: dump statistics kept by the core crypto code
 # hifnstats: print statistics kept by the HIFN driver

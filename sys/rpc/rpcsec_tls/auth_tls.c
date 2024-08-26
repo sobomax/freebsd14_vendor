@@ -29,8 +29,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 9afde553283e4c65f14445488897e23cbe02cb0d $");
-
 /*
  * auth_none.c
  * Creates a client authentication handle for passing "null"

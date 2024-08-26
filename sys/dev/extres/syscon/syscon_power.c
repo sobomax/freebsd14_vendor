@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2020 Jessica Clarke <jrtc27@FreeBSD.org>
  *
@@ -34,8 +34,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 586af01027133db7c3bc86fd97e3937ffd14fb38 $");
-
 #include <sys/param.h>
 #include <sys/bus.h>
 #include <sys/types.h>
@@ -164,9 +162,11 @@ syscon_power_attach(device_t dev)
 		OF_getencprop(node, "value", &sc->value, sizeof(sc->value));
 	}
 
+	/* Handle reboot after shutdown_panic. */
 	sc->reboot = ofw_bus_is_compatible(dev, "syscon-reboot");
 	sc->shutdown_tag = EVENTHANDLER_REGISTER(shutdown_final,
-	    syscon_power_shutdown_final, dev, SHUTDOWN_PRI_LAST);
+	    syscon_power_shutdown_final, dev,
+	    sc->reboot ? SHUTDOWN_PRI_LAST + 150 : SHUTDOWN_PRI_LAST);
 
 	return (0);
 }
@@ -192,7 +192,5 @@ static device_method_t syscon_power_methods[] = {
 
 DEFINE_CLASS_0(syscon_power, syscon_power_driver, syscon_power_methods,
     sizeof(struct syscon_power_softc));
-static devclass_t syscon_power_devclass;
 
-DRIVER_MODULE(syscon_power, simplebus, syscon_power_driver,
-    syscon_power_devclass, NULL, NULL);
+DRIVER_MODULE(syscon_power, simplebus, syscon_power_driver, NULL, NULL);

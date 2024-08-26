@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (C) 2012-2016 Intel Corporation
  * All rights reserved.
@@ -27,8 +27,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: bc5f1c7e218e6917b32296c8387298c6efdf8445 $");
-
 #include "opt_cam.h"
 #include "opt_nvme.h"
 
@@ -219,12 +217,15 @@ nvme_ctrlr_fail(struct nvme_controller *ctrlr)
 {
 	int i;
 
+	/*
+	 * No need to disable queues before failing them. Failing is a superet
+	 * of disabling (though pedantically we'd abort the AERs silently with
+	 * a different error, though when we fail, that hardly matters).
+	 */
 	ctrlr->is_failed = true;
-	nvme_admin_qpair_disable(&ctrlr->adminq);
 	nvme_qpair_fail(&ctrlr->adminq);
 	if (ctrlr->ioq != NULL) {
 		for (i = 0; i < ctrlr->num_io_queues; i++) {
-			nvme_io_qpair_disable(&ctrlr->ioq[i]);
 			nvme_qpair_fail(&ctrlr->ioq[i]);
 		}
 	}
@@ -388,8 +389,12 @@ nvme_ctrlr_enable(struct nvme_controller *ctrlr)
 	cc |= 6 << NVME_CC_REG_IOSQES_SHIFT; /* SQ entry size == 64 == 2^6 */
 	cc |= 4 << NVME_CC_REG_IOCQES_SHIFT; /* CQ entry size == 16 == 2^4 */
 
-	/* This evaluates to 0, which is according to spec. */
-	cc |= (PAGE_SIZE >> 13) << NVME_CC_REG_MPS_SHIFT;
+	/*
+	 * Use the Memory Page Size selected during device initialization.  Note
+	 * that value stored in mps is suitable to use here without adjusting by
+	 * NVME_MPS_SHIFT.
+	 */
+	cc |= ctrlr->mps << NVME_CC_REG_MPS_SHIFT;
 
 	nvme_ctrlr_barrier(ctrlr, BUS_SPACE_BARRIER_WRITE);
 	nvme_mmio_write_4(ctrlr, cc, cc);
@@ -425,9 +430,11 @@ nvme_ctrlr_hw_reset(struct nvme_controller *ctrlr)
 
 	err = nvme_ctrlr_disable(ctrlr);
 	if (err != 0)
-		return err;
+		goto out;
 
 	err = nvme_ctrlr_enable(ctrlr);
+out:
+
 	TSEXIT();
 	return (err);
 }
@@ -474,7 +481,8 @@ nvme_ctrlr_identify(struct nvme_controller *ctrlr)
 	 */
 	if (ctrlr->cdata.mdts > 0)
 		ctrlr->max_xfer_size = min(ctrlr->max_xfer_size,
-		    ctrlr->min_page_size * (1 << (ctrlr->cdata.mdts)));
+		    1 << (ctrlr->cdata.mdts + NVME_MPS_SHIFT +
+			NVME_CAP_HI_MPSMIN(ctrlr->cap_hi)));
 
 	return (0);
 }
@@ -706,10 +714,6 @@ nvme_ctrlr_async_event_log_page_cb(void *arg, const struct nvme_completion *cpl)
 			nvme_health_information_page_swapbytes(
 			    (struct nvme_health_information_page *)aer->log_page_buffer);
 			break;
-		case NVME_LOG_FIRMWARE_SLOT:
-			nvme_firmware_page_swapbytes(
-			    (struct nvme_firmware_page *)aer->log_page_buffer);
-			break;
 		case NVME_LOG_CHANGED_NAMESPACE:
 			nvme_ns_list_swapbytes(
 			    (struct nvme_ns_list *)aer->log_page_buffer);
@@ -936,24 +940,32 @@ nvme_ctrlr_hmb_alloc(struct nvme_controller *ctrlr)
 	max = (uint64_t)physmem * PAGE_SIZE / 20;
 	TUNABLE_UINT64_FETCH("hw.nvme.hmb_max", &max);
 
-	min = (long long unsigned)ctrlr->cdata.hmmin * 4096;
+	/*
+	 * Units of Host Memory Buffer in the Identify info are always in terms
+	 * of 4k units.
+	 */
+	min = (long long unsigned)ctrlr->cdata.hmmin * NVME_HMB_UNITS;
 	if (max == 0 || max < min)
 		return;
-	pref = MIN((long long unsigned)ctrlr->cdata.hmpre * 4096, max);
-	minc = MAX(ctrlr->cdata.hmminds * 4096, PAGE_SIZE);
+	pref = MIN((long long unsigned)ctrlr->cdata.hmpre * NVME_HMB_UNITS, max);
+	minc = MAX(ctrlr->cdata.hmminds * NVME_HMB_UNITS, ctrlr->page_size);
 	if (min > 0 && ctrlr->cdata.hmmaxd > 0)
 		minc = MAX(minc, min / ctrlr->cdata.hmmaxd);
 	ctrlr->hmb_chunk = pref;
 
 again:
-	ctrlr->hmb_chunk = roundup2(ctrlr->hmb_chunk, PAGE_SIZE);
+	/*
+	 * However, the chunk sizes, number of chunks, and alignment of chunks
+	 * are all based on the current MPS (ctrlr->page_size).
+	 */
+	ctrlr->hmb_chunk = roundup2(ctrlr->hmb_chunk, ctrlr->page_size);
 	ctrlr->hmb_nchunks = howmany(pref, ctrlr->hmb_chunk);
 	if (ctrlr->cdata.hmmaxd > 0 && ctrlr->hmb_nchunks > ctrlr->cdata.hmmaxd)
 		ctrlr->hmb_nchunks = ctrlr->cdata.hmmaxd;
 	ctrlr->hmb_chunks = malloc(sizeof(struct nvme_hmb_chunk) *
 	    ctrlr->hmb_nchunks, M_NVME, M_WAITOK);
 	err = bus_dma_tag_create(bus_get_dma_tag(ctrlr->dev),
-	    PAGE_SIZE, 0, BUS_SPACE_MAXADDR, BUS_SPACE_MAXADDR, NULL, NULL,
+	    ctrlr->page_size, 0, BUS_SPACE_MAXADDR, BUS_SPACE_MAXADDR, NULL, NULL,
 	    ctrlr->hmb_chunk, 1, ctrlr->hmb_chunk, 0, NULL, NULL, &ctrlr->hmb_tag);
 	if (err != 0) {
 		nvme_printf(ctrlr, "HMB tag create failed %d\n", err);
@@ -1021,9 +1033,11 @@ again:
 	}
 
 	for (i = 0; i < ctrlr->hmb_nchunks; i++) {
+		memset(&ctrlr->hmb_desc_vaddr[i], 0,
+		    sizeof(struct nvme_hmb_desc));
 		ctrlr->hmb_desc_vaddr[i].addr =
 		    htole64(ctrlr->hmb_chunks[i].hmbc_paddr);
-		ctrlr->hmb_desc_vaddr[i].size = htole32(ctrlr->hmb_chunk / 4096);
+		ctrlr->hmb_desc_vaddr[i].size = htole32(ctrlr->hmb_chunk / ctrlr->page_size);
 	}
 	bus_dmamap_sync(ctrlr->hmb_desc_tag, ctrlr->hmb_desc_map,
 	    BUS_DMASYNC_PREWRITE);
@@ -1046,8 +1060,9 @@ nvme_ctrlr_hmb_enable(struct nvme_controller *ctrlr, bool enable, bool memret)
 		cdw11 |= 2;
 	status.done = 0;
 	nvme_ctrlr_cmd_set_feature(ctrlr, NVME_FEAT_HOST_MEMORY_BUFFER, cdw11,
-	    ctrlr->hmb_nchunks * ctrlr->hmb_chunk / 4096, ctrlr->hmb_desc_paddr,
-	    ctrlr->hmb_desc_paddr >> 32, ctrlr->hmb_nchunks, NULL, 0,
+	    ctrlr->hmb_nchunks * ctrlr->hmb_chunk / ctrlr->page_size,
+	    ctrlr->hmb_desc_paddr, ctrlr->hmb_desc_paddr >> 32,
+	    ctrlr->hmb_nchunks, NULL, 0,
 	    nvme_completion_poll_cb, &status);
 	nvme_completion_poll(&status);
 	if (nvme_completion_is_error(&status.cpl))
@@ -1145,6 +1160,11 @@ nvme_ctrlr_start_config_hook(void *arg)
 
 	TSENTER();
 
+	/*
+	 * Don't call pre/post reset here. We've not yet created the qpairs,
+	 * haven't setup the ISRs, so there's no need to 'drain' them or
+	 * 'exclude' them.
+	 */
 	if (nvme_ctrlr_hw_reset(ctrlr) != 0) {
 fail:
 		nvme_ctrlr_fail(ctrlr);
@@ -1190,15 +1210,6 @@ nvme_ctrlr_reset_task(void *arg, int pending)
 
 	nvme_ctrlr_devctl_log(ctrlr, "RESET", "resetting controller");
 	status = nvme_ctrlr_hw_reset(ctrlr);
-	/*
-	 * Use pause instead of DELAY, so that we yield to any nvme interrupt
-	 *  handlers on this CPU that were blocked on a qpair lock. We want
-	 *  all nvme interrupts completed before proceeding with restarting the
-	 *  controller.
-	 *
-	 * XXX - any way to guarantee the interrupt handlers have quiesced?
-	 */
-	pause("nvmereset", hz / 10);
 	if (status == 0)
 		nvme_ctrlr_start(ctrlr, true);
 	else
@@ -1321,8 +1332,9 @@ nvme_ctrlr_passthrough_cmd(struct nvme_controller *ctrlr,
 		mtx_sleep(pt, mtx, PRIBIO, "nvme_pt", 0);
 	mtx_unlock(mtx);
 
-err:
 	if (buf != NULL) {
+		vunmapbuf(buf);
+err:
 		uma_zfree(pbuf_zone, buf);
 		PRELE(curproc);
 	}
@@ -1379,7 +1391,6 @@ nvme_ctrlr_construct(struct nvme_controller *ctrlr, device_t dev)
 	uint32_t	cap_lo;
 	uint32_t	cap_hi;
 	uint32_t	to, vs, pmrcap;
-	uint8_t		mpsmin;
 	int		status, timeout_period;
 
 	ctrlr->dev = dev;
@@ -1388,7 +1399,7 @@ nvme_ctrlr_construct(struct nvme_controller *ctrlr, device_t dev)
 	if (bus_get_domain(dev, &ctrlr->domain) != 0)
 		ctrlr->domain = 0;
 
-	cap_lo = nvme_mmio_read_4(ctrlr, cap_lo);
+	ctrlr->cap_lo = cap_lo = nvme_mmio_read_4(ctrlr, cap_lo);
 	if (bootverbose) {
 		device_printf(dev, "CapLo: 0x%08x: MQES %u%s%s%s%s, TO %u\n",
 		    cap_lo, NVME_CAP_LO_MQES(cap_lo),
@@ -1398,18 +1409,22 @@ nvme_ctrlr_construct(struct nvme_controller *ctrlr, device_t dev)
 		    (NVME_CAP_LO_AMS(cap_lo) & 0x2) ? " VS" : "",
 		    NVME_CAP_LO_TO(cap_lo));
 	}
-	cap_hi = nvme_mmio_read_4(ctrlr, cap_hi);
+	ctrlr->cap_hi = cap_hi = nvme_mmio_read_4(ctrlr, cap_hi);
 	if (bootverbose) {
 		device_printf(dev, "CapHi: 0x%08x: DSTRD %u%s, CSS %x%s, "
-		    "MPSMIN %u, MPSMAX %u%s%s\n", cap_hi,
+		    "CPS %x, MPSMIN %u, MPSMAX %u%s%s%s%s%s\n", cap_hi,
 		    NVME_CAP_HI_DSTRD(cap_hi),
 		    NVME_CAP_HI_NSSRS(cap_hi) ? ", NSSRS" : "",
 		    NVME_CAP_HI_CSS(cap_hi),
 		    NVME_CAP_HI_BPS(cap_hi) ? ", BPS" : "",
+		    NVME_CAP_HI_CPS(cap_hi),
 		    NVME_CAP_HI_MPSMIN(cap_hi),
 		    NVME_CAP_HI_MPSMAX(cap_hi),
 		    NVME_CAP_HI_PMRS(cap_hi) ? ", PMRS" : "",
-		    NVME_CAP_HI_CMBS(cap_hi) ? ", CMBS" : "");
+		    NVME_CAP_HI_CMBS(cap_hi) ? ", CMBS" : "",
+		    NVME_CAP_HI_NSSS(cap_hi) ? ", NSSS" : "",
+		    NVME_CAP_HI_CRWMS(cap_hi) ? ", CRWMS" : "",
+		    NVME_CAP_HI_CRIMS(cap_hi) ? ", CRIMS" : "");
 	}
 	if (bootverbose) {
 		vs = nvme_mmio_read_4(ctrlr, vs);
@@ -1431,12 +1446,18 @@ nvme_ctrlr_construct(struct nvme_controller *ctrlr, device_t dev)
 
 	ctrlr->dstrd = NVME_CAP_HI_DSTRD(cap_hi) + 2;
 
-	mpsmin = NVME_CAP_HI_MPSMIN(cap_hi);
-	ctrlr->min_page_size = 1 << (12 + mpsmin);
+	ctrlr->mps = NVME_CAP_HI_MPSMIN(cap_hi);
+	ctrlr->page_size = 1 << (NVME_MPS_SHIFT + ctrlr->mps);
 
 	/* Get ready timeout value from controller, in units of 500ms. */
 	to = NVME_CAP_LO_TO(cap_lo) + 1;
 	ctrlr->ready_timeout_in_ms = to * 500;
+
+	timeout_period = NVME_ADMIN_TIMEOUT_PERIOD;
+	TUNABLE_INT_FETCH("hw.nvme.admin_timeout_period", &timeout_period);
+	timeout_period = min(timeout_period, NVME_MAX_TIMEOUT_PERIOD);
+	timeout_period = max(timeout_period, NVME_MIN_TIMEOUT_PERIOD);
+	ctrlr->admin_timeout_period = timeout_period;
 
 	timeout_period = NVME_DEFAULT_TIMEOUT_PERIOD;
 	TUNABLE_INT_FETCH("hw.nvme.timeout_period", &timeout_period);
@@ -1450,7 +1471,8 @@ nvme_ctrlr_construct(struct nvme_controller *ctrlr, device_t dev)
 	ctrlr->enable_aborts = 0;
 	TUNABLE_INT_FETCH("hw.nvme.enable_aborts", &ctrlr->enable_aborts);
 
-	ctrlr->max_xfer_size = NVME_MAX_XFER_SIZE;
+	/* Cap transfers by the maximum addressable by page-sized PRP (4KB pages -> 2MB). */
+	ctrlr->max_xfer_size = MIN(maxphys, (ctrlr->page_size / 8 * ctrlr->page_size));
 	if (nvme_ctrlr_construct_admin_qpair(ctrlr) != 0)
 		return (ENXIO);
 
@@ -1687,15 +1709,6 @@ nvme_ctrlr_resume(struct nvme_controller *ctrlr)
 
 	if (nvme_ctrlr_hw_reset(ctrlr) != 0)
 		goto fail;
-#ifdef NVME_2X_RESET
-	/*
-	 * Prior to FreeBSD 13.1, FreeBSD's nvme driver reset the hardware twice
-	 * to get it into a known good state. However, the hardware's state is
-	 * good and we don't need to do this for proper functioning.
-	 */
-	if (nvme_ctrlr_hw_reset(ctrlr) != 0)
-		goto fail;
-#endif
 
 	/*
 	 * Now that we've reset the hardware, we can restart the controller. Any

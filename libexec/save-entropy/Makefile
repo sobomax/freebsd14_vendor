@@ -1,5 +1,5 @@
-# $FreeBSD: 400bb9e6888c9d17b5ea8f440a70f24315ea0e7d $
 
 SCRIPTS=	save-entropy.sh
+MAN=		save-entropy.8
 
 .include <bsd.prog.mk>

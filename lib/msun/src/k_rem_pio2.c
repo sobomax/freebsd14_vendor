@@ -11,9 +11,6 @@
  * ====================================================
  */
 
-#include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 0a717f768428f318d181ac012b1ae977ac44c3ec $");
-
 /*
  * __kernel_rem_pio2(x,y,e0,nx,prec)
  * double x[],y[]; int e0,nx,prec;

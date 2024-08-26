@@ -1,6 +1,5 @@
 #!/bin/sh
 #
-# $FreeBSD: 97e0c17ec4bc2a8b4759c9062a81dfe3b0884944 $
 #
 
 # PROVIDE: localpkg

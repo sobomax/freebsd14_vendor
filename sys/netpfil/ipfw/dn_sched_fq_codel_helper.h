@@ -1,7 +1,5 @@
 /*
  * Codel - The Controlled-Delay Active Queue Management algorithm.
- *
- * $FreeBSD: 05054a97b2365070de60e99747c273ea03bfcf56 $
  * 
  * Copyright (C) 2016 Centre for Advanced Internet Architectures,
  *  Swinburne University of Technology, Melbourne, Australia.

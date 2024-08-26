@@ -1,7 +1,17 @@
-# $FreeBSD: 2f8f9655e8db11172f73648e5712020f49f57c9e $
+
+.include <src.opts.mk>
 
 PROG=		sockstat
 
 LIBADD=		jail
+
+.if ${MK_CASPER} != "no"
+LIBADD+=	casper
+LIBADD+=	cap_net
+LIBADD+=	cap_netdb
+LIBADD+=	cap_pwd
+LIBADD+=	cap_sysctl
+CFLAGS+=	-DWITH_CASPER
+.endif
 
 .include <bsd.prog.mk>

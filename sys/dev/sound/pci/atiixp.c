@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2005 Ariff Abdullah <ariff@FreeBSD.org>
  * All rights reserved.
@@ -68,8 +68,6 @@
 #include <sys/endian.h>
 
 #include <dev/sound/pci/atiixp.h>
-
-SND_DECLARE_FILE("$FreeBSD: 21e8350b691efb9f9ec41423a4f3ac7fcf42d661 $");
 
 #define ATI_IXP_DMA_RETRY_MAX	100
 
@@ -1099,9 +1097,9 @@ atiixp_chip_post_init(void *arg)
 	    "polling", CTLTYPE_INT | CTLFLAG_RW | CTLFLAG_MPSAFE, sc->dev,
 	    sizeof(sc->dev), sysctl_atiixp_polling, "I", "Enable polling mode");
 
-	snprintf(status, SND_STATUSLEN, "at memory 0x%jx irq %jd %s",
+	snprintf(status, SND_STATUSLEN, "mem 0x%jx irq %jd on %s",
 	    rman_get_start(sc->reg), rman_get_start(sc->irq),
-	    PCM_KLDSTRING(snd_atiixp));
+	    device_get_nameunit(device_get_parent(sc->dev)));
 
 	pcm_setstatus(sc->dev, status);
 
@@ -1333,7 +1331,6 @@ static int
 atiixp_pci_suspend(device_t dev)
 {
 	struct atiixp_info *sc = pcm_getdevinfo(dev);
-	uint32_t value;
 
 	/* quickly disable interrupts and save channels active state */
 	atiixp_lock(sc);
@@ -1352,8 +1349,6 @@ atiixp_pci_suspend(device_t dev)
 
 	/* power down aclink and pci bus */
 	atiixp_lock(sc);
-	value = atiixp_rd(sc, ATI_REG_CMD);
-	value |= ATI_REG_CMD_POWERDOWN | ATI_REG_CMD_AC_RESET;
 	atiixp_wr(sc, ATI_REG_CMD, ATI_REG_CMD_POWERDOWN);
 	atiixp_unlock(sc);
 
@@ -1420,6 +1415,6 @@ static driver_t atiixp_driver = {
 	PCM_SOFTC_SIZE,
 };
 
-DRIVER_MODULE(snd_atiixp, pci, atiixp_driver, pcm_devclass, 0, 0);
+DRIVER_MODULE(snd_atiixp, pci, atiixp_driver, 0, 0);
 MODULE_DEPEND(snd_atiixp, sound, SOUND_MINVER, SOUND_PREFVER, SOUND_MAXVER);
 MODULE_VERSION(snd_atiixp, 1);

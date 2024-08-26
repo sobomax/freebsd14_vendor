@@ -21,8 +21,6 @@
  * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
- *
- * $FreeBSD: 6171c0f6012430c38e88fabca32039e4e17c3278 $
  */
 
 #ifndef MLX5_SRQ_H
@@ -51,6 +49,7 @@ struct mlx5_srq_attr {
 	u32 user_index;
 	u64 db_record;
 	u64 *pas;
+	u16 uid;
 };
 
 struct mlx5_core_dev;

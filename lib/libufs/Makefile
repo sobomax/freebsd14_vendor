@@ -1,4 +1,3 @@
-# $FreeBSD: 7557228804841cecf92b5cfaf74a52cc932b1944 $
 
 PACKAGE=	ufs
 LIB=	ufs
@@ -20,6 +19,8 @@ MLINKS+= cgread.3 cgput.3
 MLINKS+= getinode.3 putinode.3
 MLINKS+= sbread.3 sbwrite.3
 MLINKS+= sbread.3 sbget.3
+MLINKS+= sbread.3 sbsearch.3
+MLINKS+= sbread.3 sbfind.3
 MLINKS+= sbread.3 sbput.3
 MLINKS+= ufs_disk_close.3 ufs_disk_fillout.3
 MLINKS+= ufs_disk_close.3 ufs_disk_fillout_blank.3

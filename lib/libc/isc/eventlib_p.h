@@ -22,7 +22,6 @@
  * \author vix 09sep95 [initial]
  *
  * $Id: eventlib_p.h,v 1.9 2006/03/09 23:57:56 marka Exp $
- * $FreeBSD: a56334f0a87dfdf520c0fe8ca241c350e1db5d62 $
  */
 
 #ifndef _EVENTLIB_P_H

@@ -1,2 +1,1 @@
-.\" $FreeBSD: 2e498797fe5265df9f043ad7c8e9fba93eaf0b45 $
 Do not build CUSE-related programs and libraries.

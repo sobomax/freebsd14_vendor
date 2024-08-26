@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2004, 2007 Lukas Ertl
  * All rights reserved.
@@ -27,8 +27,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 2778646467e2ad6761442d1246aeed78015961fb $");
-
 #include <sys/param.h>
 #include <sys/bio.h>
 #include <sys/lock.h>
@@ -345,14 +343,11 @@ static int
 gv_raid5_request(struct gv_plex *p, struct gv_raid5_packet *wp,
     struct bio *bp, caddr_t addr, off_t boff, off_t bcount, int *delay)
 {
-	struct g_geom *gp;
 	struct gv_sd *broken, *original, *parity, *s;
 	struct gv_bioq *bq;
 	struct bio *cbp;
 	int i, psdno, sdno, type, grow;
 	off_t real_len, real_off;
-
-	gp = bp->bio_to->geom;
 
 	if (p == NULL || LIST_EMPTY(&p->subdisks))
 		return (ENXIO);
@@ -605,7 +600,7 @@ gv_raid5_offset(struct gv_plex *p, off_t boff, off_t bcount, off_t *real_off,
 	/* The number of the subdisk containing the parity stripe. */
 	psd = sdcount - 1 - ( boff / (p->stripesize * (sdcount - 1))) %
 	    sdcount;
-	KASSERT(psdno >= 0, ("gv_raid5_offset: psdno < 0"));
+	KASSERT(psd >= 0, ("gv_raid5_offset: psdno < 0"));
 
 	/* Offset of the start address from the start of the stripe. */
 	stripeoff = boff % (p->stripesize * (sdcount - 1));
@@ -613,7 +608,7 @@ gv_raid5_offset(struct gv_plex *p, off_t boff, off_t bcount, off_t *real_off,
 
 	/* The number of the subdisk where the stripe resides. */
 	sd = stripeoff / p->stripesize;
-	KASSERT(sdno >= 0, ("gv_raid5_offset: sdno < 0"));
+	KASSERT(sd >= 0, ("gv_raid5_offset: sdno < 0"));
 
 	/* At or past parity subdisk. */
 	if (sd >= psd)

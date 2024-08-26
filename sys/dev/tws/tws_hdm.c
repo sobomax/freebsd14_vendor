@@ -32,8 +32,6 @@
  * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
- *
- * $FreeBSD: efad88a918a5c7c3d399a72133308e26c82e60ad $
  */
 
 #include <dev/tws/tws.h>
@@ -82,7 +80,7 @@ void tws_display_ctlr_info(struct tws_softc *sc);
 int 
 tws_init_ctlr(struct tws_softc *sc)
 {
-    u_int64_t reg;
+    u_int64_t reg __tws_debug;
     u_int32_t regh, regl;
 
     TWS_TRACE_DEBUG(sc, "entry", sc, sc->is64bit);

@@ -31,8 +31,6 @@
 
 #include <sys/cdefs.h>
 __SCCSID("@(#)seekdir.c	8.1 (Berkeley) 6/4/93");
-__FBSDID("$FreeBSD: 3974af7d73ee2922ec9e1c9aa8cc6bc7909d5f10 $");
-
 #include "namespace.h"
 #include <sys/param.h>
 #include <dirent.h>

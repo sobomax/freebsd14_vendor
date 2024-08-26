@@ -1,6 +1,5 @@
-# $FreeBSD: 65a3d91297bd4daf58c9a729898707fd990e1084 $
 #
-# SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+# SPDX-License-Identifier: BSD-2-Clause
 #
 # Copyright (c) 2019 Kristof Provost <kp@FreeBSD.org>
 #

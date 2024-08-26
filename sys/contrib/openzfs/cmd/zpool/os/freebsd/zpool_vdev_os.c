@@ -6,7 +6,7 @@
  * You may not use this file except in compliance with the License.
  *
  * You can obtain a copy of the license at usr/src/OPENSOLARIS.LICENSE
- * or http://www.opensolaris.org/os/licensing.
+ * or https://opensource.org/licenses/CDDL-1.0.
  * See the License for the specific language governing permissions
  * and limitations under the License.
  *
@@ -86,6 +86,7 @@ int
 check_device(const char *name, boolean_t force, boolean_t isspare,
     boolean_t iswholedisk)
 {
+	(void) iswholedisk;
 	char path[MAXPATHLEN];
 
 	if (strncmp(name, _PATH_DEV, sizeof (_PATH_DEV) - 1) != 0)
@@ -99,6 +100,7 @@ check_device(const char *name, boolean_t force, boolean_t isspare,
 boolean_t
 check_sector_size_database(char *path, int *sector_size)
 {
+	(void) path, (void) sector_size;
 	return (0);
 }
 
@@ -115,4 +117,31 @@ after_zpool_upgrade(zpool_handle_t *zhp)
 		    "code. See gptzfsboot(8) and loader.efi(8) for "
 		    "details.\n"), zpool_get_name(zhp));
 	}
+}
+
+int
+check_file(const char *file, boolean_t force, boolean_t isspare)
+{
+	return (check_file_generic(file, force, isspare));
+}
+
+int
+zpool_power_current_state(zpool_handle_t *zhp, char *vdev)
+{
+
+	(void) zhp;
+	(void) vdev;
+	/* Enclosure slot power not supported on FreeBSD yet */
+	return (-1);
+}
+
+int
+zpool_power(zpool_handle_t *zhp, char *vdev, boolean_t turn_on)
+{
+
+	(void) zhp;
+	(void) vdev;
+	(void) turn_on;
+	/* Enclosure slot power not supported on FreeBSD yet */
+	return (ENOTSUP);
 }

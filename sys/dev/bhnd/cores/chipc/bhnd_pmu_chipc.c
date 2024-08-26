@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2016 Landon Fuller <landon@landonf.org>
  * All rights reserved.
@@ -30,8 +30,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: d04702c10f978645b2f47b2e4e3ad54ef13ac6d0 $");
-
 /*
  * ChipCommon attachment support for the bhnd(4) PMU driver.
  * 
@@ -119,7 +117,7 @@ static device_method_t bhnd_pmu_chipc_methods[] = {
 DEFINE_CLASS_1(bhnd_pmu, bhnd_pmu_chipc_driver, bhnd_pmu_chipc_methods,
     sizeof(struct bhnd_pmu_softc), bhnd_pmu_driver);
 EARLY_DRIVER_MODULE(bhnd_pmu_chipc, bhnd_chipc, bhnd_pmu_chipc_driver,
-    bhnd_pmu_devclass, NULL, NULL, BUS_PASS_TIMER + BUS_PASS_ORDER_MIDDLE);
+    NULL, NULL, BUS_PASS_TIMER + BUS_PASS_ORDER_MIDDLE);
 
 MODULE_DEPEND(bhnd_pmu_chipc, bhnd, 1, 1, 1);
 MODULE_VERSION(bhnd_pmu_chipc, 1);

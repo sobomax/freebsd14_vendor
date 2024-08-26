@@ -29,7 +29,6 @@
  * SUCH DAMAGE.
  *
  *	@(#)extern.h	8.2 (Berkeley) 1/7/94
- * $FreeBSD: c33034c48c5e03f58bd6970958c8989123772810 $
  */
 
 struct entry	*addentry(char *, ino_t, int);

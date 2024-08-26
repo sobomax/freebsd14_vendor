@@ -1,5 +1,4 @@
 #
-# $FreeBSD: 68cce1ad059409859c975758fd3ee53c349e1ae3 $
 #
 
 Notes on the internal structure of dummynet (2010 version)

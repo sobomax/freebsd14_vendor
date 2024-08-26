@@ -1,4 +1,3 @@
-# $FreeBSD: c4ae4f50319766f827bcb2c0c1531ea5a00fa341 $
 
 .include <src.opts.mk>
 .include "${SRCTOP}/secure/ssh.mk"

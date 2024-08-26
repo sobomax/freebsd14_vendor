@@ -22,9 +22,6 @@
  * From: FreeBSD: head/lib/libc/gen/ftw.c 239151 2012-08-09 15:11:38Z jilles
  */
 
-#include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 92ce058726a71f83ce5e8940257ad4648824b20d $");
-
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <errno.h>

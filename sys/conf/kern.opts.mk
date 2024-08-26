@@ -1,6 +1,8 @@
-# $FreeBSD: 2f452b432f42317bfb28199c809fd18ed398ec78 $
 
-# Options set in the build system that affect the kernel somehow.
+# Options set in the build system which affect the building of kernel
+# modules. These select which parts to compile in or out (eg INET) or which
+# parts to omit (eg CDDL or SOURCELESS_HOST). Some of these will cause
+# config.mk to define symbols in various opt_*.h files.
 
 #
 # Define MK_* variables (which are either "yes" or "no") for users
@@ -32,6 +34,7 @@ __DEFAULT_YES_OPTIONS = \
     CDDL \
     CRYPT \
     CUSE \
+    DTRACE \
     EFI \
     FORMAT_EXTENSIONS \
     INET \
@@ -54,11 +57,11 @@ __DEFAULT_YES_OPTIONS = \
 
 __DEFAULT_NO_OPTIONS = \
     BHYVE_SNAPSHOT \
-    EXTRA_TCP_STACKS \
     INIT_ALL_PATTERN \
     INIT_ALL_ZERO \
     KERNEL_RETPOLINE \
-    RATELIMIT
+    RATELIMIT \
+    VERIEXEC
 
 # Some options are totally broken on some architectures. We disable
 # them. If you need to enable them on an experimental basis, you
@@ -74,23 +77,8 @@ __DEFAULT_NO_OPTIONS = \
 BROKEN_OPTIONS+= INIT_ALL_ZERO
 .endif
 
+# Broken on 32-bit arm, kernel module compile errors
 .if ${MACHINE_CPUARCH} == "arm"
-. if ${MACHINE_ARCH:Marmv[67]*} == ""
-BROKEN_OPTIONS+= CDDL ZFS
-. endif
-.endif
-
-.if ${MACHINE_CPUARCH} == "mips"
-BROKEN_OPTIONS+= CDDL ZFS SSP
-.endif
-
-.if ${MACHINE_CPUARCH} == "powerpc" && ${MACHINE_ARCH} == "powerpc"
-BROKEN_OPTIONS+= ZFS
-.endif
-
-# Things that don't work because the kernel doesn't have the support
-# for them.
-.if ${MACHINE} != "i386" && ${MACHINE} != "amd64"
 BROKEN_OPTIONS+= OFED
 .endif
 
@@ -99,9 +87,15 @@ BROKEN_OPTIONS+= OFED
 BROKEN_OPTIONS+= KERNEL_RETPOLINE
 .endif
 
-# EFI doesn't exist on mips, powerpc, or riscv.
-.if ${MACHINE:Mmips} || ${MACHINE:Mpowerpc} || ${MACHINE:Mriscv}
+# EFI doesn't exist on powerpc or riscv and is broken on i386
+.if ${MACHINE:Mpowerpc} || ${MACHINE:Mriscv} || ${MACHINE} == "i386"
 BROKEN_OPTIONS+=EFI
+.endif
+
+.if ${MACHINE_CPUARCH} == "i386" || ${MACHINE_CPUARCH} == "amd64"
+__DEFAULT_NO_OPTIONS += FDT
+.else
+__DEFAULT_YES_OPTIONS += FDT
 .endif
 
 # expanded inline from bsd.mkopt.mk to avoid share/mk dependency
@@ -178,10 +172,19 @@ MK_${var}_SUPPORT:= yes
 MK_KERNEL_SYMBOLS:=	no
 .endif
 
+.if ${MK_CDDL} == "no"
+MK_DTRACE:=	no
+.endif
+
 # Some modules only compile successfully if option FDT is set, due to #ifdef FDT
 # wrapped around declarations.  Module makefiles can optionally compile such
 # things using .if !empty(OPT_FDT)
 .if !defined(OPT_FDT) && defined(KERNBUILDDIR)
 OPT_FDT!= sed -n '/FDT/p' ${KERNBUILDDIR}/opt_platform.h
 .export OPT_FDT
+.if empty(OPT_FDT)
+MK_FDT:=no
+.else
+MK_FDT:=yes
+.endif
 .endif

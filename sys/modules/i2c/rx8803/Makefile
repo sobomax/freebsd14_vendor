@@ -1,4 +1,3 @@
-# $FreeBSD: 1f8554c7e1952fb807933e3f094f9af28f5077f4 $
 
 .PATH:	${SRCTOP}/sys/dev/iicbus/rtc/
 KMOD	= rx8803

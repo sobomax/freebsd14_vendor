@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2018 The FreeBSD Foundation
  *
@@ -29,8 +29,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: d5f94dd39276801652b125fafd56f6b05806d02c $");
-
 #ifdef SAN_NEEDS_INTERCEPTORS
 #define	SAN_RUNTIME
 #endif

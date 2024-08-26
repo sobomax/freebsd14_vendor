@@ -1,5 +1,4 @@
 # $OpenBSD: Makefile,v 1.8 2015/09/09 15:33:18 deraadt Exp $
-# $FreeBSD: 1fcaf238ca2a3b75201556c92ee17a835061cf79 $
 
 PACKAGE=	yp
 PROG=		ypldap

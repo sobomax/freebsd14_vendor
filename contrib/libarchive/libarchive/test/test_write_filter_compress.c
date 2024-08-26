@@ -25,7 +25,6 @@
  */
 
 #include "test.h"
-__FBSDID("$FreeBSD: 5cc0fc80bd8c8249627652790eb5bf07e441bf3b $");
 
 /*
  * A basic exercise of compress reading and writing.

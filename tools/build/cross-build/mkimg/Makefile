@@ -1,4 +1,3 @@
-# $FreeBSD: 932f6150f118444f7a7bb862e1638980873a80d4 $
 
 # allow building mkimg as a host tool.
 

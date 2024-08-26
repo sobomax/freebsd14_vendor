@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: a432f6c5673926dc4d087ca97a431b6356aadf80 $
+ * $FreeBSD: f2196da56bc857b67238cb10e70ff453ca519400 $
  */
 
 #ifndef _OPENSOLARIS_SYS_VFS_H_
@@ -54,8 +54,6 @@ typedef	int	umode_t;
 #define	VFS_RDONLY	MNT_RDONLY
 #define	VFS_NOSETUID	MNT_NOSUID
 #define	VFS_NOEXEC	MNT_NOEXEC
-
-#define	fs_vscan(vp, cr, async)	(0)
 
 #define	VROOT		VV_ROOT
 
@@ -103,7 +101,7 @@ void vfs_setmntopt(vfs_t *vfsp, const char *name, const char *arg,
 void vfs_clearmntopt(vfs_t *vfsp, const char *name);
 int vfs_optionisset(const vfs_t *vfsp, const char *opt, char **argp);
 int mount_snapshot(kthread_t *td, vnode_t **vpp, const char *fstype,
-    char *fspath, char *fspec, int fsflags);
+    char *fspath, char *fspec, int fsflags, vfs_t *parent_vfsp);
 
 typedef	uint64_t	vfs_feature_t;
 
@@ -118,10 +116,6 @@ typedef	uint64_t	vfs_feature_t;
 #define	VFSFT_REPARSE		0x100000100	/* Supports reparse point */
 #define	VFSFT_ZEROCOPY_SUPPORTED	0x100000200
 				/* Support loaning /returning cache buffer */
-
-#define	vfs_set_feature(vfsp, feature)		do { } while (0)
-#define	vfs_clear_feature(vfsp, feature)	do { } while (0)
-#define	vfs_has_feature(vfsp, feature)		(0)
 
 #include <sys/mount.h>
 #endif	/* _OPENSOLARIS_SYS_VFS_H_ */

@@ -30,7 +30,6 @@
   POSSIBILITY OF SUCH DAMAGE.
 
 ******************************************************************************/
-/*$FreeBSD: a9b3c8e41e6b723c5614f6f2aee29c4076ae1ce6 $*/
 
 
 #ifndef _IXGBE_FEATURES_H_

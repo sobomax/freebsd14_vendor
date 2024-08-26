@@ -27,8 +27,6 @@
  * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
- *
- * $FreeBSD: c2f8c8e2abc06d665e41546fd6103805fa9812e9 $
  */
 
 #ifndef _SYS_IMGACT_H_
@@ -55,7 +53,6 @@ struct image_args {
 	int argc;		/* count of argument strings */
 	int envc;		/* count of environment strings */
 	int fd;			/* file descriptor of the executable */
-	struct filedesc *fdp;	/* new file descriptor table */
 };
 
 struct image_params {
@@ -67,6 +64,7 @@ struct image_params {
 	const char *image_header;	/* header of file to exec */
 	unsigned long entry_addr;	/* entry address of target executable */
 	unsigned long reloc_base;	/* load address of image */
+	unsigned long et_dyn_addr;	/* PIE load base */
 	char *interpreter_name;		/* name of the interpreter */
 	void *auxargs;			/* ELF Auxinfo structure pointer */
 	struct sf_buf *firstpage;	/* first page that we mapped */
@@ -93,6 +91,8 @@ struct image_params {
 	bool opened;			/* we have opened executable vnode */
 	bool textset;
 	u_int map_flags;
+#define IMGP_ASLR_SHARED_PAGE	0x1
+	uint32_t imgp_flags;
 	struct vnode *interpreter_vp;	/* vnode of the interpreter */
 };
 
@@ -121,8 +121,6 @@ void	exec_setregs(struct thread *, struct image_params *, uintptr_t);
 int	exec_shell_imgact(struct image_params *);
 int	exec_copyin_args(struct image_args *, const char *, enum uio_seg,
 	char **, char **);
-int	exec_copyin_data_fds(struct thread *, struct image_args *, const void *,
-	size_t, const int *, size_t);
 int	pre_execve(struct thread *td, struct vmspace **oldvmspace);
 void	post_execve(struct thread *td, int error, struct vmspace *oldvmspace);
 #endif

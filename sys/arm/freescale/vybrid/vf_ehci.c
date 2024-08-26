@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2013 Ruslan Bukin <br@bsdpad.com>
  * All rights reserved.
@@ -32,8 +32,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 8c1ddfc7d79e13717241684666dea8bb9bc6f60e $");
-
 #include "opt_bus.h"
 
 #include <sys/param.h>
@@ -163,9 +161,7 @@ static driver_t ehci_driver = {
 	sizeof(ehci_softc_t)
 };
 
-static devclass_t ehci_devclass;
-
-DRIVER_MODULE(vybrid_ehci, simplebus, ehci_driver, ehci_devclass, 0, 0);
+DRIVER_MODULE(vybrid_ehci, simplebus, ehci_driver, 0, 0);
 MODULE_DEPEND(vybrid_ehci, usb, 1, 1, 1);
 
 static void

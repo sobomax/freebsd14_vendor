@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD AND MIT
+ * SPDX-License-Identifier: BSD-2-Clause AND MIT
  *
  * Copyright (c) 1999 Doug Rabson
  * All rights reserved.
@@ -60,8 +60,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 7bc66d552e312afa8a052c2c84a043a1a2118a39 $");
-
 #include "opt_isa.h"
 
 #include <sys/param.h>
@@ -73,6 +71,7 @@ __FBSDID("$FreeBSD: 7bc66d552e312afa8a052c2c84a043a1a2118a39 $");
 #include <sys/module.h>
 #include <machine/bus.h>
 #include <sys/rman.h>
+#include <sys/sbuf.h>
 #include <sys/sysctl.h>
 
 #include <machine/resource.h>
@@ -274,12 +273,7 @@ find_first_bit(uint32_t mask)
 static int
 find_next_bit(uint32_t mask, int bit)
 {
-	bit++;
-	while (bit < 32 && !(mask & (1 << bit)))
-		bit++;
-	if (bit != 32)
-		return (bit);
-	return (-1);
+	return (find_first_bit(mask & (-2 << bit)));
 }
 
 /*
@@ -576,7 +570,7 @@ isa_probe_children(device_t dev)
 		    strcmp(kern_ident, "GENERIC") == 0 &&
 		    device_is_attached(child))
 			device_printf(child,
-			    "non-PNP ISA device will be removed from GENERIC in FreeBSD 14.\n");
+			    "non-PNP ISA device will be removed from GENERIC in FreeBSD 15.\n");
 	}
 
 	/*
@@ -1032,30 +1026,26 @@ isa_pnp_probe(device_t dev, device_t child, struct isa_pnp_id *ids)
 }
 
 static int
-isa_child_pnpinfo_str(device_t bus, device_t child, char *buf,
-    size_t buflen)
+isa_child_pnpinfo(device_t bus, device_t child, struct sbuf *sb)
 {
 	struct isa_device *idev = DEVTOISA(child);
 
 	if (idev->id_vendorid)
-		snprintf(buf, buflen, "pnpid=%s",
+		sbuf_printf(sb, "pnpid=%s",
 		    pnp_eisaformat(idev->id_vendorid));
 	return (0);
 }
 
 static int
-isa_child_location_str(device_t bus, device_t child, char *buf,
-    size_t buflen)
+isa_child_location(device_t bus, device_t child, struct sbuf *sb)
 {
 #if 0
 	/* id_pnphandle isn't there yet */
 	struct isa_device *idev = DEVTOISA(child);
 
 	if (idev->id_vendorid)
-		snprintf(buf, buflen, "pnphandle=%d", idev->id_pnphandle);
+		sbuf_printf(sbuf, "pnphandle=%d", idev->id_pnphandle);
 #endif
-	/* Nothing here yet */
-	*buf = '\0';
 	return (0);
 }
 
@@ -1087,8 +1077,8 @@ static device_method_t isa_methods[] = {
 	DEVMETHOD(bus_delete_resource,	bus_generic_rl_delete_resource),
 	DEVMETHOD(bus_activate_resource, bus_generic_activate_resource),
 	DEVMETHOD(bus_deactivate_resource, bus_generic_deactivate_resource),
-	DEVMETHOD(bus_child_pnpinfo_str, isa_child_pnpinfo_str),
-	DEVMETHOD(bus_child_location_str, isa_child_location_str),
+	DEVMETHOD(bus_child_pnpinfo,	isa_child_pnpinfo),
+	DEVMETHOD(bus_child_location,	isa_child_location),
 	DEVMETHOD(bus_hinted_child,	isa_hinted_child),
 	DEVMETHOD(bus_hint_device_unit,	isa_hint_device_unit),
 
@@ -1102,21 +1092,17 @@ static device_method_t isa_methods[] = {
 
 DEFINE_CLASS_0(isa, isa_driver, isa_methods, 0);
 
-devclass_t isa_devclass;
-
 /*
  * ISA can be attached to a PCI-ISA bridge, or other locations on some
  * platforms.
  */
-DRIVER_MODULE(isa, isab, isa_driver, isa_devclass, 0, 0);
-DRIVER_MODULE(isa, eisab, isa_driver, isa_devclass, 0, 0);
+DRIVER_MODULE(isa, isab, isa_driver, 0, 0);
+DRIVER_MODULE(isa, eisab, isa_driver, 0, 0);
 MODULE_VERSION(isa, 1);
 
 /*
  * Code common to ISA bridges.
  */
-
-devclass_t isab_devclass;
 
 int
 isab_attach(device_t dev)

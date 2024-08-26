@@ -1,13 +1,20 @@
 #	@(#)Makefile	8.2 (Berkeley) 1/4/94
-# $FreeBSD: 879a7c48f6df59f00314c7e707f56434322e7882 $
 #
 # Doing a "make install" builds /usr/include.
 
 .include <src.opts.mk>
 
-PACKAGE=runtime
+PACKAGE=clibs
 CLEANFILES= osreldate.h version
 SUBDIR= arpa protocols rpcsvc rpc xlocale
+.if ${MACHINE_CPUARCH} == "amd64"
+SUBDIR+=		i386
+INCLUDE_SUBDIRS+=	i386
+.endif
+.if ${MACHINE_CPUARCH} == "aarch64"
+SUBDIR+=		arm
+INCLUDE_SUBDIRS+=	arm
+.endif
 SUBDIR_PARALLEL=
 INCS=	a.out.h ar.h assert.h bitstring.h byteswap.h \
 	complex.h cpio.h _ctype.h ctype.h \
@@ -23,7 +30,7 @@ INCS=	a.out.h ar.h assert.h bitstring.h byteswap.h \
 	pthread_np.h pwd.h ranlib.h readpassphrase.h regex.h \
 	res_update.h resolv.h runetype.h sched.h \
 	search.h semaphore.h setjmp.h \
-	signal.h spawn.h stab.h stdalign.h stdbool.h stddef.h \
+	signal.h spawn.h stab.h stdalign.h stdbool.h stdckdint.h stddef.h \
 	stdnoreturn.h stdio.h stdlib.h string.h stringlist.h \
 	strings.h sysexits.h tar.h termios.h tgmath.h \
 	time.h timeconv.h timers.h ttyent.h \
@@ -43,19 +50,19 @@ LHDRS=	aio.h errno.h fcntl.h linker_set.h poll.h stdatomic.h stdint.h \
 LDIRS=	geom net net80211 netgraph netinet netinet6 \
 	netipsec netlink netsmb nfs nfsclient nfsserver sys vm
 
-LSUBDIRS=	dev/acpica dev/agp dev/an dev/ciss dev/filemon dev/firewire \
+LSUBDIRS=	dev/acpica dev/agp dev/ciss dev/filemon dev/firewire \
 	dev/hwpmc dev/hyperv \
-	dev/ic dev/iicbus dev/io dev/mfi dev/mmc dev/nvme \
+	dev/ic dev/iicbus dev/io dev/mfi dev/mmc \
 	dev/ofw dev/pbio dev/pci ${_dev_powermac_nvram} dev/ppbus dev/pwm \
 	dev/smbus dev/speaker dev/tcp_log dev/veriexec dev/vkbd dev/wg \
 	fs/devfs fs/fdescfs fs/msdosfs fs/nfs fs/nullfs \
 	fs/procfs fs/smbfs fs/udf fs/unionfs \
 	geom/cache geom/concat geom/eli geom/gate geom/journal geom/label \
 	geom/mirror geom/mountver geom/multipath geom/nop \
-	geom/raid geom/raid3 geom/shsec geom/stripe geom/virstor \
+	geom/raid geom/raid3 geom/shsec geom/stripe geom/union geom/virstor \
 	net/altq \
 	net/route \
-	netgraph/atm netgraph/netflow \
+	netgraph/netflow \
 	netinet/cc \
 	netinet/netdump \
 	netinet/tcp_stacks \
@@ -171,6 +178,10 @@ HYPERVDIR=	${INCLUDEDIR}/dev/hyperv
 OPENCRYPTO=	cryptodev.h
 OPENCRYPTODIR=	${INCLUDEDIR}/crypto
 
+.PATH: ${SRCTOP}/sys/dev/nvme
+NVME=		nvme.h
+NVMEDIR=	${INCLUDEDIR}/dev/nvme
+
 .PATH: ${SRCTOP}/sys/dev/pci
 PCI=		pcireg.h
 PCIDIR=		${INCLUDEDIR}/dev/pci
@@ -242,6 +253,7 @@ INCSGROUPS=	INCS \
 		HID \
 		HYPERV \
 		OPENCRYPTO \
+		NVME \
 		PCI \
 		RPC \
 		SECAUDIT \
@@ -345,12 +357,16 @@ compat:
 	mtree -deU ${NO_ROOT:D-W} ${MTREE_FOLLOWS_SYMLINKS} \
 	    -f ${SRCTOP}/etc/mtree/BSD.include.dist \
 	    -p ${SDESTDIR}${INCLUDEDIR} > /dev/null
+.for d in ${INCLUDE_SUBDIRS}
+	${INSTALL} -d ${TAG_ARGS} -o ${BINOWN} -g ${BINGRP} -m 755 \
+	    ${SDESTDIR}${INCLUDEDIR}/${d}
+.endfor
 
 copies: .PHONY .META
 	cd ${SDESTDIR}${INCLUDEDIR}; find ${LDIRS} ${LSUBDIRS} ${LSUBSUBDIRS} crypto \
 	    machine machine/pc ${_MARCHS} -maxdepth 1 -mindepth 1 -type l \
 	    -name "*.h" -print -delete || true
-.for i in ${LDIRS} ${LSUBDIRS:Ndev/agp:Ndev/acpica:Ndev/evdev:Ndev/hid:Ndev/hyperv:Ndev/pci:Ndev/veriexec} ${LSUBSUBDIRS}
+.for i in ${LDIRS} ${LSUBDIRS:Ndev/agp:Ndev/acpica:Ndev/evdev:Ndev/hid:Ndev/hyperv:Ndev/pci:Ndev/veriexec:Ndev/wg} ${LSUBSUBDIRS}
 	cd ${SRCTOP}/sys; \
 	${INSTALL} -C ${TAG_ARGS:D${TAG_ARGS},dev} -o ${BINOWN} -g ${BINGRP} -m 444 $i/*.h \
 	    ${SDESTDIR}${INCLUDEDIR}/$i
@@ -386,7 +402,7 @@ symlinks: .PHONY .META
 	cd ${SRCTOP}; ${INSTALL_SYMLINK} ${TAG_ARGS:D${TAG_ARGS},dev} \
 	    $$(printf '../../../%s ' sys/$i/*.h) ${SDESTDIR}${INCLUDEDIR}/$i
 .endfor
-.for i in ${LSUBDIRS:Ndev/agp:Ndev/acpica:Ndev/evdev:Ndev/hid:Ndev/hyperv:Ndev/pci:Ndev/veriexec}
+.for i in ${LSUBDIRS:Ndev/agp:Ndev/acpica:Ndev/evdev:Ndev/hid:Ndev/hyperv:Ndev/pci:Ndev/veriexec:Ndev/wg}
 	cd ${SRCTOP}; ${INSTALL_SYMLINK} ${TAG_ARGS:D${TAG_ARGS},dev} \
 	    $$(printf '../../../../%s ' sys/$i/*.h) ${SDESTDIR}${INCLUDEDIR}/$i
 .endfor
@@ -479,3 +495,16 @@ HOST_MACHINE_ARCH!= uname -p
 MACHINE:= ${HOST_MACHINE}
 MACHINE_ARCH:= ${HOST_MACHINE_ARCH}
 .endif
+
+check-ldirs:
+	missing_dirs=""; \
+	for dir in ${LDIRS} ${LSUBDIRS} ${LSUBSUBDIRS}; do \
+		if [ ! -d ${SRCTOP}/sys/$$dir ]; then \
+			echo "${SRCTOP}/sys/$$dir"; \
+			missing_dirs="$$missing_dirs $$dir"; \
+		fi; \
+	done; \
+	if [ -n "$$missing_dirs" ]; then \
+		echo "Nonexistant directories:" $$missing_dirs; \
+		false; \
+	fi

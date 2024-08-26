@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 1996, by Steve Passe
  * Copyright (c) 2003, by Peter Wemm
@@ -27,8 +27,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 650f83b1aad4f86abed77a2d4c1c02f5db209ee2 $");
-
 #include "opt_acpi.h"
 #include "opt_cpu.h"
 #include "opt_ddb.h"
@@ -41,9 +39,6 @@ __FBSDID("$FreeBSD: 650f83b1aad4f86abed77a2d4c1c02f5db209ee2 $");
 #include <sys/bus.h>
 #include <sys/cpuset.h>
 #include <sys/domainset.h>
-#ifdef GPROF 
-#include <sys/gmon.h>
-#endif
 #include <sys/kdb.h>
 #include <sys/kernel.h>
 #include <sys/ktr.h>
@@ -99,10 +94,10 @@ __FBSDID("$FreeBSD: 650f83b1aad4f86abed77a2d4c1c02f5db209ee2 $");
 #define	AP_BOOTPT_SZ		(PAGE_SIZE * 4)
 
 /* Temporary variables for init_secondary()  */
-char *doublefault_stack;
-char *mce_stack;
-char *nmi_stack;
-char *dbg_stack;
+static char *doublefault_stack;
+static char *mce_stack;
+static char *nmi_stack;
+static char *dbg_stack;
 void *bootpcpu;
 
 extern u_int mptramp_la57;
@@ -170,7 +165,7 @@ cpu_mp_start(void)
 	mptramp_pagetables = kernel_pmap->pm_cr3;
 
 	/* Start each Application Processor */
-	init_ops.start_all_aps();
+	start_all_aps();
 
 	set_interrupt_apic_ids();
 
@@ -218,6 +213,8 @@ init_secondary(void)
 	/* See comment in pmap_bootstrap(). */
 	pc->pc_pcid_next = PMAP_PCID_KERN + 2;
 	pc->pc_pcid_gen = 1;
+	pc->pc_kpmap_store.pm_pcid = PMAP_PCID_KERN;
+	pc->pc_kpmap_store.pm_gen = 1;
 
 	pc->pc_smp_tlb_gen = 1;
 
@@ -291,35 +288,35 @@ init_secondary(void)
 	init_secondary_tail();
 }
 
-/*******************************************************************
- * local functions and data
- */
-
-#ifdef NUMA
 static void
-mp_realloc_pcpu(int cpuid, int domain)
+amd64_mp_alloc_pcpu(void)
 {
 	vm_page_t m;
-	vm_offset_t oa, na;
+	int cpu;
 
-	oa = (vm_offset_t)&__pcpu[cpuid];
-	if (vm_phys_domain(pmap_kextract(oa)) == domain)
-		return;
-	m = vm_page_alloc_noobj_domain(domain, 0);
-	if (m == NULL)
-		return;
-	na = PHYS_TO_DMAP(VM_PAGE_TO_PHYS(m));
-	pagecopy((void *)oa, (void *)na);
-	pmap_qenter((vm_offset_t)&__pcpu[cpuid], &m, 1);
-	/* XXX old pcpu page leaked. */
-}
+	/* Allocate pcpu areas to the correct domain. */
+	for (cpu = 1; cpu < mp_ncpus; cpu++) {
+#ifdef NUMA
+		m = NULL;
+		if (vm_ndomains > 1) {
+			m = vm_page_alloc_noobj_domain(
+			    acpi_pxm_get_cpu_locality(cpu_apic_ids[cpu]),
+			    VM_ALLOC_ZERO);
+		}
+		if (m == NULL)
 #endif
+			m = vm_page_alloc_noobj(VM_ALLOC_ZERO);
+		if (m == NULL)
+			panic("cannot alloc pcpu page for cpu %d", cpu);
+		pmap_qenter((vm_offset_t)&__pcpu[cpu], &m, 1);
+	}
+}
 
 /*
  * start each AP in our list
  */
 int
-native_start_all_aps(void)
+start_all_aps(void)
 {
 	vm_page_t m_boottramp, m_pml4, m_pdp, m_pd[4];
 	pml5_entry_t old_pml45;
@@ -331,6 +328,7 @@ native_start_all_aps(void)
 	int apic_id, cpu, domain, i;
 	u_char mpbiosreason;
 
+	amd64_mp_alloc_pcpu();
 	mtx_init(&ap_boot_mtx, "ap boot", NULL, MTX_SPIN);
 
 	MPASS(bootMP_size <= PAGE_SIZE);
@@ -404,16 +402,6 @@ native_start_all_aps(void)
 	outb(CMOS_REG, BIOS_RESET);
 	outb(CMOS_DATA, BIOS_WARM);	/* 'warm-start' */
 
-	/* Relocate pcpu areas to the correct domain. */
-#ifdef NUMA
-	if (vm_ndomains > 1)
-		for (cpu = 1; cpu < mp_ncpus; cpu++) {
-			apic_id = cpu_apic_ids[cpu];
-			domain = acpi_pxm_get_cpu_locality(apic_id);
-			mp_realloc_pcpu(cpu, domain);
-		}
-#endif
-
 	/* start each AP */
 	domain = 0;
 	for (cpu = 1; cpu < mp_ncpus; cpu++) {
@@ -423,17 +411,17 @@ native_start_all_aps(void)
 			domain = acpi_pxm_get_cpu_locality(apic_id);
 #endif
 		/* allocate and set up an idle stack data page */
-		bootstacks[cpu] = (void *)kmem_malloc(kstack_pages * PAGE_SIZE,
+		bootstacks[cpu] = kmem_malloc(kstack_pages * PAGE_SIZE,
 		    M_WAITOK | M_ZERO);
-		doublefault_stack = (char *)kmem_malloc(DBLFAULT_STACK_SIZE,
+		doublefault_stack = kmem_malloc(DBLFAULT_STACK_SIZE,
 		    M_WAITOK | M_ZERO);
-		mce_stack = (char *)kmem_malloc(MCE_STACK_SIZE,
+		mce_stack = kmem_malloc(MCE_STACK_SIZE,
 		    M_WAITOK | M_ZERO);
-		nmi_stack = (char *)kmem_malloc_domainset(
+		nmi_stack = kmem_malloc_domainset(
 		    DOMAINSET_PREF(domain), NMI_STACK_SIZE, M_WAITOK | M_ZERO);
-		dbg_stack = (char *)kmem_malloc_domainset(
+		dbg_stack = kmem_malloc_domainset(
 		    DOMAINSET_PREF(domain), DBG_STACK_SIZE, M_WAITOK | M_ZERO);
-		dpcpu = (void *)kmem_malloc_domainset(DOMAINSET_PREF(domain),
+		dpcpu = kmem_malloc_domainset(DOMAINSET_PREF(domain),
 		    DPCPU_SIZE, M_WAITOK | M_ZERO);
 
 		bootpcpu = &__pcpu[cpu];
@@ -770,7 +758,7 @@ invltlb_invpcid_handler(pmap_t smp_tlb_pmap)
 	(*ipi_invltlb_counts[PCPU_GET(cpuid)])++;
 #endif /* COUNT_IPIS */
 
-	d.pcid = smp_tlb_pmap->pm_pcids[PCPU_GET(cpuid)].pm_pcid;
+	d.pcid = pmap_get_pcid(smp_tlb_pmap);
 	d.pad = 0;
 	d.addr = 0;
 	invpcid(&d, smp_tlb_pmap == kernel_pmap ? INVPCID_CTXGLOB :
@@ -789,7 +777,7 @@ invltlb_invpcid_pti_handler(pmap_t smp_tlb_pmap)
 	(*ipi_invltlb_counts[PCPU_GET(cpuid)])++;
 #endif /* COUNT_IPIS */
 
-	d.pcid = smp_tlb_pmap->pm_pcids[PCPU_GET(cpuid)].pm_pcid;
+	d.pcid = pmap_get_pcid(smp_tlb_pmap);
 	d.pad = 0;
 	d.addr = 0;
 	if (smp_tlb_pmap == kernel_pmap) {
@@ -802,7 +790,8 @@ invltlb_invpcid_pti_handler(pmap_t smp_tlb_pmap)
 		invpcid(&d, INVPCID_CTXGLOB);
 	} else {
 		invpcid(&d, INVPCID_CTX);
-		if (smp_tlb_pmap == PCPU_GET(curpmap))
+		if (smp_tlb_pmap == PCPU_GET(curpmap) &&
+		    smp_tlb_pmap->pm_ucr3 != PMAP_NO_CR3)
 			PCPU_SET(ucr3_load_mask, ~CR3_PCID_SAVE);
 	}
 }
@@ -810,8 +799,6 @@ invltlb_invpcid_pti_handler(pmap_t smp_tlb_pmap)
 static void
 invltlb_pcid_handler(pmap_t smp_tlb_pmap)
 {
-	uint32_t pcid;
-  
 #ifdef COUNT_XINVLTLB_HITS
 	xhits_gbl[PCPU_GET(cpuid)]++;
 #endif /* COUNT_XINVLTLB_HITS */
@@ -830,8 +817,8 @@ invltlb_pcid_handler(pmap_t smp_tlb_pmap)
 		 * CPU.
 		 */
 		if (smp_tlb_pmap == PCPU_GET(curpmap)) {
-			pcid = smp_tlb_pmap->pm_pcids[PCPU_GET(cpuid)].pm_pcid;
-			load_cr3(smp_tlb_pmap->pm_cr3 | pcid);
+			load_cr3(smp_tlb_pmap->pm_cr3 |
+			    pmap_get_pcid(smp_tlb_pmap));
 			if (smp_tlb_pmap->pm_ucr3 != PMAP_NO_CR3)
 				PCPU_SET(ucr3_load_mask, ~CR3_PCID_SAVE);
 		}
@@ -867,8 +854,7 @@ invlpg_invpcid_handler(pmap_t smp_tlb_pmap, vm_offset_t smp_tlb_addr1)
 	if (smp_tlb_pmap == PCPU_GET(curpmap) &&
 	    smp_tlb_pmap->pm_ucr3 != PMAP_NO_CR3 &&
 	    PCPU_GET(ucr3_load_mask) == PMAP_UCR3_NOMASK) {
-		d.pcid = smp_tlb_pmap->pm_pcids[PCPU_GET(cpuid)].pm_pcid |
-		    PMAP_PCID_USER_PT;
+		d.pcid = pmap_get_pcid(smp_tlb_pmap) | PMAP_PCID_USER_PT;
 		d.pad = 0;
 		d.addr = smp_tlb_addr1;
 		invpcid(&d, INVPCID_ADDR);
@@ -892,7 +878,7 @@ invlpg_pcid_handler(pmap_t smp_tlb_pmap, vm_offset_t smp_tlb_addr1)
 	if (smp_tlb_pmap == PCPU_GET(curpmap) &&
 	    (ucr3 = smp_tlb_pmap->pm_ucr3) != PMAP_NO_CR3 &&
 	    PCPU_GET(ucr3_load_mask) == PMAP_UCR3_NOMASK) {
-		pcid = smp_tlb_pmap->pm_pcids[PCPU_GET(cpuid)].pm_pcid;
+		pcid = pmap_get_pcid(smp_tlb_pmap);
 		kcr3 = smp_tlb_pmap->pm_cr3 | pcid | CR3_PCID_SAVE;
 		ucr3 |= pcid | PMAP_PCID_USER_PT | CR3_PCID_SAVE;
 		pmap_pti_pcid_invlpg(ucr3, kcr3, smp_tlb_addr1);
@@ -946,8 +932,7 @@ invlrng_invpcid_handler(pmap_t smp_tlb_pmap, vm_offset_t smp_tlb_addr1,
 	if (smp_tlb_pmap == PCPU_GET(curpmap) &&
 	    smp_tlb_pmap->pm_ucr3 != PMAP_NO_CR3 &&
 	    PCPU_GET(ucr3_load_mask) == PMAP_UCR3_NOMASK) {
-		d.pcid = smp_tlb_pmap->pm_pcids[PCPU_GET(cpuid)].pm_pcid |
-		    PMAP_PCID_USER_PT;
+		d.pcid = pmap_get_pcid(smp_tlb_pmap) | PMAP_PCID_USER_PT;
 		d.pad = 0;
 		d.addr = smp_tlb_addr1;
 		do {
@@ -980,7 +965,7 @@ invlrng_pcid_handler(pmap_t smp_tlb_pmap, vm_offset_t smp_tlb_addr1,
 	if (smp_tlb_pmap == PCPU_GET(curpmap) &&
 	    (ucr3 = smp_tlb_pmap->pm_ucr3) != PMAP_NO_CR3 &&
 	    PCPU_GET(ucr3_load_mask) == PMAP_UCR3_NOMASK) {
-		pcid = smp_tlb_pmap->pm_pcids[PCPU_GET(cpuid)].pm_pcid;
+		pcid = pmap_get_pcid(smp_tlb_pmap);
 		kcr3 = smp_tlb_pmap->pm_cr3 | pcid | CR3_PCID_SAVE;
 		ucr3 |= pcid | PMAP_PCID_USER_PT | CR3_PCID_SAVE;
 		pmap_pti_pcid_invlrng(ucr3, kcr3, smp_tlb_addr1, smp_tlb_addr2);

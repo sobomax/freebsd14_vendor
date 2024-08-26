@@ -1,4 +1,3 @@
-# $FreeBSD: 2429af302823a4522b14328f597751af924ce61d $
 # Danish ISO 8859-1 keyboard layout for Apple MacBook keyboards. Not all
 # key combinations are available in this character set yet.
 # by Erik Cederstrand <erik@cederstrand.dk>

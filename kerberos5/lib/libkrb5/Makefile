@@ -1,4 +1,3 @@
-# $FreeBSD: 2f3304dc4e7d6f89c5d4e64a4c54dab844d859a5 $
 
 PACKAGE=	kerberos-lib
 
@@ -626,6 +625,7 @@ CFLAGS+=	-I${KRB5DIR}/lib/krb5 \
 		-I${KRB5DIR}/base \
 		-I${SRCTOP}/contrib/com_err \
 		-I.
+CFLAGS+=	-DOPENSSL_API_COMPAT=0x10100000L
 
 .include <bsd.lib.mk>
 

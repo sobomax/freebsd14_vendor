@@ -1,6 +1,5 @@
 #!/bin/sh
 #
-# $FreeBSD: 0611dea794d87ba90274bf26bd3854dcb02c4bc7 $
 #
 
 # PROVIDE: ipropd_master

@@ -1,4 +1,3 @@
-# $FreeBSD: 7204a35aa0a57efedf57e801edfb2d1f0561972c $
 
 printf '%s\n' '\a\ b c'	| { read a b; printf '%s\n' "x${a}x${b}x"; }
 printf '%s\n' '\a b\ c'	| { read a b; printf '%s\n' "x${a}x${b}x"; }

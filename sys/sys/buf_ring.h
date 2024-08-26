@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2007-2009 Kip Macy <kmacy@freebsd.org>
  * All rights reserved.
@@ -24,8 +24,6 @@
  * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
- *
- * $FreeBSD: 48c7101aad97c6164a069531080a4db3a9b047cb $
  *
  */
 
@@ -73,7 +71,7 @@ buf_ring_enqueue(struct buf_ring *br, void *buf)
 	 */
 	for (i = br->br_cons_head; i != br->br_prod_head;
 	     i = ((i + 1) & br->br_cons_mask))
-		if(br->br_ring[i] == buf)
+		if (br->br_ring[i] == buf)
 			panic("buf=%p already enqueue at %d prod=%d cons=%d",
 			    buf, i, br->br_prod_tail, br->br_cons_tail);
 #endif	

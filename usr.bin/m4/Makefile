@@ -1,5 +1,4 @@
 #	$OpenBSD: Makefile,v 1.13 2014/05/12 19:11:19 espie Exp $
-# $FreeBSD: 25c83c093f5f063b9514d7144d18f23c98c99467 $
 
 # -DEXTENDED 
 # 	if you want the paste & spaste macros.

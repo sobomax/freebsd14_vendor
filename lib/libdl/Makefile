@@ -1,4 +1,3 @@
-# $FreeBSD: c37449691e0b1cf6de09f2c492c960622022c268 $
 
 PACKAGE=clibs
 LIB=dl

@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2009 Yahoo! Inc.
  * Copyright (c) 2011-2015 LSI Corp.
@@ -28,13 +28,9 @@
  * SUCH DAMAGE.
  *
  * Avago Technologies (LSI) MPT-Fusion Host Adapter FreeBSD
- *
- * $FreeBSD: d21cf1e2204e58192f8806289d36041707be2bec $
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: d21cf1e2204e58192f8806289d36041707be2bec $");
-
 /* Communications core for Avago Technologies (LSI) MPT2 */
 
 /* TODO Move headers to mpsvar */
@@ -85,9 +81,6 @@ __FBSDID("$FreeBSD: d21cf1e2204e58192f8806289d36041707be2bec $");
 #include <dev/mps/mpsvar.h>
 #include <dev/mps/mps_table.h>
 #include <dev/mps/mps_sas.h>
-
-#define MPSSAS_DISCOVERY_TIMEOUT	20
-#define MPSSAS_MAX_DISCOVERY_TIMEOUTS	10 /* 200 seconds */
 
 /*
  * static array to check SCSI OpCode for EEDP protection bits
@@ -302,7 +295,6 @@ mpssas_log_command(struct mps_command *cm, u_int level, const char *fmt, ...)
 	struct sbuf sb;
 	va_list ap;
 	char str[224];
-	char path_str[64];
 
 	if (cm == NULL)
 		return;
@@ -316,9 +308,7 @@ mpssas_log_command(struct mps_command *cm, u_int level, const char *fmt, ...)
 	va_start(ap, fmt);
 
 	if (cm->cm_ccb != NULL) {
-		xpt_path_string(cm->cm_ccb->csio.ccb_h.path, path_str,
-				sizeof(path_str));
-		sbuf_cat(&sb, path_str);
+		xpt_path_sbuf(cm->cm_ccb->csio.ccb_h.path, &sb);
 		if (cm->cm_ccb->ccb_h.func_code == XPT_SCSI_IO) {
 			scsi_command_string(&cm->cm_ccb->csio, &sb);
 			sbuf_printf(&sb, "length %d ",
@@ -591,7 +581,9 @@ mpssas_remove_device(struct mps_softc *sc, struct mps_command *tm)
 	 * if so.
 	 */
 	if (TAILQ_FIRST(&targ->commands) == NULL) {
-		mps_dprint(sc, MPS_INFO, "No pending commands: starting remove_device\n");
+		mps_dprint(sc, MPS_INFO,
+		    "No pending commands: starting remove_device target %u handle 0x%04x\n",
+		    targ->tid, handle);
 		mps_map_command(sc, tm);
 		targ->pending_remove_tm = NULL;
 	} else {
@@ -773,8 +765,6 @@ mps_attach_sas(struct mps_softc *sc)
 	sc->sassc->startup_refcount = 0;
 	mpssas_startup_increment(sassc);
 
-	callout_init(&sassc->discovery_callout, 1 /*mpsafe*/);
-
 	mps_unlock(sc);
 
 	/*
@@ -888,9 +878,6 @@ mpssas_discovery_end(struct mpssas_softc *sassc)
 	struct mps_softc *sc = sassc->sc;
 
 	MPS_FUNCTRACE(sc);
-
-	if (sassc->flags & MPSSAS_DISCOVERY_TIMEOUT_PENDING)
-		callout_stop(&sassc->discovery_callout);
 
 	/*
 	 * After discovery has completed, check the mapping table for any
@@ -1645,6 +1632,15 @@ mpssas_action_scsiio(struct mpssas_softc *sassc, union ccb *ccb)
 	targ = &sassc->targets[csio->ccb_h.target_id];
 	mps_dprint(sc, MPS_TRACE, "ccb %p target flag %x\n", ccb, targ->flags);
 	if (targ->handle == 0x0) {
+		if (targ->flags & MPSSAS_TARGET_INDIAGRESET) {
+			mps_dprint(sc, MPS_ERROR,
+			    "%s NULL handle for target %u in diag reset freezing queue\n",
+			    __func__, csio->ccb_h.target_id);
+			ccb->ccb_h.status = CAM_REQUEUE_REQ | CAM_DEV_QFRZN;
+			xpt_freeze_devq(ccb->ccb_h.path, 1);
+			xpt_done(ccb);
+			return;
+		}
 		mps_dprint(sc, MPS_ERROR, "%s NULL handle for target %u\n", 
 		    __func__, csio->ccb_h.target_id);
 		mpssas_set_ccbstatus(ccb, CAM_DEV_NOT_THERE);
@@ -2382,7 +2378,9 @@ mpssas_scsiio_complete(struct mps_softc *sc, struct mps_command *cm)
 	if (cm->cm_targ->flags & MPSSAS_TARGET_INREMOVAL) {
 		if (TAILQ_FIRST(&cm->cm_targ->commands) == NULL &&
 		    cm->cm_targ->pending_remove_tm != NULL) {
-			mps_dprint(sc, MPS_INFO, "Last pending command complete: starting remove_device\n");
+			mps_dprint(sc, MPS_INFO,
+			    "Last pending command complete: starting remove_device target %u handle 0x%04x\n",
+			    cm->cm_targ->tid, cm->cm_targ->handle);
 			mps_map_command(sc, cm->cm_targ->pending_remove_tm);
 			cm->cm_targ->pending_remove_tm = NULL;
 		}
@@ -3199,6 +3197,7 @@ mpssas_async(void *callback_arg, uint32_t code, struct cam_path *path,
 		}
 
 		bzero(&rcap_buf, sizeof(rcap_buf));
+		bzero(&cdai, sizeof(cdai));
 		xpt_setup_ccb(&cdai.ccb_h, path, CAM_PRIORITY_NORMAL);
 		cdai.ccb_h.func_code = XPT_DEV_ADVINFO;
 		cdai.ccb_h.flags = CAM_DIR_IN;

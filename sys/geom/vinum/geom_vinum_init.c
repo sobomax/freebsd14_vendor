@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2004, 2007 Lukas Ertl
  * Copyright (c) 2007, 2009 Ulf Lilleengen
@@ -28,7 +28,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 115a3c66d4455335dd359f1ba43360cebbd31e4e $");
 #include <sys/param.h>
 #include <sys/bio.h>
 #include <sys/libkern.h>
@@ -233,7 +232,7 @@ gv_find_good_plex(struct gv_volume *v)
 static int
 gv_sync(struct gv_volume *v)
 {
-	struct gv_softc *sc;
+	struct gv_softc *sc __diagused;
 	struct gv_plex *p, *up;
 	int error;
 

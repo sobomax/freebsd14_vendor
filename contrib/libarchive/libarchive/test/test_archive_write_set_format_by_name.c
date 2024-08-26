@@ -23,9 +23,7 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-
 #include "test.h"
-__FBSDID("$FreeBSD: ef1327431b3781da6d34c4366857736cc07177ad $");
 
 static void
 test_format_by_name(const char *format_name, const char *compression_type,

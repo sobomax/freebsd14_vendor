@@ -1,4 +1,3 @@
-# $FreeBSD: 5ee9035209d456537790bf225412d8e23f25c7dc $
 
 .PATH: ${SRCTOP}/sys/arm64/rockchip
 

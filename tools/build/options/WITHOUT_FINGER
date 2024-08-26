@@ -1,4 +1,3 @@
-.\" $FreeBSD: d421612454784d2dab2209d2e824f5984223cb5c $
 Do not build or install
 .Xr finger 1
 and

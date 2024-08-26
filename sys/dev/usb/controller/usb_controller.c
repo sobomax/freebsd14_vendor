@@ -1,6 +1,5 @@
-/* $FreeBSD: 37f318ca98dfd8063261b956d8c42da24e4b5d9c $ */
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2008 Hans Petter Selasky. All rights reserved.
  *
@@ -106,8 +105,6 @@ static int usb_no_shutdown_wait = 0;
 SYSCTL_INT(_hw_usb, OID_AUTO, no_shutdown_wait, CTLFLAG_RWTUN,
     &usb_no_shutdown_wait, 0, "No USB device waiting at system shutdown.");
 
-static devclass_t usb_devclass;
-
 static device_method_t usb_methods[] = {
 	DEVMETHOD(device_probe, usb_probe),
 	DEVMETHOD(device_attach, usb_attach),
@@ -126,19 +123,19 @@ static driver_t usb_driver = {
 };
 
 /* Host Only Drivers */
-DRIVER_MODULE(usbus, ohci, usb_driver, usb_devclass, 0, 0);
-DRIVER_MODULE(usbus, uhci, usb_driver, usb_devclass, 0, 0);
-DRIVER_MODULE(usbus, ehci, usb_driver, usb_devclass, 0, 0);
-DRIVER_MODULE(usbus, xhci, usb_driver, usb_devclass, 0, 0);
+DRIVER_MODULE(usbus, ohci, usb_driver, 0, 0);
+DRIVER_MODULE(usbus, uhci, usb_driver, 0, 0);
+DRIVER_MODULE(usbus, ehci, usb_driver, 0, 0);
+DRIVER_MODULE(usbus, xhci, usb_driver, 0, 0);
 
 /* Device Only Drivers */
-DRIVER_MODULE(usbus, musbotg, usb_driver, usb_devclass, 0, 0);
-DRIVER_MODULE(usbus, uss820dci, usb_driver, usb_devclass, 0, 0);
-DRIVER_MODULE(usbus, octusb, usb_driver, usb_devclass, 0, 0);
+DRIVER_MODULE(usbus, musbotg, usb_driver, 0, 0);
+DRIVER_MODULE(usbus, uss820dci, usb_driver, 0, 0);
+DRIVER_MODULE(usbus, octusb, usb_driver, 0, 0);
 
 /* Dual Mode Drivers */
-DRIVER_MODULE(usbus, dwcotg, usb_driver, usb_devclass, 0, 0);
-DRIVER_MODULE(usbus, saf1761otg, usb_driver, usb_devclass, 0, 0);
+DRIVER_MODULE(usbus, dwcotg, usb_driver, 0, 0);
+DRIVER_MODULE(usbus, saf1761otg, usb_driver, 0, 0);
 
 /*------------------------------------------------------------------------*
  *	usb_probe

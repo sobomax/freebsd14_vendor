@@ -1,5 +1,4 @@
 /*	$OpenBSD: ypldap_dns.c,v 1.8 2015/01/16 06:40:22 deraadt Exp $ */
-/*	$FreeBSD: 5cb0390c8603fece8663b13ee15e477290cfd660 $ */
 
 /*
  * Copyright (c) 2003-2008 Henning Brauer <henning@openbsd.org>

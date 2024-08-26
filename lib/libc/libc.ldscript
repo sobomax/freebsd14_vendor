@@ -1,2 +1,1 @@
-/* $FreeBSD: 02e4d962a31836cd1cf87332043d00496e378fac $ */
 GROUP ( @@SHLIB@@ @@LIBDIR@@/libc_nonshared.a @@LIBDIR@@/libssp_nonshared.a )

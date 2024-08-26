@@ -1,4 +1,3 @@
-/* $FreeBSD: 2b4348870db4f0184f14840712787ee577185b75 $ */
 
 /* Define when using wide characters */
 #define USE_WIDECHAR

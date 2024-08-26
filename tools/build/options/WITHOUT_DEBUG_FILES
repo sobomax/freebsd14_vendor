@@ -1,3 +1,2 @@
-.\" $FreeBSD: f9169afccf2a8358a3e2e1e222d4e48063e82c1f $
 Avoid building or installing standalone debug files for each
 executable binary and shared library.

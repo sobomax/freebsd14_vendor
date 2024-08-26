@@ -1,3 +1,2 @@
-# $FreeBSD: c3d58b79e422c40885e880041ed2a9375087b1f8 $
 
 rm -rf ${WORK_DIR}/../../../t0/2/1

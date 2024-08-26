@@ -30,8 +30,6 @@
  * CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF
  * THE POSSIBILITY OF SUCH DAMAGE.
- *
- * $FreeBSD: 9b42b330f75531e7de4ffc386ef51726a688ed5f $
  */
 
 /*
@@ -711,7 +709,7 @@ struct vr_statistics {
 };
 
 struct vr_softc {
-	struct ifnet		*vr_ifp;	/* interface info */
+	if_t			vr_ifp;	/* interface info */
 	device_t		vr_dev;
 	struct resource		*vr_res;
 	int			vr_res_id;

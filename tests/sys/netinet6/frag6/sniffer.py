@@ -1,4 +1,3 @@
-# $FreeBSD: 7e1d283dbf9114f8d120866fc954310efd496ed8 $
 
 import threading
 import logging

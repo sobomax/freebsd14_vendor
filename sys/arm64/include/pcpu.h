@@ -24,16 +24,17 @@
  * SUCH DAMAGE.
  *
  *	from: FreeBSD: src/sys/i386/include/globaldata.h,v 1.27 2001/04/27
- * $FreeBSD: 8ec4a33b0d67392bf21cdb1bca165d0bf1b51b0f $
  */
+
+#ifdef __arm__
+#include <arm/pcpu.h>
+#else /* !__arm__ */
 
 #ifndef	_MACHINE_PCPU_H_
 #define	_MACHINE_PCPU_H_
 
 #include <machine/cpu.h>
 #include <machine/cpufunc.h>
-
-#define	ALT_STACK_SIZE	128
 
 typedef int (*pcpu_bp_harden)(void);
 typedef int (*pcpu_ssbd)(int);
@@ -47,10 +48,9 @@ struct debug_monitor_state;
 	pcpu_ssbd pc_ssbd;						\
 	struct pmap *pc_curpmap;					\
 	struct pmap *pc_curvmpmap;					\
-	u_int	pc_bcast_tlbi_workaround;				\
 	/* Store as two u_int values to preserve KBI */			\
-	u_int	pc_mpidr_low;	/* lower MPIDR 32 bits */		\
-	u_int	pc_mpidr_high;	/* upper MPIDR 32 bits */		\
+	uint64_t pc_mpidr;						\
+	u_int	pc_bcast_tlbi_workaround;				\
 	char __pad[197]
 
 #ifdef _KERNEL
@@ -82,13 +82,13 @@ get_curthread(void)
 
 #define	PCPU_GET(member)	(pcpup->pc_ ## member)
 #define	PCPU_ADD(member, value)	(pcpup->pc_ ## member += (value))
-#define	PCPU_INC(member)	PCPU_ADD(member, 1)
 #define	PCPU_PTR(member)	(&pcpup->pc_ ## member)
 #define	PCPU_SET(member,value)	(pcpup->pc_ ## member = (value))
 
-#define	PCPU_GET_MPIDR(pc)	\
-    ((((uint64_t)((pc)->pc_mpidr_high)) << 32) | ((pc)->pc_mpidr_low))
+#define	PCPU_GET_MPIDR(pc)	((pc)->pc_mpidr)
 
 #endif	/* _KERNEL */
 
 #endif	/* !_MACHINE_PCPU_H_ */
+
+#endif /* !__arm__ */

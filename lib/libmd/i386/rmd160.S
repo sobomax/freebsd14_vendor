@@ -1,4 +1,3 @@
-/* $FreeBSD: 7ccfb22daf12893b3fdbe8d2dd9cfc9c11bbb119 $ */
 /* Run the C pre-processor over this file with one of the following defined
  * ELF - elf object files,
  * OUT - a.out object files,

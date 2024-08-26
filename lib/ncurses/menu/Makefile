@@ -1,4 +1,3 @@
-# $FreeBSD: 9bd92723fed9f163c582e3ac45f0063e3858baf6 $
 
 .include <src.opts.mk>
 .include "${.CURDIR:H}/config.mk"

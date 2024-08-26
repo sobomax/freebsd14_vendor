@@ -1,4 +1,3 @@
-/* $FreeBSD: 58febb66eb75192af2b885c1e79c31f5ad35167a $ */
 #ifndef _EFI_FS_H
 #define _EFI_FS_H
 
@@ -29,7 +28,7 @@ Revision History
 
 
 //
-// EFI Partition header (normaly starts in LBA 1)
+// EFI Partition header (normally starts in LBA 1)
 //
 
 #define EFI_PARTITION_SIGNATURE         0x5053595320494249

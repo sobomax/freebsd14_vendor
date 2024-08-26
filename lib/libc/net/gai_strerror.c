@@ -29,9 +29,6 @@
  * SUCH DAMAGE.
  */
 
-#include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 276ba91b95fd0949610de8c0fb3a2d70a8311164 $");
-
 #include "namespace.h"
 #include <netdb.h>
 #if defined(NLS)

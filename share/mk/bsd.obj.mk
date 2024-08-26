@@ -1,4 +1,3 @@
-# $FreeBSD: 816571970b64f91187c303b17a67c866c896e316 $
 #
 # The include file <bsd.obj.mk> handles creating the 'obj' directory
 # and cleaning up object files, etc.

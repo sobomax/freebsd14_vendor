@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 16188c71b53d5693927ff836a4ad7cb3d19a443d $");
+__FBSDID("$FreeBSD: 4a2d02350f6288a2e3020a6a0b96bce56c258804 $");
 
 #include <sys/types.h>
 #include <sys/param.h>
@@ -114,7 +114,7 @@ log_sysevent(nvlist_t *event)
 		}
 		case DATA_TYPE_STRING:
 		{
-			char *value;
+			const char *value;
 
 			(void) nvpair_value_string(elem, &value);
 			sbuf_printf(sb, " %s=%s", nvpair_name(elem), value);
@@ -180,7 +180,7 @@ log_sysevent(nvlist_t *event)
 		}
 		case DATA_TYPE_STRING_ARRAY:
 		{
-			char **strarr;
+			const char **strarr;
 			uint_t ii, nelem;
 
 			(void) nvpair_value_string_array(elem, &strarr, &nelem);

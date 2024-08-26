@@ -37,8 +37,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 51b96e5446262d5e55c08aa7562f2ec0aaf9c643 $");
-
 #include <sys/param.h>
 #include <sys/systm.h>
 #include <sys/condvar.h>
@@ -374,7 +372,7 @@ static int
 cp2112_gpio_read_pin(device_t dev, uint32_t pin_num, bool *on)
 {
 	struct gpio_get_req data;
-	struct cp2112gpio_softc *sc;
+	struct cp2112gpio_softc *sc __diagused;
 	int err;
 
 	sc = device_get_softc(dev);
@@ -393,7 +391,7 @@ static int
 cp2112_gpio_write_pin(device_t dev, uint32_t pin_num, bool on)
 {
 	struct gpio_set_req data;
-	struct cp2112gpio_softc *sc;
+	struct cp2112gpio_softc *sc __diagused;
 	int err;
 	bool actual;
 
@@ -419,7 +417,7 @@ cp2112_gpio_configure_write_pin(device_t dev, uint32_t pin_num,
     bool output, enum cp2112_out_mode *mode)
 {
 	struct gpio_config_req data;
-	struct cp2112gpio_softc *sc;
+	struct cp2112gpio_softc *sc __diagused;
 	int err;
 	uint8_t mask;
 
@@ -1388,9 +1386,7 @@ static driver_t cp2112hid_driver = {
 	.size = sizeof(struct cp2112_softc),
 };
 
-static devclass_t cp2112hid_devclass;
-DRIVER_MODULE(cp2112hid, uhub, cp2112hid_driver, cp2112hid_devclass,
-    NULL, NULL);
+DRIVER_MODULE(cp2112hid, uhub, cp2112hid_driver, NULL, NULL);
 MODULE_DEPEND(cp2112hid, usb, 1, 1, 1);
 MODULE_VERSION(cp2112hid, 1);
 USB_PNP_HOST_INFO(cp2112_devs);
@@ -1421,9 +1417,7 @@ static driver_t cp2112gpio_driver = {
 	.size = sizeof(struct cp2112gpio_softc),
 };
 
-static devclass_t cp2112gpio_devclass;
-DRIVER_MODULE(cp2112gpio, cp2112hid, cp2112gpio_driver, cp2112gpio_devclass,
-    NULL, NULL);
+DRIVER_MODULE(cp2112gpio, cp2112hid, cp2112gpio_driver, NULL, NULL);
 MODULE_DEPEND(cp2112gpio, cp2112hid, 1, 1, 1);
 MODULE_DEPEND(cp2112gpio, gpiobus, 1, 1, 1);
 MODULE_VERSION(cp2112gpio, 1);
@@ -1448,9 +1442,7 @@ static driver_t cp2112iic_driver = {
 	sizeof(struct cp2112iic_softc)
 };
 
-static devclass_t cp2112iic_devclass;
-DRIVER_MODULE(cp2112iic, cp2112hid, cp2112iic_driver, cp2112iic_devclass,
-    NULL, NULL);
+DRIVER_MODULE(cp2112iic, cp2112hid, cp2112iic_driver, NULL, NULL);
 MODULE_DEPEND(cp2112iic, cp2112hid, 1, 1, 1);
 MODULE_DEPEND(cp2112iic, iicbus, IICBUS_MINVER, IICBUS_PREFVER, IICBUS_MAXVER);
 MODULE_VERSION(cp2112iic, 1);

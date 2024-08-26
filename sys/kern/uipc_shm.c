@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2006, 2011, 2016-2017 Robert N. M. Watson
  * Copyright 2020 The FreeBSD Foundation
@@ -48,8 +48,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: f1dc0f828b23ce32c9d66e6c4334413a7526b7cf $");
-
 #include "opt_capsicum.h"
 #include "opt_ktrace.h"
 
@@ -132,6 +130,8 @@ static int	shm_dotruncate_locked(struct shmfd *shmfd, off_t length,
     void *rl_cookie);
 static int	shm_copyin_path(struct thread *td, const char *userpath_in,
     char **path_out);
+static int	shm_deallocate(struct shmfd *shmfd, off_t *offset,
+    off_t *length, int flags);
 
 static fo_rdwr_t	shm_read;
 static fo_rdwr_t	shm_write;
@@ -147,6 +147,7 @@ static fo_mmap_t	shm_mmap;
 static fo_get_seals_t	shm_get_seals;
 static fo_add_seals_t	shm_add_seals;
 static fo_fallocate_t	shm_fallocate;
+static fo_fspacectl_t	shm_fspacectl;
 
 /* File descriptor operations. */
 struct fileops shm_ops = {
@@ -167,6 +168,8 @@ struct fileops shm_ops = {
 	.fo_get_seals = shm_get_seals,
 	.fo_add_seals = shm_add_seals,
 	.fo_fallocate = shm_fallocate,
+	.fo_fspacectl = shm_fspacectl,
+	.fo_cmp = file_kcmp_generic,
 	.fo_flags = DFLAG_PASSABLE | DFLAG_SEEKABLE,
 };
 
@@ -179,6 +182,15 @@ static int largepage_reclaim_tries = 1;
 SYSCTL_INT(_vm_largepages, OID_AUTO, reclaim_tries,
     CTLFLAG_RWTUN, &largepage_reclaim_tries, 0,
     "Number of contig reclaims before giving up for default alloc policy");
+
+#define	shm_rangelock_unlock(shmfd, cookie)				\
+	rangelock_unlock(&(shmfd)->shm_rl, (cookie), &(shmfd)->shm_mtx)
+#define	shm_rangelock_rlock(shmfd, start, end)				\
+	rangelock_rlock(&(shmfd)->shm_rl, (start), (end), &(shmfd)->shm_mtx)
+#define	shm_rangelock_tryrlock(shmfd, start, end)			\
+	rangelock_tryrlock(&(shmfd)->shm_rl, (start), (end), &(shmfd)->shm_mtx)
+#define	shm_rangelock_wlock(shmfd, start, end)				\
+	rangelock_wlock(&(shmfd)->shm_rl, (start), (end), &(shmfd)->shm_mtx)
 
 static int
 uiomove_object_page(vm_object_t obj, size_t len, struct uio *uio)
@@ -454,10 +466,10 @@ shm_read(struct file *fp, struct uio *uio, struct ucred *active_cred,
 		return (error);
 #endif
 	foffset_lock_uio(fp, uio, flags);
-	rl_cookie = rangelock_rlock(&shmfd->shm_rl, uio->uio_offset,
-	    uio->uio_offset + uio->uio_resid, &shmfd->shm_mtx);
+	rl_cookie = shm_rangelock_rlock(shmfd, uio->uio_offset,
+	    uio->uio_offset + uio->uio_resid);
 	error = uiomove_object(shmfd->shm_object, shmfd->shm_size, uio);
-	rangelock_unlock(&shmfd->shm_rl, rl_cookie, &shmfd->shm_mtx);
+	shm_rangelock_unlock(shmfd, rl_cookie);
 	foffset_unlock_uio(fp, uio, flags);
 	return (error);
 }
@@ -495,13 +507,10 @@ shm_write(struct file *fp, struct uio *uio, struct ucred *active_cred,
 	} else {
 		size = uio->uio_offset + uio->uio_resid;
 	}
-	if ((flags & FOF_OFFSET) == 0) {
-		rl_cookie = rangelock_wlock(&shmfd->shm_rl, 0, OFF_MAX,
-		    &shmfd->shm_mtx);
-	} else {
-		rl_cookie = rangelock_wlock(&shmfd->shm_rl, uio->uio_offset,
-		    size, &shmfd->shm_mtx);
-	}
+	if ((flags & FOF_OFFSET) == 0)
+		rl_cookie = shm_rangelock_wlock(shmfd, 0, OFF_MAX);
+	else
+		rl_cookie = shm_rangelock_wlock(shmfd, uio->uio_offset, size);
 	if ((shmfd->shm_seals & F_SEAL_WRITE) != 0) {
 		error = EPERM;
 	} else {
@@ -514,7 +523,7 @@ shm_write(struct file *fp, struct uio *uio, struct ucred *active_cred,
 			error = uiomove_object(shmfd->shm_object,
 			    shmfd->shm_size, uio);
 	}
-	rangelock_unlock(&shmfd->shm_rl, rl_cookie, &shmfd->shm_mtx);
+	shm_rangelock_unlock(shmfd, rl_cookie);
 	foffset_unlock_uio(fp, uio, flags);
 	return (error);
 }
@@ -569,22 +578,20 @@ shm_ioctl(struct file *fp, u_long com, void *data, struct ucred *active_cred,
 		    conf->alloc_policy != SHM_LARGEPAGE_ALLOC_HARD)
 			return (EINVAL);
 
-		rl_cookie = rangelock_wlock(&shmfd->shm_rl, 0, OFF_MAX,
-		    &shmfd->shm_mtx);
+		rl_cookie = shm_rangelock_wlock(shmfd, 0, OFF_MAX);
 		shmfd->shm_lp_psind = conf->psind;
 		shmfd->shm_lp_alloc_policy = conf->alloc_policy;
 		shmfd->shm_object->un_pager.phys.data_val = conf->psind;
-		rangelock_unlock(&shmfd->shm_rl, rl_cookie, &shmfd->shm_mtx);
+		shm_rangelock_unlock(shmfd, rl_cookie);
 		return (0);
 	case FIOGSHMLPGCNF:
 		if (!shm_largepage(shmfd))
 			return (ENOTTY);
 		conf = data;
-		rl_cookie = rangelock_rlock(&shmfd->shm_rl, 0, OFF_MAX,
-		    &shmfd->shm_mtx);
+		rl_cookie = shm_rangelock_rlock(shmfd, 0, OFF_MAX);
 		conf->psind = shmfd->shm_lp_psind;
 		conf->alloc_policy = shmfd->shm_lp_alloc_policy;
-		rangelock_unlock(&shmfd->shm_rl, rl_cookie, &shmfd->shm_mtx);
+		shm_rangelock_unlock(shmfd, rl_cookie);
 		return (0);
 	default:
 		return (ENOTTY);
@@ -592,8 +599,7 @@ shm_ioctl(struct file *fp, u_long com, void *data, struct ucred *active_cred,
 }
 
 static int
-shm_stat(struct file *fp, struct stat *sb, struct ucred *active_cred,
-    struct thread *td)
+shm_stat(struct file *fp, struct stat *sb, struct ucred *active_cred)
 {
 	struct shmfd *shmfd;
 #ifdef MAC
@@ -688,13 +694,63 @@ out:
 }
 
 static int
+shm_partial_page_invalidate(vm_object_t object, vm_pindex_t idx, int base,
+    int end)
+{
+	vm_page_t m;
+	int rv;
+
+	VM_OBJECT_ASSERT_WLOCKED(object);
+	KASSERT(base >= 0, ("%s: base %d", __func__, base));
+	KASSERT(end - base <= PAGE_SIZE, ("%s: base %d end %d", __func__, base,
+	    end));
+
+retry:
+	m = vm_page_grab(object, idx, VM_ALLOC_NOCREAT);
+	if (m != NULL) {
+		MPASS(vm_page_all_valid(m));
+	} else if (vm_pager_has_page(object, idx, NULL, NULL)) {
+		m = vm_page_alloc(object, idx,
+		    VM_ALLOC_NORMAL | VM_ALLOC_WAITFAIL);
+		if (m == NULL)
+			goto retry;
+		vm_object_pip_add(object, 1);
+		VM_OBJECT_WUNLOCK(object);
+		rv = vm_pager_get_pages(object, &m, 1, NULL, NULL);
+		VM_OBJECT_WLOCK(object);
+		vm_object_pip_wakeup(object);
+		if (rv == VM_PAGER_OK) {
+			/*
+			 * Since the page was not resident, and therefore not
+			 * recently accessed, immediately enqueue it for
+			 * asynchronous laundering.  The current operation is
+			 * not regarded as an access.
+			 */
+			vm_page_launder(m);
+		} else {
+			vm_page_free(m);
+			VM_OBJECT_WUNLOCK(object);
+			return (EIO);
+		}
+	}
+	if (m != NULL) {
+		pmap_zero_page_area(m, base, end - base);
+		KASSERT(vm_page_all_valid(m), ("%s: page %p is invalid",
+		    __func__, m));
+		vm_page_set_dirty(m);
+		vm_page_xunbusy(m);
+	}
+
+	return (0);
+}
+
+static int
 shm_dotruncate_locked(struct shmfd *shmfd, off_t length, void *rl_cookie)
 {
 	vm_object_t object;
-	vm_page_t m;
-	vm_pindex_t idx, nobjsize;
+	vm_pindex_t nobjsize;
 	vm_ooffset_t delta;
-	int base, rv;
+	int base, error;
 
 	KASSERT(length >= 0, ("shm_dotruncate: length < 0"));
 	object = shmfd->shm_object;
@@ -721,45 +777,10 @@ shm_dotruncate_locked(struct shmfd *shmfd, off_t length, void *rl_cookie)
 		 */
 		base = length & PAGE_MASK;
 		if (base != 0) {
-			idx = OFF_TO_IDX(length);
-retry:
-			m = vm_page_grab(object, idx, VM_ALLOC_NOCREAT);
-			if (m != NULL) {
-				MPASS(vm_page_all_valid(m));
-			} else if (vm_pager_has_page(object, idx, NULL, NULL)) {
-				m = vm_page_alloc(object, idx,
-				    VM_ALLOC_NORMAL | VM_ALLOC_WAITFAIL);
-				if (m == NULL)
-					goto retry;
-				vm_object_pip_add(object, 1);
-				VM_OBJECT_WUNLOCK(object);
-				rv = vm_pager_get_pages(object, &m, 1, NULL,
-				    NULL);
-				VM_OBJECT_WLOCK(object);
-				vm_object_pip_wakeup(object);
-				if (rv == VM_PAGER_OK) {
-					/*
-					 * Since the page was not resident,
-					 * and therefore not recently
-					 * accessed, immediately enqueue it
-					 * for asynchronous laundering.  The
-					 * current operation is not regarded
-					 * as an access.
-					 */
-					vm_page_launder(m);
-				} else {
-					vm_page_free(m);
-					VM_OBJECT_WUNLOCK(object);
-					return (EIO);
-				}
-			}
-			if (m != NULL) {
-				pmap_zero_page_area(m, base, PAGE_SIZE - base);
-				KASSERT(vm_page_all_valid(m),
-				    ("shm_dotruncate: page %p is invalid", m));
-				vm_page_set_dirty(m);
-				vm_page_xunbusy(m);
-			}
+			error = shm_partial_page_invalidate(object,
+			    OFF_TO_IDX(length), base, PAGE_SIZE);
+			if (error)
+				return (error);
 		}
 		delta = IDX_TO_OFF(object->size - nobjsize);
 
@@ -901,10 +922,9 @@ shm_dotruncate(struct shmfd *shmfd, off_t length)
 	void *rl_cookie;
 	int error;
 
-	rl_cookie = rangelock_wlock(&shmfd->shm_rl, 0, OFF_MAX,
-	    &shmfd->shm_mtx);
+	rl_cookie = shm_rangelock_wlock(shmfd, 0, OFF_MAX);
 	error = shm_dotruncate_cookie(shmfd, length, rl_cookie);
-	rangelock_unlock(&shmfd->shm_rl, rl_cookie, &shmfd->shm_mtx);
+	shm_rangelock_unlock(shmfd, rl_cookie);
 	return (error);
 }
 
@@ -1242,8 +1262,7 @@ kern_shm_open2(struct thread *td, const char *userpath, int flags, mode_t mode,
 				error = ENOENT;
 			}
 		} else {
-			rl_cookie = rangelock_wlock(&shmfd->shm_rl, 0, OFF_MAX,
-			    &shmfd->shm_mtx);
+			rl_cookie = shm_rangelock_wlock(shmfd, 0, OFF_MAX);
 
 			/*
 			 * kern_shm_open() likely shouldn't ever error out on
@@ -1315,8 +1334,7 @@ kern_shm_open2(struct thread *td, const char *userpath, int flags, mode_t mode,
 				shmfd->shm_seals |= initial_seals;
 				shm_hold(shmfd);
 			}
-			rangelock_unlock(&shmfd->shm_rl, rl_cookie,
-			    &shmfd->shm_mtx);
+			shm_rangelock_unlock(shmfd, rl_cookie);
 		}
 		sx_xunlock(&shm_dict_lock);
 
@@ -1531,11 +1549,7 @@ shm_mmap_large(struct shmfd *shmfd, vm_map_t map, vm_offset_t *addr,
 
 	/* MAP_PRIVATE is disabled */
 	if ((flags & ~(MAP_SHARED | MAP_FIXED | MAP_EXCL |
-	    MAP_NOCORE |
-#ifdef MAP_32BIT
-	    MAP_32BIT |
-#endif
-	    MAP_ALIGNMENT_MASK)) != 0)
+	    MAP_NOCORE | MAP_32BIT | MAP_ALIGNMENT_MASK)) != 0)
 		return (EINVAL);
 
 	vms = td->td_proc->p_vmspace;
@@ -1555,10 +1569,8 @@ shm_mmap_large(struct shmfd *shmfd, vm_map_t map, vm_offset_t *addr,
 	if ((foff & mask) != 0)
 		return (EINVAL);
 	maxaddr = vm_map_max(map);
-#ifdef MAP_32BIT
 	if ((flags & MAP_32BIT) != 0 && maxaddr > MAP_32BIT_MAX_ADDR)
 		maxaddr = MAP_32BIT_MAX_ADDR;
-#endif
 	if (size == 0 || (size & mask) != 0 ||
 	    (*addr != 0 && ((*addr & mask) != 0 ||
 	    *addr + size < *addr || *addr + size > maxaddr)))
@@ -1638,8 +1650,7 @@ shm_mmap(struct file *fp, vm_map_t map, vm_offset_t *addr, vm_size_t objsize,
 	shmfd = fp->f_data;
 	maxprot = VM_PROT_NONE;
 
-	rl_cookie = rangelock_rlock(&shmfd->shm_rl, 0, objsize,
-	    &shmfd->shm_mtx);
+	rl_cookie = shm_rangelock_rlock(shmfd, 0, objsize);
 	/* FREAD should always be set. */
 	if ((fp->f_flag & FREAD) != 0)
 		maxprot |= VM_PROT_EXECUTE | VM_PROT_READ;
@@ -1713,7 +1724,7 @@ shm_mmap(struct file *fp, vm_map_t map, vm_offset_t *addr, vm_size_t objsize,
 		vm_object_deallocate(shmfd->shm_object);
 	}
 out:
-	rangelock_unlock(&shmfd->shm_rl, rl_cookie, &shmfd->shm_mtx);
+	shm_rangelock_unlock(shmfd, rl_cookie);
 	return (error);
 }
 
@@ -1931,8 +1942,7 @@ shm_add_seals(struct file *fp, int seals)
 
 	error = 0;
 	shmfd = fp->f_data;
-	rl_cookie = rangelock_wlock(&shmfd->shm_rl, 0, OFF_MAX,
-	    &shmfd->shm_mtx);
+	rl_cookie = shm_rangelock_wlock(shmfd, 0, OFF_MAX);
 
 	/* Even already-set seals should result in EPERM. */
 	if ((shmfd->shm_seals & F_SEAL_SEAL) != 0) {
@@ -1963,7 +1973,7 @@ shm_add_seals(struct file *fp, int seals)
 	}
 	shmfd->shm_seals |= nseals;
 out:
-	rangelock_unlock(&shmfd->shm_rl, rl_cookie, &shmfd->shm_mtx);
+	shm_rangelock_unlock(shmfd, rl_cookie);
 	return (error);
 }
 
@@ -1976,6 +1986,105 @@ shm_get_seals(struct file *fp, int *seals)
 	*seals = shmfd->shm_seals;
 	return (0);
 }
+
+static int
+shm_deallocate(struct shmfd *shmfd, off_t *offset, off_t *length, int flags)
+{
+	vm_object_t object;
+	vm_pindex_t pistart, pi, piend;
+	vm_ooffset_t off, len;
+	int startofs, endofs, end;
+	int error;
+
+	off = *offset;
+	len = *length;
+	KASSERT(off + len <= (vm_ooffset_t)OFF_MAX, ("off + len overflows"));
+	if (off + len > shmfd->shm_size)
+		len = shmfd->shm_size - off;
+	object = shmfd->shm_object;
+	startofs = off & PAGE_MASK;
+	endofs = (off + len) & PAGE_MASK;
+	pistart = OFF_TO_IDX(off);
+	piend = OFF_TO_IDX(off + len);
+	pi = OFF_TO_IDX(off + PAGE_MASK);
+	error = 0;
+
+	/* Handle the case when offset is on or beyond shm size. */
+	if ((off_t)len <= 0) {
+		*length = 0;
+		return (0);
+	}
+
+	VM_OBJECT_WLOCK(object);
+
+	if (startofs != 0) {
+		end = pistart != piend ? PAGE_SIZE : endofs;
+		error = shm_partial_page_invalidate(object, pistart, startofs,
+		    end);
+		if (error)
+			goto out;
+		off += end - startofs;
+		len -= end - startofs;
+	}
+
+	if (pi < piend) {
+		vm_object_page_remove(object, pi, piend, 0);
+		off += IDX_TO_OFF(piend - pi);
+		len -= IDX_TO_OFF(piend - pi);
+	}
+
+	if (endofs != 0 && pistart != piend) {
+		error = shm_partial_page_invalidate(object, piend, 0, endofs);
+		if (error)
+			goto out;
+		off += endofs;
+		len -= endofs;
+	}
+
+out:
+	VM_OBJECT_WUNLOCK(shmfd->shm_object);
+	*offset = off;
+	*length = len;
+	return (error);
+}
+
+static int
+shm_fspacectl(struct file *fp, int cmd, off_t *offset, off_t *length, int flags,
+    struct ucred *active_cred, struct thread *td)
+{
+	void *rl_cookie;
+	struct shmfd *shmfd;
+	off_t off, len;
+	int error;
+
+	KASSERT(cmd == SPACECTL_DEALLOC, ("shm_fspacectl: Invalid cmd"));
+	KASSERT((flags & ~SPACECTL_F_SUPPORTED) == 0,
+	    ("shm_fspacectl: non-zero flags"));
+	KASSERT(*offset >= 0 && *length > 0 && *length <= OFF_MAX - *offset,
+	    ("shm_fspacectl: offset/length overflow or underflow"));
+	error = EINVAL;
+	shmfd = fp->f_data;
+	off = *offset;
+	len = *length;
+
+	rl_cookie = shm_rangelock_wlock(shmfd, off, off + len);
+	switch (cmd) {
+	case SPACECTL_DEALLOC:
+		if ((shmfd->shm_seals & F_SEAL_WRITE) != 0) {
+			error = EPERM;
+			break;
+		}
+		error = shm_deallocate(shmfd, &off, &len, flags);
+		*offset = off;
+		*length = len;
+		break;
+	default:
+		__assert_unreachable();
+	}
+	shm_rangelock_unlock(shmfd, rl_cookie);
+	return (error);
+}
+
 
 static int
 shm_fallocate(struct file *fp, off_t offset, off_t len, struct thread *td)
@@ -1999,11 +2108,10 @@ shm_fallocate(struct file *fp, off_t offset, off_t len, struct thread *td)
 	 * the shmfd is not necessarily a concern.  If other mechanisms are
 	 * added to grow a shmfd, this may need to be re-evaluated.
 	 */
-	rl_cookie = rangelock_wlock(&shmfd->shm_rl, offset, size,
-	    &shmfd->shm_mtx);
+	rl_cookie = shm_rangelock_wlock(shmfd, offset, size);
 	if (size > shmfd->shm_size)
 		error = shm_dotruncate_cookie(shmfd, size, rl_cookie);
-	rangelock_unlock(&shmfd->shm_rl, rl_cookie, &shmfd->shm_mtx);
+	shm_rangelock_unlock(shmfd, rl_cookie);
 	/* Translate to posix_fallocate(2) return value as needed. */
 	if (error == ENOMEM)
 		error = ENOSPC;
@@ -2017,12 +2125,10 @@ sysctl_posix_shm_list(SYSCTL_HANDLER_ARGS)
 	struct sbuf sb;
 	struct kinfo_file kif;
 	u_long i;
-	ssize_t curlen;
 	int error, error2;
 
 	sbuf_new_for_sysctl(&sb, NULL, sizeof(struct kinfo_file) * 5, req);
 	sbuf_clear_flags(&sb, SBUF_INCLUDENUL);
-	curlen = 0;
 	error = 0;
 	sx_slock(&shm_dict_lock);
 	for (i = 0; i < shm_hash + 1; i++) {
@@ -2040,7 +2146,6 @@ sysctl_posix_shm_list(SYSCTL_HANDLER_ARGS)
 			    0 : ENOMEM;
 			if (error != 0)
 				break;
-			curlen += kif.kf_structsize;
 		}
 	}
 	sx_sunlock(&shm_dict_lock);

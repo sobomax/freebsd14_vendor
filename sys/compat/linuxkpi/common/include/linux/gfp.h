@@ -25,8 +25,6 @@
  * THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- *
- * $FreeBSD: a2930b44b0c49f96fd1e941c6813b52be569570c $
  */
 #ifndef	_LINUXKPI_LINUX_GFP_H_
 #define	_LINUXKPI_LINUX_GFP_H_
@@ -72,6 +70,7 @@
 #define	GFP_HIGHUSER_MOVABLE	M_WAITOK
 #define	GFP_IOFS	M_NOWAIT
 #define	GFP_NOIO	M_NOWAIT
+#define	GFP_NOFS	M_NOWAIT
 #define	GFP_DMA32	__GFP_DMA32
 #define	GFP_TEMPORARY	M_NOWAIT
 #define	GFP_NATIVE_MASK	(M_NOWAIT | M_WAITOK | M_USE_RESERVE | M_ZERO)
@@ -98,8 +97,8 @@ extern void *linux_page_address(struct page *);
 /*
  * Page management for unmapped pages:
  */
-extern vm_page_t linux_alloc_pages(gfp_t flags, unsigned int order);
-extern void linux_free_pages(vm_page_t page, unsigned int order);
+extern struct page *linux_alloc_pages(gfp_t flags, unsigned int order);
+extern void linux_free_pages(struct page *page, unsigned int order);
 void *linuxkpi_page_frag_alloc(struct page_frag_cache *, size_t, gfp_t);
 void linuxkpi_page_frag_free(void *);
 void linuxkpi__page_frag_cache_drain(struct page *, size_t);
@@ -137,6 +136,12 @@ __free_page(struct page *page)
 {
 
 	linux_free_pages(page, 0);
+}
+
+static inline struct page *
+dev_alloc_pages(unsigned int order)
+{
+	return (linux_alloc_pages(GFP_ATOMIC, order));
 }
 
 /*

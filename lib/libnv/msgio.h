@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2013 The FreeBSD Foundation
  * All rights reserved.
@@ -29,8 +29,6 @@
  * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
- *
- * $FreeBSD: 13592e4cd0fb30a3243ecab3bf9caccb4dbc754b $
  */
 
 #ifndef	_MSGIO_H_
@@ -47,6 +45,6 @@ int fd_send(int sock, const int *fds, size_t nfds);
 int fd_recv(int sock, int *fds, size_t nfds);
 
 int buf_send(int sock, void *buf, size_t size);
-int buf_recv(int sock, void *buf, size_t size);
+int buf_recv(int sock, void *buf, size_t size, int flags);
 
 #endif	/* !_MSGIO_H_ */

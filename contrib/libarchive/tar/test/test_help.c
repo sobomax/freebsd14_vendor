@@ -23,7 +23,6 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 #include "test.h"
-__FBSDID("$FreeBSD: 0e7d1c97ea6274882b0c63f46b840347e0f9d4f1 $");
 
 /*
  * Test that "--help", "-h", and "-W help" options all work and

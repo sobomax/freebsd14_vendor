@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2006 Shteryana Shopova <syrinx@FreeBSD.org>
  * All rights reserved.
@@ -26,8 +26,6 @@
  * SUCH DAMAGE.
  *
  * Bridge MIB implementation for SNMPd.
- *
- * $FreeBSD: 65f7b8e85cc8ebec2d95ab993a9e8971cbb2c18e $
  */
 
 #include <sys/param.h>

@@ -11,9 +11,6 @@
  * ====================================================
  */
 
-#include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 4e3b28311e798ba016bb446431704bd255849a9f $");
-
 /*
  * See e_cosh.c for complete comments.
  *

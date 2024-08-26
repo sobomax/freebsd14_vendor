@@ -37,9 +37,6 @@
 #if defined(LIBC_SCCS) && !defined(lint)
 static char sccsid[] = "@(#)strtok.c	8.1 (Berkeley) 6/4/93";
 #endif /* LIBC_SCCS and not lint */
-#include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 46e40bfa4a61f77b065da8c0ea4c5d3b4f1f044f $");
-
 #include <stddef.h>
 #ifdef DEBUG_STRTOK
 #include <stdio.h>

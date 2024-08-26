@@ -1,4 +1,3 @@
-# $FreeBSD: b31cb73b4e465c4ad97c157e2e177b93544ae6f8 $
 
 .PATH: ${SRCTOP}/sys/dev/mem
 .PATH: ${SRCTOP}/sys/${MACHINE}/${MACHINE}

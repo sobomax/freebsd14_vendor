@@ -30,7 +30,6 @@
 # SUCH DAMAGE.
 #
 #	@(#)newvers.sh	8.1 (Berkeley) 4/20/94
-# $FreeBSD: 516e92c136fed84538f8d620eac8e09ae0405231 $
 
 # Command line options:
 #
@@ -53,19 +52,31 @@
 #
 
 TYPE="FreeBSD"
-REVISION="13.2"
-BRANCH="RELEASE-p12"
+REVISION="14.1"
+BRANCH="RELEASE-p3"
 if [ -n "${BRANCH_OVERRIDE}" ]; then
 	BRANCH=${BRANCH_OVERRIDE}
 fi
-RELEASE="${REVISION}-${BRANCH}"
-VERSION="${TYPE} ${RELEASE}"
+unset RELEASE
+unset VERSION
 
 if [ -z "${SYSDIR}" ]; then
-    SYSDIR=$(dirname $0)/..
+	SYSDIR=$(dirname $0)/..
 fi
 
-RELDATE=$(awk '/__FreeBSD_version.*propagated to newvers/ {print $3}' ${PARAMFILE:-${SYSDIR}/sys/param.h})
+# allow random overrides
+while :
+do
+	case "$1" in
+	*=*) eval "$1"; shift;;
+	*) break;;
+	esac
+done
+
+RELEASE="${RELEASE:-${REVISION}-${BRANCH}}"
+VERSION="${VERSION:-${TYPE} ${RELEASE}}"
+
+RELDATE=$(awk '/^#define[[:space:]]*__FreeBSD_version/ {print $3}' ${PARAMFILE:-${SYSDIR}/sys/param.h})
 
 if [ -r "${SYSDIR}/../COPYRIGHT" ]; then
 	year=$(sed -Ee '/^Copyright .* The FreeBSD Project/!d;s/^.*1992-([0-9]*) .*$/\1/g' ${SYSDIR}/../COPYRIGHT)
@@ -206,15 +217,6 @@ for dir in /usr/bin /usr/local/bin; do
 		fi
 	fi
 done
-
-if [ -z "${svnversion}" ] && [ -x /usr/bin/svnliteversion ] ; then
-	/usr/bin/svnliteversion $(realpath ${0}) >/dev/null 2>&1
-	if [ $? -eq 0 ]; then
-		svnversion=/usr/bin/svnliteversion
-	else
-		svnversion=
-	fi
-fi
 
 if findvcs .git; then
 	for dir in /usr/bin /usr/local/bin; do

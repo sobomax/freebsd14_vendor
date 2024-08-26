@@ -1,4 +1,3 @@
-# $FreeBSD: 8c62ffd2b570a5c2859397de52bf0858edb50eb8 $
 
 f() {
 	trap 'return 42' USR1

@@ -24,8 +24,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: fd6a19ad1bea340397d4743d1accff2efb60942f $");
-
 #include <libsecureboot.h>
 
 #include "decode.h"

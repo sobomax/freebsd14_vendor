@@ -1,4 +1,3 @@
-# $FreeBSD: 17fe6783b3cbe324e339f4e834de5178e7007289 $
 
 .PATH: ${SRCTOP}/contrib/ntp/sntp/libopts
 

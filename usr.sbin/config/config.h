@@ -29,7 +29,6 @@
  * SUCH DAMAGE.
  *
  *	@(#)config.h	8.1 (Berkeley) 6/6/93
- * $FreeBSD: a1591486b390006935d7af3d5433ff104abda625 $
  */
 
 /*
@@ -40,6 +39,62 @@
 #include <stdbool.h>
 #include <stdlib.h>
 #include <string.h>
+
+#ifdef __cplusplus
+#include <string>
+
+class configword {
+private:
+	std::string	cw_word;
+	bool		cw_eof;
+	bool		cw_eol;
+public:
+	configword() : cw_word(""), cw_eof(false), cw_eol(false) {}
+	configword(std::string &&word) : cw_word(word), cw_eof(false), cw_eol(false) {}
+
+	bool eof() const {
+		return (cw_eof);
+	}
+
+	bool eol() const {
+		return (cw_eol);
+	}
+
+	configword &eof(bool eof) {
+		cw_eof = eof;
+		return (*this);
+	}
+
+	configword &eol(bool eol) {
+		cw_eol = eol;
+		return (*this);
+	}
+
+	char operator[](int idx) {
+		return (cw_word[idx]);
+	}
+
+	operator const char*() const {
+		return (cw_word.c_str());
+	}
+
+	const std::string &operator*() const {
+		return (cw_word);
+	}
+
+	const std::string *operator->() const {
+		return (&cw_word);
+	}
+};
+
+/*
+ * Is it ugly to limit these to C++ files? Yes.
+ */
+configword get_word(FILE *);
+configword get_quoted_word(FILE *);
+#endif
+
+__BEGIN_DECLS
 
 struct cfgfile {
 	STAILQ_ENTRY(cfgfile)	cfg_next;
@@ -69,7 +124,6 @@ struct files_name {
  * Types.
  */
 #define NORMAL		1
-#define	PROFILING	3
 #define NODEPEND	4
 #define LOCAL		5
 #define DEVDONE		0x80000000
@@ -184,13 +238,12 @@ extern char	kernconfstr[];
 extern int	do_trace;
 extern int	incignore;
 
-char	*get_word(FILE *);
-char	*get_quoted_word(FILE *);
 char	*path(const char *);
 char	*raisestr(char *);
 void	remember(const char *);
 void	moveifchanged(const char *, const char *);
 int	yylex(void);
+int	yyparse(void);
 void	options(void);
 void	makefile(void);
 void	makeenv(void);
@@ -210,7 +263,6 @@ extern STAILQ_HEAD(file_list_head, file_list) ftab;
 
 extern STAILQ_HEAD(files_name_head, files_name) fntab;
 
-extern int	profiling;
 extern int	debugging;
 extern int	found_defaults;
 
@@ -219,6 +271,8 @@ extern int	versreq;
 
 extern char *PREFIX;		/* Config file name - for error messages */
 extern char srcdir[];		/* root of the kernel source tree */
+
+__END_DECLS;
 
 #define eq(a,b)	(!strcmp(a,b))
 #define ns(s)	strdup(s)

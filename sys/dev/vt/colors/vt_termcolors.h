@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2013 The FreeBSD Foundation
  *
@@ -26,9 +26,9 @@
  * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
- *
- * $FreeBSD: 3fc99ee9743f7ea62b50b40974e08b895deddfce $
  */
+
+struct fb_info;
 
 enum vt_color_format {
 	COLOR_FORMAT_BW = 0,
@@ -57,6 +57,6 @@ static const int cons_to_vga_colors[NCOLORS] = {
 	8, 12, 10, 14,  9, 13, 11, 15
 };
 
-/* Helper to fill color map used by driver */
-int vt_generate_cons_palette(uint32_t *palette, int format, uint32_t rmax,
+/* Helper to fill color map and set RGB offsets used by driver */
+int vt_config_cons_colors(struct fb_info *info, int format, uint32_t rmax,
     int roffset, uint32_t gmax, int goffset, uint32_t bmax, int boffset);

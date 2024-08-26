@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2013 The FreeBSD Foundation
  *
@@ -29,8 +29,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 2796d2e9384fee2aa08f8e4c46a1017ac5083599 $");
-
 #include "opt_capsicum.h"
 
 #include <sys/param.h>
@@ -104,7 +102,7 @@ freebsd32_cap_ioctls_get(struct thread *td,
 	fdp = td->td_proc->p_fd;
 	FILEDESC_SLOCK(fdp);
 
-	if (fget_locked(fdp, fd) == NULL) {
+	if (fget_noref(fdp, fd) == NULL) {
 		error = EBADF;
 		goto out;
 	}
@@ -119,9 +117,10 @@ freebsd32_cap_ioctls_get(struct thread *td,
 	cmds = fdep->fde_ioctls;
 	if (cmds32 != NULL && cmds != NULL) {
 		for (i = 0; i < MIN(fdep->fde_nioctls, maxcmds); i++) {
-			error = suword32(&cmds32[i], cmds[i]);
-			if (error != 0)
+			if (suword32(&cmds32[i], cmds[i]) != 0) {
+				error = EFAULT;
 				goto out;
+			}
 		}
 	}
 	if (fdep->fde_nioctls == -1)

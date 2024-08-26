@@ -7,7 +7,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: fa343b4a767f8c9d900c850e9610f4ed780bfe3a $");
 #include <dev/aic7xxx/aic79xx_osm.h>
 
 static ahd_reg_parse_entry_t MODE_PTR_parse_table[] = {

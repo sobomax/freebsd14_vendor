@@ -21,14 +21,10 @@
  * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
- *
- * $FreeBSD: b48e491a4e2f45ae7f7efea441cec26cdf9cf156 $
  */
 
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: b48e491a4e2f45ae7f7efea441cec26cdf9cf156 $");
-
 #include <sys/param.h>
 #include <sys/systm.h>
 #include <sys/kernel.h>
@@ -61,6 +57,14 @@ linuxkpi_unregister_shrinker(struct shrinker *s)
 
 	sx_xlock(&sx_shrinker);
 	TAILQ_REMOVE(&lkpi_shrinkers, s, next);
+	sx_xunlock(&sx_shrinker);
+}
+
+void
+linuxkpi_synchronize_shrinkers(void)
+{
+
+	sx_xlock(&sx_shrinker);
 	sx_xunlock(&sx_shrinker);
 }
 

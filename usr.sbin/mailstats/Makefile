@@ -1,5 +1,4 @@
 #	@(#)Makefile	8.2 (Berkeley) 9/21/96
-# $FreeBSD: b8dd89225551e51b95da3dfbadf2e7f464be58d0 $
 
 SENDMAIL_DIR= ${SRCTOP}/contrib/sendmail
 .PATH: ${SENDMAIL_DIR}/mailstats
@@ -28,3 +27,5 @@ sm_os.h: ${SENDMAIL_DIR}/include/sm/os/sm_os_freebsd.h .NOMETA
 	ln -sf ${.ALLSRC} ${.TARGET}
 
 .include <bsd.prog.mk>
+
+CWARNFLAGS+= ${NO_WDEPRECATED_NON_PROTOTYPE}

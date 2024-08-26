@@ -26,8 +26,6 @@
  * THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- *
- * $FreeBSD: 94a912e99167dd0d47af2477e2d023b99e3a44a8 $
  */
 
 #ifndef _SYS_IMGACT_ELF_H_
@@ -83,13 +81,12 @@ typedef struct {
 	int brand;
 	int machine;
 	const char *compat_3_brand;	/* pre Binutils 2.10 method (FBSD 3) */
-	const char *emul_path;
 	const char *interp_path;
 	struct sysentvec *sysvec;
 	const char *interp_newpath;
 	int flags;
 	Elf_Brandnote *brand_note;
-	boolean_t	(*header_supported)(struct image_params *,
+	bool		(*header_supported)(struct image_params *,
 	    int32_t *, uint32_t *);
 		/* High 8 bits of flags is private to the ABI */
 #define	BI_CAN_EXEC_DYN		0x0001
@@ -103,6 +100,7 @@ __ElfType(Brandinfo);
 
 #define	MAX_BRANDS		8
 #define	FREEBSD_ABI_VENDOR	"FreeBSD"
+#define	GNU_ABI_VENDOR		"GNU"
 
 typedef void (*outfunc_t)(void *, struct sbuf *, size_t *);
 
@@ -112,7 +110,7 @@ struct sseg_closure {
 	size_t size;            /* Total size of all writable segments. */
 };
 
-int	__elfN(brand_inuse)(Elf_Brandinfo *entry);
+bool	__elfN(brand_inuse)(Elf_Brandinfo *entry);
 int	__elfN(insert_brand_entry)(Elf_Brandinfo *entry);
 int	__elfN(remove_brand_entry)(Elf_Brandinfo *entry);
 int	__elfN(freebsd_fixup)(uintptr_t *, struct image_params *);
@@ -125,6 +123,9 @@ void	__elfN(prepare_notes)(struct thread *, struct note_info_list *,
 void	__elfN(size_segments)(struct thread *, struct sseg_closure *, int);
 size_t	__elfN(register_note)(struct thread *, struct note_info_list *,
 	    int, outfunc_t, void *);
+bool	__elfN(parse_notes)(struct image_params *, Elf_Note *, const char *,
+	    const Elf_Phdr *, bool (*)(const Elf_Note *, void *, bool *),
+	    void *);
 
 /* Machine specific function to dump per-thread information. */
 void	__elfN(dump_thread)(struct thread *, void *, size_t *);

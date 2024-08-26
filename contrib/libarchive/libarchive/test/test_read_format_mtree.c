@@ -24,7 +24,6 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 #include "test.h"
-__FBSDID("$FreeBSD: 500fd5384a5d837c81fa5e9aabaeecb69e78843f $");
 
 static void
 test_read_format_mtree1(void)

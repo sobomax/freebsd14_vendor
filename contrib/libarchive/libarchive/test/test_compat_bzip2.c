@@ -23,7 +23,6 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 #include "test.h"
-__FBSDID("$FreeBSD: 21417be0783f5b0f6705234bfe4b645935ee7d78 $");
 
 /*
  * Verify our ability to read sample files compatibly with bunzip2.

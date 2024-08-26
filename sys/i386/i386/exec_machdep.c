@@ -44,8 +44,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: a3fc0178d32264602b78e7c4602af378b857d9d5 $");
-
 #include "opt_cpu.h"
 #include "opt_ddb.h"
 #include "opt_kstack_pages.h"
@@ -114,6 +112,10 @@ static void freebsd4_sendsig(sig_t catcher, ksiginfo_t *, sigset_t *mask);
 #endif
 
 extern struct sysentvec elf32_freebsd_sysvec;
+
+_Static_assert(sizeof(mcontext_t) == 640, "mcontext_t size incorrect");
+_Static_assert(sizeof(ucontext_t) == 704, "ucontext_t size incorrect");
+_Static_assert(sizeof(siginfo_t) == 64, "siginfo_t size incorrect");
 
 /*
  * Send an interrupt to process.
@@ -233,8 +235,8 @@ osendsig(sig_t catcher, ksiginfo_t *ksi, sigset_t *mask)
 	}
 
 	regs->tf_esp = (int)fp;
-	if (p->p_sysent->sv_sigcode_base != 0) {
-		regs->tf_eip = p->p_sysent->sv_sigcode_base + szsigcode -
+	if (PROC_HAS_SHP(p)) {
+		regs->tf_eip = PROC_SIGCODE(p) + szsigcode -
 		    szosigcode;
 	} else {
 		/* a.out sysentvec does not use shared page */
@@ -256,7 +258,7 @@ osendsig(sig_t catcher, ksiginfo_t *ksi, sigset_t *mask)
 static void
 freebsd4_sendsig(sig_t catcher, ksiginfo_t *ksi, sigset_t *mask)
 {
-	struct sigframe4 sf, *sfp;
+	struct freebsd4_sigframe sf, *sfp;
 	struct proc *p;
 	struct thread *td;
 	struct sigacts *psp;
@@ -291,13 +293,13 @@ freebsd4_sendsig(sig_t catcher, ksiginfo_t *ksi, sigset_t *mask)
 	/* Allocate space for the signal handler context. */
 	if ((td->td_pflags & TDP_ALTSTACK) != 0 && !oonstack &&
 	    SIGISMEMBER(psp->ps_sigonstack, sig)) {
-		sfp = (struct sigframe4 *)((uintptr_t)td->td_sigstk.ss_sp +
-		    td->td_sigstk.ss_size - sizeof(struct sigframe4));
+		sfp = (struct freebsd4_sigframe *)((uintptr_t)td->td_sigstk.ss_sp +
+		    td->td_sigstk.ss_size - sizeof(struct freebsd4_sigframe));
 #if defined(COMPAT_43)
 		td->td_sigstk.ss_flags |= SS_ONSTACK;
 #endif
 	} else
-		sfp = (struct sigframe4 *)regs->tf_esp - 1;
+		sfp = (struct freebsd4_sigframe *)regs->tf_esp - 1;
 
 	/* Build the argument list for the signal handler. */
 	sf.sf_signum = sig;
@@ -359,7 +361,7 @@ freebsd4_sendsig(sig_t catcher, ksiginfo_t *ksi, sigset_t *mask)
 	}
 
 	regs->tf_esp = (int)sfp;
-	regs->tf_eip = p->p_sysent->sv_sigcode_base + szsigcode -
+	regs->tf_eip = PROC_SIGCODE(p) + szsigcode -
 	    szfreebsd4_sigcode;
 	regs->tf_eflags &= ~(PSL_T | PSL_D);
 	regs->tf_cs = _ucodesel;
@@ -521,7 +523,7 @@ sendsig(sig_t catcher, ksiginfo_t *ksi, sigset_t *mask)
 	}
 
 	regs->tf_esp = (int)sfp;
-	regs->tf_eip = p->p_sysent->sv_sigcode_base;
+	regs->tf_eip = PROC_SIGCODE(p);
 	if (regs->tf_eip == 0)
 		regs->tf_eip = PROC_PS_STRINGS(p) - szsigcode;
 	regs->tf_eflags &= ~(PSL_T | PSL_D);
@@ -654,9 +656,9 @@ osigreturn(struct thread *td, struct osigreturn_args *uap)
 int
 freebsd4_sigreturn(struct thread *td, struct freebsd4_sigreturn_args *uap)
 {
-	struct ucontext4 uc;
+	struct freebsd4_ucontext uc;
 	struct trapframe *regs;
-	struct ucontext4 *ucp;
+	struct freebsd4_ucontext *ucp;
 	int cs, eflags, error;
 	ksiginfo_t ksi;
 

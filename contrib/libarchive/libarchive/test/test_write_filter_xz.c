@@ -25,7 +25,6 @@
  */
 
 #include "test.h"
-__FBSDID("$FreeBSD: e2f1ec82142574b5c2cac1ce7318c3732a74c871 $");
 
 /*
  * A basic exercise of xz reading and writing.

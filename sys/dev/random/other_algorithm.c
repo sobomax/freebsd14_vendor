@@ -40,8 +40,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: b74d2ab6b860046f5dc1544a00091d07f2fc9f3a $");
-
 #include <sys/limits.h>
 
 #ifdef _KERNEL

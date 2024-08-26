@@ -1,6 +1,5 @@
 /*
  * This file is in the public domain.
- * $FreeBSD: 6f2b1a17c60c5871db25f35f04a8282a034f4656 $
  */
 
 #include <sys/param.h>

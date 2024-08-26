@@ -33,7 +33,6 @@
  * SUCH DAMAGE.
  *
  *	@(#)cname.h	8.3 (Berkeley) 3/20/94
- * $FreeBSD: 3419181aac97d1d474f13204d600704019755071 $
  */
 
 /* character-name table */

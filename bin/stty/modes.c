@@ -33,8 +33,6 @@ static char sccsid[] = "@(#)modes.c	8.3 (Berkeley) 4/2/94";
 #endif
 #endif /* not lint */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 5cd3061aa44920d47b1a0f1c86e5b1b06594b085 $");
-
 #include <sys/types.h>
 #include <string.h>
 #include "stty.h"
@@ -128,6 +126,8 @@ static const struct modes imodes[] = {
 	{ "-decctlq",	IXANY, 0 },
 	{ "imaxbel",	IMAXBEL, 0 },
 	{ "-imaxbel",	0, IMAXBEL },
+	{ "iutf8",	IUTF8, 0 },
+	{ "-iutf8",	0, IUTF8 },
 	{ NULL,		0, 0 },
 };
 

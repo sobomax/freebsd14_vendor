@@ -47,10 +47,6 @@
  * or implied warranty.
  */
 
-#include <sys/cdefs.h>
-
-__FBSDID("$FreeBSD: 63f515310f9bc5b644eb3b5c22c34600b47fcd66 $");
-
 #ifdef	KRB5
 
 #include <arpa/telnet.h>

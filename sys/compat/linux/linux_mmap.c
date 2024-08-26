@@ -27,16 +27,10 @@
  * THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- *
- * $FreeBSD: 6d91bb575a626d08ef6d2d7878b436819871972e $
  */
 
-#include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 6d91bb575a626d08ef6d2d7878b436819871972e $");
-
-#include <sys/capsicum.h>
+#include <sys/fcntl.h>
 #include <sys/file.h>
-#include <sys/imgact.h>
 #include <sys/ktr.h>
 #include <sys/lock.h>
 #include <sys/mman.h>
@@ -215,12 +209,12 @@ linux_mmap_common(struct thread *td, uintptr_t addr, size_t len, int prot,
 	    (bsd_flags & MAP_EXCL) == 0) {
 		mr_fixed = mr;
 		mr_fixed.mr_flags |= MAP_FIXED | MAP_EXCL;
-		error = kern_mmap_req(td, &mr_fixed);
+		error = kern_mmap(td, &mr_fixed);
 		if (error == 0)
 			goto out;
 	}
 
-	error = kern_mmap_req(td, &mr);
+	error = kern_mmap(td, &mr);
 out:
 	LINUX_CTR2(mmap2, "return: %d (%p)", error, td->td_retval[0]);
 
@@ -230,16 +224,22 @@ out:
 int
 linux_mprotect_common(struct thread *td, uintptr_t addr, size_t len, int prot)
 {
+	int flags = 0;
 
-	/* XXX Ignore PROT_GROWSDOWN and PROT_GROWSUP for now. */
-	prot &= ~(LINUX_PROT_GROWSDOWN | LINUX_PROT_GROWSUP);
-	if ((prot & ~(PROT_READ | PROT_WRITE | PROT_EXEC)) != 0)
+	/* XXX Ignore PROT_GROWSUP for now. */
+	prot &= ~LINUX_PROT_GROWSUP;
+	if ((prot & ~(LINUX_PROT_GROWSDOWN | PROT_READ | PROT_WRITE |
+	    PROT_EXEC)) != 0)
 		return (EINVAL);
+	if ((prot & LINUX_PROT_GROWSDOWN) != 0) {
+		prot &= ~LINUX_PROT_GROWSDOWN;
+		flags |= VM_MAP_PROTECT_GROWSDOWN;
+	}
 
 #if defined(__amd64__)
 	linux_fixup_prot(td, &prot);
 #endif
-	return (kern_mprotect(td, addr, len, prot));
+	return (kern_mprotect(td, addr, len, prot, flags));
 }
 
 /*

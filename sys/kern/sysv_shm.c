@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-4-Clause AND BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-4-Clause AND BSD-2-Clause
  *
  * Copyright (c) 1994 Adam Glass and Charles Hannum.  All rights reserved.
  *
@@ -69,8 +69,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: e1d6fda7e2a364b4bcfdfa495757b7504b6af929 $");
-
 #include "opt_sysvipc.h"
 
 #include <sys/param.h>
@@ -1431,7 +1429,7 @@ freebsd7_freebsd32_shmctl(struct thread *td,
 		struct shminfo shminfo;
 	} u;
 	union {
-		struct shmid_ds32_old shmid_ds32;
+		struct shmid_ds_old32 shmid_ds32;
 		struct shm_info32 shm_info32;
 		struct shminfo32 shminfo32;
 	} u32;

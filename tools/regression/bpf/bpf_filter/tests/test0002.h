@@ -1,7 +1,5 @@
 /*-
  * Test 0002:	BPF_RET+BPF_K
- *
- * $FreeBSD: 15935505d849c91665c32538db38c2687a77f23a $
  */
 
 /* BPF program */

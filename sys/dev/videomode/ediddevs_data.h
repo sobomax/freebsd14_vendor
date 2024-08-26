@@ -1,10 +1,8 @@
-/*	$FreeBSD: e0ad80ab4f9f6669c686d45a7924323bea25aeb0 $	*/
-
 /*
  * THIS FILE AUTOMATICALLY GENERATED.  DO NOT EDIT.
  *
  * generated from:
- *	NetBSD: ediddevs,v 1.1 2006/05/11 01:49:53 gdamore Exp
+ *	NetBSD: ediddevs,v 1.2 2007/03/07 18:47:13 macallan Exp
  */
 
 /*-

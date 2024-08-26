@@ -42,8 +42,6 @@ static char sccsid[] = "@(#)column.c	8.4 (Berkeley) 5/4/95";
 #endif
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: a253d24ca1b33b2a20354f60bf293c3d42d29918 $");
-
 #include <sys/types.h>
 #include <sys/ioctl.h>
 #include <sys/param.h>

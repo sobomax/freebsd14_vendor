@@ -1,4 +1,3 @@
-# $FreeBSD: 09a51e1cdba28777b3d8b1894773ce141a10b856 $
 
 # iconv sources
 .PATH: ${LIBC_SRCTOP}/iconv

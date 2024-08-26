@@ -1,5 +1,4 @@
 #	@(#)Makefile	8.1 (Berkeley) 6/5/93
-# $FreeBSD: 87c47307d59cfb3bd02ff051eede13e1ea0a27da $
 
 PACKAGE=runtime
 PROG=	reboot

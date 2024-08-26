@@ -32,8 +32,6 @@
  * LC_MESSAGES database generation routines for localedef.
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: a25711c4a17bc0e5cfc13cd8bcfa6600982aafb1 $");
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <errno.h>

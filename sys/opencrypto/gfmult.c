@@ -25,8 +25,6 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- *	$FreeBSD: febabfdd4ed59340fef882e9a5da010c2774dbb2 $
- *
  */
 
 #include "gfmult.h"

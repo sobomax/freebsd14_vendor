@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2015-2019 Yandex LLC
  * Copyright (c) 2015 Alexander V. Chernikov <melifaro@FreeBSD.org>
@@ -28,8 +28,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 9616ecb29a0b26e9ce859594373e8e83c683ff65 $");
-
 #include <sys/param.h>
 #include <sys/systm.h>
 #include <sys/counter.h>
@@ -1712,8 +1710,8 @@ nat64lsn_init_instance(struct ip_fw_chain *ch, in_addr_t prefix, int plen)
 		ALIAS_LOCK_INIT(alias);
 	}
 
-        callout_init_mtx(&cfg->periodic, &cfg->periodic_lock, 0);
-        callout_init(&cfg->jcallout, CALLOUT_MPSAFE);
+	callout_init_mtx(&cfg->periodic, &cfg->periodic_lock, 0);
+	callout_init(&cfg->jcallout, CALLOUT_MPSAFE);
 
 	return (cfg);
 }

@@ -23,7 +23,6 @@
  * SUCH DAMAGE.
  */
 
-/* $FreeBSD: bf1bc6229fb84511a3ced689b17307389094b328 $ */
 
 #define LIBNETMAP_NOTHREADSAFE
 #include <libnetmap.h>

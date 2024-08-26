@@ -1,7 +1,7 @@
 /*-
  * CAM request queue management functions.
  *
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 1997 Justin T. Gibbs.
  * All rights reserved.
@@ -29,8 +29,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: d426850577913863d7bc5169d4872e9b9ac0fe46 $");
-
 #include <sys/param.h>
 #include <sys/systm.h>
 #include <sys/types.h>
@@ -46,10 +44,6 @@ static MALLOC_DEFINE(M_CAMQ, "CAM queue", "CAM queue buffers");
 static MALLOC_DEFINE(M_CAMDEVQ, "CAM dev queue", "CAM dev queue buffers");
 static MALLOC_DEFINE(M_CAMCCBQ, "CAM ccb queue", "CAM ccb queue buffers");
 
-static __inline int
-		queue_cmp(cam_pinfo **queue_array, int i, int j);
-static __inline void
-		swap(cam_pinfo **queue_array, int i, int j);
 static void	heap_up(cam_pinfo **queue_array, int new_index);
 static void	heap_down(cam_pinfo **queue_array, int index,
 			  int last_index);
@@ -60,17 +54,16 @@ camq_init(struct camq *camq, int size)
 	bzero(camq, sizeof(*camq));
 	camq->array_size = size;
 	if (camq->array_size != 0) {
-		camq->queue_array = (cam_pinfo**)malloc(size*sizeof(cam_pinfo*),
-							M_CAMQ, M_NOWAIT);
+		/*
+		 * Heap algorithms like everything numbered from 1, so
+		 * allocate one more to account for 0 base.
+		 */
+		camq->queue_array = malloc((size + 1) * sizeof(cam_pinfo*),
+		    M_CAMQ, M_NOWAIT);
 		if (camq->queue_array == NULL) {
 			printf("camq_init: - cannot malloc array!\n");
 			return (1);
 		}
-		/*
-		 * Heap algorithms like everything numbered from 1, so
-		 * offset our pointer into the heap array by one element.
-		 */
-		camq->queue_array--;
 	}
 	return (0);
 }
@@ -85,16 +78,11 @@ void
 camq_fini(struct camq *queue)
 {
 	if (queue->queue_array != NULL) {
-		/*
-		 * Heap algorithms like everything numbered from 1, so
-		 * our pointer into the heap array is offset by one element.
-		 */
-		queue->queue_array++;
 		free(queue->queue_array, M_CAMQ);
 	}
 }
 
-u_int32_t
+uint32_t
 camq_resize(struct camq *queue, int new_size)
 {
 	cam_pinfo **new_array;
@@ -102,8 +90,8 @@ camq_resize(struct camq *queue, int new_size)
 	KASSERT(new_size >= queue->entries, ("camq_resize: "
 	    "New queue size can't accommodate queued entries (%d < %d).",
 	    new_size, queue->entries));
-	new_array = (cam_pinfo **)malloc(new_size * sizeof(cam_pinfo *),
-					 M_CAMQ, M_NOWAIT);
+	new_array = malloc((new_size + 1) * sizeof(cam_pinfo *), M_CAMQ,
+	    M_NOWAIT);
 	if (new_array == NULL) {
 		/* Couldn't satisfy request */
 		return (CAM_RESRC_UNAVAIL);
@@ -114,12 +102,11 @@ camq_resize(struct camq *queue, int new_size)
 	 * by one element.
 	 */
 	if (queue->queue_array != NULL) {
-		queue->queue_array++;
 		bcopy(queue->queue_array, new_array,
-		      queue->entries * sizeof(cam_pinfo *));
+		    (queue->entries + 1) * sizeof(cam_pinfo *));
 		free(queue->queue_array, M_CAMQ);
 	}
-	queue->queue_array = new_array-1;
+	queue->queue_array = new_array;
 	queue->array_size = new_size;
 	return (CAM_REQ_CMP);
 }
@@ -177,7 +164,7 @@ camq_remove(struct camq *queue, int index)
  * element index and restore the Heap(0, num_elements) property.
  */
 void
-camq_change_priority(struct camq *queue, int index, u_int32_t new_priority)
+camq_change_priority(struct camq *queue, int index, uint32_t new_priority)
 {
 	if (new_priority > queue->queue_array[index]->priority) {
 		queue->queue_array[index]->priority = new_priority;
@@ -228,10 +215,10 @@ cam_devq_free(struct cam_devq *devq)
 	free(devq, M_CAMDEVQ);
 }
 
-u_int32_t
+uint32_t
 cam_devq_resize(struct cam_devq *camq, int devices)
 {
-	u_int32_t retval;
+	uint32_t retval;
 
 	retval = camq_resize(&camq->send_queue, devices);
 	return (retval);
@@ -264,7 +251,7 @@ cam_ccbq_free(struct cam_ccbq *ccbq)
 	}
 }
 
-u_int32_t
+uint32_t
 cam_ccbq_resize(struct cam_ccbq *ccbq, int new_size)
 {
 	int delta;

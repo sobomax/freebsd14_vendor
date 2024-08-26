@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2015 Spectra Logic Corporation
  * All rights reserved.
@@ -30,8 +30,6 @@
  * POSSIBILITY OF SUCH DAMAGES.
  *
  * Authors: Ken Merry           (Spectra Logic Corporation)
- *
- * $FreeBSD: 89fc3be716bf530acc340ab460c23642c19fcda7 $
  */
 
 #ifndef _SYS_DISK_ZONE_H_

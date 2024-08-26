@@ -23,9 +23,6 @@
  * SUCH DAMAGE.
  */
 
-#include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 910931e11d58bccfcccb4a9f90c75811f9843d0d $");
-
 #include <lua.h>
 #include "lauxlib.h"
 

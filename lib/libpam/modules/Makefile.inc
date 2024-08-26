@@ -1,4 +1,3 @@
-# $FreeBSD: 87885c36b3501e104dd6aba733f54fbecef4c30c $
 
 PAMDIR=		${SRCTOP}/contrib/openpam
 

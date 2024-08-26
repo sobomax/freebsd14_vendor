@@ -23,7 +23,6 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  */
-/* $FreeBSD: e880304e73798d1ef50e3450c174d2edf608664f $ */
 
 #if defined(__FreeBSD__)
 #include <sys/cdefs.h> /* prerequisite */
@@ -151,6 +150,7 @@ netmap_get_null_na(struct nmreq_header *hdr, struct netmap_adapter **na,
 	nna->up.num_rx_rings = req->nr_rx_rings;
 	nna->up.num_tx_desc = req->nr_tx_slots;
 	nna->up.num_rx_desc = req->nr_rx_slots;
+	nna->up.na_flags = NAF_OFFSETS;
 	error = netmap_attach_common(&nna->up);
 	if (error)
 		goto free_nna;

@@ -1,4 +1,3 @@
-# $FreeBSD: 966927709a061dcce488bb51dd934a17cc686637 $
 
 .include <src.opts.mk>
 
@@ -37,6 +36,7 @@ CFLAGS+=	-I${SRCTOP}/contrib/lutok/include
 CFLAGS+=	-I${SRCTOP}/contrib/sqlite3
 # kyua uses auto_ptr
 CFLAGS+=	-Wno-deprecated-declarations
+CXXSTD=		c++11
 CFLAGS+=	-DHAVE_CONFIG_H
 
 # We compile the kyua libraries as part of the main executable as this saves

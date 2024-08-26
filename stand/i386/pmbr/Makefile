@@ -1,4 +1,3 @@
-# $FreeBSD: e09bb610fc18277e959ad116c23611e606063cb2 $
 
 PROG=	pmbr
 STRIP=

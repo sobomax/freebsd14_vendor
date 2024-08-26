@@ -1,4 +1,3 @@
-# $FreeBSD: f6ce3b313f31843c5e70bcc27e7220e32fd93f1a $
 
 .PATH:		${SRCTOP}/sys/dev/isl
 KMOD		= isl

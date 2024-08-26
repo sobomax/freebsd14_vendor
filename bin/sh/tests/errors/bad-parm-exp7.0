@@ -1,4 +1,3 @@
-# $FreeBSD: b8562fbed47b8d8f7c0980ea9ba0114c5d940cf9 $
 
 v=1
 eval ": $(printf '${v-${\372}}')"

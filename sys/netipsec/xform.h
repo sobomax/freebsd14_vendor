@@ -1,4 +1,3 @@
-/*	$FreeBSD: ff59971cf1331bd9b9306cd88d6fe0ef566f8ec6 $	*/
 /*	$OpenBSD: ip_ipsp.h,v 1.119 2002/03/14 01:27:11 millert Exp $	*/
 /*-
  * The authors of this code are John Ioannidis (ji@tla.org),

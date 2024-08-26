@@ -1,5 +1,4 @@
 # $DragonFly: src/sys/dev/netif/et/Makefile,v 1.1 2007/10/12 14:12:42 sephe Exp $
-# $FreeBSD: d0a15274fe0073b6ac51baa7e5096ee251e2f155 $
 
 .PATH: ${SRCTOP}/sys/dev/et
 

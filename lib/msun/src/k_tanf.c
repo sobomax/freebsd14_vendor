@@ -13,11 +13,6 @@
  * ====================================================
  */
 
-#ifndef INLINE_KERNEL_TANDF
-#include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 5be14458b80c4ee2aee7c734e35eb4623f694489 $");
-#endif
-
 #include "math.h"
 #include "math_private.h"
 

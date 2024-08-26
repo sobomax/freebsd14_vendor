@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 789800075063995e5d0a31a860d9c044a92c3fac $
+ * $FreeBSD: aec85c42d02a58f74c81af9f576b0dedc642ccdf $
  */
 
 #ifndef _IWL_MEI_IWL_MEI_H
@@ -50,7 +50,12 @@ struct iwl_mei_nvm {
 };
 
 struct iwl_mei_conn_info {
-	int __dummy;
+	uint8_t				lp_state;
+	uint8_t				band;
+	uint8_t				channel;
+	uint8_t				ssid_len;
+	uint8_t				bssid[ETH_ALEN];
+	uint8_t				ssid[IEEE80211_MAX_SSID_LEN];
 };
 
 struct iwl_mei_ops {
@@ -132,6 +137,22 @@ iwl_mei_start_unregister(void)
 static __inline void
 iwl_mei_unregister_complete(void)
 {
+}
+
+static __inline void
+iwl_mei_device_state(bool up __unused)
+{
+}
+
+static __inline void
+iwl_mei_alive_notif(bool x __unused)
+{
+}
+
+static __inline bool
+iwl_mei_pldr_req(void)
+{
+	return (false);
 }
 #endif
 

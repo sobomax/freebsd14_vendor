@@ -24,9 +24,6 @@
  * SUCH DAMAGE.
  */
 
-#include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 0951ed6618e4025ca5a2b8c438ff08590349d714 $");
-
 /*
  * U-Boot-specific module functionality.
  */

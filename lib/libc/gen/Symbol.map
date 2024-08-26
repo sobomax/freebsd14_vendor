@@ -1,7 +1,3 @@
-/*
- * $FreeBSD: 0a20a41d0e20482ed48b4aeb464cdb263d96d538 $
- */
-
 FBSD_1.0 {
 	__xuname;
 	pthread_atfork;
@@ -111,6 +107,7 @@ FBSD_1.0 {
 	execv;
 	execvp;
 	execvP;
+	fabs;
 	fmtcheck;
 	fmtmsg;
 	fnmatch;
@@ -185,10 +182,12 @@ FBSD_1.0 {
 	endusershell;
 	setusershell;
 	getvfsbyname;
+	__nan;
 	__isnan;
 	isnan;
 	__isnanf;
 	isnanf;
+	__infinity;
 	__isinf;
 	isinf;
 	__isinff;
@@ -200,6 +199,7 @@ FBSD_1.0 {
 	ldexp;
 	lockf;
 	lrand48;
+	makecontext;
 	modf;
 	mrand48;
 	nice;
@@ -221,6 +221,12 @@ FBSD_1.0 {
 	group_from_gid;
 	setdomainname;
 	sethostname;
+	_setjmp;
+	_longjmp;
+	setjmp;
+	longjmp;
+	sigsetjmp;
+	siglongjmp;
 	longjmperror;
 	getmode;
 	setmode;
@@ -427,6 +433,8 @@ FBSD_1.6 {
 	eventfd_write;
 	getlogin_r;
 	memalign;
+	memfd_create;
+	pthread_getname_np;
 	scandir_b;
 	sigandset;
 	sigisemptyset;
@@ -436,6 +444,7 @@ FBSD_1.6 {
 };
 
 FBSD_1.7 {
+	 kqueue1;
 	 posix_spawn_file_actions_addchdir_np;
 	 posix_spawn_file_actions_addclosefrom_np;
 	 posix_spawn_file_actions_addfchdir_np;
@@ -446,6 +455,12 @@ FBSD_1.7 {
 	 versionsort;
 	 __cpuset_alloc;
 	 __cpuset_free;
+};
+
+FBSD_1.8 {
+	aio_read2;
+	aio_write2;
+	execvpe;
 };
 
 FBSDprivate_1.0 {
@@ -573,4 +588,5 @@ FBSDprivate_1.0 {
 	__fillcontextx;
 	__fillcontextx2;
 	__getcontextx_size;
+	__makecontext;
 };

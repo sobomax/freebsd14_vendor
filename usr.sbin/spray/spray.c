@@ -30,11 +30,6 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef lint
-static const char rcsid[] =
-  "$FreeBSD: d8d25ef8a33c81bbb0554579034075d6c784f954 $";
-#endif /* not lint */
-
 #include <err.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -47,7 +42,7 @@ static const char rcsid[] =
 #define SPRAYOVERHEAD	86
 #endif
 
-static void usage(void);
+static void usage(void) __dead2;
 static void print_xferstats(unsigned int, int, double);
 
 /* spray buffer */

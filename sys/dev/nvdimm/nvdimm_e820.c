@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2019 Dell EMC Isilon
  *
@@ -26,8 +26,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 0ba8cfbc7868a26d151cf6f1c36cb54f389fd464 $");
-
 #include <sys/param.h>
 #include <sys/bio.h>
 #include <sys/bitstring.h>
@@ -356,8 +354,6 @@ static driver_t	nvdimm_e820_driver = {
 	sizeof(struct nvdimm_e820_bus),
 };
 
-static devclass_t nvdimm_e820_devclass;
-
 static int
 nvdimm_e820_chainevh(struct module *m, int e, void *arg __unused)
 {
@@ -367,7 +363,7 @@ nvdimm_e820_chainevh(struct module *m, int e, void *arg __unused)
 
 	switch (e) {
 	case MOD_UNLOAD:
-		dc = nvdimm_e820_devclass;
+		dc = devclass_find(nvdimm_e820_driver.name);
 		maxunit = devclass_get_maxunit(dc);
 		for (i = 0; i < maxunit; i++) {
 			dev = devclass_get_device(dc, i);
@@ -390,5 +386,5 @@ nvdimm_e820_chainevh(struct module *m, int e, void *arg __unused)
 	return (0);
 }
 
-DRIVER_MODULE(nvdimm_e820, nexus, nvdimm_e820_driver, nvdimm_e820_devclass,
+DRIVER_MODULE(nvdimm_e820, nexus, nvdimm_e820_driver,
     nvdimm_e820_chainevh, NULL);

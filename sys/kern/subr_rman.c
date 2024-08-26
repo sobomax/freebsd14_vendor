@@ -58,8 +58,6 @@
 #include "opt_ddb.h"
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 07d056c528457bf1cb9cedcb649e6a81fbf46a2c $");
-
 #include <sys/param.h>
 #include <sys/systm.h>
 #include <sys/kernel.h>
@@ -79,11 +77,7 @@ __FBSDID("$FreeBSD: 07d056c528457bf1cb9cedcb649e6a81fbf46a2c $");
 /*
  * We use a linked list rather than a bitmap because we need to be able to
  * represent potentially huge objects (like all of a processor's physical
- * address space).  That is also why the indices are defined to have type
- * `unsigned long' -- that being the largest integral type in ISO C (1990).
- * The 1999 version of C allows `long long'; we may need to switch to that
- * at some point in the future, particularly if we want to support 36-bit
- * addresses on IA32 hardware.
+ * address space).
  */
 struct resource_i {
 	struct resource		r_r;
@@ -1120,7 +1114,7 @@ DB_SHOW_COMMAND(rman, db_show_rman)
 	}
 }
 
-DB_SHOW_COMMAND(rmans, db_show_rmans)
+DB_SHOW_COMMAND_FLAGS(rmans, db_show_rmans, DB_CMD_MEMSAFE)
 {
 	struct rman *rm;
 
@@ -1138,5 +1132,5 @@ DB_SHOW_ALL_COMMAND(rman, db_show_all_rman)
 		dump_rman(rm);
 	}
 }
-DB_SHOW_ALIAS(allrman, db_show_all_rman);
+DB_SHOW_ALIAS_FLAGS(allrman, db_show_all_rman, DB_CMD_MEMSAFE);
 #endif

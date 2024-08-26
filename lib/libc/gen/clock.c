@@ -31,8 +31,6 @@
 
 #include <sys/cdefs.h>
 __SCCSID("@(#)clock.c	8.1 (Berkeley) 6/4/93");
-__FBSDID("$FreeBSD: d20bbf878f5049f337c8576ffb2f8497c0b6cd2e $");
-
 #include <sys/param.h>
 #include <sys/time.h>
 #include <sys/resource.h>

@@ -30,7 +30,6 @@
 .\" SUCH DAMAGE.
 .\"
 .\"     @(#)kvm.3	8.1 (Berkeley) 6/4/93
-.\" $FreeBSD: fbddcd475cc8def840bd6c7a9fe910b8330a741f $
 .\"
 .Dd February 5, 2020
 .Dt KVM 3
@@ -161,3 +160,12 @@ and
 .Xr sysctl 3 ,
 .Xr kmem 4 ,
 .Xr mem 4
+.Sh HISTORY
+The
+.Fn kvm_native ,
+.Fn kvm_nlist2 ,
+.Fn kvm_open2 ,
+and
+.Fn kvm_read2
+functions first appeared in
+.Fx 11.0 .

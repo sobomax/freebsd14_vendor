@@ -23,7 +23,6 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 #include "test.h"
-__FBSDID("$FreeBSD: 784e0858431b8ea37c03d38f7378f6a4b670d644 $");
 
 /*
  * Unpack the archive in a new dir.

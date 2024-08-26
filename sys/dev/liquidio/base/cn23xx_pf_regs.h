@@ -30,7 +30,6 @@
  *   (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  *   OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-/*$FreeBSD: d0ff22838b1b2f8a27e0e39dc302351082bdf45f $*/
 
 /* \file cn23xx_pf_regs.h
  * \brief Host Driver: Register Address and Register Mask values for

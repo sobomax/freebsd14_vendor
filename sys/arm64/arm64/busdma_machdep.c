@@ -32,8 +32,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 5d42d4e58c223518e1e3a028c3c131ac595cc851 $");
-
 #include <sys/param.h>
 #include <sys/systm.h>
 #include <sys/malloc.h>
@@ -46,45 +44,11 @@ __FBSDID("$FreeBSD: 5d42d4e58c223518e1e3a028c3c131ac595cc851 $");
 #include <sys/uio.h>
 #include <vm/vm.h>
 #include <vm/vm_extern.h>
+#include <vm/vm_phys.h>
 #include <vm/pmap.h>
 
 #include <machine/bus.h>
 #include <arm64/include/bus_dma_impl.h>
-
-/*
- * Convenience function for manipulating driver locks from busdma (during
- * busdma_swi, for example).
- */
-void
-busdma_lock_mutex(void *arg, bus_dma_lock_op_t op)
-{
-	struct mtx *dmtx;
-
-	dmtx = (struct mtx *)arg;
-	switch (op) {
-	case BUS_DMA_LOCK:
-		mtx_lock(dmtx);
-		break;
-	case BUS_DMA_UNLOCK:
-		mtx_unlock(dmtx);
-		break;
-	default:
-		panic("Unknown operation 0x%x for busdma_lock_mutex!", op);
-	}
-}
-
-/*
- * dflt_lock should never get called.  It gets put into the dma tag when
- * lockfunc == NULL, which is only valid if the maps that are associated
- * with the tag are meant to never be defered.
- * XXX Should have a way to identify which driver is responsible here.
- */
-void
-bus_dma_dflt_lock(void *arg, bus_dma_lock_op_t op)
-{
-
-	panic("driver error: busdma dflt_lock called");
-}
 
 /*
  * Return true if a match is made.
@@ -154,7 +118,7 @@ common_bus_dma_tag_create(struct bus_dma_tag_common *parent,
 		common->lockfunc = lockfunc;
 		common->lockfuncarg = lockfuncarg;
 	} else {
-		common->lockfunc = bus_dma_dflt_lock;
+		common->lockfunc = _busdma_dflt_lock;
 		common->lockfuncarg = NULL;
 	}
 
@@ -179,8 +143,11 @@ common_bus_dma_tag_create(struct bus_dma_tag_common *parent,
 			common->filterarg = parent->filterarg;
 			common->parent = parent->parent;
 		}
+		common->domain = parent->domain;
 		atomic_add_int(&parent->ref_count, 1);
 	}
+	common->domain = vm_phys_domain_match(common->domain, 0ul,
+	    common->lowaddr);
 	*dmat = common;
 	return (0);
 }
@@ -197,6 +164,10 @@ bus_dma_tag_create(bus_dma_tag_t parent, bus_size_t alignment,
 {
 	struct bus_dma_tag_common *tc;
 	int error;
+
+	/* Filters are deprecated, emit a warning. */
+	if (filter != NULL || filterarg != NULL)
+		printf("Warning: use of filters is deprecated; see busdma(9)\n");
 
 	if (parent == NULL) {
 		error = bus_dma_bounce_impl.tag_create(parent, alignment,
@@ -246,6 +217,13 @@ bus_dma_tag_destroy(bus_dma_tag_t dmat)
 int
 bus_dma_tag_set_domain(bus_dma_tag_t dmat, int domain)
 {
+	struct bus_dma_tag_common *tc;
 
-	return (0);
+	tc = (struct bus_dma_tag_common *)dmat;
+	domain = vm_phys_domain_match(domain, 0ul, tc->lowaddr);
+	/* Only call the callback if it changes. */
+	if (domain == tc->domain)
+		return (0);
+	tc->domain = domain;
+	return (tc->impl->tag_set_domain(dmat));
 }

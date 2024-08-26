@@ -23,7 +23,6 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 #include "test.h"
-__FBSDID("$FreeBSD: 6dd8fd9b0f7d109a5568d6fa164f2d8003b7abc4 $");
 
 #define UMASK 022
 

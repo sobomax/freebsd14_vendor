@@ -27,9 +27,6 @@
  * The parts of kern_tc.c and other timekeeping bits of the kernel.
  */
 
-#include <sys/cdefs.h>
-__FBSDID("$FreeBSD: c34cbfc92af1cc4dd79738c9eb548df13e2c36b4 $");
-
 #include <sys/time.h>
 
 volatile time_t time_second = 1;

@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2002 Doug Rabson
  * All rights reserved.
@@ -27,7 +27,5 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 3c1181ff9a5cc100d0346f65748bca457626aee5 $");
-
 #define __ELF_WORD_SIZE 64
 #include <kern/imgact_elf.c>

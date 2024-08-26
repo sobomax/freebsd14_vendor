@@ -27,8 +27,6 @@
  */
 
 #include "archive_platform.h"
-__FBSDID("$FreeBSD: ec29c5c418e4e482cb32dbc0694d957704718bc5 $");
-
 
 #ifdef HAVE_ERRNO_H
 #include <errno.h>
@@ -389,7 +387,7 @@ archive_write_gnutar_header(struct archive_write *a,
 	if (r != 0) {
 		if (errno == ENOMEM) {
 			archive_set_error(&a->archive, ENOMEM,
-			    "Can't allocate memory for Pathame");
+			    "Can't allocate memory for pathname");
 			ret = ARCHIVE_FATAL;
 			goto exit_write_header;
 		}

@@ -1,4 +1,3 @@
-# $FreeBSD: a2cf5fb7712cb1d5112f2ce01616283b9ecb5de9 $
 
 REGRESSION_START($1)
 

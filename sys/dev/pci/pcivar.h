@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright 1997, Stefan Esser <se@freebsd.org>
  *
@@ -23,8 +23,6 @@
  * THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- *
- * $FreeBSD: 3a444114027d172d82e43251b43c4940616f6ab6 $
  *
  */
 
@@ -125,6 +123,11 @@ struct pcicfg_msix {
     struct msix_vector *msix_vectors;	/* Array of allocated vectors. */
     struct resource *msix_table_res;	/* Resource containing vector table. */
     struct resource *msix_pba_res;	/* Resource containing PBA. */
+};
+
+struct pci_id_ofw_iommu {
+	uint32_t id;
+	uint32_t xref;
 };
 
 /* Interesting values for HyperTransport */

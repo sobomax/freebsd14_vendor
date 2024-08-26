@@ -34,12 +34,10 @@
  * SUCH DAMAGE.
  *
  *	from: @(#)SYS.h	5.5 (Berkeley) 5/7/91
- * $FreeBSD: 8a3225fa6df5aa2895e5acb7032b6259c31cbceb $
  */
 
 #include <machine/asm.h>
 #include <sys/syscall.h>
-#include <machine/swi.h>
 
 #define SYSTRAP(x)							\
 			mov ip, r7;					\

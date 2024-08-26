@@ -1,6 +1,7 @@
-# $FreeBSD: 76185a2bca494ce761887793e1d0682e7bec15be $
 #
-# Option file for FreeBSD /usr/src builds.
+# Option file for FreeBSD /usr/src builds, at least the userland and boot loader
+# portions of the tree. These options generally chose what parts of the tree to
+# include or omit and are FreeBSD source tree specific.
 #
 # Users define WITH_FOO and WITHOUT_FOO on the command line or in /etc/src.conf
 # and /etc/make.conf files. These translate in the build system to MK_FOO={yes,no}
@@ -51,13 +52,15 @@ __<src.opts.mk>__:
 # BROKEN was selected as the least imperfect one considered at the
 # time. Options are added to BROKEN_OPTIONS list on a per-arch basis.
 # At this time, there's no provision for mutually incompatible options.
+# Options listed in 'REQUIRED_OPTIONS' will be hard-wired to 'yes'; this
+# is intended as a transitional measure while options are in the process
+# of being removed.
 
 __DEFAULT_YES_OPTIONS = \
     ACCT \
     ACPI \
     APM \
     AT \
-    ATM \
     AUDIT \
     AUTHPF \
     AUTOFS \
@@ -72,34 +75,29 @@ __DEFAULT_YES_OPTIONS = \
     BSNMP \
     BZIP2 \
     CALENDAR \
-    CAPSICUM \
     CAROOT \
-    CASPER \
     CCD \
     CDDL \
     CLANG \
     CLANG_BOOTSTRAP \
-    CLANG_IS_CC \
     CLEAN \
     CPP \
     CROSS_COMPILER \
     CRYPT \
     CUSE \
-    CXX \
     CXGBETOOL \
     DIALOG \
     DICT \
     DMAGENT \
+    DTRACE \
     DYNAMICROOT \
     EE \
     EFI \
     ELFTOOLCHAIN_BOOTSTRAP \
     EXAMPLES \
-    FDT \
     FILE \
     FINGER \
     FLOPPY \
-    FMTREE \
     FORTH \
     FP_LIBC \
     FREEBSD_UPDATE \
@@ -125,14 +123,13 @@ __DEFAULT_YES_OPTIONS = \
     LDNS \
     LDNS_UTILS \
     LEGACY_CONSOLE \
-    LIBCPLUSPLUS \
     LLD \
     LLD_BOOTSTRAP \
     LLD_IS_LD \
     LLVM_COV \
     LLVM_CXXFILT \
-    LLVM_TARGET_ALL \
     LOADER_GELI \
+    LOADER_KBOOT \
     LOADER_LUA \
     LOADER_OFW \
     LOADER_UBOOT \
@@ -144,14 +141,15 @@ __DEFAULT_YES_OPTIONS = \
     MAIL \
     MAILWRAPPER \
     MAKE \
-    MALLOC_PRODUCTION \
     MLX5TOOL \
-    NDIS \
     NETCAT \
     NETGRAPH \
+    NETLINK \
+    NETLINK_SUPPORT \
     NLS_CATALOGS \
     NS_CACHING \
     NTP \
+    NUAGEINIT \
     NVME \
     OFED \
     OPENSSL \
@@ -159,8 +157,8 @@ __DEFAULT_YES_OPTIONS = \
     PF \
     PKGBOOTSTRAP \
     PMC \
-    PORTSNAP \
     PPP \
+    PTHREADS_ASSERTIONS \
     QUOTAS \
     RADIUS_SUPPORT \
     RBOOTD \
@@ -170,7 +168,6 @@ __DEFAULT_YES_OPTIONS = \
     SENDMAIL \
     SERVICESDB \
     SETUID_LOGIN \
-    SHARED_TOOLCHAIN \
     SHAREDOCS \
     SOURCELESS \
     SOURCELESS_HOST \
@@ -202,27 +199,33 @@ __DEFAULT_NO_OPTIONS = \
     CLANG_EXTRAS \
     CLANG_FORMAT \
     DETECT_TZ_CHANGES \
+    DISK_IMAGE_TOOLS_BOOTSTRAP \
+    DTRACE_ASAN \
     DTRACE_TESTS \
     EXPERIMENTAL \
     HESIOD \
-    LIBSOFT \
-    LLVM_ASSERTIONS \
-    LLVM_BINUTILS \
-    LOADER_FIREWIRE \
+    LOADER_BIOS_TEXTONLY \
     LOADER_VERBOSE \
     LOADER_VERIEXEC_PASS_MANIFEST \
+    LLVM_ASSERTIONS \
+    LLVM_BINUTILS \
+    LLVM_FULL_DEBUGINFO \
+    MALLOC_PRODUCTION \
     OFED_EXTRA \
     OPENLDAP \
     RPCBIND_WARMSTART_SUPPORT \
     SORT_THREADS \
-    SVN \
-    SVNLITE \
     ZONEINFO_LEAPSECONDS_SUPPORT \
+
+__REQUIRED_OPTIONS = \
+    CAPSICUM \
+    CASPER
 
 # LEFT/RIGHT. Left options which default to "yes" unless their corresponding
 # RIGHT option is disabled.
 __DEFAULT_DEPENDENT_OPTIONS= \
 	CLANG_FULL/CLANG \
+	LLVM_TARGET_ALL/CLANG \
 	LOADER_VERIEXEC/BEARSSL \
 	LOADER_EFI_SECUREBOOT/LOADER_VERIEXEC \
 	LOADER_VERIEXEC_VECTX/LOADER_VERIEXEC \
@@ -264,11 +267,10 @@ __T=${MACHINE_ARCH}
 __LLVM_TARGETS= \
 		aarch64 \
 		arm \
-		mips \
 		powerpc \
 		riscv \
 		x86
-__LLVM_TARGET_FILT=	C/(amd64|i386)/x86/:C/powerpc.*/powerpc/:C/armv[67]/arm/:C/riscv.*/riscv/:C/mips.*/mips/
+__LLVM_TARGET_FILT=	C/(amd64|i386)/x86/:C/powerpc.*/powerpc/:C/armv[67]/arm/:C/riscv.*/riscv/
 .for __llt in ${__LLVM_TARGETS}
 # Default enable the given TARGET's LLVM_TARGET support
 .if ${__T:${__LLVM_TARGET_FILT}} == ${__llt}
@@ -282,47 +284,41 @@ __DEFAULT_DEPENDENT_OPTIONS+=	LLVM_TARGET_${__llt:${__LLVM_TARGET_FILT}:tu}/LLVM
 .endif
 .endfor
 
-__DEFAULT_NO_OPTIONS+=LLVM_TARGET_BPF
+__DEFAULT_NO_OPTIONS+=LLVM_TARGET_BPF LLVM_TARGET_MIPS
 
 .include <bsd.compiler.mk>
 
-.if ${__T} == "aarch64" || ${__T} == "amd64" || ${__T} == "i386" || ${__T:Mpowerpc*}
+.if ${__T} == "i386" || ${__T} == "amd64"
+__DEFAULT_NO_OPTIONS += FDT
+.else
+__DEFAULT_YES_OPTIONS += FDT
+.endif
+
+.if ${__T:Marm*} == "" && ${__T:Mriscv64*} == ""
 __DEFAULT_YES_OPTIONS+=LLDB
 .else
 __DEFAULT_NO_OPTIONS+=LLDB
 .endif
-# LIB32 is supported on amd64, mips64, and powerpc64
-.if (${__T} == "amd64" || ${__T:Mmips64*} || ${__T} == "powerpc64")
+# LIB32 is not supported on all 64-bit architectures.
+.if (${__T} == "amd64" || ${__T:Maarch64*} != "" || ${__T} == "powerpc64")
 __DEFAULT_YES_OPTIONS+=LIB32
 .else
 BROKEN_OPTIONS+=LIB32
 .endif
-# Only doing soft float API stuff on armv6 and armv7
-.if ${__T} != "armv6" && ${__T} != "armv7"
-BROKEN_OPTIONS+=LIBSOFT
-.endif
-.if ${__T:Mmips*}
-# GOOGLETEST cannot currently be compiled on mips due to external circumstances.
-# Notably, the freebsd-gcc port isn't linking in libgcc so we end up trying ot
-# link to a hidden symbol. LLVM would successfully link this in, but some of
-# the mips variants are broken under LLVM until LLVM 10. GOOGLETEST should be
-# marked no longer broken with the switch to LLVM.
-BROKEN_OPTIONS+=GOOGLETEST SSP
-.endif
-# EFI doesn't exist on mips or powerpc.
-.if ${__T:Mmips*} || ${__T:Mpowerpc*}
+# EFI doesn't exist on powerpc (well, officially) and doesn't work on i386
+.if ${__T:Mpowerpc*} || ${__T} == "i386"
 BROKEN_OPTIONS+=EFI
 .endif
 # OFW is only for powerpc, exclude others
 .if ${__T:Mpowerpc*} == ""
 BROKEN_OPTIONS+=LOADER_OFW
 .endif
-# KBOOT is only for powerpc64 (powerpc64le broken) and kinda for amd64
-.if ${__T} != "powerpc64" && ${__T} != "amd64"
+# KBOOT is only for powerpc64 (powerpc64le broken) amd64 and aarch64
+.if ${__T} != "powerpc64" && ${__T} != "amd64" && ${__T} != "aarch64"
 BROKEN_OPTIONS+=LOADER_KBOOT
 .endif
-# UBOOT is only for arm, mips, and big-endian powerpc
-.if (${__T:Marm*} == "" && ${__T:Mmips*} == "" && ${__T:Mpowerpc*} == "") || ${__T} == "powerpc64le"
+# UBOOT is only for arm, and big-endian powerpc
+.if (${__T:Marm*} == "" && ${__T:Mpowerpc*} == "") || ${__T} == "powerpc64le"
 BROKEN_OPTIONS+=LOADER_UBOOT
 .endif
 # GELI and Lua in loader currently cause boot failures on powerpc.
@@ -333,25 +329,20 @@ BROKEN_OPTIONS+=LOADER_UBOOT
 BROKEN_OPTIONS+=LOADER_GELI LOADER_LUA
 .endif
 
-# Kernel TLS is enabled by default on amd64 and aarch64
-.if ${__T} == "aarch64" || ${__T} == "amd64"
+# Kernel TLS is enabled by default on amd64, aarch64 and powerpc64*
+.if ${__T} == "aarch64" || ${__T} == "amd64" || ${__T:Mpowerpc64*} != ""
 __DEFAULT_YES_OPTIONS+=OPENSSL_KTLS
 .else
 __DEFAULT_NO_OPTIONS+=OPENSSL_KTLS
 .endif
 
-.if ${__T:Mmips64*}
-# profiling won't work on MIPS64 because there is only assembly for o32
-BROKEN_OPTIONS+=PROFILE
-.endif
 .if ${__T} != "aarch64" && ${__T} != "amd64" && ${__T} != "i386" && \
-    ${__T} != "powerpc64"
+    ${__T:Mpowerpc64*} == ""
 BROKEN_OPTIONS+=CXGBETOOL
 BROKEN_OPTIONS+=MLX5TOOL
 .endif
 
-# HyperV is currently x86-only
-.if ${__T} != "amd64" && ${__T} != "i386"
+.if ${__T} != "amd64" && ${__T} != "i386" && ${__T} != "aarch64"
 BROKEN_OPTIONS+=HYPERV
 .endif
 
@@ -367,6 +358,19 @@ __DEFAULT_YES_OPTIONS+=OPENMP
 .else
 __DEFAULT_NO_OPTIONS+=OPENMP
 .endif
+
+# Broken on 32-bit arm, kernel module compile errors
+.if ${__T:Marm*} != ""
+BROKEN_OPTIONS+= OFED
+.endif
+
+# MK_host_egacy is set by local.sys.mk so is valid here
+.if ${MACHINE} == "host" && ${MK_host_egacy} == "yes"
+# we cannot expect tests to work
+BROKEN_OPTIONS+= TESTS
+.endif
+
+.-include <site.src.opts.mk>
 
 .include <bsd.mkopt.mk>
 
@@ -384,9 +388,10 @@ MK_SOURCELESS_UCODE:= no
 .endif
 
 .if ${MK_CDDL} == "no"
-MK_ZFS:=	no
-MK_LOADER_ZFS:=	no
 MK_CTF:=	no
+MK_DTRACE:=	no
+MK_LOADER_ZFS:=	no
+MK_ZFS:=	no
 .endif
 
 .if ${MK_CRYPT} == "no"
@@ -396,24 +401,12 @@ MK_KERBEROS:=	no
 MK_KERBEROS_SUPPORT:=	no
 .endif
 
-.if ${MK_CXX} == "no"
-MK_CLANG:=	no
-MK_LLD:=	no
-MK_LLDB:=	no
-MK_LLVM_BINUTILS:= no
-MK_GOOGLETEST:=	no
-MK_OFED:=	no
-MK_OPENMP:=	no
-MK_PMC:=	no
-MK_TESTS:=	no
-.endif
-
 .if ${MK_DIALOG} == "no"
 MK_BSDINSTALL:=	no
 .endif
 
-.if ${MK_FILE} == "no"
-MK_SVNLITE:=	no
+.if ${MK_DTRACE} == "no"
+MK_CTF:=	no
 .endif
 
 .if ${MK_MAIL} == "no"
@@ -423,7 +416,6 @@ MK_DMAGENT:=	no
 .endif
 
 .if ${MK_NETGRAPH} == "no"
-MK_ATM:=	no
 MK_BLUETOOTH:=	no
 .endif
 
@@ -439,8 +431,7 @@ MK_KERBEROS:=	no
 MK_KERBEROS_SUPPORT:=	no
 MK_LDNS:=	no
 MK_PKGBOOTSTRAP:=	no
-MK_SVN:=		no
-MK_SVNLITE:=		no
+MK_LOADER_ZFS:=	no
 MK_ZFS:=	no
 .endif
 
@@ -477,7 +468,6 @@ MK_LLD_BOOTSTRAP:= no
 
 .if ${MK_TOOLCHAIN} == "no"
 MK_CLANG:=	no
-MK_INCLUDES:=	no
 MK_LLD:=	no
 MK_LLDB:=	no
 MK_LLVM_BINUTILS:=	no
@@ -488,6 +478,12 @@ MK_CLANG_EXTRAS:= no
 MK_CLANG_FORMAT:= no
 MK_CLANG_FULL:= no
 MK_LLVM_COV:= no
+.endif
+
+.if ${MK_ASAN} == "yes"
+# In order to get sensible backtraces from ASAN we have to install
+# llvm-symbolizer as /usr/bin/addr2line instead of the elftoolchain version.
+MK_LLVM_BINUTILS:=	yes
 .endif
 
 .if ${MK_LLVM_BINUTILS} == "yes"

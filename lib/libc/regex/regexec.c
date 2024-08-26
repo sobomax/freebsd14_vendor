@@ -38,9 +38,6 @@
 #if defined(LIBC_SCCS) && !defined(lint)
 static char sccsid[] = "@(#)regexec.c	8.3 (Berkeley) 3/20/94";
 #endif /* LIBC_SCCS and not lint */
-#include <sys/cdefs.h>
-__FBSDID("$FreeBSD: bf27d05f86c66c93c95430130d10540fe32a086b $");
-
 /*
  * the outer shell of regexec()
  *
@@ -97,8 +94,8 @@ xmbrtowc_dummy(wint_t *wi,
 }
 
 /* macros for manipulating states, small version */
-#define	states	long
-#define	states1	states		/* for later use in regexec() decision */
+#define	states1	long		/* for later use in regexec() decision */
+#define	states	states1
 #define	CLEAR(v)	((v) = 0)
 #define	SET0(v, n)	((v) &= ~((unsigned long)1 << (n)))
 #define	SET1(v, n)	((v) |= (unsigned long)1 << (n))

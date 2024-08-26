@@ -10,9 +10,6 @@
  * ====================================================
  */
 
-#include <sys/cdefs.h>
-__FBSDID("$FreeBSD: a5f3870e626177675e18413e43401d85fcfb25a9 $");
-
 /*
  * copysign(double x, double y)
  * copysign(x,y) returns a value with the magnitude of x and

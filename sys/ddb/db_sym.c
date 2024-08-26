@@ -31,8 +31,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 19aba9f7abb2118c68676a09001af2e6053e6aee $");
-
 #include "opt_kstack_pages.h"
 
 #include <sys/param.h>

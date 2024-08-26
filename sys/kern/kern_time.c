@@ -32,8 +32,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 8b103c6fe729cf0d873fbea54fcc39cae8cc89e1 $");
-
 #include "opt_ktrace.h"
 
 #include <sys/param.h>
@@ -246,9 +244,10 @@ sys_clock_gettime(struct thread *td, struct clock_gettime_args *uap)
 static inline void
 cputick2timespec(uint64_t runtime, struct timespec *ats)
 {
-	runtime = cputick2usec(runtime);
-	ats->tv_sec = runtime / 1000000;
-	ats->tv_nsec = runtime % 1000000 * 1000;
+	uint64_t tr;
+	tr = cpu_tickrate();
+	ats->tv_sec = runtime / tr;
+	ats->tv_nsec = ((runtime % tr) * 1000000000ULL) / tr;
 }
 
 void
@@ -478,10 +477,7 @@ kern_clock_getres(struct thread *td, clockid_t clock_id, struct timespec *ts)
 	case CLOCK_THREAD_CPUTIME_ID:
 	case CLOCK_PROCESS_CPUTIME_ID:
 	cputime:
-		/* sync with cputick2usec */
-		ts->tv_nsec = 1000000 / cpu_tickrate();
-		if (ts->tv_nsec == 0)
-			ts->tv_nsec = 1000;
+		ts->tv_nsec = 1000000000 / cpu_tickrate() + 1;
 		break;
 	default:
 		if ((int)clock_id < 0)
@@ -1100,21 +1096,21 @@ ratecheck(struct timeval *lasttime, const struct timeval *mininterval)
 }
 
 /*
- * ppsratecheck(): packets (or events) per second limitation.
+ * eventratecheck(): events per second limitation.
  *
  * Return 0 if the limit is to be enforced (e.g. the caller
- * should drop a packet because of the rate limitation).
+ * should ignore the event because of the rate limitation).
  *
- * maxpps of 0 always causes zero to be returned.  maxpps of -1
+ * maxeps of 0 always causes zero to be returned.  maxeps of -1
  * always causes 1 to be returned; this effectively defeats rate
  * limiting.
  *
  * Note that we maintain the struct timeval for compatibility
  * with other bsd systems.  We reuse the storage and just monitor
- * clock ticks for minimal overhead.  
+ * clock ticks for minimal overhead.
  */
 int
-ppsratecheck(struct timeval *lasttime, int *curpps, int maxpps)
+eventratecheck(struct timeval *lasttime, int *cureps, int maxeps)
 {
 	int now;
 
@@ -1126,11 +1122,11 @@ ppsratecheck(struct timeval *lasttime, int *curpps, int maxpps)
 	now = ticks;
 	if (lasttime->tv_sec == 0 || (u_int)(now - lasttime->tv_sec) >= hz) {
 		lasttime->tv_sec = now;
-		*curpps = 1;
-		return (maxpps != 0);
+		*cureps = 1;
+		return (maxeps != 0);
 	} else {
-		(*curpps)++;		/* NB: ignore potential overflow */
-		return (maxpps < 0 || *curpps <= maxpps);
+		(*cureps)++;		/* NB: ignore potential overflow */
+		return (maxeps < 0 || *cureps <= maxeps);
 	}
 }
 

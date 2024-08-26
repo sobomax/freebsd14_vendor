@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 1998 Brian Somers <brian@Awfulhak.org>
  * All rights reserved.
@@ -24,8 +24,6 @@
  * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
- *
- * $FreeBSD: 1af2924b8d56902a3a2c7cddeceda7bfeac4d300 $
  */
 
 #include <sys/param.h>
@@ -1354,7 +1352,7 @@ bundle_GetLabel(struct bundle *bundle)
 }
 
 int
-bundle_LinkSize()
+bundle_LinkSize(void)
 {
   struct iovec iov[SCATTER_SEGMENTS];
   int niov, expect, f;

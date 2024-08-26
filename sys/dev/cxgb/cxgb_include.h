@@ -1,5 +1,4 @@
 /*
- *  $FreeBSD: d98ef5771baac56a8ea8b1aea9092fdecc38c8eb $
  */
 
 #include <sys/cdefs.h>

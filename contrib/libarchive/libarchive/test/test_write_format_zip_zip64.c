@@ -24,7 +24,6 @@
  */
 
 #include "test.h"
-__FBSDID("$FreeBSD: c5f00a2e5d8dce1e65e88cd81484c8ff7c44f6aa $");
 
 static void
 verify_zip_filesize(uint64_t size, int expected)

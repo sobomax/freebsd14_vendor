@@ -1,4 +1,3 @@
-# $FreeBSD: 3701b14518727f1339511c4d6b34ce65284b014e $
 
 .PATH: ${SRCTOP}/sys/dev/sym
 

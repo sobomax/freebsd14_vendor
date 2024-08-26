@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2009-2010
  *	Swinburne University of Technology, Melbourne, Australia
@@ -53,8 +53,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: fc995b0ebb02da3361919352dabb8afd431ee40b $");
-
 #include <sys/param.h>
 #include <sys/kernel.h>
 #include <sys/khelp.h>
@@ -69,6 +67,10 @@ __FBSDID("$FreeBSD: fc995b0ebb02da3361919352dabb8afd431ee40b $");
 
 #include <net/vnet.h>
 
+#include <net/route.h>
+#include <net/route/nhop.h>
+
+#include <netinet/in_pcb.h>
 #include <netinet/tcp.h>
 #include <netinet/tcp_seq.h>
 #include <netinet/tcp_timer.h>
@@ -89,10 +91,11 @@ __FBSDID("$FreeBSD: fc995b0ebb02da3361919352dabb8afd431ee40b $");
 
 static void	chd_ack_received(struct cc_var *ccv, uint16_t ack_type);
 static void	chd_cb_destroy(struct cc_var *ccv);
-static int	chd_cb_init(struct cc_var *ccv);
+static int	chd_cb_init(struct cc_var *ccv, void *ptr);
 static void	chd_cong_signal(struct cc_var *ccv, uint32_t signal_type);
 static void	chd_conn_init(struct cc_var *ccv);
 static int	chd_mod_init(void);
+static size_t	chd_data_sz(void);
 
 struct chd {
 	/*
@@ -126,8 +129,6 @@ VNET_DEFINE_STATIC(uint32_t, chd_qthresh) = 20;
 #define	V_chd_loss_fair	VNET(chd_loss_fair)
 #define	V_chd_use_max	VNET(chd_use_max)
 
-static MALLOC_DEFINE(M_CHD, "chd data",
-    "Per connection data required for the CHD congestion control algorithm");
 
 struct cc_algo chd_cc_algo = {
 	.name = "chd",
@@ -136,7 +137,10 @@ struct cc_algo chd_cc_algo = {
 	.cb_init = chd_cb_init,
 	.cong_signal = chd_cong_signal,
 	.conn_init = chd_conn_init,
-	.mod_init = chd_mod_init
+	.mod_init = chd_mod_init,
+	.cc_data_sz = chd_data_sz,
+	.after_idle = newreno_cc_after_idle,
+	.post_recovery = newreno_cc_post_recovery,
 };
 
 static __inline void
@@ -238,7 +242,7 @@ chd_ack_received(struct cc_var *ccv, uint16_t ack_type)
 	struct ertt *e_t;
 	int backoff, new_measurement, qdly, rtt;
 
-	e_t = khelp_get_osd(CCV(ccv, osd), ertt_id);
+	e_t = khelp_get_osd(&CCV(ccv, t_osd), ertt_id);
 	chd_data = ccv->cc_data;
 	new_measurement = e_t->flags & ERTT_NEW_MEASUREMENT;
 	backoff = qdly = 0;
@@ -304,18 +308,27 @@ chd_ack_received(struct cc_var *ccv, uint16_t ack_type)
 static void
 chd_cb_destroy(struct cc_var *ccv)
 {
+	free(ccv->cc_data, M_CC_MEM);
+}
 
-	free(ccv->cc_data, M_CHD);
+size_t
+chd_data_sz(void)
+{
+	return (sizeof(struct chd));
 }
 
 static int
-chd_cb_init(struct cc_var *ccv)
+chd_cb_init(struct cc_var *ccv, void *ptr)
 {
 	struct chd *chd_data;
 
-	chd_data = malloc(sizeof(struct chd), M_CHD, M_NOWAIT);
-	if (chd_data == NULL)
-		return (ENOMEM);
+	INP_WLOCK_ASSERT(tptoinpcb(ccv->ccvc.tcp));
+	if (ptr == NULL) {
+		chd_data = malloc(sizeof(struct chd), M_CC_MEM, M_NOWAIT);
+		if (chd_data == NULL)
+			return (ENOMEM);
+	} else
+		chd_data = ptr;
 
 	chd_data->shadow_w = 0;
 	ccv->cc_data = chd_data;
@@ -330,7 +343,7 @@ chd_cong_signal(struct cc_var *ccv, uint32_t signal_type)
 	struct chd *chd_data;
 	int qdly;
 
-	e_t = khelp_get_osd(CCV(ccv, osd), ertt_id);
+	e_t = khelp_get_osd(&CCV(ccv, t_osd), ertt_id);
 	chd_data = ccv->cc_data;
 	qdly = imax(e_t->rtt, chd_data->maxrtt_in_rtt) - e_t->minrtt;
 
@@ -374,7 +387,7 @@ chd_cong_signal(struct cc_var *ccv, uint32_t signal_type)
 		break;
 
 	default:
-		newreno_cc_algo.cong_signal(ccv, signal_type);
+		newreno_cc_cong_signal(ccv, signal_type);
 	}
 }
 
@@ -403,10 +416,6 @@ chd_mod_init(void)
 		printf("%s: h_ertt module not found\n", __func__);
 		return (ENOENT);
 	}
-
-	chd_cc_algo.after_idle = newreno_cc_algo.after_idle;
-	chd_cc_algo.post_recovery = newreno_cc_algo.post_recovery;
-
 	return (0);
 }
 
@@ -493,5 +502,5 @@ SYSCTL_UINT(_net_inet_tcp_cc_chd,  OID_AUTO, use_max,
     "as the basic delay measurement for the algorithm.");
 
 DECLARE_CC_MODULE(chd, &chd_cc_algo);
-MODULE_VERSION(chd, 1);
+MODULE_VERSION(chd, 2);
 MODULE_DEPEND(chd, ertt, 1, 1, 1);

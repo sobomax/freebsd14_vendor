@@ -24,7 +24,6 @@ if [ ! "$_STARTUP_RCCONF_SUBR" ]; then _STARTUP_RCCONF_SUBR=1
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: 80b6504994cc885da76bf15871872d0700b8f42f $
 #
 ############################################################ INCLUDES
 

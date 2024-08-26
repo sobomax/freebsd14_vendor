@@ -1,4 +1,3 @@
-# $FreeBSD: 36dc65d28580a3abb78e2b8b0b860aa4b014d0bb $
 
 PACKAGE=	yp
 PROG=	ypxfr

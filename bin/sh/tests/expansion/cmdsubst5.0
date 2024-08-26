@@ -1,4 +1,3 @@
-# $FreeBSD: afca3719e8b0b66b4aae312721ef6ba87302c32b $
 
 unset v
 exec 2>/dev/null

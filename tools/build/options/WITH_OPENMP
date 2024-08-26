@@ -1,2 +1,1 @@
-.\" $FreeBSD: 03158075daed7fed051ed9ad596bffbab88d82da $
 Build LLVM's OpenMP runtime.

@@ -24,7 +24,6 @@ if [ ! "$_MEDIA_DOS_SUBR" ]; then _MEDIA_DOS_SUBR=1
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: df91aebcd814923a68d16012d4307f4e68c222cc $
 #
 ############################################################ INCLUDES
 

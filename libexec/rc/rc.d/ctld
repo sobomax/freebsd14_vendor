@@ -1,6 +1,5 @@
 #!/bin/sh
 #
-# $FreeBSD: 2919a10dea4db57bab16f0ccf97dc7c092a98308 $
 #
 
 # PROVIDE: ctld

@@ -1,2 +1,1 @@
-# $FreeBSD: d804e128debe42306ecd112456e05f6264aece57 $
 case x in x) </dev/null ;& esac

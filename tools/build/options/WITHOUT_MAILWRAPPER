@@ -1,4 +1,3 @@
-.\" $FreeBSD: ce8fa0e395ed944f962284d73ba4bbee6c00dea7 $
 Do not build the
 .Xr mailwrapper 8
 MTA selector.

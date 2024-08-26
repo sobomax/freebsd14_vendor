@@ -1,4 +1,3 @@
-.\" $FreeBSD: 0857788db2fff7505901ee0a960b53f7edf2bf9e $
 Do not build the
 .Xr gcov 1
 tool.

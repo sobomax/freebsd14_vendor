@@ -30,7 +30,6 @@
 .\" SUCH DAMAGE.
 .\"
 .\"     @(#)kvm_read.3	8.1 (Berkeley) 6/4/93
-.\" $FreeBSD: 19a1aafea780ed395e497ed157f486e6c9dcc13c $
 .\"
 .Dd November 27, 2015
 .Dt KVM_READ 3
@@ -104,3 +103,8 @@ Otherwise, -1 is returned.
 .Xr kvm_nlist 3 ,
 .Xr kvm_open 3 ,
 .Xr kvm_openfiles 3
+.Sh HISTORY
+The
+.Fn kvm_read2
+function first appeared in
+.Fx 11.0 .

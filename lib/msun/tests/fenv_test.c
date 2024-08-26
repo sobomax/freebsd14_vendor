@@ -29,8 +29,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 7750764406d7550a3b65a51e5554ff1e242ad3cc $");
-
 #include <sys/types.h>
 #include <sys/wait.h>
 #include <assert.h>

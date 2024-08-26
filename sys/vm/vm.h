@@ -56,8 +56,6 @@
  *
  * any improvements or extensions that they make and grant Carnegie the
  * rights to redistribute these changes.
- *
- * $FreeBSD: 8466ceef45ca366682033f6345c373582c415d0e $
  */
 
 #ifndef VM_H
@@ -89,8 +87,9 @@ typedef u_char vm_prot_t;	/* protection codes */
 #define	VM_PROT_DEFAULT		VM_PROT_ALL
 
 enum obj_type {
-	OBJT_DEFAULT,
+	OBJT_RESERVED = 0,	/* was OBJT_DEFAULT */
 	OBJT_SWAP,
+	OBJT_DEFAULT = OBJT_SWAP,
 	OBJT_VNODE,
 	OBJT_DEVICE,
 	OBJT_PHYS,

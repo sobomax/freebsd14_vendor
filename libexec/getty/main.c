@@ -41,8 +41,6 @@ static char sccsid[] = "@(#)from: main.c	8.1 (Berkeley) 6/20/93";
 #endif
 #endif /* not lint */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: fad3811adcf6d261e71a039b756e062ee5e558e6 $");
-
 #include <sys/param.h>
 #include <sys/ioctl.h>
 #include <sys/time.h>
@@ -737,7 +735,8 @@ static void
 putf(const char *cp)
 {
 	time_t t;
-	char *slash, db[100];
+	char db[100];
+	const char *slash;
 
 	static struct utsname kerninfo;
 

@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2011, Bryan Venteicher <bryanv@FreeBSD.org>
  * All rights reserved.
@@ -27,8 +27,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 050e29c37dda3e4f69672ba2f230e0ad9d409dde $");
-
 #include <sys/param.h>
 #include <sys/systm.h>
 #include <sys/kernel.h>
@@ -329,8 +327,7 @@ virtio_write_device_config(device_t dev, bus_size_t offset, const void *dst, int
 }
 
 int
-virtio_child_pnpinfo_str(device_t busdev __unused, device_t child, char *buf,
-    size_t buflen)
+virtio_child_pnpinfo(device_t busdev __unused, device_t child, struct sbuf *sb)
 {
 
 	/*
@@ -344,7 +341,7 @@ virtio_child_pnpinfo_str(device_t busdev __unused, device_t child, char *buf,
 	 * see a lot of PNP utility in exposing the same value under a
 	 * different name.
 	 */
-	snprintf(buf, buflen, "vendor=0x%08x device=0x%04x subvendor=0x%04x "
+	sbuf_printf(sb, "vendor=0x%08x device=0x%04x subvendor=0x%04x "
 	    "device_type=0x%08x", (unsigned)virtio_get_vendor(child),
 	    (unsigned)virtio_get_device(child),
 	    (unsigned)virtio_get_subvendor(child),

@@ -1,7 +1,3 @@
-/*
- * $FreeBSD: 346c8ca7e2908a8fc83140c951e5603d841fac11 $
- */
-
 FBSD_1.0 {
 	acl_calc_mask;
 	acl_copy_entry;
@@ -83,4 +79,13 @@ FBSD_1.1 {
 	acl_set_flagset_np;
 	acl_strip_np;
 	acl_to_text_np;
+};
+
+FBSD_1.7 {
+	acl_cmp_np;
+	acl_equiv_mode_np;
+	acl_extended_file_np;
+	acl_extended_file_nofollow_np;
+	acl_extended_link_np;
+	acl_from_mode_np;
 };

@@ -1,6 +1,5 @@
 #!/bin/sh
 #
-# $FreeBSD: 8bb09dd920bdea93bea6f7287638b4843553075f $
 #
 
 # PROVIDE: securelevel

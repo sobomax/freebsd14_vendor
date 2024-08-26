@@ -1,6 +1,0 @@
-.\" $FreeBSD: 85d80ad476a52ca731648a1506fcea05ac7a992b $
-Do not install links to the Clang C/C++ compiler as
-.Pa /usr/bin/cc ,
-.Pa /usr/bin/c++
-and
-.Pa /usr/bin/cpp .

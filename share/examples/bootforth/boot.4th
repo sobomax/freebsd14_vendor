@@ -1,6 +1,5 @@
 \ Example of the file which is automatically loaded by /boot/loader
 \ on startup.
-\ $FreeBSD: 8f26e0d0a38dc5ae23c4cc85044ed153828bf117 $
 
 \ Load the screen manipulation words
 

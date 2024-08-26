@@ -16,16 +16,14 @@
  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
  * DEALINGS IN THE SOFTWARE.
- *
- * $FreeBSD: 721bb93c3c484f24699cfc04236d99529e67a87a $
  */
 
 #ifndef __XEN_BLKIF_H__
 #define __XEN_BLKIF_H__
 
-#include <xen/interface/io/ring.h>
-#include <xen/interface/io/blkif.h>
-#include <xen/interface/io/protocols.h>
+#include <contrib/xen/io/ring.h>
+#include <contrib/xen/io/blkif.h>
+#include <contrib/xen/io/protocols.h>
 
 /* Not a real protocol.  Used to generate ring structs which contain
  * the elements common to all protocols only.  This way we get a

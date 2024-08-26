@@ -1,4 +1,3 @@
-# $FreeBSD: 58301eca17d620968a34d167d6d2fdea9337389e $
 #
 
 .PATH:  ${SRCTOP}/sys/dev/smbios

@@ -33,8 +33,6 @@
  * SUCH DAMAGE.
  *
  *	@(#)procfs_note.c	8.2 (Berkeley) 1/21/94
- *
- * $FreeBSD: 301f27cd91231a21048543456682f51f7c25fdc4 $
  */
 
 #include <sys/param.h>

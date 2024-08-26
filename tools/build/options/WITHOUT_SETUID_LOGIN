@@ -1,4 +1,3 @@
-.\" $FreeBSD: af073b322947f60be79bd861e8a897fcfdd5650d $
 Set this to disable the installation of
 .Xr login 1
 as a set-user-ID root program.

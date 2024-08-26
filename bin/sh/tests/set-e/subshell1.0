@@ -1,3 +1,2 @@
-# $FreeBSD: 8e5831bd19074c1ff5fca889189b0409c974e2f7 $
 set -e
 (true)

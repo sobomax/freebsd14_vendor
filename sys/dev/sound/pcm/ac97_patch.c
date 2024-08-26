@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2002 Orion Hodson
  * All rights reserved.
@@ -33,8 +33,6 @@
 #include <dev/sound/pcm/sound.h>
 #include <dev/sound/pcm/ac97.h>
 #include <dev/sound/pcm/ac97_patch.h>
-
-SND_DECLARE_FILE("$FreeBSD: a88d54b8250458bd32eb775731bccb54eb8affd4 $");
 
 void ad1886_patch(struct ac97_info* codec)
 {

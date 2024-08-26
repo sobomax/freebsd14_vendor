@@ -27,8 +27,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 9ce0680725245719e449e3a525db17807e0d2ea6 $");
-
 #include <sys/types.h>
 #include <rtld_tls.h>
 

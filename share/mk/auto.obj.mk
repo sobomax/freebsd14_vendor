@@ -1,4 +1,3 @@
-# $FreeBSD: 7f903ee7efb86ea3c8ff03fdeb33fe1e1ec736c1 $
 # $Id: auto.obj.mk,v 1.12 2015/12/16 01:57:06 sjg Exp $
 #
 #	@(#) Copyright (c) 2004, Simon J. Gerraty

@@ -1,4 +1,3 @@
-# $FreeBSD: cb0fba0336990babf6f9199059a810e1af64c991 $
 #
 # Disk geometry and partition layout tables.
 # See disktab(5) for format of this file.

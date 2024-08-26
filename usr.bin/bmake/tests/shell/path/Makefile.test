@@ -7,7 +7,6 @@
 # Be sure to include a meta-character into the command line, so that
 # really our shell is executed.
 #
-# $FreeBSD: fe40b645510ec44a87d4e633c13018f807e56a8a $
 #
 
 .ifmake sh_test

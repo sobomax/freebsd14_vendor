@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2019 Leandro Lupori
  *
@@ -26,8 +26,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 29da6c4d4d4faaa413a9cae38aa6a456f4bdea30 $");
-
 #include <sys/param.h>
 #include <sys/types.h>
 

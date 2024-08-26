@@ -1,7 +1,5 @@
 /*-
  * Test 0013:	BPF_ST & BPF_LDX+BPF_MEM
- *
- * $FreeBSD: 004e517b32963c30a737030bd78e827012635fe8 $
  */
 
 /* BPF program */

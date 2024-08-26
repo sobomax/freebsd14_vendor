@@ -27,8 +27,6 @@
 . $STF_SUITE/include/libtest.kshlib
 . $STF_SUITE/tests/xattr/xattr_common.kshlib
 
-# $FreeBSD: 991e692db35423029fd83d5cc0b985137060a02f $
-
 ################################################################################
 #
 # __stc_assertion_start

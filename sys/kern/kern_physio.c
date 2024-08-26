@@ -1,6 +1,4 @@
 /*-
- * SPDX-License-Identifier: BSD-4-Clause
- *
  * Copyright (c) 1994 John S. Dyson
  * All rights reserved.
  *
@@ -20,8 +18,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 3185e77aba460222a73e646b71599454f26c2eb0 $");
-
 #include <sys/param.h>
 #include <sys/systm.h>
 #include <sys/bio.h>
@@ -61,7 +57,7 @@ physio(struct cdev *dev, struct uio *uio, int ioflag)
 		return (ENXIO);
 
 	/* XXX: sanity check */
-	if(dev->si_iosize_max < PAGE_SIZE) {
+	if (dev->si_iosize_max < PAGE_SIZE) {
 		printf("WARNING: %s si_iosize_max=%d, using DFLTPHYS.\n",
 		    devtoname(dev), dev->si_iosize_max);
 		dev->si_iosize_max = DFLTPHYS;

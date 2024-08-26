@@ -1,5 +1,4 @@
 /*
- * $FreeBSD: 02bf91cd613c8cf88b2541946847e63a2f7e7f03 $
  */
 
 #ifndef __SYS_DEV_ETHERSWITCH_ETHERSWITCH_H
@@ -9,7 +8,6 @@
 #include <net/ethernet.h>
 
 #ifdef _KERNEL
-extern devclass_t       etherswitch_devclass;
 extern driver_t         etherswitch_driver;
 #endif /* _KERNEL */
 
@@ -57,17 +55,18 @@ struct etherswitch_conf {
 };
 typedef struct etherswitch_conf etherswitch_conf_t;
 
-#define	ETHERSWITCH_PORT_CPU		(1 << 0)
-#define	ETHERSWITCH_PORT_STRIPTAG	(1 << 1)
-#define	ETHERSWITCH_PORT_ADDTAG		(1 << 2)
-#define	ETHERSWITCH_PORT_FIRSTLOCK	(1 << 3)
-#define	ETHERSWITCH_PORT_DROPUNTAGGED	(1 << 4)
-#define	ETHERSWITCH_PORT_DOUBLE_TAG	(1 << 5)
-#define	ETHERSWITCH_PORT_INGRESS	(1 << 6)
-#define	ETHERSWITCH_PORT_DROPTAGGED     (1 << 7)
+#define	ETHERSWITCH_PORT_CPU			(1 << 0)
+#define	ETHERSWITCH_PORT_STRIPTAG		(1 << 1)
+#define	ETHERSWITCH_PORT_ADDTAG			(1 << 2)
+#define	ETHERSWITCH_PORT_FIRSTLOCK		(1 << 3)
+#define	ETHERSWITCH_PORT_DROPUNTAGGED		(1 << 4)
+#define	ETHERSWITCH_PORT_DOUBLE_TAG		(1 << 5)
+#define	ETHERSWITCH_PORT_INGRESS		(1 << 6)
+#define	ETHERSWITCH_PORT_DROPTAGGED     	(1 << 7)
+#define	ETHERSWITCH_PORT_STRIPTAGINGRESS	(1 << 8)
 #define	ETHERSWITCH_PORT_FLAGS_BITS	\
 "\020\1CPUPORT\2STRIPTAG\3ADDTAG\4FIRSTLOCK\5DROPUNTAGGED\6QinQ\7INGRESS" \
-"\10DROPTAGGED"
+"\10DROPTAGGED\11STRIPTAGINGRESS"
 
 #define ETHERSWITCH_PORT_MAX_LEDS 3
 

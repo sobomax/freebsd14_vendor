@@ -1,4 +1,3 @@
-# $FreeBSD: 452c57246e39ac741fd3aa4fd7081c1da993da56 $
 
 .include <bsd.own.mk>
 
@@ -38,7 +37,7 @@ PROGS+=		h_raw
 LDADD.h_raw+=	${SANITIZER_LDFLAGS}
 .else
 .if make(all)
-.info "Could not find runtime library ${_libclang_rt_ubsan}, skipping h_raw"
+.info Could not find runtime library ${_libclang_rt_ubsan}, skipping h_raw
 .endif
 .endif
 .endif

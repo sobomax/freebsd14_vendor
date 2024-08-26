@@ -1,5 +1,4 @@
 #!/bin/sh
-# $FreeBSD: 4b0fc6cf7825f8ea5691e3ee60583aea52e9c297 $
 
 # Test handling of write errors.
 

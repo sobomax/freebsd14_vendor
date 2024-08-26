@@ -1,4 +1,3 @@
-/*	$FreeBSD: de5121d94767ed889ab9c9cc32f50c7e1e257d76 $	*/
 
 /*
  * Copyright (C) 2012 by Darren Reed.
@@ -367,7 +366,7 @@ flushfilter(char *arg, int *filter)
 		if (!(opts & OPT_DONOTHING)) {
 			if (use_inet6) {
 				fprintf(stderr,
-					"IPv6 rules are no longer seperate\n");
+					"IPv6 rules are no longer separate\n");
 			} else if (filter != NULL) {
 				ipfobj_t obj;
 

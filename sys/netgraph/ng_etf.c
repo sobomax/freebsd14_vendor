@@ -3,7 +3,7 @@
  */
 
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2001, FreeBSD Incorporated 
  * All rights reserved.
@@ -31,8 +31,6 @@
  * SUCH DAMAGE.
  *
  * Author: Julian Elischer <julian@freebsd.org>
- *
- * $FreeBSD: 26e8489878b86503e9f820e859e3c53f19eec6d1 $
  */
 
 #include <sys/param.h>

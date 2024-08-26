@@ -1,6 +1,5 @@
 #!/bin/sh
 #
-# $FreeBSD: f17f7b4090c06d3716538854cb8f330587dc78ae $
 #
 
 # PROVIDE: route6d

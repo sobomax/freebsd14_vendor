@@ -1,4 +1,3 @@
-# $FreeBSD: 0e9f58cc3fc0fbaa8ce11e2f57ab494847d838fd $
 
 .include <src.opts.mk>
 
@@ -23,7 +22,7 @@ MK_WERROR.gcc=	no
 .if ${MACHINE_CPUARCH} == "aarch64"
 . for pat in cas swp ldadd ldclr ldeor ldset
 .  for size in 1 2 4 8 16
-.   for model in 1 2 3 4
+.   for model in 1 2 3 4 5
 .    if ${pat} == "cas" || ${size} != "16"
 # Use .for to define lse_name, to get a special loop-local variable
 .     for lse_name in outline_atomic_${pat}${size}_${model}.S

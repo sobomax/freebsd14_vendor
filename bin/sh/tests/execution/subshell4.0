@@ -1,3 +1,2 @@
-# $FreeBSD: b39edb12eb2c73e8a1ae077841c0d633d1c2c266 $
 
 (eval "set v=1"; false) && echo bad; :

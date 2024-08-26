@@ -29,9 +29,6 @@
  * SUCH DAMAGE.
  */
 
-#include <sys/cdefs.h>
-
-__FBSDID("$FreeBSD: 5ba9f49cdd3522645f574634571f6bc25e69c89e $");
 
 #ifndef lint
 static const char copyright[] =
@@ -389,6 +386,9 @@ main(int argc, char *argv[])
 	argwidth = ttywidth - WUSED;
 	if (argwidth < 4)
 		argwidth = 8;
+	/* Don't truncate if we're outputting json or XML. */
+	if (xo_get_style(NULL) != XO_STYLE_TEXT)
+		argwidth = ARG_MAX;
 	for (ep = ehead; ep != NULL; ep = ep->next) {
 		if (ep->kp == NULL) {
 			ep->args = strdup("-");

@@ -1,3 +1,2 @@
-.\" $FreeBSD: 27488f45ddc90da0fe99d80c321c15d711f911ec $
 Do not build applications to support
 .Xr netgraph 4 .

@@ -28,8 +28,6 @@
  * THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- *
- * $FreeBSD: 8e41a670bec04c807842dcefc26da49e6d5125bb $
  */
 
 /*
@@ -58,12 +56,9 @@
 
 typedef struct link_map {
 	caddr_t		l_base;			/* Base Address of library */
-#ifdef __mips__
-	caddr_t		l_xxx;			/* unused */
-#endif
 	const char	*l_name;		/* Absolute Path to Library */
 	const void	*l_ld;			/* Pointer to .dynamic in memory */
-	struct link_map	*l_next, *l_prev;	/* linked list of of mapped libs */
+	struct link_map	*l_next, *l_prev;	/* linked list of mapped libs */
 	caddr_t		l_addr;			/* Load Offset of library */
 	const char	*l_refname;		/* object we are filtering for */
 } Link_map;

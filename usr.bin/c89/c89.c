@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * This is the Posix.2 mandated C compiler.  Basically, a hook to the
  * cc(1) command.
@@ -30,8 +30,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: fbccf395b5f07b600908a887871c78825c19f662 $");
-
 #include <err.h>
 #include <stdio.h>
 #include <stdlib.h>

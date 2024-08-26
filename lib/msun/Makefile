@@ -1,5 +1,4 @@
 #  @(#)Makefile 5.1beta 93/09/24
-# $FreeBSD: 0be2813bb93388e2fab9adbff7089e18654949ba $
 #
 #  ====================================================
 #  Copyright (C) 1993 by Sun Microsystems, Inc. All rights reserved.
@@ -29,7 +28,7 @@ CFLAGS+=	-I${.CURDIR}/x86
 CFLAGS+=	-I${.CURDIR}/ld80
 .elif ${LDBL_PREC} == 113
 .PATH:  ${.CURDIR}/ld128
-CFLAGS+=	-I${.CURDIR}/ld128
+CFLAGS+=	-I${.CURDIR}/ld128 -I${SRCTOP}/contrib/arm-optimized-routines/math
 .endif
 
 CFLAGS+=	-I${.CURDIR}/${ARCH_SUBDIR}
@@ -59,7 +58,7 @@ SHLIBDIR?= /lib
 SHLIB_MAJOR= 5
 WARNS?=	1
 IGNORE_PRAGMA=
-COMMON_SRCS= b_exp.c b_log.c b_tgamma.c \
+COMMON_SRCS= b_tgamma.c \
 	e_acos.c e_acosf.c e_acosh.c e_acoshf.c e_asin.c e_asinf.c \
 	e_atan2.c e_atan2f.c e_atanh.c e_atanhf.c e_cosh.c e_coshf.c e_exp.c \
 	e_expf.c e_fmod.c e_fmodf.c e_gamma.c e_gamma_r.c e_gammaf.c \
@@ -69,7 +68,6 @@ COMMON_SRCS= b_exp.c b_log.c b_tgamma.c \
 	e_pow.c e_powf.c e_rem_pio2.c \
 	e_rem_pio2f.c e_remainder.c e_remainderf.c e_scalb.c e_scalbf.c \
 	e_sinh.c e_sinhf.c e_sqrt.c e_sqrtf.c fenv.c \
-	imprecise.c \
 	k_cos.c k_cosf.c k_exp.c k_expf.c k_rem_pio2.c k_sin.c k_sinf.c \
 	k_tan.c k_tanf.c \
 	s_asinh.c s_asinhf.c s_atan.c s_atanf.c s_carg.c s_cargf.c s_cargl.c \
@@ -99,24 +97,34 @@ COMMON_SRCS+= s_cospi.c s_cospif.c \
 	s_sinpi.c s_sinpif.c \
 	s_tanpi.c s_tanpif.c
 
+# LIBCSRCDIR is defined lazily, so can't be used for exists() below
+LIBC_SRCTOP=${SRCTOP}/lib/libc
 # Location of fpmath.h and _fpmath.h
-.if exists(${LIBCSRCDIR}/${MACHINE_ARCH})
-LIBC_ARCH=${MACHINE_ARCH}
+
+# Pick the current architecture directory for libc. In general, this is named
+# MACHINE_CPUARCH, but some ABIs are different enough to require their own libc,
+# so allow a directory named MACHINE_ARCH to override this (though treat
+# powerpc64le and powerpc64 the same).
+# Note: This is copied from libc/Makefile
+M=${MACHINE_ARCH:S/powerpc64le/powerpc64/}
+.if exists(${LIBC_SRCTOP}/${M})
+LIBC_ARCH=${M}
 .else
 LIBC_ARCH=${MACHINE_CPUARCH}
 .endif
-CFLAGS+=	-I${.CURDIR}/src -I${LIBCSRCDIR}/include \
-	-I${LIBCSRCDIR}/${LIBC_ARCH}
+
+CFLAGS+=	-I${.CURDIR}/src -I${LIBC_SRCTOP}/include \
+		-I${LIBC_SRCTOP}/${LIBC_ARCH}
 SYM_MAPS+=	${.CURDIR}/Symbol.map
 
-VERSION_DEF=	${LIBCSRCDIR}/Versions.def
+VERSION_DEF=	${LIBC_SRCTOP}/Versions.def
 SYMBOL_MAPS=	${SYM_MAPS}
 
 # C99 long double functions
 COMMON_SRCS+=	s_copysignl.c s_fabsl.c s_llrintl.c s_lrintl.c s_modfl.c
 .if ${LDBL_PREC} != 53
 # If long double != double use these; otherwise, we alias the double versions.
-COMMON_SRCS+=	catrigl.c \
+COMMON_SRCS+=	b_tgammal.c catrigl.c \
 	e_acoshl.c e_acosl.c e_asinl.c e_atan2l.c e_atanhl.c \
 	e_coshl.c e_fmodl.c e_hypotl.c \
 	e_lgammal.c e_lgammal_r.c e_powl.c \
@@ -148,7 +156,8 @@ COMMON_SRCS+=	catrig.c catrigf.c \
 	s_cproj.c s_cprojf.c s_creal.c s_crealf.c s_creall.c \
 	s_csinh.c s_csinhf.c s_ctanh.c s_ctanhf.c
 
-# FreeBSD's C library supplies these functions:
+# FreeBSD's C library supplies these functions (but note we still have s_frexp.c
+# and s_isnan.c enabled above, so they are duplicated):
 #COMMON_SRCS+=	s_fabs.c s_frexp.c s_isnan.c s_ldexp.c s_modf.c
 
 # Exclude the generic versions of what we provide in the MD area.

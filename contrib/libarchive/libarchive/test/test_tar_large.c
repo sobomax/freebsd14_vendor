@@ -23,7 +23,6 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 #include "test.h"
-__FBSDID("$FreeBSD: 8a9405b68e64c4dd443875049a7bdf3ea2398265 $");
 
 #include <errno.h>
 #include <stdlib.h>

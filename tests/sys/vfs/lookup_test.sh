@@ -1,4 +1,3 @@
-# $FreeBSD: 909afddda8d6e64d33a61d4402ab73bf4f2675aa $
 
 long_symlink_head()
 {

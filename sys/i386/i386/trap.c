@@ -40,14 +40,11 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: ccd77b12ceb9f8d94b91a0bff8af3b51445b8790 $");
-
 /*
  * 386 Trap and System call handling
  */
 
 #include "opt_clock.h"
-#include "opt_compat.h"
 #include "opt_cpu.h"
 #include "opt_hwpmc_hooks.h"
 #include "opt_isa.h"
@@ -205,8 +202,7 @@ trap_check_kstack(void)
 	stk = read_esp();
 	if (stk >= PMAP_TRM_MIN_ADDRESS)
 		panic("td %p stack %#x in trampoline", td, stk);
-	if (stk < td->td_kstack || stk >= td->td_kstack +
-	    ptoa(td->td_kstack_pages))
+	if (!kstack_contains(td, stk, 0))
 		panic("td %p stack %#x not in kstack VA %#x %d",
 		    td, stk, td->td_kstack, td->td_kstack_pages);
 }
@@ -332,7 +328,7 @@ trap(struct trapframe *frame)
 		td->td_pticks = 0;
 		td->td_frame = frame;
 		addr = frame->tf_eip;
-		if (td->td_cowgen != p->p_cowgen)
+		if (td->td_cowgen != atomic_load_int(&p->p_cowgen))
 			thread_cow_update(td);
 
 		switch (type) {
@@ -1089,6 +1085,7 @@ cpu_fetch_syscall_args(struct thread *td)
 #endif
 
 	sa->code = frame->tf_eax;
+	sa->original_code = sa->code;
 	params = (caddr_t)frame->tf_esp + sizeof(uint32_t);
 
 	/*
@@ -1116,7 +1113,7 @@ cpu_fetch_syscall_args(struct thread *td)
 	}
 
  	if (sa->code >= p->p_sysent->sv_size)
- 		sa->callp = &p->p_sysent->sv_table[0];
+		sa->callp = &nosys_sysent;
   	else
  		sa->callp = &p->p_sysent->sv_table[sa->code];
 

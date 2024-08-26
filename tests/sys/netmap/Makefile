@@ -1,4 +1,3 @@
-# $FreeBSD: 0228271dd6681df003713e2bdbcd021368a68049 $
 
 PACKAGE=	tests
 
@@ -10,5 +9,6 @@ PLAIN_TESTS_C+=	ctrl-api-test
 
 CFLAGS+=	-I${SRCTOP}/tests
 LIBADD+= 	pthread
+LIBADD+= 	netmap
 
 .include <bsd.test.mk>

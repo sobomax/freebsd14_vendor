@@ -1,9 +1,8 @@
-# $FreeBSD: 50f92ecc6542816492481293881ec1972a0eef5e $
 
 CLEANFILES+=	certdata.txt
 
 SUBDIR+=	trusted
-SUBDIR+=	blacklisted
+SUBDIR+=	untrusted
 
 .include <bsd.obj.mk>
 

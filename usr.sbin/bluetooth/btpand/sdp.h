@@ -1,7 +1,7 @@
 /*	$NetBSD: sdp.h,v 1.2 2008/12/06 20:01:15 plunky Exp $	*/
 
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-NetBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2008 Iain Hibbert
  * All rights reserved.
@@ -27,7 +27,6 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-/* $FreeBSD: a1a9758edec8d74bd8d48d8af75fbe07f9cc8b68 $ */
 
 #include <bluetooth.h>
 #include <sdp.h>

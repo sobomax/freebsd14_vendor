@@ -1,5 +1,4 @@
 # Omap4430 generic configuration
-#$FreeBSD: b3edb8bec4267899c4e3bc134fe5e09db0bfe087 $
 files		"../ti/omap4/files.omap4"
 include		"../ti/std.ti"
 

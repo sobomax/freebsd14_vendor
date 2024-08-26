@@ -40,8 +40,6 @@
  * POSSIBILITY OF SUCH DAMAGES.
  *
  * $Id: //depot/aic7xxx/aic7xxx/aic7xxx.h#85 $
- *
- * $FreeBSD: f48e793fea6aa64065e65bf6c887bc8be0562140 $
  */
 
 #ifndef _AIC7XXX_H_

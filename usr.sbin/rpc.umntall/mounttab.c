@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 1999 Martin Blapp
  * All rights reserved.
@@ -28,8 +28,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: a0e0d7fb81e6bf20f38c217735f23f64cc3ab22c $");
-
 #include <sys/syslog.h>
 
 #include <rpc/rpc.h>

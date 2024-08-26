@@ -29,15 +29,12 @@
  * SUCH DAMAGE.
  */
 
-#include <sys/cdefs.h>
-__FBSDID("$FreeBSD: aa7c7123a04b74a83196f993682c75d1432dd270 $");
-
 #include <rpc/rpc.h>
 #include <rpcsvc/yp.h>
 #include <stdlib.h>
 #include <string.h>
 
-extern int (*ypresp_allfn)();
+extern int (*ypresp_allfn)(u_long, char *, int, char *, int, void *);
 extern void *ypresp_data;
 
 /*

@@ -28,8 +28,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: ccb5dd04821014ba27d1cad924740ddc61884c43 $");
-
 #include "opt_acpi.h"
 #include "opt_ddb.h"
 
@@ -41,6 +39,7 @@ __FBSDID("$FreeBSD: ccb5dd04821014ba27d1cad924740ddc61884c43 $");
 #include <sys/lock.h>
 #include <sys/malloc.h>
 #include <sys/module.h>
+#include <sys/sbuf.h>
 #include <sys/uuid.h>
 
 #include <contrib/dev/acpica/include/acpi.h>
@@ -66,14 +65,18 @@ find_dimm(ACPI_HANDLE handle, UINT32 nesting_level, void *context,
 	ACPI_DEVICE_INFO *device_info;
 	ACPI_STATUS status;
 
+	device_info = NULL;
 	status = AcpiGetObjectInfo(handle, &device_info);
 	if (ACPI_FAILURE(status))
 		return_ACPI_STATUS(AE_ERROR);
 	if (device_info->Address == (uintptr_t)context) {
 		*(ACPI_HANDLE *)return_value = handle;
-		return_ACPI_STATUS(AE_CTRL_TERMINATE);
-	}
-	return_ACPI_STATUS(AE_OK);
+		status = AE_CTRL_TERMINATE;
+	} else
+		status = AE_OK;
+
+	AcpiOsFree(device_info);
+	return_ACPI_STATUS(status);
 }
 
 static ACPI_HANDLE
@@ -245,20 +248,14 @@ nvdimm_root_write_ivar(device_t dev, device_t child, int index,
 }
 
 static int
-nvdimm_root_child_location_str(device_t dev, device_t child, char *buf,
-    size_t buflen)
+nvdimm_root_child_location(device_t dev, device_t child, struct sbuf *sb)
 {
 	ACPI_HANDLE handle;
-	int res;
 
 	handle = nvdimm_root_get_acpi_handle(child);
 	if (handle != NULL)
-		res = snprintf(buf, buflen, "handle=%s", acpi_name(handle));
-	else
-		res = snprintf(buf, buflen, "");
+		sbuf_printf(sb, "handle=%s", acpi_name(handle));
 
-	if (res >= buflen)
-		return (EOVERFLOW);
 	return (0);
 }
 
@@ -269,7 +266,8 @@ static device_method_t nvdimm_acpi_methods[] = {
 	DEVMETHOD(bus_add_child, bus_generic_add_child),
 	DEVMETHOD(bus_read_ivar, nvdimm_root_read_ivar),
 	DEVMETHOD(bus_write_ivar, nvdimm_root_write_ivar),
-	DEVMETHOD(bus_child_location_str, nvdimm_root_child_location_str),
+	DEVMETHOD(bus_child_location, nvdimm_root_child_location),
+	DEVMETHOD(bus_get_device_path, acpi_get_acpi_device_path),
 	DEVMETHOD_END
 };
 
@@ -279,7 +277,5 @@ static driver_t	nvdimm_acpi_driver = {
 	sizeof(struct nvdimm_root_dev),
 };
 
-static devclass_t nvdimm_acpi_root_devclass;
-DRIVER_MODULE(nvdimm_acpi_root, acpi, nvdimm_acpi_driver,
-    nvdimm_acpi_root_devclass, NULL, NULL);
+DRIVER_MODULE(nvdimm_acpi_root, acpi, nvdimm_acpi_driver, NULL, NULL);
 MODULE_DEPEND(nvdimm_acpi_root, acpi, 1, 1, 1);

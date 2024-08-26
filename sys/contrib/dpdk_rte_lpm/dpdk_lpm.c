@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2020 Alexander V. Chernikov
  *
@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 51cd134132f63ce8d37fb03417572e43c1e059d6 $");
+__FBSDID("$FreeBSD: b6b18d94a2e31436e17365941b21e2d2ad0d1119 $");
 #include "opt_inet.h"
 
 #include <sys/param.h>

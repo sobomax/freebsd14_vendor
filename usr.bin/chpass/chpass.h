@@ -40,7 +40,6 @@
  * SUCH DAMAGE.
  *
  *	@(#)chpass.h	8.4 (Berkeley) 4/2/94
- * $FreeBSD: b655c5dd0b5981c965011af69b6787f28ea15f0d $
  */
 
 struct passwd;

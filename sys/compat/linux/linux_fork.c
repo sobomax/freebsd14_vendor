@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2004 Tim J. Robbins
  * Copyright (c) 2002 Doug Rabson
@@ -28,14 +28,7 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 2839e865e95fb775bb93b38abd35502d95efa069 $");
-
-#include "opt_compat.h"
-
 #include <sys/param.h>
-#include <sys/systm.h>
-#include <sys/imgact.h>
 #include <sys/ktr.h>
 #include <sys/lock.h>
 #include <sys/mutex.h>
@@ -47,7 +40,6 @@ __FBSDID("$FreeBSD: 2839e865e95fb775bb93b38abd35502d95efa069 $");
 #include <sys/sx.h>
 #include <sys/umtxvar.h>
 #include <sys/unistd.h>
-#include <sys/wait.h>
 
 #include <vm/vm.h>
 #include <vm/pmap.h>
@@ -323,7 +315,7 @@ linux_clone_thread(struct thread *td, struct l_clone_args *args)
 	sched_fork_thread(td, newtd);
 	thread_unlock(td);
 	if (P_SHOULDSTOP(p))
-		newtd->td_flags |= TDF_ASTPENDING | TDF_NEEDSUSPCHK;
+		ast_sched(newtd, TDA_SUSPEND);
 
 	if (p->p_ptevents & PTRACE_LWP)
 		newtd->td_dbgflags |= TDB_BORN;

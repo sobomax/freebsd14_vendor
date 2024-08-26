@@ -11,8 +11,6 @@
  * implied warranties, including, without limitation, the implied
  * warranties of merchantability and fitness for a particular
  * purpose.
- *
- * $FreeBSD: 984ab52a816fe36c5c8da8496c508581588a3adf $
  */
 
 /* Memory Locations */

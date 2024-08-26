@@ -1,7 +1,6 @@
 #
 # DEFAULTS -- Default kernel configuration file for FreeBSD/powerpc
 #
-# $FreeBSD: da8e7fb6d1978392c97e18e7cf2e3a4f2c174521 $
 
 # Pseudo devices.
 device		mem		# Memory and kernel memory devices
@@ -12,4 +11,9 @@ device		uart_ns8250
 options 	GEOM_PART_BSD
 options 	GEOM_PART_MBR
 
+# Default congestion control algorithm
+options 	CC_CUBIC		# include CUBIC congestion control
+
 options         NEW_PCIB
+
+options 	NETLINK			# netlink(4) support

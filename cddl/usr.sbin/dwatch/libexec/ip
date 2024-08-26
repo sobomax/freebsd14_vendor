@@ -4,7 +4,6 @@
 #
 # $Title: dwatch(8) module for dtrace_ip(4) $
 # $Copyright: 2014-2018 Devin Teske. All rights reserved. $
-# $FreeBSD: 8de385f568bf22bd12e4ed50b7443c908878b406 $
 #
 ############################################################ DESCRIPTION
 #

@@ -1,4 +1,4 @@
-# $FreeBSD: 2dcf8dda8f590abee3f3356d774f4b0154ee9790 $
+.include <bsd.init.mk>
 
 # ZFS is not supported, we want debugging until this is vetted and
 # we don't want the gptboot.efifat thing created.

@@ -1,6 +1,5 @@
-# $FreeBSD: 4bb69614453e7139cfda18614b6e94cc7f76a027 $
 
-PACKAGE=	kerberos
+PACKAGE=	kerberos-lib
 
 LIB=	com_err
 SRCS=	com_err.c error.c

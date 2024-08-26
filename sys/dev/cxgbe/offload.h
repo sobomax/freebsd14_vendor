@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2010 Chelsio Communications, Inc.
  * All rights reserved.
@@ -25,8 +25,6 @@
  * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
- *
- * $FreeBSD: 81ed08f2e41293fabdf393a2ea20f3fcc82fecb1 $
  *
  */
 
@@ -225,13 +223,11 @@ struct tom_tunables {
 	int ddp;
 	int rx_coalesce;
 	int tls;
-	int tls_rx_timeout;
-	int *tls_rx_ports;
-	int num_tls_rx_ports;
 	int tx_align;
 	int tx_zcopy;
 	int cop_managed_offloading;
 	int autorcvbuf_inc;
+	int update_hc_on_pmtu_change;
 	int iso;
 };
 

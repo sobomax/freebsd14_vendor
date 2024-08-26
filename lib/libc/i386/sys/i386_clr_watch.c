@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright 2000  Brian S. Dean <bsd@bsdhome.com>
  * All Rights Reserved.
@@ -27,9 +27,6 @@
  * USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
-
-#include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 885ed7ddc3982444ff0e0746d9d8ab72281e13f7 $");
 
 #include <machine/reg.h>
 #include <machine/sysarch.h>

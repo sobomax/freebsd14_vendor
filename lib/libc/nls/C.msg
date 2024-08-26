@@ -1,4 +1,3 @@
-$ $FreeBSD: 4004011d260f5550b0881f3c5f321c172511362e $
 $
 $ Message catalog for C locale (template)
 $

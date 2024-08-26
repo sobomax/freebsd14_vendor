@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2011-2012 Stefan Bethke.
  * All rights reserved.
@@ -24,13 +24,9 @@
  * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
- *
- * $FreeBSD: f3af9f93825a99a222f35e2d2fbd6432f57faf62 $
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: f3af9f93825a99a222f35e2d2fbd6432f57faf62 $");
-
 #include <ctype.h>
 #include <err.h>
 #include <errno.h>
@@ -223,6 +219,8 @@ set_port_flag(struct cfg *cfg, int argc, char *argv[])
 			f = ETHERSWITCH_PORT_DOUBLE_TAG;
 		else if (strcasecmp(flag, "ingress") == 0)
 			f = ETHERSWITCH_PORT_INGRESS;
+		else if (strcasecmp(flag, "striptagingress") == 0)
+			f = ETHERSWITCH_PORT_STRIPTAGINGRESS;
 	}
 	bzero(&p, sizeof(p));
 	p.es_port = cfg->unit;
@@ -869,6 +867,8 @@ static struct cmds cmds[] = {
 	{ MODE_PORT, "-ingress", 0, set_port_flag },
 	{ MODE_PORT, "striptag", 0, set_port_flag },
 	{ MODE_PORT, "-striptag", 0, set_port_flag },
+	{ MODE_PORT, "striptagingress", 0, set_port_flag },
+	{ MODE_PORT, "-striptagingress", 0, set_port_flag },
 	{ MODE_PORT, "doubletag", 0, set_port_flag },
 	{ MODE_PORT, "-doubletag", 0, set_port_flag },
 	{ MODE_PORT, "firstlock", 0, set_port_flag },

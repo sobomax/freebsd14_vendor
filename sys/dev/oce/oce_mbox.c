@@ -38,7 +38,6 @@
  * Costa Mesa, CA 92626
  */
 
-/* $FreeBSD: 321775c13d1eab0789ae55a2eee1e9d15ca165df $ */
 
 #include "oce_if.h"
 
@@ -373,7 +372,6 @@ oce_mbox_post(POCE_SOFTC sc, struct oce_mbx *mbx, struct oce_mbx_ctx *mbxctx)
 	int rc = 0;
 	uint32_t tmo = 0;
 	uint32_t cstatus = 0;
-	uint32_t xstatus = 0;
 
 	LOCK(&sc->bmbx_lock);
 
@@ -402,7 +400,6 @@ oce_mbox_post(POCE_SOFTC sc, struct oce_mbx *mbx, struct oce_mbx_ctx *mbxctx)
 
 		/* pick up the mailbox status */
 		cstatus = mb_cqe->u0.s.completion_status;
-		xstatus = mb_cqe->u0.s.extended_status;
 
 		/*
 		 * store the mbx context in the cqe tag section so that
@@ -474,7 +471,7 @@ oce_read_mac_addr(POCE_SOFTC sc, uint32_t if_id,
 		goto error;
 	}
 
-	/* copy the mac addres in the output parameter */
+	/* copy the mac address in the output parameter */
 	mac->size_of_struct = fwcmd->params.rsp.mac.size_of_struct;
 	bcopy(&fwcmd->params.rsp.mac.mac_addr[0], &mac->mac_addr[0],
 		mac->size_of_struct);

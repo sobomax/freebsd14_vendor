@@ -1,4 +1,3 @@
-# $FreeBSD: fe9bbbaba41a92204ecea1eaf256842ab382da28 $
 
 .PATH: ${SRCTOP}/sys/dev/powermac_nvram
 

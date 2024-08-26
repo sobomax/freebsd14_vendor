@@ -29,8 +29,6 @@
  * SUCH DAMAGE.
  *
  *	@(#)defs.h	8.1 (Berkeley) 6/5/93
- *
- * $FreeBSD: 9b0218163d3b26c56b4e860431b419646d4791c7 $
  */
 
 

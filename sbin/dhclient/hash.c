@@ -43,8 +43,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 5d797cc9696491950d94f9070e7056661c523b15 $");
-
 #include "dhcpd.h"
 
 static int do_hash(const unsigned char *, int, int);

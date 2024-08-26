@@ -1,4 +1,3 @@
-/* $FreeBSD: d51ffddcc77f3875d0d9b32a33088475aa75ddac $ */
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>

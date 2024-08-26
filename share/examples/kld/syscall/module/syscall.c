@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 1999 Assar Westerlund
  * All rights reserved.
@@ -24,8 +24,6 @@
  * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
- *
- * $FreeBSD: 701e2492884c2fe42c0496a547eba7cde8679c7d $
  */
 
 #include <sys/param.h>
@@ -51,8 +49,8 @@ hello(struct thread *td, void *arg)
  * The `sysent' for the new syscall
  */
 static struct sysent hello_sysent = {
-	0,			/* sy_narg */
-	hello			/* sy_call */
+	.sy_narg = 0,
+	.sy_call = hello
 };
 
 /*

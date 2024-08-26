@@ -28,9 +28,6 @@
  * SUCH DAMAGE.
  */
 
-#include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 0a8125eeabb5da161bfd6aef3b51529bf8598841 $");
-
 #include <sys/param.h>
 #include <sys/signal.h>
 #include <sys/ucontext.h>

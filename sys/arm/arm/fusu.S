@@ -36,8 +36,6 @@
 #include <machine/asm.h>
 #include <machine/armreg.h>
 #include "assym.inc"
-__FBSDID("$FreeBSD: fd366542b283ad6352b2de65a2b16b09692262c7 $");
-
 	.syntax	unified
 
 #define GET_PCB(tmp) \

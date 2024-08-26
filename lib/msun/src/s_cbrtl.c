@@ -14,9 +14,6 @@
  * and David A. Schultz.
  */
 
-#include <sys/cdefs.h>
-__FBSDID("$FreeBSD: b15c96ecde035e6ff4a347b6c582007603182f28 $");
-
 #include <float.h>
 #ifdef __i386__
 #include <ieeefp.h>

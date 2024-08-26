@@ -1,4 +1,3 @@
-# $FreeBSD: f318ff0f88b9dad5dd76bafef98b75ae4fd577ef $
 
 .PATH:  ${SRCTOP}/sys/dev/ntb
 

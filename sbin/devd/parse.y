@@ -2,7 +2,7 @@
 /*-
  * DEVD (Device action daemon)
  *
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2002 M. Warner Losh <imp@FreeBSD.org>
  *
@@ -26,8 +26,6 @@
  * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
- *
- * $FreeBSD: 9b8fd592045aebc6aaf49d3cfd4f3675692f4b44 $
  */
 
 #include <sys/cdefs.h>

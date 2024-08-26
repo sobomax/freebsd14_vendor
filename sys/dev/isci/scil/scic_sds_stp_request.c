@@ -53,8 +53,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: f35e8cca7256bac22723d950b9566f2057a4b462 $");
-
 #include <dev/isci/scil/intel_sat.h>
 #include <dev/isci/scil/intel_sata.h>
 #include <dev/isci/scil/sci_types.h>

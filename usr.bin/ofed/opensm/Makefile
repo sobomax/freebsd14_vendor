@@ -1,4 +1,3 @@
-# $FreeBSD: 738b6ace31a1091d538c54d6e68471b470624da6 $
 
 _spath=	${SRCTOP}/contrib/ofed/opensm/opensm
 .PATH: ${_spath} ${_spath:H}/man

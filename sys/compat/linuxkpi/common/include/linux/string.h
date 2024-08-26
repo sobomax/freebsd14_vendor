@@ -25,8 +25,6 @@
  * THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- *
- * $FreeBSD: 932bed81d0346b2d2e18b1a0de05b9f24f7d76e5 $
  */
 #ifndef	_LINUXKPI_LINUX_STRING_H_
 #define	_LINUXKPI_LINUX_STRING_H_
@@ -39,6 +37,7 @@
 #include <linux/uaccess.h>
 #include <linux/err.h>
 #include <linux/bitops.h> /* for BITS_PER_LONG */
+#include <linux/stdarg.h>
 
 #include <sys/libkern.h>
 
@@ -206,6 +205,15 @@ strscpy(char* dst, const char* src, size_t len)
 	return (-E2BIG);
 }
 
+static inline ssize_t
+strscpy_pad(char* dst, const char* src, size_t len)
+{
+
+	bzero(dst, len);
+
+	return (strscpy(dst, src, len));
+}
+
 static inline void *
 memset32(uint32_t *b, uint32_t c, size_t len)
 {
@@ -256,5 +264,20 @@ memcpy_and_pad(void *dst, size_t dstlen, const void *src, size_t len, int ch)
 	size_t _o = offsetof(typeof(*(ptr)), smember);			\
 	memset(_ptr + _o, _c, sizeof(*(ptr)) - _o);			\
 })
+
+#define	memset_after(ptr, bytepat, smember)				\
+({									\
+	uint8_t *_ptr = (uint8_t *)(ptr);				\
+	int _c = (int)(bytepat);					\
+	size_t _o = offsetofend(typeof(*(ptr)), smember);		\
+	memset(_ptr + _o, _c, sizeof(*(ptr)) - _o);			\
+})
+
+static inline void
+memzero_explicit(void *p, size_t s)
+{
+	memset(p, 0, s);
+	__asm__ __volatile__("": :"r"(p) :"memory");
+}
 
 #endif	/* _LINUXKPI_LINUX_STRING_H_ */

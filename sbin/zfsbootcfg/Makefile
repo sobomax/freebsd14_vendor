@@ -1,5 +1,4 @@
 #	@(#)Makefile	8.4 (Berkeley) 6/22/95
-# $FreeBSD: 566ba2261705797cecb328a00d0dda9c1270fc82 $
 
 PROG=	zfsbootcfg
 MAN=	zfsbootcfg.8

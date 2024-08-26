@@ -1,4 +1,3 @@
-/* $FreeBSD: a635adba415817725e8660678115362e1d8bc5ae $ */
 /* Do not modify. This file is auto-generated from poly1305-ppcfp.pl. */
 .machine	"any"
 .abiversion	2

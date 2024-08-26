@@ -29,17 +29,12 @@
  * SUCH DAMAGE.
  *
  *	@(#)limits.h	8.3 (Berkeley) 1/4/94
- * $FreeBSD: 5a7b831b3089b0ec9d67b2019f0cd8cf324e0b0f $
  */
 
 #ifndef _MACHINE_LIMITS_H_
 #define	_MACHINE_LIMITS_H_
 
-#include <sys/cdefs.h>
-
-#ifdef __CC_SUPPORTS_WARNING
 #warning "machine/limits.h is deprecated.  Include sys/limits.h instead."
-#endif
 
 #include <sys/limits.h>
 

@@ -27,7 +27,6 @@
 .\" SUCH DAMAGE.
 .\"
 .\"	@(#)csh.a	8.1 (Berkeley) 6/8/93
-.\" $FreeBSD: d908fb2c3ba962cbc3b8ee075d26579e6d8e028c $
 .\"
 .SH
 Appendix \- Special characters

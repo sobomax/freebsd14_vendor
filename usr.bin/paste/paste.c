@@ -45,8 +45,6 @@ static char sccsid[] = "@(#)paste.c	8.1 (Berkeley) 6/6/93";
 #endif
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 9d34c203e3b0098534af2ed8d34d32b5a6a2a868 $");
-
 #include <sys/types.h>
 
 #include <err.h>
@@ -65,7 +63,7 @@ static int delimcnt;
 static int parallel(char **);
 static int sequential(char **);
 static int tr(wchar_t *);
-static void usage(void);
+static void usage(void) __dead2;
 
 static wchar_t tab[] = L"\t";
 

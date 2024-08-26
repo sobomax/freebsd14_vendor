@@ -37,7 +37,6 @@
  * SUCH DAMAGE.
  *
  *	from: @(#)param.h	5.8 (Berkeley) 6/28/91
- * $FreeBSD: a8c6df4304f817f380143ad57402a55190f7e3cc $
  */
 
 #ifndef _ARM_INCLUDE__ALIGN_H_

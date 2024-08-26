@@ -25,8 +25,6 @@
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 17f3367719e293689dc41fc9cb7794f0b837ba04 $");
-
 #include <dev/drm2/drmP.h>
 
 static void drm_platform_free_irq(struct drm_device *dev)

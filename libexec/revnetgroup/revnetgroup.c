@@ -38,11 +38,6 @@
  * Columbia University, New York City
  */
 
-#ifndef lint
-static const char rcsid[] =
-  "$FreeBSD: 11fba515a7ba5d5a4fe091ddfbef4705b4c54e07 $";
-#endif /* not lint */
-
 #include <err.h>
 #include <stdio.h>
 #include <stdlib.h>

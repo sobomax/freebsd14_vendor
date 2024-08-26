@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2019 The FreeBSD Foundation
  *
@@ -26,8 +26,6 @@
  * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
- *
- * $FreeBSD: e6be9adfcff6c8fbef92b331023775aa941fd67f $
  */
 
 #ifndef _LIBC_ARM_STATIC_TLS_H
@@ -38,11 +36,7 @@ _libc_get_static_tls_base(size_t offset)
 {
 	uintptr_t tlsbase;
 
-#ifdef ARM_TP_ADDRESS
-	tlsbase = *(uintptr_t *)ARM_TP_ADDRESS;
-#else
 	__asm __volatile("mrc  p15, 0, %0, c13, c0, 3" : "=r" (tlsbase));
-#endif
 
 	tlsbase += offset;
 	return (tlsbase);

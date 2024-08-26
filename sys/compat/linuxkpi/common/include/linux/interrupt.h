@@ -25,8 +25,6 @@
  * THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- *
- * $FreeBSD: 1e7a1042d237fa6e54e5dbc42eac4009e8a3d498 $
  */
 #ifndef	_LINUXKPI_LINUX_INTERRUPT_H_
 #define	_LINUXKPI_LINUX_INTERRUPT_H_
@@ -42,16 +40,13 @@
 
 typedef	irqreturn_t	(*irq_handler_t)(int, void *);
 
-#define	IRQF_SHARED	RF_SHAREABLE
+#define	IRQF_SHARED		0x0004	/* Historically */
 #define	IRQF_NOBALANCING	0
 
 #define	IRQ_DISABLE_UNLAZY	0
 
-struct irq_ent;
+#define	IRQ_NOTCONNECTED	(1U << 31)
 
-void linux_irq_handler(void *);
-void lkpi_devm_irq_release(struct device *, void *);
-void lkpi_irq_release(struct device *, struct irq_ent *);
 int  lkpi_request_irq(struct device *, unsigned int, irq_handler_t,
 	irq_handler_t, unsigned long, const char *, void *);
 int  lkpi_enable_irq(unsigned int);
@@ -160,7 +155,9 @@ irq_set_status_flags(unsigned int irq __unused, unsigned long flags __unused)
 /*
  * LinuxKPI tasklet support
  */
+struct tasklet_struct;
 typedef void tasklet_func_t(unsigned long);
+typedef void tasklet_callback_t(struct tasklet_struct *);
 
 struct tasklet_struct {
 	TAILQ_ENTRY(tasklet_struct) entry;
@@ -169,6 +166,8 @@ struct tasklet_struct {
 	volatile u_int tasklet_state;
 	atomic_t count;
 	unsigned long data;
+	tasklet_callback_t *callback;
+	bool use_callback;
 };
 
 #define	DECLARE_TASKLET(_name, _func, _data)	\
@@ -176,6 +175,11 @@ struct tasklet_struct _name = { .func = (_func), .data = (_data) }
 
 #define	tasklet_hi_schedule(t)	tasklet_schedule(t)
 
+/* Some other compat code in the tree has this defined as well. */
+#define	from_tasklet(_dev, _t, _field)		\
+    container_of(_t, typeof(*(_dev)), _field)
+
+void tasklet_setup(struct tasklet_struct *, tasklet_callback_t *);
 extern void tasklet_schedule(struct tasklet_struct *);
 extern void tasklet_kill(struct tasklet_struct *);
 extern void tasklet_init(struct tasklet_struct *, tasklet_func_t *,
@@ -186,5 +190,6 @@ extern void tasklet_disable_nosync(struct tasklet_struct *);
 extern int tasklet_trylock(struct tasklet_struct *);
 extern void tasklet_unlock(struct tasklet_struct *);
 extern void tasklet_unlock_wait(struct tasklet_struct *ts);
+#define	tasklet_unlock_spin_wait(ts)	tasklet_unlock_wait(ts)
 
 #endif	/* _LINUXKPI_LINUX_INTERRUPT_H_ */

@@ -1,5 +1,4 @@
 /*	$NetBSD: efun.c,v 1.10 2015/07/26 02:20:30 kamil Exp $	*/
-/*	$FreeBSD: 8a622e4e55241217331b01a9580dc3b871785a4e $ */
 
 /*-
  * Copyright (c) 2006 The NetBSD Foundation, Inc.

@@ -1,5 +1,4 @@
 #	@(#)Makefile	8.1 (Berkeley) 6/8/93
-# $FreeBSD: 14a2f703e5b94f716993c9501e30287ebdcbb9af $
 
 VOLUME=		psd/01.cacm
 SRCS=		stubs p.mac p1 p2 p3 p4 p5 p6

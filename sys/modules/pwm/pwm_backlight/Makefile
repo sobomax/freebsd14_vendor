@@ -1,4 +1,3 @@
-# $FreeBSD: c7ab67b386511746a09710b7fd34c56015315217 $
 
 .PATH:	${SRCTOP}/sys/dev/pwm
 KMOD=	pwm_backlight

@@ -33,9 +33,6 @@
 #if defined(LIBC_SCCS) && !defined(lint)
 static char sccsid[] = "@(#)getnetconfig.c	1.12 91/12/19 SMI";
 #endif
-#include <sys/cdefs.h>
-__FBSDID("$FreeBSD: abd5eadf3917ae352ec0247efed23628f0b62c56 $");
-
 /*
  * Copyright (c) 1989 by Sun Microsystems, Inc.
  */

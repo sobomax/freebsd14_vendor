@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 1999 Cameron Grant <cg@freebsd.org>
  * Copyright (c) 2003-2007 Yuriy Tsibizov <yuriy.tsibizov@gfk.ru>
@@ -25,8 +25,6 @@
  * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
- *
- * $FreeBSD: 85c200631ca2ca58d82e6e1ff2e315449b7a8ba5 $
  */
 
 #include <sys/param.h>
@@ -2698,8 +2696,8 @@ emu_init(struct emu_sc_info *sc)
 	     /* highaddr */ BUS_SPACE_MAXADDR,
 	     /* filter */ NULL, /* filterarg */ NULL,
 	     /* maxsize */ EMU_MAX_BUFSZ, /* nsegments */ 1, /* maxsegz */ 0x3ffff,
-	     /* flags */ 0, /* lockfunc */ busdma_lock_mutex,
-	     /* lockarg */ &Giant, &(sc->mem.dmat)) != 0) {
+	     /* flags */ 0, /* lockfunc */NULL, /* lockarg */NULL,
+	     &sc->mem.dmat) != 0) {
 		device_printf(sc->dev, "unable to create dma tag\n");
 		bus_dma_tag_destroy(sc->mem.dmat);
 		return (ENOMEM);
@@ -2987,7 +2985,6 @@ emu_write_ivar(device_t bus __unused, device_t dev __unused,
 static int
 emu_pci_probe(device_t dev)
 {
-	struct sbuf *s;
 	unsigned int thiscard = 0;
 	uint16_t vendor;
 
@@ -2999,15 +2996,8 @@ emu_pci_probe(device_t dev)
 	if (thiscard == 0)
 		return (ENXIO);
 
-	s = sbuf_new(NULL, NULL, 4096, 0);
-	if (s == NULL)
-		return (ENOMEM);
-	sbuf_printf(s, "Creative %s [%s]", emu_cards[thiscard].desc, emu_cards[thiscard].SBcode);
-	sbuf_finish(s);
-
-	device_set_desc_copy(dev, sbuf_data(s));
-
-	sbuf_delete(s);
+	device_set_descf(dev, "Creative %s [%s]",
+	    emu_cards[thiscard].desc, emu_cards[thiscard].SBcode);
 
 	return (BUS_PROBE_DEFAULT);
 }
@@ -3539,7 +3529,5 @@ emu_modevent(module_t mod __unused, int cmd, void *data __unused)
 
 }
 
-static devclass_t emu_devclass;
-
-DRIVER_MODULE(snd_emu10kx, pci, emu_driver, emu_devclass, emu_modevent, NULL);
+DRIVER_MODULE(snd_emu10kx, pci, emu_driver, emu_modevent, NULL);
 MODULE_VERSION(snd_emu10kx, SND_EMU10KX_PREFVER);

@@ -1,3 +1,2 @@
-.\" $FreeBSD: 267c32f6029d5a0c0e735f1a84e16a88e37783da $
 Do not build
 .Xr mlx5tool 8

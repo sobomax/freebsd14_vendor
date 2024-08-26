@@ -1,4 +1,3 @@
-/* $FreeBSD: f40910d8edf37daed8c53a54499c87ea009bf46a $ */
 /* $NetBSD: citrus_viqr.c,v 1.5 2011/11/19 18:20:13 tnozaki Exp $ */
 
 /*-

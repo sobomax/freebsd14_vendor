@@ -36,8 +36,6 @@
  * OF SUCH DAMAGE.
  *
  * Author: Julian Elischer <julian@freebsd.org>
- *
- * $FreeBSD: 05f37579aba152184a47b89b67aeb18efaeefd93 $
  * $Whistle: ng_socket.c,v 1.28 1999/11/01 09:24:52 julian Exp $
  */
 
@@ -287,11 +285,15 @@ ngc_send(struct socket *so, int flags, struct mbuf *m, struct sockaddr *addr,
 		if (ng_findtype(mkp->type) == NULL) {
 			char filename[NG_TYPESIZ + 3];
 			int fileid;
+			bool loaded;
 
 			/* Not found, try to load it as a loadable module. */
 			snprintf(filename, sizeof(filename), "ng_%s",
 			    mkp->type);
 			error = kern_kldload(curthread, filename, &fileid);
+			loaded = (error == 0);
+			if (error == EEXIST)
+				error = 0;
 			if (error != 0) {
 				free(msg, M_NETGRAPH_MSG);
 				goto release;
@@ -300,9 +302,10 @@ ngc_send(struct socket *so, int flags, struct mbuf *m, struct sockaddr *addr,
 			/* See if type has been loaded successfully. */
 			if (ng_findtype(mkp->type) == NULL) {
 				free(msg, M_NETGRAPH_MSG);
-				(void)kern_kldunload(curthread, fileid,
-				    LINKER_UNLOAD_NORMAL);
-				error =  ENXIO;
+				if (loaded)
+					(void)kern_kldunload(curthread, fileid,
+					    LINKER_UNLOAD_NORMAL);
+				error = ENXIO;
 				goto release;
 			}
 		}
@@ -1128,68 +1131,42 @@ dummy_disconnect(struct socket *so)
 {
 	return (0);
 }
+
 /*
+ * Definitions of protocols supported in the NETGRAPH domain.
  * Control and data socket type descriptors
  *
  * XXXRW: Perhaps _close should do something?
  */
-
-static struct pr_usrreqs ngc_usrreqs = {
-	.pru_abort =		NULL,
-	.pru_attach =		ngc_attach,
-	.pru_bind =		ngc_bind,
-	.pru_connect =		ngc_connect,
-	.pru_detach =		ngc_detach,
-	.pru_disconnect =	dummy_disconnect,
-	.pru_peeraddr =		NULL,
-	.pru_send =		ngc_send,
-	.pru_shutdown =		NULL,
-	.pru_sockaddr =		ng_getsockaddr,
-	.pru_close =		NULL,
-};
-
-static struct pr_usrreqs ngd_usrreqs = {
-	.pru_abort =		NULL,
-	.pru_attach =		ngd_attach,
-	.pru_bind =		NULL,
-	.pru_connect =		ngd_connect,
-	.pru_detach =		ngd_detach,
-	.pru_disconnect =	dummy_disconnect,
-	.pru_peeraddr =		NULL,
-	.pru_send =		ngd_send,
-	.pru_shutdown =		NULL,
-	.pru_sockaddr =		ng_getsockaddr,
-	.pru_close =		NULL,
-};
-
-/*
- * Definitions of protocols supported in the NETGRAPH domain.
- */
-
-extern struct domain ngdomain;		/* stop compiler warnings */
-
-static struct protosw ngsw[] = {
-{
+static struct protosw ngcontrol_protosw = {
 	.pr_type =		SOCK_DGRAM,
-	.pr_domain =		&ngdomain,
 	.pr_protocol =		NG_CONTROL,
 	.pr_flags =		PR_ATOMIC | PR_ADDR /* | PR_RIGHTS */,
-	.pr_usrreqs =		&ngc_usrreqs
-},
-{
+	.pr_attach =		ngc_attach,
+	.pr_bind =		ngc_bind,
+	.pr_connect =		ngc_connect,
+	.pr_detach =		ngc_detach,
+	.pr_disconnect =	dummy_disconnect,
+	.pr_send =		ngc_send,
+	.pr_sockaddr =		ng_getsockaddr,
+};
+static struct protosw ngdata_protosw = {
 	.pr_type =		SOCK_DGRAM,
-	.pr_domain =		&ngdomain,
 	.pr_protocol =		NG_DATA,
 	.pr_flags =		PR_ATOMIC | PR_ADDR,
-	.pr_usrreqs =		&ngd_usrreqs
-}
+	.pr_attach =		ngd_attach,
+	.pr_connect =		ngd_connect,
+	.pr_detach =		ngd_detach,
+	.pr_disconnect =	dummy_disconnect,
+	.pr_send =		ngd_send,
+	.pr_sockaddr =		ng_getsockaddr,
 };
 
-struct domain ngdomain = {
+static struct domain ngdomain = {
 	.dom_family =		AF_NETGRAPH,
 	.dom_name =		"netgraph",
-	.dom_protosw =		ngsw,
-	.dom_protoswNPROTOSW =	&ngsw[nitems(ngsw)]
+	.dom_nprotosw =		2,
+	.dom_protosw =		{ &ngcontrol_protosw, &ngdata_protosw },
 };
 
 /*
@@ -1223,7 +1200,7 @@ ngs_mod_event(module_t mod, int event, void *data)
 	return (error);
 }
 
-VNET_DOMAIN_SET(ng);
+DOMAIN_SET(ng);
 
 SYSCTL_INT(_net_graph, OID_AUTO, family, CTLFLAG_RD, SYSCTL_NULL_INT_PTR, AF_NETGRAPH, "");
 static SYSCTL_NODE(_net_graph, OID_AUTO, data, CTLFLAG_RW | CTLFLAG_MPSAFE, 0,

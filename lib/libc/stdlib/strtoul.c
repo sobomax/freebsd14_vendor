@@ -5,7 +5,7 @@
  *	The Regents of the University of California.  All rights reserved.
  *
  * Copyright (c) 2011 The FreeBSD Foundation
- * All rights reserved.
+ *
  * Portions of this software were developed by David Chisnall
  * under sponsorship from the FreeBSD Foundation.
  *
@@ -37,9 +37,6 @@
 #if defined(LIBC_SCCS) && !defined(lint)
 static char sccsid[] = "@(#)strtoul.c	8.1 (Berkeley) 6/4/93";
 #endif /* LIBC_SCCS and not lint */
-#include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 50ce1cbf07a86205bc5328c1ef01d80ff78f8864 $");
-
 #include <limits.h>
 #include <ctype.h>
 #include <errno.h>
@@ -85,6 +82,13 @@ strtoul_l(const char * __restrict nptr, char ** __restrict endptr, int base, loc
 		c = s[1];
 		s += 2;
 		base = 16;
+	}
+	if ((base == 0 || base == 2) &&
+	    c == '0' && (*s == 'b' || *s == 'B') &&
+	    (s[1] >= '0' && s[1] <= '1')) {
+		c = s[1];
+		s += 2;
+		base = 2;
 	}
 	if (base == 0)
 		base = c == '0' ? 8 : 10;

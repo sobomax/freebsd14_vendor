@@ -1,7 +1,5 @@
 /*-
  * This file is in the public domain.
- *
- * $FreeBSD: 0a1609196ef9d6989974fe33180ecc13e889b27d $
  */
 
 #ifndef _MACHINE_PMC_MDEP_H_
@@ -10,6 +8,7 @@
 #define PMC_MDEP_CLASS_INDEX_POWERPC	1
 
 union pmc_md_op_pmcallocate {
+	uint32_t		pm_event;
 	uint64_t		__pad[4];
 };
 

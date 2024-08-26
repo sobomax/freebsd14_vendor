@@ -1,4 +1,3 @@
-# $FreeBSD: 94359aa40c7c523301183871e16f7b3f2c21dab5 $
 
 PACKAGE=	kerberos-lib
 

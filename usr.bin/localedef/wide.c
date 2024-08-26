@@ -35,8 +35,6 @@
  * this approach means that we need a method for each and every encoding.
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 808239620dbbd0506a3e08045b591e21898dd760 $");
-
 #include <ctype.h>
 #include <stdlib.h>
 #include <wchar.h>

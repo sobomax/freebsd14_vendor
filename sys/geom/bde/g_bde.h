@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2002 Poul-Henning Kamp
  * Copyright (c) 2002 Networks Associates Technology, Inc.
@@ -30,8 +30,6 @@
  * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
- *
- * $FreeBSD: 3f36bb4281ae1e86baa6cf46f0b2e5cb5f98e016 $
  */
 
 #ifndef _SYS_GEOM_BDE_G_BDE_H_
@@ -56,6 +54,11 @@
 
 /* This just needs to be "large enough" */
 #define G_BDE_KEYBYTES	304
+
+/* This file is being included by userspace. */
+#ifndef __diagused
+#define	__diagused
+#endif
 
 struct g_bde_work;
 struct g_bde_softc;
@@ -176,7 +179,7 @@ void g_bde_worker(void *arg);
 static __inline void
 AES_init(cipherInstance *ci)
 {
-	int error;
+	int error __diagused;
 
 	error = rijndael_cipherInit(ci, MODE_CBC, NULL);
 	KASSERT(error > 0, ("rijndael_cipherInit %d", error));
@@ -185,7 +188,7 @@ AES_init(cipherInstance *ci)
 static __inline void
 AES_makekey(keyInstance *ki, int dir, u_int len, const void *key)
 {
-	int error;
+	int error __diagused;
 
 	error = rijndael_makeKey(ki, dir, len, key);
 	KASSERT(error > 0, ("rijndael_makeKey %d", error));
@@ -194,7 +197,7 @@ AES_makekey(keyInstance *ki, int dir, u_int len, const void *key)
 static __inline void
 AES_encrypt(cipherInstance *ci, keyInstance *ki, const void *in, void *out, u_int len)
 {
-	int error;
+	int error __diagused;
 
 	error = rijndael_blockEncrypt(ci, ki, in, len * 8, out);
 	KASSERT(error > 0, ("rijndael_blockEncrypt %d", error));
@@ -203,7 +206,7 @@ AES_encrypt(cipherInstance *ci, keyInstance *ki, const void *in, void *out, u_in
 static __inline void
 AES_decrypt(cipherInstance *ci, keyInstance *ki, const void *in, void *out, u_int len)
 {
-	int error;
+	int error __diagused;
 
 	error = rijndael_blockDecrypt(ci, ki, in, len * 8, out);
 	KASSERT(error > 0, ("rijndael_blockDecrypt %d", error));

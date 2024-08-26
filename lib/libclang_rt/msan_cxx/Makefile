@@ -1,6 +1,4 @@
 
-# $FreeBSD: 29ba33393ca70614dea6d81ebb071184a94c2ab8 $
-
 .include <bsd.init.mk>
 
 LIB=		clang_rt.msan_cxx-${CRTARCH}

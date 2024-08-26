@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2006 IronPort Systems Inc. <ambrisko@ironport.com>
  * All rights reserved.
@@ -27,8 +27,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 197c317dcc09fbdd2ee53da5415eb14855c2122e $");
-
 #include <sys/param.h>
 #include <sys/systm.h>
 #include <sys/bus.h>
@@ -297,7 +295,7 @@ read_start:
 		len += count - 1;
 
 		/* If this was the last block we are done. */
-		if (ssif_buf[0] != 0xff)
+		if (ssif_buf[0] == 0xff)
 			break;
 		block++;
 	}

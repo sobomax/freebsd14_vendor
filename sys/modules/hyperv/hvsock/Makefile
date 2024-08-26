@@ -1,4 +1,3 @@
-# $FreeBSD: b619b4865bed8417f4d33f37247b489048e70ba1 $
 
 .PATH:  ${SRCTOP}/sys/dev/hyperv/hvsock
 

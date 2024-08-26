@@ -15,8 +15,6 @@
 #define __GLOBAL_VARIABLE_GUID_H__
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: cef7995e749786defd007c08203951e3c5366417 $");
-
 #ifndef EFI_GLOBAL_VARIABLE
 #define EFI_GLOBAL_VARIABLE \
   { \

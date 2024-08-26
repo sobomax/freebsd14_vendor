@@ -23,7 +23,6 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 #include "test.h"
-__FBSDID("$FreeBSD: 5416021947e01f55546a5230af253d98b00a1ec4 $");
 
 /*
  * A "usual" empty tar archive contains only zero bytes

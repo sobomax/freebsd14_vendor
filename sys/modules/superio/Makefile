@@ -1,4 +1,3 @@
-# $FreeBSD: 064c3986356644d0e11af5800143fa1251622984 $
 
 .PATH: ${.CURDIR}/../../dev/superio
 

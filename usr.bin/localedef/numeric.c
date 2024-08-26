@@ -32,8 +32,6 @@
  * LC_NUMERIC database generation routines for localedef.
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 2950420897ca76823968184b3b5b0589cb32e0b4 $");
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <errno.h>
@@ -95,7 +93,7 @@ add_numeric_group(int n)
 		(void) asprintf(&s, "%s;%d", numeric.grouping, n);
 	}
 	if (s == NULL)
-		fprintf(stderr, "out of memory");
+		fprintf(stderr, "out of memory\n");
 
 	free((char *)numeric.grouping);
 	numeric.grouping = s;

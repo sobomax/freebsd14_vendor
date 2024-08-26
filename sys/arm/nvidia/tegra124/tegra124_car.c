@@ -25,8 +25,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 49246889c06259cc9156c2bf17d0510f93138213 $");
-
 #include <sys/param.h>
 #include <sys/systm.h>
 #include <sys/bus.h>
@@ -596,8 +594,7 @@ static device_method_t tegra124_car_methods[] = {
 	DEVMETHOD_END
 };
 
-static devclass_t tegra124_car_devclass;
 static DEFINE_CLASS_0(car, tegra124_car_driver, tegra124_car_methods,
     sizeof(struct tegra124_car_softc));
-EARLY_DRIVER_MODULE(tegra124_car, simplebus, tegra124_car_driver,
-    tegra124_car_devclass, NULL, NULL, BUS_PASS_TIMER);
+EARLY_DRIVER_MODULE(tegra124_car, simplebus, tegra124_car_driver, NULL, NULL,
+    BUS_PASS_TIMER);

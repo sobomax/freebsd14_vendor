@@ -23,7 +23,6 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  */
-/* $FreeBSD: 3fdfe355d9c7951771b3ced789a9dfc48694262b $ */
 /*
  * Virtual HBA infrastructure, to be used for testing as well as other cute hacks.
  */

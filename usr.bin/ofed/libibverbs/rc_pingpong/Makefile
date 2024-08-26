@@ -1,4 +1,3 @@
-# $FreeBSD: 12d847e9e23800ffdbd80d8237adc47618f56f49 $
 
 PACKAGE=	rdma
 PROG=	ibv_rc_pingpong

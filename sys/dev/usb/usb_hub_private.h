@@ -1,6 +1,5 @@
-/* $FreeBSD: ddb4010820612e9b98ffb5a42a7c2f8daecab3d8 $ */
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-NetBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 1998 The NetBSD Foundation, Inc. All rights reserved.
  * Copyright (c) 1998 Lennart Augustsson. All rights reserved.
@@ -80,6 +79,7 @@ uhub_find_iface_index(struct usb_hub *hub, device_t child,
 device_probe_t uhub_probe;
 device_attach_t uhub_attach;
 device_detach_t uhub_detach;
-bus_child_location_str_t uhub_child_location_string;
+bus_child_location_t uhub_child_location;
+bus_get_device_path_t uhub_get_device_path;
 
 #endif

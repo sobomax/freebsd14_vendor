@@ -1,4 +1,3 @@
-/*	$FreeBSD: cb91db86e1293591a51b88cf56fef15222a5c12f $	*/
 /* $OpenBSD: ip_ipcomp.c,v 1.1 2001/07/05 12:08:52 jjbg Exp $ */
 
 /*-

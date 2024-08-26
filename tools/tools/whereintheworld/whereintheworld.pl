@@ -7,7 +7,6 @@
 # Dag-Erling Smørgrav <des@freebsd.org> 09 January 2003
 #
 # $Id: whereintheworld,v 1.3 2000/01/28 00:42:32 fenner Exp $
-# $FreeBSD: 6e358cfa6734d3bf546d16862f4a917dfbfd0af2 $
 #
 
 use strict;

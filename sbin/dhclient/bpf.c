@@ -44,8 +44,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: d938b68c7c94948cec026b03de8e84de562ab802 $");
-
 #include "dhcpd.h"
 #include "privsep.h"
 #include <sys/capsicum.h>

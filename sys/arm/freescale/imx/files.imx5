@@ -1,4 +1,3 @@
-# $FreeBSD: 4ede403b5ae2affe14234039ec60eb0e708d6dec $
 
 # Init
 arm/freescale/imx/imx_machdep.c		standard

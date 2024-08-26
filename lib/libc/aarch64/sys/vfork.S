@@ -25,7 +25,7 @@
  */
 
 #include <machine/asm.h>
-__FBSDID("$FreeBSD: 77c1e0cfb0e29ab43085b4348f9afa62cd170be9 $");
+#include <sys/elf_common.h>
 #include "SYS.h"
 
 ENTRY(__sys_vfork)
@@ -39,3 +39,5 @@ ENTRY(__sys_vfork)
 	mov	lr, x2
 	ret
 END(__sys_vfork)
+
+GNU_PROPERTY_AARCH64_FEATURE_1_NOTE(GNU_PROPERTY_AARCH64_FEATURE_1_VAL)

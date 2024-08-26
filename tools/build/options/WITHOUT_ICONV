@@ -1,2 +1,1 @@
-.\" $FreeBSD: 3c887a41515352beed327f6a6ca952a60d18033a $
 Do not build iconv as part of libc.

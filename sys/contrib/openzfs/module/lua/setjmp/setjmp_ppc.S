@@ -1,4 +1,4 @@
-/*	$FreeBSD: 72aa5d5ab5b05f5b7612153447ad4ecdd90ef4db $  */
+/*	$FreeBSD: a035cd11b33bde2b2afcf64ab06c22b78ff10276 $  */
 /*	from:	NetBSD: setjmp.S,v 1.1 1998/01/27 15:13:12 sakamoto Exp $  */
 /*	from:	OpenBSD: setjmp.S,v 1.2 1996/12/28 06:22:18 rahnds Exp 	*/
 /* kernel version of this file, does not have signal goop */
@@ -54,7 +54,7 @@
 #ifdef PPC64_ELF_ABI_v2
 
 #define	ENTRY(name) \
-	.align 2 ; \
+	.balign 2 ; \
 	.type name,@function; \
 	.weak name; \
 name:
@@ -64,7 +64,7 @@ name:
 #define	XGLUE(a,b) a##b
 #define	GLUE(a,b) XGLUE(a,b)
 #define	ENTRY(name) \
-	.align 2 ; \
+	.balign 2 ; \
 	.weak name; \
 	.weak GLUE(.,name); \
 	.pushsection ".opd","aw"; \

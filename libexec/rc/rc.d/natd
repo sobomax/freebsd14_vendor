@@ -1,6 +1,5 @@
 #!/bin/sh
 #
-# $FreeBSD: 635113581805722d3096fd142477c363b8c08222 $
 #
 
 # PROVIDE: natd

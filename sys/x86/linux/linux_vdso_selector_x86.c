@@ -28,9 +28,6 @@
  * SUCH DAMAGE.
  */
 
-#include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 93da98420f1740b6a25688ef6aaaf1cababb44aa $");
-
 #include <sys/param.h>
 #include <x86/cputypes.h>
 #include <x86/x86_var.h>

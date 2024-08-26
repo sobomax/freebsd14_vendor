@@ -1,4 +1,3 @@
-# $FreeBSD: 4dac5c675a4987b5324c0c3bcf23c5b07ccd0c80 $
 
 SUBDIR= \
 	include \

@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2009 IronPort Systems Inc. <ambrisko@ironport.com>
  * All rights reserved.
@@ -27,8 +27,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 4b33c5b014d84ef453a85fd7418da6a8b743cb68 $");
-
 /*
  * Linux ioctl handler for the ipmi device driver
  */

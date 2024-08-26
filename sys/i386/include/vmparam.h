@@ -34,7 +34,6 @@
  * SUCH DAMAGE.
  *
  *	from: @(#)vmparam.h	5.9 (Berkeley) 5/12/91
- * $FreeBSD: 3b844fbc8be1c4bb36d99ab5b0d4d50d244a69db $
  */
 
 #ifndef _MACHINE_VMPARAM_H_

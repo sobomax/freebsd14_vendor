@@ -29,7 +29,6 @@
  * SUCH DAMAGE.
  *
  *	@(#)reboot.h	8.3 (Berkeley) 12/13/94
- * $FreeBSD: 20b91f8ed91db687fcbb7eda4679ddde33716e7a $
  */
 
 #ifndef _SYS_REBOOT_H_

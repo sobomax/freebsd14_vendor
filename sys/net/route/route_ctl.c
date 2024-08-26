@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2020 Alexander V. Chernikov
  *
@@ -26,7 +26,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 9bb02c99ddce2086c681f53673b95bbe10787d68 $");
 #include "opt_inet.h"
 #include "opt_inet6.h"
 #include "opt_route.h"
@@ -44,6 +43,7 @@ __FBSDID("$FreeBSD: 9bb02c99ddce2086c681f53673b95bbe10787d68 $");
 
 #include <net/if.h>
 #include <net/if_var.h>
+#include <net/if_private.h>
 #include <net/if_dl.h>
 #include <net/vnet.h>
 #include <net/route.h>
@@ -95,6 +95,8 @@ static int delete_route(struct rib_head *rnh, struct rtentry *rt,
 static int rt_delete_conditional(struct rib_head *rnh, struct rtentry *rt,
     int prio, rib_filter_f_t *cb, void *cbdata, struct rib_cmd_info *rc);
 
+static bool fill_pxmask_family(int family, int plen, struct sockaddr *_dst,
+    struct sockaddr **pmask);
 static int get_prio_from_info(const struct rt_addrinfo *info);
 static int nhop_get_prio(const struct nhop_object *nh);
 
@@ -388,6 +390,18 @@ lookup_prefix(struct rib_head *rnh, const struct rt_addrinfo *info,
 	    info->rti_info[RTAX_NETMASK], rnd);
 
 	return (rt);
+}
+
+const struct rtentry *
+rib_lookup_prefix_plen(struct rib_head *rnh, struct sockaddr *dst, int plen,
+    struct route_nhop_data *rnd)
+{
+	union sockaddr_union mask_storage;
+	struct sockaddr *netmask = &mask_storage.sa;
+
+	if (fill_pxmask_family(dst->sa_family, plen, dst, &netmask))
+		return (lookup_prefix_bysa(rnh, dst, netmask, rnd));
+	return (NULL);
 }
 
 static bool

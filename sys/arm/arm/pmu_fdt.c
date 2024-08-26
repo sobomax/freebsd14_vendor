@@ -29,8 +29,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 6590e0659d822dc6c477c14d2f8193258b75d2e3 $");
-
 #include <sys/param.h>
 #include <sys/systm.h>
 #include <sys/bus.h>
@@ -234,6 +232,4 @@ static driver_t pmu_fdt_driver = {
 	sizeof(struct pmu_softc),
 };
 
-static devclass_t pmu_fdt_devclass;
-
-DRIVER_MODULE(pmu, simplebus, pmu_fdt_driver, pmu_fdt_devclass, 0, 0);
+DRIVER_MODULE(pmu, simplebus, pmu_fdt_driver, 0, 0);

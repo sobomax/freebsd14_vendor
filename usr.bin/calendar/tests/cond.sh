@@ -1,4 +1,3 @@
-# $FreeBSD: 420aaf1d7c5cb8b7d179854e09962e2dffba1819 $
 
 CALENDAR_FILE="-f ${SRCDIR}/calendar.cond"
 CALENDAR_BIN="calendar"

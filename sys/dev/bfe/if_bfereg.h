@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2003 Stuart Walsh
  *
@@ -24,7 +24,6 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  */
-/* $FreeBSD: 8638f78cf56290f03eb9841b858835ec1a7f2cb9 $ */
 
 #ifndef _BFE_H
 #define _BFE_H
@@ -583,7 +582,7 @@ struct bfe_hw_stats {
 
 struct bfe_softc
 {
-    struct ifnet            *bfe_ifp;     /* interface info */
+    if_t                    bfe_ifp;     /* interface info */
     device_t                bfe_dev;
     device_t                bfe_miibus;
     bus_dma_tag_t           bfe_tag;

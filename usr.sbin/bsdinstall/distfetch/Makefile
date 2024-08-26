@@ -1,8 +1,8 @@
-# $FreeBSD: 044b83a8a1a0cfe46bdd864a6345598192e8cff1 $
 
 BINDIR= ${LIBEXECDIR}/bsdinstall
 PROG=	distfetch
-LIBADD=	fetch ncursesw dialog m
+CFLAGS+=	-I${SRCTOP}/contrib/bsddialog/lib -I${.OBJDIR}/../distextract
+LIBADD=	fetch bsddialog
 
 MAN=
 

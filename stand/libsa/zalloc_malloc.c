@@ -27,9 +27,6 @@
  * SUCH DAMAGE.
  */
 
-#include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 215e07d34a84569be159ad14e59af56e861823b8 $");
-
 /*
  * MALLOC.C - malloc equivalent, runs on top of zalloc and uses sbrk
  */

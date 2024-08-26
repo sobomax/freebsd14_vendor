@@ -1,4 +1,3 @@
-# $FreeBSD: 119968c6088a76263aae0dd0559c2c4964d5f50a $
 
 .PATH: ${SRCTOP}/sys/dev/rl
 

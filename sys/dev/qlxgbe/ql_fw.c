@@ -29,8 +29,6 @@
  * File: ql_fw.c
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 67711ecf8eeaa065c4e92696de1dd084f19071ab $");
-
 #include "ql_os.h"
 
 unsigned int ql83xx_firmware_version_major = 5;

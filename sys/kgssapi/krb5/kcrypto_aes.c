@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2008 Isilon Inc http://www.isilon.com/
  * Authors: Doug Rabson <dfr@rabson.org>
@@ -28,8 +28,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 38faeb37066c271171199fcc064946ff38338527 $");
-
 #include <sys/param.h>
 #include <sys/lock.h>
 #include <sys/malloc.h>
@@ -122,7 +120,7 @@ aes_crypto_cb(struct cryptop *crp)
 	int error;
 	struct aes_state *as = (struct aes_state *) crp->crp_opaque;
 
-	if (crypto_ses2caps(crp->crp_session) & CRYPTOCAP_F_SYNC)
+	if (CRYPTO_SESS_SYNC(crp->crp_session))
 		return (0);
 
 	error = crp->crp_etype;
@@ -165,7 +163,7 @@ aes_encrypt_1(const struct krb5_key_state *ks, int buftype, void *buf,
 
 	error = crypto_dispatch(crp);
 
-	if ((crypto_ses2caps(as->as_session_aes) & CRYPTOCAP_F_SYNC) == 0) {
+	if (!CRYPTO_SESS_SYNC(as->as_session_aes)) {
 		mtx_lock(&as->as_lock);
 		if (!error && !(crp->crp_flags & CRYPTO_F_DONE))
 			error = msleep(crp, &as->as_lock, 0, "gssaes", 0);
@@ -335,7 +333,7 @@ aes_checksum(const struct krb5_key_state *ks, int usage,
 
 	error = crypto_dispatch(crp);
 
-	if ((crypto_ses2caps(as->as_session_sha1) & CRYPTOCAP_F_SYNC) == 0) {
+	if (!CRYPTO_SESS_SYNC(as->as_session_sha1)) {
 		mtx_lock(&as->as_lock);
 		if (!error && !(crp->crp_flags & CRYPTO_F_DONE))
 			error = msleep(crp, &as->as_lock, 0, "gssaes", 0);

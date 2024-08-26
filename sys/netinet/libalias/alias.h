@@ -1,7 +1,7 @@
 /* lint -save -library Flexelint comment for external headers */
 
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2001 Charles Mott <cm@linktel.net>
  * All rights reserved.
@@ -26,8 +26,6 @@
  * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
- *
- * $FreeBSD: 558a750b4fd8f155b5fe538cd035d09fe7f17e47 $
  */
 
 /*
@@ -122,9 +120,6 @@ int		LibAliasSaveFragment(struct libalias *, void *_ptr);
 /* Miscellaneous functions. */
 unsigned short	LibAliasInternetChecksum(struct libalias *, unsigned short *_ptr, int _nbytes);
 void		LibAliasSetTarget(struct libalias *, struct in_addr _target_addr);
-
-/* never used and never worked, to be removed in FreeBSD 14 */
-int		LibAliasCheckNewLink(struct libalias *);
 
 /* Transparent proxying routines. */
 int		LibAliasProxyRule(struct libalias *, const char *_cmd);

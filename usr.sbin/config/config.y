@@ -18,7 +18,6 @@
 %token	HINTS
 %token	IDENT
 %token	MAXUSERS
-%token	PROFILE
 %token	OPTIONS
 %token	NOOPTION
 %token	MAKEOPTIONS
@@ -69,7 +68,6 @@
  * SUCH DAMAGE.
  *
  *	@(#)config.y	8.1 (Berkeley) 6/6/93
- * $FreeBSD: 6fcd93aa19f9a285d262afde10f0014838e171d5 $
  */
 
 #include <assert.h>
@@ -189,10 +187,7 @@ Config_spec:
 		|
 	NOMAKEOPTION Save_id { rmopt_schedule(&mkopt, $2); } |
 	IDENT ID { ident = $2; } |
-	System_spec
-		|
 	MAXUSERS NUMBER { maxusers = $2; } |
-	PROFILE NUMBER { profiling = $2; } |
 	ENV ID { newenvvar($2, true); } |
 	ENVVAR ENVLINE { newenvvar($2, false); } |
 	HINTS ID {
@@ -204,15 +199,6 @@ Config_spec:
 		hint->hint_name = $2;
 		STAILQ_INSERT_HEAD(&hints, hint, hint_next);
 	        }
-
-System_spec:
-	CONFIG System_id System_parameter_list {
-		errx(1, "%s:%d: root/dump/swap specifications obsolete",
-		      yyfile, yyline);
-		}
-	  |
-	CONFIG System_id
-	  ;
 
 System_id:
 	Save_id { newopt(&mkopt, ns("KERNEL"), $1, 0, 0); };

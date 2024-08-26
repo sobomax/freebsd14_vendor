@@ -33,8 +33,6 @@
 #include "opt_platform.h"
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 187e00576e0345dfd5fd1117a3f489fb2db8f5e0 $");
-
 #include <sys/param.h>
 #include <sys/systm.h>
 #include <sys/bus.h>
@@ -58,6 +56,7 @@ __FBSDID("$FreeBSD: 187e00576e0345dfd5fd1117a3f489fb2db8f5e0 $");
 #include <vm/vm_map.h>
 
 #include <machine/machdep.h>
+#include <machine/cpu.h>
 #include <machine/debug_monitor.h>
 #include <machine/intr.h>
 #include <machine/smp.h>
@@ -125,8 +124,6 @@ static void ipi_preempt(void *);
 static void ipi_rendezvous(void *);
 static void ipi_stop(void *);
 
-struct pcb stoppcbs[MAXCPU];
-
 #ifdef FDT
 static u_int fdt_cpuid;
 #endif
@@ -136,6 +133,9 @@ void init_secondary(uint64_t);
 
 /* Synchronize AP startup. */
 static struct mtx ap_boot_mtx;
+
+/* Used to initialize the PCPU ahead of calling init_secondary(). */
+void *bootpcpu;
 
 /* Stacks for AP initialization, discarded once idle threads are started. */
 void *bootstack;
@@ -148,7 +148,7 @@ static volatile int aps_started;
 static volatile int aps_ready;
 
 /* Temporary variables for init_secondary()  */
-void *dpcpu[MAXCPU - 1];
+static void *dpcpu[MAXCPU - 1];
 
 static bool
 is_boot_cpu(uint64_t target_cpu)
@@ -210,6 +210,8 @@ init_secondary(uint64_t cpu)
 	pmap_t pmap0;
 	uint64_t mpidr;
 
+	ptrauth_mp_start(cpu);
+
 	/*
 	 * Verify that the value passed in 'cpu' argument (aka context_id) is
 	 * valid. Some older U-Boot based PSCI implementations are buggy,
@@ -226,15 +228,6 @@ init_secondary(uint64_t cpu)
 			panic("MPIDR for this CPU is not in pcpu table");
 	}
 
-	pcpup = cpuid_to_pcpu[cpu];
-	/*
-	 * Set the pcpu pointer with a backup in tpidr_el1 to be
-	 * loaded when entering the kernel from userland.
-	 */
-	__asm __volatile(
-	    "mov x18, %0 \n"
-	    "msr tpidr_el1, %0" :: "r"(pcpup));
-
 	/*
 	 * Identify current CPU. This is necessary to setup
 	 * affinity registers and to provide support for
@@ -243,6 +236,7 @@ init_secondary(uint64_t cpu)
 	 * We need this before signalling the CPU is ready to
 	 * let the boot CPU use the results.
 	 */
+	pcpup = cpuid_to_pcpu[cpu];
 	pcpup->pc_midr = get_midr();
 	identify_cpu(cpu);
 
@@ -273,7 +267,7 @@ init_secondary(uint64_t cpu)
 	cpu_initclocks_ap();
 
 #ifdef VFP
-	vfp_init();
+	vfp_init_secondary();
 #endif
 
 	dbg_init();
@@ -290,7 +284,7 @@ init_secondary(uint64_t cpu)
 	kcsan_cpu_init(cpu);
 
 	/* Enter the scheduler */
-	sched_throw(NULL);
+	sched_ap_entry();
 
 	panic("scheduler returned us to init_secondary");
 	/* NOTREACHED */
@@ -316,8 +310,7 @@ smp_after_idle_runnable(void *arg __unused)
 
 	for (cpu = 1; cpu < mp_ncpus; cpu++) {
 		if (bootstacks[cpu] != NULL)
-			kmem_free((vm_offset_t)bootstacks[cpu],
-			    MP_BOOTSTACK_SIZE);
+			kmem_free(bootstacks[cpu], MP_BOOTSTACK_SIZE);
 	}
 }
 SYSINIT(smp_after_idle_runnable, SI_SUB_SMP, SI_ORDER_ANY,
@@ -519,7 +512,7 @@ enable_cpu_spin(uint64_t cpu, vm_paddr_t entry, vm_paddr_t release_paddr)
 		return (ENOMEM);
 
 	*release_addr = entry;
-	pmap_unmapdev((vm_offset_t)release_addr, sizeof(*release_addr));
+	pmap_unmapdev(release_addr, sizeof(*release_addr));
 
 	__asm __volatile(
 	    "dsb sy	\n"
@@ -537,7 +530,6 @@ static bool
 start_cpu(u_int cpuid, uint64_t target_cpu, int domain, vm_paddr_t release_addr)
 {
 	struct pcpu *pcpup;
-	vm_offset_t pcpu_mem;
 	vm_size_t size;
 	vm_paddr_t pa;
 	int err, naps;
@@ -553,20 +545,18 @@ start_cpu(u_int cpuid, uint64_t target_cpu, int domain, vm_paddr_t release_addr)
 	KASSERT(cpuid < MAXCPU, ("Too many CPUs"));
 
 	size = round_page(sizeof(*pcpup) + DPCPU_SIZE);
-	pcpu_mem = kmem_malloc_domainset(DOMAINSET_PREF(domain), size,
+	pcpup = kmem_malloc_domainset(DOMAINSET_PREF(domain), size,
 	    M_WAITOK | M_ZERO);
-	pmap_disable_promotion(pcpu_mem, size);
-
-	pcpup = (struct pcpu *)pcpu_mem;
+	pmap_disable_promotion((vm_offset_t)pcpup, size);
 	pcpu_init(pcpup, cpuid, sizeof(struct pcpu));
-	pcpup->pc_mpidr_low = target_cpu & CPU_AFF_MASK;
-	pcpup->pc_mpidr_high = (target_cpu & CPU_AFF_MASK) >> 32;
+	pcpup->pc_mpidr = target_cpu & CPU_AFF_MASK;
+	bootpcpu = pcpup;
 
 	dpcpu[cpuid - 1] = (void *)(pcpup + 1);
 	dpcpu_init(dpcpu[cpuid - 1], cpuid);
 
-	bootstacks[cpuid] = (void *)kmem_malloc_domainset(
-	    DOMAINSET_PREF(domain), MP_BOOTSTACK_SIZE, M_WAITOK | M_ZERO);
+	bootstacks[cpuid] = kmem_malloc_domainset(DOMAINSET_PREF(domain),
+	    MP_BOOTSTACK_SIZE, M_WAITOK | M_ZERO);
 
 	naps = atomic_load_int(&aps_started);
 	bootstack = (char *)bootstacks[cpuid] + MP_BOOTSTACK_SIZE;
@@ -588,8 +578,8 @@ start_cpu(u_int cpuid, uint64_t target_cpu, int domain, vm_paddr_t release_addr)
 	if (err != 0) {
 		pcpu_destroy(pcpup);
 		dpcpu[cpuid - 1] = NULL;
-		kmem_free((vm_offset_t)bootstacks[cpuid], MP_BOOTSTACK_SIZE);
-		kmem_free(pcpu_mem, size);
+		kmem_free(bootstacks[cpuid], MP_BOOTSTACK_SIZE);
+		kmem_free(pcpup, size);
 		bootstacks[cpuid] = NULL;
 		mp_ncpus--;
 		return (false);
@@ -689,7 +679,7 @@ populate_release_addr(phandle_t node, vm_paddr_t *release_addr)
 	*release_addr = (((uintptr_t)buf[0] << 32) | buf[1]);
 }
 
-static boolean_t
+static bool
 start_cpu_fdt(u_int id, phandle_t node, u_int addr_size, pcell_t *reg)
 {
 	uint64_t target_cpu;
@@ -718,11 +708,11 @@ start_cpu_fdt(u_int id, phandle_t node, u_int addr_size, pcell_t *reg)
 	if (!psci_present && cpuid != 0) {
 		if (OF_getprop_alloc(node, "enable-method",
 		    (void **)&enable_method) <= 0)
-			return (FALSE);
+			return (false);
 
 		if (strcmp(enable_method, "spin-table") != 0) {
 			OF_prop_free(enable_method);
-			return (FALSE);
+			return (false);
 		}
 
 		OF_prop_free(enable_method);
@@ -730,12 +720,12 @@ start_cpu_fdt(u_int id, phandle_t node, u_int addr_size, pcell_t *reg)
 		if (release_addr == 0) {
 			printf("Failed to fetch release address for CPU %u",
 			    cpuid);
-			return (FALSE);
+			return (false);
 		}
 	}
 
 	if (!start_cpu(cpuid, target_cpu, 0, release_addr))
-		return (FALSE);
+		return (false);
 
 	/*
 	 * Don't increment for the boot CPU, its CPU ID is reserved.
@@ -750,7 +740,7 @@ start_cpu_fdt(u_int id, phandle_t node, u_int addr_size, pcell_t *reg)
 	cpuid_to_pcpu[cpuid]->pc_domain = domain;
 	if (domain < MAXMEMDOM)
 		CPU_SET(cpuid, &cpuset_domain[domain]);
-	return (TRUE);
+	return (true);
 }
 static void
 cpu_init_fdt(void)
@@ -781,8 +771,9 @@ cpu_mp_start(void)
 	/* CPU 0 is always boot CPU. */
 	CPU_SET(0, &all_cpus);
 	mpidr = READ_SPECIALREG(mpidr_el1) & CPU_AFF_MASK;
-	cpuid_to_pcpu[0]->pc_mpidr_low = mpidr;
-	cpuid_to_pcpu[0]->pc_mpidr_high = mpidr >> 32;
+	cpuid_to_pcpu[0]->pc_mpidr = mpidr;
+
+	cpu_desc_init();
 
 	switch(arm64_bus_method) {
 #ifdef DEV_ACPI
@@ -811,12 +802,10 @@ cpu_mp_announce(void)
 static void
 cpu_count_acpi_handler(ACPI_SUBTABLE_HEADER *entry, void *arg)
 {
-	ACPI_MADT_GENERIC_INTERRUPT *intr;
 	u_int *cores = arg;
 
 	switch(entry->Type) {
 	case ACPI_MADT_TYPE_GENERIC_INTERRUPT:
-		intr = (ACPI_MADT_GENERIC_INTERRUPT *)entry;
 		(*cores)++;
 		break;
 	default:
@@ -920,9 +909,8 @@ intr_ipi_lookup(u_int ipi)
  *  source mapped.
  */
 void
-intr_ipi_dispatch(u_int ipi, struct trapframe *tf)
+intr_ipi_dispatch(u_int ipi)
 {
-	void *arg;
 	struct intr_ipi *ii;
 
 	ii = intr_ipi_lookup(ipi);
@@ -931,12 +919,7 @@ intr_ipi_dispatch(u_int ipi, struct trapframe *tf)
 
 	intr_ipi_increment_count(ii->ii_count, PCPU_GET(cpuid));
 
-	/*
-	 * Supply ipi filter with trapframe argument
-	 * if none is registered.
-	 */
-	arg = ii->ii_handler_arg != NULL ? ii->ii_handler_arg : tf;
-	ii->ii_handler(arg);
+	ii->ii_handler(ii->ii_handler_arg);
 }
 
 #ifdef notyet

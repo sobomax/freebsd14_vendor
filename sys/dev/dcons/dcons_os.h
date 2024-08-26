@@ -33,7 +33,6 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  * 
- * $FreeBSD: b8fc3afc39efe4e82776237d1953199a91d5339d $
  */
 
 #include <sys/_eventhandler.h>

@@ -1,4 +1,3 @@
-# $FreeBSD: 09b6aadf68927da19beea28e0d3411ce4af142ee $
 
 .PATH: ${SRCTOP}/sys/dev/vmware/vmci
 

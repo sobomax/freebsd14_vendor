@@ -61,8 +61,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 52c603949bdc8a7c4b34cacfad941564cad67129 $");
-
 #include "opt_debug_lockf.h"
 
 #include <sys/param.h>
@@ -195,7 +193,7 @@ static void	 lf_print_owner(struct lock_owner *);
 struct lock_owner {
 	LIST_ENTRY(lock_owner) lo_link; /* (l) hash chain */
 	int	lo_refs;	    /* (l) Number of locks referring to this */
-	int	lo_flags;	    /* (c) Flags passwd to lf_advlock */
+	int	lo_flags;	    /* (c) Flags passed to lf_advlock */
 	caddr_t	lo_id;		    /* (c) Id value passed to lf_advlock */
 	pid_t	lo_pid;		    /* (c) Process Id of the lock owner */
 	int	lo_sysid;	    /* (c) System Id of the lock owner */
@@ -764,14 +762,13 @@ lf_purgelocks(struct vnode *vp, struct lockf **statep)
 	 * sleeping waiting for locks on this vnode and then free all
 	 * the remaining locks.
 	 */
-	VI_LOCK(vp);
 	KASSERT(VN_IS_DOOMED(vp),
 	    ("lf_purgelocks: vp %p has not vgone yet", vp));
 	state = *statep;
 	if (state == NULL) {
-		VI_UNLOCK(vp);
 		return;
 	}
+	VI_LOCK(vp);
 	*statep = NULL;
 	if (LIST_EMPTY(&state->ls_active) && state->ls_threads == 0) {
 		KASSERT(LIST_EMPTY(&state->ls_pending),
@@ -2527,8 +2524,7 @@ vfs_report_lockf(struct mount *mp, struct sbuf *sb)
 		if (gerror == 0 && vn_lock(vp, LK_SHARED) == 0) {
 			error = prison_canseemount(ucred, vp->v_mount);
 			if (error == 0)
-				error = VOP_STAT(vp, &stt, ucred, NOCRED,
-				    curthread);
+				error = VOP_STAT(vp, &stt, ucred, NOCRED);
 			VOP_UNLOCK(vp);
 			if (error == 0) {
 				klf->kl.kl_file_fsid = stt.st_dev;

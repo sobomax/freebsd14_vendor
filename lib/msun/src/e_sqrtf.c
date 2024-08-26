@@ -13,16 +13,12 @@
  * ====================================================
  */
 
-#ifndef lint
-static char rcsid[] = "$FreeBSD: 06e5d62fa5f9b643fcd715d50146ea506907ce82 $";
-#endif
-
 #include "math.h"
 #include "math_private.h"
 
 #ifdef USE_BUILTIN_SQRTF
 float
-__ieee754_sqrtf(float x)
+sqrtf(float x)
 {
 	return (__builtin_sqrtf(x));
 }
@@ -30,7 +26,7 @@ __ieee754_sqrtf(float x)
 static	const float	one	= 1.0, tiny=1.0e-30;
 
 float
-__ieee754_sqrtf(float x)
+sqrtf(float x)
 {
 	float z;
 	int32_t sign = (int)0x80000000;

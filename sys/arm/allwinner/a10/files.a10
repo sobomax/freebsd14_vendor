@@ -1,4 +1,3 @@
-# $FreeBSD: 5fe53134f44ce99f336005bfe52bf5024eea8579 $
 
 arm/allwinner/a10/a10_intc.c		standard
 arm/allwinner/a10/a10_padconf.c		standard

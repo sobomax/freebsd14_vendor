@@ -22,8 +22,6 @@
 .\" OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 .\" SUCH DAMAGE.
 .\"
-.\" $FreeBSD: 1e52640eec5642f6da04528e797dd10a34b6a6ae $
-.\"
 .Dd November 1, 2022
 .Dt RTNETLINK 4
 .Os
@@ -238,7 +236,7 @@ Should be provided by userland at the nexthtop creation time.
 .It Dv NHA_GROUP
 This attribute designates the nexthtop group and contains all of its nexthtops
 and their relative weights.
-The attribute constists of a list of
+The attribute consists of a list of
 .Va nexthop_grp
 structures:
 .Bd -literal
@@ -284,6 +282,13 @@ struct ifinfomsg {
 Creates a new interface.
 The only mandatory TLV is
 .Dv IFLA_IFNAME .
+The following attributes are returned inside the nested
+.Dv NLMSGERR_ATTR_COOKIE :
+.Pp
+.Bd -literal -offset indent -compact
+IFLA_NEW_IFINDEX	(uint32) created interface index
+IFLA_IFNAME		(string) created interface name
+.Ed
 .Ss RTM_DELLINK
 Deletes the interface specified by
 .Dv IFLA_IFNAME .

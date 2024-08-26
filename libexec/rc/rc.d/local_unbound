@@ -1,6 +1,5 @@
 #!/bin/sh
 #
-# $FreeBSD: 9c32b8263dc8a7604a058dc99ea6893bf1a94025 $
 #
 
 # PROVIDE: local_unbound

@@ -1,7 +1,7 @@
 /*- 
  *  privs.h - header for privileged operations
  *
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  *  Copyright (C) 1993  Thomas Koenig
  *
@@ -24,8 +24,6 @@
  * THEORY OF LIABILITY, WETHER IN CONTRACT, STRICT LIABILITY, OR TORT
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- *
- * $FreeBSD: ba84ec9318d4d5d24b66ab11f5695ea3f45359ed $
  */
 
 #ifndef _PRIVS_H

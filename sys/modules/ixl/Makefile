@@ -1,4 +1,3 @@
-#$FreeBSD: fb2fcf6574acc0e4390e3341235e2b2aad7bd0a6 $
 
 .PATH:  ${SRCTOP}/sys/dev/ixl
 

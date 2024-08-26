@@ -27,8 +27,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 446e9983bcae88a51744a43e39d7cc4a7fbedeb4 $");
-
 #include <sys/types.h>
 #include <sys/mman.h>
 #include <sys/queue.h>

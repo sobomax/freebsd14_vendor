@@ -32,8 +32,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: d98e618d9c439f8ffa1b9f72412ed58ead449bf4 $");
-
 /*
  * Various setup functions for truss.  Not the cleanest-written code,
  * I'm afraid.
@@ -72,22 +70,6 @@ static void	enter_syscall(struct trussinfo *, struct threadinfo *,
 		    struct ptrace_lwpinfo *);
 static void	new_proc(struct trussinfo *, pid_t, lwpid_t);
 
-
-static struct procabi cloudabi32 = {
-	.type = "CloudABI32",
-	.abi = SYSDECODE_ABI_CLOUDABI32,
-	.pointer_size = sizeof(uint32_t),
-	.extra_syscalls = STAILQ_HEAD_INITIALIZER(cloudabi32.extra_syscalls),
-	.syscalls = { NULL }
-};
-
-static struct procabi cloudabi64 = {
-	.type = "CloudABI64",
-	.abi = SYSDECODE_ABI_CLOUDABI64,
-	.pointer_size = sizeof(uint64_t),
-	.extra_syscalls = STAILQ_HEAD_INITIALIZER(cloudabi64.extra_syscalls),
-	.syscalls = { NULL }
-};
 
 static struct procabi freebsd = {
 	.type = "FreeBSD",
@@ -131,8 +113,6 @@ static struct procabi linux32 = {
 #endif
 
 static struct procabi_table abis[] = {
-	{ "CloudABI ELF32", &cloudabi32 },
-	{ "CloudABI ELF64", &cloudabi64 },
 #if __SIZEOF_POINTER__ == 4
 	{ "FreeBSD ELF32", &freebsd },
 #elif __SIZEOF_POINTER__ == 8
@@ -579,7 +559,7 @@ exit_syscall(struct trussinfo *info, struct ptrace_lwpinfo *pl)
 			 */
 			if (psr.sr_error != 0) {
 				asprintf(&temp, "0x%lx",
-				    t->cs.args[sc->decode.args[i].offset]);
+				    (long)t->cs.args[sc->decode.args[i].offset]);
 			} else {
 				temp = print_arg(&sc->decode.args[i],
 				    t->cs.args, psr.sr_retval, info);

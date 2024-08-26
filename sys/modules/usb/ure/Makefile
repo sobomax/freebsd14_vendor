@@ -1,4 +1,3 @@
-# $FreeBSD: 3ede59a5639ec7a50d714103420d0004b5addbc1 $
 
 .PATH: ${SRCTOP}/sys/dev/usb/net
 

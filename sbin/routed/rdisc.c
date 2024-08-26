@@ -27,17 +27,12 @@
  * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
- *
- * $FreeBSD: 3494f061b64b3190abac1616a046c34362dc6d34 $
  */
 
 #include "defs.h"
 #include <netinet/in_systm.h>
 #include <netinet/ip.h>
 #include <netinet/ip_icmp.h>
-
-__RCSID("$FreeBSD: 3494f061b64b3190abac1616a046c34362dc6d34 $");
-
 /* router advertisement ICMP packet */
 struct icmp_ad {
 	u_int8_t    icmp_type;		/* type of message */

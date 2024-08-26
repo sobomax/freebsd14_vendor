@@ -9,12 +9,22 @@ title: Freescale Low Power Inter IC (LPI2C) for i.MX
 maintainers:
   - Anson Huang <Anson.Huang@nxp.com>
 
+allOf:
+  - $ref: /schemas/i2c/i2c-controller.yaml#
+
 properties:
   compatible:
-    enum:
-      - fsl,imx7ulp-lpi2c
-      - fsl,imx8qxp-lpi2c
-      - fsl,imx8qm-lpi2c
+    oneOf:
+      - enum:
+          - fsl,imx7ulp-lpi2c
+      - items:
+          - enum:
+              - fsl,imx8qxp-lpi2c
+              - fsl,imx8dxl-lpi2c
+              - fsl,imx8qm-lpi2c
+              - fsl,imx8ulp-lpi2c
+              - fsl,imx93-lpi2c
+          - const: fsl,imx7ulp-lpi2c
 
   reg:
     maxItems: 1
@@ -22,7 +32,30 @@ properties:
   interrupts:
     maxItems: 1
 
+  assigned-clock-parents: true
+  assigned-clock-rates: true
+  assigned-clocks: true
+  clock-frequency: true
+
+  clock-names:
+    items:
+      - const: per
+      - const: ipg
+
   clocks:
+    maxItems: 2
+
+  dmas:
+    items:
+      - description: DMA controller phandle and request line for TX
+      - description: DMA controller phandle and request line for RX
+
+  dma-names:
+    items:
+      - const: tx
+      - const: rx
+
+  power-domains:
     maxItems: 1
 
 required:
@@ -31,17 +64,18 @@ required:
   - interrupts
   - clocks
 
-additionalProperties: false
+unevaluatedProperties: false
 
 examples:
   - |
     #include <dt-bindings/clock/imx7ulp-clock.h>
     #include <dt-bindings/interrupt-controller/arm-gic.h>
 
-    lpi2c7@40a50000 {
+    i2c@40a50000 {
         compatible = "fsl,imx7ulp-lpi2c";
         reg = <0x40A50000 0x10000>;
         interrupt-parent = <&intc>;
         interrupts = <GIC_SPI 37 IRQ_TYPE_LEVEL_HIGH>;
-        clocks = <&clks IMX7ULP_CLK_LPI2C7>;
+        clocks = <&clks IMX7ULP_CLK_LPI2C7>,
+                 <&clks IMX7ULP_CLK_NIC1_BUS_DIV>;
     };

@@ -35,8 +35,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 51e9181679c7595a5cab13b842d0548874d99a8f $");
-
 #include <string.h>
 
 #define PAM_SM_AUTH

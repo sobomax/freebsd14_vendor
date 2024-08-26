@@ -38,8 +38,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 59a7c78cb03b883e417dc6a0d23b70a03706ae98 $");
-
 #include "opt_inet.h"
 
 #include <sys/param.h>
@@ -52,13 +50,13 @@ __FBSDID("$FreeBSD: 59a7c78cb03b883e417dc6a0d23b70a03706ae98 $");
 #include <sys/mbuf.h>
 #include <sys/malloc.h>
 #include <sys/proc.h>
-#include <sys/rmlock.h>
 #include <sys/socket.h>
 #include <sys/syslog.h>
 
 #include <net/if.h>
 #include <net/if_var.h>
 #include <net/if_dl.h>
+#include <net/if_private.h>
 #include <net/if_types.h>
 #include <net/netisr.h>
 #include <net/ethernet.h>
@@ -187,7 +185,7 @@ static void	in_arpinput(struct mbuf *);
 
 static void arp_check_update_lle(struct arphdr *ah, struct in_addr isaddr,
     struct ifnet *ifp, int bridged, struct llentry *la);
-static void arp_mark_lle_reachable(struct llentry *la);
+static void arp_mark_lle_reachable(struct llentry *la, struct ifnet *ifp);
 static void arp_iflladdr(void *arg __unused, struct ifnet *ifp);
 
 static eventhandler_tag iflladdr_tag;
@@ -465,8 +463,6 @@ arpresolve_full(struct ifnet *ifp, int is_gw, int flags, struct mbuf *m,
 	struct llentry **plle)
 {
 	struct llentry *la = NULL, *la_tmp;
-	struct mbuf *curr = NULL;
-	struct mbuf *next = NULL;
 	int error, renew;
 	char *lladdr;
 	int ll_len;
@@ -534,6 +530,7 @@ arpresolve_full(struct ifnet *ifp, int is_gw, int flags, struct mbuf *m,
 	}
 
 	renew = (la->la_asked == 0 || la->la_expire != time_uptime);
+
 	/*
 	 * There is an arptab entry, but no ethernet address
 	 * response yet.  Add the mbuf to the list, dropping
@@ -541,24 +538,10 @@ arpresolve_full(struct ifnet *ifp, int is_gw, int flags, struct mbuf *m,
 	 * setting.
 	 */
 	if (m != NULL) {
-		if (la->la_numheld >= V_arp_maxhold) {
-			if (la->la_hold != NULL) {
-				next = la->la_hold->m_nextpkt;
-				m_freem(la->la_hold);
-				la->la_hold = next;
-				la->la_numheld--;
-				ARPSTAT_INC(dropped);
-			}
-		}
-		if (la->la_hold != NULL) {
-			curr = la->la_hold;
-			while (curr->m_nextpkt != NULL)
-				curr = curr->m_nextpkt;
-			curr->m_nextpkt = m;
-		} else
-			la->la_hold = m;
-		la->la_numheld++;
+		size_t dropped = lltable_append_entry_queue(la, m, V_arp_maxhold);
+		ARPSTAT_ADD(dropped, dropped);
 	}
+
 	/*
 	 * Return EWOULDBLOCK if we have tried less than arp_maxtries. It
 	 * will be masked by ether_output(). Return EHOSTDOWN/EHOSTUNREACH
@@ -701,6 +684,10 @@ arpintr(struct mbuf *m)
 		hlen = ETHER_ADDR_LEN; /* RFC 826 */
 		layer = "ethernet";
 		break;
+	case ARPHRD_IEEE802:
+		hlen = ETHER_ADDR_LEN;
+		layer = "ieee802";
+		break;
 	case ARPHRD_INFINIBAND:
 		hlen = 20;	/* RFC 4391, INFINIBAND_ALEN */
 		layer = "infiniband";
@@ -779,7 +766,6 @@ SYSCTL_INT(_net_link_ether_inet, OID_AUTO, allow_multicast, CTLFLAG_RW,
 static void
 in_arpinput(struct mbuf *m)
 {
-	struct rm_priotracker in_ifa_tracker;
 	struct arphdr *ah;
 	struct ifnet *ifp = m->m_pkthdr.rcvif;
 	struct llentry *la = NULL, *la_tmp;
@@ -846,24 +832,21 @@ in_arpinput(struct mbuf *m)
 	 * of the receive interface. (This will change slightly
 	 * when we have clusters of interfaces).
 	 */
-	IN_IFADDR_RLOCK(&in_ifa_tracker);
-	LIST_FOREACH(ia, INADDR_HASH(itaddr.s_addr), ia_hash) {
+	CK_LIST_FOREACH(ia, INADDR_HASH(itaddr.s_addr), ia_hash) {
 		if (((bridged && ia->ia_ifp->if_bridge == ifp->if_bridge) ||
 		    ia->ia_ifp == ifp) &&
 		    itaddr.s_addr == ia->ia_addr.sin_addr.s_addr &&
 		    (ia->ia_ifa.ifa_carp == NULL ||
 		    (*carp_iamatch_p)(&ia->ia_ifa, &enaddr))) {
 			ifa_ref(&ia->ia_ifa);
-			IN_IFADDR_RUNLOCK(&in_ifa_tracker);
 			goto match;
 		}
 	}
-	LIST_FOREACH(ia, INADDR_HASH(isaddr.s_addr), ia_hash)
+	CK_LIST_FOREACH(ia, INADDR_HASH(isaddr.s_addr), ia_hash)
 		if (((bridged && ia->ia_ifp->if_bridge == ifp->if_bridge) ||
 		    ia->ia_ifp == ifp) &&
 		    isaddr.s_addr == ia->ia_addr.sin_addr.s_addr) {
 			ifa_ref(&ia->ia_ifa);
-			IN_IFADDR_RUNLOCK(&in_ifa_tracker);
 			goto match;
 		}
 
@@ -878,17 +861,15 @@ in_arpinput(struct mbuf *m)
 	 * meant to be destined to the bridge member.
 	 */
 	if (is_bridge) {
-		LIST_FOREACH(ia, INADDR_HASH(itaddr.s_addr), ia_hash) {
+		CK_LIST_FOREACH(ia, INADDR_HASH(itaddr.s_addr), ia_hash) {
 			if (BDG_MEMBER_MATCHES_ARP(itaddr.s_addr, ifp, ia)) {
 				ifa_ref(&ia->ia_ifa);
 				ifp = ia->ia_ifp;
-				IN_IFADDR_RUNLOCK(&in_ifa_tracker);
 				goto match;
 			}
 		}
 	}
 #undef BDG_MEMBER_MATCHES_ARP
-	IN_IFADDR_RUNLOCK(&in_ifa_tracker);
 
 	/*
 	 * No match, use the first inet address on the receive interface
@@ -906,13 +887,9 @@ in_arpinput(struct mbuf *m)
 	/*
 	 * If bridging, fall back to using any inet address.
 	 */
-	IN_IFADDR_RLOCK(&in_ifa_tracker);
-	if (!bridged || (ia = CK_STAILQ_FIRST(&V_in_ifaddrhead)) == NULL) {
-		IN_IFADDR_RUNLOCK(&in_ifa_tracker);
+	if (!bridged || (ia = CK_STAILQ_FIRST(&V_in_ifaddrhead)) == NULL)
 		goto drop;
-	}
 	ifa_ref(&ia->ia_ifa);
-	IN_IFADDR_RUNLOCK(&in_ifa_tracker);
 match:
 	if (!enaddr)
 		enaddr = (u_int8_t *)IF_LLADDR(ifp);
@@ -1010,7 +987,7 @@ match:
 		IF_AFDATA_WUNLOCK(ifp);
 
 		if (la_tmp == NULL) {
-			arp_mark_lle_reachable(la);
+			arp_mark_lle_reachable(la, ifp);
 			LLE_WUNLOCK(la);
 		} else {
 			/* Free newly-create entry and handle packet */
@@ -1258,7 +1235,7 @@ arp_check_update_lle(struct arphdr *ah, struct in_addr isaddr, struct ifnet *ifp
 		llentry_mark_used(la);
 	}
 
-	arp_mark_lle_reachable(la);
+	arp_mark_lle_reachable(la, ifp);
 
 	/*
 	 * The packets are all freed within the call to the output
@@ -1278,7 +1255,7 @@ arp_check_update_lle(struct arphdr *ah, struct in_addr isaddr, struct ifnet *ifp
 }
 
 static void
-arp_mark_lle_reachable(struct llentry *la)
+arp_mark_lle_reachable(struct llentry *la, struct ifnet *ifp)
 {
 	int canceled, wtime;
 
@@ -1286,6 +1263,9 @@ arp_mark_lle_reachable(struct llentry *la)
 
 	la->ln_state = ARP_LLINFO_REACHABLE;
 	EVENTHANDLER_INVOKE(lle_event, la, LLENTRY_RESOLVED);
+
+	if ((ifp->if_flags & IFF_STICKYARP) != 0)
+		la->la_flags |= LLE_STATIC;
 
 	if (!(la->la_flags & LLE_STATIC)) {
 		LLE_ADDREF(la);

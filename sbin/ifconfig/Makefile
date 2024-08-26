@@ -1,5 +1,4 @@
 #	From: @(#)Makefile	8.1 (Berkeley) 6/5/93
-# $FreeBSD: b178dc0c7e6afb10af54a27cb23ccd6986afe66a $
 
 .include <src.opts.mk>
 
@@ -24,6 +23,7 @@ SRCS+=	af_inet6.c		# IPv6 support
 .endif
 .if ${MK_INET6_SUPPORT} != "no"
 SRCS+=	af_nd6.c		# ND6 support
+SRCS+=	ifstf.c			# STF configuration options
 .endif
 
 SRCS+=	ifclone.c		# clone device support
@@ -70,10 +70,15 @@ LIBADD+=	jail
 .endif
 LIBADD+=	nv
 
+.if ${MK_NETLINK_SUPPORT} != "no"
+SRCS+=	ifconfig_netlink.c
+.else
+CFLAGS+=-DWITHOUT_NETLINK
+.endif
+
 MAN=	ifconfig.8
 
 CFLAGS+= -Wall -Wmissing-prototypes -Wcast-qual -Wwrite-strings -Wnested-externs
-WARNS?=	2
 
 HAS_TESTS=
 SUBDIR.${MK_TESTS}+= tests

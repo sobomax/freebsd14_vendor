@@ -1,4 +1,3 @@
-# $FreeBSD: cd8f0f121ea6542ef383ffff8636aca2ae18a73c $
 #
 # Machine dependent definitions for the amd64 architecture.
 #

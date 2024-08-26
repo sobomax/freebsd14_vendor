@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD AND BSD-4-Clause
+ * SPDX-License-Identifier: BSD-2-Clause AND BSD-4-Clause
  *
  * Copyright (c) 1999 Russell Cattelan <cattelan@thebarn.com>
  * Copyright (c) 1998 Joachim Kuebart <joachim.kuebart@gmx.net>
@@ -89,8 +89,6 @@
 #include <sys/sysctl.h>
 
 #include "mixer_if.h"
-
-SND_DECLARE_FILE("$FreeBSD: 351b7f5ed287aa95bc0a95e7799fa1538dea137e $");
 
 #define MEM_MAP_REG 0x14
 
@@ -1858,10 +1856,10 @@ es_pci_attach(device_t dev)
 		goto bad;
 	}
 
-	snprintf(status, SND_STATUSLEN, "at %s 0x%jx irq %jd %s",
-	    (es->regtype == SYS_RES_IOPORT)? "io" : "memory",
+	snprintf(status, SND_STATUSLEN, "%s 0x%jx irq %jd on %s",
+	    (es->regtype == SYS_RES_IOPORT)? "port" : "mem",
 	    rman_get_start(es->reg), rman_get_start(es->irq),
-	    PCM_KLDSTRING(snd_es137x));
+	    device_get_nameunit(device_get_parent(dev)));
 
 	if (pcm_register(dev, es, numplay, 1))
 		goto bad;
@@ -1941,6 +1939,6 @@ static driver_t es_driver = {
 	PCM_SOFTC_SIZE,
 };
 
-DRIVER_MODULE(snd_es137x, pci, es_driver, pcm_devclass, 0, 0);
+DRIVER_MODULE(snd_es137x, pci, es_driver, 0, 0);
 MODULE_DEPEND(snd_es137x, sound, SOUND_MINVER, SOUND_PREFVER, SOUND_MAXVER);
 MODULE_VERSION(snd_es137x, 1);

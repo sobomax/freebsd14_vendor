@@ -29,7 +29,6 @@
  * SUCH DAMAGE.
  *
  *	@(#)ufs_extern.h	8.10 (Berkeley) 5/14/95
- * $FreeBSD: 3ac631e6ab0b708314156477d27a953743324736 $
  */
 
 #ifndef _UFS_UFS_EXTERN_H_

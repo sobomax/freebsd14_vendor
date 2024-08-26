@@ -1,5 +1,5 @@
 .\"-
-.\" SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+.\" SPDX-License-Identifier: BSD-2-Clause
 .\"
 .\" Copyright (c) 2018 Kyle Evans <kevans@FreeBSD.org>
 .\"
@@ -24,9 +24,7 @@
 .\" OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 .\" SUCH DAMAGE.
 .\"
-.\" $FreeBSD: b32a44325f920c68a1369406885e3c3974277e19 $
-.\"
-.Dd August 12, 2018
+.Dd June 18, 2021
 .Dt EFIDEV 4
 .Os
 .Sh NAME
@@ -71,11 +69,28 @@ with supplemental structures and constants defined in
 .In sys/efi.h :
 .Bl -tag -width indent
 .It Dv EFIIOC_GET_TABLE Pq Vt "struct efi_get_table_ioc"
-Get a table by uuid from the UEFI system table.
+Copy the UEFI table specified by the
+.Va uuid
+field of the
+.Vt struct efi_get_table_ioc
+into the
+.Va buf
+field.
+The memory size for the buf field can be queried by passing
+.Dv NULL
+pointer as a buf value.
+The required size will be stored in the
+.Va table_len
+field.
+The size of the allocated memory must be specified in the
+.Va buf_len
+field.
 .Bd -literal -offset indent
 struct efi_get_table_ioc {
+	void *buf;
 	struct uuid uuid;
-	void *ptr;
+	size_t table_len;
+	size_t buf_len;
 };
 .Ed
 .It Dv EFIIOC_GET_TIME Pq Vt "struct efi_tm"

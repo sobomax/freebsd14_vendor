@@ -1,6 +1,6 @@
 /*	$NetBSD: x86emu.h,v 1.1 2007/12/01 20:14:10 joerg Exp $	*/
 /*	$OpenBSD: x86emu.h,v 1.3 2009/06/06 03:45:05 matthieu Exp $ */
-/*	$FreeBSD: f25a95ba6c7b8fe4c43e7f0048f5f17ec9220cf7 $	*/
+/*	$FreeBSD: 328df37d6a7c576d0f029be0f65a0a604b44da37 $	*/
 
 /****************************************************************************
 *
@@ -169,8 +169,6 @@ struct x86emu {
 };
 
 __BEGIN_DECLS
-
-void	x86emu_init_default(struct x86emu *);
 
 /* decode.c */
 

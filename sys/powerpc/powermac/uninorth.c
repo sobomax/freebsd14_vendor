@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (C) 2002 Benno Rice.
  * All rights reserved.
@@ -23,8 +23,6 @@
  * WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR
  * OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- *
- * $FreeBSD: f1f6ffafad639d8321d6ba5e02fa6a7706fb8c56 $
  */
 
 #include <sys/param.h>
@@ -117,7 +115,7 @@ static device_method_t unin_chip_methods[] = {
 	DEVMETHOD(bus_deactivate_resource, unin_chip_deactivate_resource),
 	DEVMETHOD(bus_get_resource_list, unin_chip_get_resource_list),
 
-	DEVMETHOD(bus_child_pnpinfo_str, ofw_bus_gen_child_pnpinfo_str),
+	DEVMETHOD(bus_child_pnpinfo,	ofw_bus_gen_child_pnpinfo),
 
         /* ofw_bus interface */
 	DEVMETHOD(ofw_bus_get_devinfo,	unin_chip_get_devinfo),
@@ -135,8 +133,6 @@ static driver_t	unin_chip_driver = {
 	sizeof(struct unin_chip_softc)
 };
 
-static devclass_t	unin_chip_devclass;
-
 /*
  * Assume there is only one unin chip in a PowerMac, so that pmu.c functions can
  * suspend the chip after the whole rest of the device tree is suspended, not
@@ -144,8 +140,7 @@ static devclass_t	unin_chip_devclass;
  */
 static device_t		unin_chip;
 
-EARLY_DRIVER_MODULE(unin, ofwbus, unin_chip_driver, unin_chip_devclass, 0, 0,
-    BUS_PASS_BUS);
+EARLY_DRIVER_MODULE(unin, ofwbus, unin_chip_driver, 0, 0, BUS_PASS_BUS);
 
 /*
  * Add an interrupt to the dev's resource list if present
@@ -616,7 +611,7 @@ unin_chip_deactivate_resource(device_t bus, device_t child, int type, int rid,
 		u_int32_t psize;
 		
 		psize = rman_get_size(res);
-		pmap_unmapdev((vm_offset_t)rman_get_virtual(res), psize);
+		pmap_unmapdev(rman_get_virtual(res), psize);
 	}
 
 	return (rman_deactivate_resource(res));

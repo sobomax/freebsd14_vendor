@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (C) 2018 Marvell International Ltd.
  *
@@ -30,8 +30,6 @@
 #include "opt_acpi.h"
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: e3553173125143f5dfc65ee47118523612e29e8f $");
-
 #include <sys/param.h>
 #include <sys/bus.h>
 #include <sys/kernel.h>

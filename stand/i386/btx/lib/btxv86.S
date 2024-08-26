@@ -13,8 +13,6 @@
 # purpose.
 #
 
-# $FreeBSD: 0d7d1116322d22f49485eb86ca58264624199a17 $
-
 #
 # BTX V86 interface.
 #

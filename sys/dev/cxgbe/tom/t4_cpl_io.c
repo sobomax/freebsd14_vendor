@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2012, 2015 Chelsio Communications, Inc.
  * All rights reserved.
@@ -28,8 +28,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 601692cbcd76ae5c9dc19121a9057ba4b2a76529 $");
-
 #include "opt_inet.h"
 #include "opt_inet6.h"
 #include "opt_kern_tls.h"
@@ -98,10 +96,6 @@ send_flowc_wr(struct toepcb *toep, struct tcpcb *tp)
 		nparams = 8;
 	else
 		nparams = 6;
-	if (ulp_mode(toep) == ULP_MODE_TLS)
-		nparams++;
-	if (toep->tls.fcplenmax != 0)
-		nparams++;
 	if (toep->params.tc_idx != -1) {
 		MPASS(toep->params.tc_idx >= 0 &&
 		    toep->params.tc_idx < sc->params.nsched_cls);
@@ -148,10 +142,6 @@ send_flowc_wr(struct toepcb *toep, struct tcpcb *tp)
 	    __func__, toep->tid, toep->params.emss, toep->params.sndbuf,
 	    tp ? tp->snd_nxt : 0, tp ? tp->rcv_nxt : 0);
 
-	if (ulp_mode(toep) == ULP_MODE_TLS)
-		FLOWC_PARAM(ULP_MODE, ulp_mode(toep));
-	if (toep->tls.fcplenmax != 0)
-		FLOWC_PARAM(TXDATAPLEN_MAX, toep->tls.fcplenmax);
 	if (toep->params.tc_idx != -1)
 		FLOWC_PARAM(SCHEDCLASS, toep->params.tc_idx);
 #undef FLOWC_PARAM
@@ -288,7 +278,7 @@ send_reset(struct adapter *sc, struct toepcb *toep, uint32_t snd_nxt)
 	 * XXX: What's the correct way to tell that the inp hasn't been detached
 	 * from its socket?  Should I even be flushing the snd buffer here?
 	 */
-	if ((inp->inp_flags & (INP_DROPPED | INP_TIMEWAIT)) == 0) {
+	if ((inp->inp_flags & INP_DROPPED) == 0) {
 		struct socket *so = inp->inp_socket;
 
 		if (so != NULL)	/* because I'm not sure.  See comment above */
@@ -306,7 +296,7 @@ static void
 assign_rxopt(struct tcpcb *tp, uint16_t opt)
 {
 	struct toepcb *toep = tp->t_toe;
-	struct inpcb *inp = tp->t_inpcb;
+	struct inpcb *inp = tptoinpcb(tp);
 	struct adapter *sc = td_adapter(toep->td);
 
 	INP_LOCK_ASSERT(inp);
@@ -395,9 +385,6 @@ make_established(struct toepcb *toep, uint32_t iss, uint32_t irs, uint16_t opt)
 	send_flowc_wr(toep, tp);
 
 	soisconnected(so);
-
-	if (ulp_mode(toep) == ULP_MODE_TLS)
-		tls_establish(toep);
 }
 
 int
@@ -422,27 +409,10 @@ send_rx_credits(struct adapter *sc, struct toepcb *toep, int credits)
 }
 
 void
-send_rx_modulate(struct adapter *sc, struct toepcb *toep)
-{
-	struct wrqe *wr;
-	struct cpl_rx_data_ack *req;
-
-	wr = alloc_wrqe(sizeof(*req), toep->ctrlq);
-	if (wr == NULL)
-		return;
-	req = wrtod(wr);
-
-	INIT_TP_WR_MIT_CPL(req, CPL_RX_DATA_ACK, toep->tid);
-	req->credit_dack = htobe32(F_RX_MODULATE_RX);
-
-	t4_wrq_tx(sc, wr);
-}
-
-void
 t4_rcvd_locked(struct toedev *tod, struct tcpcb *tp)
 {
 	struct adapter *sc = tod->tod_softc;
-	struct inpcb *inp = tp->t_inpcb;
+	struct inpcb *inp = tptoinpcb(tp);
 	struct socket *so = inp->inp_socket;
 	struct sockbuf *sb = &so->so_rcv;
 	struct toepcb *toep = tp->t_toe;
@@ -459,14 +429,13 @@ t4_rcvd_locked(struct toedev *tod, struct tcpcb *tp)
 		rx_credits = send_rx_credits(sc, toep, rx_credits);
 		tp->rcv_wnd += rx_credits;
 		tp->rcv_adv += rx_credits;
-	} else if (toep->flags & TPF_FORCE_CREDITS)
-		send_rx_modulate(sc, toep);
+	}
 }
 
 void
 t4_rcvd(struct toedev *tod, struct tcpcb *tp)
 {
-	struct inpcb *inp = tp->t_inpcb;
+	struct inpcb *inp = tptoinpcb(tp);
 	struct socket *so = inp->inp_socket;
 	struct sockbuf *sb = &so->so_rcv;
 
@@ -803,7 +772,7 @@ t4_push_frames(struct adapter *sc, struct toepcb *toep, int drop)
 			int newsize = min(sb->sb_hiwat + V_tcp_autosndbuf_inc,
 			    V_tcp_autosndbuf_max);
 
-			if (!sbreserve_locked(sb, newsize, so, NULL))
+			if (!sbreserve_locked(so, SO_SND, newsize, NULL))
 				sb->sb_flags &= ~SB_AUTOSIZE;
 			else
 				sowwakeup = 1;	/* room available */
@@ -1276,7 +1245,7 @@ t4_tod_output(struct toedev *tod, struct tcpcb *tp)
 {
 	struct adapter *sc = tod->tod_softc;
 #ifdef INVARIANTS
-	struct inpcb *inp = tp->t_inpcb;
+	struct inpcb *inp = tptoinpcb(tp);
 #endif
 	struct toepcb *toep = tp->t_toe;
 
@@ -1295,7 +1264,7 @@ t4_send_fin(struct toedev *tod, struct tcpcb *tp)
 {
 	struct adapter *sc = tod->tod_softc;
 #ifdef INVARIANTS
-	struct inpcb *inp = tp->t_inpcb;
+	struct inpcb *inp = tptoinpcb(tp);
 #endif
 	struct toepcb *toep = tp->t_toe;
 
@@ -1316,7 +1285,7 @@ t4_send_rst(struct toedev *tod, struct tcpcb *tp)
 {
 	struct adapter *sc = tod->tod_softc;
 #if defined(INVARIANTS)
-	struct inpcb *inp = tp->t_inpcb;
+	struct inpcb *inp = tptoinpcb(tp);
 #endif
 	struct toepcb *toep = tp->t_toe;
 
@@ -1383,8 +1352,6 @@ do_peer_close(struct sge_iq *iq, const struct rss_header *rss, struct mbuf *m)
 	if (toep->flags & TPF_ABORT_SHUTDOWN)
 		goto done;
 
-	so = inp->inp_socket;
-	socantrcvmore(so);
 	if (ulp_mode(toep) == ULP_MODE_TCPDDP) {
 		DDP_LOCK(toep);
 		if (__predict_false(toep->ddp.flags &
@@ -1392,6 +1359,8 @@ do_peer_close(struct sge_iq *iq, const struct rss_header *rss, struct mbuf *m)
 			handle_ddp_close(toep, tp, cpl->rcv_nxt);
 		DDP_UNLOCK(toep);
 	}
+	so = inp->inp_socket;
+	socantrcvmore(so);
 
 	if (ulp_mode(toep) == ULP_MODE_RDMA ||
 	    (ulp_mode(toep) == ULP_MODE_ISCSI && chip_id(sc) >= CHELSIO_T6)) {
@@ -1611,7 +1580,7 @@ do_abort_req(struct sge_iq *iq, const struct rss_header *rss, struct mbuf *m)
 	}
 	toep->flags |= TPF_ABORT_SHUTDOWN;
 
-	if ((inp->inp_flags & (INP_DROPPED | INP_TIMEWAIT)) == 0) {
+	if ((inp->inp_flags & INP_DROPPED) == 0) {
 		struct socket *so = inp->inp_socket;
 
 		if (so != NULL)
@@ -1678,7 +1647,7 @@ do_rx_data(struct sge_iq *iq, const struct rss_header *rss, struct mbuf *m)
 	struct socket *so;
 	struct sockbuf *sb;
 	struct epoch_tracker et;
-	int len, rx_credits;
+	int len;
 	uint32_t ddp_placed = 0;
 
 	if (__predict_false(toep->flags & TPF_SYNQE)) {
@@ -1701,7 +1670,7 @@ do_rx_data(struct sge_iq *iq, const struct rss_header *rss, struct mbuf *m)
 	len = m->m_pkthdr.len;
 
 	INP_WLOCK(inp);
-	if (inp->inp_flags & (INP_DROPPED | INP_TIMEWAIT)) {
+	if (inp->inp_flags & INP_DROPPED) {
 		CTR4(KTR_CXGBE, "%s: tid %u, rx (%d bytes), inp_flags 0x%x",
 		    __func__, tid, len, inp->inp_flags);
 		INP_WUNLOCK(inp);
@@ -1770,7 +1739,7 @@ do_rx_data(struct sge_iq *iq, const struct rss_header *rss, struct mbuf *m)
 		unsigned int newsize = min(hiwat + sc->tt.autorcvbuf_inc,
 		    V_tcp_autorcvbuf_max);
 
-		if (!sbreserve_locked(sb, newsize, so, NULL))
+		if (!sbreserve_locked(so, SO_RCV, newsize, NULL))
 			sb->sb_flags &= ~SB_AUTOSIZE;
 	}
 
@@ -1784,17 +1753,18 @@ do_rx_data(struct sge_iq *iq, const struct rss_header *rss, struct mbuf *m)
 		if (changed) {
 			if (toep->ddp.flags & DDP_SC_REQ)
 				toep->ddp.flags ^= DDP_ON | DDP_SC_REQ;
-			else {
-				KASSERT(cpl->ddp_off == 1,
-				    ("%s: DDP switched on by itself.",
-				    __func__));
-
+			else if (cpl->ddp_off == 1) {
 				/* Fell out of DDP mode */
 				toep->ddp.flags &= ~DDP_ON;
 				CTR1(KTR_CXGBE, "%s: fell out of DDP mode",
 				    __func__);
 
 				insert_ddp_data(toep, ddp_placed);
+			} else {
+				/*
+				 * Data was received while still
+				 * ULP_MODE_NONE, just fall through.
+				 */
 			}
 		}
 
@@ -1810,19 +1780,17 @@ do_rx_data(struct sge_iq *iq, const struct rss_header *rss, struct mbuf *m)
 	}
 
 	sbappendstream_locked(sb, m, 0);
-	rx_credits = sbspace(sb) > tp->rcv_wnd ? sbspace(sb) - tp->rcv_wnd : 0;
-	if (rx_credits > 0 && sbused(sb) + tp->rcv_wnd < sb->sb_lowat) {
-		rx_credits = send_rx_credits(sc, toep, rx_credits);
-		tp->rcv_wnd += rx_credits;
-		tp->rcv_adv += rx_credits;
-	}
+	t4_rcvd_locked(&toep->td->tod, tp);
 
-	if (ulp_mode(toep) == ULP_MODE_TCPDDP && toep->ddp.waiting_count > 0 &&
+	if (ulp_mode(toep) == ULP_MODE_TCPDDP &&
+	    (toep->ddp.flags & DDP_AIO) != 0 && toep->ddp.waiting_count > 0 &&
 	    sbavail(sb) != 0) {
 		CTR2(KTR_CXGBE, "%s: tid %u queueing AIO task", __func__,
 		    tid);
 		ddp_queue_toep(toep);
 	}
+	if (toep->flags & TPF_TLS_STARTING)
+		tls_received_starting_data(sc, toep, sb, len);
 	sorwakeup_locked(so);
 	SOCKBUF_UNLOCK_ASSERT(sb);
 	if (ulp_mode(toep) == ULP_MODE_TCPDDP)
@@ -1874,7 +1842,7 @@ do_fw4_ack(struct sge_iq *iq, const struct rss_header *rss, struct mbuf *m)
 		return (0);
 	}
 
-	KASSERT((inp->inp_flags & (INP_TIMEWAIT | INP_DROPPED)) == 0,
+	KASSERT((inp->inp_flags & INP_DROPPED) == 0,
 	    ("%s: inp_flags 0x%x", __func__, inp->inp_flags));
 
 	tp = intotcpcb(inp);
@@ -2052,8 +2020,20 @@ t4_uninit_cpl_io_handlers(void)
 #define	aio_sent	backend3
 #define	aio_refs	backend4
 
-#define	jobtotid(job)							\
-	(((struct toepcb *)(so_sototcpcb((job)->fd_file->f_data)->t_toe))->tid)
+#ifdef VERBOSE_TRACES
+static int
+jobtotid(struct kaiocb *job)
+{
+	struct socket *so;
+	struct tcpcb *tp;
+	struct toepcb *toep;
+
+	so = job->fd_file->f_data;
+	tp = sototcpcb(so);
+	toep = tp->t_toe;
+	return (toep->tid);
+}
+#endif
 
 static void
 aiotx_free_job(struct kaiocb *job)
@@ -2192,20 +2172,19 @@ static void
 t4_aiotx_process_job(struct toepcb *toep, struct socket *so, struct kaiocb *job)
 {
 	struct sockbuf *sb;
-	struct file *fp;
 	struct inpcb *inp;
 	struct tcpcb *tp;
 	struct mbuf *m;
+	u_int sent;
 	int error, len;
 	bool moretocome, sendmore;
 
 	sb = &so->so_snd;
 	SOCKBUF_UNLOCK(sb);
-	fp = job->fd_file;
 	m = NULL;
 
 #ifdef MAC
-	error = mac_socket_check_send(fp->f_cred, so);
+	error = mac_socket_check_send(job->fd_file->f_cred, so);
 	if (error != 0)
 		goto out;
 #endif
@@ -2292,14 +2271,16 @@ sendanother:
 
 	inp = toep->inp;
 	INP_WLOCK(inp);
-	if (inp->inp_flags & (INP_TIMEWAIT | INP_DROPPED)) {
+	if (inp->inp_flags & INP_DROPPED) {
 		INP_WUNLOCK(inp);
 		SOCK_IO_SEND_UNLOCK(so);
 		error = ECONNRESET;
 		goto out;
 	}
 
-	job->aio_sent += m_length(m, NULL);
+	sent = m_length(m, NULL);
+	job->aio_sent += sent;
+	counter_u64_add(toep->ofld_txq->tx_aio_octets, sent);
 
 	sbappendstream(sb, m, 0);
 	m = NULL;
@@ -2308,7 +2289,13 @@ sendanother:
 		tp = intotcpcb(inp);
 		if (moretocome)
 			tp->t_flags |= TF_MORETOCOME;
-		error = tp->t_fb->tfb_tcp_output(tp);
+		error = tcp_output(tp);
+		if (error < 0) {
+			INP_UNLOCK_ASSERT(inp);
+			SOCK_IO_SEND_UNLOCK(so);
+			error = -error;
+			goto out;
+		}
 		if (moretocome)
 			tp->t_flags &= ~TF_MORETOCOME;
 	}
@@ -2346,6 +2333,7 @@ sendanother:
 	 * socket.
 	 */
 	aiotx_free_job(job);
+	counter_u64_add(toep->ofld_txq->tx_aio_jobs, 1);
 
 out:
 	if (error) {
@@ -2362,9 +2350,11 @@ t4_aiotx_task(void *context, int pending)
 	struct toepcb *toep = context;
 	struct socket *so;
 	struct kaiocb *job;
+	struct epoch_tracker et;
 
 	so = toep->aiotx_so;
 	CURVNET_SET(toep->vnet);
+	NET_EPOCH_ENTER(et);
 	SOCKBUF_LOCK(&so->so_snd);
 	while (!TAILQ_EMPTY(&toep->aiotx_jobq) && sowriteable(so)) {
 		job = TAILQ_FIRST(&toep->aiotx_jobq);
@@ -2376,11 +2366,11 @@ t4_aiotx_task(void *context, int pending)
 	}
 	toep->aiotx_so = NULL;
 	SOCKBUF_UNLOCK(&so->so_snd);
-	CURVNET_RESTORE();
+	NET_EPOCH_EXIT(et);
 
 	free_toepcb(toep);
-	SOCK_LOCK(so);
 	sorele(so);
+	CURVNET_RESTORE();
 }
 
 static void
@@ -2409,7 +2399,7 @@ t4_aiotx_cancel(struct kaiocb *job)
 	struct toepcb *toep;
 
 	so = job->fd_file->f_data;
-	tp = so_sototcpcb(so);
+	tp = sototcpcb(so);
 	toep = tp->t_toe;
 	MPASS(job->uaiocb.aio_lio_opcode == LIO_WRITE);
 	sb = &so->so_snd;
@@ -2426,7 +2416,7 @@ t4_aiotx_cancel(struct kaiocb *job)
 int
 t4_aio_queue_aiotx(struct socket *so, struct kaiocb *job)
 {
-	struct tcpcb *tp = so_sototcpcb(so);
+	struct tcpcb *tp = sototcpcb(so);
 	struct toepcb *toep = tp->t_toe;
 	struct adapter *sc = td_adapter(toep->td);
 

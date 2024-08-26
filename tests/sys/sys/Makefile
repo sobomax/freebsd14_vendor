@@ -1,4 +1,3 @@
-# $FreeBSD: 7b0cf7e92743ed3ab3c26eb4d01a24c505a94bcf $
 
 .include <bsd.compiler.mk>
 

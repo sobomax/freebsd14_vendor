@@ -1,4 +1,3 @@
-# $FreeBSD: fb388e23c03c84a23ea1d5f67cd9121829183333 $
 
 .PATH: ${SRCTOP}/sys/dev/mdio
 

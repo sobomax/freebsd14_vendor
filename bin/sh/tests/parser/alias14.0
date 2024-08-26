@@ -1,4 +1,3 @@
-# $FreeBSD: 1b92fc07d5b26f02bcb188f1fa418f9a11dc36ef $
 
 alias command='command '
 alias alias0=exit

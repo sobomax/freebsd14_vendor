@@ -1,4 +1,3 @@
-/* $FreeBSD: 49c808a2650400330a14f7ce4b2b2a34b7028d4f $ */
 
 #include <machine/asm.h>
 

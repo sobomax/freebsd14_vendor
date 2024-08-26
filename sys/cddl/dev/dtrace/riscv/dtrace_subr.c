@@ -21,8 +21,6 @@
  *
  * Portions Copyright 2016-2018 Ruslan Bukin <br@bsdpad.com>
  *
- * $FreeBSD: 1e24a88f6c7568047b9e6b0fe865169f5e74e71f $
- *
  */
 /*
  * Copyright 2005 Sun Microsystems, Inc.  All rights reserved.
@@ -196,9 +194,7 @@ dtrace_trap(struct trapframe *frame, u_int type)
 	 * flag is cleared and finally re-scheduling is enabled.
 	 *
 	 * Check if DTrace has enabled 'no-fault' mode:
-	 *
 	 */
-
 	if ((cpu_core[curcpu].cpuc_dtrace_flags & CPU_DTRACE_NOFAULT) != 0) {
 		/*
 		 * There are only a couple of trap types that are expected.
@@ -208,15 +204,19 @@ dtrace_trap(struct trapframe *frame, u_int type)
 		case SCAUSE_LOAD_ACCESS_FAULT:
 		case SCAUSE_STORE_ACCESS_FAULT:
 		case SCAUSE_INST_ACCESS_FAULT:
+		case SCAUSE_INST_PAGE_FAULT:
+		case SCAUSE_LOAD_PAGE_FAULT:
+		case SCAUSE_STORE_PAGE_FAULT:
 			/* Flag a bad address. */
 			cpu_core[curcpu].cpuc_dtrace_flags |= CPU_DTRACE_BADADDR;
-			cpu_core[curcpu].cpuc_dtrace_illval = 0;
+			cpu_core[curcpu].cpuc_dtrace_illval = frame->tf_stval;
 
 			/*
 			 * Offset the instruction pointer to the instruction
 			 * following the one causing the fault.
 			 */
-			frame->tf_sepc += 4;
+			frame->tf_sepc +=
+			    dtrace_instr_size((uint8_t *)frame->tf_sepc);
 
 			return (1);
 		default:
@@ -240,16 +240,6 @@ dtrace_probe_error(dtrace_state_t *state, dtrace_epid_t epid, int which,
 }
 
 static int
-match_opcode(uint32_t insn, int match, int mask)  
-{
-
-	if (((insn ^ match) & mask) == 0)
-		return (1);
-
-	return (0);
-}
-
-static int
 dtrace_invop_start(struct trapframe *frame)
 {
 	register_t *sp;
@@ -261,7 +251,7 @@ dtrace_invop_start(struct trapframe *frame)
 	if (invop == 0)
 		return (-1);
 
-	if (match_opcode(invop, (MATCH_SD | RS2_RA | RS1_SP),
+	if (dtrace_match_opcode(invop, (MATCH_SD | RS2_RA | RS1_SP),
 	    (MASK_SD | RS2_MASK | RS1_MASK))) {
 		/* Non-compressed store of ra to sp */
 		imm = (invop >> 7) & 0x1f;
@@ -272,14 +262,14 @@ dtrace_invop_start(struct trapframe *frame)
 		return (0);
 	}
 
-	if (match_opcode(invop, (MATCH_JALR | (X_RA << RS1_SHIFT)),
+	if (dtrace_match_opcode(invop, (MATCH_JALR | (X_RA << RS1_SHIFT)),
 	    (MASK_JALR | RD_MASK | RS1_MASK | IMM_MASK))) {
 		/* Non-compressed ret */
 		frame->tf_sepc = frame->tf_ra;
 		return (0);
 	}
 
-	if (match_opcode(invop, (MATCH_C_SDSP | RS2_C_RA),
+	if (dtrace_match_opcode(invop, (MATCH_C_SDSP | RS2_C_RA),
 	    (MASK_C_SDSP | RS2_C_MASK))) {
 		/* 'C'-compressed store of ra to sp */
 		uimm = ((invop >> 10) & 0x7) << 3;
@@ -290,12 +280,15 @@ dtrace_invop_start(struct trapframe *frame)
 		return (0);
 	}
 
-	if (match_opcode(invop, (MATCH_C_JR | (X_RA << RD_SHIFT)),
+	if (dtrace_match_opcode(invop, (MATCH_C_JR | (X_RA << RD_SHIFT)),
 	    (MASK_C_JR | RD_MASK))) {
 		/* 'C'-compressed ret */
 		frame->tf_sepc = frame->tf_ra;
 		return (0);
 	}
+
+	if (dtrace_match_opcode(invop, MATCH_C_NOP, MASK_C_NOP))
+		return (0);
 
 #ifdef INVARIANTS
 	panic("Instruction %x doesn't match any opcode.", invop);

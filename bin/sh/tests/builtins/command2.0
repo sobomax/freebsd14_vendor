@@ -1,3 +1,2 @@
-# $FreeBSD: ff7b5f2c8dc82dc3bb7b19e0dacd4535bc301a62 $
 PATH=
 command -p cat < /dev/null

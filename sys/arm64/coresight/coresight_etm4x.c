@@ -30,8 +30,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 1b9b3ed71fd6151ff75a5b8e0e061690421adef0 $");
-
 #include <sys/param.h>
 #include <sys/systm.h>
 #include <sys/bus.h>
@@ -173,7 +171,7 @@ static int
 etm_init(device_t dev)
 {
 	struct etm_softc *sc;
-	uint32_t reg;
+	uint32_t reg __unused;
 
 	sc = device_get_softc(dev);
 

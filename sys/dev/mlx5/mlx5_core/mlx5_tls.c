@@ -21,8 +21,6 @@
  * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
- *
- * $FreeBSD: 0665a4133b45ea2871f5b2c8a83c0a49ff3a1735 $
  */
 
 #include "opt_rss.h"
@@ -118,7 +116,7 @@ int mlx5_tls_open_tis(struct mlx5_core_dev *mdev, int tc, int tdn, int pdn, u32 
 void mlx5_tls_close_tis(struct mlx5_core_dev *mdev, u32 tisn)
 {
 
-	mlx5_core_destroy_tis(mdev, tisn);
+	mlx5_core_destroy_tis(mdev, tisn, 0);
 }
 
 int mlx5_tls_open_tir(struct mlx5_core_dev *mdev, int tdn, int rqtn, u32 *p_tirn)
@@ -147,5 +145,5 @@ int mlx5_tls_open_tir(struct mlx5_core_dev *mdev, int tdn, int rqtn, u32 *p_tirn
 
 void mlx5_tls_close_tir(struct mlx5_core_dev *mdev, u32 tirn)
 {
-	mlx5_core_destroy_tir(mdev, tirn);
+	mlx5_core_destroy_tir(mdev, tirn, 0);
 }

@@ -21,8 +21,6 @@
  * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
- *
- * $FreeBSD: 4ea2989ca185dd909d3406d07ad45caebec906ab $
  */
 
 #ifndef __SYSDECODE_H__
@@ -38,8 +36,6 @@ enum sysdecode_abi {
 	SYSDECODE_ABI_FREEBSD32,
 	SYSDECODE_ABI_LINUX,
 	SYSDECODE_ABI_LINUX32,
-	SYSDECODE_ABI_CLOUDABI64,
-	SYSDECODE_ABI_CLOUDABI32
 };
 
 int	sysdecode_abi_to_freebsd_errno(enum sysdecode_abi _abi, int _error);
@@ -87,6 +83,7 @@ const char *sysdecode_nfssvc_flags(int _flags);
 bool	sysdecode_open_flags(FILE *_fp, int _flags, int *_rem);
 const char *sysdecode_pathconf_name(int _name);
 bool	sysdecode_pipe2_flags(FILE *_fp, int _flags, int *_rem);
+bool	sysdecode_pollfd_events(FILE *fp, int flags, int *rem);
 const char *sysdecode_prio_which(int _which);
 const char *sysdecode_procctl_cmd(int _cmd);
 const char *sysdecode_ptrace_request(int _request);
@@ -144,6 +141,7 @@ bool	sysdecode_shmflags(FILE *_fp, int _flags, int *_rem);
 bool	sysdecode_linux_atflags(FILE *_fp, int _flag, int *_rem);
 void	sysdecode_linux_clockid(FILE *_fp, clockid_t _which);
 bool	sysdecode_linux_clock_flags(FILE *_fp, int _flags, int *_rem);
+bool	sysdecode_linux_clone_flags(FILE *_fp, int _flags, int *_rem);
 bool	sysdecode_linux_open_flags(FILE *_fp, int _flags, int *_rem);
 const char *sysdecode_linux_signal(int _sig);
 const char *sysdecode_linux_sigprocmask_how(int _how);

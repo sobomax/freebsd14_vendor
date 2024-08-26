@@ -34,9 +34,6 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include <sys/cdefs.h>
-__FBSDID("$FreeBSD: b4bdc869a2e19eaba9ff191b4907d775c9166cfd $");
-
 #include <wchar.h>
 
 wchar_t *

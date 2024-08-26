@@ -1,2 +1,1 @@
-# $FreeBSD: 35b125c147672319e409d043ab89789ef3f668e9 $
 true && ! true | false

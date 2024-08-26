@@ -1,4 +1,3 @@
-# $FreeBSD: dea45f52b92bd93901e88c8285b6cb72b0594f42 $
 
 PACKAGE=	lib${LIB}
 LIB=	bsdstat

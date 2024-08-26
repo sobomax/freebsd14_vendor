@@ -1,7 +1,5 @@
 /*-
  * Test 0031:	BPF_ALU+BPF_RSH+BPF_X
- *
- * $FreeBSD: ff5fc1950a28abde48f37ebc5bb974d17b44885f $
  */
 
 /* BPF program */

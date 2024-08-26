@@ -30,8 +30,6 @@
  */
 
 #include <machine/asm.h>
-__FBSDID("$FreeBSD: 431ea4801b7ea1cef1a423d97d725a2cc639b79f $");
-
 	.text
 	.align	0
 	.globl	.rtld_start

@@ -1,4 +1,3 @@
-# $FreeBSD: 455efdbfc8eea629e397f65948eea645a0581cd4 $
 
 PACKAGE=ssh
 LIB=	cbor
@@ -7,7 +6,8 @@ PRIVATELIB=
 DIST=${SRCTOP}/contrib/libcbor
 .PATH:	${DIST}/src
 
-SRCS=	cbor.c
+SRCS=	allocators.c
+SRCS+=	cbor.c
 SRCS+=	cbor/arrays.c
 SRCS+=	cbor/bytestrings.c
 SRCS+=	cbor/callbacks.c

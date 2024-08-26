@@ -18,8 +18,6 @@
  * information: Portions Copyright [yyyy] [name of copyright owner]
  *
  * CDDL HEADER END
- *
- * $FreeBSD: 1b9996bb133abf9f094649bac904c8360cdb39a3 $
  */
 /*
  * Copyright 2004 Sun Microsystems, Inc.  All rights reserved.

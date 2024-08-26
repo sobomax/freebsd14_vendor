@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2005-2010 Pawel Jakub Dawidek <pjd@FreeBSD.org>
  * All rights reserved.
@@ -27,8 +27,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: ca8170db7e4d2d1d4e15c5c09c88af2bdda14b33 $");
-
 #include <sys/param.h>
 #ifdef _KERNEL
 #include <sys/systm.h>
@@ -112,7 +110,7 @@ g_eli_crypto_cipher(u_int algo, int enc, u_char *data, size_t datasize,
 {
 	EVP_CIPHER_CTX *ctx;
 	const EVP_CIPHER *type;
-	u_char iv[keysize];
+	u_char iv[G_ELI_IVKEYLEN];
 	int outsize;
 
 	assert(algo != CRYPTO_AES_XTS);

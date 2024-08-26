@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2004 John Baldwin <jhb@FreeBSD.org>
  *
@@ -58,8 +58,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: e81c6745aa2442fdc058727aca88582b08e80520 $");
-
 #include "opt_sleepqueue_profiling.h"
 #include "opt_ddb.h"
 #include "opt_sched.h"
@@ -453,7 +451,7 @@ sleepq_check_ast_sc_locked(struct thread *td, struct sleepqueue_chain *sc)
 	 * thread.  If not, we can switch immediately.
 	 */
 	thread_lock(td);
-	if ((td->td_flags & (TDF_NEEDSIGCHK | TDF_NEEDSUSPCHK)) == 0)
+	if (!td_ast_pending(td, TDA_SIG) && !td_ast_pending(td, TDA_SUSPEND))
 		return (0);
 
 	thread_unlock(td);
@@ -834,7 +832,8 @@ sleepq_remove_thread(struct sleepqueue *sq, struct thread *td)
 		td->td_sleepqueue = LIST_FIRST(&sq->sq_free);
 	LIST_REMOVE(td->td_sleepqueue, sq_hash);
 
-	if ((td->td_flags & TDF_TIMEOUT) == 0 && td->td_sleeptimo != 0)
+	if ((td->td_flags & TDF_TIMEOUT) == 0 && td->td_sleeptimo != 0 &&
+	    td->td_lock == &sc->sc_lock) {
 		/*
 		 * We ignore the situation where timeout subsystem was
 		 * unable to stop our callout.  The struct thread is
@@ -844,8 +843,16 @@ sleepq_remove_thread(struct sleepqueue *sq, struct thread *td)
 		 * sleepq_timeout() ensure that the thread does not
 		 * get spurious wakeups, even if the callout was reset
 		 * or thread reused.
+		 *
+		 * We also cannot safely stop the callout if a scheduler
+		 * lock is held since softclock_thread() forces a lock
+		 * order of callout lock -> scheduler lock.  The thread
+		 * lock will be a scheduler lock only if the thread is
+		 * preparing to go to sleep, so this is hopefully a rare
+		 * scenario.
 		 */
 		callout_stop(&td->td_slpcallout);
+	}
 
 	td->td_wmesg = NULL;
 	td->td_wchan = NULL;

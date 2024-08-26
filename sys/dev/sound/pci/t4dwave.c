@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 1999 Cameron Grant <cg@freebsd.org>
  * All rights reserved.
@@ -36,8 +36,6 @@
 
 #include <dev/pci/pcireg.h>
 #include <dev/pci/pcivar.h>
-
-SND_DECLARE_FILE("$FreeBSD: 08edb53b11a01c3a07c93b142ab8e61816336134 $");
 
 /* -------------------------------------------------------------------- */
 
@@ -913,14 +911,15 @@ tr_pci_attach(device_t dev)
 		/*highaddr*/BUS_SPACE_MAXADDR,
 		/*filter*/NULL, /*filterarg*/NULL,
 		/*maxsize*/tr->bufsz, /*nsegments*/1, /*maxsegz*/tr->bufsz,
-		/*flags*/0, /*lockfunc*/busdma_lock_mutex,
-		/*lockarg*/&Giant, &tr->parent_dmat) != 0) {
+		/*flags*/0, /*lockfunc*/NULL, /*lockarg*/NULL,
+		&tr->parent_dmat) != 0) {
 		device_printf(dev, "unable to create dma tag\n");
 		goto bad;
 	}
 
-	snprintf(status, 64, "at io 0x%jx irq %jd %s",
-		 rman_get_start(tr->reg), rman_get_start(tr->irq),PCM_KLDSTRING(snd_t4dwave));
+	snprintf(status, SND_STATUSLEN, "port 0x%jx irq %jd on %s",
+		 rman_get_start(tr->reg), rman_get_start(tr->irq),
+		 device_get_nameunit(device_get_parent(dev)));
 
 	if (pcm_register(dev, tr, dacn, 1))
 		goto bad;
@@ -1033,6 +1032,6 @@ static driver_t tr_driver = {
 	PCM_SOFTC_SIZE,
 };
 
-DRIVER_MODULE(snd_t4dwave, pci, tr_driver, pcm_devclass, 0, 0);
+DRIVER_MODULE(snd_t4dwave, pci, tr_driver, 0, 0);
 MODULE_DEPEND(snd_t4dwave, sound, SOUND_MINVER, SOUND_PREFVER, SOUND_MAXVER);
 MODULE_VERSION(snd_t4dwave, 1);

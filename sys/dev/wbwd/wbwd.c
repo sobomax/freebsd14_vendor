@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2011 Sandvine Incorporated ULC.
  * Copyright (c) 2012 iXsystems, Inc.
@@ -40,8 +40,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 2c8cc63dbfdcadaee0cb5e4183fac5a59e32ae25 $");
-
 #include <sys/param.h>
 #include <sys/kernel.h>
 #include <sys/systm.h>
@@ -295,10 +293,9 @@ static int
 sysctl_wb_force_test_nmi(SYSCTL_HANDLER_ARGS)
 {
 	struct wb_softc *sc;
-	int error, test, val;
+	int error, val;
 
 	sc = arg1;
-	test = arg2;
 
 #ifdef notyet
 	val = sc->test_nmi;
@@ -310,6 +307,8 @@ sysctl_wb_force_test_nmi(SYSCTL_HANDLER_ARGS)
                 return (error);
 
 #ifdef notyet
+	int test = arg2;
+
 	/* Manually clear the test for a value of 0 and do nothing else. */
 	if (test && val == 0) {
 		sc->test_nmi = 0;
@@ -680,8 +679,6 @@ static driver_t wb_driver = {
 	sizeof(struct wb_softc)
 };
 
-static devclass_t wb_devclass;
-
-DRIVER_MODULE(wb, superio, wb_driver, wb_devclass, NULL, NULL);
+DRIVER_MODULE(wb, superio, wb_driver, NULL, NULL);
 MODULE_DEPEND(wb, superio, 1, 1, 1);
 MODULE_VERSION(wb, 1);

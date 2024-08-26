@@ -1,4 +1,3 @@
-# $FreeBSD: ea7fb054a546b8742ba51788a1e8a3e7290bb33d $
 
 case 5 in
 [0$((-9))]) ;;

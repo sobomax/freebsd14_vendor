@@ -1,4 +1,3 @@
-# $FreeBSD: e3d7526838a13f24417fe607406a2c03ea5b487b $
 
 .include <src.opts.mk>
 
@@ -7,10 +6,16 @@ MAN=	tzsetup.8
 
 CFLAGS+= -I.
 
-.if ${MK_DIALOG} != no && !defined(BOOTSTRAPPING)
+.if !defined(BOOTSTRAPPING)
 WARNS?=	3
-CFLAGS+=	-I${SRCTOP}/contrib/dialog -DHAVE_DIALOG
-LIBADD=	dialog ncursesw
+CFLAGS+=	-I${SRCTOP}/contrib/bsddialog/lib -DHAVE_BSDDIALOG
+LIBADD=		bsddialog
 .endif
+
+ZONETAB=	${SRCTOP}/contrib/tzdata/zone1970.tab
+baseline: ${PROG} ${ZONETAB}
+	${.OBJDIR}/${PROG} -d ${ZONETAB} > ${.CURDIR}/baseline
+
+.PHONY:	baseline
 
 .include <bsd.prog.mk>

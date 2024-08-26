@@ -1,9 +1,9 @@
 #	@(#)Makefile	8.1 (Berkeley) 6/6/93
-# $FreeBSD: b966f8165795a96a9f2419f20f544de5b0723365 $
 
 .include <src.opts.mk>
 
 PROG=	head
+LIBADD=	util
 
 HAS_TESTS=
 SUBDIR.${MK_TESTS}+= tests

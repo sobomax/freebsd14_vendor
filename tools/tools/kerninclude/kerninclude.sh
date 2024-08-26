@@ -6,7 +6,6 @@
 # this stuff is worth it, you can buy me a beer in return.   Poul-Henning Kamp
 # ----------------------------------------------------------------------------
 #
-# $FreeBSD: fd3e4fd4e0721e8562d024729ff00aaf4fab96c2 $
 #
 # This script tries to find #include statements which are not needed in
 # the FreeBSD kernel tree.

@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2013 The FreeBSD Foundation
  * Copyright (c) 2013 Mariusz Zaborski <oshogbo@FreeBSD.org>
@@ -31,8 +31,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 7cec4c898f043f6a336abe3067554028c4d63fb9 $");
-
 #include <sys/param.h>
 #include <sys/socket.h>
 #include <sys/select.h>
@@ -450,7 +448,7 @@ buf_send(int sock, void *buf, size_t size)
 }
 
 int
-buf_recv(int sock, void *buf, size_t size)
+buf_recv(int sock, void *buf, size_t size, int flags)
 {
 	ssize_t done;
 	unsigned char *ptr;
@@ -461,7 +459,7 @@ buf_recv(int sock, void *buf, size_t size)
 	ptr = buf;
 	while (size > 0) {
 		fd_wait(sock, true);
-		done = recv(sock, ptr, size, 0);
+		done = recv(sock, ptr, size, flags);
 		if (done == -1) {
 			if (errno == EINTR)
 				continue;

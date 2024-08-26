@@ -1,4 +1,3 @@
-# $FreeBSD: e8946f0ba4ef3b1f28337ca0e5343821ad3923da $
 
 .PATH: ${SRCTOP}/sys/rpc ${SRCTOP}/sys/rpc/rpcsec_tls
 KMOD=	krpc

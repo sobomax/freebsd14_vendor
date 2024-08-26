@@ -33,8 +33,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 4d2a45b7e4c44dc8e8f0c7ab59e81ac9c48a2866 $");
-
 #include <sys/param.h>
 #include <sys/libkern.h>
 #include <sys/malloc.h>
@@ -147,7 +145,7 @@ aesni_encrypt_ecb(int rounds, const void *key_schedule, size_t len,
 
 void
 aesni_decrypt_ecb(int rounds, const void *key_schedule, size_t len,
-    const uint8_t from[AES_BLOCK_LEN], uint8_t to[AES_BLOCK_LEN])
+    const uint8_t *from, uint8_t *to)
 {
 	__m128i tot;
 	__m128i tout[8];

@@ -37,8 +37,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 8865c79ccc0c0804762acc246796c98641d1e445 $");
-
 #include <sys/param.h>
 #include <sys/systm.h>
 #include <sys/bus.h>
@@ -475,7 +473,7 @@ dwc_setup_rxfilter(struct dwc_softc *sc)
 	/*
 	 * Set the primary address.
 	 */
-	eaddr = IF_LLADDR(ifp);
+	eaddr = if_getlladdr(ifp);
 	lo = eaddr[0] | (eaddr[1] << 8) | (eaddr[2] << 16) |
 	    (eaddr[3] << 24);
 	hi = eaddr[4] | (eaddr[5] << 8);
@@ -1825,10 +1823,8 @@ driver_t dwc_driver = {
 	sizeof(struct dwc_softc),
 };
 
-static devclass_t dwc_devclass;
-
-DRIVER_MODULE(dwc, simplebus, dwc_driver, dwc_devclass, 0, 0);
-DRIVER_MODULE(miibus, dwc, miibus_driver, miibus_devclass, 0, 0);
+DRIVER_MODULE(dwc, simplebus, dwc_driver, 0, 0);
+DRIVER_MODULE(miibus, dwc, miibus_driver, 0, 0);
 
 MODULE_DEPEND(dwc, ether, 1, 1, 1);
 MODULE_DEPEND(dwc, miibus, 1, 1, 1);

@@ -31,8 +31,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 2cd2a4c723243090f2bd2aa4a6b2e224008a6cdd $");
-
 #include <sys/param.h>
 #include <sys/wait.h>
 
@@ -236,7 +234,7 @@ main(int argc, char *argv[])
 			rtld = _PATH_RTLD;
 #if __ELF_WORD_SIZE > 32 && defined(ELF32_SUPPORTED)
 			if (type == TYPE_ELF32)
-				rtld = _COMPAT32_PATH_RTLD;
+				rtld = __PATH_RTLD("32");
 #endif
 			if (is_shlib == 0) {
 				execl(rtld, rtld, "--",
@@ -260,7 +258,8 @@ static void
 usage(void)
 {
 
-	fprintf(stderr, "usage: ldd [-a] [-f format] program ...\n");
+	fprintf(stderr,
+	    "usage: ldd [-a] [-f format [-f format]] program ...\n");
 	exit(1);
 }
 

@@ -44,9 +44,6 @@ this code that are retained.
 ===============================================================================
 */
 
-#include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 79993fb207f50fee100a14e5abd354b897c13c77 $");
-
 #ifdef SOFTFLOAT_FOR_GCC
 #include "softfloat-for-gcc.h"
 #endif

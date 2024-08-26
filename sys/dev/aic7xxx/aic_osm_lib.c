@@ -33,8 +33,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 3dcf15a428e59680e4c30513f819e102f77f1531 $");
-
 static void	aic_recovery_thread(void *arg);
 
 void

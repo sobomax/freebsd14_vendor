@@ -13,11 +13,8 @@
  * ====================================================
  */
 
-#include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 1b6bf36f9cba5eeb45bb61943c288310b21248e8 $");
-
 /*
- * __ieee754_fmodf(x,y)
+ * fmodf(x,y)
  * Return x mod y in exact arithmetic
  * Method: shift and subtract
  */
@@ -28,7 +25,7 @@ __FBSDID("$FreeBSD: 1b6bf36f9cba5eeb45bb61943c288310b21248e8 $");
 static const float one = 1.0, Zero[] = {0.0, -0.0,};
 
 float
-__ieee754_fmodf(float x, float y)
+fmodf(float x, float y)
 {
 	int32_t n,hx,hy,hz,ix,iy,sx,i;
 

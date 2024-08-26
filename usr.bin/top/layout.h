@@ -4,8 +4,6 @@
  *  This file defines the locations on tne screen for various parts of the
  *  display.  These definitions are used by the routines in "display.c" for
  *  cursor addressing.
- *
- * $FreeBSD: ac2fa4780c318abde6b2ec603bf0dc41acfab470 $
  */
 
 extern int  x_lastpid;		/* 10 */

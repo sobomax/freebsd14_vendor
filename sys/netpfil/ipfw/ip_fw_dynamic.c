@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2017-2018 Yandex LLC
  * Copyright (c) 2017-2018 Andrey V. Elsukov <ae@FreeBSD.org>
@@ -28,8 +28,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 3b96a9ac019f460366e796a86e95a0f27d62a9d0 $");
-
 #include "opt_inet.h"
 #include "opt_inet6.h"
 #include "opt_ipfw.h"
@@ -59,8 +57,8 @@ __FBSDID("$FreeBSD: 3b96a9ac019f460366e796a86e95a0f27d62a9d0 $");
 #include <netinet/ip.h>
 #include <netinet/ip_var.h>
 #include <netinet/ip_fw.h>
-#include <netinet/tcp_var.h>
 #include <netinet/udp.h>
+#include <netinet/tcp.h>
 
 #include <netinet/ip6.h>	/* IN6_ARE_ADDR_EQUAL */
 #ifdef INET6
@@ -2458,7 +2456,7 @@ dyn_send_keepalive_ipv4(struct ip_fw_chain *chain)
 		CK_SLIST_FOREACH(s, &V_dyn_ipv4[bucket], entry) {
 			/*
 			 * Only established TCP connections that will
-			 * become expired withing dyn_keepalive_interval.
+			 * become expired within dyn_keepalive_interval.
 			 */
 			if (s->proto != IPPROTO_TCP ||
 			    (s->data->state & BOTH_SYN) != BOTH_SYN ||
@@ -2565,7 +2563,7 @@ dyn_send_keepalive_ipv6(struct ip_fw_chain *chain)
 		CK_SLIST_FOREACH(s, &V_dyn_ipv6[bucket], entry) {
 			/*
 			 * Only established TCP connections that will
-			 * become expired withing dyn_keepalive_interval.
+			 * become expired within dyn_keepalive_interval.
 			 */
 			if (s->proto != IPPROTO_TCP ||
 			    (s->data->state & BOTH_SYN) != BOTH_SYN ||

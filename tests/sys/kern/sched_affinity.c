@@ -4,8 +4,6 @@
  * SPDX-License-Identifier: BSD-2-Clause
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: db8d9132550cfd60c6e483ac54864e3486000f05 $");
-
 #include <sys/types.h>
 #include <sys/stdint.h>
 #include <sys/sysctl.h>

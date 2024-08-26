@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  * Copyright 2021 Mariusz Zaborski <oshogbo@FreeBSD.org>
  *
  * Redistribution and use in source and binary forms, with or without
@@ -21,8 +21,6 @@
  * THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- *
- * $FreeBSD: 3a220b009bb6a771bc46a65a1878ade14e12e139 $
  */
 
 #include <atf-c.h>
@@ -39,7 +37,7 @@ setup(const atf_tc_t *tc)
 {
 	int testdir;
 
-	testdir = opendir(atf_tc_get_config_var(tc, "srcdir"));
+	testdir = opendir_fd(atf_tc_get_config_var(tc, "srcdir"));
 	ATF_REQUIRE(testdir >= 0);
 
 	binaryfd = openat(testdir, TARGET_ELF_NAME, O_RDONLY);

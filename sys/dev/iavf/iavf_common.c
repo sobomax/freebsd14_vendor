@@ -28,7 +28,6 @@
  *  ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  *  POSSIBILITY OF SUCH DAMAGE.
  */
-/*$FreeBSD: b6ca90752ddcd381c265de5e4616adb7d39d5fae $*/
 
 #include "iavf_type.h"
 #include "iavf_adminq.h"

@@ -68,17 +68,19 @@
  * POSSIBILITY OF SUCH DAMAGE.
  *
  * OpenBSD: if_bridge.h,v 1.14 2001/03/22 03:48:29 jason Exp
- *
- * $FreeBSD: 6a32355d4d67e44a1de79025716bef5250d0c0fd $
  */
 
 /*
  * Data structure and control definitions for bridge interfaces.
  */
 
+#include <sys/types.h>
 #include <sys/callout.h>
 #include <sys/queue.h>
 #include <sys/condvar.h>
+
+#include <net/ethernet.h>
+#include <net/if.h>
 
 /*
  * Commands used in the SIOCSDRVSPEC ioctl.  Note the lookup of the
@@ -305,8 +307,10 @@ struct ifbpstpconf {
 	KASSERT((_ifp)->if_bridge_input != NULL,	\
 	    ("%s: if_bridge not loaded!", __func__));	\
 	_m = (*(_ifp)->if_bridge_input)(_ifp, _m);	\
-	if (_m != NULL)					\
+	if (_m != NULL)	{				\
 		_ifp = _m->m_pkthdr.rcvif;		\
+		m->m_flags &= ~M_BRIDGE_INJECT;		\
+	}						\
 } while (0)
 
 #define BRIDGE_OUTPUT(_ifp, _m, _err)	do {    	\

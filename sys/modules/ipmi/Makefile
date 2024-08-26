@@ -1,4 +1,3 @@
-# $FreeBSD: 733ac6f302222e8607dd9cd915158753dc0d0d20 $
 
 .PATH: ${SRCTOP}/sys/dev/ipmi
 
@@ -10,7 +9,7 @@ SRCS+=	bus_if.h device_if.h
 
 .if ${MACHINE_CPUARCH} == "i386" || ${MACHINE_CPUARCH} == "amd64" || \
     ${MACHINE_CPUARCH} == "aarch64"
-SRCS+=	ipmi_kcs.c ipmi_smic.c
+SRCS+=	ipmi_kcs.c ipmi_smic.c ipmi_bt.c
 SRCS+=	ipmi_acpi.c
 SRCS+=	opt_acpi.h
 SRCS+=	acpi_if.h

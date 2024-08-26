@@ -1,11 +1,10 @@
 #!/bin/sh
 #
-# $FreeBSD: d754167362451b47d9cb2751ed5dd6112b7ace96 $
 #
 
 # PROVIDE: mountd
 # REQUIRE: NETWORKING rpcbind quota mountlate
-# KEYWORD: nojail shutdown
+# KEYWORD: nojailvnet shutdown
 
 . /etc/rc.subr
 

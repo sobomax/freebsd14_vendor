@@ -32,8 +32,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: f95246f1cf385f8d28104bb72122e6cf811d1bd7 $");
-
 #include <sys/param.h>
 #include <sys/systm.h>
 #include <sys/sysproto.h>
@@ -111,7 +109,7 @@ oquota(struct thread *td, struct oquota_args *uap)
 
 #define	KINFO_PROC		(0<<8)
 #define	KINFO_RT		(1<<8)
-#define	KINFO_VNODE		(2<<8)
+/* UNUSED, was KINFO_VNODE (2<<8) */
 #define	KINFO_FILE		(3<<8)
 #define	KINFO_METER		(4<<8)
 #define	KINFO_LOADAVG		(5<<8)
@@ -181,13 +179,6 @@ ogetkerninfo(struct thread *td, struct ogetkerninfo_args *uap)
 		name[4] = uap->op & 0xff;
 		name[5] = uap->arg;
 		error = userland_sysctl(td, name, 6, uap->where, uap->size,
-			0, 0, 0, &size, 0);
-		break;
-
-	case KINFO_VNODE:
-		name[0] = CTL_KERN;
-		name[1] = KERN_VNODE;
-		error = userland_sysctl(td, name, 2, uap->where, uap->size,
 			0, 0, 0, &size, 0);
 		break;
 
@@ -336,7 +327,9 @@ freebsd4_uname(struct thread *td, struct freebsd4_uname_args *uap)
 		1, 0, 0, 0, 0);
 	if (error)
 		return (error);
-	subyte( uap->name->sysname + sizeof(uap->name->sysname) - 1, 0);
+	error = subyte(uap->name->sysname + sizeof(uap->name->sysname) - 1, 0);
+	if (error)
+		return (EFAULT);
 
 	name[1] = KERN_HOSTNAME;
 	len = sizeof uap->name->nodename;
@@ -344,7 +337,9 @@ freebsd4_uname(struct thread *td, struct freebsd4_uname_args *uap)
 		1, 0, 0, 0, 0);
 	if (error)
 		return (error);
-	subyte( uap->name->nodename + sizeof(uap->name->nodename) - 1, 0);
+	error = subyte(uap->name->nodename + sizeof(uap->name->nodename) - 1, 0);
+	if (error)
+		return (EFAULT);
 
 	name[1] = KERN_OSRELEASE;
 	len = sizeof uap->name->release;
@@ -352,7 +347,9 @@ freebsd4_uname(struct thread *td, struct freebsd4_uname_args *uap)
 		1, 0, 0, 0, 0);
 	if (error)
 		return (error);
-	subyte( uap->name->release + sizeof(uap->name->release) - 1, 0);
+	error = subyte(uap->name->release + sizeof(uap->name->release) - 1, 0);
+	if (error)
+		return (EFAULT);
 
 /*
 	name = KERN_VERSION;
@@ -370,13 +367,11 @@ freebsd4_uname(struct thread *td, struct freebsd4_uname_args *uap)
 	for(s = version; *s && *s != '#'; s++);
 
 	for(us = uap->name->version; *s && *s != ':'; s++) {
-		error = subyte( us++, *s);
-		if (error)
-			return (error);
+		if (subyte(us++, *s) != 0)
+			return (EFAULT);
 	}
-	error = subyte( us++, 0);
-	if (error)
-		return (error);
+	if (subyte(us++, 0) != 0)
+		return (EFAULT);
 
 	name[0] = CTL_HW;
 	name[1] = HW_MACHINE;
@@ -385,7 +380,9 @@ freebsd4_uname(struct thread *td, struct freebsd4_uname_args *uap)
 		1, 0, 0, 0, 0);
 	if (error)
 		return (error);
-	subyte( uap->name->machine + sizeof(uap->name->machine) - 1, 0);
+	error = subyte(uap->name->machine + sizeof(uap->name->machine) - 1, 0);
+	if (error)
+		return (EFAULT);
 	return (0);
 }
 

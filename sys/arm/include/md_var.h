@@ -29,7 +29,6 @@
  * SUCH DAMAGE.
  *
  *	from: FreeBSD: src/sys/i386/include/md_var.h,v 1.40 2001/07/12
- * $FreeBSD: c9669d6556bd7d9b2a8f3d757be6d8ce3465f8a1 $
  */
 
 #ifndef	_MACHINE_MD_VAR_H_
@@ -41,16 +40,6 @@ extern int szsigcode;
 extern u_long elf_hwcap;
 extern u_long elf_hwcap2;
 extern vm_paddr_t arm_physmem_kernaddr;
-
-extern int (*_arm_memcpy)(void *, void *, int, int);
-extern int (*_arm_bzero)(void *, int, int);
-
-extern int _min_memcpy_size;
-extern int _min_bzero_size;
-
-#define DST_IS_USER	0x1
-#define SRC_IS_USER	0x2
-#define IS_PHYSICAL	0x4
 
 enum cpu_class {
 	CPU_CLASS_NONE,

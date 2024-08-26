@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2006 Michael Lorenz
  * Copyright 2008 by Nathan Whitehorn
@@ -29,8 +29,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: ae01b9251b111052542038fb7dc944a40eaaf737 $");
-
 #include <sys/param.h>
 #include <sys/systm.h>
 #include <sys/module.h>
@@ -154,11 +152,8 @@ static driver_t pmu_driver = {
 	sizeof(struct pmu_softc),
 };
 
-static devclass_t pmu_devclass;
-
-EARLY_DRIVER_MODULE(pmu, macio, pmu_driver, pmu_devclass, 0, 0,
-    BUS_PASS_RESOURCE);
-DRIVER_MODULE(adb, pmu, adb_driver, adb_devclass, 0, 0);
+EARLY_DRIVER_MODULE(pmu, macio, pmu_driver, 0, 0, BUS_PASS_RESOURCE);
+DRIVER_MODULE(adb, pmu, adb_driver, 0, 0);
 
 static int	pmuextint_probe(device_t);
 static int	pmuextint_attach(device_t);
@@ -176,10 +171,8 @@ static driver_t pmuextint_driver = {
 	0
 };
 
-static devclass_t pmuextint_devclass;
-
-EARLY_DRIVER_MODULE(pmuextint, macgpio, pmuextint_driver, pmuextint_devclass,
-    0, 0, BUS_PASS_RESOURCE);
+EARLY_DRIVER_MODULE(pmuextint, macgpio, pmuextint_driver, 0, 0,
+    BUS_PASS_RESOURCE);
 
 /* Make sure uhid is loaded, as it turns off some of the ADB emulation */
 MODULE_DEPEND(pmu, usb, 1, 1, 1);
@@ -577,9 +570,8 @@ pmu_send_byte(struct pmu_softc *sc, uint8_t data)
 static inline int
 pmu_read_byte(struct pmu_softc *sc, uint8_t *data)
 {
-	volatile uint8_t scratch;
 	pmu_in(sc);
-	scratch = pmu_read_reg(sc, vSR);
+	(void)pmu_read_reg(sc, vSR);
 	pmu_ack_off(sc);
 	/* wait for intr to come up */
 	do {} while (pmu_intr_state(sc) == 0);
@@ -764,7 +756,7 @@ pmu_adb_send(device_t dev, u_char command_byte, int len, u_char *data,
     u_char poll)
 {
 	struct pmu_softc *sc = device_get_softc(dev);
-	int i,replen;
+	int i;
 	uint8_t packet[16], resp[16];
 
 	/* construct an ADB command packet and send it */
@@ -777,7 +769,7 @@ pmu_adb_send(device_t dev, u_char command_byte, int len, u_char *data,
 		packet[i + 3] = data[i];
 
 	mtx_lock(&sc->sc_mutex);
-	replen = pmu_send(sc, PMU_ADB_CMD, len + 3, packet, 16, resp);
+	pmu_send(sc, PMU_ADB_CMD, len + 3, packet, 16, resp);
 	mtx_unlock(&sc->sc_mutex);
 
 	if (poll)
@@ -820,10 +812,12 @@ pmu_shutdown(void *xsc, int howto)
 	struct pmu_softc *sc = xsc;
 	uint8_t cmd[] = {'M', 'A', 'T', 'T'};
 
-	if (howto & RB_HALT)
+	if ((howto & RB_POWEROFF) != 0)
 		pmu_send(sc, PMU_POWER_OFF, 4, cmd, 0, NULL);
-	else
+	else if ((howto & RB_HALT) == 0)
 		pmu_send(sc, PMU_RESET_CPU, 0, NULL, 0, NULL);
+	else
+		return;
 
 	for (;;);
 }
@@ -988,10 +982,8 @@ pmu_battquery_proc(void)
 static int
 pmu_battmon(SYSCTL_HANDLER_ARGS)
 {
-	struct pmu_softc *sc;
 	int error, result;
 
-	sc = arg1;
 	result = pmu_battmon_enabled;
 
 	error = sysctl_handle_int(oidp, &result, 0, req);

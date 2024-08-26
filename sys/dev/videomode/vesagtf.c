@@ -1,5 +1,4 @@
 /* $NetBSD: vesagtf.c,v 1.2 2013/09/15 15:56:07 martin Exp $ */
-/* $FreeBSD: 9398e61b17a3cad84e035e53332f334c6998d9b4 $ */
 
 /*-
  * Copyright (c) 2006 Itronix Inc.
@@ -151,9 +150,6 @@
  */
 
 #ifdef	_KERNEL
-#include <sys/cdefs.h>
-
-__FBSDID("$FreeBSD: 9398e61b17a3cad84e035e53332f334c6998d9b4 $");
 #include <sys/types.h>
 #include <sys/param.h>
 #include <sys/systm.h>

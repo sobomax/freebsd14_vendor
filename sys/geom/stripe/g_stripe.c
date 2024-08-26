@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2004-2005 Pawel Jakub Dawidek <pjd@FreeBSD.org>
  * All rights reserved.
@@ -27,8 +27,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 3ae6a0e3f8718557b205edb4f3cbca830b1e8291 $");
-
 #include <sys/param.h>
 #include <sys/systm.h>
 #include <sys/kernel.h>
@@ -203,7 +201,7 @@ static int
 g_stripe_access(struct g_provider *pp, int dr, int dw, int de)
 {
 	struct g_consumer *cp1, *cp2, *tmp;
-	struct g_stripe_softc *sc;
+	struct g_stripe_softc *sc __diagused;
 	struct g_geom *gp;
 	int error;
 

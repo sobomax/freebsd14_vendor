@@ -1,4 +1,3 @@
-# $FreeBSD: 177ac5880d832f722eee09996749f978bfc32db0 $
 
 KMOD=	mw88W8363fw
 FIRMWS=	mw88W8363.fw:mw88W8363fw mwlboot.fw:mwlboot

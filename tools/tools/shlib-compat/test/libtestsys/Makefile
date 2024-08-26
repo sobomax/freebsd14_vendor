@@ -1,4 +1,3 @@
-# $FreeBSD: 837cfc3b352043fe78838bf5c7ece6cc137f54a3 $
 
 TESTNUM=	sys
 

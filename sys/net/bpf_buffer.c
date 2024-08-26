@@ -64,8 +64,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 60318727ff148b91feefd42d9362e54aa1b6f6bf $");
-
 #include "opt_bpf.h"
 
 #include <sys/param.h>

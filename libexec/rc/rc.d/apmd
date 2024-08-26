@@ -1,6 +1,5 @@
 #!/bin/sh
 #
-# $FreeBSD: 96751000a36f52f5cee559b18ad216efa6263c3c $
 #
 
 # PROVIDE: apmd

@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2005 David Xu <davidxu@freebsd.org>
  * All rights reserved.
@@ -25,8 +25,6 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: 9c35644ecf3dbb385aa2893fa241dc5e41d3ef03 $
- *
  */
 
 #include <sys/cdefs.h>
@@ -42,7 +40,9 @@
 #include "un-namespace.h"
 
 __weak_reference(__aio_read, aio_read);
+__weak_reference(__aio_readv, aio_readv);
 __weak_reference(__aio_write, aio_write);
+__weak_reference(__aio_writev, aio_writev);
 __weak_reference(__aio_return, aio_return);
 __weak_reference(__aio_waitcomplete, aio_waitcomplete);
 __weak_reference(__aio_fsync, aio_fsync);
@@ -51,7 +51,9 @@ __weak_reference(__lio_listio, lio_listio);
 typedef void (*aio_func)(union sigval val, struct aiocb *iocb);
 
 extern int __sys_aio_read(struct aiocb *iocb);
+extern int __sys_aio_readv(struct aiocb *iocb);
 extern int __sys_aio_write(struct aiocb *iocb);
+extern int __sys_aio_writev(struct aiocb *iocb);
 extern ssize_t __sys_aio_waitcomplete(struct aiocb **iocbp, struct timespec *timeout);
 extern ssize_t __sys_aio_return(struct aiocb *iocb);
 extern int __sys_aio_error(struct aiocb *iocb);
@@ -131,10 +133,24 @@ __aio_read(struct aiocb *iocb)
 }
 
 int
+__aio_readv(struct aiocb *iocb)
+{
+
+	return aio_io(iocb, &__sys_aio_readv);
+}
+
+int
 __aio_write(struct aiocb *iocb)
 {
 
 	return aio_io(iocb, &__sys_aio_write);
+}
+
+int
+__aio_writev(struct aiocb *iocb)
+{
+
+	return aio_io(iocb, &__sys_aio_writev);
 }
 
 ssize_t

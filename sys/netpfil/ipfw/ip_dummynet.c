@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Codel/FQ_Codel and PIE/FQ-PIE Code:
  * Copyright (C) 2016 Centre for Advanced Internet Architectures,
@@ -35,8 +35,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: a157b3d928cd2f3c119f8c9574d4e986550c726f $");
-
 /*
  * Configuration and internal object management for dummynet.
  */
@@ -107,6 +105,18 @@ dummynet(void *arg)
 
 	(void)arg;	/* UNUSED */
 	taskqueue_enqueue(dn_tq, &dn_task);
+}
+
+void
+dummynet_sched_lock(void)
+{
+	mtx_lock(&sched_mtx);
+}
+
+void
+dummynet_sched_unlock(void)
+{
+	mtx_unlock(&sched_mtx);
 }
 
 void
@@ -1722,7 +1732,7 @@ config_sched(struct dn_sch *_nsch, struct dn_id *arg)
 	int i;
 	struct dn_link p;	/* copy of oldlink */
 	struct dn_profile *pf = NULL;	/* copy of old link profile */
-	/* Used to preserv mask parameter */
+	/* Used to preserve mask parameter */
 	struct ipfw_flow_id new_mask;
 	int new_buckets = 0;
 	int new_flags = 0;
@@ -2550,7 +2560,7 @@ ip_dn_vnet_init(void)
 {
 	if (V_dn_cfg.init_done)
 		return;
-	V_dn_cfg.init_done = 1;
+
 	/* Set defaults here. MSVC does not accept initializers,
 	 * and this is also useful for vimages
 	 */
@@ -2589,6 +2599,8 @@ ip_dn_vnet_init(void)
 
 	/* Initialize curr_time adjustment mechanics. */
 	getmicrouptime(&V_dn_cfg.prev_t);
+
+	V_dn_cfg.init_done = 1;
 }
 
 static void
@@ -2737,7 +2749,6 @@ static moduledata_t dummynet_mod = {
 #define	DN_SI_SUB	SI_SUB_PROTO_FIREWALL
 #define	DN_MODEV_ORD	(SI_ORDER_ANY - 128) /* after ipfw */
 DECLARE_MODULE(dummynet, dummynet_mod, DN_SI_SUB, DN_MODEV_ORD);
-MODULE_DEPEND(dummynet, ipfw, 3, 3, 3);
 MODULE_VERSION(dummynet, 3);
 
 /*

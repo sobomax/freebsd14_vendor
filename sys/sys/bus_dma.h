@@ -1,7 +1,7 @@
 /*	$NetBSD: bus.h,v 1.12 1997/10/01 08:25:15 fvdl Exp $	*/
 
 /*-
- * SPDX-License-Identifier: (BSD-2-Clause-NetBSD AND BSD-4-Clause)
+ * SPDX-License-Identifier: (BSD-2-Clause AND BSD-4-Clause)
  *
  * Copyright (c) 1996, 1997 The NetBSD Foundation, Inc.
  * All rights reserved.
@@ -62,7 +62,6 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-/* $FreeBSD: 7eac96b5af1ea4476bbaee6dc97e7b5f8996b519 $ */
 
 #ifndef _BUS_DMA_H_
 #define _BUS_DMA_H_
@@ -148,6 +147,11 @@ typedef int bus_dma_filter_t(void *, bus_addr_t);
  * Generic helper function for manipulating mutexes.
  */
 void busdma_lock_mutex(void *arg, bus_dma_lock_op_t op);
+
+/*
+ * Internal helper function used by tags that do not defer loads.
+ */
+void _busdma_dflt_lock(void *arg, bus_dma_lock_op_t op);
 
 /*
  * Allocate a device specific dma_tag encapsulating the constraints of

@@ -1,4 +1,3 @@
-# $FreeBSD: df4852f0b8ac6763824d3e90c97e4746f1fb105c $
 set -e
 trap 'echo Broken pipe -- test failed' PIPE
 

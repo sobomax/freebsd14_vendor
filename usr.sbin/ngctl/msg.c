@@ -38,8 +38,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 38f0db704927cbbaddddd3b543c4bf8bb175caa2 $");
-
 #include <err.h>
 #include <netgraph.h>
 #include <stdio.h>

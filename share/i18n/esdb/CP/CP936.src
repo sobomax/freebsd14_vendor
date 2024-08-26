@@ -1,4 +1,3 @@
-# $FreeBSD: a0ec63bf67e635c98d738740a636c3419a52216c $ 
 # $NetBSD: CP936.src,v 1.2 2006/08/19 10:58:41 tnozaki Exp $
 
 NAME		"CP936"

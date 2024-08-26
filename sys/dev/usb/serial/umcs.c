@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2010 Lev Serebryakov <lev@FreeBSD.org>.
  * All rights reserved.
@@ -40,8 +40,6 @@
  *
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 06480509c576f23ed6113d81514d03da3f2dfeef $");
-
 #include <sys/stdint.h>
 #include <sys/stddef.h>
 #include <sys/param.h>
@@ -268,15 +266,13 @@ static device_method_t umcs7840_methods[] = {
 	DEVMETHOD_END
 };
 
-static devclass_t umcs7840_devclass;
-
 static driver_t umcs7840_driver = {
 	.name = "umcs7840",
 	.methods = umcs7840_methods,
 	.size = sizeof(struct umcs7840_softc),
 };
 
-DRIVER_MODULE(umcs7840, uhub, umcs7840_driver, umcs7840_devclass, 0, 0);
+DRIVER_MODULE(umcs7840, uhub, umcs7840_driver, 0, 0);
 MODULE_DEPEND(umcs7840, ucom, 1, 1, 1);
 MODULE_DEPEND(umcs7840, usb, 1, 1, 1);
 MODULE_VERSION(umcs7840, UMCS7840_MODVER);
@@ -1051,7 +1047,7 @@ umcs7840_set_baudrate(struct umcs7840_softc *sc, uint8_t portno, uint32_t rate)
 	}
 	DPRINTF("Port %d set speed: %d (%02x / %d)\n", portno, rate, clk, divisor);
 
-	/* Set clock source for standard BAUD frequences */
+	/* Set clock source for standard BAUD frequencies */
 	err = umcs7840_get_reg_sync(sc, umcs7840_port_registers[portno].reg_sp, &data);
 	if (err)
 		return (err);
@@ -1082,7 +1078,7 @@ umcs7840_set_baudrate(struct umcs7840_softc *sc, uint8_t portno, uint32_t rate)
 	return (0);
 }
 
-/* Maximum speeds for standard frequences, when PLL is not used */
+/* Maximum speeds for standard frequencies, when PLL is not used */
 static const uint32_t umcs7840_baudrate_divisors[] = {0, 115200, 230400, 403200, 460800, 806400, 921600, 1572864, 3145728,};
 static const uint8_t umcs7840_baudrate_divisors_len = nitems(umcs7840_baudrate_divisors);
 

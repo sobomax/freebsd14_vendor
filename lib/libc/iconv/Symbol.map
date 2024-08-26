@@ -1,7 +1,3 @@
-/*
- * $FreeBSD: 8a9a75d519ed5a456edf9992899a8ac760179eed $
- */
-
 FBSD_1.3 {
 	__bsd___iconv;
 	__bsd___iconv_free_list;

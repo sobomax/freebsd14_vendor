@@ -28,9 +28,6 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 8957fce51a6f094da5de96976da136ea96ebbdc1 $");
-
 #include <sys/param.h>
 #include <sys/time.h>
 #include <sys/socket.h>

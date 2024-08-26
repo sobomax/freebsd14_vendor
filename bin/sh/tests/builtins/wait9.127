@@ -1,3 +1,2 @@
-# $FreeBSD: 661f275421f84244bd050cb4a710704ab60edc32 $
 # Init cannot be a child of the shell.
 wait 1

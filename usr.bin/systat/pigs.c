@@ -36,8 +36,6 @@ static char sccsid[] = "@(#)pigs.c	8.2 (Berkeley) 9/23/93";
 #endif
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: d9f3f8d4ad1487016b47fa872baced937382d7b7 $");
-
 /*
  * Pigs display from Bill Reeves at Lucasfilm
  */
@@ -62,7 +60,7 @@ static int nproc;
 static struct p_times {
 	float pt_pctcpu;
 	struct kinfo_proc *pt_kp;
-} *pt;
+} *pt = NULL;
 
 static int    fscale;
 static double  lccpu;
@@ -90,7 +88,7 @@ showpigs(void)
 	const char *uname, *pname;
 	char pidname[30];
 
-	if (pt == NULL)
+	if (nproc == 0)
 		return;
 
 	qsort(pt, nproc, sizeof (struct p_times), compar);
@@ -146,23 +144,20 @@ fetchpigs(void)
 	float ftime;
 	float *pctp;
 	struct kinfo_proc *kpp;
-	static int lastnproc = 0;
+	static int maxnproc = 0;
 
 	if ((kpp = kvm_getprocs(kd, KERN_PROC_ALL, 0, &nproc)) == NULL) {
 		error("%s", kvm_geterr(kd));
-		if (pt)
-			free(pt);
+		nproc = 0;
 		return;
 	}
-	if (nproc > lastnproc) {
-		free(pt);
-		if ((pt =
-		    malloc(nproc * sizeof(struct p_times))) == NULL) {
+	if (nproc > maxnproc) {
+		if ((pt = realloc(pt, nproc * sizeof(*pt))) == NULL) {
 			error("Out of memory");
 			die(0);
 		}
+		maxnproc = nproc;
 	}
-	lastnproc = nproc;
 	/*
 	 * calculate %cpu for each proc
 	 */

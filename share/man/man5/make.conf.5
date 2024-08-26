@@ -22,9 +22,7 @@
 .\" OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 .\" SUCH DAMAGE.
 .\"
-.\" $FreeBSD: b8bb71ddc165e19e14c73736423b372af74b9535 $
-.\"
-.Dd June 11, 2021
+.Dd November 15, 2022
 .Dt MAKE.CONF 5
 .Os
 .Sh NAME
@@ -385,7 +383,7 @@ for which section 4 man pages will be installed.
 The special value
 .Sq all
 installs all available architectures.
-The default is the MACHINE and MACHINE_ARCH being built.
+It is also the default value.
 .It Va MODULES_WITH_WORLD
 .Pq Vt bool
 Set to build modules with the system instead of the kernel.
@@ -573,11 +571,7 @@ The script used by
 to start, stop, and restart
 .Xr sendmail 8 .
 The default value is
-.Pa /etc/rc.sendmail .
-This value should match the
-.Dq Li mta_start_script
-setting in
-.Xr rc.conf 5 .
+.Pa /etc/rc.d/sendmail .
 .It Va SENDMAIL_SUBMIT_MC
 .Pq Vt str
 The default
@@ -613,20 +607,16 @@ The value assigned is the highest optimization value used.
 The following list provides a name and short description for variables
 that are used when building documentation.
 .Bl -tag -width ".Va PRINTERDEVICE"
-.It Va DISTDIR
-.Pq Vt str
-Where distfiles are kept.
-Normally, this is
-.Pa distfiles
-in
-.Va PORTSDIR .
 .It Va DOC_LANG
 .Pq Vt str
-The list of languages and encodings to build and install.
+The list of languages to build and install when building documentation
+in
+.Pa /usr/doc .
 .It Va PRINTERDEVICE
 .Pq Vt str
-The default format for system documentation, depends on your
-printer.
+The default format for system documentation in
+.Pa /usr/src/share/doc ,
+depends on your printer.
 This can be set to
 .Dq Li ascii
 for simple printers, or

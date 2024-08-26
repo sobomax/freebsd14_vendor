@@ -1,5 +1,5 @@
 #
-# SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+# SPDX-License-Identifier: BSD-2-Clause
 #
 # Copyright 2016 Baptiste Daroussin <bapt@FreeBSD.org>
 #
@@ -24,7 +24,6 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: d02f1c49a6af1d64e72f7e986d805b1ab4a9c74a $
 
 BEGIN {
 	print "# Warning: Do not edit. This is automatically extracted"

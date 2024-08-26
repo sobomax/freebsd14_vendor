@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2006 Bernd Walter.  All rights reserved.
  * Copyright (c) 2006 M. Warner Losh <imp@FreeBSD.org>
@@ -54,8 +54,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 3f3c65289d480a9270a2d84f232c116f1cebb605 $");
-
 #include <sys/param.h>
 #include <sys/systm.h>
 #include <sys/bio.h>
@@ -86,11 +84,6 @@ __FBSDID("$FreeBSD: 3f3c65289d480a9270a2d84f232c116f1cebb605 $");
 #include <dev/mmc/mmcvar.h>
 
 #include "mmcbus_if.h"
-
-#if __FreeBSD_version < 800002
-#define	kproc_create	kthread_create
-#define	kproc_exit	kthread_exit
-#endif
 
 #define	MMCSD_CMD_RETRIES	5
 
@@ -1553,7 +1546,6 @@ static driver_t mmcsd_driver = {
 	mmcsd_methods,
 	sizeof(struct mmcsd_softc),
 };
-static devclass_t mmcsd_devclass;
 
 static int
 mmcsd_handler(module_t mod __unused, int what, void *arg __unused)
@@ -1571,6 +1563,6 @@ mmcsd_handler(module_t mod __unused, int what, void *arg __unused)
 	return (0);
 }
 
-DRIVER_MODULE(mmcsd, mmc, mmcsd_driver, mmcsd_devclass, mmcsd_handler, NULL);
+DRIVER_MODULE(mmcsd, mmc, mmcsd_driver, mmcsd_handler, NULL);
 MODULE_DEPEND(mmcsd, g_flashmap, 0, 0, 0);
 MMC_DEPEND(mmcsd);

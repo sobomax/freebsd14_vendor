@@ -35,8 +35,6 @@
 .\" IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 .\"
 .\"	@(#)m.mac	8.1 (Berkeley) 8/14/93
-.\"
-.\" $FreeBSD: 6e68c4ee7983cb4613e0e8e140743b86ae7b82f6 $
 .if \n(mo=1 .ds mo January
 .if \n(mo=2 .ds mo February
 .if \n(mo=3 .ds mo March

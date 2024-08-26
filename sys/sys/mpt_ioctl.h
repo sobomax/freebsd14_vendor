@@ -30,8 +30,6 @@
  * SUCH DAMAGE.
  *
  * LSI MPT-Fusion Host Adapter FreeBSD userland interface
- *
- * $FreeBSD: 527334594faf57d3e0672006f3c4089ed280db2e $
  */
 
 #ifndef _MPT_IOCTL_H_

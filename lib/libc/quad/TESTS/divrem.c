@@ -42,9 +42,6 @@ static char copyright[] =
 #if defined(LIBC_SCCS) && !defined(lint)
 static char sccsid[] = "@(#)divrem.c	8.1 (Berkeley) 6/4/93";
 #endif /* LIBC_SCCS and not lint */
-#include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 74011bf55b5e26da4b8e9083751dd97573e85081 $");
-
 #include <stdio.h>
 
 main()

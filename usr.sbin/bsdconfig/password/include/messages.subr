@@ -22,7 +22,6 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: 655160de0724485acc41ac743bf6a8740a2a5f35 $
 
 hline_alnum_punc_tab_enter="Use alpha-numeric, punctuation, TAB or ENTER"
 msg_cancel="Cancel"

@@ -1,6 +1,5 @@
 /*
  * $NetBSD: rpcb_svc_4.c,v 1.1 2000/06/02 23:15:41 fvdl Exp $
- * $FreeBSD: b6ee61771edf3fb96108bd9cab691794b2cae308 $
  */
 
 /*-
@@ -245,7 +244,6 @@ done:
 			}
 		}
 	}
-	return;
 }
 
 /*

@@ -1,4 +1,3 @@
-# $FreeBSD: 9bdd4874fb20337895aab6847ea7e0e75a4a36f4 $
 
 VOLUME=		papers
 DOC=		bio

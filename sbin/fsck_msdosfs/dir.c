@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2019 Google LLC
  * Copyright (C) 1995, 1996, 1997 Wolfgang Solfrank
@@ -32,8 +32,6 @@
 #include <sys/cdefs.h>
 #ifndef lint
 __RCSID("$NetBSD: dir.c,v 1.20 2006/06/05 16:51:18 christos Exp $");
-static const char rcsid[] =
-  "$FreeBSD: 471f6cc0335e40d3cecf93c215b23086e40f1b27 $";
 #endif /* not lint */
 
 #include <assert.h>
@@ -400,8 +398,21 @@ checksize(struct fat_descriptor *fat, u_char *p, struct dosDirEntry *dir)
 	if (dir->head == CLUST_FREE) {
 		physicalSize = 0;
 	} else {
-		if (!fat_is_valid_cl(fat, dir->head))
-			return FSERROR;
+		if (!fat_is_valid_cl(fat, dir->head) || !fat_is_cl_head(fat, dir->head)) {
+			pwarn("Directory entry %s of size %u referencing invalid cluster %u\n",
+			    fullpath(dir), dir->size, dir->head);
+			if (ask(1, "Truncate")) {
+				p[28] = p[29] = p[30] = p[31] = 0;
+				p[26] = p[27] = 0;
+				if (boot->ClustMask == CLUST32_MASK)
+					p[20] = p[21] = 0;
+				dir->size = 0;
+				dir->head = CLUST_FREE;
+				return FSDIRMOD;
+			} else {
+				return FSERROR;
+			}
+		}
 		ret = checkchain(fat, dir->head, &chainsize);
 		/*
 		 * Upon return, chainsize would hold the chain length
@@ -984,7 +995,7 @@ readDosDirSection(struct fat_descriptor *fat, struct dosDirEntry *dir)
 				n->next = pendingDirectories;
 				n->dir = d;
 				pendingDirectories = n;
-			} else {
+			} else if (!(mod & FSERROR)) {
 				mod |= k = checksize(fat, p, &dirent);
 				if (k & FSDIRMOD)
 					mod |= THISMOD;

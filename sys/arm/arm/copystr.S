@@ -41,8 +41,6 @@
 #include "assym.inc"
 #include <machine/asm.h>
 #include <machine/armreg.h>
-__FBSDID("$FreeBSD: b1237ceccd396bc58ac493a8d0d2f3cd5670e47f $");
-
 #include <sys/errno.h>
 
 	.text

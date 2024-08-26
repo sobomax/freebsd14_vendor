@@ -1,10 +1,10 @@
-#	$FreeBSD: 622952be04778eb431d28f3a32d5aefb64e38f9d $
 
 PACKAGE=	ipf
 PROG=		ippool
 SRCS=		${GENHDRS} ippool_y.c ippool_l.c ippool.c
 MAN=		ippool.5 ippool.8
 CFLAGS+=	-I.
+CFLAGS+=	-Wno-error=unused-but-set-variable
 
 GENHDRS=	ippool_l.h ippool_y.h
 CLEANFILES+=	${GENHDRS} ippool_y.c ippool_l.c

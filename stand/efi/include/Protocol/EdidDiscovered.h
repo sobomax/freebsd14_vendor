@@ -1,4 +1,3 @@
-/* $FreeBSD: a521e90d00562609e993f71736b4ea75757d1d92 $ */
 /** @file
   EDID Discovered Protocol from the UEFI 2.0 specification.
 

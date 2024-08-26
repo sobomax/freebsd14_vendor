@@ -1,4 +1,3 @@
-# $FreeBSD: 60c59c0ea929a3185978f3098f9ef0d66de9b421 $
 
 LIB_CXX=	devdctl
 INCS=	consumer.h		\
@@ -18,8 +17,8 @@ WARNS?=	3
 PRIVATELIB=	true
 SHLIB_MAJOR=	0
 
-# Silence warnings about usage of deprecated std::auto_ptr, and various
-# deprecated function objects from <functional>
+# Silence warnings about usage of various deprecated function objects
+# from <functional>
 CXXWARNFLAGS+=	-Wno-deprecated-declarations
 
 .include <bsd.lib.mk>

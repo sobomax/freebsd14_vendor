@@ -1,5 +1,4 @@
 #
-# $FreeBSD: cb8acf31f650edca1e57848509c786e41f4bb907 $
 #
 
 JABBERWOCKY

@@ -23,7 +23,6 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: 70838cd1042b5b62cdc10dd529e7bd063d2b7bd9 $
 #
 
 #include <sys/bus.h>
@@ -85,7 +84,7 @@ METHOD int pin_max {
 };
 
 #
-# Set value of pin specifed by pin_num 
+# Set value of pin specified by pin_num 
 #
 METHOD int pin_set {
 	device_t dev;
@@ -94,7 +93,7 @@ METHOD int pin_set {
 };
 
 #
-# Get value of pin specifed by pin_num 
+# Get value of pin specified by pin_num 
 #
 METHOD int pin_get {
 	device_t dev;
@@ -103,7 +102,7 @@ METHOD int pin_get {
 };
 
 #
-# Toggle value of pin specifed by pin_num 
+# Toggle value of pin specified by pin_num 
 #
 METHOD int pin_toggle {
 	device_t dev;

@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2004, 2008, 2009 Silicon Graphics International Corp.
  * Copyright (c) 2017 Alexander Motin <mav@FreeBSD.org>
@@ -39,8 +39,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: d607ab9f4523e374189b08d39dc0b675953eaae7 $");
-
 #include <sys/param.h>
 #include <sys/callout.h>
 #include <sys/ioctl.h>

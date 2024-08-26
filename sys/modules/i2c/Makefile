@@ -1,4 +1,3 @@
-# $FreeBSD: 9fea714975f7181725ec618b39698bb30a89b35e $
 
 SUBDIR = \
 	ads111x \
@@ -29,8 +28,11 @@ SUBDIR = \
 	smbus \
 
 .if !empty(OPT_FDT)
-SUBDIR += tca6416 \
-	  rx8803
+SUBDIR += hym8563 \
+	  rv3032 \
+	  rx8803 \
+	  tca64xx \
+	  tmp461
 .endif
 
 .if ${MACHINE_CPUARCH} == "aarch64" || ${MACHINE_CPUARCH} == "amd64" || \

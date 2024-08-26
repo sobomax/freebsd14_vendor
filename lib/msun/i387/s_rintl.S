@@ -34,8 +34,6 @@
  */
 
 #include <machine/asm.h>
-__FBSDID("$FreeBSD: 8be8d96ebcdbf800d9afc4bc4aada0265eb0a81a $")
-
 ENTRY(rintl)
 	fldt	4(%esp)
 	frndint

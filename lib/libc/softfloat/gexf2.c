@@ -8,9 +8,6 @@
 #include "milieu.h"
 #include "softfloat.h"
 
-#include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 70cf1c32d7ec5917aa320e1956fb5ea1e77f8546 $");
-
 #ifdef FLOATX80
 
 flag __gexf2(floatx80, floatx80);

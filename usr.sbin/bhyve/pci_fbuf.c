@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2015 Nahanni Systems, Inc.
  * All rights reserved.
@@ -24,13 +24,9 @@
  * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
- *
- * $FreeBSD: 91215a124c5931e375b74f6d8cba1dd34b761eda $
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 91215a124c5931e375b74f6d8cba1dd34b761eda $");
-
 #include <sys/types.h>
 #include <sys/mman.h>
 
@@ -50,10 +46,11 @@ __FBSDID("$FreeBSD: 91215a124c5931e375b74f6d8cba1dd34b761eda $");
 #include "config.h"
 #include "debug.h"
 #include "console.h"
-#include "inout.h"
 #include "pci_emul.h"
 #include "rfb.h"
-#include "vga.h"
+#ifdef __amd64__
+#include "amd64/vga.h"
+#endif
 
 /*
  * bhyve Framebuffer device emulation.
@@ -365,8 +362,6 @@ pci_fbuf_render(struct bhyvegc *gc, void *arg)
 		sc->gc_width = sc->memregs.width;
 		sc->gc_height = sc->memregs.height;
 	}
-
-	return;
 }
 
 static int

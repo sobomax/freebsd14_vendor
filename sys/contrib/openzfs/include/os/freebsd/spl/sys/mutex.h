@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: e757d12c15020b23eadc903c30086276b9fe2e34 $
+ * $FreeBSD: 8cfe56c753090f6b448c47cdf30991833309ffb2 $
  */
 
 #ifndef _OPENSOLARIS_SYS_MUTEX_H_
@@ -64,6 +64,7 @@ typedef enum {
 } while (0)
 #define	mutex_destroy(lock)	sx_destroy(lock)
 #define	mutex_enter(lock)	sx_xlock(lock)
+#define	mutex_enter_interruptible(lock)	sx_xlock_sig(lock)
 #define	mutex_enter_nested(lock, type)	sx_xlock(lock)
 #define	mutex_tryenter(lock)	sx_try_xlock(lock)
 #define	mutex_exit(lock)	sx_xunlock(lock)

@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2013 The FreeBSD Foundation
  *
@@ -29,8 +29,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 99960daa3219a60f2150a67a6e5feab41d559132 $");
-
 #include <sys/param.h>
 #include <sys/systm.h>
 #include <sys/domainset.h>
@@ -43,6 +41,7 @@ __FBSDID("$FreeBSD: 99960daa3219a60f2150a67a6e5feab41d559132 $");
 #include <sys/lock.h>
 #include <sys/proc.h>
 #include <sys/memdesc.h>
+#include <sys/msan.h>
 #include <sys/mutex.h>
 #include <sys/sysctl.h>
 #include <sys/rman.h>
@@ -518,7 +517,7 @@ iommu_bus_dmamem_alloc(bus_dma_tag_t dmat, void** vaddr, int flags,
 		    DOMAINSET_PREF(tag->common.domain), mflags);
 		map->flags |= BUS_DMAMAP_IOMMU_MALLOC;
 	} else {
-		*vaddr = (void *)kmem_alloc_attr_domainset(
+		*vaddr = kmem_alloc_attr_domainset(
 		    DOMAINSET_PREF(tag->common.domain), tag->common.maxsize,
 		    mflags, 0ul, BUS_SPACE_MAXADDR, attr);
 		map->flags |= BUS_DMAMAP_IOMMU_KMEM_ALLOC;
@@ -546,7 +545,7 @@ iommu_bus_dmamem_free(bus_dma_tag_t dmat, void *vaddr, bus_dmamap_t map1)
 	} else {
 		KASSERT((map->flags & BUS_DMAMAP_IOMMU_KMEM_ALLOC) != 0,
 		    ("iommu_bus_dmamem_free for non alloced map %p", map));
-		kmem_free((vm_offset_t)vaddr, tag->common.maxsize);
+		kmem_free(vaddr, tag->common.maxsize);
 		map->flags &= ~BUS_DMAMAP_IOMMU_KMEM_ALLOC;
 	}
 
@@ -886,10 +885,27 @@ iommu_bus_dmamap_unload(bus_dma_tag_t dmat, bus_dmamap_t map1)
 }
 
 static void
-iommu_bus_dmamap_sync(bus_dma_tag_t dmat, bus_dmamap_t map,
+iommu_bus_dmamap_sync(bus_dma_tag_t dmat, bus_dmamap_t map1,
     bus_dmasync_op_t op)
 {
+	struct bus_dmamap_iommu *map __unused;
+
+	map = (struct bus_dmamap_iommu *)map1;
+	kmsan_bus_dmamap_sync(&map->kmsan_mem, op);
 }
+
+#ifdef KMSAN
+static void
+iommu_bus_dmamap_load_kmsan(bus_dmamap_t map1, struct memdesc *mem)
+{
+	struct bus_dmamap_iommu *map;
+
+	map = (struct bus_dmamap_iommu *)map1;
+	if (map == NULL)
+		return;
+	memcpy(&map->kmsan_mem, mem, sizeof(struct memdesc));
+}
+#endif
 
 struct bus_dma_impl bus_dma_iommu_impl = {
 	.tag_create = iommu_bus_dma_tag_create,
@@ -907,6 +923,9 @@ struct bus_dma_impl bus_dma_iommu_impl = {
 	.map_complete = iommu_bus_dmamap_complete,
 	.map_unload = iommu_bus_dmamap_unload,
 	.map_sync = iommu_bus_dmamap_sync,
+#ifdef KMSAN
+	.load_kmsan = iommu_bus_dmamap_load_kmsan,
+#endif
 };
 
 static void

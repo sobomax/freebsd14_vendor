@@ -1,4 +1,3 @@
-# $FreeBSD: 3287bcf3ebd1ce666e5a3a9c2d432b7b8111bbe4 $
 
 PROG=	lzmainfo
 

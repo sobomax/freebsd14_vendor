@@ -34,8 +34,6 @@
 
 #include <sys/cdefs.h>
 __SCCSID("@(#)crypt.c	5.11 (Berkeley) 6/25/91");
-__FBSDID("$FreeBSD: 7995196ef234f67b829b2820c9474a80c95371dc $");
-
 #include <stdio.h>
 #include <string.h>
 #include <unistd.h>

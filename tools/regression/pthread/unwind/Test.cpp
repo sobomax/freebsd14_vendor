@@ -1,4 +1,3 @@
-/* $FreeBSD: 46e451c390b6e128c7b647856ec793383189e41e $ */
 
 static int destructed;
 static int destructed2;

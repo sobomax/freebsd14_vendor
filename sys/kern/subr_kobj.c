@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2000,2003 Doug Rabson
  * All rights reserved.
@@ -27,8 +27,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: d001450cba6f98a7e8332f17785bb289c48ff258 $");
-
 #include <sys/param.h>
 #include <sys/kernel.h>
 #include <sys/kobj.h>
@@ -112,7 +110,7 @@ kobj_class_compile_common(kobj_class_t cls, kobj_ops_t ops)
 	/*
 	 * First register any methods which need it.
 	 */
-	for (i = 0, m = cls->methods; m->desc; i++, m++) {
+	for (m = cls->methods; m->desc; m++) {
 		if (m->desc->id == 0)
 			m->desc->id = kobj_next_id++;
 	}
@@ -156,7 +154,7 @@ kobj_class_compile1(kobj_class_t cls, int mflags)
 void
 kobj_class_compile(kobj_class_t cls)
 {
-	int error;
+	int error __diagused;
 
 	error = kobj_class_compile1(cls, M_WAITOK);
 	KASSERT(error == 0, ("kobj_class_compile1 returned %d", error));

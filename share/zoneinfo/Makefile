@@ -1,4 +1,3 @@
-# $FreeBSD: e93d30e0fcaa045fc56e3dca3547bd9da95aa83c $
 
 #
 # HOW TO UPDATE THE ZONEINFO DATA
@@ -29,6 +28,12 @@
 #   (write a meaningful commit message)
 # $ git push freebsd HEAD:stable/12
 #
+#
+# If there are changes to zone1970.tab, update the baseline file by running
+# `make baseline` in usr.sbin/tzsetup to check if tzsetup is able to parse new
+# contents (if not, report/fix tzsetup).  Check that update does not
+# introduce breaking/unexpected changes to continents/countries/zones,
+# and commit the updated baseline file.
 
 .include <src.opts.mk>
 
@@ -38,7 +43,7 @@ CONTRIBDIR=	${SRCTOP}/contrib/tzdata/
 .PATH:		${CONTRIBDIR}
 
 .if defined(LEAPSECONDS)
-.warning "Using backwards compatibility variable for LEAPSECONDS; please use WITH_ZONEINFO_LEAPSECONDS_SUPPORT instead"
+.warning Using backwards compatibility variable for LEAPSECONDS; please use WITH_ZONEINFO_LEAPSECONDS_SUPPORT instead
 MK_ZONEINFO_LEAPSECONDS_SUPPORT= yes
 .endif
 
@@ -82,11 +87,15 @@ META_TARGETS+=	zoneinfo install-zoneinfo
 #
 ZICFLAGS?=	-b fat
 
+.if ${MK_DIRDEPS_BUILD} == "yes"
+ZIC= ${STAGE_HOST_OBJTOP}/usr/sbin/zic
+.endif
+
 zoneinfo: ${TDATA}
 	mkdir -p ${TZBUILDDIR}
 	cd ${TZBUILDDIR}; mkdir -p ${TZBUILDSUBDIRS}
 	umask 022; cd ${.CURDIR}; \
-	zic -D -d ${TZBUILDDIR} ${ZICFLAGS} -m ${NOBINMODE} \
+	${ZIC:Uzic} -D -d ${TZBUILDDIR} ${ZICFLAGS} -m ${NOBINMODE} \
 	    ${LEAPFILE} ${TZFILES}
 
 #

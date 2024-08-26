@@ -29,8 +29,6 @@
  * THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- *
- * $FreeBSD: ced13faffcf0be9c8f850f6613e26b315890c4ac $
  */
 #ifndef	_LINUXKPI_LINUX_DEVICE_H_
 #define	_LINUXKPI_LINUX_DEVICE_H_
@@ -48,13 +46,13 @@
 #include <linux/pm.h>
 #include <linux/idr.h>
 #include <linux/ratelimit.h>	/* via linux/dev_printk.h */
+#include <linux/fwnode.h>
 #include <asm/atomic.h>
 
 #include <sys/bus.h>
 #include <sys/backlight.h>
 
 struct device;
-struct fwnode_handle;
 
 struct class {
 	const char	*name;
@@ -70,6 +68,7 @@ struct class {
 
 struct dev_pm_ops {
 	int (*prepare)(struct device *dev);
+	void (*complete)(struct device *dev);
 	int (*suspend)(struct device *dev);
 	int (*suspend_late)(struct device *dev);
 	int (*resume)(struct device *dev);
@@ -127,6 +126,8 @@ struct device {
 
 	spinlock_t	devres_lock;
 	struct list_head devres_head;
+
+	struct dev_pm_info	power;
 };
 
 extern struct device linux_root_device;
@@ -186,15 +187,31 @@ show_class_attr_string(struct class *class,
 	struct class_attribute_string class_attr_##_name = \
 		_CLASS_ATTR_STRING(_name, _mode, _str)
 
-#define	dev_err(dev, fmt, ...)	device_printf((dev)->bsddev, fmt, ##__VA_ARGS__)
-#define	dev_crit(dev, fmt, ...)	device_printf((dev)->bsddev, fmt, ##__VA_ARGS__)
-#define	dev_warn(dev, fmt, ...)	device_printf((dev)->bsddev, fmt, ##__VA_ARGS__)
-#define	dev_info(dev, fmt, ...)	device_printf((dev)->bsddev, fmt, ##__VA_ARGS__)
-#define	dev_notice(dev, fmt, ...)	device_printf((dev)->bsddev, fmt, ##__VA_ARGS__)
-#define	dev_emerg(dev, fmt, ...)	device_printf((dev)->bsddev, fmt, ##__VA_ARGS__)
-#define	dev_dbg(dev, fmt, ...)	do { } while (0)
 #define	dev_printk(lvl, dev, fmt, ...)					\
-	    device_printf((dev)->bsddev, fmt, ##__VA_ARGS__)
+    device_printf((dev)->bsddev, fmt, ##__VA_ARGS__)
+
+#define	dev_emerg(dev, fmt, ...)	device_printf((dev)->bsddev, fmt, ##__VA_ARGS__)
+#define	dev_alert(dev, fmt, ...)	device_printf((dev)->bsddev, fmt, ##__VA_ARGS__)
+#define	dev_crit(dev, fmt, ...)		device_printf((dev)->bsddev, fmt, ##__VA_ARGS__)
+#define	dev_err(dev, fmt, ...)		device_printf((dev)->bsddev, fmt, ##__VA_ARGS__)
+#define	dev_warn(dev, fmt, ...)		device_printf((dev)->bsddev, fmt, ##__VA_ARGS__)
+#define	dev_notice(dev, fmt, ...)	device_printf((dev)->bsddev, fmt, ##__VA_ARGS__)
+#define	dev_info(dev, fmt, ...)		device_printf((dev)->bsddev, fmt, ##__VA_ARGS__)
+#define	dev_dbg(dev, fmt, ...)		do { } while (0)
+
+#define	dev_WARN(dev, fmt, ...)	\
+    device_printf((dev)->bsddev, "%s:%d: " fmt, __func__, __LINE__, ##__VA_ARGS__)
+
+#define	dev_WARN_ONCE(dev, condition, fmt, ...) do {		\
+	static bool __dev_WARN_ONCE;				\
+	bool __ret_warn_on = (condition);			\
+	if (unlikely(__ret_warn_on)) {				\
+		if (!__dev_WARN_ONCE) {				\
+			__dev_WARN_ONCE = true;			\
+			device_printf((dev)->bsddev, "%s:%d: " fmt, __func__, __LINE__, ##__VA_ARGS__); \
+		}						\
+	}							\
+} while (0)
 
 #define dev_info_once(dev, ...) do {		\
 	static bool __dev_info_once;		\
@@ -220,6 +237,14 @@ show_class_attr_string(struct class *class,
 	}					\
 } while (0)
 
+#define	dev_dbg_once(dev, ...) do {		\
+	static bool __dev_dbg_once;		\
+	if (!__dev_dbg_once) {			\
+		__dev_dbg_once = 1;		\
+		dev_dbg(dev, __VA_ARGS__);	\
+	}					\
+} while (0)
+
 #define	dev_err_ratelimited(dev, ...) do {	\
 	static linux_ratelimit_t __ratelimited;	\
 	if (linux_ratelimited(&__ratelimited))	\
@@ -230,6 +255,12 @@ show_class_attr_string(struct class *class,
 	static linux_ratelimit_t __ratelimited;	\
 	if (linux_ratelimited(&__ratelimited))	\
 		dev_warn(dev, __VA_ARGS__);	\
+} while (0)
+
+#define	dev_dbg_ratelimited(dev, ...) do {	\
+	static linux_ratelimit_t __ratelimited;	\
+	if (linux_ratelimited(&__ratelimited))	\
+		dev_dbg(dev, __VA_ARGS__);	\
 } while (0)
 
 /* Public and LinuxKPI internal devres functions. */
@@ -250,6 +281,7 @@ int lkpi_devres_destroy(struct device *, void(*release)(struct device *, void *)
 void lkpi_devres_release_free_list(struct device *);
 void lkpi_devres_unlink(struct device *, void *);
 void lkpi_devm_kmalloc_release(struct device *, void *);
+#define	devm_kfree(_d, _p)		lkpi_devm_kmalloc_release(_d, _p)
 
 static inline const char *
 dev_driver_string(const struct device *dev)
@@ -516,10 +548,10 @@ device_release_driver(struct device *dev)
 	dev_set_drvdata(dev, NULL);
 	/* Do not call dev->release! */
 
-	mtx_lock(&Giant);
+	bus_topo_lock();
 	if (device_is_attached(dev->bsddev))
 		device_detach(dev->bsddev);
-	mtx_unlock(&Giant);
+	bus_topo_unlock();
 #endif
 }
 
@@ -529,9 +561,9 @@ device_reprobe(struct device *dev)
 	int error;
 
 	device_release_driver(dev);
-	mtx_lock(&Giant);
+	bus_topo_lock();
 	error = device_probe_and_attach(dev->bsddev);
-	mtx_unlock(&Giant);
+	bus_topo_unlock();
 
 	return (-error);
 }
@@ -552,6 +584,12 @@ device_wakeup_enable(struct device *dev)
 
 	device_set_wakeup_enable(dev, true);
 	return (0);
+}
+
+static inline bool
+device_iommu_mapped(struct device *dev __unused)
+{
+	return (false);
 }
 
 #define	dev_pm_set_driver_flags(dev, flags) do { \
@@ -650,5 +688,12 @@ devm_kmemdup(struct device *dev, const void *src, size_t len, gfp_t gfp)
 
 #define	devm_kcalloc(_dev, _sizen, _size, _gfp)			\
     devm_kmalloc((_dev), ((_sizen) * (_size)), (_gfp) | __GFP_ZERO)
+
+int lkpi_devm_add_action(struct device *dev, void (*action)(void *), void *data);
+#define	devm_add_action(dev, action, data)	\
+	lkpi_devm_add_action(dev, action, data);
+int lkpi_devm_add_action_or_reset(struct device *dev, void (*action)(void *), void *data);
+#define	devm_add_action_or_reset(dev, action, data)	\
+	lkpi_devm_add_action_or_reset(dev, action, data)
 
 #endif	/* _LINUXKPI_LINUX_DEVICE_H_ */

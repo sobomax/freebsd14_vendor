@@ -9,7 +9,7 @@
  * Paul Borman at Krystal Technologies.
  *
  * Copyright (c) 2011 The FreeBSD Foundation
- * All rights reserved.
+ *
  * Portions of this software were developed by David Chisnall
  * under sponsorship from the FreeBSD Foundation.
  *
@@ -41,9 +41,6 @@
 #if defined(LIBC_SCCS) && !defined(lint)
 static char sccsid[] = "@(#)big5.c	8.1 (Berkeley) 6/4/93";
 #endif /* LIBC_SCCS and not lint */
-#include <sys/cdefs.h>
-__FBSDID("$FreeBSD: c1f94d39c7dac2c8fc073e1c70ce8c91c4d0bd29 $");
-
 #include <sys/types.h>
 #include <errno.h>
 #include <runetype.h>

@@ -26,9 +26,6 @@
  */
 
 
-#include <sys/cdefs.h>
-__FBSDID("$FreeBSD: f44161b33331f16e33d000650bc916d571691db8 $");
-
 #include <machine/cpu.h>
 #include <machine/ifunc.h>
 

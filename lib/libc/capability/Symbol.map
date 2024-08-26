@@ -1,7 +1,3 @@
-/*
- * $FreeBSD: c5c18c2f53154d3320446c8b0da1b464fbb959d0 $
- */
-
 FBSD_1.3 {
 	__cap_rights_clear;
 	cap_rights_contains;

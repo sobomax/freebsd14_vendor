@@ -4,7 +4,7 @@
 $id: http://devicetree.org/schemas/mips/ingenic/devices.yaml#
 $schema: http://devicetree.org/meta-schemas/core.yaml#
 
-title: Ingenic XBurst based Platforms Device Tree Bindings
+title: Ingenic XBurst based Platforms
 
 maintainers:
   - 周琰杰 (Zhou Yanjie) <zhouyanjie@wanyeetech.com>
@@ -47,4 +47,12 @@ properties:
         items:
           - const: yna,cu1830-neo
           - const: ingenic,x1830
+
+      - description: YSH & ATIL General Board, CU2000 Module with Neo Backplane
+        items:
+          - const: yna,cu2000-neo
+          - const: ingenic,x2000e
+
+additionalProperties: true
+
 ...

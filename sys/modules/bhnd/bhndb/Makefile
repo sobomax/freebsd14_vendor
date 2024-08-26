@@ -1,4 +1,3 @@
-# $FreeBSD: 12fcde7e049f76673add61a217f11dd55f1e8acf $
 
 .PATH: ${SRCTOP}/sys/dev/bhnd/bhndb
 

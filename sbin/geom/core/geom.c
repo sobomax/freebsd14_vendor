@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2004-2009 Pawel Jakub Dawidek <pjd@FreeBSD.org>
  * All rights reserved.
@@ -27,8 +27,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 9b43910b88f964287d23249b04119021047ded7d $");
-
 #include <sys/param.h>
 #include <sys/linker.h>
 #include <sys/module.h>
@@ -503,7 +501,10 @@ run_command(int argc, char *argv[])
 	}
 	if (errstr != NULL && errstr[0] != '\0') {
 		warnx("%s", errstr);
-		if (strncmp(errstr, "warning: ", strlen("warning: ")) != 0) {
+		/* Suppress EXIT_FAILURE for warnings */
+		if (strncmp(errstr, "warning: ", strlen("warning: ")) == 0)
+			req->nerror = 0;
+		if (req->nerror != 0) {
 			gctl_free(req);
 			exit(EXIT_FAILURE);
 		}

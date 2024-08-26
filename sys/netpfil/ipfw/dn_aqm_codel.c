@@ -1,7 +1,5 @@
 /*
  * Codel - The Controlled-Delay Active Queue Management algorithm.
- *
- * $FreeBSD: 13d46137a6202fa226b6dd883a1de59b8119e7c7 $
  * 
  * Copyright (C) 2016 Centre for Advanced Internet Architectures,
  *  Swinburne University of Technology, Melbourne, Australia.
@@ -192,8 +190,9 @@ struct mbuf *
 codel_extract_head(struct dn_queue *q, aqm_time_t *pkt_ts)
 {
 	struct m_tag *mtag;
-	struct mbuf *m = q->mq.head;
+	struct mbuf *m;
 
+next:	m = q->mq.head;
 	if (m == NULL)
 		return m;
 	q->mq.head = m->m_nextpkt;
@@ -212,6 +211,11 @@ codel_extract_head(struct dn_queue *q, aqm_time_t *pkt_ts)
 	} else {
 		*pkt_ts = *(aqm_time_t *)(mtag + 1);
 		m_tag_delete(m,mtag); 
+	}
+	if (m->m_pkthdr.rcvif != NULL &&
+	    __predict_false(m_rcvif_restore(m) == NULL)) {
+		m_freem(m);
+		goto next;
 	}
 
 	return m;

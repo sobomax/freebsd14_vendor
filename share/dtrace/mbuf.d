@@ -23,8 +23,6 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 0e2f47495472dc11c0166ee1ad38d3ec13c95432 $
- *
  * Translators and flags for the mbuf structure.  FreeBSD specific code.
  */
 

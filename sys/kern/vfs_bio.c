@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2004 Poul-Henning Kamp
  * Copyright (c) 1994,1997 John S. Dyson
@@ -45,16 +45,15 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: abb9ebc7281b93cb2252182787b3e12ae510b09a $");
-
 #include <sys/param.h>
 #include <sys/systm.h>
 #include <sys/asan.h>
 #include <sys/bio.h>
 #include <sys/bitset.h>
+#include <sys/boottrace.h>
+#include <sys/buf.h>
 #include <sys/conf.h>
 #include <sys/counter.h>
-#include <sys/buf.h>
 #include <sys/devicestat.h>
 #include <sys/eventhandler.h>
 #include <sys/fail.h>
@@ -62,15 +61,18 @@ __FBSDID("$FreeBSD: abb9ebc7281b93cb2252182787b3e12ae510b09a $");
 #include <sys/limits.h>
 #include <sys/lock.h>
 #include <sys/malloc.h>
+#include <sys/memdesc.h>
 #include <sys/mount.h>
 #include <sys/mutex.h>
 #include <sys/kernel.h>
 #include <sys/kthread.h>
+#include <sys/pctrie.h>
 #include <sys/proc.h>
 #include <sys/racct.h>
 #include <sys/refcount.h>
 #include <sys/resourcevar.h>
 #include <sys/rwlock.h>
+#include <sys/sched.h>
 #include <sys/smp.h>
 #include <sys/sysctl.h>
 #include <sys/syscallsubr.h>
@@ -116,7 +118,7 @@ struct bufqueue {
 #define	BQ_ASSERT_LOCKED(bq)	mtx_assert(BQ_LOCKPTR((bq)), MA_OWNED)
 
 struct bufdomain {
-	struct bufqueue	bd_subq[MAXCPU + 1]; /* Per-cpu sub queues + global */
+	struct bufqueue	*bd_subq;
 	struct bufqueue bd_dirtyq;
 	struct bufqueue	*bd_cleanq;
 	struct mtx_padalign bd_run_lock;
@@ -318,7 +320,8 @@ SYSCTL_COUNTER_U64(_vfs, OID_AUTO, notbufdflushes, CTLFLAG_RD, &notbufdflushes,
 static long barrierwrites;
 SYSCTL_LONG(_vfs, OID_AUTO, barrierwrites, CTLFLAG_RW | CTLFLAG_STATS,
     &barrierwrites, 0, "Number of barrier writes");
-SYSCTL_INT(_vfs, OID_AUTO, unmapped_buf_allowed, CTLFLAG_RD,
+SYSCTL_INT(_vfs, OID_AUTO, unmapped_buf_allowed,
+    CTLFLAG_RDTUN | CTLFLAG_NOFETCH,
     &unmapped_buf_allowed, 0,
     "Permit the use of the unmapped i/o");
 int maxbcachebuf = MAXBCACHEBUF;
@@ -764,6 +767,9 @@ bufspace_daemon_shutdown(void *arg, int howto __unused)
 	struct bufdomain *bd = arg;
 	int error;
 
+	if (KERNEL_PANICKED())
+		return;
+
 	BD_RUN_LOCK(bd);
 	bd->bd_shutdown = true;
 	wakeup(&bd->bd_running);
@@ -1054,13 +1060,22 @@ kern_vfs_bio_buffer_alloc(caddr_t v, long physmem_est)
 	int tuned_nbuf;
 	long maxbuf, maxbuf_sz, buf_sz,	biotmap_sz;
 
-#ifdef KASAN
 	/*
-	 * With KASAN enabled, the kernel map is shadowed.  Account for this
-	 * when sizing maps based on the amount of physical memory available.
+	 * With KASAN or KMSAN enabled, the kernel map is shadowed.  Account for
+	 * this when sizing maps based on the amount of physical memory
+	 * available.
 	 */
+#if defined(KASAN)
 	physmem_est = (physmem_est * KASAN_SHADOW_SCALE) /
 	    (KASAN_SHADOW_SCALE + 1);
+#elif defined(KMSAN)
+	physmem_est /= 3;
+
+	/*
+	 * KMSAN cannot reliably determine whether buffer data is initialized
+	 * unless it is updated through a KVA mapping.
+	 */
+	unmapped_buf_allowed = 0;
 #endif
 
 	/*
@@ -1154,7 +1169,12 @@ kern_vfs_bio_buffer_alloc(caddr_t v, long physmem_est)
 	}
 
 	if (nswbuf == 0) {
-		nswbuf = min(nbuf / 4, 256);
+		/*
+		 * Pager buffers are allocated for short periods, so scale the
+		 * number of reserved buffers based on the number of CPUs rather
+		 * than amount of memory.
+		 */
+		nswbuf = min(nbuf / 4, 32 * mp_ncpus);
 		if (nswbuf < NSWBUF_MIN)
 			nswbuf = NSWBUF_MIN;
 	}
@@ -1182,6 +1202,7 @@ bufinit(void)
 	struct buf *bp;
 	int i;
 
+	TSENTER();
 	KASSERT(maxbcachebuf >= MAXBSIZE,
 	    ("maxbcachebuf (%d) must be >= MAXBSIZE (%d)\n", maxbcachebuf,
 	    MAXBSIZE));
@@ -1317,6 +1338,7 @@ bufinit(void)
 	buffreekvacnt = counter_u64_alloc(M_WAITOK);
 	bufdefragcnt = counter_u64_alloc(M_WAITOK);
 	bufkvaspace = counter_u64_alloc(M_WAITOK);
+	TSEXIT();
 }
 
 #ifdef INVARIANTS
@@ -1415,8 +1437,7 @@ bufshutdown(int show_busybufs)
 		 * threads to run.
 		 */
 		for (subiter = 0; subiter < 50 * iter; subiter++) {
-			thread_lock(curthread);
-			mi_switch(SW_VOL);
+			sched_relinquish(curthread);
 			DELAY(1000);
 		}
 #endif
@@ -1457,10 +1478,12 @@ bufshutdown(int show_busybufs)
 		 * Failed to sync all blocks. Indicate this and don't
 		 * unmount filesystems (thus forcing an fsck on reboot).
 		 */
+		BOOTTRACE("shutdown failed to sync buffers");
 		printf("Giving up on %d buffers\n", nbusy);
 		DELAY(5000000);	/* 5 seconds */
 		swapoff_all();
 	} else {
+		BOOTTRACE("shutdown sync complete");
 		if (!first_buf_printf)
 			printf("Final sync complete\n");
 
@@ -1480,6 +1503,7 @@ bufshutdown(int show_busybufs)
 			swapoff_all();
 			vfs_unmountall();
 		}
+		BOOTTRACE("shutdown unmounted all filesystems");
 	}
 	DELAY(100000);		/* wait for console output to finish */
 }
@@ -1898,6 +1922,9 @@ bd_init(struct bufdomain *bd)
 {
 	int i;
 
+	/* Per-CPU clean buf queues, plus one global queue. */
+	bd->bd_subq = mallocarray(mp_maxid + 2, sizeof(struct bufqueue),
+	    M_BIOBUF, M_WAITOK | M_ZERO);
 	bd->bd_cleanq = &bd->bd_subq[mp_maxid + 1];
 	bq_init(bd->bd_cleanq, QUEUE_CLEAN, mp_maxid + 1, "bufq clean lock");
 	bq_init(&bd->bd_dirtyq, QUEUE_DIRTY, -1, "bufq dirty lock");
@@ -3403,6 +3430,9 @@ buf_daemon_shutdown(void *arg __unused, int howto __unused)
 {
 	int error;
 
+	if (KERNEL_PANICKED())
+		return;
+
 	mtx_lock(&bdlock);
 	bd_shutdown = true;
 	wakeup(&bd_request);
@@ -3950,9 +3980,11 @@ getblkx(struct vnode *vp, daddr_t blkno, daddr_t dblkno, int size, int slpflag,
 	    ("GB_KVAALLOC only makes sense with GB_UNMAPPED"));
 	if (vp->v_type != VCHR)
 		ASSERT_VOP_LOCKED(vp, "getblk");
-	if (size > maxbcachebuf)
-		panic("getblk: size(%d) > maxbcachebuf(%d)\n", size,
+	if (size > maxbcachebuf) {
+		printf("getblkx: size(%d) > maxbcachebuf(%d)\n", size,
 		    maxbcachebuf);
+		return (EIO);
+	}
 	if (!unmapped_buf_allowed)
 		flags &= ~(GB_UNMAPPED | GB_KVAALLOC);
 
@@ -3961,8 +3993,15 @@ getblkx(struct vnode *vp, daddr_t blkno, daddr_t dblkno, int size, int slpflag,
 
 	/* Attempt lockless lookup first. */
 	bp = gbincore_unlocked(bo, blkno);
-	if (bp == NULL)
+	if (bp == NULL) {
+		/*
+		 * With GB_NOCREAT we must be sure about not finding the buffer
+		 * as it may have been reassigned during unlocked lookup.
+		 */
+		if ((flags & GB_NOCREAT) != 0)
+			goto loop;
 		goto newbuf_unlocked;
+	}
 
 	error = BUF_TIMELOCK(bp, LK_EXCLUSIVE | LK_NOWAIT, NULL, "getblku", 0,
 	    0);
@@ -4119,6 +4158,12 @@ newbuf_unlocked:
 		vmio = vp->v_object != NULL;
 		if (vmio) {
 			maxsize = size + (offset & PAGE_MASK);
+			if (maxsize > maxbcachebuf) {
+				printf(
+			    "getblkx: maxsize(%d) > maxbcachebuf(%d)\n",
+				    maxsize, maxbcachebuf);
+				return (EIO);
+			}
 		} else {
 			maxsize = size;
 			/* Do not allow non-VMIO notmapped buffers. */
@@ -4343,8 +4388,9 @@ allocbuf(struct buf *bp, int size)
 	if (bp->b_bcount == size)
 		return (1);
 
-	if (bp->b_kvasize != 0 && bp->b_kvasize < size)
-		panic("allocbuf: buffer too small");
+	KASSERT(bp->b_kvasize == 0 || bp->b_kvasize >= size,
+	    ("allocbuf: buffer too small %p %#x %#x",
+	    bp, bp->b_kvasize, size));
 
 	newbsize = roundup2(size, DEV_BSIZE);
 	if ((bp->b_flags & B_VMIO) == 0) {
@@ -4361,11 +4407,12 @@ allocbuf(struct buf *bp, int size)
 	} else {
 		int desiredpages;
 
-		desiredpages = (size == 0) ? 0 :
+		desiredpages = size == 0 ? 0 :
 		    num_pages((bp->b_offset & PAGE_MASK) + newbsize);
 
-		if (bp->b_flags & B_MALLOC)
-			panic("allocbuf: VMIO buffer can't be malloced");
+		KASSERT((bp->b_flags & B_MALLOC) == 0,
+		    ("allocbuf: VMIO buffer can't be malloced %p", bp));
+
 		/*
 		 * Set B_CACHE initially if buffer is 0 length or will become
 		 * 0-length.
@@ -4418,7 +4465,11 @@ biodone(struct bio *bp)
 		atomic_add_int(&inflight_transient_maps, -1);
 	}
 	done = bp->bio_done;
-	if (done == NULL) {
+	/*
+	 * The check for done == biodone is to allow biodone to be
+	 * used as a bio_done routine.
+	 */
+	if (done == NULL || done == biodone) {
 		mtxp = mtx_pool_find(mtxpool_sleep, bp);
 		mtx_lock(mtxp);
 		bp->bio_flags |= BIO_DONE;
@@ -4828,7 +4879,8 @@ vfs_bio_set_valid(struct buf *bp, int base, int size)
 void
 vfs_bio_clrbuf(struct buf *bp) 
 {
-	int i, j, mask, sa, ea, slide;
+	int i, j, sa, ea, slide, zbits;
+	vm_page_bits_t mask;
 
 	if ((bp->b_flags & (B_VMIO | B_MALLOC)) != B_VMIO) {
 		clrbuf(bp);
@@ -4847,7 +4899,9 @@ vfs_bio_clrbuf(struct buf *bp)
 		if (bp->b_pages[i] == bogus_page)
 			continue;
 		j = sa / DEV_BSIZE;
-		mask = ((1 << ((ea - sa) / DEV_BSIZE)) - 1) << j;
+		zbits = (sizeof(vm_page_bits_t) * NBBY) -
+		    (ea - sa) / DEV_BSIZE;
+		mask = (VM_PAGE_BITS_ALL >> zbits) << j;
 		if ((bp->b_pages[i]->valid & mask) == mask)
 			continue;
 		if ((bp->b_pages[i]->valid & mask) == 0)
@@ -5107,7 +5161,9 @@ bufobj_init(struct bufobj *bo, void *private)
         rw_init(BO_LOCKPTR(bo), "bufobj interlock");
         bo->bo_private = private;
         TAILQ_INIT(&bo->bo_clean.bv_hd);
+	pctrie_init(&bo->bo_clean.bv_root);
         TAILQ_INIT(&bo->bo_dirty.bv_hd);
+	pctrie_init(&bo->bo_dirty.bv_root);
 }
 
 void
@@ -5185,24 +5241,21 @@ bdata2bio(struct buf *bp, struct bio *bip)
 	}
 }
 
-/*
- * The MIPS pmap code currently doesn't handle aliased pages.
- * The VIPT caches may not handle page aliasing themselves, leading
- * to data corruption.
- *
- * As such, this code makes a system extremely unhappy if said
- * system doesn't support unaliasing the above situation in hardware.
- * Some "recent" systems (eg some mips24k/mips74k cores) don't enable
- * this feature at build time, so it has to be handled in software.
- *
- * Once the MIPS pmap/cache code grows to support this function on
- * earlier chips, it should be flipped back off.
- */
-#ifdef	__mips__
-static int buf_pager_relbuf = 1;
-#else
-static int buf_pager_relbuf = 0;
-#endif
+struct memdesc
+memdesc_bio(struct bio *bio)
+{
+	if ((bio->bio_flags & BIO_VLIST) != 0)
+		return (memdesc_vlist((struct bus_dma_segment *)bio->bio_data,
+		    bio->bio_ma_n));
+
+	if ((bio->bio_flags & BIO_UNMAPPED) != 0)
+		return (memdesc_vmpages(bio->bio_ma, bio->bio_bcount,
+		    bio->bio_ma_offset));
+
+	return (memdesc_vaddr(bio->bio_data, bio->bio_bcount));
+}
+
+static int buf_pager_relbuf;
 SYSCTL_INT(_vfs, OID_AUTO, buf_pager_relbuf, CTLFLAG_RWTUN,
     &buf_pager_relbuf, 0,
     "Make buffer pager release buffers after reading");
@@ -5457,7 +5510,7 @@ DB_SHOW_COMMAND(buffer, db_show_buffer)
 	db_printf(" ");
 }
 
-DB_SHOW_COMMAND(bufqueues, bufqueues)
+DB_SHOW_COMMAND_FLAGS(bufqueues, bufqueues, DB_CMD_MEMSAFE)
 {
 	struct bufdomain *bd;
 	struct buf *bp;
@@ -5523,7 +5576,7 @@ DB_SHOW_COMMAND(bufqueues, bufqueues)
 	}
 }
 
-DB_SHOW_COMMAND(lockedbufs, lockedbufs)
+DB_SHOW_COMMAND_FLAGS(lockedbufs, lockedbufs, DB_CMD_MEMSAFE)
 {
 	struct buf *bp;
 	int i;
@@ -5561,7 +5614,7 @@ DB_SHOW_COMMAND(vnodebufs, db_show_vnodebufs)
 	}
 }
 
-DB_COMMAND(countfreebufs, db_coundfreebufs)
+DB_COMMAND_FLAGS(countfreebufs, db_coundfreebufs, DB_CMD_MEMSAFE)
 {
 	struct buf *bp;
 	int i, used = 0, nfree = 0;

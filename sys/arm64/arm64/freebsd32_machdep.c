@@ -25,8 +25,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 7338e2b410f9aa41c77c6c512bb158803d97e46c $");
-
 #include <sys/param.h>
 #include <sys/exec.h>
 #include <sys/proc.h>
@@ -34,9 +32,11 @@ __FBSDID("$FreeBSD: 7338e2b410f9aa41c77c6c512bb158803d97e46c $");
 #include <sys/mutex.h>
 #include <sys/syscallsubr.h>
 #include <sys/ktr.h>
+#include <sys/sysctl.h>
 #include <sys/sysent.h>
 #include <sys/sysproto.h>
 #include <machine/armreg.h>
+#include <machine/pcb.h>
 #ifdef VFP
 #include <machine/vfp.h>
 #endif
@@ -48,7 +48,14 @@ __FBSDID("$FreeBSD: 7338e2b410f9aa41c77c6c512bb158803d97e46c $");
 #include <vm/pmap.h>
 #include <vm/vm_map.h>
 
+_Static_assert(sizeof(mcontext32_t) == 208, "mcontext32_t size incorrect");
+_Static_assert(sizeof(ucontext32_t) == 260, "ucontext32_t size incorrect");
+_Static_assert(sizeof(struct siginfo32) == 64, "struct siginfo32 size incorrect");
+
 extern void freebsd32_sendsig(sig_t catcher, ksiginfo_t *ksi, sigset_t *mask);
+
+SYSCTL_NODE(_compat, OID_AUTO, arm, CTLFLAG_RW | CTLFLAG_MPSAFE, 0,
+    "32-bit mode");
 
 /*
  * The first two fields of a ucontext_t are the signal mask and the machine
@@ -144,8 +151,12 @@ get_fpcontext32(struct thread *td, mcontext32_vfp_t *mcp)
 		    ("Called get_fpcontext32 while the kernel is using the VFP"));
 		KASSERT((pcb->pcb_fpflags & ~PCB_FP_USERMASK) == 0,
 		    ("Non-userspace FPU flags set in get_fpcontext32"));
-		for (i = 0; i < 32; i++)
-			mcp->mcv_reg[i] = (uint64_t)pcb->pcb_fpustate.vfp_regs[i];
+		for (i = 0; i < 16; i++) {
+			uint64_t *tmpreg = (uint64_t *)&pcb->pcb_fpustate.vfp_regs[i];
+
+			mcp->mcv_reg[i * 2] = tmpreg[0];
+			mcp->mcv_reg[i * 2 + 1] = tmpreg[1];
+		}
 		mcp->mcv_fpscr = VFP_FPSCR_FROM_SRCR(pcb->pcb_fpustate.vfp_fpcr,
 		    pcb->pcb_fpustate.vfp_fpsr);
 	}
@@ -161,8 +172,12 @@ set_fpcontext32(struct thread *td, mcontext32_vfp_t *mcp)
 	pcb = td->td_pcb;
 	if (td == curthread)
 		vfp_discard(td);
-	for (i = 0; i < 32; i++)
-		pcb->pcb_fpustate.vfp_regs[i] = mcp->mcv_reg[i];
+	for (i = 0; i < 16; i++) {
+		uint64_t *tmpreg = (uint64_t *)&pcb->pcb_fpustate.vfp_regs[i];
+
+		tmpreg[0] = mcp->mcv_reg[i * 2];
+		tmpreg[1] = mcp->mcv_reg[i * 2 + 1];
+	}
 	pcb->pcb_fpustate.vfp_fpsr = VFP_FPSR_FROM_FPSCR(mcp->mcv_fpscr);
 	pcb->pcb_fpustate.vfp_fpcr = VFP_FPSR_FROM_FPSCR(mcp->mcv_fpscr);
 	critical_exit();
@@ -172,11 +187,9 @@ set_fpcontext32(struct thread *td, mcontext32_vfp_t *mcp)
 static void
 get_mcontext32(struct thread *td, mcontext32_t *mcp, int flags)
 {
-	struct pcb *pcb;
 	struct trapframe *tf;
 	int i;
 
-	pcb = td->td_pcb;
 	tf = td->td_frame;
 
 	if ((flags & GET_MC_CLEAR_RET) != 0) {
@@ -342,14 +355,12 @@ freebsd32_sendsig(sig_t catcher, ksiginfo_t *ksi, sigset_t *mask)
 	struct sysentvec *sysent;
 	int onstack;
 	int sig;
-	int code;
 
 	siginfo_to_siginfo32(&ksi->ksi_info, &siginfo);
 	td = curthread;
 	p = td->td_proc;
 	PROC_LOCK_ASSERT(p, MA_OWNED);
 	sig = ksi->ksi_signo;
-	code = ksi->ksi_code;
 	psp = p->p_sigacts;
 	mtx_assert(&psp->ps_mtx, MA_OWNED);
 	tf = td->td_frame;
@@ -418,8 +429,8 @@ freebsd32_sendsig(sig_t catcher, ksiginfo_t *ksi, sigset_t *mask)
 	tf->tf_elr = (register_t)catcher;
 	tf->tf_x[13] = (register_t)fp;
 	sysent = p->p_sysent;
-	if (sysent->sv_sigcode_base != 0)
-		tf->tf_x[14] = (register_t)sysent->sv_sigcode_base;
+	if (PROC_HAS_SHP(p))
+		tf->tf_x[14] = (register_t)PROC_SIGCODE(p);
 	else
 		tf->tf_x[14] = (register_t)(PROC_PS_STRINGS(p) -
 		    *(sysent->sv_szsigcode));
@@ -446,20 +457,6 @@ freebsd32_sendsig(sig_t catcher, ksiginfo_t *ksi, sigset_t *mask)
 }
 
 #ifdef COMPAT_43
-/*
- * COMPAT_FREEBSD32 assumes we have this system call when COMPAT_43 is defined.
- * FreeBSD/arm provies a similar getpagesize() syscall.
- */
-#define ARM32_PAGE_SIZE 4096
-int
-ofreebsd32_getpagesize(struct thread *td,
-    struct ofreebsd32_getpagesize_args *uap)
-{
-
-	td->td_retval[0] = ARM32_PAGE_SIZE;
-	return (0);
-}
-
 /*
  * Mirror the osigreturn definition in kern_sig.c for !i386 platforms. This
  * mirrors what's connected to the FreeBSD/arm syscall.

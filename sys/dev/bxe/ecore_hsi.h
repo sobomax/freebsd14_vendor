@@ -27,8 +27,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 28a3ea923185517d06eac98e95eabe633f56e4e9 $");
-
 #ifndef ECORE_HSI_H
 #define ECORE_HSI_H
 

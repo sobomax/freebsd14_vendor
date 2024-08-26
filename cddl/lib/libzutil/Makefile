@@ -1,4 +1,3 @@
-# $FreeBSD: 19aa9e35fbbffde287a927a7e461bbb2b074fa1e $
 
 .PATH: ${SRCTOP}/sys/contrib/openzfs/lib/libzutil
 .PATH: ${SRCTOP}/sys/contrib/openzfs/lib/libzutil/os/freebsd
@@ -18,9 +17,8 @@ SRCS = \
         zutil_pool.c
 
 SRCS += \
-        zutil_device_path_os.c \
-        zutil_import_os.c \
-        zutil_compat.c
+	os/freebsd/zutil_device_path_os.c \
+	os/freebsd/zutil_import_os.c
 
 SRCS += zfs_ioctl_compat.c
 

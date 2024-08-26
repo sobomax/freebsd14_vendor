@@ -28,8 +28,6 @@
  * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
- *
- * $FreeBSD: 6e866269b687455b9f83645dccd28997f57bb7c6 $
  */
 
 #include <machine/asmacros.h>
@@ -48,6 +46,8 @@
 	.set	dmapbase,DMAP_MIN_ADDRESS
 	.set	dmapend,DMAP_MAX_ADDRESS
 
+#define	BOOTSTACK_SIZE	(PAGE_SIZE * KSTACK_PAGES)
+
 	.text
 /**********************************************************************
  *
@@ -60,20 +60,28 @@
  *
  * We are already in long mode, on a 64 bit %cs and running at KERNBASE.
  */
-NON_GPROF_ENTRY(btext)
+ENTRY(btext)
 
 	/* Don't trust what the loader gives for rflags. */
 	pushq	$PSL_KERNEL
 	popfq
 
-	/* Find the metadata pointers before we lose them */
+	/* Get onto a stack that we can trust - there is no going back now. */
 	movq	%rsp, %rbp
+	movq	$bootstack,%rsp
+
+#ifdef KASAN
+	/* Bootstrap a shadow map for the boot stack. */
+	movq	$bootstack, %rdi
+	subq	$BOOTSTACK_SIZE, %rdi
+	movq	$BOOTSTACK_SIZE, %rsi
+	call	kasan_init_early
+#endif
+
+	/* Grab metadata pointers from the loader. */
 	movl	4(%rbp),%edi		/* modulep (arg 1) */
 	movl	8(%rbp),%esi		/* kernend (arg 2) */
-
-	/* Get onto a stack that we can trust - there is no going back now. */
-	movq	$bootstack,%rsp
-	xorl	%ebp, %ebp
+	xorq	%rbp, %rbp
 
 	call	hammer_time		/* set up cpu for unix operation */
 	movq	%rax,%rsp		/* set up kstack for mi_startup() */
@@ -82,7 +90,7 @@ NON_GPROF_ENTRY(btext)
 	jmp	0b
 
 /* la57_trampoline(%rdi pml5) */
-NON_GPROF_ENTRY(la57_trampoline)
+ENTRY(la57_trampoline)
 	movq	%rsp,%r11
 	movq	%rbx,%r10
 	leaq	la57_trampoline_end(%rip),%rsp
@@ -121,11 +129,11 @@ l2:	movq	%r11,%rsp
 	movq	%r10,%rbx
 	retq
 	.p2align 4,0
-NON_GPROF_ENTRY(la57_trampoline_gdt_desc)
+ENTRY(la57_trampoline_gdt_desc)
 	.word	la57_trampoline_end - la57_trampoline_gdt
 	.long	0		/* filled by pmap_bootstrap_la57 */
 	.p2align 4,0
-NON_GPROF_ENTRY(la57_trampoline_gdt)
+ENTRY(la57_trampoline_gdt)
 	.long	0x00000000	/* null desc */
 	.long	0x00000000
 	.long	0x00000000	/* 64bit code */
@@ -135,10 +143,10 @@ NON_GPROF_ENTRY(la57_trampoline_gdt)
 	.long	0x0000ffff	/* universal data */
 	.long	0x00cf9300
 	.dcb.l	16,0
-NON_GPROF_ENTRY(la57_trampoline_end)
+ENTRY(la57_trampoline_end)
 
 	.bss
-	ALIGN_DATA			/* just to be sure */
+	.p2align PAGE_SHIFT
 	.globl	bootstack
-	.space	0x1000			/* space for bootstack - temporary stack */
+	.space	BOOTSTACK_SIZE		/* space for bootstack - temporary stack */
 bootstack:

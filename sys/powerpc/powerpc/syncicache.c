@@ -34,8 +34,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 61403daf07342657b518c4437ee9f2172ba2a250 $");
-
 #include <sys/param.h>
 #if	defined(_KERNEL) || defined(_STANDALONE)
 #include <sys/time.h>

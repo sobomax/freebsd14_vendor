@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2000 Matthew Jacob
  * All rights reserved.
@@ -24,8 +24,6 @@
  * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
- *
- * $FreeBSD: c8e0c65be850ae8ef840f5ce2ff27ee99f9b413d $
  */
 
 /*
@@ -142,7 +140,6 @@ struct enc_softc {
 #define	ENC_FLAG_INVALID	0x01
 #define	ENC_FLAG_INITIALIZED	0x02
 #define	ENC_FLAG_SHUTDOWN	0x04
-	union ccb		 saved_ccb;
 	struct cdev		*enc_dev;
 	struct cam_periph	*periph;
 	int			 open_count;

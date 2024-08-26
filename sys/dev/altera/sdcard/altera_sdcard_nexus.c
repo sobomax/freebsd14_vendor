@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2012 Robert N. M. Watson
  * All rights reserved.
@@ -31,8 +31,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: b6bbcdd949e280be6d0a8e3d667f40c53fec31c8 $");
-
 #include <sys/param.h>
 #include <sys/bus.h>
 #include <sys/condvar.h>
@@ -112,5 +110,4 @@ static driver_t altera_sdcard_nexus_driver = {
 	sizeof(struct altera_sdcard_softc),
 };
 
-DRIVER_MODULE(altera_sdcard, nexus, altera_sdcard_nexus_driver,
-    altera_sdcard_devclass, 0, 0);
+DRIVER_MODULE(altera_sdcard, nexus, altera_sdcard_nexus_driver, 0, 0);

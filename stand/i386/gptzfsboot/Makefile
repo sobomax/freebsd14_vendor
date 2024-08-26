@@ -1,4 +1,3 @@
-# $FreeBSD: 09615c5f97c116fde16a7b5a5d6ab53ebcb14207 $
 
 .include <bsd.init.mk>
 
@@ -10,7 +9,7 @@ FILES=		gptzfsboot
 MAN=		gptzfsboot.8
 
 BOOT_COMCONSOLE_PORT?= 0x3f8
-BOOT_COMCONSOLE_SPEED?= 9600
+BOOT_COMCONSOLE_SPEED?= 115200
 B2SIOFMT?=	0x3
 
 REL1=	0x700

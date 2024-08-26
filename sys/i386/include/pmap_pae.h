@@ -47,7 +47,6 @@
  *
  *	from: hp300: @(#)pmap.h	7.2 (Berkeley) 12/16/90
  *	from: @(#)pmap.h	7.4 (Berkeley) 5/12/91
- * $FreeBSD: e9394b444ff6d1e7764f6d75953ab96874ee9595 $
  */
 
 #ifndef _MACHINE_PMAP_PAE_H

@@ -1,6 +1,5 @@
-# $FreeBSD: cc68fe26be5ec32e66a77e07ad54823b3c40593e $
 #
-# SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+# SPDX-License-Identifier: BSD-2-Clause
 #
 # Copyright (c) 2021 KUROSAWA Takahiro <takahiro.kurosawa@gmail.com>
 #
@@ -66,7 +65,8 @@ map_e_body()
 	pft_set_rules echo "block return all" \
 		"pass in on ${epair_echo}b inet proto tcp from 198.51.100.1 port 19720:19723 to (${epair_echo}b) port 7" \
 		"pass in on ${epair_echo}b inet proto tcp from 198.51.100.1 port 36104:36107 to (${epair_echo}b) port 7" \
-		"pass in on ${epair_echo}b inet proto tcp from 198.51.100.1 port 52488:52491 to (${epair_echo}b) port 7"
+		"pass in on ${epair_echo}b inet proto tcp from 198.51.100.1 port 52488:52491 to (${epair_echo}b) port 7" \
+		"set skip on lo"
 
 	i=0
 	while [ ${i} -lt ${NC_TRY_COUNT} ]

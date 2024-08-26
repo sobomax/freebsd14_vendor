@@ -34,8 +34,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 226c2c15734b1b25c76b5f5cb26c03f1518e64be $");
-
 #include <dev/drm2/drmP.h>
 
 #define	vunmap(handle)
@@ -129,6 +127,6 @@ void drm_core_ioremapfree(struct drm_local_map *map, struct drm_device *dev)
 	    dev->agp && dev->agp->cant_use_aperture && map->type == _DRM_AGP)
 		vunmap(map->handle);
 	else
-		pmap_unmapdev((vm_offset_t)map->handle, map->size);
+		pmap_unmapdev(map->handle, map->size);
 }
 EXPORT_SYMBOL(drm_core_ioremapfree);

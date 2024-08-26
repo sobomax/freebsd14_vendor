@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2005-2009 Ariff Abdullah <ariff@FreeBSD.org>
  * Portions Copyright (c) Ryan Beasley <ryan.beasley@gmail.com> - GSoC 2006
@@ -36,8 +36,6 @@
 
 #include "feeder_if.h"
 #include "mixer_if.h"
-
-SND_DECLARE_FILE("$FreeBSD: bbc57f737036e6592894ed71d2f7fd5e29e0beab $");
 
 static MALLOC_DEFINE(M_MIXER, "mixer", "mixer");
 
@@ -819,17 +817,6 @@ mixer_uninit(device_t dev)
 	KASSERT(m->type == MIXER_TYPE_PRIMARY,
 	    ("%s(): illegal mixer type=%d", __func__, m->type));
 
-	snd_mtxlock(m->lock);
-
-	if (m->busy) {
-		snd_mtxunlock(m->lock);
-		return EBUSY;
-	}
-
-	/* destroy dev can sleep --hps */
-
-	snd_mtxunlock(m->lock);
-
 	pdev->si_drv1 = NULL;
 	destroy_dev(pdev);
 
@@ -1388,11 +1375,14 @@ mixer_clone(void *arg,
 	if (*dev != NULL)
 		return;
 	if (strcmp(name, "mixer") == 0) {
+		bus_topo_lock();
 		d = devclass_get_softc(pcm_devclass, snd_unit);
-		if (PCM_REGISTERED(d) && d->mixer_dev != NULL) {
+		/* See related comment in dsp_clone(). */
+		if (d != NULL && PCM_REGISTERED(d) && d->mixer_dev != NULL) {
 			*dev = d->mixer_dev;
 			dev_ref(*dev);
 		}
+		bus_topo_unlock();
 	}
 }
 
@@ -1440,7 +1430,7 @@ mixer_oss_mixerinfo(struct cdev *i_dev, oss_mixerinfo *mi)
 {
 	struct snddev_info *d;
 	struct snd_mixer *m;
-	int nmix, i;
+	int i;
 
 	/*
 	 * If probing the device handling the ioctl, make sure it's a mixer
@@ -1451,7 +1441,6 @@ mixer_oss_mixerinfo(struct cdev *i_dev, oss_mixerinfo *mi)
 
 	d = NULL;
 	m = NULL;
-	nmix = 0;
 
 	/*
 	 * There's a 1:1 relationship between mixers and PCM devices, so
@@ -1471,7 +1460,7 @@ mixer_oss_mixerinfo(struct cdev *i_dev, oss_mixerinfo *mi)
 
 		if (d->mixer_dev != NULL && d->mixer_dev->si_drv1 != NULL &&
 		    ((mi->dev == -1 && d->mixer_dev == i_dev) ||
-		    mi->dev == nmix)) {
+		    mi->dev == i)) {
 			m = d->mixer_dev->si_drv1;
 			mtx_lock(m->lock);
 
@@ -1483,7 +1472,7 @@ mixer_oss_mixerinfo(struct cdev *i_dev, oss_mixerinfo *mi)
 			 *   sure to unlock when existing.
 			 */
 			bzero((void *)mi, sizeof(*mi));
-			mi->dev = nmix;
+			mi->dev = i;
 			snprintf(mi->id, sizeof(mi->id), "mixer%d", i);
 			strlcpy(mi->name, m->name, sizeof(mi->name));
 			mi->modify_counter = m->modify_counter;
@@ -1547,8 +1536,7 @@ mixer_oss_mixerinfo(struct cdev *i_dev, oss_mixerinfo *mi)
 			mi->legacy_device = i;
 			 */
 			mtx_unlock(m->lock);
-		} else
-			++nmix;
+		}
 
 		PCM_UNLOCK(d);
 

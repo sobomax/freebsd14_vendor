@@ -24,7 +24,6 @@
 # Copyright 2017 Spectra Logic Corp.  All rights reserved.
 # Use is subject to license terms.
 #
-# $FreeBSD: cf85a013a3bfe739b9cf28cbfa4cd5bb96a573b7 $
 
 . $STF_SUITE/include/libtest.kshlib
 set_disks

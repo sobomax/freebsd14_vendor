@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2010 Alexander Motin <mav@FreeBSD.org>
  * Copyright (c) 2000 - 2008 Søren Schmidt <sos@FreeBSD.org>
@@ -28,8 +28,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 54fa7535bc0e5ae032c365c15df1fa3d577c0c1a $");
-
 #include <sys/param.h>
 #include <sys/bio.h>
 #include <sys/endian.h>
@@ -80,7 +78,7 @@ struct intel_raid_map {
 
 struct intel_raid_vol {
 	uint8_t		name[16];
-	u_int64_t	total_sectors __packed;
+	uint64_t	total_sectors __packed;
 	uint32_t	state;
 #define INTEL_ST_BOOTABLE		0x00000001
 #define INTEL_ST_BOOT_DEVICE		0x00000002

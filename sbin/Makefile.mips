@@ -1,4 +1,0 @@
-# $FreeBSD: 2d231b0cb2b0c2b2af24ecbe6566eef3b0d143c8 $
-
-SUBDIR += bsdlabel
-SUBDIR += fdisk

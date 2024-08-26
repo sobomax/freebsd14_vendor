@@ -1,6 +1,5 @@
 #!/bin/sh
 #
-# $FreeBSD: dc623ea594368e5e2ca90e2c4b5a037e9663518c $
 #
 
 # PROVIDE: ftpd

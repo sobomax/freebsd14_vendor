@@ -3,8 +3,6 @@
 .\" Agreement and your Software Agreement with AT&T (Western Electric).
 .\"
 .\"	@(#)p5	8.1 (Berkeley) 6/8/93
-.\"
-.\" $FreeBSD: cf40f2d6b016832512213a7496a88020b7891b35 $
 .SH
 VII. TRAPS
 .PP

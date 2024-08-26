@@ -1,4 +1,3 @@
-/* $FreeBSD: c613764bd952b90979764f805f24c5f6ee8abe5b $ */
 /*-
  * Copyright (c) 2015, Mellanox Technologies, Inc. All rights reserved.
  *

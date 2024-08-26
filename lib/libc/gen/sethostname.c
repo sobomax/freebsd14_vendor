@@ -31,8 +31,6 @@
 
 #include <sys/cdefs.h>
 __SCCSID("@(#)sethostname.c	8.1 (Berkeley) 6/4/93");
-__FBSDID("$FreeBSD: 0e120775afb9a75b76b96f0715b6b7d5eba1bef9 $");
-
 #include <sys/param.h>
 #include <sys/sysctl.h>
 

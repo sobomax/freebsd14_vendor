@@ -32,8 +32,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 9d603abc9114e5f3248afaa99f453626574a8679 $");
-
 #include <sys/param.h>
 #include <sys/stat.h>
 
@@ -639,7 +637,6 @@ fillin_program(prog_t *p)
 {
 	char path[MAXPATHLEN];
 	char line[MAXLINELEN];
-	FILE *f;
 
 	snprintf(line, MAXLINELEN, "filling in parms for %s", p->name);
 	status(line);
@@ -654,22 +651,9 @@ fillin_program(prog_t *p)
 
 	/* Determine the actual srcdir (maybe symlinked). */
 	if (p->srcdir) {
-		snprintf(line, MAXLINELEN, "cd %s && pwd -P", p->srcdir);
-		f = popen(line,"r");
-		if (!f)
-			errx(1, "Can't execute: %s\n", line);
-
-		path[0] = '\0';
-		fgets(path, sizeof path, f);
-		if (pclose(f))
-			errx(1, "Can't execute: %s\n", line);
-
-		if (!*path)
-			errx(1, "Can't perform pwd on: %s\n", p->srcdir);
-
-		/* Chop off trailing newline. */
-		path[strlen(path) - 1] = '\0';
-		p->realsrcdir = strdup(path);
+		p->realsrcdir = realpath(p->srcdir, NULL);
+		if (p->realsrcdir == NULL)
+			errx(1, "Can't resolve path: %s\n", p->srcdir);
 	}
 
 	/* Unless the option to make object files was specified the
@@ -1131,8 +1115,8 @@ prog_makefile_rules(FILE *outmk, prog_t *p)
 	    "int _crunched_%s_stub(int argc, char **argv, char **envp)"
 	    "{return main(argc,argv,envp);}\" >%s_stub.c\n",
 	    p->ident, p->ident, p->name);
-	fprintf(outmk, "%s.lo: %s_stub.o $(%s_OBJPATHS)",
-	    p->name, p->name, p->ident);
+	fprintf(outmk, "%s.lo: %s_stub.o $(%s_OBJPATHS) %s",
+	    p->name, p->name, p->ident, outmkname);
 	if (p->libs)
 		fprintf(outmk, " $(%s_LIBS)", p->ident);
 
@@ -1144,7 +1128,7 @@ prog_makefile_rules(FILE *outmk, prog_t *p)
 	fprintf(outmk, "\n");
 	fprintf(outmk, "\tcrunchide -k _crunched_%s_stub ", p->ident);
 	for (lst = p->keeplist; lst != NULL; lst = lst->next)
-		fprintf(outmk, "-k _%s ", lst->str);
+		fprintf(outmk, "-k %s ", lst->str);
 	fprintf(outmk, "%s.lo\n", p->name);
 }
 

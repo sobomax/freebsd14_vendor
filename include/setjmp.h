@@ -34,7 +34,6 @@
  * SUCH DAMAGE.
  *
  *	@(#)setjmp.h	8.2 (Berkeley) 1/21/94
- * $FreeBSD: 1cc8b7762499f2203a17e2b7a293cba9550fbc52 $
  */
 
 #ifndef _SETJMP_H_

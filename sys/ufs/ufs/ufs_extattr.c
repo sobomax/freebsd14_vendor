@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 1999-2002 Robert N. M. Watson
  * Copyright (c) 2002-2003 Networks Associates Technology, Inc.
@@ -40,8 +40,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 3a88ad7b8279abfbea169f0e6ac45b866a94009e $");
-
 #include "opt_ufs.h"
 
 #include <sys/param.h>
@@ -263,7 +261,6 @@ ufs_extattr_lookup(struct vnode *start_dvp, int lockparent, char *dirname,
 	if (lockparent == UE_GETDIR_LOCKPARENT)
 		cnp.cn_flags |= LOCKPARENT;
 	cnp.cn_lkflags = LK_EXCLUSIVE;
-	cnp.cn_thread = td;
 	cnp.cn_cred = td->td_ucred;
 	cnp.cn_pnbuf = uma_zalloc(namei_zone, M_WAITOK);
 	cnp.cn_nameptr = cnp.cn_pnbuf;

@@ -49,7 +49,6 @@
 # or the SD Card Association to disclose or distribute any technical
 # information, know-how or other confidential information to any third party.
 #
-# $FreeBSD: d3e6d7276ea89a9d69f9648b9cad3965bef7cffb $
 #
 
 #include <sys/types.h>

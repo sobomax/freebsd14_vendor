@@ -1,4 +1,3 @@
-# $FreeBSD: 850650efccb7aef1ec607c770fdf7cfef9f345a6 $
 
 .PATH:	${SRCTOP}/sys/crypto/des \
 	${SRCTOP}/sys/crypto/des/arch/${MACHINE_CPUARCH} \

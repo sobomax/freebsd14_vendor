@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * ------+---------+---------+---------+---------+---------+---------+---------*
  * Copyright (c) 2002   - Garance Alistair Drosehn <gad@FreeBSD.org>.
@@ -35,8 +35,6 @@
  */
 
 #include "lp.cdefs.h"		/* A cross-platform version of <sys/cdefs.h> */
-__FBSDID("$FreeBSD: 26c4d4fb5bcfb125d882a3ae9b10f474599047dd $");
-
 /*
  * movejobs.c - The lpc commands which move jobs around.
  */

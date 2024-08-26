@@ -1,4 +1,3 @@
-/*	$FreeBSD: e7a15b5d5cad5d454c58932af2c37a37e623cc2a $	*/
 
 /*
  * Based upon 4.4BSD's /usr/sbin/arp

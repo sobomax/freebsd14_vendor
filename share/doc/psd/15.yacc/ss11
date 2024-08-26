@@ -35,8 +35,6 @@
 .\" IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 .\"
 .\"	@(#)ssB	8.1 (Berkeley) 6/8/93
-.\"
-.\" $FreeBSD: c16bb52b9422078c32576170cf51322791b849b4 $
 .SH
 11: Acknowledgements
 .PP

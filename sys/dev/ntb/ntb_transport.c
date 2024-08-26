@@ -38,8 +38,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 3977be6db7cff909e2cfb106a4f3d3c73ebdfa94 $");
-
 #include <sys/param.h>
 #include <sys/kernel.h>
 #include <sys/systm.h>
@@ -52,6 +50,7 @@ __FBSDID("$FreeBSD: 3977be6db7cff909e2cfb106a4f3d3c73ebdfa94 $");
 #include <sys/module.h>
 #include <sys/mutex.h>
 #include <sys/queue.h>
+#include <sys/sbuf.h>
 #include <sys/sysctl.h>
 #include <sys/taskqueue.h>
 
@@ -576,12 +575,11 @@ ntb_transport_print_child(device_t dev, device_t child)
 }
 
 static int
-ntb_transport_child_location_str(device_t dev, device_t child, char *buf,
-    size_t buflen)
+ntb_transport_child_location(device_t dev, device_t child, struct sbuf *sb)
 {
 	struct ntb_transport_child *nc = device_get_ivars(child);
 
-	snprintf(buf, buflen, "consumer=%d", nc->consumer);
+	sbuf_printf(sb, "consumer=%d", nc->consumer);
 	return (0);
 }
 
@@ -1684,15 +1682,13 @@ static device_method_t ntb_transport_methods[] = {
 	DEVMETHOD(device_attach,    ntb_transport_attach),
 	DEVMETHOD(device_detach,    ntb_transport_detach),
 	/* Bus interface */
-	DEVMETHOD(bus_child_location_str, ntb_transport_child_location_str),
+	DEVMETHOD(bus_child_location, ntb_transport_child_location),
 	DEVMETHOD(bus_print_child,  ntb_transport_print_child),
 	DEVMETHOD_END
 };
 
-devclass_t ntb_transport_devclass;
 static DEFINE_CLASS_0(ntb_transport, ntb_transport_driver,
     ntb_transport_methods, sizeof(struct ntb_transport_ctx));
-DRIVER_MODULE(ntb_transport, ntb_hw, ntb_transport_driver,
-    ntb_transport_devclass, NULL, NULL);
+DRIVER_MODULE(ntb_transport, ntb_hw, ntb_transport_driver, NULL, NULL);
 MODULE_DEPEND(ntb_transport, ntb, 1, 1, 1);
 MODULE_VERSION(ntb_transport, 1);

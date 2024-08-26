@@ -31,8 +31,6 @@
 
 #include <sys/cdefs.h>
 __SCCSID("@(#)siglist.c	8.1 (Berkeley) 6/4/93");
-__FBSDID("$FreeBSD: 796a0b702136bf8695835f19065ac2f1aab8054d $");
-
 #include <signal.h>
 
 const char *const sys_signame[NSIG] = {

@@ -1,5 +1,4 @@
 /*
- * $FreeBSD: 8c3b89a8aa904ab3727aa5c5f558434da50c726a $
  */
 
 #ifndef	_SPL_NVLIST_H_

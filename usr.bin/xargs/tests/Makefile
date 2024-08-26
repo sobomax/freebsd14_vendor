@@ -1,4 +1,3 @@
-# $FreeBSD: 228c1d545781693418f829713ede10cc69307279 $
 
 PACKAGE=	tests
 
@@ -15,9 +14,11 @@ ${PACKAGE}FILES+=		regress.J.out
 ${PACKAGE}FILES+=		regress.L.out
 ${PACKAGE}FILES+=		regress.P1.out
 ${PACKAGE}FILES+=		regress.R.out
+${PACKAGE}FILES+=		regress.R-1.out
 ${PACKAGE}FILES+=		regress.in
 ${PACKAGE}FILES+=		regress.n1.out
 ${PACKAGE}FILES+=		regress.n2.out
+${PACKAGE}FILES+=		regress.n2147483647.out
 ${PACKAGE}FILES+=		regress.n2P0.out
 ${PACKAGE}FILES+=		regress.n3.out
 ${PACKAGE}FILES+=		regress.normal.out

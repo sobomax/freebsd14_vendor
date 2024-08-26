@@ -3,11 +3,11 @@
 # Whom:			AlanE <alane@freebsd.org>
 #
 # $Carpetsmoker: ports/cdialog/Makefile,v 1.4 2007/04/22 11:30:53 carpetsmoker Exp $
-# $FreeBSD: 6f6d652eed1d1d488534441748ea02d2e5bcbd5b $
+# $FreeBSD: 88a6a5d48194dcd275d386a512f2f975cfd1a35a $
 #
 
 PORTNAME=	cdialog
-PORTVERSION=	1.3.20180621
+PORTVERSION=	1.3.20210117
 PORTEPOCH=	1
 CATEGORIES=	devel
 MASTER_SITES=	ftp://ftp.invisible-island.net/${PORTNAME:S|^c||}/

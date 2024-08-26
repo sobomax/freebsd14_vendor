@@ -1,2 +1,1 @@
-.\" $FreeBSD: 32bfa960d7d548850070c64067f76da330d80040 $
-Do not build Casper program and related libraries.
+This option has no effect.

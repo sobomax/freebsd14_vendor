@@ -1,5 +1,4 @@
 /* SPDX-License-Identifier: MIT */
-/* $FreeBSD: cb92cabeb5b8b4708a9100fc942673a97bc04665 $ */
 #ifndef __JSMN_H_
 #define __JSMN_H_
 

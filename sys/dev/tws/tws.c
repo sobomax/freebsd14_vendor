@@ -35,8 +35,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: a065f7753deebdb2b46d6580a60397c6c2b910a5 $");
-
 #include <dev/tws/tws.h>
 #include <dev/tws/tws_services.h>
 #include <dev/tws/tws_hdm.h>
@@ -349,7 +347,7 @@ tws_detach(device_t dev)
 {
     struct tws_softc *sc = device_get_softc(dev);
     int i;
-    u_int32_t reg;
+    u_int32_t reg __tws_debug;
 
     TWS_TRACE_DEBUG(sc, "entry", 0, 0);
 
@@ -452,11 +450,11 @@ tws_setup_intr(struct tws_softc *sc, int irqs)
 int
 tws_teardown_intr(struct tws_softc *sc)
 {
-    int i, error;
+    int i;
 
     for(i=0;i<sc->irqs;i++) {
         if (sc->intr_handle[i]) {
-            error = bus_teardown_intr(sc->tws_dev,
+            bus_teardown_intr(sc->tws_dev,
                                       sc->irq_res[i], sc->intr_handle[i]);
             sc->intr_handle[i] = NULL;
         }
@@ -509,7 +507,6 @@ tws_init(struct tws_softc *sc)
 
     u_int32_t max_sg_elements;
     u_int32_t dma_mem_size;
-    int error;
     u_int32_t reg;
 
     sc->seq_id = 0;
@@ -569,7 +566,7 @@ tws_init(struct tws_softc *sc)
 
     /* if bus_dmamem_alloc succeeds then bus_dmamap_load will succeed */
     sc->dma_mem_phys=0;
-    error = bus_dmamap_load(sc->cmd_tag, sc->cmd_map, sc->dma_mem,
+    bus_dmamap_load(sc->cmd_tag, sc->cmd_map, sc->dma_mem,
                     dma_mem_size, tws_dmamap_cmds_load_cbfn,
                     &sc->dma_mem_phys, 0);
 
@@ -882,10 +879,8 @@ static driver_t tws_driver = {
         sizeof(struct tws_softc)
 };
 
-static devclass_t tws_devclass;
-
 /* DEFINE_CLASS_0(tws, tws_driver, tws_methods, sizeof(struct tws_softc)); */
-DRIVER_MODULE(tws, pci, tws_driver, tws_devclass, 0, 0);
+DRIVER_MODULE(tws, pci, tws_driver, 0, 0);
 MODULE_DEPEND(tws, cam, 1, 1, 1);
 MODULE_DEPEND(tws, pci, 1, 1, 1);
 

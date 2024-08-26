@@ -11,9 +11,6 @@
  * From: @(#)s_floor.c 5.1 93/09/24
  */
 
-#include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 9e2b51132535b48568c83a42593809110e73c080 $");
-
 /*
  * truncl(x)
  * Return x rounded toward 0 to integral value

@@ -1,4 +1,3 @@
-# $FreeBSD: 727651146c52574308f37dbb4fbf8e43291f011c $
 
 PROG_CXX=	llvm-mca
 
@@ -19,7 +18,5 @@ SRCS+=		Views/TimelineView.cpp
 SRCS+=		llvm-mca.cpp
 
 CFLAGS+=	-I${LLVM_BASE}/${SRCDIR}
-
-LIBADD+=	z
 
 .include "../llvm.prog.mk"

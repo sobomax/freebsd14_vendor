@@ -34,7 +34,6 @@
  * SUCH DAMAGE.
  *
  *	@(#)vm_pager.h	8.4 (Berkeley) 1/12/94
- * $FreeBSD: 0e248d8712502085173a1b5b5da5de4e48a14193 $
  */
 
 /*

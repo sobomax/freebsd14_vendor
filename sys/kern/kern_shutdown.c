@@ -37,8 +37,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: cf9411420304271f5991ecdf66a1aa6804d5391e $");
-
 #include "opt_ddb.h"
 #include "opt_ekcd.h"
 #include "opt_kdb.h"
@@ -50,6 +48,7 @@ __FBSDID("$FreeBSD: cf9411420304271f5991ecdf66a1aa6804d5391e $");
 #include <sys/param.h>
 #include <sys/systm.h>
 #include <sys/bio.h>
+#include <sys/boottrace.h>
 #include <sys/buf.h>
 #include <sys/conf.h>
 #include <sys/compressor.h>
@@ -110,6 +109,10 @@ static int panic_reboot_wait_time = PANIC_REBOOT_WAIT_TIME;
 SYSCTL_INT(_kern, OID_AUTO, panic_reboot_wait_time, CTLFLAG_RWTUN,
     &panic_reboot_wait_time, 0,
     "Seconds to wait before rebooting after a panic");
+static int reboot_wait_time = 0;
+SYSCTL_INT(_kern, OID_AUTO, reboot_wait_time, CTLFLAG_RWTUN,
+    &reboot_wait_time, 0,
+    "Seconds to wait before rebooting");
 
 /*
  * Note that stdarg.h and the ANSI style va_start macro is used for both
@@ -124,18 +127,18 @@ int debugger_on_panic = 0;
 int debugger_on_panic = 1;
 #endif
 SYSCTL_INT(_debug, OID_AUTO, debugger_on_panic,
-    CTLFLAG_RWTUN | CTLFLAG_SECURE,
-    &debugger_on_panic, 0, "Run debugger on kernel panic");
+    CTLFLAG_RWTUN, &debugger_on_panic, 0,
+    "Run debugger on kernel panic");
 
 static bool debugger_on_recursive_panic = false;
 SYSCTL_BOOL(_debug, OID_AUTO, debugger_on_recursive_panic,
-    CTLFLAG_RWTUN | CTLFLAG_SECURE,
-    &debugger_on_recursive_panic, 0, "Run debugger on recursive kernel panic");
+    CTLFLAG_RWTUN, &debugger_on_recursive_panic, 0,
+    "Run debugger on recursive kernel panic");
 
 int debugger_on_trap = 0;
 SYSCTL_INT(_debug, OID_AUTO, debugger_on_trap,
-    CTLFLAG_RWTUN | CTLFLAG_SECURE,
-    &debugger_on_trap, 0, "Run debugger on kernel trap before panic");
+    CTLFLAG_RWTUN, &debugger_on_trap, 0,
+    "Run debugger on kernel trap before panic");
 
 #ifdef KDB_TRACE
 static int trace_on_panic = 1;
@@ -226,8 +229,8 @@ SYSCTL_INT(_kern, OID_AUTO, kerneldump_gzlevel, CTLFLAG_RWTUN,
 const char *panicstr;
 bool __read_frequently panicked;
 
-int __read_mostly dumping;		/* system is dumping */
-int rebooting;				/* system is rebooting */
+int dumping __read_mostly;		/* system is dumping */
+int rebooting __read_mostly;		/* system is rebooting */
 /*
  * Used to serialize between sysctl kern.shutdown.dumpdevname and list
  * modifications via ioctl.
@@ -261,10 +264,10 @@ shutdown_conf(void *unused)
 
 	EVENTHANDLER_REGISTER(shutdown_final, poweroff_wait, NULL,
 	    SHUTDOWN_PRI_FIRST);
-	EVENTHANDLER_REGISTER(shutdown_final, shutdown_halt, NULL,
-	    SHUTDOWN_PRI_LAST + 100);
 	EVENTHANDLER_REGISTER(shutdown_final, shutdown_panic, NULL,
 	    SHUTDOWN_PRI_LAST + 100);
+	EVENTHANDLER_REGISTER(shutdown_final, shutdown_halt, NULL,
+	    SHUTDOWN_PRI_LAST + 200);
 }
 
 SYSINIT(shutdown_conf, SI_SUB_INTRINSIC, SI_ORDER_ANY, shutdown_conf, NULL);
@@ -321,14 +324,19 @@ shutdown_nice_task_fn(void *arg, int pending __unused)
 	howto = (uintptr_t)arg;
 	/* Send a signal to init(8) and have it shutdown the world. */
 	PROC_LOCK(initproc);
-	if (howto & RB_POWEROFF)
+	if ((howto & RB_POWEROFF) != 0) {
+		BOOTTRACE("SIGUSR2 to init(8)");
 		kern_psignal(initproc, SIGUSR2);
-	else if (howto & RB_POWERCYCLE)
+	} else if ((howto & RB_POWERCYCLE) != 0) {
+		BOOTTRACE("SIGWINCH to init(8)");
 		kern_psignal(initproc, SIGWINCH);
-	else if (howto & RB_HALT)
+	} else if ((howto & RB_HALT) != 0) {
+		BOOTTRACE("SIGUSR1 to init(8)");
 		kern_psignal(initproc, SIGUSR1);
-	else
+	} else {
+		BOOTTRACE("SIGINT to init(8)");
 		kern_psignal(initproc, SIGINT);
+	}
 	PROC_UNLOCK(initproc);
 }
 
@@ -343,6 +351,7 @@ shutdown_nice(int howto)
 {
 
 	if (initproc != NULL && !SCHEDULER_STOPPED()) {
+		BOOTTRACE("shutdown initiated");
 		shutdown_nice_task.ta_context = (void *)(uintptr_t)howto;
 		taskqueue_enqueue(taskqueue_fast, &shutdown_nice_task);
 	} else {
@@ -418,6 +427,29 @@ doadump(boolean_t textdump)
 }
 
 /*
+ * Trace the shutdown reason.
+ */
+static void
+reboottrace(int howto)
+{
+	if ((howto & RB_DUMP) != 0) {
+		if ((howto & RB_HALT) != 0)
+			BOOTTRACE("system panic: halting...");
+		if ((howto & RB_POWEROFF) != 0)
+			BOOTTRACE("system panic: powering off...");
+		if ((howto & (RB_HALT|RB_POWEROFF)) == 0)
+			BOOTTRACE("system panic: rebooting...");
+	} else {
+		if ((howto & RB_HALT) != 0)
+			BOOTTRACE("system halting...");
+		if ((howto & RB_POWEROFF) != 0)
+			BOOTTRACE("system powering off...");
+		if ((howto & (RB_HALT|RB_POWEROFF)) == 0)
+			BOOTTRACE("system rebooting...");
+	}
+}
+
+/*
  * kern_reboot(9): Shut down the system cleanly to prepare for reboot, halt, or
  * power off.
  */
@@ -425,6 +457,11 @@ void
 kern_reboot(int howto)
 {
 	static int once = 0;
+
+	if (initproc != NULL && curproc != initproc)
+		BOOTTRACE("kernel shutdown (dirty) started");
+	else
+		BOOTTRACE("kernel shutdown (clean) started");
 
 	/*
 	 * Normal paths here don't hold Giant, but we can wind up here
@@ -434,7 +471,7 @@ kern_reboot(int howto)
 	 * deadlock than to lock against code that won't ever
 	 * continue.
 	 */
-	while (mtx_owned(&Giant))
+	while (!SCHEDULER_STOPPED() && mtx_owned(&Giant))
 		mtx_unlock(&Giant);
 
 #if defined(SMP)
@@ -453,21 +490,22 @@ kern_reboot(int howto)
 #endif
 	/* We're in the process of rebooting. */
 	rebooting = 1;
-
-	/* We are out of the debugger now. */
-	kdb_active = 0;
+	reboottrace(howto);
 
 	/*
 	 * Do any callouts that should be done BEFORE syncing the filesystems.
 	 */
 	EVENTHANDLER_INVOKE(shutdown_pre_sync, howto);
+	BOOTTRACE("shutdown pre sync complete");
 
 	/* 
 	 * Now sync filesystems
 	 */
 	if (!cold && (howto & RB_NOSYNC) == 0 && once == 0) {
 		once = 1;
+		BOOTTRACE("bufshutdown begin");
 		bufshutdown(show_busybufs);
+		BOOTTRACE("bufshutdown end");
 	}
 
 	print_uptime();
@@ -479,11 +517,17 @@ kern_reboot(int howto)
 	 * been completed.
 	 */
 	EVENTHANDLER_INVOKE(shutdown_post_sync, howto);
+	BOOTTRACE("shutdown post sync complete");
 
 	if ((howto & (RB_HALT|RB_DUMP)) == RB_DUMP && !cold && !dumping) 
 		doadump(TRUE);
 
 	/* Now that we're going to really halt the system... */
+	BOOTTRACE("shutdown final begin");
+
+	if (shutdown_trace)
+		boottrace_dump_console();
+
 	EVENTHANDLER_INVOKE(shutdown_final, howto);
 
 	/*
@@ -658,7 +702,7 @@ shutdown_reset(void *junk, int howto)
 {
 
 	printf("Rebooting...\n");
-	DELAY(1000000);	/* wait 1 sec for printf's to complete and be read */
+	DELAY(reboot_wait_time * 1000000);
 
 	/*
 	 * Acquiring smp_ipi_mtx here has a double effect:
@@ -964,7 +1008,7 @@ kproc_shutdown(void *arg, int howto)
 	struct proc *p;
 	int error;
 
-	if (KERNEL_PANICKED())
+	if (SCHEDULER_STOPPED())
 		return;
 
 	p = (struct proc *)arg;
@@ -984,7 +1028,7 @@ kthread_shutdown(void *arg, int howto)
 	struct thread *td;
 	int error;
 
-	if (KERNEL_PANICKED())
+	if (SCHEDULER_STOPPED())
 		return;
 
 	td = (struct thread *)arg;
@@ -1775,7 +1819,7 @@ dump_init_header(const struct dumperinfo *di, struct kerneldumpheader *kdh,
 }
 
 #ifdef DDB
-DB_SHOW_COMMAND(panic, db_show_panic)
+DB_SHOW_COMMAND_FLAGS(panic, db_show_panic, DB_CMD_MEMSAFE)
 {
 
 	if (panicstr == NULL)

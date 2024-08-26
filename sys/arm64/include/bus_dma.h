@@ -1,4 +1,3 @@
-/* $FreeBSD: 1b2d36086e4ffc9525853af28a949e2665554d66 $ */
 
 #ifndef _MACHINE_BUS_DMA_H_
 #define	_MACHINE_BUS_DMA_H_

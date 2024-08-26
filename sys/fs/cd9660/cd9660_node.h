@@ -34,7 +34,6 @@
  * SUCH DAMAGE.
  *
  *	@(#)cd9660_node.h	8.6 (Berkeley) 5/14/95
- * $FreeBSD: 7d0c55e74505507aef09a987d98c52ee997c555a $
  */
 
 /*

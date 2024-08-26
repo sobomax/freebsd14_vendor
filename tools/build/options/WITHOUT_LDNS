@@ -1,2 +1,1 @@
-.\" $FreeBSD: 446d3e82e91dc32e27632428d6e60e7e9cee7249 $
 Setting this variable will prevent the LDNS library from being built.

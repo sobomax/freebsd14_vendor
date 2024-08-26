@@ -1,5 +1,4 @@
 #!/bin/sh
-# $FreeBSD: 3a507b87f6748ab1cbc6b0f2a3d806a1020cc469 $
 echo "$@"
 if ! test -t 0 ; then
 	cat

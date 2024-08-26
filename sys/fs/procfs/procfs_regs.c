@@ -36,7 +36,6 @@
  *
  * From:
  *	$Id: procfs_regs.c,v 3.2 1993/12/15 09:40:17 jsp Exp $
- * $FreeBSD: fd5d0cb2a209947c806783e6b8bb8e65b86736ea $
  */
 
 #include <sys/param.h>

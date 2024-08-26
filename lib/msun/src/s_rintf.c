@@ -13,9 +13,6 @@
  * ====================================================
  */
 
-#include <sys/cdefs.h>
-__FBSDID("$FreeBSD: f8743a4f0f81afff579c2006796620dc82eaa7c1 $");
-
 #include <float.h>
 #include <stdint.h>
 

@@ -1,4 +1,3 @@
-# $FreeBSD: 03b07d2360c8bde27d538f4f185c5cc28f3a72fe $ 
 # $NetBSD: UCS@BMP%JISX0213-1.src,v 1.1 2007/03/05 16:58:33 tnozaki Exp $
 
 TYPE		ROWCOL

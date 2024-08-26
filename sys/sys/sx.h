@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2007 Attilio Rao <attilio@freebsd.org>
  * Copyright (c) 2001 Jason Evans <jasone@freebsd.org>
@@ -27,8 +27,6 @@
  * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
- *
- * $FreeBSD: 1e6b9f3f8a46c283141eac3555794c5729e2e4a7 $
  */
 
 #ifndef	_SYS_SX_H_
@@ -253,12 +251,13 @@ __sx_xunlock(struct sx *sx, struct thread *td, const char *file, int line)
 	(((sx)->sx_lock & ~(SX_LOCK_FLAGMASK & ~SX_LOCK_SHARED)) ==	\
 	    (uintptr_t)curthread)
 
-#define	sx_unlock_(sx, file, line) do {					\
+#define	sx_unlock_(sx, file, line) __extension__ ({			\
 	if (sx_xlocked(sx))						\
 		sx_xunlock_(sx, file, line);				\
 	else								\
 		sx_sunlock_(sx, file, line);				\
-} while (0)
+	(void)0; /* ensure void type for expression */			\
+})
 
 #define	sx_unlock(sx)	sx_unlock_((sx), LOCK_FILE, LOCK_LINE)
 

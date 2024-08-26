@@ -73,9 +73,6 @@
 #include "zfsd.h"
 #include "zfsd_exception.h"
 #include "zpool_list.h"
-
-__FBSDID("$FreeBSD: 8da711fc10cb74f4e2c7bf9f7c29c7dbf6cf5cf9 $");
-
 /*============================ Namespace Control =============================*/
 using std::hex;
 using std::ifstream;
@@ -114,6 +111,26 @@ CaseFile::Find(Guid poolGUID, Guid vdevGUID)
 		return (*curCase);
 	}
 	return (NULL);
+}
+
+void
+CaseFile::Find(Guid poolGUID, Guid vdevGUID, CaseFileList &cases)
+{
+	for (CaseFileList::iterator curCase = s_activeCases.begin();
+	    curCase != s_activeCases.end(); curCase++) {
+		if (((*curCase)->PoolGUID() != poolGUID &&
+		    Guid::InvalidGuid() != poolGUID) ||
+		    (*curCase)->VdevGUID() != vdevGUID)
+			continue;
+
+		/*
+		 * We can have multiple cases for spare vdevs
+		 */
+		cases.push_back(*curCase);
+		if (!(*curCase)->IsSpare()) {
+			return;
+		}
+	}
 }
 
 CaseFile *
@@ -217,6 +234,12 @@ CaseFile::PurgeAll()
 
 }
 
+int
+CaseFile::IsSpare()
+{
+	return (m_is_spare);
+}
+
 //- CaseFile Public Methods ----------------------------------------------------
 bool
 CaseFile::RefreshVdevState()
@@ -240,6 +263,7 @@ CaseFile::ReEvaluate(const string &devPath, const string &physPath, Vdev *vdev)
 {
 	ZpoolList zpl(ZpoolList::ZpoolByGUID, &m_poolGUID);
 	zpool_handle_t *pool(zpl.empty() ? NULL : zpl.front());
+	int flags = ZFS_ONLINE_CHECKREMOVE | ZFS_ONLINE_UNSPARE;
 
 	if (pool == NULL || !RefreshVdevState()) {
 		/*
@@ -280,9 +304,10 @@ CaseFile::ReEvaluate(const string &devPath, const string &physPath, Vdev *vdev)
 	   || vdev->PoolGUID() == Guid::InvalidGuid())
 	 && vdev->GUID() == m_vdevGUID) {
 
+		if (IsSpare())
+			flags |= ZFS_ONLINE_SPARE;
 		if (zpool_vdev_online(pool, vdev->GUIDString().c_str(),
-		    ZFS_ONLINE_CHECKREMOVE | ZFS_ONLINE_UNSPARE,
-		    &m_vdevState) != 0) {
+		    flags, &m_vdevState) != 0) {
 			syslog(LOG_ERR,
 			    "Failed to online vdev(%s/%s:%s): %s: %s\n",
 			    zpool_get_name(pool), vdev->GUIDString().c_str(),
@@ -360,7 +385,7 @@ CaseFile::ReEvaluate(const ZfsEvent &event)
 {
 	bool consumed(false);
 
-	if (event.Value("type") == "misc.fs.zfs.vdev_remove") {
+	if (event.Value("type") == "sysevent.fs.zfs.vdev_remove") {
 		/*
 		 * The Vdev we represent has been removed from the
 		 * configuration.  This case is no longer of value.
@@ -368,12 +393,12 @@ CaseFile::ReEvaluate(const ZfsEvent &event)
 		Close();
 
 		return (/*consumed*/true);
-	} else if (event.Value("type") == "misc.fs.zfs.pool_destroy") {
+	} else if (event.Value("type") == "sysevent.fs.zfs.pool_destroy") {
 		/* This Pool has been destroyed.  Discard the case */
 		Close();
 
 		return (/*consumed*/true);
-	} else if (event.Value("type") == "misc.fs.zfs.config_sync") {
+	} else if (event.Value("type") == "sysevent.fs.zfs.config_sync") {
 		RefreshVdevState();
 		if (VdevState() < VDEV_STATE_HEALTHY)
 			consumed = ActivateSpare();
@@ -445,7 +470,8 @@ CaseFile::ReEvaluate(const ZfsEvent &event)
 		consumed = true;
 	}
 	else if (event.Value("class") == "ereport.fs.zfs.io" ||
-	         event.Value("class") == "ereport.fs.zfs.checksum") {
+	         event.Value("class") == "ereport.fs.zfs.checksum" ||
+		 event.Value("class") == "ereport.fs.zfs.delay") {
 
 		m_tentativeEvents.push_front(event.DeepCopy());
 		RegisterCallout(event);
@@ -490,8 +516,7 @@ bool
 CaseFile::ActivateSpare() {
 	nvlist_t	*config, *nvroot, *parent_config;
 	nvlist_t       **spares;
-	char		*devPath, *vdev_type;
-	const char	*poolname;
+	const char	*devPath, *poolname, *vdev_type;
 	u_int		 nspares, i;
 	int		 error;
 
@@ -518,7 +543,7 @@ CaseFile::ActivateSpare() {
 
 	parent_config = find_parent(config, nvroot, m_vdevGUID);
 	if (parent_config != NULL) {
-		char *parent_type;
+		const char *parent_type;
 
 		/* 
 		 * Don't activate spares for members of a "replacing" vdev.
@@ -791,7 +816,8 @@ CaseFile::CaseFile(const Vdev &vdev)
  : m_poolGUID(vdev.PoolGUID()),
    m_vdevGUID(vdev.GUID()),
    m_vdevState(vdev.State()),
-   m_vdevPhysPath(vdev.PhysicalPath())
+   m_vdevPhysPath(vdev.PhysicalPath()),
+   m_is_spare(vdev.IsSpare())
 {
 	stringstream guidString;
 
@@ -1146,6 +1172,13 @@ IsIOEvent(const Event* const event)
 	return ("ereport.fs.zfs.io" == event->Value("type"));
 }
 
+/* Does the argument event refer to an IO delay? */
+static bool
+IsDelayEvent(const Event* const event)
+{
+	return ("ereport.fs.zfs.delay" == event->Value("type"));
+}
+
 bool
 CaseFile::ShouldDegrade() const
 {
@@ -1156,8 +1189,14 @@ CaseFile::ShouldDegrade() const
 bool
 CaseFile::ShouldFault() const
 {
-	return (std::count_if(m_events.begin(), m_events.end(),
-			      IsIOEvent) > ZFS_DEGRADE_IO_COUNT);
+	bool should_fault_for_io, should_fault_for_delay;
+
+	should_fault_for_io = std::count_if(m_events.begin(), m_events.end(),
+			      IsIOEvent) > ZFS_DEGRADE_IO_COUNT;
+	should_fault_for_delay = std::count_if(m_events.begin(), m_events.end(),
+			      IsDelayEvent) > ZFS_FAULT_DELAY_COUNT;
+
+	return (should_fault_for_io || should_fault_for_delay);
 }
 
 nvlist_t *

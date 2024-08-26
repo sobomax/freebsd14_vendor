@@ -1,7 +1,3 @@
-/*
- * $FreeBSD: 170333343cf0f7d19a2a2c4e8db7ce994ce24108 $
- */
-
 FBSD_1.0 {
 	/* h_nerr; */	/* Why is this not staticized in net/herror.c? */
 	h_errlist;

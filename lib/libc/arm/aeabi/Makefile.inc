@@ -1,18 +1,16 @@
-# $FreeBSD: 9ccabc2186f94ebb8962bf8341a200a11e0c3c1b $
 
 .PATH: ${LIBC_SRCTOP}/arm/aeabi
 
 SRCS+=	aeabi_atexit.c		\
 	aeabi_unwind_cpp.c	\
 	aeabi_unwind_exidx.c
-.if (${MACHINE_ARCH:Marmv[67]*} && defined(CPUTYPE) && ${CPUTYPE:M*soft*} != "") || \
-	${MACHINE_ARCH:Marmv[67]*} == ""
+.if defined(CPUTYPE) && ${CPUTYPE:M*soft*} != ""
 SRCS+=	aeabi_asm_double.S	\
 	aeabi_asm_float.S	\
 	aeabi_double.c		\
 	aeabi_float.c
 .endif
-.if ${MACHINE_ARCH:Marmv[67]*} && (!defined(CPUTYPE) || ${CPUTYPE:M*soft*} == "")
+.if !defined(CPUTYPE) || ${CPUTYPE:M*soft*} == ""
 SRCS+=	aeabi_vfp_double.S	\
 	aeabi_vfp_float.S
 .endif

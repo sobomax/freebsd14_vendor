@@ -32,8 +32,6 @@
 
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: d59ddbcfc871541605db923fb433a13f9f063ae0 $");
-
 #include <sys/types.h>
 #include <sys/param.h>
 #include <sys/acl.h>
@@ -81,97 +79,6 @@ getgname(gid_t gid)
 		return (gids);
 	} else
 		return (gr->gr_name);
-}
-
-/*
- * return an ACL corresponding to the permissions
- * contained in mode_t
- */
-static acl_t
-acl_from_mode(const mode_t mode)
-{
-	acl_t acl;
-	acl_entry_t entry;
-	acl_permset_t perms;
-
-	/* create the ACL */
-	acl = acl_init(3);
-	if (!acl)
-		return NULL;
-
-	/* First entry: ACL_USER_OBJ */
-	if (acl_create_entry(&acl, &entry) == -1)
-		return NULL;
-	if (acl_set_tag_type(entry, ACL_USER_OBJ) == -1)
-		return NULL;
-
-	if (acl_get_permset(entry, &perms) == -1)
-		return NULL;
-	if (acl_clear_perms(perms) == -1)
-		return NULL;
-
-	/* calculate user mode */
-	if (mode & S_IRUSR)
-		if (acl_add_perm(perms, ACL_READ) == -1)
-			return NULL;
-	if (mode & S_IWUSR)
-		if (acl_add_perm(perms, ACL_WRITE) == -1)
-			return NULL;
-	if (mode & S_IXUSR)
-		if (acl_add_perm(perms, ACL_EXECUTE) == -1)
-			return NULL;
-	if (acl_set_permset(entry, perms) == -1)
-		return NULL;
-
-	/* Second entry: ACL_GROUP_OBJ */
-	if (acl_create_entry(&acl, &entry) == -1)
-		return NULL;
-	if (acl_set_tag_type(entry, ACL_GROUP_OBJ) == -1)
-		return NULL;
-
-	if (acl_get_permset(entry, &perms) == -1)
-		return NULL;
-	if (acl_clear_perms(perms) == -1)
-		return NULL;
-
-	/* calculate group mode */
-	if (mode & S_IRGRP)
-		if (acl_add_perm(perms, ACL_READ) == -1)
-			return NULL;
-	if (mode & S_IWGRP)
-		if (acl_add_perm(perms, ACL_WRITE) == -1)
-			return NULL;
-	if (mode & S_IXGRP)
-		if (acl_add_perm(perms, ACL_EXECUTE) == -1)
-			return NULL;
-	if (acl_set_permset(entry, perms) == -1)
-		return NULL;
-
-	/* Third entry: ACL_OTHER */
-	if (acl_create_entry(&acl, &entry) == -1)
-		return NULL;
-	if (acl_set_tag_type(entry, ACL_OTHER) == -1)
-		return NULL;
-
-	if (acl_get_permset(entry, &perms) == -1)
-		return NULL;
-	if (acl_clear_perms(perms) == -1)
-		return NULL;
-
-	/* calculate other mode */
-	if (mode & S_IROTH)
-		if (acl_add_perm(perms, ACL_READ) == -1)
-			return NULL;
-	if (mode & S_IWOTH)
-		if (acl_add_perm(perms, ACL_WRITE) == -1)
-			return NULL;
-	if (mode & S_IXOTH)
-		if (acl_add_perm(perms, ACL_EXECUTE) == -1)
-			return NULL;
-	if (acl_set_permset(entry, perms) == -1)
-		return NULL;
-
-	return(acl);
 }
 
 static int
@@ -229,7 +136,7 @@ print_acl(char *path, acl_type_t type, int hflag, int iflag, int nflag,
 		errno = 0;
 		if (type == ACL_TYPE_DEFAULT)
 			return(0);
-		acl = acl_from_mode(sb.st_mode);
+		acl = acl_from_mode_np(sb.st_mode);
 		if (!acl) {
 			warn("%s: acl_from_mode() failed", path);
 			return(-1);
@@ -248,6 +155,7 @@ print_acl(char *path, acl_type_t type, int hflag, int iflag, int nflag,
 	acl_text = acl_to_text_np(acl, 0, flags);
 	if (!acl_text) {
 		warn("%s: acl_to_text_np() failed", path);
+		(void)acl_free(acl);
 		return(-1);
 	}
 

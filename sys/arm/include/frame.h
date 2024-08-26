@@ -44,8 +44,6 @@
  *
  * Created      : 30/09/94
  *
- * $FreeBSD: 8866e8ab0a33b500e1889df4a2ea4723685b9816 $
- *
  */
 
 #ifndef _MACHINE_FRAME_H_
@@ -61,7 +59,7 @@
  */
 
 struct trapframe {
-	register_t tf_spsr; /* Zero on arm26 */
+	register_t tf_spsr;
 	register_t tf_r0;
 	register_t tf_r1;
 	register_t tf_r2;
@@ -77,8 +75,8 @@ struct trapframe {
 	register_t tf_r12;
 	register_t tf_usr_sp;
 	register_t tf_usr_lr;
-	register_t tf_svc_sp; /* Not used on arm26 */
-	register_t tf_svc_lr; /* Not used on arm26 */
+	register_t tf_svc_sp;
+	register_t tf_svc_lr;
 	register_t tf_pc;
 	register_t tf_pad;
 };

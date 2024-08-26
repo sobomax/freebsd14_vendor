@@ -29,7 +29,6 @@
  * SUCH DAMAGE.
  *
  *	@(#)locale.h	8.1 (Berkeley) 6/2/93
- * $FreeBSD: de8e03ade5c840b4aee6f5934ba952c559b3f4a5 $
  */
 
 #ifndef _LOCALE_H_

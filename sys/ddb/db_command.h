@@ -24,8 +24,6 @@
  *
  * any improvements or extensions that they make and grant Carnegie the
  * rights to redistribute these changes.
- *
- * $FreeBSD: 2720ba65e3a62ae32c591826883085f9806ef932 $
  */
 
 #ifndef _DDB_DB_COMMAND_H_

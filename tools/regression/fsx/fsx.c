@@ -36,8 +36,6 @@
  *
  *	Updated license to APSL 2.0, 2004/7/27 - Jordan Hubbard
  *
- * $FreeBSD: 771fedc1d0d308e44db7fd1fdac7253125918c6f $
- *
  */
 
 #include <sys/types.h>

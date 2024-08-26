@@ -1,6 +1,5 @@
-# $FreeBSD: 0f00a366878b30a26deb4ec0daa8d893d579bf1a $
 #
-# SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+# SPDX-License-Identifier: BSD-2-Clause
 #
 # Copyright (c) 2017 Kristof Provost <kp@FreeBSD.org>
 #
@@ -101,6 +100,10 @@ v6_head()
 v6_body()
 {
 	pft_init
+
+	if [ "$(atf_config_get ci false)" = "true" ]; then
+		atf_skip "https://bugs.freebsd.org/260460"
+	fi
 
 	epair_send=$(vnet_mkepair)
 	epair_recv=$(vnet_mkepair)

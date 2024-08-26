@@ -1,7 +1,6 @@
 #
 # PAE -- Generic kernel configuration file for FreeBSD/i386 PAE
 #
-# $FreeBSD: 07dfec58fd8e0d73c3c875675d914ab03bb95056 $
 
 include GENERIC
 

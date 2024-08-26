@@ -68,8 +68,6 @@
  * POSSIBILITY OF SUCH DAMAGE.
  *
  * OpenBSD: if_bridge.h,v 1.14 2001/03/22 03:48:29 jason Exp
- *
- * $FreeBSD: b7ce1e27409dd330be5de219a3bf6de8932eb58a $
  */
 
 /*

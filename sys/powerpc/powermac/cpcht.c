@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (C) 2008-2010 Nathan Whitehorn
  * All rights reserved.
@@ -26,8 +26,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: a475cafb93cd4527305c9bf4651a0be61626cfee $");
-
 #include <sys/param.h>
 #include <sys/systm.h>
 #include <sys/module.h>
@@ -138,11 +136,9 @@ struct cpcht_softc {
 	struct mtx		htirq_mtx;
 };
 
-static devclass_t	cpcht_devclass;
 DEFINE_CLASS_1(pcib, cpcht_driver, cpcht_methods, sizeof(struct cpcht_softc),
-    ofw_pci_driver);
-EARLY_DRIVER_MODULE(cpcht, ofwbus, cpcht_driver, cpcht_devclass, 0, 0,
-    BUS_PASS_BUS);
+    ofw_pcib_driver);
+EARLY_DRIVER_MODULE(cpcht, ofwbus, cpcht_driver, 0, 0, BUS_PASS_BUS);
 
 #define CPCHT_IOPORT_BASE	0xf4000000UL /* Hardwired */
 #define CPCHT_IOPORT_SIZE	0x00400000UL
@@ -212,7 +208,7 @@ cpcht_attach(device_t dev)
 	/* Now make the mapping table available to the MPIC */
 	cpcht_irqmap = sc->htirq_map;
 
-	return (ofw_pci_attach(dev));
+	return (ofw_pcib_attach(dev));
 }
 
 static void
@@ -549,8 +545,8 @@ static driver_t openpic_cpcht_driver = {
 	sizeof(struct openpic_cpcht_softc),
 };
 
-EARLY_DRIVER_MODULE(openpic, unin, openpic_cpcht_driver, openpic_devclass,
-    0, 0, BUS_PASS_INTERRUPT);
+EARLY_DRIVER_MODULE(openpic, unin, openpic_cpcht_driver, 0, 0,
+    BUS_PASS_INTERRUPT);
 
 static int
 openpic_cpcht_probe(device_t dev)

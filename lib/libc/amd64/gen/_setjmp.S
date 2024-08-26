@@ -34,8 +34,6 @@
 	.asciz "@(#)_setjmp.s	5.1 (Berkeley) 4/23/90"
 #endif /* LIBC_SCCS and not lint */
 #include <machine/asm.h>
-__FBSDID("$FreeBSD: 0e1e5f8f265dc4c059990a927811288bfcd39f9c $");
-
 /*
  * C library -- _setjmp, _longjmp
  *
@@ -48,8 +46,8 @@ __FBSDID("$FreeBSD: 0e1e5f8f265dc4c059990a927811288bfcd39f9c $");
 
 ENTRY(_setjmp)
 	movq	%rdi,%rax
-	movq	0(%rsp),%rdx		/* retval */
-	movq	%rdx, 0(%rax)		/* 0; retval */
+	movq	0(%rsp),%rdx		/* return address */
+	movq	%rdx, 0(%rax)		/* 0; return address */
 	movq	%rbx, 8(%rax)		/* 1; rbx */
 	movq	%rsp,16(%rax)		/* 2; rsp */
 	movq	%rbp,24(%rax)		/* 3; rbp */
@@ -88,7 +86,7 @@ ENTRY(___longjmp)
 	testq	%rax,%rax
 	jnz	1f
 	incq	%rax
-1:	movq	%rcx,0(%rsp)
+1:	movq	%rcx,0(%rsp)		/* return address */
 	ret
 END(___longjmp)
 

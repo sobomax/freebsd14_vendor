@@ -1,4 +1,3 @@
-/*	$FreeBSD: 73ba0cf72b8c9d94002333dfc9eb45c21ba45f2b $	*/
 
 extern int ipfrule_add(void);
 extern int ipfrule_remove(void);

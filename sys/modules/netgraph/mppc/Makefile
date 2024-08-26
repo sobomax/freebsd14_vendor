@@ -1,5 +1,4 @@
 # $Whistle: Makefile,v 1.1 1999/12/08 20:20:39 archie Exp $
-# $FreeBSD: 0cd02f7df9c044d39d7465df2f7641fb006be545 $
 
 KMOD=	ng_mppc
 SRCS= 	ng_mppc.c opt_netgraph.h

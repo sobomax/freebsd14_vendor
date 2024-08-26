@@ -23,7 +23,6 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 #include "test.h"
-__FBSDID("$FreeBSD: 0a03cb677593d1c4e2363119321c2308276f8366 $");
 
 /*
  * The pax size attribute can be used to override the size.

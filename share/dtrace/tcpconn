@@ -24,8 +24,6 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 5cf3c1cfa472bffa3f496b2ce47216347b1418d1 $
- *
  * The tcpconn D script shows histograms of the source of TCP connections
  *
  * Usage: tcpconn

@@ -1,7 +1,7 @@
 /*-
  * alias_skinny.c
  *
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2002, 2003 MarcusCom, Inc.
  * All rights reserved.
@@ -28,8 +28,6 @@
  * SUCH DAMAGE.
  *
  * Author: Joe Marcus Clarke <marcus@FreeBSD.org>
- *
- * $FreeBSD: 2c664c2c58d9588b55ce793c341d2a4a06974dcb $
  */
 
 #ifdef _KERNEL
@@ -230,7 +228,7 @@ alias_skinny_startmedia(struct StartMediaTransmission *start_media,
     struct alias_link *lnk, u_int32_t localIpAddr,
     ConvDirection direction)
 {
-	struct in_addr dst, src;
+	struct in_addr dst __unused, src __unused;
 
 	(void)pip;
 	(void)tc;
@@ -274,13 +272,11 @@ alias_skinny_opnrcvch_ack(struct libalias *la, struct OpenReceiveChannelAck *opn
 {
 	struct in_addr null_addr;
 	struct alias_link *opnrcv_lnk;
-	u_int32_t localPort;
 
 	(void)lnk;
 	(void)direction;
 
 	*localIpAddr = (u_int32_t)opnrcvch_ack->ipAddr;
-	localPort = opnrcvch_ack->port;
 
 	null_addr.s_addr = INADDR_ANY;
 	opnrcv_lnk = FindUdpTcpOut(la, pip->ip_src, null_addr,

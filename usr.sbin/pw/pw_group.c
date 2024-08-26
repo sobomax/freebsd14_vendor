@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (C) 1996
  *	David L. Nugent.  All rights reserved.
@@ -26,11 +26,6 @@
  * SUCH DAMAGE.
  */
 
-#ifndef lint
-static const char rcsid[] =
-  "$FreeBSD: 1f5979a5dd037b7a13e642f95e6e55ed7ec79100 $";
-#endif /* not lint */
-
 #include <ctype.h>
 #include <err.h>
 #include <grp.h>
@@ -55,7 +50,8 @@ grp_set_passwd(struct group *grp, bool update, int fd, bool precrypted)
 	int		 b;
 	int		 istty;
 	struct termios	 t, n;
-	char		*p, line[256];
+	static char      line[256];
+	char		*p;
 
 	if (fd == -1)
 		return;
@@ -277,9 +273,13 @@ pw_group_next(int argc, char **argv, char *arg1 __unused)
 			quiet = true;
 			break;
 		default:
-			exit(EX_USAGE);
+			usage();
 		}
 	}
+	argc -= optind;
+	argv += optind;
+	if (argc > 0)
+		usage();
 
 	if (quiet)
 		freopen(_PATH_DEVNULL, "w", stderr);
@@ -336,9 +336,13 @@ pw_group_show(int argc, char **argv, char *arg1)
 			all = true;
 			break;
 		default:
-			exit(EX_USAGE);
+			usage();
 		}
 	}
+	argc -= optind;
+	argv += optind;
+	if (argc > 0)
+		usage();
 
 	if (quiet)
 		freopen(_PATH_DEVNULL, "w", stderr);
@@ -395,9 +399,13 @@ pw_group_del(int argc, char **argv, char *arg1)
 			nis = true;
 			break;
 		default:
-			exit(EX_USAGE);
+			usage();
 		}
 	}
+	argc -= optind;
+	argv += optind;
+	if (argc > 0)
+		usage();
 
 	if (quiet)
 		freopen(_PATH_DEVNULL, "w", stderr);
@@ -417,7 +425,7 @@ pw_group_del(int argc, char **argv, char *arg1)
 	return (EXIT_SUCCESS);
 }
 
-static bool
+bool
 grp_has_member(struct group *grp, const char *name)
 {
 	int j;
@@ -555,9 +563,13 @@ pw_group_add(int argc, char **argv, char *arg1)
 			nis = true;
 			break;
 		default:
-			exit(EX_USAGE);
+			usage();
 		}
 	}
+	argc -= optind;
+	argv += optind;
+	if (argc > 0)
+		usage();
 
 	if (quiet)
 		freopen(_PATH_DEVNULL, "w", stderr);
@@ -649,9 +661,14 @@ pw_group_mod(int argc, char **argv, char *arg1)
 			nis = true;
 			break;
 		default:
-			exit(EX_USAGE);
+			usage();
 		}
 	}
+	argc -= optind;
+	argv += optind;
+	if (argc > 0)
+		usage();
+
 	if (quiet)
 		freopen(_PATH_DEVNULL, "w", stderr);
 	cnf = get_userconfig(cfg);
@@ -701,11 +718,11 @@ pw_group_mod(int argc, char **argv, char *arg1)
 	if ((grp = GETGRNAM(name)) == NULL)
 		errx(EX_SOFTWARE, "group disappeared during update");
 
-	pw_log(cnf, M_UPDATE, W_GROUP, "%s(%ju)", grp->gr_name,
+	pw_log(cnf, M_MODIFY, W_GROUP, "%s(%ju)", grp->gr_name,
 	    (uintmax_t)grp->gr_gid);
 
 	if (nis && nis_update() == 0)
-		pw_log(cnf, M_UPDATE, W_GROUP, "NIS maps updated");
+		pw_log(cnf, M_MODIFY, W_GROUP, "NIS maps updated");
 
 	return (EXIT_SUCCESS);
 }

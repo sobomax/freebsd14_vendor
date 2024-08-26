@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Written by: David Jeffery
  * Copyright (c) 2002 Adaptec Inc.
@@ -28,8 +28,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 493e28d21e9211d33978f26c5361408b7a0924ee $");
-
 #include <dev/ips/ipsreg.h>
 #include <dev/ips/ips.h>
 #include <dev/ips/ips_disk.h>
@@ -61,8 +59,7 @@ static driver_t ipsd_driver = {
 	sizeof(ipsdisk_softc_t)
 };
 
-static devclass_t ipsd_devclass;
-DRIVER_MODULE(ipsd, ips, ipsd_driver, ipsd_devclass, 0, 0);
+DRIVER_MODULE(ipsd, ips, ipsd_driver, 0, 0);
 
 /* handle opening of disk device.  It must set up all
    information about the geometry and size of the disk */

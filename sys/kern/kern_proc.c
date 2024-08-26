@@ -32,8 +32,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 2879af8f9335ceb4e292720af0df7528153745f2 $");
-
 #include "opt_ddb.h"
 #include "opt_ktrace.h"
 #include "opt_kstack_pages.h"
@@ -163,7 +161,8 @@ EVENTHANDLER_LIST_DEFINE(process_fork);
 EVENTHANDLER_LIST_DEFINE(process_exec);
 
 int kstack_pages = KSTACK_PAGES;
-SYSCTL_INT(_kern, OID_AUTO, kstack_pages, CTLFLAG_RD, &kstack_pages, 0,
+SYSCTL_INT(_kern, OID_AUTO, kstack_pages, CTLFLAG_RDTUN | CTLFLAG_NOFETCH,
+    &kstack_pages, 0,
     "Kernel stack size in pages");
 static int vmmap_skip_res_cnt = 0;
 SYSCTL_INT(_kern, OID_AUTO, proc_vmmap_skip_resident_count, CTLFLAG_RW,
@@ -246,8 +245,7 @@ proc_dtor(void *mem, int size, void *arg)
 #endif
 		/* Free all OSD associated to this thread. */
 		osd_thread_exit(td);
-		td_softdep_cleanup(td);
-		MPASS(td->td_su == NULL);
+		ast_kclear(td);
 
 		/* Make sure all thread destructors are executed */
 		EVENTHANDLER_DIRECT_INVOKE(thread_dtor, td);
@@ -279,6 +277,7 @@ proc_init(void *mem, int size, int flags)
 	EVENTHANDLER_DIRECT_INVOKE(process_init, p);
 	p->p_stats = pstats_alloc();
 	p->p_pgrp = NULL;
+	TAILQ_INIT(&p->p_kqtim_stop);
 	return (0);
 }
 
@@ -311,6 +310,7 @@ pgrp_init(void *mem, int size, int flags)
 
 	pg = mem;
 	mtx_init(&pg->pg_mtx, "process group", NULL, MTX_DEF | MTX_DUPOK);
+	sx_init(&pg->pg_killsx, "killpg racer");
 	return (0);
 }
 
@@ -574,6 +574,7 @@ errout:
 int
 enterpgrp(struct proc *p, pid_t pgid, struct pgrp *pgrp, struct session *sess)
 {
+	struct pgrp *old_pgrp;
 
 	sx_assert(&proctree_lock, SX_XLOCKED);
 
@@ -584,6 +585,15 @@ enterpgrp(struct proc *p, pid_t pgid, struct pgrp *pgrp, struct session *sess)
 	    ("enterpgrp: pgrp with pgid exists"));
 	KASSERT(!SESS_LEADER(p),
 	    ("enterpgrp: session leader attempted setpgrp"));
+
+	old_pgrp = p->p_pgrp;
+	if (!sx_try_xlock(&old_pgrp->pg_killsx)) {
+		sx_xunlock(&proctree_lock);
+		sx_xlock(&old_pgrp->pg_killsx);
+		sx_xunlock(&old_pgrp->pg_killsx);
+		return (ERESTART);
+	}
+	MPASS(old_pgrp == p->p_pgrp);
 
 	if (sess != NULL) {
 		/*
@@ -626,6 +636,7 @@ enterpgrp(struct proc *p, pid_t pgid, struct pgrp *pgrp, struct session *sess)
 
 	doenterpgrp(p, pgrp);
 
+	sx_xunlock(&old_pgrp->pg_killsx);
 	return (0);
 }
 
@@ -635,6 +646,7 @@ enterpgrp(struct proc *p, pid_t pgid, struct pgrp *pgrp, struct session *sess)
 int
 enterthispgrp(struct proc *p, struct pgrp *pgrp)
 {
+	struct pgrp *old_pgrp;
 
 	sx_assert(&proctree_lock, SX_XLOCKED);
 	PROC_LOCK_ASSERT(p, MA_NOTOWNED);
@@ -647,8 +659,26 @@ enterthispgrp(struct proc *p, struct pgrp *pgrp)
 	KASSERT(pgrp != p->p_pgrp,
 	    ("%s: p %p belongs to pgrp %p", __func__, p, pgrp));
 
+	old_pgrp = p->p_pgrp;
+	if (!sx_try_xlock(&old_pgrp->pg_killsx)) {
+		sx_xunlock(&proctree_lock);
+		sx_xlock(&old_pgrp->pg_killsx);
+		sx_xunlock(&old_pgrp->pg_killsx);
+		return (ERESTART);
+	}
+	MPASS(old_pgrp == p->p_pgrp);
+	if (!sx_try_xlock(&pgrp->pg_killsx)) {
+		sx_xunlock(&old_pgrp->pg_killsx);
+		sx_xunlock(&proctree_lock);
+		sx_xlock(&pgrp->pg_killsx);
+		sx_xunlock(&pgrp->pg_killsx);
+		return (ERESTART);
+	}
+
 	doenterpgrp(p, pgrp);
 
+	sx_xunlock(&pgrp->pg_killsx);
+	sx_xunlock(&old_pgrp->pg_killsx);
 	return (0);
 }
 
@@ -997,7 +1027,7 @@ db_print_pgrp_one(struct pgrp *pgrp, struct proc *p)
 	    p->p_pptr == NULL ? 0 : isjobproc(p->p_pptr, pgrp));
 }
 
-DB_SHOW_COMMAND(pgrpdump, pgrpdump)
+DB_SHOW_COMMAND_FLAGS(pgrpdump, pgrpdump, DB_CMD_MEMSAFE)
 {
 	struct pgrp *pgrp;
 	struct proc *p;
@@ -2275,14 +2305,13 @@ proc_get_binpath(struct proc *p, char *binname, char **retbuf,
 			 * might have been renamed or replaced, in
 			 * which case we should not report old name.
 			 */
-			NDINIT(&nd, LOOKUP, FOLLOW, UIO_SYSSPACE, *retbuf,
-			    curthread);
+			NDINIT(&nd, LOOKUP, FOLLOW, UIO_SYSSPACE, *retbuf);
 			error = namei(&nd);
 			if (error == 0) {
 				if (nd.ni_vp == vp)
 					do_fullpath = false;
 				vrele(nd.ni_vp);
-				NDFREE(&nd, NDF_ONLY_PNBUF);
+				NDFREE_PNBUF(&nd);
 			}
 		}
 	}
@@ -3097,9 +3126,9 @@ sysctl_kern_proc_sigtramp(SYSCTL_HANDLER_ARGS)
 	if ((req->flags & SCTL_MASK32) != 0) {
 		bzero(&kst32, sizeof(kst32));
 		if (SV_PROC_FLAG(p, SV_ILP32)) {
-			if (sv->sv_sigcode_base != 0) {
-				kst32.ksigtramp_start = sv->sv_sigcode_base;
-				kst32.ksigtramp_end = sv->sv_sigcode_base +
+			if (PROC_HAS_SHP(p)) {
+				kst32.ksigtramp_start = PROC_SIGCODE(p);
+				kst32.ksigtramp_end = kst32.ksigtramp_start +
 				    ((sv->sv_flags & SV_DSO_SIG) == 0 ?
 				    *sv->sv_szsigcode :
 				    (uintptr_t)sv->sv_szsigcode);
@@ -3115,9 +3144,9 @@ sysctl_kern_proc_sigtramp(SYSCTL_HANDLER_ARGS)
 	}
 #endif
 	bzero(&kst, sizeof(kst));
-	if (sv->sv_sigcode_base != 0) {
-		kst.ksigtramp_start = (char *)sv->sv_sigcode_base;
-		kst.ksigtramp_end = (char *)sv->sv_sigcode_base +
+	if (PROC_HAS_SHP(p)) {
+		kst.ksigtramp_start = (char *)PROC_SIGCODE(p);
+		kst.ksigtramp_end = (char *)kst.ksigtramp_start +
 		    ((sv->sv_flags & SV_DSO_SIG) == 0 ? *sv->sv_szsigcode :
 		    (uintptr_t)sv->sv_szsigcode);
 	} else {
@@ -3198,6 +3227,86 @@ errlocked:
 	} else
 #endif
 		error = SYSCTL_OUT(req, &addr, sizeof(addr));
+	return (error);
+}
+
+static int
+sysctl_kern_proc_vm_layout(SYSCTL_HANDLER_ARGS)
+{
+	struct kinfo_vm_layout kvm;
+	struct proc *p;
+	struct vmspace *vmspace;
+	int error, *name;
+
+	name = (int *)arg1;
+	if ((u_int)arg2 != 1)
+		return (EINVAL);
+
+	error = pget((pid_t)name[0], PGET_CANDEBUG, &p);
+	if (error != 0)
+		return (error);
+#ifdef COMPAT_FREEBSD32
+	if (SV_CURPROC_FLAG(SV_ILP32)) {
+		if (!SV_PROC_FLAG(p, SV_ILP32)) {
+			PROC_UNLOCK(p);
+			return (EINVAL);
+		}
+	}
+#endif
+	vmspace = vmspace_acquire_ref(p);
+	PROC_UNLOCK(p);
+
+	memset(&kvm, 0, sizeof(kvm));
+	kvm.kvm_min_user_addr = vm_map_min(&vmspace->vm_map);
+	kvm.kvm_max_user_addr = vm_map_max(&vmspace->vm_map);
+	kvm.kvm_text_addr = (uintptr_t)vmspace->vm_taddr;
+	kvm.kvm_text_size = vmspace->vm_tsize;
+	kvm.kvm_data_addr = (uintptr_t)vmspace->vm_daddr;
+	kvm.kvm_data_size = vmspace->vm_dsize;
+	kvm.kvm_stack_addr = (uintptr_t)vmspace->vm_maxsaddr;
+	kvm.kvm_stack_size = vmspace->vm_ssize;
+	kvm.kvm_shp_addr = vmspace->vm_shp_base;
+	kvm.kvm_shp_size = p->p_sysent->sv_shared_page_len;
+	if ((vmspace->vm_map.flags & MAP_WIREFUTURE) != 0)
+		kvm.kvm_map_flags |= KMAP_FLAG_WIREFUTURE;
+	if ((vmspace->vm_map.flags & MAP_ASLR) != 0)
+		kvm.kvm_map_flags |= KMAP_FLAG_ASLR;
+	if ((vmspace->vm_map.flags & MAP_ASLR_IGNSTART) != 0)
+		kvm.kvm_map_flags |= KMAP_FLAG_ASLR_IGNSTART;
+	if ((vmspace->vm_map.flags & MAP_WXORX) != 0)
+		kvm.kvm_map_flags |= KMAP_FLAG_WXORX;
+	if ((vmspace->vm_map.flags & MAP_ASLR_STACK) != 0)
+		kvm.kvm_map_flags |= KMAP_FLAG_ASLR_STACK;
+	if (vmspace->vm_shp_base != p->p_sysent->sv_shared_page_base &&
+	    PROC_HAS_SHP(p))
+		kvm.kvm_map_flags |= KMAP_FLAG_ASLR_SHARED_PAGE;
+
+#ifdef COMPAT_FREEBSD32
+	if (SV_CURPROC_FLAG(SV_ILP32)) {
+		struct kinfo_vm_layout32 kvm32;
+
+		memset(&kvm32, 0, sizeof(kvm32));
+		kvm32.kvm_min_user_addr = (uint32_t)kvm.kvm_min_user_addr;
+		kvm32.kvm_max_user_addr = (uint32_t)kvm.kvm_max_user_addr;
+		kvm32.kvm_text_addr = (uint32_t)kvm.kvm_text_addr;
+		kvm32.kvm_text_size = (uint32_t)kvm.kvm_text_size;
+		kvm32.kvm_data_addr = (uint32_t)kvm.kvm_data_addr;
+		kvm32.kvm_data_size = (uint32_t)kvm.kvm_data_size;
+		kvm32.kvm_stack_addr = (uint32_t)kvm.kvm_stack_addr;
+		kvm32.kvm_stack_size = (uint32_t)kvm.kvm_stack_size;
+		kvm32.kvm_shp_addr = (uint32_t)kvm.kvm_shp_addr;
+		kvm32.kvm_shp_size = (uint32_t)kvm.kvm_shp_size;
+		kvm32.kvm_map_flags = kvm.kvm_map_flags;
+		error = SYSCTL_OUT(req, &kvm32, sizeof(kvm32));
+		goto out;
+	}
+#endif
+
+	error = SYSCTL_OUT(req, &kvm, sizeof(kvm));
+#ifdef COMPAT_FREEBSD32
+out:
+#endif
+	vmspace_free(vmspace);
 	return (error);
 }
 
@@ -3319,6 +3428,10 @@ static SYSCTL_NODE(_kern_proc, KERN_PROC_SIGFASTBLK, sigfastblk, CTLFLAG_RD |
 	CTLFLAG_ANYBODY | CTLFLAG_MPSAFE, sysctl_kern_proc_sigfastblk,
 	"Thread sigfastblock address");
 
+static SYSCTL_NODE(_kern_proc, KERN_PROC_VM_LAYOUT, vm_layout, CTLFLAG_RD |
+	CTLFLAG_ANYBODY | CTLFLAG_MPSAFE, sysctl_kern_proc_vm_layout,
+	"Process virtual address space layout info");
+
 static struct sx stop_all_proc_blocker;
 SX_SYSINIT(stop_all_proc_blocker, &stop_all_proc_blocker, "sapblk");
 
@@ -3366,7 +3479,8 @@ allproc_loop:
 		LIST_REMOVE(cp, p_list);
 		LIST_INSERT_AFTER(p, cp, p_list);
 		PROC_LOCK(p);
-		if ((p->p_flag & (P_KPROC | P_SYSTEM | P_TOTAL_STOP)) != 0) {
+		if ((p->p_flag & (P_KPROC | P_SYSTEM | P_TOTAL_STOP |
+		    P_STOPPED_SIG)) != 0) {
 			PROC_UNLOCK(p);
 			continue;
 		}
@@ -3384,6 +3498,16 @@ allproc_loop:
 			 * thread running.
 			 */
 			seen_stopped = true;
+			PROC_UNLOCK(p);
+			continue;
+		}
+		if ((p->p_flag & P_TRACED) != 0) {
+			/*
+			 * thread_single() below cannot stop traced p,
+			 * so skip it.  OTOH, we cannot require
+			 * restart because debugger might be either
+			 * already stopped or traced as well.
+			 */
 			PROC_UNLOCK(p);
 			continue;
 		}

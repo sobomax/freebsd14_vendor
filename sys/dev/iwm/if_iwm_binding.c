@@ -87,8 +87,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 28207c998d777b28a28b2656e1578148fa498085 $");
-
 #include "opt_wlan.h"
 #include "opt_iwm.h"
 
@@ -159,7 +157,7 @@ static int
 iwm_binding_cmd(struct iwm_softc *sc, uint32_t action,
 	struct iwm_iface_iterator_data *data)
 {
-	struct iwm_binding_cmd cmd;
+	struct iwm_binding_cmd_v1 cmd;
 	struct iwm_phy_ctxt *phyctxt = data->phyctxt;
 	int i, ret;
 	uint32_t status;

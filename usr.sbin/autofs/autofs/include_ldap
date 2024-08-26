@@ -1,6 +1,5 @@
 #!/bin/sh
 #
-# $FreeBSD: 4cf70bfeef81df849a6927799e38299ae71d409a $
 #
 
 # Modify this to suit your needs.  The "$1" is the map name, eg. "auto_master".

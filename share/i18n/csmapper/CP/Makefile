@@ -1,4 +1,3 @@
-# $FreeBSD: 28a506c8b64dbec96d0071b6a0e6a6f844203777 $
 # $NetBSD: Makefile.inc,v 1.6 2008/10/25 22:35:36 apb Exp $
 
 CODE=	CP

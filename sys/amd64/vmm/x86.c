@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2011 NetApp, Inc.
  * All rights reserved.
@@ -24,13 +24,9 @@
  * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
- *
- * $FreeBSD: d99fb391afbabf36fab78c11f32563bc0faad2f0 $
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: d99fb391afbabf36fab78c11f32563bc0faad2f0 $");
-
 #include <sys/param.h>
 #include <sys/pcpu.h>
 #include <sys/systm.h>
@@ -60,16 +56,6 @@ static const char bhyve_id[12] = "bhyve bhyve ";
 static uint64_t bhyve_xcpuids;
 SYSCTL_ULONG(_hw_vmm, OID_AUTO, bhyve_xcpuids, CTLFLAG_RW, &bhyve_xcpuids, 0,
     "Number of times an unknown cpuid leaf was accessed");
-
-#if __FreeBSD_version < 1200060	/* Remove after 11 EOL helps MFCing */
-extern u_int threads_per_core;
-SYSCTL_UINT(_hw_vmm_topology, OID_AUTO, threads_per_core, CTLFLAG_RDTUN,
-    &threads_per_core, 0, NULL);
-
-extern u_int cores_per_package;
-SYSCTL_UINT(_hw_vmm_topology, OID_AUTO, cores_per_package, CTLFLAG_RDTUN,
-    &cores_per_package, 0, NULL);
-#endif
 
 static int cpuid_leaf_b = 1;
 SYSCTL_INT(_hw_vmm_topology, OID_AUTO, cpuid_leaf_b, CTLFLAG_RDTUN,
@@ -441,18 +427,22 @@ x86_emulate_cpuid(struct vcpu *vcpu, uint64_t *rax, uint64_t *rbx,
 				/*
 				 * Expose known-safe features.
 				 */
-				regs[1] &= (CPUID_STDEXT_FSGSBASE |
+				regs[1] &= CPUID_STDEXT_FSGSBASE |
 				    CPUID_STDEXT_BMI1 | CPUID_STDEXT_HLE |
 				    CPUID_STDEXT_AVX2 | CPUID_STDEXT_SMEP |
 				    CPUID_STDEXT_BMI2 |
 				    CPUID_STDEXT_ERMS | CPUID_STDEXT_RTM |
 				    CPUID_STDEXT_AVX512F |
+				    CPUID_STDEXT_AVX512DQ |
 				    CPUID_STDEXT_RDSEED |
 				    CPUID_STDEXT_SMAP |
 				    CPUID_STDEXT_AVX512PF |
 				    CPUID_STDEXT_AVX512ER |
-				    CPUID_STDEXT_AVX512CD | CPUID_STDEXT_SHA);
-				regs[2] = 0;
+				    CPUID_STDEXT_AVX512CD | CPUID_STDEXT_SHA |
+				    CPUID_STDEXT_AVX512BW |
+				    CPUID_STDEXT_AVX512VL;
+				regs[2] &= CPUID_STDEXT2_VAES |
+				    CPUID_STDEXT2_VPCLMULQDQ;
 				regs[3] &= CPUID_STDEXT3_MD_CLEAR;
 
 				/* Advertise RDPID if it is enabled. */

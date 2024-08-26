@@ -1,4 +1,3 @@
-/* $FreeBSD: bab36182a9e752003db00b2d601641176f6792f6 $ */
 /*
  * sock.c (C) 1995-1998 Darren Reed
  *
@@ -42,6 +41,7 @@ typedef int     boolean_t;
 #include <nlist.h>
 #include <sys/user.h>
 #include <sys/socket.h>
+#define	_WANT_SOCKET
 #include <sys/socketvar.h>
 #include <sys/proc.h>
 # include <kvm.h>

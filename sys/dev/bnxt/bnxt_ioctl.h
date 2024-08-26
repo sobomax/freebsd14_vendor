@@ -27,8 +27,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: af6c719b914dd85c082aef4225fdf5e0b1e5f128 $");
-
 #ifndef _BNXT_IOCTL_H
 #define _BNXT_IOCTL_H
 

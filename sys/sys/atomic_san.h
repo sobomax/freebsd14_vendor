@@ -32,8 +32,6 @@
  * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
- *
- * $FreeBSD: beeea82a666be5ae290cff59dc15a9b2a4fee9af $
  */
 
 #ifndef _SYS_ATOMIC_SAN_H_
@@ -267,17 +265,11 @@ ATOMIC_SAN_THREAD_FENCE(SAN_INTERCEPTOR_PREFIX);
 #define	atomic_fcmpset_acq_ptr		ATOMIC_SAN(fcmpset_acq_ptr)
 #define	atomic_fcmpset_rel_ptr		ATOMIC_SAN(fcmpset_rel_ptr)
 #define	atomic_fetchadd_ptr		ATOMIC_SAN(fetchadd_ptr)
-#define	atomic_load_ptr(x)		({					\
-	__typeof(*x) __retptr;							\
-	__retptr = (void *)ATOMIC_SAN(load_ptr)((volatile uintptr_t *)(x));	\
-	__retptr;								\
-})
+#define	atomic_load_ptr(x)						\
+	((void *)ATOMIC_SAN(load_ptr)(__DECONST(volatile uintptr_t *, (x))))
 #define	atomic_load_acq_ptr		ATOMIC_SAN(load_acq_ptr)
-#define	atomic_load_consume_ptr(x)	({					\
-	__typeof(*x) __retptr;							\
-	__retptr = (void *)atomic_load_acq_ptr((volatile uintptr_t *)(x));\
-	__retptr;								\
-})
+#define	atomic_load_consume_ptr(x)					\
+	((void *)atomic_load_acq_ptr((volatile uintptr_t *)(x)))
 #define	atomic_readandclear_ptr		ATOMIC_SAN(readandclear_ptr)
 #define	atomic_set_ptr			ATOMIC_SAN(set_ptr)
 #define	atomic_set_acq_ptr		ATOMIC_SAN(set_acq_ptr)

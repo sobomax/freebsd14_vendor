@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2015-2016 Landon Fuller <landon@landonf.org>
  * Copyright (c) 2016 Michael Zhilin <mizhka@gmail.com>
@@ -35,8 +35,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 75876fe17a4c6980063a799c6f7af04ff4d4388f $");
-
 /*
  * Broadcom ChipCommon driver.
  * 
@@ -67,8 +65,6 @@ __FBSDID("$FreeBSD: 75876fe17a4c6980063a799c6f7af04ff4d4388f $");
 #include "chipcvar.h"
 
 #include "chipc_private.h"
-
-devclass_t bhnd_chipc_devclass;	/**< bhnd(4) chipcommon device class */
 
 static struct bhnd_device_quirk chipc_quirks[];
 
@@ -594,28 +590,6 @@ chipc_print_child(device_t dev, device_t child)
 	retval += bus_print_child_footer(dev, child);
 
 	return (retval);
-}
-
-static int
-chipc_child_pnpinfo_str(device_t dev, device_t child, char *buf,
-    size_t buflen)
-{
-	if (buflen == 0)
-		return (EOVERFLOW);
-
-	*buf = '\0';
-	return (0);
-}
-
-static int
-chipc_child_location_str(device_t dev, device_t child, char *buf,
-    size_t buflen)
-{
-	if (buflen == 0)
-		return (EOVERFLOW);
-
-	*buf = '\0';
-	return (ENXIO);
 }
 
 static device_t
@@ -1409,8 +1383,6 @@ static device_method_t chipc_methods[] = {
 	/* Bus interface */
 	DEVMETHOD(bus_probe_nomatch,		chipc_probe_nomatch),
 	DEVMETHOD(bus_print_child,		chipc_print_child),
-	DEVMETHOD(bus_child_pnpinfo_str,	chipc_child_pnpinfo_str),
-	DEVMETHOD(bus_child_location_str,	chipc_child_location_str),
 
 	DEVMETHOD(bus_add_child,		chipc_add_child),
 	DEVMETHOD(bus_child_deleted,		chipc_child_deleted),
@@ -1445,7 +1417,7 @@ static device_method_t chipc_methods[] = {
 };
 
 DEFINE_CLASS_0(bhnd_chipc, bhnd_chipc_driver, chipc_methods, sizeof(struct chipc_softc));
-EARLY_DRIVER_MODULE(bhnd_chipc, bhnd, bhnd_chipc_driver, bhnd_chipc_devclass, 0, 0,
+EARLY_DRIVER_MODULE(bhnd_chipc, bhnd, bhnd_chipc_driver, 0, 0,
     BUS_PASS_BUS + BUS_PASS_ORDER_MIDDLE);
 MODULE_DEPEND(bhnd_chipc, bhnd, 1, 1, 1);
 MODULE_VERSION(bhnd_chipc, 1);

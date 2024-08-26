@@ -32,8 +32,6 @@
 #include "opt_bus.h"
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 399f17b079efd926164b2a36d49436bd761d9c89 $");
-
 #include <sys/param.h>
 #include <sys/systm.h>
 #include <sys/bus.h>
@@ -413,7 +411,7 @@ static device_method_t ahci_ata_methods[] = {
 	DEVMETHOD(bus_release_resource,     ahci_release_resource),
 	DEVMETHOD(bus_setup_intr,   ahci_setup_intr),
 	DEVMETHOD(bus_teardown_intr,ahci_teardown_intr),
-	DEVMETHOD(bus_child_location_str, ahci_child_location_str),
+	DEVMETHOD(bus_child_location, ahci_child_location),
 	DEVMETHOD_END
 };
 
@@ -423,4 +421,4 @@ static driver_t ahci_ata_driver = {
         sizeof(struct ahci_a10_softc)
 };
 
-DRIVER_MODULE(a10_ahci, simplebus, ahci_ata_driver, ahci_devclass, 0, 0);
+DRIVER_MODULE(a10_ahci, simplebus, ahci_ata_driver, 0, 0);

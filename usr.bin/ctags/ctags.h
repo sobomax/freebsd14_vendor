@@ -30,8 +30,6 @@
  *
  *	@(#)ctags.h	8.3 (Berkeley) 4/2/94
  *
- * $FreeBSD: bf2e34738858392ac64bc8140ea96f1b1f21104a $
- *
  */
 
 #define	bool	char

@@ -1,5 +1,4 @@
 #	@(#)Makefile	8.1 (Berkeley) 6/5/93
-# $FreeBSD: 38134903ee46945c238da1043a68b1d63554e853 $
 
 .PATH: ${.CURDIR:H}/dump
 

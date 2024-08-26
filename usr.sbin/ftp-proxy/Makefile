@@ -1,7 +1,7 @@
-# $FreeBSD: 768901f991318a49d2f9132f33044f647d90551f $
 
 .PATH:	${SRCTOP}/contrib/pf/ftp-proxy
 
+PACKAGE=	pf
 PROG=	ftp-proxy
 MAN=	ftp-proxy.8
 

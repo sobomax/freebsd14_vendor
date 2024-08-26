@@ -33,8 +33,6 @@
  */
 
 #include <machine/asm.h>
-__FBSDID("$FreeBSD: b582471615898d8faf40ad0bfc7ee39557315932 $");
-
 	.section .init,"ax",@progbits
 	ld	ra, 0(sp)
 	addi	sp, sp, 16

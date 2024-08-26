@@ -29,7 +29,6 @@
  * SUCH DAMAGE.
  *
  *	@(#)extern.h	8.1 (Berkeley) 6/6/93
- * $FreeBSD: cf37d6f3c3762a5865c6d2faf10fbc8bc3f007e3 $
  */
 
 #define	PFLAGS_FULL	0x01

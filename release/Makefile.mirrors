@@ -9,7 +9,6 @@
 #
 # Don't use this unless you know why you're using it.
 #
-# $FreeBSD: 522844a6b05750190af75c1640d22298cbccbd9f $
 #
 
 .include "${.CURDIR}/Makefile"

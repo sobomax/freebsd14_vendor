@@ -1,5 +1,4 @@
 #	@(#)Makefile	8.1 (Berkeley) 6/5/93
-# $FreeBSD: c832be3dc96a48ed9aa16bf1bd9e5fda5a005ee0 $
 
 PACKAGE=runtime
 PROG=	swapon

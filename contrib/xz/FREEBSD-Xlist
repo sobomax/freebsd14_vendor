@@ -1,4 +1,3 @@
-$FreeBSD: 15f3fc6fde17ddc53eff59025eaf8cfb0974e76a $
 */*/*/Makefile.*
 */*/Makefile.*
 */.gitignore
@@ -6,6 +5,7 @@ $FreeBSD: 15f3fc6fde17ddc53eff59025eaf8cfb0974e76a $
 .git
 .gitignore
 ABOUT-NLS
+CMakeLists.txt
 COPYING.GPLv2
 COPYING.GPLv3
 COPYING.LGPLv2.1
@@ -19,6 +19,7 @@ PACKAGERS
 aclocal.m4
 autogen.sh
 build-aux/
+cmake/
 config.h.in
 configure
 configure.ac

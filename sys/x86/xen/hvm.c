@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2008, 2013 Citrix Systems, Inc.
  * Copyright (c) 2012 Spectra Logic Corporation
@@ -28,8 +28,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 49051c702df7438eb389f3d03026768c28aee16d $");
-
 #include <sys/param.h>
 #include <sys/bus.h>
 #include <sys/kernel.h>
@@ -58,16 +56,14 @@ __FBSDID("$FreeBSD: 49051c702df7438eb389f3d03026768c28aee16d $");
 #include <xen/hvm.h>
 #include <xen/xen_intr.h>
 
-#include <xen/interface/arch-x86/cpuid.h>
-#include <xen/interface/hvm/params.h>
-#include <xen/interface/vcpu.h>
+#include <contrib/xen/arch-x86/cpuid.h>
+#include <contrib/xen/hvm/params.h>
+#include <contrib/xen/vcpu.h>
 
 /*--------------------------- Forward Declarations ---------------------------*/
 static void xen_hvm_cpu_init(void);
 
 /*-------------------------------- Global Data -------------------------------*/
-enum xen_domain_type xen_domain_type = XEN_NATIVE;
-
 #ifdef SMP
 struct cpu_ops xen_hvm_cpu_ops = {
 	.cpu_init	= xen_hvm_cpu_init,
@@ -84,23 +80,13 @@ static MALLOC_DEFINE(M_XENHVM, "xen_hvm", "Xen HVM PV Support");
 int xen_vector_callback_enabled;
 
 /**
- * Start info flags. ATM this only used to store the initial domain flag for
- * PVHv2, and it's always empty for HVM guests.
- */
-uint32_t hvm_start_flags;
-
-/**
  * Signal whether the vector injected for the event channel upcall requires to
  * be EOI'ed on the local APIC.
  */
 bool xen_evtchn_needs_ack;
 
 /*------------------------------- Per-CPU Data -------------------------------*/
-DPCPU_DEFINE(struct vcpu_info, vcpu_local_info);
-DPCPU_DEFINE(struct vcpu_info *, vcpu_info);
-
-/*------------------ Hypervisor Access Shared Memory Regions -----------------*/
-shared_info_t *HYPERVISOR_shared_info;
+DPCPU_DECLARE(struct vcpu_info *, vcpu_info);
 
 /*------------------------------ Sysctl tunables -----------------------------*/
 int xen_disable_pv_disks = 0;
@@ -110,7 +96,7 @@ TUNABLE_INT("hw.xen.disable_pv_nics", &xen_disable_pv_nics);
 
 /*---------------------- XEN Hypervisor Probe and Setup ----------------------*/
 
-static uint32_t cpuid_base;
+uint32_t xen_cpuid_base;
 
 static uint32_t
 xen_hvm_cpuid_base(void)
@@ -153,7 +139,7 @@ hypervisor_version(void)
 	uint32_t regs[4];
 	int major, minor;
 
-	do_cpuid(cpuid_base + 1, regs);
+	do_cpuid(xen_cpuid_base + 1, regs);
 
 	major = regs[0] >> 16;
 	minor = regs[0] & 0xffff;
@@ -171,9 +157,9 @@ xen_hvm_init_hypercall_stubs(enum xen_hvm_init_type init_type)
 	uint32_t regs[4];
 
 	/* Legacy PVH will get here without the cpuid leaf being set. */
-	if (cpuid_base == 0)
-		cpuid_base = xen_hvm_cpuid_base();
-	if (cpuid_base == 0)
+	if (xen_cpuid_base == 0)
+		xen_cpuid_base = xen_hvm_cpuid_base();
+	if (xen_cpuid_base == 0)
 		return (ENXIO);
 
 	if (xen_domain() && init_type == XEN_HVM_INIT_LATE) {
@@ -192,7 +178,7 @@ xen_hvm_init_hypercall_stubs(enum xen_hvm_init_type init_type)
 	/*
 	 * Find the hypercall pages.
 	 */
-	do_cpuid(cpuid_base + 2, regs);
+	do_cpuid(xen_cpuid_base + 2, regs);
 	if (regs[0] != 1)
 		return (EINVAL);
 
@@ -427,10 +413,8 @@ SYSINIT(xen_hvm_init, SI_SUB_HYPERVISOR, SI_ORDER_FIRST, xen_hvm_sysinit, NULL);
 static void
 xen_hvm_cpu_init(void)
 {
-	struct vcpu_register_vcpu_info info;
-	struct vcpu_info *vcpu_info;
 	uint32_t regs[4];
-	int cpu, rc;
+	int rc;
 
 	if (!xen_domain())
 		return;
@@ -448,8 +432,8 @@ xen_hvm_cpu_init(void)
 	 * Set vCPU ID. If available fetch the ID from CPUID, if not just use
 	 * the ACPI ID.
 	 */
-	KASSERT(cpuid_base != 0, ("Invalid base Xen CPUID leaf"));
-	cpuid_count(cpuid_base + 4, 0, regs);
+	KASSERT(xen_cpuid_base != 0, ("Invalid base Xen CPUID leaf"));
+	cpuid_count(xen_cpuid_base + 4, 0, regs);
 	KASSERT((regs[0] & XEN_HVM_CPUID_VCPU_ID_PRESENT) ||
 	    !xen_pv_domain(),
 	    ("Xen PV domain without vcpu_id in cpuid"));
@@ -470,66 +454,17 @@ xen_hvm_cpu_init(void)
 			    rc);
 	}
 
-	/*
-	 * Set the vCPU info.
-	 *
-	 * NB: the vCPU info for vCPUs < 32 can be fetched from the shared info
-	 * page, but in order to make sure the mapping code is correct always
-	 * attempt to map the vCPU info at a custom place.
-	 */
-	vcpu_info = DPCPU_PTR(vcpu_local_info);
-	cpu = PCPU_GET(vcpu_id);
-	info.mfn = vtophys(vcpu_info) >> PAGE_SHIFT;
-	info.offset = vtophys(vcpu_info) - trunc_page(vtophys(vcpu_info));
-
-	rc = HYPERVISOR_vcpu_op(VCPUOP_register_vcpu_info, cpu, &info);
-	if (rc != 0)
-		DPCPU_SET(vcpu_info, &HYPERVISOR_shared_info->vcpu_info[cpu]);
-	else
-		DPCPU_SET(vcpu_info, vcpu_info);
+	xen_setup_vcpu_info();
 }
 SYSINIT(xen_hvm_cpu_init, SI_SUB_INTR, SI_ORDER_FIRST, xen_hvm_cpu_init, NULL);
 
-/* HVM/PVH start_info accessors */
-static vm_paddr_t
-hvm_get_xenstore_mfn(void)
+bool
+xen_has_iommu_maps(void)
 {
+	uint32_t regs[4];
 
-	return (hvm_get_parameter(HVM_PARAM_STORE_PFN));
+	KASSERT(xen_cpuid_base != 0, ("Invalid base Xen CPUID leaf"));
+	cpuid_count(xen_cpuid_base + 4, 0, regs);
+
+	return (regs[0] & XEN_HVM_CPUID_IOMMU_MAPPINGS);
 }
-
-static evtchn_port_t
-hvm_get_xenstore_evtchn(void)
-{
-
-	return (hvm_get_parameter(HVM_PARAM_STORE_EVTCHN));
-}
-
-static vm_paddr_t
-hvm_get_console_mfn(void)
-{
-
-	return (hvm_get_parameter(HVM_PARAM_CONSOLE_PFN));
-}
-
-static evtchn_port_t
-hvm_get_console_evtchn(void)
-{
-
-	return (hvm_get_parameter(HVM_PARAM_CONSOLE_EVTCHN));
-}
-
-static uint32_t
-hvm_get_start_flags(void)
-{
-
-	return (hvm_start_flags);
-}
-
-struct hypervisor_info hypervisor_info = {
-	.get_xenstore_mfn		= hvm_get_xenstore_mfn,
-	.get_xenstore_evtchn		= hvm_get_xenstore_evtchn,
-	.get_console_mfn		= hvm_get_console_mfn,
-	.get_console_evtchn		= hvm_get_console_evtchn,
-	.get_start_flags		= hvm_get_start_flags,
-};

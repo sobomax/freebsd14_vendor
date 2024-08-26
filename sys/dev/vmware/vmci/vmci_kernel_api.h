@@ -2,8 +2,6 @@
  * Copyright (c) 2018 VMware, Inc.
  *
  * SPDX-License-Identifier: (BSD-2-Clause OR GPL-2.0)
- *
- * $FreeBSD: 85f0a23ea3327056d660bc78d0439ab26db22490 $
  */
 
 /* Kernel API (current) exported from the VMCI guest driver. */

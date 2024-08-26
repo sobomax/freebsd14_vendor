@@ -1,6 +1,0 @@
-# $FreeBSD: 8597c928063c3d2626336c72d558459b657fc260 $
-
-# RTC
-hint.ds13rtc.0.at="iicbus1"
-hint.ds13rtc.0.addr=0xd0
-hint.ds13rtc.0.compatible="dallas,ds1374"

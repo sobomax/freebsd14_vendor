@@ -5,8 +5,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: f5de77ae49c045cc26ab4bfb0825dd1424fdaf09 $");
-
 #include "igc_api.h"
 
 static void igc_reload_nvm_generic(struct igc_hw *hw);

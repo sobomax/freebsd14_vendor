@@ -1,4 +1,3 @@
-# $FreeBSD: ff4e6299526205033f8625ce8f07570e4a863ee9 $
 
 set -e
 HOME=/

@@ -1,4 +1,3 @@
-# $FreeBSD: a5530ac473c1c3e4bfc03c0d9edac4495bf831db $
 
 .PATH: ${SRCTOP}/contrib/ntp/libparse
 
@@ -13,7 +12,7 @@ SRCS=	binio.c	clk_computime.c	clk_dcf7000.c	clk_hopf6021.c \
 	trim_info.c
 
 CFLAGS+= -I${SRCTOP}/contrib/ntp/include \
-	-I${SRCTOP}/contrib/ntp/lib/isc/unix/include \
-	-I${SRCTOP}/contrib/ntp/lib/isc/include -I${.CURDIR:H}
+	-I${SRCTOP}/contrib/ntp/libntp/lib/isc/unix/include \
+	-I${SRCTOP}/contrib/ntp/libntp/lib/isc/include -I${.CURDIR:H}
 
 .include <bsd.lib.mk>

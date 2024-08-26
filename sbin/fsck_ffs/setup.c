@@ -35,8 +35,6 @@ static const char sccsid[] = "@(#)setup.c	8.10 (Berkeley) 5/9/95";
 #endif /* not lint */
 #endif
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: f06424558cf43fe9167339336075fa64c66fd2b5 $");
-
 #include <sys/param.h>
 #include <sys/disk.h>
 #include <sys/stat.h>
@@ -58,11 +56,13 @@ __FBSDID("$FreeBSD: f06424558cf43fe9167339336075fa64c66fd2b5 $");
 
 #include "fsck.h"
 
-struct inoinfo **inphead, **inpsort;	/* info about all inodes */
-struct inode snaplist[FSMAXSNAP + 1];	/* list of active snapshots */
-int snapcnt;				/* number of active snapshots */
-char *copybuf;				/* buffer to copy snapshot blocks */
+struct inohash *inphash;	       /* hash list of directory inode info */
+struct inoinfo **inpsort;	       /* disk order list of directory inodes */
+struct inode snaplist[FSMAXSNAP + 1];  /* list of active snapshots */
+int snapcnt;			       /* number of active snapshots */
+char *copybuf;			       /* buffer to copy snapshot blocks */
 
+static int sbhashfailed;
 #define POWEROF2(num)	(((num) & ((num) - 1)) == 0)
 
 static int calcsb(char *dev, int devfd, struct fs *fs);
@@ -79,40 +79,20 @@ static int checksnapinfo(struct inode *);
 int
 setup(char *dev)
 {
-	long i, cg, bmapsize;
+	long i, bmapsize;
 	struct inode ip;
-	struct fs proto;
 
 	/*
-	 * We are expected to have an open file descriptor
+	 * We are expected to have an open file descriptor and a superblock.
 	 */
-	if (fsreadfd < 0)
+	if (fsreadfd < 0 || havesb == 0) {
+		if (debug) {
+			if (fsreadfd < 0)
+				printf("setup: missing fsreadfd\n");
+			else
+				printf("setup: missing superblock\n");
+		}
 		return (0);
-	/*
-	 * If we do not yet have a superblock, read it in looking
-	 * for alternates if necessary.
-	 */
-	if (havesb == 0 && readsb(1) == 0) {
-		skipclean = 0;
-		if (bflag || preen || calcsb(dev, fsreadfd, &proto) == 0)
-			return(0);
-		if (reply("LOOK FOR ALTERNATE SUPERBLOCKS") == 0)
-			return (0);
-		for (cg = 0; cg < proto.fs_ncg; cg++) {
-			bflag = fsbtodb(&proto, cgsblock(&proto, cg));
-			if (readsb(0) != 0)
-				break;
-		}
-		if (cg >= proto.fs_ncg) {
-			printf("SEARCH FOR ALTERNATE SUPER-BLOCK FAILED. "
-			    "YOU MUST USE THE\n-b OPTION TO FSCK TO SPECIFY "
-			    "THE LOCATION OF AN ALTERNATE\nSUPER-BLOCK TO "
-			    "SUPPLY NEEDED INFORMATION; SEE fsck_ffs(8).\n");
-			bflag = 0;
-			return(0);
-		}
-		pwarn("USING ALTERNATE SUPERBLOCK AT %jd\n", bflag);
-		bflag = 0;
 	}
 	if (preen == 0)
 		printf("** %s", dev);
@@ -188,14 +168,14 @@ setup(char *dev)
 		    (unsigned)(sizeof(struct inostatlist) * (sblock.fs_ncg)));
 		goto badsb;
 	}
-	numdirs = MAX(sblock.fs_cstotal.cs_ndir, 128);
-	dirhash = numdirs;
+	numdirs = sblock.fs_cstotal.cs_ndir;
+	dirhash = MAX(numdirs / 2, 1);
 	inplast = 0;
 	listmax = numdirs + 10;
 	inpsort = (struct inoinfo **)Calloc(listmax, sizeof(struct inoinfo *));
-	inphead = (struct inoinfo **)Calloc(numdirs, sizeof(struct inoinfo *));
-	if (inpsort == NULL || inphead == NULL) {
-		printf("cannot alloc %ju bytes for inphead\n",
+	inphash = (struct inohash *)Calloc(dirhash, sizeof(struct inohash));
+	if (inpsort == NULL || inphash == NULL) {
+		printf("cannot alloc %ju bytes for inphash\n",
 		    (uintmax_t)numdirs * sizeof(struct inoinfo *));
 		goto badsb;
 	}
@@ -319,6 +299,8 @@ checksnapinfo(struct inode *snapip)
 	size = fragroundup(fs,
 	    DIP(snapip->i_dp, di_size) - lblktosize(fs, lbn));
 	bp = getdatablk(idesc.id_parent, size, BT_DATA);
+	if (bp->b_errs != 0)
+		return (0);
 	snapblklist = (daddr_t *)bp->b_un.b_buf;
 	/*
 	 * snapblklist[0] is the size of the list
@@ -398,14 +380,14 @@ openfilesys(char *dev)
 	if ((statb.st_mode & S_IFMT) != S_IFCHR &&
 	    (statb.st_mode & S_IFMT) != S_IFBLK) {
 		if (bkgrdflag != 0 && (statb.st_flags & SF_SNAPSHOT) == 0) {
-			pfatal("BACKGROUND FSCK LACKS A SNAPSHOT\n");
-			exit(EEXIT);
+			pwarn("BACKGROUND FSCK LACKS A SNAPSHOT\n");
+			return (0);
 		}
 		if (bkgrdflag != 0) {
 			cursnapshot = statb.st_ino;
 		} else {
-			pfatal("%s IS NOT A DISK DEVICE\n", dev);
-			if (reply("CONTINUE") == 0)
+			pwarn("%s IS NOT A DISK DEVICE\n", dev);
+			if (preen || reply("CONTINUE") == 0)
 				return (0);
 		}
 	}
@@ -423,38 +405,64 @@ openfilesys(char *dev)
  * Read in the super block and its summary info.
  */
 int
-readsb(int listerr)
+readsb(void)
 {
-	off_t super;
-	int ret;
 	struct fs *fs;
 
-	super = bflag ? bflag * dev_bsize :
-	    sbhashfailed ? STDSB_NOHASHFAIL : STDSB;
+	sbhashfailed = 0;
 	readcnt[sblk.b_type]++;
-	while ((ret = sbget(fsreadfd, &fs, super)) != 0) {
-		switch (ret) {
+	/*
+	 * If bflag is given, then check just that superblock.
+	 */
+	if (bflag) {
+		switch (sbget(fsreadfd, &fs, bflag * dev_bsize, 0)) {
+		case 0:
+			goto goodsb;
 		case EINTEGRITY:
-			if (bflag || super == STDSB_NOHASHFAIL)
-				return (0);
-			super = STDSB_NOHASHFAIL;
-			sbhashfailed = 1;
-			continue;
+			printf("Check hash failed for superblock at %jd\n",
+			    bflag);
+			return (0);
 		case ENOENT:
-			if (bflag)
-				printf("%jd is not a file system "
-				    "superblock\n", super / dev_bsize);
-			else
-				printf("Cannot find file system "
-				    "superblock\n");
+			printf("%jd is not a file system superblock\n", bflag);
 			return (0);
 		case EIO:
 		default:
-			printf("I/O error reading %jd\n",
-			    super / dev_bsize);
+			printf("I/O error reading %jd\n", bflag);
 			return (0);
 		}
 	}
+	/*
+	 * Check for the standard superblock and use it if good.
+	 */
+	if (sbget(fsreadfd, &fs, UFS_STDSB, UFS_NOMSG) == 0)
+		goto goodsb;
+	/*
+	 * Check if the only problem is a check-hash failure.
+	 */
+	skipclean = 0;
+	if (sbget(fsreadfd, &fs, UFS_STDSB, UFS_NOMSG | UFS_NOHASHFAIL) == 0) {
+		sbhashfailed = 1;
+		goto goodsb;
+	}
+	/*
+	 * Do an exhaustive search for a usable superblock.
+	 */
+	switch (sbsearch(fsreadfd, &fs, 0)) {
+	case 0:
+		goto goodsb;
+	case ENOENT:
+		printf("SEARCH FOR ALTERNATE SUPER-BLOCK FAILED. "
+		    "YOU MUST USE THE\n-b OPTION TO FSCK TO SPECIFY "
+		    "THE LOCATION OF AN ALTERNATE\nSUPER-BLOCK TO "
+		    "SUPPLY NEEDED INFORMATION; SEE fsck_ffs(8).\n");
+		return (0);
+	case EIO:
+	default:
+		printf("I/O error reading a usable superblock\n");
+		return (0);
+	}
+
+goodsb:
 	memcpy(&sblock, fs, fs->fs_sbsize);
 	free(fs);
 	/*

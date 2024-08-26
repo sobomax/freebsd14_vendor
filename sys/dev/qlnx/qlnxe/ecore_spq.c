@@ -28,8 +28,6 @@
  * File : ecore_spq.c
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: d3ad27f591961bff993c31e6103e8521d18586ed $");
-
 #include "bcm_osal.h"
 #include "reg_addr.h"
 #include "ecore_gtt_reg_addr.h"

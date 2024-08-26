@@ -1,4 +1,3 @@
-/*	$FreeBSD: 3152d2e4701384e0bdc5974d7ac77f77e4b84e4d $	*/
 
 /*
  * Copyright (C) 2012 by Darren Reed.
@@ -85,10 +84,7 @@ eMmutex_init(eMmutex_t *mtx, char *who, char *file, int line)
 
 
 void
-eMmutex_destroy(mtx, file, line)
-	eMmutex_t *mtx;
-	char *file;
-	int line;
+eMmutex_destroy(eMmutex_t *mtx, char *file, int line)
 {
 	if (mutex_debug & 1)
 		fprintf(mutex_file,

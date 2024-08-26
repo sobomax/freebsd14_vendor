@@ -1,9 +1,8 @@
 #!/usr/bin/awk -f
 #
-# $FreeBSD: 51b21cc2bbe24d428f650cd646a3fd72a36d96fc $
 
 #-
-# SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+# SPDX-License-Identifier: BSD-2-Clause
 #
 # Copyright (c) 2004 Mark Santcroos <marks@ripe.net>
 # All rights reserved.

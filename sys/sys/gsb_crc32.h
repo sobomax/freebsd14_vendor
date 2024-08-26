@@ -1,8 +1,6 @@
 /*-
  *  COPYRIGHT (C) 1986 Gary S. Brown.  You may use this program, or
  *  code or tables extracted from it, as desired without restriction.
- *
- * $FreeBSD: dc126a5258fbde17716b687a64861da24a95472c $
  */
 
 #ifndef _SYS_GSB_CRC32_H_

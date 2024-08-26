@@ -1,4 +1,3 @@
-# $FreeBSD: 7c736b955a68bf05c7b7de7687f62fe680546e3d $
 
 ATF_TEST=true
 . $(atf_get_srcdir)/conf.sh

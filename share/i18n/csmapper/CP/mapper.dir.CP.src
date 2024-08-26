@@ -1,4 +1,3 @@
-# $FreeBSD: 2b849d26beaf97af3c55bd9bbc21bd24b580f6c6 $
 # $NetBSD: mapper.dir.CP.src,v 1.13 2008/09/13 13:08:36 tnozaki Exp $
 
 CP50220/CP51932		mapper_zone	0x2121 - 0x7C7E

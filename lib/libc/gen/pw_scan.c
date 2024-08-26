@@ -31,8 +31,6 @@
 
 #include <sys/cdefs.h>
 __SCCSID("@(#)pw_scan.c	8.3 (Berkeley) 4/2/94");
-__FBSDID("$FreeBSD: 619092d3d4bcd728e1a0cadbb3c355e873f89a61 $");
-
 /*
  * This module is used to "verify" password entries by chpass(1) and
  * pwd_mkdb(8).

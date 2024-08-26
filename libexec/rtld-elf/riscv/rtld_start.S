@@ -33,8 +33,6 @@
  */
 
 #include <machine/asm.h>
-__FBSDID("$FreeBSD: 71806123debc19e99af3ec3a58fa4b8fe357a9f6 $");
-
 /*
  * func_ptr_type
  * _rtld(Elf_Addr *sp, func_ptr_type *exit_proc, Obj_Entry **objp)

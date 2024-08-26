@@ -1,4 +1,3 @@
-#	$FreeBSD: 1b5543909b6379dcc6aeed5c707dada5abaa9ba8 $
 
 SUBDIR=	arcode athdebug athdecode athkey athpoke athprom athrd athregs athalq
 SUBDIR+=	athstats ath_prom_read athradar athaggrstats

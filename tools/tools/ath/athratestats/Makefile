@@ -1,4 +1,3 @@
-# $FreeBSD: ccf04ebd8da0d571bff2f608ce959abc433fa709 $
 
 .PATH:	${.CURDIR}/../../../../sys/dev/ath/ath_hal
 .PATH:	${.CURDIR}/../../../../sys/dev/ath/
@@ -7,7 +6,7 @@ PROG=	athratestats
 
 SRCS=	main.c opt_ah.h ah_osdep.h
 
-LIBADD+=	ncursesw
+LIBADD+=	tinfow ncursesw
 
 CLEANFILES+=	opt_ah.h ah_osdep.h
 

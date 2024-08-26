@@ -1,4 +1,3 @@
-# $FreeBSD: a21524cb419aa8b0a44fb0a6c92277c9a8e90793 $
 
 .PATH: ${SRCTOP}/sys/kgssapi ${SRCTOP}/sys/rpc/rpcsec_gss
 KMOD=	kgssapi
@@ -15,6 +14,7 @@ SRCS=	gss_accept_sec_context.c \
 	gss_init_sec_context.c \
 	gss_impl.c \
 	gss_import_name.c \
+	gss_ip_to_dns.c \
 	gss_names.c \
 	gss_pname_to_uid.c \
 	gss_release_buffer.c \

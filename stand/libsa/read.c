@@ -31,8 +31,6 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- *	@(#)read.c	8.1 (Berkeley) 6/11/93
- *
  *
  * Copyright (c) 1989, 1990, 1991 Carnegie Mellon University
  * All Rights Reserved.
@@ -60,9 +58,6 @@
  * rights to redistribute these changes.
  */
 
-#include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 084bca2522f3852b3814af00c1f414cdc94dca4a $");
-
 #include <sys/param.h>
 #include "stand.h"
 
@@ -73,6 +68,7 @@ read(int fd, void *dest, size_t bcount)
 	size_t resid;
 
 	TSENTER();
+
 	f = fd2open_file(fd);
 	if (f == NULL || !(f->f_flags & F_READ)) {
 		errno = EBADF;

@@ -25,8 +25,6 @@
  * THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- *
- * $FreeBSD: ad25058028fc0d4698ce72519d8109c28983e1f5 $
  */
 #ifndef	_LINUXKPI_LINUX_KOBJECT_H_
 #define	_LINUXKPI_LINUX_KOBJECT_H_
@@ -37,6 +35,9 @@
 #include <linux/kref.h>
 #include <linux/list.h>
 #include <linux/slab.h>
+#include <linux/spinlock.h>
+#include <linux/wait.h>
+#include <linux/workqueue.h>
 
 struct kobject;
 struct sysctl_oid;
@@ -47,6 +48,7 @@ struct kobj_type {
 	void (*release)(struct kobject *kobj);
 	const struct sysfs_ops *sysfs_ops;
 	struct attribute **default_attrs;
+	const struct attribute_group **default_groups;
 };
 
 extern const struct kobj_type linux_kfree_type;
@@ -154,5 +156,7 @@ kobject_uevent_env(struct kobject *kobj, int action, char *envp[])
 	 * need a shortcut or simply ignore it (for now).
 	 */
 }
+
+void linux_kobject_kfree_name(struct kobject *kobj);
 
 #endif /* _LINUXKPI_LINUX_KOBJECT_H_ */

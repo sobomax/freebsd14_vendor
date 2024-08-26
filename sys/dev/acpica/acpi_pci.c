@@ -27,8 +27,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 36ea1a267853b18d04d869c43f130c0df86e38ee $");
-
 #include "opt_acpi.h"
 #include "opt_iommu.h"
 
@@ -38,6 +36,7 @@ __FBSDID("$FreeBSD: 36ea1a267853b18d04d869c43f130c0df86e38ee $");
 #include <sys/kernel.h>
 #include <sys/malloc.h>
 #include <sys/module.h>
+#include <sys/sbuf.h>
 #include <sys/taskqueue.h>
 #include <sys/tree.h>
 
@@ -78,8 +77,10 @@ CTASSERT(ACPI_STATE_D3 == PCI_POWERSTATE_D3);
 static struct pci_devinfo *acpi_pci_alloc_devinfo(device_t dev);
 static int	acpi_pci_attach(device_t dev);
 static void	acpi_pci_child_deleted(device_t dev, device_t child);
-static int	acpi_pci_child_location_str_method(device_t cbdev,
-		    device_t child, char *buf, size_t buflen);
+static int	acpi_pci_child_location_method(device_t cbdev,
+		    device_t child, struct sbuf *sb);
+static int	acpi_pci_get_device_path(device_t cbdev,
+		    device_t child, const char *locator, struct sbuf *sb);
 static int	acpi_pci_detach(device_t dev);
 static int	acpi_pci_probe(device_t dev);
 static int	acpi_pci_read_ivar(device_t dev, device_t child, int which,
@@ -103,7 +104,8 @@ static device_method_t acpi_pci_methods[] = {
 	DEVMETHOD(bus_read_ivar,	acpi_pci_read_ivar),
 	DEVMETHOD(bus_write_ivar,	acpi_pci_write_ivar),
 	DEVMETHOD(bus_child_deleted,	acpi_pci_child_deleted),
-	DEVMETHOD(bus_child_location_str, acpi_pci_child_location_str_method),
+	DEVMETHOD(bus_child_location,	acpi_pci_child_location_method),
+	DEVMETHOD(bus_get_device_path,	acpi_pci_get_device_path),
 	DEVMETHOD(bus_get_cpus,		acpi_get_cpus),
 	DEVMETHOD(bus_get_dma_tag,	acpi_pci_get_dma_tag),
 	DEVMETHOD(bus_get_domain,	acpi_get_domain),
@@ -116,11 +118,9 @@ static device_method_t acpi_pci_methods[] = {
 	DEVMETHOD_END
 };
 
-static devclass_t pci_devclass;
-
 DEFINE_CLASS_1(pci, acpi_pci_driver, acpi_pci_methods, sizeof(struct pci_softc),
     pci_driver);
-DRIVER_MODULE(acpi_pci, pcib, acpi_pci_driver, pci_devclass, 0, 0);
+DRIVER_MODULE(acpi_pci, pcib, acpi_pci_driver, 0, 0);
 MODULE_DEPEND(acpi_pci, acpi, 1, 1, 1);
 MODULE_DEPEND(acpi_pci, pci, 1, 1, 1);
 MODULE_VERSION(acpi_pci, 1);
@@ -179,25 +179,31 @@ acpi_pci_child_deleted(device_t dev, device_t child)
 }
 
 static int
-acpi_pci_child_location_str_method(device_t cbdev, device_t child, char *buf,
-    size_t buflen)
+acpi_pci_child_location_method(device_t cbdev, device_t child, struct sbuf *sb)
 {
-    struct acpi_pci_devinfo *dinfo = device_get_ivars(child);
-    int pxm;
-    char buf2[32];
+	struct acpi_pci_devinfo *dinfo = device_get_ivars(child);
+	int pxm;
 
-    pci_child_location_str_method(cbdev, child, buf, buflen);
+	pci_child_location_method(cbdev, child, sb);
 
-    if (dinfo->ap_handle) {
-        strlcat(buf, " handle=", buflen);
-        strlcat(buf, acpi_name(dinfo->ap_handle), buflen);
+	if (dinfo->ap_handle) {
+		sbuf_printf(sb, " handle=%s", acpi_name(dinfo->ap_handle));
+		if (ACPI_SUCCESS(acpi_GetInteger(dinfo->ap_handle, "_PXM", &pxm))) {
+			sbuf_printf(sb, " _PXM=%d", pxm);
+		}
+	}
+	return (0);
+}
 
-        if (ACPI_SUCCESS(acpi_GetInteger(dinfo->ap_handle, "_PXM", &pxm))) {
-                snprintf(buf2, 32, " _PXM=%d", pxm);
-                strlcat(buf, buf2, buflen);
-        }
-    }
-    return (0);
+static int
+acpi_pci_get_device_path(device_t bus, device_t child, const char *locator, struct sbuf *sb)
+{
+
+	if (strcmp(locator, BUS_LOCATOR_ACPI) == 0)
+		return (acpi_get_acpi_device_path(bus, child, locator, sb));
+
+	/* Otherwise follow base class' actions */
+	return 	(pci_get_device_path_method(bus, child, locator, sb));
 }
 
 /*

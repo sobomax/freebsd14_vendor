@@ -1,4 +1,3 @@
-# $FreeBSD: 28fa9514846bafad609da0fc8bc7f5449f846506 $
 
 .PATH: ${SRCTOP}/sys/dev/wbwd
 

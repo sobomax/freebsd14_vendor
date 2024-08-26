@@ -23,16 +23,12 @@
  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING 
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER 
  * DEALINGS IN THE SOFTWARE.
- *
- * $FreeBSD: 874c3b71b8618dcb70e919ad7a768d2b6af92955 $
  */
 
 #ifndef _XEN_XEN_OS_H_
 #define _XEN_XEN_OS_H_
 
-#if !defined(__XEN_INTERFACE_VERSION__)  
-#define  __XEN_INTERFACE_VERSION__ 0x00030208
-#endif  
+#define  __XEN_INTERFACE_VERSION__ 0x00040d00
 
 #define GRANT_REF_INVALID   0xffffffff
 
@@ -40,65 +36,46 @@
 #define __ASSEMBLY__
 #endif
 
-#include <xen/interface/xen.h>
+#include <contrib/xen/xen.h>
 
 #ifndef __ASSEMBLY__
-#include <xen/interface/event_channel.h>
+#include <xen/hvm.h>
+#include <contrib/xen/event_channel.h>
 
-struct hypervisor_info {
-	vm_paddr_t (*get_xenstore_mfn)(void);
-	evtchn_port_t (*get_xenstore_evtchn)(void);
-	vm_paddr_t (*get_console_mfn)(void);
-	evtchn_port_t (*get_console_evtchn)(void);
-	uint32_t (*get_start_flags)(void);
-};
-extern struct hypervisor_info hypervisor_info;
+/*
+ * Setup function which needs to be called on each processor by architecture
+ */
+extern void xen_setup_vcpu_info(void);
 
 static inline vm_paddr_t
 xen_get_xenstore_mfn(void)
 {
 
-	return (hypervisor_info.get_xenstore_mfn());
+	return (hvm_get_parameter(HVM_PARAM_STORE_PFN));
 }
 
 static inline evtchn_port_t
 xen_get_xenstore_evtchn(void)
 {
 
-	return (hypervisor_info.get_xenstore_evtchn());
+	return (hvm_get_parameter(HVM_PARAM_STORE_EVTCHN));
 }
 
 static inline vm_paddr_t
 xen_get_console_mfn(void)
 {
 
-	return (hypervisor_info.get_console_mfn());
+	return (hvm_get_parameter(HVM_PARAM_CONSOLE_PFN));
 }
 
 static inline evtchn_port_t
 xen_get_console_evtchn(void)
 {
 
-	return (hypervisor_info.get_console_evtchn());
+	return (hvm_get_parameter(HVM_PARAM_CONSOLE_EVTCHN));
 }
-
-static inline uint32_t
-xen_get_start_flags(void)
-{
-
-	return (hypervisor_info.get_start_flags());
-}
-#endif
-
-#include <machine/xen/xen-os.h>
-
-/* Everything below this point is not included by assembler (.S) files. */
-#ifndef __ASSEMBLY__
 
 extern shared_info_t *HYPERVISOR_shared_info;
-
-extern int xen_disable_pv_disks;
-extern int xen_disable_pv_nics;
 
 extern bool xen_suspend_cancelled;
 
@@ -132,8 +109,14 @@ static inline bool
 xen_initial_domain(void)
 {
 
-	return (xen_domain() && (xen_get_start_flags() & SIF_INITDOMAIN) != 0);
+	return (xen_domain() && (hvm_start_flags & SIF_INITDOMAIN) != 0);
 }
+#endif
+
+#include <machine/xen/xen-os.h>
+
+/* Everything below this point is not included by assembler (.S) files. */
+#ifndef __ASSEMBLY__
 
 /*
  * Based on ofed/include/linux/bitops.h

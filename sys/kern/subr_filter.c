@@ -28,7 +28,6 @@
  * Author: Randall Stewart <rrs@netflix.com>
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 51c4fd70039b22ffcc20550f50f7b31b74e850cf $");
 #include <sys/types.h>
 #include <sys/time.h>
 #include <sys/errno.h>

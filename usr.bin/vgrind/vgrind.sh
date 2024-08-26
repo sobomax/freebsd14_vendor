@@ -31,7 +31,6 @@
 #
 #       @(#)vgrind.sh	8.1 (Berkeley) 6/6/93
 #
-# $FreeBSD: 3791dbeacb0a4999febb45a8473c0958b1a5bf43 $
 #
 
 voptions=""

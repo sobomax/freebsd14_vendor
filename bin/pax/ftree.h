@@ -33,7 +33,6 @@
  * SUCH DAMAGE.
  *
  *	@(#)ftree.h	8.1 (Berkeley) 5/31/93
- * $FreeBSD: 8e0a710e4ca9fa2c4488dda0283edbfae407e0df $
  */
 
 /*

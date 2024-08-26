@@ -1,5 +1,4 @@
 #!/bin/sh
-# $FreeBSD: 20bf1922bca66cb76fa8884c294306e7758d9749 $
 
 . `dirname $0`/conf.sh
 

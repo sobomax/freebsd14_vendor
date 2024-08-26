@@ -28,8 +28,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 5cfeb9cb1e4ef95eb53259d920a1e8bf8c98f7e0 $");
-
 #include <sys/param.h>
 #include <sys/systm.h>
 #include <sys/kernel.h>
@@ -94,9 +92,6 @@ static driver_t chromebook_i2c_driver = {
 	0	/* no softc */
 };
 
-static devclass_t chromebook_i2c_devclass;
-
-DRIVER_MODULE(chromebook_i2c, iicbus, chromebook_i2c_driver,
-    chromebook_i2c_devclass, 0, 0);
+DRIVER_MODULE(chromebook_i2c, iicbus, chromebook_i2c_driver, 0, 0);
 MODULE_VERSION(chromebook_i2c, 1);
 

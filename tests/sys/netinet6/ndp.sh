@@ -25,7 +25,6 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: 2b26ffd4c448ecc36f9a04aa8744a50a6adbbced $
 #
 
 . $(atf_get_srcdir)/../common/vnet.subr
@@ -99,7 +98,7 @@ ndp_del_gu_success_body() {
 	atf_check -o match:"2001:db8::2 \(2001:db8::2\) deleted" jexec ${jname} ndp -nd 2001:db8::2
 }
 
-ndp_del_success_cleanup() {
+ndp_del_gu_success_cleanup() {
 	vnet_cleanup
 }
 

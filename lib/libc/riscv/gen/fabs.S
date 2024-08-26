@@ -37,8 +37,6 @@
  */
 
 #include <machine/asm.h>
-__FBSDID("$FreeBSD: 036d50eddf90212637d8b58fe76ace7f7d51b846 $");
-
 ENTRY(fabs)
 #ifdef __riscv_float_abi_double
 	fabs.d	fa0, fa0

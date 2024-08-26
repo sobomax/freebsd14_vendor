@@ -26,7 +26,6 @@
 .\" SUCH DAMAGE.
 .\"
 .\"     @(#)ktrace.2	8.1 (Berkeley) 6/4/93
-.\" $FreeBSD: 8b3f15e1d0017f48fdd5648ac1ec4844cd3538d8 $
 .\"
 .Dd November 2, 2022
 .Dt KTRACE 2
@@ -110,7 +109,7 @@ struct ktr_header {
 	pid_t		ktr_pid;		/* process id */
 	char		ktr_comm[MAXCOMLEN+1];	/* command name */
 	struct timeval	ktr_time;		/* timestamp */
-	intptr_t	ktr_tid;		/* was ktr_buffer */
+	long		ktr_tid;		/* thread id */
 };
 .Ed
 .Pp
@@ -146,7 +145,7 @@ The following
 tunables influence the behaviour of
 .Fn ktrace :
 .Bl -tag -width indent
-.It Va kern.ktrace.geniosize
+.It Va kern.ktrace.genio_size
 bounds the amount of data a traced I/O request will log
 to the trace file.
 .It Va kern.ktrace.request_pool

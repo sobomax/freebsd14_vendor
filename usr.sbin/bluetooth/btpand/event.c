@@ -3,7 +3,7 @@
  */
 
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2009 Maksim Yevmenkin <m_evmenkin@yahoo.com>
  * All rights reserved.
@@ -30,7 +30,6 @@
  * SUCH DAMAGE.
  */
 
-/* $FreeBSD: 502b73eaee466d29a2689eb16d0866f6c0769bd2 $ */
 
 /*
  * Hack to provide libevent (see devel/libevent port) like API.

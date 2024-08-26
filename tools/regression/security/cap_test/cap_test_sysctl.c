@@ -23,8 +23,6 @@
  * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
- *
- * $FreeBSD: a31b4241670e1aca1f895f041dd41816287ecf28 $
  */
 
 /*
@@ -32,8 +30,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: a31b4241670e1aca1f895f041dd41816287ecf28 $");
-
 #include <sys/types.h>
 #include <sys/capsicum.h>
 #include <sys/errno.h>

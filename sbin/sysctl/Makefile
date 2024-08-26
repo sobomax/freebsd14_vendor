@@ -1,10 +1,14 @@
 #	@(#)Makefile	8.1 (Berkeley) 6/6/93
-# $FreeBSD: 2069bd3382d236c9fc84f62e9d5da31ba42f9984 $
+
+.include <src.opts.mk>
 
 PACKAGE=runtime
 CONFS=	sysctl.conf
 PROG=	sysctl
 WARNS?=	3
 MAN=	sysctl.8
+
+HAS_TESTS=
+SUBDIR.${MK_TESTS}+=	tests
 
 .include <bsd.prog.mk>

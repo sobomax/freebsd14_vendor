@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2009-2013 Chelsio, Inc. All rights reserved.
  *
@@ -33,8 +33,6 @@
  */
 /* Crude resource management */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 42591f98717b782b8f714445316ecf70af6642b6 $");
-
 #include "opt_inet.h"
 
 #ifdef TCP_OFFLOAD

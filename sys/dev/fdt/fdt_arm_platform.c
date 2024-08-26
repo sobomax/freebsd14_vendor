@@ -27,8 +27,6 @@
 #include "opt_platform.h"
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: bc761f6c231a4dac8f2ab8ca915bd4d250319101 $");
-
 #include <sys/param.h>
 #include <sys/smp.h>
 
@@ -73,7 +71,7 @@ fdt_platform_probe(platform_t plat)
 }
 
 #if defined(SMP)
-static boolean_t
+static bool
 fdt_platform_maxid(u_int id, phandle_t node, u_int addr_cells, pcell_t *reg)
 {
 

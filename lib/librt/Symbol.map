@@ -1,5 +1,4 @@
 /*
- * $FreeBSD: c11b88397afd9f82510da6de04b004b3df179e4a $
  */
 
 FBSD_1.0 {
@@ -29,6 +28,11 @@ FBSD_1.5 {
 	lio_listio;
 	mq_getfd_np;
 	timer_oshandle_np;
+};
+
+FBSD_1.6 {
+	aio_readv;
+	aio_writev;
 };
 
 FBSDprivate_1.0 {

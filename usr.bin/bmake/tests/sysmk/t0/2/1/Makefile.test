@@ -1,4 +1,3 @@
-# $FreeBSD: fc95f46e679ea5b52be0cd79e9b1f0b9443bfa05 $
 #
 # Can we traverse up to / and find a 'mk/sys.mk'?
 #

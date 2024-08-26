@@ -1,4 +1,3 @@
-# $FreeBSD: dcda3c2bdac84f1d038d9f098787326125ba7dbb $
 
 LIB=	devstat
 SHLIBDIR?= /lib

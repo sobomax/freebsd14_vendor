@@ -1,4 +1,3 @@
-/*	$FreeBSD: 9f951cf6c31dea7e349d0e69fb135127424d298c $	*/
 
 /*
  * Copyright (C) 2012 by Darren Reed.
@@ -53,7 +52,7 @@ ipfrule_modevent(module_t mod, int type, void *unused)
 		error = EINVAL;
 		break;
 	}
-	return error;
+	return(error);
 }
 
 static moduledata_t ipfrulemod = {

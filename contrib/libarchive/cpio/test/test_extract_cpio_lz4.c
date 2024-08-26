@@ -23,7 +23,6 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 #include "test.h"
-__FBSDID("$FreeBSD: c16247be2bef3c25f6b38adb01363813f2b33a19 $");
 
 DEFINE_TEST(test_extract_cpio_lz4)
 {

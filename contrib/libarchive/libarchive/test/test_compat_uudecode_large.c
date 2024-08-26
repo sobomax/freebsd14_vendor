@@ -24,7 +24,6 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 #include "test.h"
-__FBSDID("$FreeBSD: a2ffd22663a520dc1f07fc94e122660600f1838e $");
 
 DEFINE_TEST(test_compat_uudecode_large)
 {

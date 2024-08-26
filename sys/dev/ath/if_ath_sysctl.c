@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2002-2009 Sam Leffler, Errno Consulting
  * All rights reserved.
@@ -30,8 +30,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: a7ffad60dbabf14a2cd7f42dd176c908c4568cc0 $");
-
 /*
  * Driver for the Atheros Wireless LAN controller.
  *
@@ -1300,6 +1298,10 @@ ath_sysctl_stats_attach(struct ath_softc *sc)
 	SYSCTL_ADD_UINT(ctx, child, OID_AUTO, "ast_tx_ldpc",
 	    CTLFLAG_RD, &sc->sc_stats.ast_tx_ldpc, 0,
 	    "Number of LDPC frames transmitted");
+
+	SYSCTL_ADD_UINT(ctx, child, OID_AUTO, "ast_tsfoor",
+	    CTLFLAG_RD, &sc->sc_stats.ast_tsfoor, 0,
+	    "Number of TSF out of range interrupts/resets");
 
 	/* Attach the RX phy error array */
 	ath_sysctl_stats_attach_rxphyerr(sc, child);

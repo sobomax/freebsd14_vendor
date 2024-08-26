@@ -1,4 +1,3 @@
-# $FreeBSD: 8a745cf48d76004e81dcdc93187cec7c7ba29bf5 $ 
 # $NetBSD: MULELAO-1%UCS.src,v 1.1 2006/11/25 10:27:22 tnozaki Exp $
 
 TYPE		ROWCOL

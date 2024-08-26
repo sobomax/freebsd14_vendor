@@ -1,4 +1,3 @@
-# $FreeBSD: 0378b117a5cac63d0ef1da02c419c2f7e1a48227 $
 # $NetBSD: Makefile.part,v 1.6 2008/10/25 22:35:36 apb Exp $
 
 PARTFILE?= ${.CURDIR}/${CODE}.part

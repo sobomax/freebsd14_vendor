@@ -8,8 +8,6 @@ use and modify. Please send modifications and/or suggestions + bug fixes to
 */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 95b49f8f39a0bcb01f8c975c48d798e1f51b04ef $");
-
 #include <ctype.h>
 #include <err.h>
 #include <netdb.h>
@@ -39,7 +37,7 @@ const char *bootpfile = "/etc/bootparams";
 
 static struct sockaddr_in my_addr;
 
-static void usage(void);
+static void usage(void) __dead2;
 
 int
 main(int argc, char **argv)

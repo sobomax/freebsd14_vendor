@@ -1,6 +1,7 @@
-# $FreeBSD: 60b62b6c06a887eb7db50db3f1a2effd7b5d6037 $
 
 .include <src.opts.mk>
+
+PACKAGE=	elftoolchain
 
 ELFTCDIR=	${SRCTOP}/contrib/elftoolchain
 SIZEDIR=	${ELFTCDIR}/size

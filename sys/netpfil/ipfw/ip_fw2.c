@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2002-2009 Luigi Rizzo, Universita` di Pisa
  *
@@ -26,8 +26,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: db63f4c34572343175daf019770a1fee8860cd07 $");
-
 /*
  * The FreeBSD IP packet firewall, main file
  */
@@ -64,10 +62,12 @@ __FBSDID("$FreeBSD: db63f4c34572343175daf019770a1fee8860cd07 $");
 #include <net/ethernet.h> /* for ETHERTYPE_IP */
 #include <net/if.h>
 #include <net/if_var.h>
+#include <net/if_private.h>
 #include <net/route.h>
 #include <net/route/nhop.h>
 #include <net/pfil.h>
 #include <net/vnet.h>
+#include <net/if_pfsync.h>
 
 #include <netpfil/pf/pf_mtag.h>
 
@@ -993,8 +993,17 @@ send_reject6(struct ip_fw_args *args, int code, u_int hlen, struct ip6_hdr *ip6)
  * sends a reject message, consuming the mbuf passed as an argument.
  */
 static void
-send_reject(struct ip_fw_args *args, int code, int iplen, struct ip *ip)
+send_reject(struct ip_fw_args *args, const ipfw_insn *cmd, int iplen,
+    struct ip *ip)
 {
+	int code, mtu;
+
+	code = cmd->arg1;
+	if (code == ICMP_UNREACH_NEEDFRAG &&
+	    cmd->len == F_INSN_SIZE(ipfw_insn_u16))
+		mtu = ((const ipfw_insn_u16 *)cmd)->ports[0];
+	else
+		mtu = 0;
 
 #if 0
 	/* XXX When ip is not guaranteed to be at mtod() we will
@@ -1008,7 +1017,7 @@ send_reject(struct ip_fw_args *args, int code, int iplen, struct ip *ip)
 #endif
 	if (code != ICMP_REJECT_RST && code != ICMP_REJECT_ABORT) {
 		/* Send an ICMP unreach */
-		icmp_error(args->m, ICMP_UNREACH, code, 0L, 0);
+		icmp_error(args->m, ICMP_UNREACH, code, 0L, mtu);
 	} else if (code == ICMP_REJECT_RST && args->f_id.proto == IPPROTO_TCP) {
 		struct tcphdr *const tcp =
 		    L3HDR(struct tcphdr, mtod(args->m, struct ip *));
@@ -1438,7 +1447,9 @@ ipfw_chk(struct ip_fw_args *args)
 
 	/* XXX ipv6 variables */
 	int is_ipv6 = 0;
+#ifdef INET6
 	uint8_t	icmp6_type = 0;
+#endif
 	uint16_t ext_hd = 0;	/* bits vector for extension header filtering */
 	/* end of ipv6 variables */
 
@@ -1550,7 +1561,9 @@ do {								\
 			switch (proto) {
 			case IPPROTO_ICMPV6:
 				PULLUP_TO(hlen, ulp, struct icmp6_hdr);
+#ifdef INET6
 				icmp6_type = ICMP6(ulp)->icmp6_type;
+#endif
 				break;
 
 			case IPPROTO_TCP:
@@ -1702,6 +1715,10 @@ do {								\
 
 			case IPPROTO_IPV4:	/* RFC 2893 */
 				PULLUP_TO(hlen, ulp, struct ip);
+				break;
+
+			case IPPROTO_PFSYNC:
+				PULLUP_TO(hlen, ulp, struct pfsync_header);
 				break;
 
 			default:
@@ -1988,7 +2005,7 @@ do {								\
 					    >> 8) | (offset != 0));
 				} else {
 					/*
-					 * Compatiblity: historically bare
+					 * Compatibility: historically bare
 					 * "frag" would match IPv6 fragments.
 					 */
 					match = (cmd->arg1 == 0x1 &&
@@ -2112,6 +2129,11 @@ do {								\
 							eh->ether_dhost:
 							eh->ether_shost;
 						keylen = ETHER_ADDR_LEN;
+						break;
+					case LOOKUP_MARK:
+						key = args->rule.pkt_mark;
+						pkey = &key;
+						keylen = sizeof(key);
 						break;
 					}
 					if (keylen == 0)
@@ -2759,6 +2781,19 @@ do {								\
 				}
 				break;
 			}
+
+			case O_MARK: {
+				uint32_t mark;
+				if (cmd->arg1 == IP_FW_TARG)
+					mark = TARG_VAL(chain, tablearg, mark);
+				else
+					mark = ((ipfw_insn_u32 *)cmd)->d[0];
+				match =
+				    (args->rule.pkt_mark &
+				    ((ipfw_insn_u32 *)cmd)->d[1]) ==
+				    (mark & ((ipfw_insn_u32 *)cmd)->d[1]);
+				break;
+			}
 				
 			/*
 			 * The second set of opcodes represents 'actions',
@@ -2851,8 +2886,7 @@ do {								\
 					cmd = ACTION_PTR(f);
 					l = f->cmd_len - f->act_ofs;
 					cmdlen = 0;
-					match = 1;
-					break;
+					continue;
 				}
 				/*
 				 * Dynamic entry not found. If CHECK_STATE,
@@ -3038,7 +3072,7 @@ do {								\
 				     is_icmp_query(ICMP(ulp))) &&
 				    !(m->m_flags & (M_BCAST|M_MCAST)) &&
 				    !IN_MULTICAST(ntohl(dst_ip.s_addr))) {
-					send_reject(args, cmd->arg1, iplen, ip);
+					send_reject(args, cmd, iplen, ip);
 					m = args->m;
 				}
 				/* FALLTHROUGH */
@@ -3262,6 +3296,18 @@ do {								\
 				done = 1;	/* exit outer loop */
 				break;
 			}
+
+			case O_SETMARK: {
+				l = 0;		/* exit inner loop */
+				args->rule.pkt_mark = (
+				    (cmd->arg1 == IP_FW_TARG) ?
+				    TARG_VAL(chain, tablearg, mark) :
+				    ((ipfw_insn_u32 *)cmd)->d[0]);
+
+				IPFW_INC_RULE_COUNTER(f, pktlen);
+				break;
+			}
+
 			case O_EXTERNAL_ACTION:
 				l = 0; /* in any case exit inner loop */
 				retval = ipfw_run_eaction(chain, args,

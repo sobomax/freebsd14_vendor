@@ -44,8 +44,6 @@ static char sccsid[] = "@(#)ping.c	8.1 (Berkeley) 6/5/93";
 #endif /* not lint */
 #endif
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 2fc876e50776d1d206bb143181fa24986d2e0a7c $");
-
 /*
  *			P I N G . C
  *
@@ -89,7 +87,6 @@ __FBSDID("$FreeBSD: 2fc876e50776d1d206bb143181fa24986d2e0a7c $");
 #include <ctype.h>
 #include <err.h>
 #include <errno.h>
-#include <math.h>
 #include <netdb.h>
 #include <stddef.h>
 #include <signal.h>
@@ -129,10 +126,8 @@ struct tv32 {
 };
 
 /* various options */
-static int options;
 #define	F_FLOOD		0x0001
 #define	F_INTERVAL	0x0002
-#define	F_NUMERIC	0x0004
 #define	F_PINGFILLED	0x0008
 #define	F_QUIET		0x0010
 #define	F_RROUTE	0x0020
@@ -180,7 +175,6 @@ static char BSPACE = '\b';	/* characters written for flood */
 static const char *DOT = ".";
 static size_t DOTlen = 1;
 static size_t DOTidx = 0;
-static char *hostname;
 static char *shostname;
 static int ident;		/* process id to identify our packets */
 static int uid;			/* cached uid for micro-optimization */
@@ -192,9 +186,6 @@ static int send_len;
 /* counters */
 static long nmissedmax;		/* max value of ntransmitted - nreceived - 1 */
 static long npackets;		/* max packets to transmit */
-static long nreceived;		/* # of packets we got back */
-static long nrepeats;		/* number of duplicates */
-static long ntransmitted;	/* sequence # for outbound packets = #sent */
 static long snpackets;			/* max packets to transmit in one sweep */
 static long sntransmitted;	/* # of packets we sent in this sweep */
 static int sweepmax;		/* max value of payload in sweep */
@@ -202,34 +193,17 @@ static int sweepmin = 0;	/* start value of payload in sweep */
 static int sweepincr = 1;	/* payload increment in sweep */
 static int interval = 1000;	/* interval between packets, ms */
 static int waittime = MAXWAIT;	/* timeout for each packet */
-static long nrcvtimeout = 0;	/* # of packets we got back after waittime */
-
-/* timing */
-static int timing;		/* flag to do timing */
-static double tmin = 999999999.0;	/* minimum round trip time */
-static double tmax = 0.0;	/* maximum round trip time */
-static double tsum = 0.0;	/* sum of all times, for doing average */
-static double tsumsq = 0.0;	/* sum of all times squared, for std. dev. */
-
-/* nonzero if we've been told to finish up */
-static volatile sig_atomic_t finish_up;
-static volatile sig_atomic_t siginfo_p;
 
 static cap_channel_t *capdns;
 
 static void fill(char *, char *);
 static cap_channel_t *capdns_setup(void);
-static void check_status(void);
-static void finish(void) __dead2;
 static void pinger(void);
 static char *pr_addr(struct in_addr);
 static char *pr_ntime(n_time);
 static void pr_icmph(struct icmp *, struct ip *, const u_char *const);
-static void pr_iph(struct ip *);
+static void pr_iph(struct ip *, const u_char *);
 static void pr_pack(char *, ssize_t, struct sockaddr_in *, struct timespec *);
-static void pr_retip(struct ip *, const u_char *);
-static void status(int);
-static void stopit(int);
 
 int
 ping(int argc, char *const *argv)
@@ -266,8 +240,6 @@ ping(int argc, char *const *argv)
 	policy_in = policy_out = NULL;
 #endif
 	cap_rights_t rights;
-
-	options |= F_NUMERIC;
 
 	/*
 	 * Do the stuff that we need root priv's for *first*, and
@@ -382,7 +354,7 @@ ping(int argc, char *const *argv)
 			options |= F_SWEEP;
 			break;
 		case 'H':
-			options &= ~F_NUMERIC;
+			options |= F_HOSTNAME;
 			break;
 		case 'h': /* Packet size increment for ping sweep */
 			ltmp = strtonum(optarg, 1, INT_MAX, &errstr);
@@ -455,7 +427,7 @@ ping(int argc, char *const *argv)
 			options |= F_TTL;
 			break;
 		case 'n':
-			options |= F_NUMERIC;
+			options &= ~F_HOSTNAME;
 			break;
 		case 'o':
 			options |= F_ONCE;
@@ -885,22 +857,17 @@ ping(int argc, char *const *argv)
 
 	sigemptyset(&si_sa.sa_mask);
 	si_sa.sa_flags = 0;
-
-	si_sa.sa_handler = stopit;
-	if (sigaction(SIGINT, &si_sa, 0) == -1) {
+	si_sa.sa_handler = onsignal;
+	if (sigaction(SIGINT, &si_sa, 0) == -1)
 		err(EX_OSERR, "sigaction SIGINT");
-	}
-
-	si_sa.sa_handler = status;
-	if (sigaction(SIGINFO, &si_sa, 0) == -1) {
-		err(EX_OSERR, "sigaction");
-	}
-
-        if (alarmtimeout > 0) {
-		si_sa.sa_handler = stopit;
+	seenint = 0;
+	if (sigaction(SIGINFO, &si_sa, 0) == -1)
+		err(EX_OSERR, "sigaction SIGINFO");
+	seeninfo = 0;
+	if (alarmtimeout > 0) {
 		if (sigaction(SIGALRM, &si_sa, 0) == -1)
 			err(EX_OSERR, "sigaction SIGALRM");
-        }
+	}
 
 	bzero(&msg, sizeof(msg));
 	msg.msg_name = (caddr_t)&from;
@@ -932,13 +899,18 @@ ping(int argc, char *const *argv)
 	}
 
 	almost_done = 0;
-	while (!finish_up) {
+	while (seenint == 0) {
 		struct timespec now, timeout;
 		fd_set rfds;
 		int n;
 		ssize_t cc;
 
-		check_status();
+		/* signal handling */
+		if (seeninfo) {
+			pr_summary(stderr);
+			seeninfo = 0;
+			continue;
+		}
 		if ((unsigned)srecv >= FD_SETSIZE)
 			errx(EX_OSERR, "descriptor too large");
 		FD_ZERO(&rfds);
@@ -948,9 +920,10 @@ ping(int argc, char *const *argv)
 		timespecsub(&timeout, &now, &timeout);
 		if (timeout.tv_sec < 0)
 			timespecclear(&timeout);
+
 		n = pselect(srecv + 1, &rfds, NULL, NULL, &timeout, NULL);
 		if (n < 0)
-			continue;	/* Must be EINTR. */
+			continue;	/* EINTR */
 		if (n == 1) {
 			struct timespec *tv = NULL;
 #ifdef SO_TIMESTAMP
@@ -985,7 +958,7 @@ ping(int argc, char *const *argv)
 			    (npackets && nreceived >= npackets))
 				break;
 		}
-		if (n == 0 || options & F_FLOOD) {
+		if (n == 0 || (options & F_FLOOD)) {
 			if (sweepmax && sntransmitted == snpackets) {
 				if (datalen + sweepincr > sweepmax)
 					break;
@@ -1001,14 +974,21 @@ ping(int argc, char *const *argv)
 				if (almost_done)
 					break;
 				almost_done = 1;
+				/*
+				 * If we're not transmitting any more packets,
+				 * change the timer to wait two round-trip times
+				 * if we've received any packets or (waittime)
+				 * milliseconds if we haven't.
+				 */
 				intvl.tv_nsec = 0;
 				if (nreceived) {
 					intvl.tv_sec = 2 * tmax / 1000;
-					if (!intvl.tv_sec)
+					if (intvl.tv_sec == 0)
 						intvl.tv_sec = 1;
 				} else {
 					intvl.tv_sec = waittime / 1000;
-					intvl.tv_nsec = waittime % 1000 * 1000000;
+					intvl.tv_nsec =
+					    waittime % 1000 * 1000000;
 				}
 			}
 			(void)clock_gettime(CLOCK_MONOTONIC, &last);
@@ -1019,28 +999,9 @@ ping(int argc, char *const *argv)
 			}
 		}
 	}
-	finish();
-	/* NOTREACHED */
-	exit(0);	/* Make the compiler happy */
-}
+	pr_summary(stdout);
 
-/*
- * stopit --
- *	Set the global bit that causes the main loop to quit.
- * Do NOT call finish() from here, since finish() does far too much
- * to be called from a signal handler.
- */
-void
-stopit(int sig __unused)
-{
-
-	/*
-	 * When doing reverse DNS lookups, the finish_up flag might not
-	 * be noticed for a while.  Just exit if we get a second SIGINT.
-	 */
-	if (!(options & F_NUMERIC) && finish_up)
-		_exit(nreceived ? 0 : 2);
-	finish_up = 1;
+	exit(nreceived ? 0 : 2);
 }
 
 /*
@@ -1189,12 +1150,8 @@ pr_pack(char *buf, ssize_t cc, struct sockaddr_in *from, struct timespec *tv)
 		return;
 	}
 
-#ifndef icmp_data
-	icmp_data_raw = buf + hlen + offsetof(struct icmp, icmp_ip);
-#else
 	icmp_data_raw_len = cc - (hlen + offsetof(struct icmp, icmp_data));
 	icmp_data_raw = buf + hlen + offsetof(struct icmp, icmp_data);
-#endif
 
 	/* Now the ICMP part */
 	cc -= hlen;
@@ -1218,8 +1175,14 @@ pr_pack(char *buf, ssize_t cc, struct sockaddr_in *from, struct timespec *tv)
 				tv1.tv_sec = ntohl(tv32.tv32_sec);
 				tv1.tv_nsec = ntohl(tv32.tv32_nsec);
 				timespecsub(tv, &tv1, tv);
- 				triptime = ((double)tv->tv_sec) * 1000.0 +
+				triptime = ((double)tv->tv_sec) * 1000.0 +
 				    ((double)tv->tv_nsec) / 1000000.0;
+				if (triptime < 0) {
+					warnx("time of day goes back (%.3f ms),"
+					    " clamping time to 0",
+					    triptime);
+					triptime = 0;
+				}
 				tsum += triptime;
 				tsumsq += triptime * triptime;
 				if (triptime < tmin)
@@ -1298,14 +1261,14 @@ pr_pack(char *buf, ssize_t cc, struct sockaddr_in *from, struct timespec *tv)
 					for (i = 0; i < datalen; ++i, ++cp) {
 						if ((i % 16) == 8)
 							(void)printf("\n\t");
-						(void)printf("%2x ", *cp);
+						(void)printf(" %2x", *cp);
 					}
 					(void)printf("\ndp:");
 					cp = &outpack[ICMP_MINLEN];
 					for (i = 0; i < datalen; ++i, ++cp) {
 						if ((i % 16) == 8)
 							(void)printf("\n\t");
-						(void)printf("%2x ", *cp);
+						(void)printf(" %2x", *cp);
 					}
 					break;
 				}
@@ -1370,7 +1333,7 @@ pr_pack(char *buf, ssize_t cc, struct sockaddr_in *from, struct timespec *tv)
 		     (oicmp.icmp_id == ident))) {
 		    (void)printf("%zd bytes from %s: ", cc,
 			pr_addr(from->sin_addr));
-		    pr_icmph(&icp, &oip, oicmp_raw);
+		    pr_icmph(&icp, &oip, icmp_data_raw);
 		} else
 		    return;
 	}
@@ -1407,7 +1370,7 @@ pr_pack(char *buf, ssize_t cc, struct sockaddr_in *from, struct timespec *tv)
 					(void)putchar('\n');
 				}
 			} else
-				(void)printf("\t(truncated route)\n");
+				(void)printf("\t(truncated route)");
 			break;
 		case IPOPT_RR:
 			j = cp[IPOPT_OLEN];		/* get length */
@@ -1465,77 +1428,6 @@ pr_pack(char *buf, ssize_t cc, struct sockaddr_in *from, struct timespec *tv)
 }
 
 /*
- * status --
- *	Print out statistics when SIGINFO is received.
- */
-
-static void
-status(int sig __unused)
-{
-
-	siginfo_p = 1;
-}
-
-static void
-check_status(void)
-{
-
-	if (siginfo_p) {
-		siginfo_p = 0;
-		(void)fprintf(stderr, "\r%ld/%ld packets received (%.1f%%)",
-		    nreceived, ntransmitted,
-		    ntransmitted ? nreceived * 100.0 / ntransmitted : 0.0);
-		if (nreceived && timing)
-			(void)fprintf(stderr, " %.3f min / %.3f avg / %.3f max",
-			    tmin, tsum / (nreceived + nrepeats), tmax);
-		(void)fprintf(stderr, "\n");
-	}
-}
-
-/*
- * finish --
- *	Print out statistics, and give up.
- */
-static void
-finish(void)
-{
-
-	(void)signal(SIGINT, SIG_IGN);
-	(void)signal(SIGALRM, SIG_IGN);
-	(void)putchar('\n');
-	(void)fflush(stdout);
-	(void)printf("--- %s ping statistics ---\n", hostname);
-	(void)printf("%ld packets transmitted, ", ntransmitted);
-	(void)printf("%ld packets received, ", nreceived);
-	if (nrepeats)
-		(void)printf("+%ld duplicates, ", nrepeats);
-	if (ntransmitted) {
-		if (nreceived > ntransmitted)
-			(void)printf("-- somebody's printing up packets!");
-		else
-			(void)printf("%.1f%% packet loss",
-			    ((ntransmitted - nreceived) * 100.0) /
-			    ntransmitted);
-	}
-	if (nrcvtimeout)
-		(void)printf(", %ld packets out of wait time", nrcvtimeout);
-	(void)putchar('\n');
-	if (nreceived && timing) {
-		double n = nreceived + nrepeats;
-		double avg = tsum / n;
-		double vari = tsumsq / n - avg * avg;
-		(void)printf(
-		    "round-trip min/avg/max/stddev = %.3f/%.3f/%.3f/%.3f ms\n",
-		    tmin, avg, tmax, sqrt(vari));
-	}
-
-	if (nreceived)
-		exit(0);
-	else
-		exit(2);
-}
-
-/*
  * pr_icmph --
  *	Print a descriptive string about an ICMP header.
  */
@@ -1578,11 +1470,11 @@ pr_icmph(struct icmp *icp, struct ip *oip, const u_char *const oicmp_raw)
 			break;
 		}
 		/* Print returned IP header information */
-		pr_retip(oip, oicmp_raw);
+		pr_iph(oip, oicmp_raw);
 		break;
 	case ICMP_SOURCEQUENCH:
 		(void)printf("Source Quench\n");
-		pr_retip(oip, oicmp_raw);
+		pr_iph(oip, oicmp_raw);
 		break;
 	case ICMP_REDIRECT:
 		switch(icp->icmp_code) {
@@ -1603,7 +1495,7 @@ pr_icmph(struct icmp *icp, struct ip *oip, const u_char *const oicmp_raw)
 			break;
 		}
 		(void)printf("(New addr: %s)\n", inet_ntoa(icp->icmp_gwaddr));
-		pr_retip(oip, oicmp_raw);
+		pr_iph(oip, oicmp_raw);
 		break;
 	case ICMP_ECHO:
 		(void)printf("Echo Request\n");
@@ -1622,12 +1514,12 @@ pr_icmph(struct icmp *icp, struct ip *oip, const u_char *const oicmp_raw)
 			    icp->icmp_code);
 			break;
 		}
-		pr_retip(oip, oicmp_raw);
+		pr_iph(oip, oicmp_raw);
 		break;
 	case ICMP_PARAMPROB:
 		(void)printf("Parameter problem: pointer = 0x%02x\n",
 		    icp->icmp_hun.ih_pptr);
-		pr_retip(oip, oicmp_raw);
+		pr_iph(oip, oicmp_raw);
 		break;
 	case ICMP_TSTAMP:
 		(void)printf("Timestamp\n");
@@ -1667,31 +1559,39 @@ pr_icmph(struct icmp *icp, struct ip *oip, const u_char *const oicmp_raw)
  *	Print an IP header with options.
  */
 static void
-pr_iph(struct ip *ip)
+pr_iph(struct ip *ip, const u_char *cp)
 {
-	struct in_addr ina;
-	u_char *cp;
+	struct in_addr dst_ina, src_ina;
 	int hlen;
 
 	hlen = ip->ip_hl << 2;
-	cp = (u_char *)ip + 20;		/* point to options */
+	cp = cp + sizeof(struct ip);		/* point to options */
 
-	(void)printf("Vr HL TOS  Len   ID Flg  off TTL Pro  cks      Src      Dst\n");
+	memcpy(&src_ina, &ip->ip_src.s_addr, sizeof(src_ina));
+	memcpy(&dst_ina, &ip->ip_dst.s_addr, sizeof(dst_ina));
+
+	(void)printf("Vr HL TOS  Len   ID Flg  off TTL Pro  cks %*s %*s",
+	    (int)strlen(inet_ntoa(src_ina)), "Src",
+	    (int)strlen(inet_ntoa(dst_ina)), "Dst");
+	if (hlen > (int)sizeof(struct ip))
+		(void)printf(" Opts");
+	(void)putchar('\n');
 	(void)printf(" %1x  %1x  %02x %04x %04x",
 	    ip->ip_v, ip->ip_hl, ip->ip_tos, ntohs(ip->ip_len),
 	    ntohs(ip->ip_id));
-	(void)printf("   %1lx %04lx",
-	    (u_long) (ntohl(ip->ip_off) & 0xe000) >> 13,
-	    (u_long) ntohl(ip->ip_off) & 0x1fff);
+	(void)printf("   %1x %04x",
+	    (ntohs(ip->ip_off) & 0xe000) >> 13,
+	    ntohs(ip->ip_off) & 0x1fff);
 	(void)printf("  %02x  %02x %04x", ip->ip_ttl, ip->ip_p,
 							    ntohs(ip->ip_sum));
-	memcpy(&ina, &ip->ip_src.s_addr, sizeof ina);
-	(void)printf(" %s ", inet_ntoa(ina));
-	memcpy(&ina, &ip->ip_dst.s_addr, sizeof ina);
-	(void)printf(" %s ", inet_ntoa(ina));
+	(void)printf(" %s", inet_ntoa(src_ina));
+	(void)printf(" %s", inet_ntoa(dst_ina));
 	/* dump any option bytes */
-	while (hlen-- > 20) {
-		(void)printf("%02x", *cp++);
+	if (hlen > (int)sizeof(struct ip)) {
+		(void)printf(" ");
+		while (hlen-- > (int)sizeof(struct ip)) {
+			(void)printf("%02x", *cp++);
+		}
 	}
 	(void)putchar('\n');
 }
@@ -1707,10 +1607,10 @@ pr_addr(struct in_addr ina)
 	struct hostent *hp;
 	static char buf[16 + 3 + MAXHOSTNAMELEN];
 
-	if (options & F_NUMERIC)
+	if (!(options & F_HOSTNAME))
 		return inet_ntoa(ina);
 
-	hp = cap_gethostbyaddr(capdns, (char *)&ina, 4, AF_INET);
+	hp = cap_gethostbyaddr(capdns, (char *)&ina, sizeof(ina), AF_INET);
 
 	if (hp == NULL)
 		return inet_ntoa(ina);
@@ -1718,23 +1618,6 @@ pr_addr(struct in_addr ina)
 	(void)snprintf(buf, sizeof(buf), "%s (%s)", hp->h_name,
 	    inet_ntoa(ina));
 	return(buf);
-}
-
-/*
- * pr_retip --
- *	Dump some info on a returned (via ICMP) IP packet.
- */
-static void
-pr_retip(struct ip *ip, const u_char *cp)
-{
-	pr_iph(ip);
-
-	if (ip->ip_p == 6)
-		(void)printf("TCP: from port %u, to port %u (decimal)\n",
-		    (*cp * 256 + *(cp + 1)), (*(cp + 2) * 256 + *(cp + 3)));
-	else if (ip->ip_p == 17)
-		(void)printf("UDP: from port %u, to port %u (decimal)\n",
-			(*cp * 256 + *(cp + 1)), (*(cp + 2) * 256 + *(cp + 3)));
 }
 
 static char *

@@ -69,8 +69,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 372019affa46d7836079d0d575ed16fd794c4629 $");
-
 #include "opt_vm.h"
 
 #include <sys/param.h>
@@ -163,10 +161,10 @@ static SYSCTL_NODE(_vm_stats, OID_AUTO, swap, CTLFLAG_RD | CTLFLAG_MPSAFE, 0,
     "VM swap stats");
 
 SYSCTL_PROC(_vm, OID_AUTO, swap_reserved, CTLTYPE_U64 | CTLFLAG_RD | CTLFLAG_MPSAFE,
-    &swap_reserved, 0, sysctl_page_shift, "A", 
+    &swap_reserved, 0, sysctl_page_shift, "QU",
     "Amount of swap storage needed to back all allocated anonymous memory.");
 SYSCTL_PROC(_vm, OID_AUTO, swap_total, CTLTYPE_U64 | CTLFLAG_RD | CTLFLAG_MPSAFE,
-    &swap_total, 0, sysctl_page_shift, "A", 
+    &swap_total, 0, sysctl_page_shift, "QU",
     "Total amount of available swap storage.");
 
 int vm_overcommit __read_mostly = 0;
@@ -384,7 +382,7 @@ static int swap_pager_almost_full = 1; /* swap space exhaustion (w/hysteresis)*/
 static struct mtx swbuf_mtx;	/* to sync nsw_wcount_async */
 static int nsw_wcount_async;	/* limit async write buffers */
 static int nsw_wcount_async_max;/* assigned maximum			*/
-static int nsw_cluster_max;	/* maximum VOP I/O allowed		*/
+int nsw_cluster_max; 		/* maximum VOP I/O allowed		*/
 
 static int sysctl_swap_async_max(SYSCTL_HANDLER_ARGS);
 SYSCTL_PROC(_vm, OID_AUTO, swap_async_max, CTLTYPE_INT | CTLFLAG_RW |
@@ -426,7 +424,7 @@ static int	swap_pager_getpages(vm_object_t, vm_page_t *, int, int *,
     int *);
 static int	swap_pager_getpages_async(vm_object_t, vm_page_t *, int, int *,
     int *, pgo_getpages_iodone_t, void *);
-static void	swap_pager_putpages(vm_object_t, vm_page_t *, int, boolean_t, int *);
+static void	swap_pager_putpages(vm_object_t, vm_page_t *, int, int, int *);
 static boolean_t
 		swap_pager_haspage(vm_object_t object, vm_pindex_t pindex, int *before, int *after);
 static void	swap_pager_init(void);
@@ -575,6 +573,16 @@ swap_pager_init(void)
 	mtx_init(&sw_dev_mtx, "swapdev", NULL, MTX_DEF);
 	sx_init(&sw_alloc_sx, "swspsx");
 	sx_init(&swdev_syscall_lock, "swsysc");
+
+	/*
+	 * The nsw_cluster_max is constrained by the bp->b_pages[]
+	 * array, which has maxphys / PAGE_SIZE entries, and our locally
+	 * defined MAX_PAGEOUT_CLUSTER.   Also be aware that swap ops are
+	 * constrained by the swap device interleave stripe size.
+	 *
+	 * Initialized early so that GEOM_ELI can see it.
+	 */
+	nsw_cluster_max = min(maxphys / PAGE_SIZE, MAX_PAGEOUT_CLUSTER);
 }
 
 /*
@@ -594,11 +602,6 @@ swap_pager_swap_init(void)
 	 * initialize workable values (0 will work for hysteresis
 	 * but it isn't very efficient).
 	 *
-	 * The nsw_cluster_max is constrained by the bp->b_pages[]
-	 * array, which has maxphys / PAGE_SIZE entries, and our locally
-	 * defined MAX_PAGEOUT_CLUSTER.   Also be aware that swap ops are
-	 * constrained by the swap device interleave stripe size.
-	 *
 	 * Currently we hardwire nsw_wcount_async to 4.  This limit is
 	 * designed to prevent other I/O from having high latencies due to
 	 * our pageout I/O.  The value 4 works well for one or two active swap
@@ -609,8 +612,9 @@ swap_pager_swap_init(void)
 	 * at least 2 per swap devices, and 4 is a pretty good value if you
 	 * have one NFS swap device due to the command/ack latency over NFS.
 	 * So it all works out pretty well.
+	 *
+	 * nsw_cluster_max is initialized in swap_pager_init().
 	 */
-	nsw_cluster_max = min(maxphys / PAGE_SIZE, MAX_PAGEOUT_CLUSTER);
 
 	nsw_wcount_async = 4;
 	nsw_wcount_async_max = nsw_wcount_async;
@@ -782,6 +786,20 @@ swap_pager_dealloc(vm_object_t object)
 	swp_pager_meta_free_all(object);
 	object->handle = NULL;
 	object->type = OBJT_DEAD;
+
+	/*
+	 * Release the allocation charge.
+	 */
+	if (object->cred != NULL) {
+		swap_release_by_cred(object->charge, object->cred);
+		object->charge = 0;
+		crfree(object->cred);
+		object->cred = NULL;
+	}
+
+	/*
+	 * Hide the object from swap_pager_swapoff().
+	 */
 	vm_object_clear_flag(object, OBJ_SWAP);
 }
 
@@ -1020,12 +1038,14 @@ static bool
 swp_pager_xfer_source(vm_object_t srcobject, vm_object_t dstobject,
     vm_pindex_t pindex, daddr_t addr)
 {
-	daddr_t dstaddr;
+	daddr_t dstaddr __diagused;
 
 	KASSERT((srcobject->flags & OBJ_SWAP) != 0,
-	    ("%s: Srcobject not swappable", __func__));
-	if ((dstobject->flags & OBJ_SWAP) != 0 &&
-	    swp_pager_meta_lookup(dstobject, pindex) != SWAPBLK_NONE) {
+	    ("%s: srcobject not swappable", __func__));
+	KASSERT((dstobject->flags & OBJ_SWAP) != 0,
+	    ("%s: dstobject not swappable", __func__));
+
+	if (swp_pager_meta_lookup(dstobject, pindex) != SWAPBLK_NONE) {
 		/* Caller should destroy the source block. */
 		return (false);
 	}
@@ -1056,8 +1076,6 @@ swp_pager_xfer_source(vm_object_t srcobject, vm_object_t dstobject,
  *
  *	The source object contains no vm_page_t's (which is just as well)
  *
- *	The source object is of type OBJT_SWAP.
- *
  *	The source and destination objects must be locked.
  *	Both object locks may temporarily be released.
  */
@@ -1065,7 +1083,6 @@ void
 swap_pager_copy(vm_object_t srcobject, vm_object_t dstobject,
     vm_pindex_t offset, int destroysource)
 {
-
 	VM_OBJECT_ASSERT_WLOCKED(srcobject);
 	VM_OBJECT_ASSERT_WLOCKED(dstobject);
 
@@ -1093,21 +1110,9 @@ swap_pager_copy(vm_object_t srcobject, vm_object_t dstobject,
 
 	/*
 	 * Free left over swap blocks in source.
-	 *
-	 * We have to revert the type to OBJT_DEFAULT so we do not accidentally
-	 * double-remove the object from the swap queues.
 	 */
-	if (destroysource) {
+	if (destroysource)
 		swp_pager_meta_free_all(srcobject);
-		/*
-		 * Reverting the type is not necessary, the caller is going
-		 * to destroy srcobject directly, but I'm doing it here
-		 * for consistency since we've removed the object from its
-		 * queues.
-		 */
-		srcobject->type = OBJT_DEFAULT;
-		vm_object_clear_flag(srcobject, OBJ_SWAP);
-	}
 }
 
 /*
@@ -1460,9 +1465,6 @@ swap_pager_getpages_async(vm_object_t object, vm_page_t *ma, int count,
  *
  *	Assign swap (if necessary) and initiate I/O on the specified pages.
  *
- *	We support both OBJT_DEFAULT and OBJT_SWAP objects.  DEFAULT objects
- *	are automatically converted to SWAP objects.
- *
  *	In a low memory situation we may block in VOP_STRATEGY(), but the new
  *	vm_page reservation system coupled with properly written VFS devices
  *	should ensure that no low-memory deadlock occurs.  This is an area
@@ -1491,23 +1493,11 @@ swap_pager_putpages(vm_object_t object, vm_page_t *ma, int count,
 	    ("%s: object mismatch %p/%p",
 	    __func__, object, ma[0]->object));
 
-	/*
-	 * Step 1
-	 *
-	 * Turn object into OBJT_SWAP.  Force sync if not a pageout process.
-	 */
-	if ((object->flags & OBJ_SWAP) == 0) {
-		addr = swp_pager_meta_build(object, 0, SWAPBLK_NONE);
-		KASSERT(addr == SWAPBLK_NONE,
-		    ("unexpected object swap block"));
-	}
 	VM_OBJECT_WUNLOCK(object);
 	async = curproc == pageproc && (flags & VM_PAGER_PUT_SYNC) == 0;
 	swp_pager_init_freerange(&s_free, &n_free);
 
 	/*
-	 * Step 2
-	 *
 	 * Assign swap blocks and issue I/O.  We reallocate swap on the fly.
 	 * The page is left dirty until the pageout operation completes
 	 * successfully.
@@ -1696,6 +1686,9 @@ swp_pager_async_iodone(struct buf *bp)
 				 * getpages so don't play cute tricks here.
 				 */
 				vm_page_invalid(m);
+				if (i < bp->b_pgbefore ||
+				    i >= bp->b_npages - bp->b_pgafter)
+					vm_page_free_invalid(m);
 			} else {
 				/*
 				 * If a write error occurs, reactivate page
@@ -1800,7 +1793,8 @@ swap_pager_swapped_pages(vm_object_t object)
 	int i;
 
 	VM_OBJECT_ASSERT_LOCKED(object);
-	if ((object->flags & OBJ_SWAP) == 0)
+
+	if (pctrie_is_empty(&object->un_pager.swp.swp_blks))
 		return (0);
 
 	for (res = 0, pi = 0; (sb = SWAP_PCTRIE_LOOKUP_GE(
@@ -1899,8 +1893,8 @@ swap_pager_swapoff_object(struct swdevt *sp, vm_object_t object)
 			if (rv != VM_PAGER_OK)
 				panic("%s: read from swap failed: %d",
 				    __func__, rv);
-			vm_object_pip_wakeupn(object, 1);
 			VM_OBJECT_WLOCK(object);
+			vm_object_pip_wakeupn(object, 1);
 			vm_page_xunbusy(m);
 
 			/*
@@ -2030,9 +2024,6 @@ swp_pager_free_empty_swblk(vm_object_t object, struct swblk *sb)
 /*
  * SWP_PAGER_META_BUILD() -	add swap block to swap meta data for object
  *
- *	We first convert the object to a swap object if it is a default
- *	object.
- *
  *	The specified swapblk is added to the object's swap metadata.  If
  *	the swapblk is not valid, it is freed instead.  Any previously
  *	assigned swapblk is returned.
@@ -2047,27 +2038,6 @@ swp_pager_meta_build(vm_object_t object, vm_pindex_t pindex, daddr_t swapblk)
 	int error, i;
 
 	VM_OBJECT_ASSERT_WLOCKED(object);
-
-	/*
-	 * Convert default object to swap object if necessary
-	 */
-	if ((object->flags & OBJ_SWAP) == 0) {
-		pctrie_init(&object->un_pager.swp.swp_blks);
-
-		/*
-		 * Ensure that swap_pager_swapoff()'s iteration over
-		 * object_list does not see a garbage pctrie.
-		 */
-		atomic_thread_fence_rel();
-
-		object->type = OBJT_SWAP;
-		vm_object_set_flag(object, OBJ_SWAP);
-		object->un_pager.swp.writemappings = 0;
-		KASSERT((object->flags & OBJ_ANON) != 0 ||
-		    object->handle == NULL,
-		    ("default pager %p with handle %p",
-		    object, object->handle));
-	}
 
 	rdpi = rounddown(pindex, SWAP_META_PAGES);
 	sb = SWAP_PCTRIE_LOOKUP(&object->un_pager.swp.swp_blks, rdpi);
@@ -2176,7 +2146,7 @@ swp_pager_meta_transfer(vm_object_t srcobject, vm_object_t dstobject,
 
 	mc = 0;
 	m = NULL;
-	if ((srcobject->flags & OBJ_SWAP) == 0 || count == 0)
+	if (count == 0 || pctrie_is_empty(&srcobject->un_pager.swp.swp_blks))
 		goto out;
 
 	swp_pager_init_freerange(&s_free, &n_free);
@@ -2255,7 +2225,8 @@ swp_pager_meta_free_all(vm_object_t object)
 	int i;
 
 	VM_OBJECT_ASSERT_WLOCKED(object);
-	if ((object->flags & OBJ_SWAP) == 0)
+
+	if (pctrie_is_empty(&object->un_pager.swp.swp_blks))
 		return;
 
 	swp_pager_init_freerange(&s_free, &n_free);
@@ -2319,9 +2290,10 @@ swap_pager_find_least(vm_object_t object, vm_pindex_t pindex)
 	int i;
 
 	VM_OBJECT_ASSERT_LOCKED(object);
-	if ((object->flags & OBJ_SWAP) == 0)
-		return (object->size);
+	MPASS((object->flags & OBJ_SWAP) != 0);
 
+	if (pctrie_is_empty(&object->un_pager.swp.swp_blks))
+		return (object->size);
 	sb = SWAP_PCTRIE_LOOKUP_GE(&object->un_pager.swp.swp_blks,
 	    rounddown(pindex, SWAP_META_PAGES));
 	if (sb == NULL)
@@ -2384,12 +2356,12 @@ sys_swapon(struct thread *td, struct swapon_args *uap)
 	}
 
 	NDINIT(&nd, LOOKUP, ISOPEN | FOLLOW | LOCKLEAF | AUDITVNODE1,
-	    UIO_USERSPACE, uap->name, td);
+	    UIO_USERSPACE, uap->name);
 	error = namei(&nd);
 	if (error)
 		goto done;
 
-	NDFREE(&nd, NDF_ONLY_PNBUF);
+	NDFREE_PNBUF(&nd);
 	vp = nd.ni_vp;
 
 	if (vn_isdisk_error(vp, &error)) {
@@ -2516,11 +2488,11 @@ kern_swapoff(struct thread *td, const char *name, enum uio_seg name_seg,
 
 	sx_xlock(&swdev_syscall_lock);
 
-	NDINIT(&nd, LOOKUP, FOLLOW | AUDITVNODE1, name_seg, name, td);
+	NDINIT(&nd, LOOKUP, FOLLOW | AUDITVNODE1, name_seg, name);
 	error = namei(&nd);
 	if (error)
 		goto done;
-	NDFREE(&nd, NDF_ONLY_PNBUF);
+	NDFREE_PNBUF(&nd);
 	vp = nd.ni_vp;
 
 	mtx_lock(&sw_dev_mtx);
@@ -2539,11 +2511,14 @@ done:
 	return (error);
 }
 
+
+#ifdef COMPAT_FREEBSD13
 int
 freebsd13_swapoff(struct thread *td, struct freebsd13_swapoff_args *uap)
 {
 	return (kern_swapoff(td, uap->name, UIO_USERSPACE, 0));
 }
+#endif
 
 int
 sys_swapoff(struct thread *td, struct swapoff_args *uap)
@@ -2930,6 +2905,7 @@ swapgeom_strategy(struct buf *bp, struct swdevt *sp)
 	bio->bio_offset = (bp->b_blkno - sp->sw_first) * PAGE_SIZE;
 	bio->bio_length = bp->b_bcount;
 	bio->bio_done = swapgeom_done;
+	bio->bio_flags |= BIO_SWAP;
 	if (!buf_mapped(bp)) {
 		bio->bio_ma = bp->b_pages;
 		bio->bio_data = unmapped_buf;

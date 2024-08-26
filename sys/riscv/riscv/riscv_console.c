@@ -33,8 +33,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: abedf8fa8c554bbf37a7ba036099952a605d5463 $");
-
 #include <sys/param.h>
 #include <sys/kdb.h>
 #include <sys/kernel.h>
@@ -266,6 +264,4 @@ static driver_t rcons_driver = {
 	sizeof(struct rcons_softc)
 };
 
-static devclass_t rcons_devclass;
-
-DRIVER_MODULE(rcons, nexus, rcons_driver, rcons_devclass, 0, 0);
+DRIVER_MODULE(rcons, nexus, rcons_driver, 0, 0);

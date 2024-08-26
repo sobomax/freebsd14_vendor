@@ -24,7 +24,6 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: 41e7f65ebf1b77a4112fe4a1e64f9f9c872115f5 $
 #
 
 # If there is a global system configuration file, suck it in.

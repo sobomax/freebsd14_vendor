@@ -58,8 +58,6 @@
  *
  * any improvements or extensions that they make and grant Carnegie the
  * rights to redistribute these changes.
- *
- * $FreeBSD: c3db4bb5765127b22c31f1cf76612b3b65b6bea4 $
  */
 
 #ifndef _VM_VM_KERN_H_

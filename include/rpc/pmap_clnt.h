@@ -31,7 +31,6 @@
  *
  *	from: @(#)pmap_clnt.h 1.11 88/02/08 SMI 
  *	from: @(#)pmap_clnt.h	2.1 88/07/29 4.0 RPCSRC
- * $FreeBSD: 465cb0c02623a51f4a0c500b76448a31f69a165c $
  */
 
 /*

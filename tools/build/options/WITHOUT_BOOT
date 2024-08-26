@@ -1,2 +1,1 @@
-.\" $FreeBSD: dae312bf45b1f7e136d5ff35866aac5707e6b024 $
 Do not build the boot blocks and loader.

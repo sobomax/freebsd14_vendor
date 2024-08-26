@@ -1,5 +1,4 @@
 #	From: @(#)bsd.prog.mk	5.26 (Berkeley) 6/25/91
-# $FreeBSD: b616be508ce4dea77add5fc1041add75def9f947 $
 #
 # The include file <bsd.kmod.mk> handles building and installing loadable
 # kernel modules.
@@ -44,9 +43,11 @@
 #
 # DESTDIR	The tree where the module gets installed. [not set]
 #
-# KERNBUILDDIR
-#		Set to the location of the kernel build directory where
+# KERNBUILDDIR	Set to the location of the kernel build directory where
 #		the opt_*.h files, .o's and kernel winds up.
+#
+# BLOB_OBJS	Prebuilt binary blobs .o's from the src tree to be linked into
+#		the module. These are precious and not removed in make clean.
 #
 # +++ targets +++
 #
@@ -78,8 +79,8 @@ OBJCOPY?=	objcopy
 
 .SUFFIXES: .out .o .c .cc .cxx .C .y .l .s .S .m
 
-# amd64 and mips use direct linking for kmod, all others use shared binaries
-.if ${MACHINE_CPUARCH} != amd64 && ${MACHINE_CPUARCH} != mips
+# amd64 uses direct linking for kmod, all others use shared binaries
+.if ${MACHINE_CPUARCH} != amd64
 __KLD_SHARED=yes
 .else
 __KLD_SHARED=no
@@ -164,7 +165,7 @@ CFLAGS+=	-fno-omit-frame-pointer -mno-omit-leaf-frame-pointer
 .endif
 
 .if ${MACHINE_CPUARCH} == "aarch64" || ${MACHINE_CPUARCH} == "riscv" || \
-    ${MACHINE_CPUARCH} == "powerpc"
+    ${MACHINE_CPUARCH} == "powerpc" || ${MACHINE_CPUARCH} == "i386"
 CFLAGS+=	-fPIC
 .endif
 
@@ -191,10 +192,6 @@ LDFLAGS+=	--no-toc-optimize
 .endif
 .endif
 
-.if ${MACHINE_CPUARCH} == mips
-CFLAGS+=	-G0 -fno-pic -mno-abicalls -mlong-calls
-.endif
-
 .if defined(DEBUG) || defined(DEBUG_FLAGS)
 CTFFLAGS+=	-g
 .endif
@@ -212,7 +209,7 @@ ${_firmw:C/\:.*$/.fwo/:T}:	${_firmw:C/\:.*$//} ${SYSDIR}/kern/firmw.S
 	@${ECHO} ${_firmw:C/\:.*$//} ${.ALLSRC:M*${_firmw:C/\:.*$//}}
 	${CC:N${CCACHE_BIN}} -c -x assembler-with-cpp -DLOCORE 	\
 	    ${CFLAGS} ${WERROR} 				\
-	    -DFIRMW_FILE="${.ALLSRC:M*${_firmw:C/\:.*$//}}" 	\
+	    -DFIRMW_FILE=\""${.ALLSRC:M*${_firmw:C/\:.*$//}}"\"	\
 	    -DFIRMW_SYMBOL="${_firmw:C/\:.*$//:C/[-.\/@]/_/g}"	\
 	    ${SYSDIR}/kern/firmw.S -o ${.TARGET}
 
@@ -261,21 +258,21 @@ LDSCRIPT_FLAGS?= -T ${SYSDIR}/conf/ldscript.kmod.${MACHINE}
 .endif
 
 .if ${__KLD_SHARED} == yes
-${KMOD}.kld: ${OBJS}
+${KMOD}.kld: ${OBJS} ${BLOB_OBJS}
 .else
-${FULLPROG}: ${OBJS}
+${FULLPROG}: ${OBJS} ${BLOB_OBJS}
 .endif
 	${LD} -m ${LD_EMULATION} ${_LDFLAGS} ${LDSCRIPT_FLAGS} -r \
-	    -o ${.TARGET} ${OBJS}
+	    -o ${.TARGET} ${OBJS} ${BLOB_OBJS}
 .if ${MK_CTF} != "no"
-	${CTFMERGE} ${CTFFLAGS} -o ${.TARGET} ${OBJS}
+	${CTFMERGE} ${CTFFLAGS} -o ${.TARGET} ${OBJS} ${BLOB_OBJS}
 .endif
 .if defined(EXPORT_SYMS)
 .if ${EXPORT_SYMS} != YES
 .if ${EXPORT_SYMS} == NO
 	:> export_syms
 .elif !exists(${.CURDIR}/${EXPORT_SYMS})
-	echo -n "${EXPORT_SYMS:@s@$s${.newline}@}" > export_syms
+	printf '%s' "${EXPORT_SYMS:@s@$s${.newline}@}" > export_syms
 .else
 	grep -v '^#' < ${EXPORT_SYMS} > export_syms
 .endif
@@ -294,6 +291,9 @@ ${FULLPROG}: ${OBJS}
 _ILINKS=machine
 .if ${MACHINE_CPUARCH} == "i386" || ${MACHINE_CPUARCH} == "amd64"
 _ILINKS+=x86
+.endif
+.if ${MACHINE_CPUARCH} == "amd64"
+_ILINKS+=i386
 .endif
 CLEANFILES+=${_ILINKS}
 
@@ -361,10 +361,11 @@ afterinstall: _kldxref
 .ORDER: realinstall _kldxref
 .ORDER: _installlinks _kldxref
 _kldxref: .PHONY
-	@if type kldxref >/dev/null 2>&1; then \
-		${ECHO} ${KLDXREF_CMD} ${DESTDIR}${KMODDIR}; \
-		${KLDXREF_CMD} ${DESTDIR}${KMODDIR}; \
-	fi
+	${KLDXREF_CMD} ${DESTDIR}${KMODDIR}
+.if defined(NO_ROOT) && defined(METALOG)
+	echo ".${DISTBASE}${KMODDIR}/linker.hints type=file mode=0644 uname=root gname=wheel" | \
+	    cat -l >> ${METALOG}
+.endif
 .endif
 .endif # !target(realinstall)
 
@@ -557,9 +558,6 @@ OPENZFS_CFLAGS=     \
 	-I${SYSDIR}/cddl/compat/opensolaris \
 	-I${SYSDIR}/cddl/contrib/opensolaris/uts/common \
 	-include ${ZINCDIR}/os/freebsd/spl/sys/ccompile.h
-OPENZFS_CWARNFLAGS= \
-	-Wno-nested-externs \
-	-Wno-redundant-decls
 
 .include <bsd.dep.mk>
 .include <bsd.clang-analyze.mk>

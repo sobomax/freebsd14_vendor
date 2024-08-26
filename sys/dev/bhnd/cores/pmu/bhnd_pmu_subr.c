@@ -23,8 +23,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 85f0495f321e1d6fd3fff20dbff8a345d3174bfb $");
-
 #include <sys/types.h>
 
 #include <dev/bhnd/bhndvar.h>

@@ -26,7 +26,6 @@
 .\" SUCH DAMAGE.
 .\"
 .\"     From: @(#)gethostbyname.3	8.4 (Berkeley) 5/25/95
-.\" $FreeBSD: 85b6806092e538b8d11d0401bcbbdcfbd166108f $
 .\"
 .Dd June 27, 2022
 .Dt GETHOSTBYNAME 3
@@ -348,6 +347,10 @@ The
 function first appeared in
 .Tn BIND
 version 4.9.4.
+The
+.Fn gethostbyname_r
+function first appeared in
+.Fx 6.2 .
 .Sh CAVEATS
 The
 .Fn gethostent

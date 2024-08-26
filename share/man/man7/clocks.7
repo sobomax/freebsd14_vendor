@@ -24,8 +24,6 @@
 .\" THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 .\" (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
 .\" THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-.\"
-.\" $FreeBSD: 692796842ed45b5fe8e8ffb09cba12f4593b9a8b $
 .\" "
 .Dd January 18, 2008
 .Dt CLOCKS 7
@@ -104,8 +102,7 @@ and throwing away information and resolution.
 The profiling clock.
 This is a real clock with frequency 1024.
 It is used mainly by
-.Xr moncontrol 3 ,
-.Xr kgmon 8
+.Xr moncontrol 3
 and
 .Xr gprof 1 .
 Applications should determine its actual frequency using

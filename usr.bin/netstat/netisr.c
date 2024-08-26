@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2010-2011 Juniper Networks, Inc.
  * All rights reserved.
@@ -29,9 +29,6 @@
  * SUCH DAMAGE.
  */
 
-#include <sys/cdefs.h>
-
-__FBSDID("$FreeBSD: 9c9f05f406c5b859af03096fcf5eb3e7fcd7933e $");
 
 #include <sys/param.h>
 #include <sys/sysctl.h>

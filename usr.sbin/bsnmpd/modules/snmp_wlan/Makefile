@@ -1,5 +1,4 @@
 #
-# $FreeBSD: eb6b230210e953a6bb13e1fe5bbaa0bf45128715 $
 #
 
 MOD=	wlan

@@ -4,8 +4,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: cacb863e75e6e71d7cd08a9143e530033044facf $");
-
 void __stack_chk_fail(void);
 
 #ifdef PIC

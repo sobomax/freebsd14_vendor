@@ -37,7 +37,6 @@
 
 #include <sys/cdefs.h>
 #ifdef __FreeBSD__
-__FBSDID("$FreeBSD: e1482f004d47353e9627c99be5fa8235192f2710 $");
 #else
 #if defined(_KERNEL)
 __KERNEL_RCSID(0, "$NetBSD: ubsan.c,v 1.3 2018/08/03 16:31:04 kamil Exp $");

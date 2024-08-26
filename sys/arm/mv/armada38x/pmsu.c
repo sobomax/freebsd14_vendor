@@ -26,8 +26,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 7df368d0c05182d66b2e50d4ee90d9885a31ab03 $");
-
 #include <sys/param.h>
 #include <sys/bus.h>
 #include <sys/conf.h>
@@ -78,10 +76,8 @@ static driver_t pmsu_driver = {
 	sizeof(struct pmsu_softc)
 };
 
-static devclass_t pmsu_devclass;
-
-DRIVER_MODULE(pmsu, simplebus, pmsu_driver, pmsu_devclass, 0, 0);
-DRIVER_MODULE(pmsu, ofwbus, pmsu_driver, pmsu_devclass, 0, 0);
+DRIVER_MODULE(pmsu, simplebus, pmsu_driver, 0, 0);
+DRIVER_MODULE(pmsu, ofwbus, pmsu_driver, 0, 0);
 
 static int
 pmsu_probe(device_t dev)

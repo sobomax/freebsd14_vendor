@@ -2,7 +2,6 @@
  * System call numbers.
  *
  * DO NOT EDIT-- this file is automatically @generated.
- * $FreeBSD: 253d53ad71fac329358efc4cd20b61e12362b690 $
  */
 
 #define	SYS_syscall	0
@@ -141,7 +140,7 @@
 #define	SYS_mkdir	136
 #define	SYS_rmdir	137
 #define	SYS_utimes	138
-				/* 139 is obsolete 4.2 sigreturn */
+				/* 139 is obsolete sigreturn */
 #define	SYS_adjtime	140
 				/* 141 is old getpeername */
 				/* 142 is old gethostid */
@@ -517,6 +516,13 @@
 #define	SYS___specialfd	577
 #define	SYS_aio_writev	578
 #define	SYS_aio_readv	579
+#define	SYS_fspacectl	580
 #define	SYS_sched_getcpu	581
 #define	SYS_swapoff	582
-#define	SYS_MAXSYSCALL	583
+#define	SYS_kqueuex	583
+#define	SYS_membarrier	584
+#define	SYS_timerfd_create	585
+#define	SYS_timerfd_gettime	586
+#define	SYS_timerfd_settime	587
+#define	SYS_kcmp	588
+#define	SYS_MAXSYSCALL	589

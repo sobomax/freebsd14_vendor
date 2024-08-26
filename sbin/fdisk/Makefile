@@ -1,4 +1,3 @@
-# $FreeBSD: eaed0aea04aa2733ec5923396a0e08a2fe239fa1 $
 
 PACKAGE=runtime
 PROG=	fdisk

@@ -3,7 +3,7 @@
  */
 
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2001-2002 Maksim Yevmenkin <m_evmenkin@yahoo.com>
  * All rights reserved.
@@ -30,7 +30,6 @@
  * SUCH DAMAGE.
  *
  * $Id: ng_btsocket_l2cap_raw.c,v 1.12 2003/09/14 23:29:06 max Exp $
- * $FreeBSD: 5508ff7526d278d948d6360d1a247cfb153ed696 $
  */
 
 #include <sys/param.h>
@@ -513,14 +512,10 @@ ng_btsocket_l2cap_raw_rtclean(void *context, int pending)
  * Initialize everything
  */
 
-void
-ng_btsocket_l2cap_raw_init(void)
+static void
+ng_btsocket_l2cap_raw_init(void *arg __unused)
 {
 	int	error = 0;
-
-	/* Skip initialization of globals for non-default instances. */
-	if (!IS_DEFAULT_VNET(curvnet))
-		return;
 
 	ng_btsocket_l2cap_raw_node = NULL;
 	ng_btsocket_l2cap_raw_debug_level = NG_BTSOCKET_WARN_LEVEL;
@@ -582,6 +577,8 @@ ng_btsocket_l2cap_raw_init(void)
 	TASK_INIT(&ng_btsocket_l2cap_raw_rt_task, 0,
 		ng_btsocket_l2cap_raw_rtclean, NULL);
 } /* ng_btsocket_l2cap_raw_init */
+SYSINIT(ng_btsocket_l2cap_raw_init, SI_SUB_PROTO_DOMAIN, SI_ORDER_THIRD,
+    ng_btsocket_l2cap_raw_init, NULL);
 
 /*
  * Abort connection on socket
@@ -786,7 +783,7 @@ ng_btsocket_l2cap_raw_connect(struct socket *so, struct sockaddr *nam,
  */
 
 int
-ng_btsocket_l2cap_raw_control(struct socket *so, u_long cmd, caddr_t data,
+ng_btsocket_l2cap_raw_control(struct socket *so, u_long cmd, void *data,
 		struct ifnet *ifp, struct thread *td)
 {
 	ng_btsocket_l2cap_raw_pcb_p	 pcb = so2l2cap_raw_pcb(so);

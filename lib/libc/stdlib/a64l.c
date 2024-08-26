@@ -10,8 +10,6 @@ __RCSID("$NetBSD: a64l.c,v 1.8 2000/01/22 22:19:19 mycroft Exp $");
 #endif
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: a130dcb24bf528152c83fba2815f3779fd9be324 $");
-
 #include <stdlib.h>
 #include <inttypes.h>
 

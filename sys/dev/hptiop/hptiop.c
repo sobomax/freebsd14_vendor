@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * HighPoint RR3xxx/4xxx RAID Driver for FreeBSD
  * Copyright (C) 2007-2012 HighPoint Technologies, Inc. All Rights Reserved.
@@ -27,8 +27,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 4091a8fb2822d7efab60d5cb5a36934fb5420bc3 $");
-
 #include <sys/param.h>
 #include <sys/types.h>
 #include <sys/cons.h>
@@ -76,8 +74,6 @@ __FBSDID("$FreeBSD: 4091a8fb2822d7efab60d5cb5a36934fb5420bc3 $");
 
 static const char driver_name[] = "hptiop";
 static const char driver_version[] = "v1.9";
-
-static devclass_t hptiop_devclass;
 
 static int hptiop_send_sync_msg(struct hpt_iop_hba *hba,
 				u_int32_t msg, u_int32_t millisec);
@@ -468,10 +464,6 @@ static void hptiop_drain_outbound_queue_itl(struct hpt_iop_hba *hba)
 		if (req & IOPMU_QUEUE_MASK_HOST_BITS)
 			hptiop_request_callback_itl(hba, req);
 		else {
-			struct hpt_iop_request_header *p;
-
-			p = (struct hpt_iop_request_header *)
-				((char *)hba->u.itl.mu + req);
 			temp = bus_space_read_4(hba->bar0t,
 					hba->bar0h,req +
 					offsetof(struct hpt_iop_request_header,
@@ -1800,7 +1792,7 @@ static driver_t hptiop_pci_driver = {
 	sizeof(struct hpt_iop_hba)
 };
 
-DRIVER_MODULE(hptiop, pci, hptiop_pci_driver, hptiop_devclass, 0, 0);
+DRIVER_MODULE(hptiop, pci, hptiop_pci_driver, 0, 0);
 MODULE_DEPEND(hptiop, cam, 1, 1, 1);
 
 static int hptiop_probe(device_t dev)
@@ -2042,6 +2034,7 @@ static int hptiop_attach(device_t dev)
 		goto free_hba_path;
 	}
 
+	memset(&ccb, 0, sizeof(ccb));
 	xpt_setup_ccb(&ccb.ccb_h, hba->path, /*priority*/5);
 	ccb.ccb_h.func_code = XPT_SASYNC_CB;
 	ccb.event_enable = (AC_FOUND_DEVICE | AC_LOST_DEVICE);
@@ -2797,6 +2790,7 @@ static void hptiop_release_resource(struct hpt_iop_hba *hba)
 	if (hba->path) {
 		struct ccb_setasync ccb;
 
+		memset(&ccb, 0, sizeof(ccb));
 		xpt_setup_ccb(&ccb.ccb_h, hba->path, /*priority*/5);
 		ccb.ccb_h.func_code = XPT_SASYNC_CB;
 		ccb.event_enable = 0;

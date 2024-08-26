@@ -1,4 +1,3 @@
-/* $FreeBSD: 0b627f362c2216aa113c1cfb52ee45464a8b0c88 $ */
 /* $NetBSD: citrus_prop.c,v 1.4 2011/03/30 08:22:01 jruoho Exp $ */
 
 /*-
@@ -30,7 +29,6 @@
  *
  */
 
-#include <sys/cdefs.h>
 
 #include <assert.h>
 #include <errno.h>

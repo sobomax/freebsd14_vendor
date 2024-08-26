@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2000 Dmitry Dicky diwil@dataart.com
  * All rights reserved.
@@ -34,8 +34,6 @@
 #include <dev/sound/pcm/ac97.h>
 #include <dev/pci/pcireg.h>
 #include <dev/pci/pcivar.h>
-
-SND_DECLARE_FILE("$FreeBSD: 886d50f27fe7d5c1e4c78409954110e28072fd8c $");
 
 #define PCI_VENDOR_FORTEMEDIA	0x1319
 #define PCI_DEVICE_FORTEMEDIA1	0x08011319	/* Audio controller */
@@ -632,15 +630,16 @@ fm801_pci_attach(device_t dev)
 		/*highaddr*/BUS_SPACE_MAXADDR,
 		/*filter*/NULL, /*filterarg*/NULL,
 		/*maxsize*/fm801->bufsz, /*nsegments*/1, /*maxsegz*/0x3ffff,
-		/*flags*/0, /*lockfunc*/busdma_lock_mutex,
-		/*lockarg*/&Giant, &fm801->parent_dmat) != 0) {
+		/*flags*/0, /*lockfunc*/NULL, /*lockarg*/NULL,
+		&fm801->parent_dmat) != 0) {
 		device_printf(dev, "unable to create dma tag\n");
 		goto oops;
 	}
 
-	snprintf(status, 64, "at %s 0x%jx irq %jd %s",
-		(fm801->regtype == SYS_RES_IOPORT)? "io" : "memory",
-		rman_get_start(fm801->reg), rman_get_start(fm801->irq),PCM_KLDSTRING(snd_fm801));
+	snprintf(status, SND_STATUSLEN, "%s 0x%jx irq %jd on %s",
+		(fm801->regtype == SYS_RES_IOPORT)? "port" : "mem",
+		rman_get_start(fm801->reg), rman_get_start(fm801->irq),
+		device_get_nameunit(device_get_parent(dev)));
 
 #define FM801_MAXPLAYCH	1
 	if (pcm_register(dev, fm801, FM801_MAXPLAYCH, 1)) goto oops;
@@ -759,6 +758,6 @@ static driver_t fm801_driver = {
 	PCM_SOFTC_SIZE,
 };
 
-DRIVER_MODULE(snd_fm801, pci, fm801_driver, pcm_devclass, 0, 0);
+DRIVER_MODULE(snd_fm801, pci, fm801_driver, 0, 0);
 MODULE_DEPEND(snd_fm801, sound, SOUND_MINVER, SOUND_PREFVER, SOUND_MAXVER);
 MODULE_VERSION(snd_fm801, 1);

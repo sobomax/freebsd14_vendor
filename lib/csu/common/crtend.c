@@ -22,8 +22,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 072f7b7a82f26f833826762a3e28269b31c8cfff $");
-
 #include "crt.h"
 
 typedef void (*crt_func)(void);

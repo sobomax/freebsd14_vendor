@@ -1,5 +1,4 @@
 #	$NetBSD: Makefile.videomode,v 1.1 2006/03/04 02:34:27 gdamore Exp $
-#	$FreeBSD: 27ac06e8a10af5b6d9b4d2f45561517c3d06416b $
 #
 # As per tron@NetBSD.org, the proper procedure is
 #

@@ -25,8 +25,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 4fe3e6ee3d13299bef7311e2fcce14e8d27703f6 $");
-
 #include <Python.h>
 
 #include "bus.h"

@@ -1,4 +1,3 @@
-.\" $FreeBSD: e63d5b3bb7fb49d0ecc1eea61e33625219f98aed $
 Do not build or install
 .Xr tcpd 8 ,
 and related utilities.

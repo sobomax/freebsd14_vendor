@@ -1,4 +1,3 @@
-# $FreeBSD: 8aea6ff00acf1cf86f94333b0b618568e97b55da $
 
 .PATH: ${SRCTOP}/sys/dev/sound
 

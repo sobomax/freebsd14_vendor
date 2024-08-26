@@ -12,10 +12,7 @@
  *
  */
 
-#include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 422ff269806715332d6637303bc9f6184b3e0d5d $");
-
-/* __ieee754_atanh(x)
+/* atanh(x)
  * Method :
  *    1.Reduced x to positive by atanh(-x) = -atanh(x)
  *    2.For x>=0.5
@@ -42,7 +39,7 @@ static const double one = 1.0, huge = 1e300;
 static const double zero = 0.0;
 
 double
-__ieee754_atanh(double x)
+atanh(double x)
 {
 	double t;
 	int32_t hx,ix;

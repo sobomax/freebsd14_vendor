@@ -1,4 +1,3 @@
-# $FreeBSD: b6b7b7ba66e9bbb30bb55698eef371d674732481 $
 
 .PATH: ${SRCTOP}/sys/dev/vte
 

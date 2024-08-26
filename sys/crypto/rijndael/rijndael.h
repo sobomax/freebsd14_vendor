@@ -1,5 +1,4 @@
 /*	$KAME: rijndael.h,v 1.6 2003/08/28 08:36:32 itojun Exp $	*/
-/*	$FreeBSD: 6a52bbceb8224f944064ef10069b804b76ec6cec $	*/
 
 /**
  * rijndael-alg-fst.h

@@ -1,4 +1,3 @@
-# $FreeBSD: 1484b8803948ed64fbbaf7ccec7156562341b8a6 $
 
 .PATH:	${.CURDIR}/arch/${MACHINE_CPUARCH}
 

@@ -1,8 +1,0 @@
-# $FreeBSD: 2ba920cfc86c2cac68d4a6d9f15e027919518f97 $
-#
-# standard config for all ar71xx based kernels.
-
-files		"../atheros/files.ar71xx"
-
-machine		mips mips
-cpu		CPU_MIPS4KC

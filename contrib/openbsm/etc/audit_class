@@ -1,6 +1,3 @@
-#
-# $FreeBSD: 47868b17d5da8287afb21c66b0c1c525f1309c29 $
-#
 0x00000000:no:invalid class
 0x00000001:fr:file read
 0x00000002:fw:file write

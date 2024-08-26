@@ -1,4 +1,4 @@
-# $FreeBSD: 00ae29bab26b59a695b36cb573ab0514c2cf1687 $
+SHLIBDIR?=/lib
 
 .include <src.opts.mk>
 

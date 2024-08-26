@@ -1,4 +1,3 @@
-# $FreeBSD: 8d4b0b5b5b8aa2ce6812309c7f052d41a0a3ec93 $ 
 # $NetBSD: KZ1048.src,v 1.1 2007/03/13 16:34:39 tnozaki Exp $
 
 NAME		"KZ1048"

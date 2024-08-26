@@ -1,6 +1,5 @@
 #!/bin/sh
 #
-# $FreeBSD: 3260b1cab9a5325c84b2c056b67da58e3ca065ff $
 #
 
 # PROVIDE: ip6addrctl

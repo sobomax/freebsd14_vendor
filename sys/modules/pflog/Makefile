@@ -1,4 +1,3 @@
-# $FreeBSD: 32c7d56bf331ff90b394ce18ecc6689bd00a2636 $
 
 .PATH: ${SRCTOP}/sys/netpfil/pf
 

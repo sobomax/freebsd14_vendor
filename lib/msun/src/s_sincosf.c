@@ -15,9 +15,6 @@
  * Merged s_sinf.c and s_cosf.c by Steven G. Kargl.
  */
 
-#include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 755ff05d481d5a6a7bb0a56f22b8374bc9eee49a $");
-
 #include <float.h>
 
 #include "math.h"

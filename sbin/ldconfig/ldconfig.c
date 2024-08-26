@@ -50,18 +50,16 @@
 #include "ldconfig.h"
 #include "rtld_paths.h"
 
-#define	_PATH_ELFSOFT_HINTS	"/var/run/ld-elf-soft.so.hints"
-
-static void usage(void);
+static void usage(void) __dead2;
 
 int
 main(int argc, char **argv)
 {
 	const char *hints_file;
 	int c;
-	bool is_32, is_soft, justread, merge, rescan, verbose;
+	bool is_32, justread, merge, rescan, force_be;
 
-	is_32 = is_soft = justread = merge = rescan = verbose = false;
+	force_be = is_32 = justread = merge = rescan = false;
 
 	while (argc > 1) {
 		if (strcmp(argv[1], "-aout") == 0) {
@@ -73,23 +71,20 @@ main(int argc, char **argv)
 			is_32 = true;
 			argc--;
 			argv++;
-		} else if (strcmp(argv[1], "-soft") == 0) {
-			is_soft = true;
-			argc--;
-			argv++;
 		} else {
 			break;
 		}
 	}
 
-	if (is_soft)
-		hints_file = _PATH_SOFT_ELF_HINTS;
-	else if (is_32)
-		hints_file = _PATH_ELF32_HINTS;
+	if (is_32)
+		hints_file = __PATH_ELF_HINTS("32");
 	else
 		hints_file = _PATH_ELF_HINTS;
-	while((c = getopt(argc, argv, "Rf:imrsv")) != -1) {
+	while((c = getopt(argc, argv, "BRf:imrsv")) != -1) {
 		switch (c) {
+		case 'B':
+			force_be = true;
+			break;
 		case 'R':
 			rescan = true;
 			break;
@@ -109,7 +104,7 @@ main(int argc, char **argv)
 			/* was nostd */
 			break;
 		case 'v':
-			verbose = true;
+			/* was verbose */
 			break;
 		default:
 			usage();
@@ -123,7 +118,7 @@ main(int argc, char **argv)
 		if (argc == optind)
 			rescan = true;
 		update_elf_hints(hints_file, argc - optind,
-		    argv + optind, merge || rescan);
+		    argv + optind, merge || rescan, force_be);
 	}
 	exit(0);
 }
@@ -132,7 +127,7 @@ static void
 usage(void)
 {
 	fprintf(stderr,
-	    "usage: ldconfig [-32] [-elf] [-Rimrv] [-f hints_file] "
+	    "usage: ldconfig [-32] [-BRimr] [-f hints_file]"
 	    "[directory | file ...]\n");
 	exit(1);
 }

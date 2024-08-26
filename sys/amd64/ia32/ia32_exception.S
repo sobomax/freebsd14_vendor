@@ -22,8 +22,6 @@
  * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
- *
- * $FreeBSD: c7bfb02f0281ba46b57132515e810052f6d75e95 $
  */
 
 #include <machine/asmacros.h>
@@ -73,8 +71,6 @@ int0x80_syscall_common:
 	pushfq
 	andq	$~(PSL_D | PSL_AC),(%rsp)
 	popfq
-	FAKE_MCOUNT(TF_RIP(%rsp))
 	movq	%rsp, %rdi
 	call	ia32_syscall
-	MEXITCOUNT
 	jmp	doreti

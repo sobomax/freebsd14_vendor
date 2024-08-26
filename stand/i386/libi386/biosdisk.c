@@ -25,9 +25,6 @@
  * SUCH DAMAGE.
  */
 
-#include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 87c8c47844b02cd0b88b117b2d52d08da4fa82ce $");
-
 /*
  * BIOS disk device handling.
  *

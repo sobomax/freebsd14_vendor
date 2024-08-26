@@ -25,10 +25,7 @@
  * SUCH DAMAGE.
  */
 
-#include <sys/cdefs.h>
 #include <sys/param.h>
-__FBSDID("$FreeBSD: 88dee8c7ce2d603e9f85fe9893a6669e64291e46 $");
-
 /*
  * Simple hashed block cache
  */

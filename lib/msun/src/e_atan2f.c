@@ -13,9 +13,6 @@
  * ====================================================
  */
 
-#include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 346d76746c050e2cc285188b01c73b99c6bda98e $");
-
 #include "math.h"
 #include "math_private.h"
 
@@ -30,7 +27,7 @@ static volatile float
 pi_lo   = -8.7422776573e-08; /* 0xb3bbbd2e */
 
 float
-__ieee754_atan2f(float y, float x)
+atan2f(float y, float x)
 {
 	float z;
 	int32_t k,m,hx,hy,ix,iy;

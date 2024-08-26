@@ -34,19 +34,18 @@
  * SUCH DAMAGE.
  *
  *	@(#)systm.h	8.7 (Berkeley) 3/29/95
- * $FreeBSD: 828297e5b948e3ceb0fa6c6defc920efeab7e963 $
  */
 
 #ifndef _SYS_SYSTM_H_
 #define	_SYS_SYSTM_H_
 
-#include <sys/cdefs.h>
-#include <machine/atomic.h>
-#include <machine/cpufunc.h>
+#include <sys/types.h>
 #include <sys/callout.h>
 #include <sys/kassert.h>
 #include <sys/queue.h>
 #include <sys/stdint.h>		/* for people using printf mainly */
+#include <machine/atomic.h>
+#include <machine/cpufunc.h>
 
 __NULLABILITY_PRAGMA_PUSH
 
@@ -102,6 +101,18 @@ struct ucred;
 #include <sys/pcpu.h>		/* curthread */
 #include <sys/kpilite.h>
 
+/*
+ * If we have already panic'd and this is the thread that called
+ * panic(), then don't block on any mutexes but silently succeed.
+ * Otherwise, the kernel will deadlock since the scheduler isn't
+ * going to run the thread that holds any lock we need.
+ */
+#define	SCHEDULER_STOPPED_TD(td)  ({					\
+	MPASS((td) == curthread);					\
+	__predict_false((td)->td_stopsched);				\
+})
+#define	SCHEDULER_STOPPED() SCHEDULER_STOPPED_TD(curthread)
+
 extern int osreldate;
 
 extern const void *zero_region;	/* address space maps to a zeroed page	*/
@@ -150,7 +161,6 @@ void	*hashinit_flags(int count, struct malloc_type *type,
 void	*phashinit(int count, struct malloc_type *type, u_long *nentries);
 void	*phashinit_flags(int count, struct malloc_type *type, u_long *nentries,
     int flags);
-void	g_waitidle(void);
 
 void	cpu_flush_dcache(void *, size_t);
 void	cpu_rootconf(void);
@@ -168,7 +178,7 @@ void	tablefull(const char *);
 extern int (*lkpi_alloc_current)(struct thread *, int);
 int linux_alloc_current_noop(struct thread *, int);
 
-#if defined(KLD_MODULE) || defined(KTR_CRITICAL) || !defined(_KERNEL) || defined(GENOFFSET)
+#if (defined(KLD_MODULE) && !defined(KLD_TIED)) || defined(KTR_CRITICAL) || !defined(_KERNEL) || defined(GENOFFSET)
 #define critical_enter() critical_enter_KBI()
 #define critical_exit() critical_exit_KBI()
 #else
@@ -236,10 +246,7 @@ void	hexdump(const void *ptr, int length, const char *hdr, int flags);
 #define	HD_OMIT_CHARS	(1 << 18)
 
 #define ovbcopy(f, t, l) bcopy((f), (t), (l))
-void	bcopy(const void * _Nonnull from, void * _Nonnull to, size_t len);
-void	bzero(void * _Nonnull buf, size_t len);
 void	explicit_bzero(void * _Nonnull, size_t);
-int	bcmp(const void *b1, const void *b2, size_t len);
 
 void	*memset(void * _Nonnull buf, int c, size_t len);
 void	*memcpy(void * _Nonnull to, const void * _Nonnull from, size_t len);
@@ -332,11 +339,41 @@ int	casueword32(volatile uint32_t *base, uint32_t oldval, uint32_t *oldvalp,
 int	casueword(volatile u_long *p, u_long oldval, u_long *oldvalp,
 	    u_long newval);
 
+#if defined(SAN_NEEDS_INTERCEPTORS) && !defined(KCSAN)
+int	SAN_INTERCEPTOR(fubyte)(volatile const void *base);
+int	SAN_INTERCEPTOR(fuword16)(volatile const void *base);
+int	SAN_INTERCEPTOR(fueword)(volatile const void *base, long *val);
+int	SAN_INTERCEPTOR(fueword32)(volatile const void *base, int32_t *val);
+int	SAN_INTERCEPTOR(fueword64)(volatile const void *base, int64_t *val);
+int	SAN_INTERCEPTOR(subyte)(volatile void *base, int byte);
+int	SAN_INTERCEPTOR(suword)(volatile void *base, long word);
+int	SAN_INTERCEPTOR(suword16)(volatile void *base, int word);
+int	SAN_INTERCEPTOR(suword32)(volatile void *base, int32_t word);
+int	SAN_INTERCEPTOR(suword64)(volatile void *base, int64_t word);
+int	SAN_INTERCEPTOR(casueword32)(volatile uint32_t *base, uint32_t oldval,
+	    uint32_t *oldvalp, uint32_t newval);
+int	SAN_INTERCEPTOR(casueword)(volatile u_long *p, u_long oldval,
+	    u_long *oldvalp, u_long newval);
+#ifndef SAN_RUNTIME
+#define	fubyte(b)		SAN_INTERCEPTOR(fubyte)((b))
+#define	fuword16(b)		SAN_INTERCEPTOR(fuword16)((b))
+#define	fueword(b, v)		SAN_INTERCEPTOR(fueword)((b), (v))
+#define	fueword32(b, v)		SAN_INTERCEPTOR(fueword32)((b), (v))
+#define	fueword64(b, v)		SAN_INTERCEPTOR(fueword64)((b), (v))
+#define	subyte(b, w)		SAN_INTERCEPTOR(subyte)((b), (w))
+#define	suword(b, w)		SAN_INTERCEPTOR(suword)((b), (w))
+#define	suword16(b, w)		SAN_INTERCEPTOR(suword16)((b), (w))
+#define	suword32(b, w)		SAN_INTERCEPTOR(suword32)((b), (w))
+#define	suword64(b, w)		SAN_INTERCEPTOR(suword64)((b), (w))
+#define	casueword32(b, o, p, n)	SAN_INTERCEPTOR(casueword32)((b), (o), (p), (n))
+#define	casueword(b, o, p, n)	SAN_INTERCEPTOR(casueword)((b), (o), (p), (n))
+#endif /* !SAN_RUNTIME */
+#endif /* SAN_NEEDS_INTERCEPTORS && !KCSAN */
+
 int	sysbeep(int hertz, sbintime_t duration);
 
 void	hardclock(int cnt, int usermode);
 void	hardclock_sync(int cpu);
-void	softclock(void *);
 void	statclock(int cnt, int usermode);
 void	profclock(int cnt, int usermode, uintfptr_t pc);
 
@@ -354,6 +391,14 @@ void	cpu_new_callout(int cpu, sbintime_t bt, sbintime_t bt_opt);
 void	cpu_et_frequency(struct eventtimer *et, uint64_t newfreq);
 extern int	cpu_disable_c2_sleep;
 extern int	cpu_disable_c3_sleep;
+
+extern void	(*tcp_hpts_softclock)(void);
+extern volatile uint32_t __read_frequently hpts_that_need_softclock;
+
+#define	tcp_hpts_softclock()	do {					\
+		if (hpts_that_need_softclock > 0)			\
+			tcp_hpts_softclock();				\
+} while (0)
 
 char	*kern_getenv(const char *name);
 void	freeenv(char *env);
@@ -456,6 +501,8 @@ int poll_no_poll(int events);
 /* XXX: Should be void nanodelay(u_int nsec); */
 void	DELAY(int usec);
 
+int kcmp_cmp(uintptr_t a, uintptr_t b);
+
 /* Root mount holdback API */
 struct root_hold_token {
 	int				flags;
@@ -483,10 +530,9 @@ int alloc_unr(struct unrhdr *uh);
 int alloc_unr_specific(struct unrhdr *uh, u_int item);
 int alloc_unrl(struct unrhdr *uh);
 void free_unr(struct unrhdr *uh, u_int item);
-
-#ifndef __LP64__
-#define UNR64_LOCKED
-#endif
+void *create_iter_unr(struct unrhdr *uh);
+int next_iter_unr(void *handle);
+void free_iter_unr(void *handle);
 
 struct unrhdr64 {
         uint64_t	counter;
@@ -499,16 +545,12 @@ new_unrhdr64(struct unrhdr64 *unr64, uint64_t low)
 	unr64->counter = low;
 }
 
-#ifdef UNR64_LOCKED
-uint64_t alloc_unr64(struct unrhdr64 *);
-#else
 static __inline uint64_t
 alloc_unr64(struct unrhdr64 *unr64)
 {
 
 	return (atomic_fetchadd_64(&unr64->counter, 1));
 }
-#endif
 
 void	intr_prof_stack_use(struct thread *td, struct trapframe *frame);
 
@@ -529,10 +571,16 @@ void _gone_in_dev(device_t dev, int major, const char *msg);
 #define gone_in(major, msg)		__gone_ok(major, msg) _gone_in(major, msg)
 #define gone_in_dev(dev, major, msg)	__gone_ok(major, msg) _gone_in_dev(dev, major, msg)
 
-#if defined(INVARIANTS) || defined(WITNESS)
+#ifdef INVARIANTS
 #define	__diagused
 #else
 #define	__diagused	__unused
+#endif
+
+#ifdef WITNESS
+#define	__witness_used
+#else
+#define	__witness_used	__unused
 #endif
 
 #endif /* _KERNEL */

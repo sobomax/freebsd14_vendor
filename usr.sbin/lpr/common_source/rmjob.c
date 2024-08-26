@@ -36,8 +36,6 @@ static char sccsid[] = "@(#)rmjob.c	8.2 (Berkeley) 4/28/95";
 #endif
 
 #include "lp.cdefs.h"		/* A cross-platform version of <sys/cdefs.h> */
-__FBSDID("$FreeBSD: f3502000ee08e7b8bccce9e4c3bca445254cc91d $");
-
 #include <sys/param.h>
 #include <sys/uio.h>
 

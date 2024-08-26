@@ -1,6 +1,3 @@
-#include <sys/cdefs.h>
-__FBSDID("$FreeBSD: eee541bac1717a77c942d9c7d342db2419e8571d $");
-
 #include <sys/types.h>
 #include <assert.h>
 #include <regex.h>

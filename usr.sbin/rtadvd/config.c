@@ -1,4 +1,3 @@
-/*	$FreeBSD: f857889332a4aef10fe7f84e8188d021cc3acbc1 $	*/
 /*	$KAME: config.c,v 1.84 2003/08/05 12:34:23 itojun Exp $	*/
 
 /*-

@@ -11,11 +11,8 @@
  * ====================================================
  */
 
-#include <sys/cdefs.h>
-__FBSDID("$FreeBSD: c0a7b5b75b1201d45cb47d020c0a77c013ed49f8 $");
-
 /*
- * __ieee754_scalb(x, fn) is provide for
+ * scalb(x, fn) is provide for
  * passing various standard test suite. One 
  * should use scalbn() instead.
  */
@@ -25,10 +22,10 @@ __FBSDID("$FreeBSD: c0a7b5b75b1201d45cb47d020c0a77c013ed49f8 $");
 
 #ifdef _SCALB_INT
 double
-__ieee754_scalb(double x, int fn)
+scalb(double x, int fn)
 #else
 double
-__ieee754_scalb(double x, double fn)
+scalb(double x, double fn)
 #endif
 {
 #ifdef _SCALB_INT

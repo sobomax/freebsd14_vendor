@@ -1,3 +1,0 @@
-.\" $FreeBSD: f7bcdae04fce68d1879e29fad08a3240c3daba43 $
-Set to not build programs and libraries
-related to NDIS emulation support.

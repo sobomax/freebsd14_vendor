@@ -1,6 +1,5 @@
 #!/bin/sh
 #
-# $FreeBSD: 13e8dd9c06af94f77464d79c29de91ead7500061 $
 #
 
 # PROVIDE: virecover

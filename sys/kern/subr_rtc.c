@@ -55,8 +55,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: f9fb61f826356593f9da1ee8d122e543fd22a8c7 $");
-
 #include "opt_ffclock.h"
 
 #include <sys/param.h>

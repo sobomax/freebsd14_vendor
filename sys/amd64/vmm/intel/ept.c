@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2011 NetApp, Inc.
  * All rights reserved.
@@ -24,13 +24,9 @@
  * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
- *
- * $FreeBSD: 4d75d5547890e461314467b7700c4aa551f12db2 $
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 4d75d5547890e461314467b7700c4aa551f12db2 $");
-
 #include <sys/param.h>
 #include <sys/kernel.h>
 #include <sys/types.h>

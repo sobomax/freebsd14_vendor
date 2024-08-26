@@ -1,5 +1,4 @@
 #!/bin/sh
-# $FreeBSD: 5b80d5c1bb1597faa49aa76aa509a5f45b45a83b $
 #
 
 # PROVIDE: stf

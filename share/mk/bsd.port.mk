@@ -1,4 +1,3 @@
-# $FreeBSD: 8c0e72e5bebe9cfc451ffef8466501ccdcaf7301 $
 
 .if !defined(PORTSDIR)
 # Autodetect if the command is being run in a ports tree that's not rooted

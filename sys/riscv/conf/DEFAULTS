@@ -1,7 +1,6 @@
 #
 # DEFAULTS -- Default kernel configuration file for FreeBSD/RISC-V
 #
-# $FreeBSD: 082e52247b3d551d3f0ef697a46483ffd34348a7 $
 
 machine		riscv	riscv64
 
@@ -13,4 +12,10 @@ options 	GEOM_PART_BSD
 options 	GEOM_PART_MBR
 options 	GEOM_PART_GPT
 
+# Default congestion control algorithm
+options 	CC_CUBIC		# include CUBIC congestion control
+
 options 	NEW_PCIB
+options 	INTRNG
+
+options 	NETLINK			# netlink(4) support

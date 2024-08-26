@@ -31,8 +31,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 436f983baa5bd7fee32d2c962d0b758492c82458 $");
-
 #include <sys/param.h>
 #include <sys/systm.h>
 #include <sys/endian.h>
@@ -216,9 +214,8 @@ static driver_t ti_edma3_driver = {
 	ti_edma3_methods,
 	sizeof(struct ti_edma3_softc),
 };
-static devclass_t ti_edma3_devclass;
 
-DRIVER_MODULE(ti_edma3, simplebus, ti_edma3_driver, ti_edma3_devclass, 0, 0);
+DRIVER_MODULE(ti_edma3, simplebus, ti_edma3_driver, 0, 0);
 MODULE_DEPEND(ti_edma3, ti_sysc, 1, 1, 1);
 
 static void

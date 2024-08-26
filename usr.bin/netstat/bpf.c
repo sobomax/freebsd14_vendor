@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2005 Christian S.J. Peron
  * All rights reserved.
@@ -27,8 +27,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 425174608851f83c8c4ab3a83a6d3234924d5e22 $");
-
 #include <sys/types.h>
 #include <sys/protosw.h>
 #include <sys/socket.h>

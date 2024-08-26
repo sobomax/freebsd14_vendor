@@ -11,8 +11,6 @@
  * implied warranties, including, without limitation, the implied
  * warranties of merchantability and fitness for a particular
  * purpose.
- *
- * $FreeBSD: 73474fbe9c76976034e2be3645b54a26752afaeb $
  */
 
 #ifndef _CONS_H_

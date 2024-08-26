@@ -29,8 +29,6 @@
  * SUCH DAMAGE.
  *
  *	@(#)stddef.h	8.1 (Berkeley) 6/2/93
- *
- * $FreeBSD: a52e6d312f8403ebd83fa5422b3964136a68de0a $
  */
 
 #ifndef _STDDEF_H_

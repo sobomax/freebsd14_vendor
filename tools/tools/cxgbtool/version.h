@@ -19,7 +19,6 @@
 /* $Date: 2007/02/05 18:46:24 $ $RCSfile: version.h,v $ $Revision: 1.9 $ */
 
 /*
- * $FreeBSD: 403a8beeafc2c0a3450e9bf427464610a678a1cd $
  */
 
 #ifndef __CXGBTOOL_VERSION_H

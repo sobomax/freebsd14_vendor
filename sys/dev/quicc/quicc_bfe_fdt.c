@@ -29,8 +29,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 0888e512a4fdc0d8504952694692ee539716b7a9 $");
-
 #include <sys/param.h>
 #include <sys/systm.h>
 #include <sys/bus.h>
@@ -89,4 +87,4 @@ quicc_fdt_probe(device_t dev)
 	return (quicc_bfe_probe(dev, (uintptr_t)clock));
 }
 
-DRIVER_MODULE(quicc, simplebus, quicc_fdt_driver, quicc_devclass, 0, 0);
+DRIVER_MODULE(quicc, simplebus, quicc_fdt_driver, 0, 0);

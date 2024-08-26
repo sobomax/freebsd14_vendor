@@ -1,8 +1,7 @@
 /*	$NetBSD: nsswitch.h,v 1.6 1999/01/26 01:04:07 lukem Exp $	*/
-/*	$FreeBSD: 2be7a59fd1b9d283217297d1a938139256748ca5 $ */
 
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-NetBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 1997, 1998, 1999 The NetBSD Foundation, Inc.
  * All rights reserved.
@@ -186,7 +185,7 @@ typedef ns_mtab *(*nss_module_register_fn)(const char *, unsigned int *,
 
 /* 
  * Many NSS interfaces follow the getXXnam, getXXid, getXXent pattern.
- * Developers are encouraged to use nss_lookup_type where approriate.
+ * Developers are encouraged to use nss_lookup_type where appropriate.
  */
 enum nss_lookup_type {
 	nss_lt_name = 1,

@@ -23,8 +23,6 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 1aac03ae8c30a5abfc9f6ca92a53256a3a8f2586 $
- *
  */
 #ifndef __AW_WDOG_H__
 #define	__AW_WDOG_H__

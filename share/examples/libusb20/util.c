@@ -4,8 +4,6 @@
  * can do whatever you want with this stuff. If we meet some day, and you think
  * this stuff is worth it, you can buy me a beer in return.        Joerg Wunsch
  * ----------------------------------------------------------------------------
- *
- * $FreeBSD: 4a24ee0cf8c90ac5eaaa41c619814ac53e52ce2c $
  */
 
 /*

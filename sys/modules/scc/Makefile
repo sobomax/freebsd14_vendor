@@ -1,4 +1,3 @@
-# $FreeBSD: 7d5efd33d51535ec1c69791f0a89a0a8a465a9aa $
 
 .PATH: ${SRCTOP}/sys/dev/scc
 

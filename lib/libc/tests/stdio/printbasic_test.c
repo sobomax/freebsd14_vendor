@@ -28,9 +28,6 @@
  * Tests for basic and miscellaneous printf() formats.
  */
 
-#include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 322e7477da25dee29efe5637c423fa9a2e0dccf3 $");
-
 #include <err.h>
 #include <limits.h>
 #include <locale.h>

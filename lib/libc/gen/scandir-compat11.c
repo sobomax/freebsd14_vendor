@@ -30,9 +30,6 @@
  * From: FreeBSD: head/lib/libc/gen/scandir.c 317372 2017-04-24 14:56:41Z pfg
  */
 
-#include <sys/cdefs.h>
-__FBSDID("$FreeBSD: e6af1929a4d2876f37bf9eca8bacd7e932d59932 $");
-
 /*
  * Scan the directory dirname calling select to make a list of selected
  * directory entries then sort using qsort and compare routine dcomp.
@@ -58,8 +55,8 @@ __FBSDID("$FreeBSD: e6af1929a4d2876f37bf9eca8bacd7e932d59932 $");
 
 #define	SELECT(x)	select(x)
 
-static int freebsd11_scandir_thunk_cmp(void *thunk, const void *p1,
-    const void *p2);
+static int freebsd11_scandir_thunk_cmp(const void *p1, const void *p2,
+    void *thunk);
 
 int
 freebsd11_scandir(const char *dirname, struct freebsd11_dirent ***namelist,
@@ -116,7 +113,7 @@ freebsd11_scandir(const char *dirname, struct freebsd11_dirent ***namelist,
 	closedir(dirp);
 	if (numitems && dcomp != NULL)
 		qsort_r(names, numitems, sizeof(struct freebsd11_dirent *),
-		    &dcomp, freebsd11_scandir_thunk_cmp);
+		    freebsd11_scandir_thunk_cmp, &dcomp);
 	*namelist = names;
 	return (numitems);
 
@@ -141,7 +138,7 @@ freebsd11_alphasort(const struct freebsd11_dirent **d1,
 }
 
 static int
-freebsd11_scandir_thunk_cmp(void *thunk, const void *p1, const void *p2)
+freebsd11_scandir_thunk_cmp(const void *p1, const void *p2, void *thunk)
 {
 	int (*dc)(const struct freebsd11_dirent **, const struct
 	    freebsd11_dirent **);

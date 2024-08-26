@@ -27,8 +27,6 @@
  * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
- *
- * $FreeBSD: d3b6a4484689aab6adff0f1c1558a1923aa0de7a $
  */
 
 #include "defs.h"
@@ -40,8 +38,6 @@
 __COPYRIGHT("@(#) Copyright (c) 1983, 1988, 1993 "
 	    "The Regents of the University of California."
 	    "  All rights reserved.");
-__RCSID("$FreeBSD: d3b6a4484689aab6adff0f1c1558a1923aa0de7a $");
-
 pid_t	mypid;
 
 naddr	myaddr;				/* system address */

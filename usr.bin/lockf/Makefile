@@ -1,5 +1,9 @@
-# $FreeBSD: 7baff7cd7738e1c6c19bfdfae16d2b7167e38ad2 $
+
+.include <src.opts.mk>
 
 PROG=	lockf
+
+HAS_TESTS=
+SUBDIR.${MK_TESTS}+= tests
 
 .include <bsd.prog.mk>

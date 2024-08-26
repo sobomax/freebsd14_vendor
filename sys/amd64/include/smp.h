@@ -6,8 +6,6 @@
  * this stuff is worth it, you can buy me a beer in return.   Poul-Henning Kamp
  * ----------------------------------------------------------------------------
  *
- * $FreeBSD: 84ee73cef72379ca7ea55ad07c3ecae69f73570d $
- *
  */
 
 #ifndef _MACHINE_SMP_H_
@@ -38,7 +36,7 @@ inthand_t
 	IDTVEC(rendezvous_pti);
 
 void	invlop_handler(void);
-int native_start_all_aps(void);
+int	start_all_aps(void);
 
 #endif /* !LOCORE */
 #endif /* SMP */

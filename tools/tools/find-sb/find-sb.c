@@ -1,8 +1,6 @@
 /*
  * This program, created 2002-10-03 by Garrett A. Wollman
  * <wollman@FreeBSD.org>, is in the public domain.  Use at your own risk.
- *
- * $FreeBSD: fd4de42194b891c9b062ac454df62c8a094d6e10 $
  */
 
 #ifdef __FreeBSD__

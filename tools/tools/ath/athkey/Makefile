@@ -1,4 +1,3 @@
-# $FreeBSD: 071caa686fd4ae83611555eb1b52280cbca28294 $
 
 PROG=	athkey
 

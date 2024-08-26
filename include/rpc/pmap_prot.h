@@ -31,7 +31,6 @@
  *
  *	from: @(#)pmap_prot.h 1.14 88/02/08 SMI 
  *	from: @(#)pmap_prot.h	2.1 88/07/29 4.0 RPCSRC
- * $FreeBSD: f69bad9ca1a77b15104d3fb912e66fddfd49674b $
  */
 
 /*

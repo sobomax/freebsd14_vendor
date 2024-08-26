@@ -1,4 +1,3 @@
-# $FreeBSD: 667b5c1029302ed7a15d31af496107563bbf1a7c $
 
 .include "../Makefile.inc"
 # Keep the existing tests directory structure (with subdirs per component)

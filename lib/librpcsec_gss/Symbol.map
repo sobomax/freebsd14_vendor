@@ -1,5 +1,4 @@
 /*
- * $FreeBSD: 7f69c98e8af434b19a3a334a65be60592f7bf6d1 $
  */
 FBSD_1.1 {
 	rpc_gss_seccreate;

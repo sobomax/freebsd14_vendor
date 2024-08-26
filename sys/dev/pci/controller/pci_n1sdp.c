@@ -32,8 +32,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: d51641c432f4f2903419c2135e9f34630a485310 $");
-
 #include <sys/param.h>
 #include <sys/systm.h>
 #include <sys/malloc.h>
@@ -46,6 +44,7 @@ __FBSDID("$FreeBSD: d51641c432f4f2903419c2135e9f34630a485310 $");
 #include <vm/vm.h>
 #include <vm/vm_extern.h>
 #include <vm/vm_page.h>
+#include <vm/vm_phys.h>
 
 #include <contrib/dev/acpica/include/acpi.h>
 #include <contrib/dev/acpica/include/accommon.h>
@@ -66,6 +65,9 @@ __FBSDID("$FreeBSD: d51641c432f4f2903419c2135e9f34630a485310 $");
 #define	BDF_TABLE_SIZE		(16 * 1024)
 #define	PCI_CFG_SPACE_SIZE	0x1000
 
+_Static_assert(BDF_TABLE_SIZE >= PAGE_SIZE,
+    "pci_n1sdp.c assumes a 4k or 16k page size when mapping the shared data");
+
 struct pcie_discovery_data {
 	uint32_t rc_base_addr;
 	uint32_t nr_bdfs;
@@ -85,30 +87,40 @@ n1sdp_init(struct generic_pcie_n1sdp_softc *sc)
 	vm_offset_t vaddr;
 	vm_paddr_t paddr_rc;
 	vm_paddr_t paddr;
+	vm_page_t m[BDF_TABLE_SIZE / PAGE_SIZE];
 	int table_count;
 	int bdfs_size;
 	int error, i;
 
 	paddr = AP_NS_SHARED_MEM_BASE + sc->acpi.segment * BDF_TABLE_SIZE;
+	vm_phys_fictitious_reg_range(paddr, paddr + BDF_TABLE_SIZE,
+	    VM_MEMATTR_UNCACHEABLE);
+
+	for (i = 0; i < nitems(m); i++) {
+		m[i] = PHYS_TO_VM_PAGE(paddr + i * PAGE_SIZE);
+		MPASS(m[i] != NULL);
+	}
+
 	vaddr = kva_alloc((vm_size_t)BDF_TABLE_SIZE);
 	if (vaddr == 0) {
 		printf("%s: Can't allocate KVA memory.", __func__);
-		return (ENXIO);
+		error = ENXIO;
+		goto out;
 	}
-	pmap_kenter(vaddr, (vm_size_t)BDF_TABLE_SIZE, paddr,
-	    VM_MEMATTR_UNCACHEABLE);
+	pmap_qenter(vaddr, m, nitems(m));
 
 	shared_data = (struct pcie_discovery_data *)vaddr;
+	paddr_rc = (vm_offset_t)shared_data->rc_base_addr;
+	error = bus_space_map(sc->acpi.base.res->r_bustag, paddr_rc,
+	    PCI_CFG_SPACE_SIZE, 0, &sc->n1_bsh);
+	if (error != 0)
+		goto out_pmap;
+
 	bdfs_size = sizeof(struct pcie_discovery_data) +
 	    sizeof(uint32_t) * shared_data->nr_bdfs;
-	sc->n1_discovery_data = malloc(bdfs_size, M_DEVBUF, M_WAITOK | M_ZERO);
+	sc->n1_discovery_data = malloc(bdfs_size, M_DEVBUF,
+	    M_WAITOK | M_ZERO);
 	memcpy(sc->n1_discovery_data, shared_data, bdfs_size);
-
-	paddr_rc = (vm_offset_t)shared_data->rc_base_addr;
-	error = bus_space_map(sc->acpi.base.bst, paddr_rc, PCI_CFG_SPACE_SIZE,
-	    0, &sc->n1_bsh);
-	if (error != 0)
-		return (error);
 
 	if (bootverbose) {
 		table_count = sc->n1_discovery_data->nr_bdfs;
@@ -117,10 +129,13 @@ n1sdp_init(struct generic_pcie_n1sdp_softc *sc)
 			    sc->n1_discovery_data->valid_bdfs[i]);
 	}
 
-	pmap_kremove(vaddr);
+out_pmap:
+	pmap_qremove(vaddr, nitems(m));
 	kva_free(vaddr, (vm_size_t)BDF_TABLE_SIZE);
 
-	return (0);
+out:
+	vm_phys_fictitious_unreg_range(paddr, paddr + BDF_TABLE_SIZE);
+	return (error);
 }
 
 static int
@@ -228,10 +243,10 @@ n1sdp_get_bus_space(device_t dev, u_int bus, u_int slot, u_int func, u_int reg,
 			return (EINVAL);
 		*bsh = sc->n1_bsh;
 	} else {
-		*bsh = sc->acpi.base.bsh;
+		*bsh = rman_get_bushandle(sc->acpi.base.res);
 	}
 
-	*bst = sc->acpi.base.bst;
+	*bst = rman_get_bustag(sc->acpi.base.res);
 	*offset = PCIE_ADDR_OFFSET(bus - sc->acpi.base.bus_start, slot, func,
 	    reg);
 
@@ -344,7 +359,4 @@ static device_method_t n1sdp_pcie_acpi_methods[] = {
 DEFINE_CLASS_1(pcib, n1sdp_pcie_acpi_driver, n1sdp_pcie_acpi_methods,
     sizeof(struct generic_pcie_n1sdp_softc), generic_pcie_acpi_driver);
 
-static devclass_t n1sdp_pcie_acpi_devclass;
-
-DRIVER_MODULE(n1sdp_pcib, acpi, n1sdp_pcie_acpi_driver,
-    n1sdp_pcie_acpi_devclass, 0, 0);
+DRIVER_MODULE(n1sdp_pcib, acpi, n1sdp_pcie_acpi_driver, 0, 0);

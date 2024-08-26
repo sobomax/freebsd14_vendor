@@ -1,7 +1,6 @@
 #
-# $FreeBSD: 5dac4a3e9ee35e42ef7d0425706d851ee5f2a9bd $
 #
-# The user-driven targets are:
+# The common user-driven targets are (for a complete list, see build(7)):
 #
 # universe            - *Really* build *everything* (buildworld and
 #                       all kernels on all architectures).  Define
@@ -84,9 +83,9 @@
 #  4.  `make installkernel KERNCONF=YOUR_KERNEL_HERE'   (default is GENERIC).
 #       [steps 3. & 4. can be combined by using the "kernel" target]
 #  5.  `reboot'        (in single user mode: boot -s from the loader prompt).
-#  6.  `mergemaster -p'
+#  6.  `etcupdate -p'
 #  7.  `make installworld'
-#  8.  `mergemaster'            (you may wish to use -i, along with -U or -F).
+#  8.  `etcupdate -B'
 #  9.  `make delete-old'
 # 10.  `reboot'
 # 11.  `make delete-old-libs' (in case no 3rd party program uses them anymore)
@@ -119,6 +118,16 @@
 # For more information, see the build(7) manual page.
 #
 
+# Include jobs.mk early if we need it.
+# It will turn:
+# 	make buildworld-jobs
+# into
+# 	make -j${JOB_MAX} buildworld > ../buildworld.log 2>&1
+#
+.if make(*-jobs)
+.include <jobs.mk>
+.endif
+
 .if defined(UNIVERSE_TARGET) || defined(MAKE_JUST_WORLDS) || defined(WITHOUT_KERNELS)
 __DO_KERNELS=no
 .endif
@@ -146,29 +155,35 @@ __DO_KERNELS?=yes
 .include "targets/Makefile"
 .else
 
-TGTS=	all all-man buildenv buildenvvars buildkernel buildworld \
+.include "${.CURDIR}/share/mk/bsd.compat.pre.mk"
+
+TGTS=	all all-man buildenv buildenvvars buildetc buildkernel buildworld \
 	check check-old check-old-dirs check-old-files check-old-libs \
-	checkdpadd checkworld clean cleandepend cleandir cleanworld \
-	cleanuniverse \
+	checkdpadd checkworld clean cleandepend cleandir cleankernel \
+	cleanworld cleanuniverse \
 	delete-old delete-old-dirs delete-old-files delete-old-libs \
 	depend distribute distributekernel distributekernel.debug \
 	distributeworld distrib-dirs distribution doxygen \
-	everything hier hierarchy install installcheck installkernel \
+	everything hier hierarchy install installcheck installetc installkernel \
 	installkernel.debug packagekernel packageworld \
 	reinstallkernel reinstallkernel.debug \
 	installworld kernel-toolchain libraries maninstall \
 	list-old-dirs list-old-files list-old-libs \
 	obj objlink showconfig tags toolchain \
 	makeman sysent \
-	_worldtmp _legacy _bootstrap-tools _cleanobj _obj \
+	_cleanworldtmp _worldtmp _legacy _bootstrap-tools _cleanobj _obj \
 	_build-tools _build-metadata _cross-tools _includes _libraries \
-	build32 distribute32 install32 buildsoft distributesoft installsoft \
 	builddtb xdev xdev-build xdev-install \
 	xdev-links native-xtools native-xtools-install stageworld stagekernel \
-	stage-packages stage-packages-kernel stage-packages-world \
-	create-packages-world create-packages-kernel create-packages \
+	stage-packages stage-packages-kernel stage-packages-world stage-packages-source \
+	create-packages-world create-packages-kernel create-packages-source create-packages \
 	update-packages packages installconfig real-packages real-update-packages \
-	sign-packages package-pkg print-dir test-system-compiler test-system-linker
+	sign-packages package-pkg print-dir test-system-compiler test-system-linker \
+	test-includes
+
+.for libcompat in ${_ALL_libcompats}
+TGTS+=	build${libcompat} distribute${libcompat} install${libcompat}
+.endfor
 
 # These targets require a TARGET and TARGET_ARCH be defined.
 XTGTS=	native-xtools native-xtools-install xdev xdev-build xdev-install \
@@ -190,11 +205,15 @@ TGTS+=	${BITGTS}
 # the interactive tty prompt.  The safest route is to just whitelist
 # the ones that benefit from it.
 META_TGT_WHITELIST+= \
-	_* build32 buildfiles buildincludes buildkernel buildsoft \
+	_* buildfiles buildincludes buildkernel \
 	buildworld everything kernel-toolchain kernel-toolchains kernel \
-	kernels libraries native-xtools showconfig test-system-compiler \
-	test-system-linker tinderbox toolchain \
+	kernels libraries native-xtools showconfig test-includes \
+	test-system-compiler test-system-linker tinderbox toolchain \
 	toolchains universe universe-toolchain world worlds xdev xdev-build
+
+.for libcompat in ${_ALL_libcompats}
+META_TGT_WHITELIST+=	build${libcompat}
+.endfor
 
 .ORDER: buildworld installworld
 .ORDER: buildworld distrib-dirs
@@ -215,6 +234,7 @@ META_TGT_WHITELIST+= \
 .ORDER: buildkernel installkernel.debug
 .ORDER: buildkernel reinstallkernel
 .ORDER: buildkernel reinstallkernel.debug
+.ORDER: kernel-toolchain buildkernel
 
 # Only sanitize PATH on FreeBSD.
 # PATH may include tools that are required to cross-build
@@ -223,7 +243,7 @@ META_TGT_WHITELIST+= \
 PATH=	/sbin:/bin:/usr/sbin:/usr/bin
 .endif
 MAKEOBJDIRPREFIX?=	/usr/obj
-_MAKEOBJDIRPREFIX!= /usr/bin/env -i PATH=${PATH} ${MAKE} MK_AUTO_OBJ=no \
+_MAKEOBJDIRPREFIX!= /usr/bin/env -i PATH=${PATH:Q} ${MAKE} MK_AUTO_OBJ=no \
     ${.MAKEFLAGS:MMAKEOBJDIRPREFIX=*} __MAKE_CONF=${__MAKE_CONF} \
     SRCCONF=${SRCCONF} SRC_ENV_CONF= \
     -f /dev/null -V MAKEOBJDIRPREFIX dummy
@@ -266,7 +286,7 @@ SUB_MAKE= `test -x ${MYMAKE} && echo ${MYMAKE} || echo ${MAKE}` \
 SUB_MAKE= ${MAKE} -m ${.CURDIR}/share/mk
 .endif
 
-_MAKE=	PATH=${PATH} MAKE_CMD="${MAKE}" ${SUB_MAKE} -f Makefile.inc1 \
+_MAKE=	PATH=${PATH:Q} MAKE_CMD="${MAKE}" ${SUB_MAKE} -f Makefile.inc1 \
 	TARGET=${_TARGET} TARGET_ARCH=${_TARGET_ARCH} ${_MAKEARGS}
 
 .if defined(MK_META_MODE) && ${MK_META_MODE} == "yes"
@@ -516,29 +536,27 @@ worlds: .PHONY
 # Don't build rarely used, semi-supported architectures unless requested.
 #
 .if defined(EXTRA_TARGETS)
-EXTRA_ARCHES_mips=	mipsel mipshf mipselhf mips64el mips64hf mips64elhf
-EXTRA_ARCHES_mips+=	mipsn32
+# armv6's importance has waned enough to make building it the exception rather
+# than the rule.
+EXTRA_ARCHES_arm=	armv6
 # powerpcspe excluded from main list until clang fixed
-EXTRA_ARCHES_powerpc=	powerpcspe powerpc64le
+EXTRA_ARCHES_powerpc=	powerpcspe
 .endif
-TARGETS?=amd64 arm arm64 i386 mips powerpc riscv
+TARGETS?= ${TARGET_MACHINE_LIST}
 _UNIVERSE_TARGETS=	${TARGETS}
-TARGET_ARCHES_arm?=	armv6 armv7
-TARGET_ARCHES_arm64?=	aarch64
-TARGET_ARCHES_mips?=	mips mips64 ${EXTRA_ARCHES_mips}
-TARGET_ARCHES_powerpc?=	powerpc powerpc64 ${EXTRA_ARCHES_powerpc}
-TARGET_ARCHES_riscv?=	riscv64 riscv64sf
 .for target in ${TARGETS}
-TARGET_ARCHES_${target}?= ${target}
+TARGET_ARCHES_${target}= ${MACHINE_ARCH_LIST_${target}}
 .endfor
 
 .if defined(USE_GCC_TOOLCHAINS)
-TOOLCHAINS_amd64=	amd64-gcc6
-TOOLCHAINS_arm64=	aarch64-gcc6
-TOOLCHAINS_i386=	i386-gcc6
-TOOLCHAINS_mips=	mips-gcc6
-TOOLCHAINS_powerpc=	powerpc-gcc6 powerpc64-gcc6
-TOOLCHAIN_powerpc64=	powerpc64-gcc6
+TOOLCHAINS_amd64=	amd64-gcc12
+TOOLCHAINS_arm=		armv6-gcc12 armv7-gcc12
+TOOLCHAIN_armv7=	armv7-gcc12
+TOOLCHAINS_arm64=	aarch64-gcc12
+TOOLCHAINS_i386=	i386-gcc12
+TOOLCHAINS_powerpc=	powerpc-gcc12 powerpc64-gcc12
+TOOLCHAIN_powerpc64=	powerpc64-gcc12
+TOOLCHAINS_riscv=	riscv64-gcc12
 .endif
 
 # If a target is using an external toolchain, set MAKE_PARAMS to enable use
@@ -564,6 +582,17 @@ MAKE_PARAMS_${arch}?=	CROSS_TOOLCHAIN=${TOOLCHAIN_${arch}}
 
 UNIVERSE_TARGET?=	buildworld
 KERNSRCDIR?=		${.CURDIR}/sys
+
+.if ${.MAKE.OS} == "FreeBSD"
+UNIVERSE_TOOLCHAIN_TARGET?=		${MACHINE}
+UNIVERSE_TOOLCHAIN_TARGET_ARCH?=	${MACHINE_ARCH}
+.else
+# MACHINE/MACHINE_ARCH may not follow the same naming as us (e.g. x86_64 vs
+# amd64) on non-FreeBSD. Rather than attempt to sanitise it, arbitrarily use
+# amd64 as the default universe toolchain target.
+UNIVERSE_TOOLCHAIN_TARGET?=		amd64
+UNIVERSE_TOOLCHAIN_TARGET_ARCH?=	amd64
+.endif
 
 targets:	.PHONY
 	@echo "Supported TARGET/TARGET_ARCH pairs for world and kernel targets"
@@ -595,8 +624,9 @@ universe-toolchain: .PHONY universe_prologue
 	@echo "> Toolchain bootstrap started on `LC_ALL=C date`"
 	@echo "--------------------------------------------------------------"
 	${_+_}@cd ${.CURDIR}; \
-	    env PATH=${PATH} ${SUB_MAKE} ${JFLAG} kernel-toolchain \
-	    TARGET=${MACHINE} TARGET_ARCH=${MACHINE_ARCH} \
+	    env PATH=${PATH:Q} ${SUB_MAKE} ${JFLAG} kernel-toolchain \
+	    TARGET=${UNIVERSE_TOOLCHAIN_TARGET} \
+	    TARGET_ARCH=${UNIVERSE_TOOLCHAIN_TARGET_ARCH} \
 	    OBJTOP="${HOST_OBJTOP}" \
 	    WITHOUT_SYSTEM_COMPILER=yes \
 	    WITHOUT_SYSTEM_LINKER=yes \
@@ -737,7 +767,7 @@ TARGET_ARCH_${kernel}!=	cd ${KERNSRCDIR}/${TARGET}/conf && \
 	config -m ${KERNSRCDIR}/${TARGET}/conf/${kernel} 2> /dev/null | \
 	grep -v WARNING: | cut -f 2
 .if empty(TARGET_ARCH_${kernel})
-.error "Target architecture for ${TARGET}/conf/${kernel} unknown.  config(8) likely too old."
+.error Target architecture for ${TARGET}/conf/${kernel} unknown.  config(8) likely too old.
 .endif
 universe_kernconfs_${TARGET_ARCH_${kernel}}: universe_kernconf_${TARGET}_${kernel}
 universe_kernconf_${TARGET}_${kernel}: .MAKE

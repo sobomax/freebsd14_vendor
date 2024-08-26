@@ -1,4 +1,3 @@
-# $FreeBSD: 5a37480c9ffca88fdb14a2afbeb911f6ce3090b8 $
 
 .PATH: ${SRCTOP}/sys/dev/vr
 

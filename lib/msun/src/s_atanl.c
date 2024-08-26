@@ -11,9 +11,6 @@
  * ====================================================
  */
 
-#include <sys/cdefs.h>
-__FBSDID("$FreeBSD: ff29c3ce8a185961e30b01239f51207a7611f78e $");
-
 /*
  * See comments in s_atan.c.
  * Converted to long double by David Schultz <das@FreeBSD.ORG>.

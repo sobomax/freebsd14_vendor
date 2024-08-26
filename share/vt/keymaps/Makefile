@@ -1,4 +1,3 @@
-# $FreeBSD: 31ef7e3466dc107948db6fc6cbf9fbf292b8559f $
 
 PACKAGE=	vt-data
 
@@ -35,6 +34,7 @@ FILES=	INDEX.keymaps \
 	es.kbd \
 	fi.kbd \
 	fr.acc.kbd \
+	fr.bepo.kbd \
 	fr.dvorak.acc.kbd \
 	fr.dvorak.kbd \
 	fr.kbd \

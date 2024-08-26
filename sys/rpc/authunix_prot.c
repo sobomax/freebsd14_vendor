@@ -35,8 +35,6 @@ static char *sccsid2 = "@(#)authunix_prot.c 1.15 87/08/11 Copyr 1984 Sun Micro";
 static char *sccsid = "@(#)authunix_prot.c	2.1 88/07/29 4.0 RPCSRC";
 #endif
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: b6cde0fbd0ffbc30f0ed2a7df958a4536320a2a6 $");
-
 /*
  * authunix_prot.c
  * XDR for UNIX style authentication parameters for RPC

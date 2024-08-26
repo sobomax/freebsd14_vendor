@@ -29,9 +29,6 @@
  * SUCH DAMAGE.
  */
 
-#include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 5d7ee3b2d2be6bc7f9ab40d36e49b4435ac92104 $");
-
 #include <stdio.h>
 
 #include "spinlock.h"

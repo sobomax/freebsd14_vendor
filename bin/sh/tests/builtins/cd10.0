@@ -1,4 +1,3 @@
-# $FreeBSD: 5c165cb21fcc768f293958f3be8bdbacd4719bf2 $
 
 # Precondition
 (cd /bin) || exit

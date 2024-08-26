@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (C) 2012-2013 Intel Corporation
  * All rights reserved.
@@ -27,8 +27,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 68a2ecb9b0b803f01f918f8c1c5a696f78694bc3 $");
-
 #include <sys/param.h>
 #include <sys/ioccom.h>
 #include <sys/stat.h>

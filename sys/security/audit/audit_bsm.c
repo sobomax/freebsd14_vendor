@@ -36,8 +36,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: d350ef3cf3c2913737fc4f17b92cca19e074d3f0 $");
-
 #include <sys/param.h>
 #include <sys/vnode.h>
 #include <sys/ipc.h>
@@ -1086,6 +1084,18 @@ kaudit_to_bsm(struct kaudit_record *kar, struct au_record **pau)
 	case AUE_FLOCK:
 		if (ARG_IS_VALID(kar, ARG_CMD)) {
 			tok = au_to_arg32(2, "operation", ar->ar_arg_cmd);
+			kau_write(rec, tok);
+		}
+		FD_VNODE1_TOKENS;
+		break;
+
+	case AUE_FSPACECTL:
+		if (ARG_IS_VALID(kar, ARG_CMD)) {
+			tok = au_to_arg32(2, "operation", ar->ar_arg_cmd);
+			kau_write(rec, tok);
+		}
+		if (ARG_IS_VALID(kar, ARG_FFLAGS)) {
+			tok = au_to_arg32(4, "flags", ar->ar_arg_fflags);
 			kau_write(rec, tok);
 		}
 		FD_VNODE1_TOKENS;

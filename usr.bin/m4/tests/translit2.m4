@@ -1,4 +1,3 @@
-dnl $FreeBSD: ec26c084057399d07067266f608b8fede7512123 $
 translit(`[HAVE_abc/def.h
 ]', `
 /.', `/  ')

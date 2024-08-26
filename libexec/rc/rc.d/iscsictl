@@ -1,10 +1,9 @@
 #!/bin/sh
 #
-# $FreeBSD: 6ae3910f0628460214324e61f14020601db8a8fb $
 #
 
 # PROVIDE: iscsictl
-# REQUIRE: NETWORK iscsid
+# REQUIRE: NETWORKING iscsid
 # BEFORE:  DAEMON
 # KEYWORD: nojail
 

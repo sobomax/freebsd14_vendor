@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2006 Marcel Moolenaar All rights reserved.
  * Copyright (c) 2001 M. Warner Losh <imp@FreeBSD.org>
@@ -26,8 +26,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: cf7fbb99b3d57abeda3404022e330cda31fff7e2 $");
-
 #include <sys/param.h>
 #include <sys/systm.h>
 #include <sys/bus.h>
@@ -39,6 +37,7 @@ __FBSDID("$FreeBSD: cf7fbb99b3d57abeda3404022e330cda31fff7e2 $");
 #include <machine/resource.h>
 
 #include <dev/pci/pcivar.h>
+#include <dev/pci/pcireg.h>
 
 #include <dev/uart/uart.h>
 #include <dev/uart/uart_bus.h>
@@ -80,6 +79,9 @@ struct pci_unique_id {
 	uint16_t	vendor;
 	uint16_t	device;
 };
+
+#define PCI_NO_MSI	0x40000000
+#define PCI_RID_MASK	0x0000ffff
 
 static const struct pci_id pci_ns8250_ids[] = {
 { 0x1028, 0x0008, 0xffff, 0, "Dell Remote Access Card III", 0x14,
@@ -134,6 +136,8 @@ static const struct pci_id pci_ns8250_ids[] = {
 { 0x1d0f, 0x8250, 0x1d0f, 0, "Amazon PCI serial device", 0x10 },
 { 0x1fd4, 0x1999, 0x1fd4, 0x0001, "Sunix SER5xxxx Serial Port", 0x10,
 	8 * DEFAULT_RCLK },
+{ 0x8086, 0x0c5f, 0xffff, 0, "Atom Processor S1200 UART",
+	0x10 | PCI_NO_MSI },
 { 0x8086, 0x0f0a, 0xffff, 0, "Intel ValleyView LPIO1 HSUART#1", 0x10,
 	24 * DEFAULT_RCLK, 2 },
 { 0x8086, 0x0f0c, 0xffff, 0, "Intel ValleyView LPIO1 HSUART#2", 0x10,
@@ -179,7 +183,8 @@ static const struct pci_id pci_ns8250_ids[] = {
 	"Intel Corporation C610/X99 series chipset KT Controller", 0x10 },
 { 0x8086, 0x9c3d, 0xffff, 0, "Intel Lynx Point-LP HECI KT", 0x10 },
 { 0x8086, 0xa13d, 0xffff, 0,
-	"100 Series/C230 Series Chipset Family KT Redirection", 0x10 },
+	"100 Series/C230 Series Chipset Family KT Redirection",
+	0x10 | PCI_NO_MSI },
 { 0x9710, 0x9820, 0x1000, 1, "NetMos NM9820 Serial Port", 0x10 },
 { 0x9710, 0x9835, 0x1000, 1, "NetMos NM9835 Serial Port", 0x10 },
 { 0x9710, 0x9865, 0xa000, 0x1000, "NetMos NM9865 Serial Port", 0x10 },
@@ -260,6 +265,12 @@ uart_pci_probe(device_t dev)
 {
 	struct uart_softc *sc;
 	const struct pci_id *id;
+	struct pci_id cid = {
+		.regshft = 0,
+		.rclk = 0,
+		.rid = 0x10 | PCI_NO_MSI,
+		.desc = "Generic SimpleComm PCI device",
+	};
 	int result;
 
 	sc = device_get_softc(dev);
@@ -269,11 +280,20 @@ uart_pci_probe(device_t dev)
 		sc->sc_class = &uart_ns8250_class;
 		goto match;
 	}
+	if (pci_get_class(dev) == PCIC_SIMPLECOMM &&
+	    pci_get_subclass(dev) == PCIS_SIMPLECOMM_UART &&
+	    pci_get_progif(dev) < PCIP_SIMPLECOMM_UART_16550A) {
+		/* XXX rclk what to do */
+		id = &cid;
+		sc->sc_class = &uart_ns8250_class;
+		goto match;
+	}
 	/* Add checks for non-ns8250 IDs here. */
 	return (ENXIO);
 
  match:
-	result = uart_bus_probe(dev, id->regshft, 0, id->rclk, id->rid, 0, 0);
+	result = uart_bus_probe(dev, id->regshft, 0, id->rclk,
+	    id->rid & PCI_RID_MASK, 0, 0);
 	/* Bail out on error. */
 	if (result > 0)
 		return (result);
@@ -294,6 +314,7 @@ static int
 uart_pci_attach(device_t dev)
 {
 	struct uart_softc *sc;
+	const struct pci_id *id;
 	int count;
 
 	sc = device_get_softc(dev);
@@ -302,7 +323,9 @@ uart_pci_attach(device_t dev)
 	 * Use MSI in preference to legacy IRQ if available. However, experience
 	 * suggests this is only reliable when one MSI vector is advertised.
 	 */
-	if (pci_msi_count(dev) == 1) {
+	id = uart_pci_match(dev, pci_ns8250_ids);
+	if ((id == NULL || (id->rid & PCI_NO_MSI) == 0) &&
+	    pci_msi_count(dev) == 1) {
 		count = 1;
 		if (pci_alloc_msi(dev, &count) == 0) {
 			sc->sc_irid = 1;
@@ -326,4 +349,4 @@ uart_pci_detach(device_t dev)
 	return (uart_bus_detach(dev));
 }
 
-DRIVER_MODULE(uart, pci, uart_pci_driver, uart_devclass, NULL, NULL);
+DRIVER_MODULE(uart, pci, uart_pci_driver, NULL, NULL);

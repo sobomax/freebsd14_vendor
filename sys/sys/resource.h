@@ -29,7 +29,6 @@
  * SUCH DAMAGE.
  *
  *	@(#)resource.h	8.4 (Berkeley) 1/9/95
- * $FreeBSD: 08bb09b4a6455b90917b5f30027e55a43ac5c244 $
  */
 
 #ifndef _SYS_RESOURCE_H_

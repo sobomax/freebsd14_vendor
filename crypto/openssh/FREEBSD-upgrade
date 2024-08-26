@@ -66,8 +66,8 @@
     (leaving them deleted).
 
 10) Resolve conflicts.  Remember to bump the version addendum in
-    version.h, and update the default value in ssh{,d}_config and
-    ssh{,d}_config.5.
+    version.h, and update the default value in sshd_config and
+    sshd_config.5.
 
 11) Diff against the vendor branch:
 
@@ -77,6 +77,7 @@
 
 12) Run the configure script:
 
+    $ cd crypto/openssh
     $ sh freebsd-configure.sh
 
 13) Review changes to config.h very carefully.
@@ -89,6 +90,7 @@
 
 15) Update ssh_namespace.h:
 
+    $ cd crypto/openssh
     $ sh freebsd-namespace.sh
 
 16) Build and install world, reboot, test.  Pay particular attention
@@ -107,42 +109,31 @@
 	  An overview of FreeBSD changes to OpenSSH-portable
 	  ==================================================
 
-0) VersionAddendum
-
-   The SSH protocol allows for a human-readable version string of up
-   to 40 characters to be appended to the protocol version string.
-   FreeBSD takes advantage of this to include a date indicating the
-   "patch level", so people can easily determine whether their system
-   is vulnerable when an OpenSSH advisory goes out.  Some people,
-   however, dislike advertising their patch level in the protocol
-   handshake, so we've added a VersionAddendum configuration variable
-   to allow them to change or disable it.  Upstream added support for
-   VersionAddendum on the server side, but we also support it on the
-   client side.
-
 1) Modified server-side defaults
 
    We've modified some configuration defaults in sshd:
 
       - UsePAM defaults to "yes".
       - PermitRootLogin defaults to "no".
-      - X11Forwarding defaults to "yes".
       - PasswordAuthentication defaults to "no".
       - VersionAddendum defaults to "FreeBSD-YYYYMMDD".
       - UseDNS defaults to "yes".
 
 2) Modified client-side defaults
 
-   We've modified some configuration defaults in ssh:
-
-      - CheckHostIP defaults to "no".
-      - VersionAddendum defaults to "FreeBSD-YYYYMMDD".
+   We defaulted CheckHostIP to "no" in 2000 (a95c1225217b).  Upstream has
+   now made the same change, and we no longer have any modified client-side
+   defaults.
 
 3) Canonic host names
 
    We've added code to ssh.c to canonicize the target host name after
    reading options but before trying to connect.  This eliminates the
    usual problem with duplicate known_hosts entries.
+
+   We added this support in 2002 (r99054 / bf2e2524a2ce).  In 2014
+   upstream introduced CanonicalDomains and related options to serve a
+   similar purpose but they require environment-specific configuration.
 
 4) setusercontext() environment
 
@@ -170,13 +161,29 @@
    upstream submission from
    https://github.com/openssh/openssh-portable/pull/262.
 
-8) HPN
+8) Blocklist integration
 
-   We no longer have the HPN patches (adaptive buffer size for
-   increased throughput on high-BxD links), but we recognize and
-   ignore HPN-related configuration options to avoid breaking existing
-   configurations.
+   We include blocklist (https://github.com/zoulasc/blocklist) in FreeBSD,
+   and ssh is patched to report login failures to it.
 
+9) Paths
+
+   A number of paths are changed to match FreeBSD's configuration (e.g.,
+   using /usr/local/ instead of /uxr/X11R6/).
+
+10) Retired patches
+
+   We no longer have client-side VersionAddendum, but we recognize and ignore
+   the configuration options to avoid breaking existing configurations.
+
+11) PrintLastLog bugfix
+
+   Upstream's autoconf sets DISABLE_LASTLOG if the system does not have
+   lastlog.ll_line, but uses it to disable the PrintLastLog configuration
+   option altogether.  There is a hacky SKIP_DISABLE_LASTLOG_DEFINE=yes to
+   skip setting DISABLE_LASTLOG which we've applied for FreeBSD, but the
+   autoconf machinery really ought to be reworked.  Reported upstream at
+   https://lists.mindrot.org/pipermail/openssh-unix-dev/2022-May/040242.html
 
 
 This port was brought to you by (in no particular order) DARPA, NAI

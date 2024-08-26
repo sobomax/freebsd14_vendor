@@ -1,4 +1,3 @@
-/* $FreeBSD: 8d67be70beece96aa0b43ded57c35771e66840f3 $ */
 /*     $NetBSD: yacc.y,v 1.11 2016/06/28 09:22:16 wiz Exp $    */
 
 %{

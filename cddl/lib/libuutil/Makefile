@@ -1,4 +1,3 @@
-# $FreeBSD: d1267caa9fd3e6b57c48f1091c92587df8ab5a21 $
 
 .PATH: ${SRCTOP}/sys/contrib/openzfs/lib/libuutil
 
@@ -7,12 +6,9 @@ LIB=	uutil
 SRCS=\
 	uu_alloc.c \
 	uu_avl.c \
-	uu_dprintf.c \
 	uu_ident.c \
 	uu_list.c \
 	uu_misc.c \
-	uu_open.c \
-	uu_pname.c \
 	uu_string.c
 
 WARNS?=	2

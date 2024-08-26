@@ -29,7 +29,6 @@
  * SUCH DAMAGE.
  *
  *	@(#)pathnames.h	8.1 (Berkeley) 6/6/93
- * $FreeBSD: 7297ba5b95d7c13536f4c541d08317fcc7a7e3c1 $
  */
 
 #define	_PATH_KLOG	"/dev/klog"

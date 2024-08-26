@@ -30,7 +30,6 @@
   POSSIBILITY OF SUCH DAMAGE.
 
 ******************************************************************************/
-/*$FreeBSD: e412df86ae6b7164a0c2e809a17a1aa03ac9a277 $*/
 
 
 #ifndef _IXL_PF_IOV_H_

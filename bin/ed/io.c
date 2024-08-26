@@ -26,8 +26,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 697e0a4c7ab5a41d7edafaa060a7699c0ec57764 $");
-
 #include "ed.h"
 
 /* read_file: read a named file/pipe into the buffer; return line count */

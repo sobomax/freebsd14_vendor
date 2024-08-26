@@ -29,7 +29,6 @@
  * SUCH DAMAGE.
  *
  *	@(#)mntopts.h	8.7 (Berkeley) 3/29/95
- * $FreeBSD: 3488d34fe96ce6c7d0962d0c363c3153aa0c9851 $
  */
 
 struct mntopt {

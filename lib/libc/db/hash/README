@@ -1,5 +1,4 @@
 #	@(#)README	8.1 (Berkeley) 6/4/93
-# $FreeBSD: 80d674396c0a1b7061d4958cd62801b9d3fba4e1 $
 
 This package implements a superset of the hsearch and dbm/ndbm libraries.
 

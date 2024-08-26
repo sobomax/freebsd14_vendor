@@ -1,6 +1,5 @@
-# $FreeBSD: e4cf3722565a3c2d6dc810fc89a12db3e710c85c $
 #
-# SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+# SPDX-License-Identifier: BSD-2-Clause
 #
 # Copyright (c) 2021 Rubicon Communications, LLC (Netgate)
 #

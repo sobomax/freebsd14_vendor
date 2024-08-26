@@ -1,4 +1,3 @@
-# $FreeBSD: 9d4ae89e0e2edb9a9f63150b25bf6ada34306b4b $
 command -v ls
 command -v true
 command -v /bin/ls

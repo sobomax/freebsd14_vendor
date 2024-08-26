@@ -24,9 +24,6 @@
  * SUCH DAMAGE.
  */
 
-#include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 2f169ea60f66c9ed91ab8527fe1e37bd8a918d55 $");
-
 /*
  * Minimal sbrk() emulation required for malloc support.
  */

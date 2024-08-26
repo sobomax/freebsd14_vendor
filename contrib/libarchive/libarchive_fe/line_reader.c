@@ -26,8 +26,6 @@
  */
 
 #include "lafe_platform.h"
-__FBSDID("$FreeBSD: c7c4694eeb82567b51c758fb44b93f527f5986e2 $");
-
 #include <errno.h>
 #include <stdio.h>
 #include <stdlib.h>

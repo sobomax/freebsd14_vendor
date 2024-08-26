@@ -1,4 +1,3 @@
-/*	$FreeBSD: deb932fb0ce25667f1a71ff139b5a57e0de8b62b $	*/
 /*	$OpenBSD: if_iwnvar.h,v 1.18 2010/04/30 16:06:46 damien Exp $	*/
 
 /*-

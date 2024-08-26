@@ -1,6 +1,5 @@
 #!/bin/sh
 #
-# $FreeBSD: ef87bcba8f83b480e8fd0e9f9d73aabcf59ef98f $
 #
 
 # PROVIDE: rarpd

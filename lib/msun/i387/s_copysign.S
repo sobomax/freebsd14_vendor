@@ -34,8 +34,6 @@
  */
 
 #include <machine/asm.h>
-__FBSDID("$FreeBSD: 63a916f312729eb94e4f75629033a0e47dc2e708 $")
-
 ENTRY(copysign)
 	movl	16(%esp),%edx
 	andl	$0x80000000,%edx

@@ -44,8 +44,6 @@
 
 #include <machine/asm.h>
 #include "assym.inc"
-__FBSDID("$FreeBSD: 4f4dd7c437c15e18f93dc6ae6d36c261a257109b $");
-
 	.syntax	unified
 /*
  * int in_cksum(struct mbuf *m, int len)

@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2020 Oskar Holmlund <oskar.holmlund@ohdata.se>
  *
@@ -23,13 +23,9 @@
  * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
- *
- * $FreeBSD: 15b0e75a8a1e6c0640e2cad93ed07a623665eb05 $
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 15b0e75a8a1e6c0640e2cad93ed07a623665eb05 $");
-
 #include <sys/param.h>
 #include <sys/conf.h>
 #include <sys/bus.h>

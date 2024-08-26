@@ -34,8 +34,6 @@
 __RCSID("$NetBSD: wcscpy.c,v 1.1 2000/12/23 23:14:36 itojun Exp $");
 #endif /* LIBC_SCCS and not lint */
 #endif
-__FBSDID("$FreeBSD: b400fae1cb5c3ed69b5a26c5f36d9702cb30671e $");
-
 #include <wchar.h>
 
 wchar_t *

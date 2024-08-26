@@ -24,8 +24,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 712b21cda46e464ea6895358eebef46fa56a5535 $");
-
 /*
  * This file is compiled in userspace in order to run ATF unit tests.
  */

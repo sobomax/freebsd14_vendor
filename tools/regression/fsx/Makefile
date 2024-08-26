@@ -1,4 +1,3 @@
-# $FreeBSD: bf7b0233b9198d94fab8e84f48581b7192194e09 $
 
 PROG=	fsx
 

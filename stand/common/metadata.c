@@ -26,9 +26,6 @@
  *	from: FreeBSD: src/sys/boot/sparc64/loader/metadata.c,v 1.6
  */
 
-#include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 67bd504fa2a433aab4c11eea7622113cec51203f $");
-
 #include <stand.h>
 #include <sys/param.h>
 #include <sys/linker.h>
@@ -223,7 +220,7 @@ md_load(char *args, vm_offset_t *modulep, vm_offset_t *dtb)
     return (md_load_dual(args, modulep, dtb, 0));
 }
 
-#if defined(__mips__) || defined(__powerpc__)
+#if defined(__powerpc__)
 int
 md_load64(char *args, vm_offset_t *modulep, vm_offset_t *dtb)
 {

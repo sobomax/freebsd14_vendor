@@ -26,7 +26,6 @@
 .\" SUCH DAMAGE.
 .\"
 .\"     @(#)config.8	8.2 (Berkeley) 4/19/94
-.\" $FreeBSD: b4147843376bcae0070e32f80122c691fe417d08 $
 .\"
 .Dd April 9, 2021
 .Dt CONFIG 8
@@ -102,16 +101,6 @@ file.
 This option makes sense only if
 .Cd "options INCLUDE_CONFIG_FILE"
 entry was present in your configuration file.
-.It Fl p
-Configure a system for profiling; for example,
-.Xr kgmon 8
-and
-.Xr gprof 1 .
-If two or more
-.Fl p
-options are supplied,
-.Nm
-configures a system for high resolution profiling.
 .It Ar SYSTEM_NAME
 Specify the name of the system configuration file
 containing device specifications, configuration options
@@ -188,7 +177,7 @@ debuggers available prior to
 .Bx 4.4 Lite
 were able to find some information
 from a normal kernel;
-.Xr gdb 1
+.Xr gdb 1 Pq Pa ports/devel/gdb
 provides very little support for normal kernels, and a debug kernel is needed
 for any meaningful analysis.
 .Pp

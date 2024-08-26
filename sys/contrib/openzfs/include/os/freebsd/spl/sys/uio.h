@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: b71f2f2e56251d94396534d9e622c71c9f887f22 $
+ * $FreeBSD: b9d41903ea638fbf8d5a46ca389f7ce32612c21d $
  */
 
 #ifndef _OPENSOLARIS_SYS_UIO_H_
@@ -62,7 +62,7 @@ zfs_uio_setoffset(zfs_uio_t *uio, offset_t off)
 }
 
 static inline void
-zfs_uio_advance(zfs_uio_t *uio, size_t size)
+zfs_uio_advance(zfs_uio_t *uio, ssize_t size)
 {
 	zfs_uio_resid(uio) -= size;
 	zfs_uio_offset(uio) += size;

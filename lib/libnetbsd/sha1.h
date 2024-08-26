@@ -1,7 +1,6 @@
-/*	$FreeBSD: d75365fe108ab00bac442d5f98c780ba0006cb8c $	*/
 
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2012 SRI International
  * All rights reserved.

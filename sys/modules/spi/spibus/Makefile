@@ -1,4 +1,3 @@
-# $FreeBSD: 01386d39e1182994a356f850903e211ca0c951b4 $
 
 .PATH:	${SRCTOP}/sys/dev/spibus
 
@@ -7,6 +6,11 @@ SRCS=	spibus.c
 
 .if !empty(OPT_FDT)
 SRCS+=	ofw_spibus.c ofw_bus_if.h
+.endif
+
+.if ${MACHINE_CPUARCH} == "aarch64" || ${MACHINE_CPUARCH} == "amd64" || \
+    ${MACHINE_CPUARCH} == "i386"
+SRCS+= acpi_spibus.c opt_acpi.h acpi_if.h
 .endif
 
 # Generated files...

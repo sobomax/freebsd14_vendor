@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2004, 2007 Lukas Ertl
  * Copyright (c) 2007, 2009 Ulf Lilleengen
@@ -28,8 +28,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 3e5b2e3d51a317a23de736b3c71a9de8f2cd34dc $");
-
 #include <sys/param.h>
 #include <sys/bio.h>
 #include <sys/lock.h>
@@ -173,7 +171,7 @@ gv_plex_offset(struct gv_plex *p, off_t boff, off_t bcount, off_t *real_off,
 			return (GV_ERR_ISBUSY);
 		*sdno = stripeno % sdcount;
 
-		KASSERT(sdno >= 0, ("gv_plex_offset: sdno < 0"));
+		KASSERT(*sdno >= 0, ("gv_plex_offset: sdno < 0"));
 		stripestart = (stripeno / sdcount) *
 		    p->stripesize;
 		KASSERT(stripestart >= 0, ("gv_plex_offset: stripestart < 0"));
@@ -538,10 +536,8 @@ gv_normal_parity(struct gv_plex *p, struct bio *bp, struct gv_raid5_packet *wp)
 static void
 gv_plex_flush(struct gv_plex *p)
 {
-	struct gv_softc *sc;
 	struct bio *bp;
 
-	sc = p->vinumconf;
 	bp = bioq_takefirst(p->rqueue);
 	while (bp != NULL) {
 		gv_plex_start(p, bp);

@@ -1,7 +1,7 @@
 /*	$NetBSD: tap.c,v 1.1 2008/08/17 13:20:57 plunky Exp $	*/
 
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-NetBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2008 Iain Hibbert
  * All rights reserved.
@@ -27,7 +27,6 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-/* $FreeBSD: d9d9a3e90af16c45c296f03b29fa520f3662dbed $ */
 
 #include <sys/cdefs.h>
 __RCSID("$NetBSD: tap.c,v 1.1 2008/08/17 13:20:57 plunky Exp $");

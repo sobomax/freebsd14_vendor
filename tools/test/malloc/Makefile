@@ -1,4 +1,3 @@
-# $FreeBSD: ac3fdd89486b285c6b842a996fc45c2e09fe8248 $
 PROG=	malloc
 SRCS=	main.c
 .PATH:	${.CURDIR}/../../../lib/libc/stdlib

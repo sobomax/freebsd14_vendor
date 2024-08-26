@@ -34,7 +34,6 @@
  * SUCH DAMAGE.
  *
  *	from: @(#)cons.h	7.2 (Berkeley) 5/9/91
- * $FreeBSD: ad73b258df6d1b4541b1e75238c14d7642280ede $
  */
 
 #ifndef _MACHINE_CONS_H_

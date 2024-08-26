@@ -28,9 +28,6 @@
  * Test for mergesort() routine.
  */
 
-#include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 4334b924f6bb63f27edbe524972e2e608902a8c4 $");
-
 #include <assert.h>
 #include <stdio.h>
 #include <stdlib.h>

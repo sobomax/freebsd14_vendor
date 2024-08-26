@@ -23,8 +23,6 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 273c3f9b4f5e4f60585881b0d7c9fb6e0dd9080d $
- *
  */
 
 #if defined(__GNUC__) && defined(_KERNEL)

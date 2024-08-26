@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2004 Marcel Moolenaar
  * All rights reserved.
@@ -27,8 +27,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: de68e8c476b13c914dde30d1a1905ae2e59e6d26 $");
-
 #include <sys/param.h>
 #include <sys/systm.h>
 #include <sys/kdb.h>
@@ -510,11 +508,11 @@ do_qXfer_threads_read(void)
 
 			sbuf_putc(&ctx.qXfer.sb, '>');
 
-			if (ctx.iter->td_state == TDS_RUNNING)
+			if (TD_GET_STATE(ctx.iter) == TDS_RUNNING)
 				sbuf_cat(&ctx.qXfer.sb, "Running");
-			else if (ctx.iter->td_state == TDS_RUNQ)
+			else if (TD_GET_STATE(ctx.iter) == TDS_RUNQ)
 				sbuf_cat(&ctx.qXfer.sb, "RunQ");
-			else if (ctx.iter->td_state == TDS_CAN_RUN)
+			else if (TD_GET_STATE(ctx.iter) == TDS_CAN_RUN)
 				sbuf_cat(&ctx.qXfer.sb, "CanRun");
 			else if (TD_ON_LOCK(ctx.iter))
 				sbuf_cat(&ctx.qXfer.sb, "Blocked");

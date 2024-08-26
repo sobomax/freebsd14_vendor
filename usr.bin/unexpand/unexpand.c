@@ -29,9 +29,6 @@
  * SUCH DAMAGE.
  */
 
-#include <sys/cdefs.h>
-
-__FBSDID("$FreeBSD: 08ba8ffe1dc43a63c989ff09d22558303ae200f6 $");
 
 #ifndef lint
 static const char copyright[] =
@@ -62,7 +59,7 @@ static int	nstops;
 static int	tabstops[100];
 
 static void getstops(const char *);
-static void usage(void);
+static void usage(void) __dead2;
 static int tabify(const char *);
 
 int

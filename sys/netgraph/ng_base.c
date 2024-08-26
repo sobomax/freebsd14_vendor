@@ -33,8 +33,6 @@
  *
  * Authors: Julian Elischer <julian@freebsd.org>
  *          Archie Cobbs <archie@freebsd.org>
- *
- * $FreeBSD: 1b8b26f38f34b4712910f587f406d63e401c3bed $
  * $Whistle: ng_base.c,v 1.39 1999/01/28 23:54:53 julian Exp $
  */
 
@@ -65,6 +63,8 @@
 #include <sys/unistd.h>
 #include <machine/cpu.h>
 #include <vm/uma.h>
+
+#include <machine/stack.h>
 
 #include <net/netisr.h>
 #include <net/vnet.h>
@@ -3374,10 +3374,8 @@ sysctl_debug_ng_dump_items(SYSCTL_HANDLER_ARGS)
 {
 	int error;
 	int val;
-	int i;
 
 	val = allocated;
-	i = 1;
 	error = sysctl_handle_int(oidp, &val, 0, req);
 	if (error != 0 || req->newptr == NULL)
 		return (error);
@@ -3441,7 +3439,19 @@ ngthread(void *arg)
 			} else {
 				NG_QUEUE_UNLOCK(&node->nd_input_queue);
 				NGI_GET_NODE(item, node); /* zaps stored node */
-				ng_apply_item(node, item, rw);
+
+				if ((item->el_flags & NGQF_TYPE) == NGQF_MESG) {
+					/*
+					 * NGQF_MESG items should never be processed in
+					 * NET_EPOCH context. So, temporary exit from EPOCH.
+					 */
+					NET_EPOCH_EXIT(et);
+					ng_apply_item(node, item, rw);
+					NET_EPOCH_ENTER(et);
+				} else {
+					ng_apply_item(node, item, rw);
+				}
+
 				NG_NODE_UNREF(node);
 			}
 		}
@@ -3815,20 +3825,18 @@ ng_callout(struct callout *c, node_p node, hook_p hook, int ticks,
 	return (0);
 }
 
-/* A special modified version of callout_stop() */
-int
-ng_uncallout(struct callout *c, node_p node)
+/*
+ * Free references and item if callout_stop/callout_drain returned 1,
+ * meaning that callout was successfully stopped and now references
+ * belong to us.
+ */
+static void
+ng_uncallout_internal(struct callout *c, node_p node)
 {
 	item_p item;
-	int rval;
 
-	KASSERT(c != NULL, ("ng_uncallout: NULL callout"));
-	KASSERT(node != NULL, ("ng_uncallout: NULL node"));
-
-	rval = callout_stop(c);
 	item = c->c_arg;
-	/* Do an extra check */
-	if ((rval > 0) && (c->c_func == &ng_callout_trampoline) &&
+	if ((c->c_func == &ng_callout_trampoline) &&
 	    (item != NULL) && (NGI_NODE(item) == node)) {
 		/*
 		 * We successfully removed it from the queue before it ran
@@ -3838,12 +3846,40 @@ ng_uncallout(struct callout *c, node_p node)
 		NG_FREE_ITEM(item);
 	}
 	c->c_arg = NULL;
+}
 
-	/*
-	 * Callers only want to know if the callout was cancelled and
-	 * not draining or stopped.
-	 */
-	return (rval > 0);
+
+/* A special modified version of callout_stop() */
+int
+ng_uncallout(struct callout *c, node_p node)
+{
+	int rval;
+
+	rval = callout_stop(c);
+	if (rval > 0)
+		/*
+		 * XXXGL: in case if callout is already running and next
+		 * invocation is scheduled at the same time, callout_stop()
+		 * returns 0. See d153eeee97d. In this case netgraph(4) would
+		 * leak resources. However, no nodes are known to induce such
+		 * behavior.
+		 */
+		ng_uncallout_internal(c, node);
+
+	return (rval);
+}
+
+/* A special modified version of callout_drain() */
+int
+ng_uncallout_drain(struct callout *c, node_p node)
+{
+	int rval;
+
+	rval = callout_drain(c);
+	if (rval > 0)
+		ng_uncallout_internal(c, node);
+
+	return (rval);
 }
 
 /*

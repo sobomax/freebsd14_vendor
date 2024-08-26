@@ -1,3 +1,2 @@
-.\" $FreeBSD: fd331607328d27d1145ce2313de1ee1eb1252d72 $
 Do not build or install
 .Xr rbootd 8 .

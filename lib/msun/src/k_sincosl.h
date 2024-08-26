@@ -12,9 +12,6 @@
  * k_sinl.c and k_cosl.c merged by Steven G. Kargl
  */
 
-#include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 6425f14a1ea0193520205f5f9039adac64b31823 $");
-
 #if LDBL_MANT_DIG == 64		/* ld80 version of k_sincosl.c. */
 
 #if defined(__amd64__) || defined(__i386__)

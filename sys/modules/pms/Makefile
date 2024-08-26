@@ -1,4 +1,3 @@
-# $FreeBSD: 4dc00b75ff6fd1d124c9ad5f2e4ffa8a605d424f $
 # 5/31/2012
 #PATH shall include all directories
 
@@ -22,7 +21,6 @@ CFLAGS+=-fms-extensions
 
 CFLAGS+=-Wredundant-decls
 CFLAGS+=-Wunused-variable
-CFLAGS+=-Wnested-externs
 CFLAGS+=-Woverflow
 CFLAGS+=-Wmissing-prototypes
 CFLAGS+=-Wparentheses

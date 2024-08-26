@@ -1,4 +1,3 @@
-# $FreeBSD: 359fc6f476e6d16061a11739e8d977063ee0240c $
 
 f() { return 42; }
 f

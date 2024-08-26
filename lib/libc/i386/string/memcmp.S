@@ -29,8 +29,6 @@
  */
 
 #include <machine/asm.h>
-__FBSDID("$FreeBSD: cbb3b8a468a31f1d467afd96154c8cd8df907551 $");
-
 /*
  * memcmp (void *b1, void *b2, size_t len)
  *

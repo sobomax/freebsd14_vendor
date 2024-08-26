@@ -8,7 +8,7 @@
  * Donn Seeley at UUNET Technologies, Inc.
  *
  * Copyright (c) 2011 The FreeBSD Foundation
- * All rights reserved.
+ *
  * Portions of this software were developed by David Chisnall
  * under sponsorship from the FreeBSD Foundation.
  *
@@ -40,9 +40,6 @@
 #if defined(LIBC_SCCS) && !defined(lint)
 static char sccsid[] = "@(#)vscanf.c	8.1 (Berkeley) 6/4/93";
 #endif /* LIBC_SCCS and not lint */
-#include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 15024fdfc09c468ede5fa4ab6e87d991c955587d $");
-
 #include "namespace.h"
 #include <stdio.h>
 #include "un-namespace.h"

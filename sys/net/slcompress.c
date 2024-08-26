@@ -29,7 +29,6 @@
  * SUCH DAMAGE.
  *
  *	@(#)slcompress.c	8.2 (Berkeley) 4/16/94
- * $FreeBSD: 9c342474089cecdc07f393ae3beaac646ef76c31 $
  */
 
 /*

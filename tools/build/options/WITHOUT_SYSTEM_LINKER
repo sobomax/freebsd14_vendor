@@ -1,4 +1,3 @@
-.\" $FreeBSD: 4b9019dfefdabda7438a33b88d9802e7f0d23749 $
 Do not opportunistically skip building a cross-linker during the
 bootstrap phase of the build.
 Normally, if the currently installed linker matches the planned bootstrap

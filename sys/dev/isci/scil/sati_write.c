@@ -53,8 +53,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 915fbde25ab851b5233d97130427bf65cca462b6 $");
-
 /**
  * @file
  * @brief This file contains the method implementations required to

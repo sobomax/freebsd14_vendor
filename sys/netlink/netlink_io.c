@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2021 Ng Peng Nam Sean
  * Copyright (c) 2022 Alexander V. Chernikov <melifaro@FreeBSD.org>
@@ -27,7 +27,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: fb8006f689e421e1bf9fdd012faf110ebaa9db85 $");
 #include <sys/param.h>
 #include <sys/ck.h>
 #include <sys/lock.h>
@@ -46,7 +45,7 @@ __FBSDID("$FreeBSD: fb8006f689e421e1bf9fdd012faf110ebaa9db85 $");
 #define	DEBUG_MOD_NAME	nl_io
 #define	DEBUG_MAX_LEVEL	LOG_DEBUG3
 #include <netlink/netlink_debug.h>
-_DECLARE_DEBUG(LOG_DEBUG);
+_DECLARE_DEBUG(LOG_INFO);
 
 /*
  * The logic below provide a p2p interface for receiving and
@@ -123,6 +122,56 @@ queue_free(struct nl_io_queue *q)
 	q->length = 0;
 }
 
+void
+nl_add_msg_info(struct mbuf *m)
+{
+	struct nlpcb *nlp = nl_get_thread_nlp(curthread);
+	NL_LOG(LOG_DEBUG2, "Trying to recover nlp from thread %p: %p",
+	    curthread, nlp);
+
+	if (nlp == NULL)
+		return;
+
+	/* Prepare what we want to encode - PID, socket PID & msg seq */
+	struct {
+		struct nlattr nla;
+		uint32_t val;
+	} data[] = {
+		{
+			.nla.nla_len = sizeof(struct nlattr) + sizeof(uint32_t),
+			.nla.nla_type = NLMSGINFO_ATTR_PROCESS_ID,
+			.val = nlp->nl_process_id,
+		},
+		{
+			.nla.nla_len = sizeof(struct nlattr) + sizeof(uint32_t),
+			.nla.nla_type = NLMSGINFO_ATTR_PORT_ID,
+			.val = nlp->nl_port,
+		},
+	};
+
+
+	while (m->m_next != NULL)
+		m = m->m_next;
+	m->m_next = sbcreatecontrol(data, sizeof(data),
+	    NETLINK_MSG_INFO, SOL_NETLINK, M_NOWAIT);
+
+	NL_LOG(LOG_DEBUG2, "Storing %u bytes of data, ctl: %p",
+	    (unsigned)sizeof(data), m->m_next);
+}
+
+static __noinline struct mbuf *
+extract_msg_info(struct mbuf *m)
+{
+	while (m->m_next != NULL) {
+		if (m->m_next->m_type == MT_CONTROL) {
+			struct mbuf *ctl = m->m_next;
+			m->m_next = NULL;
+			return (ctl);
+		}
+		m = m->m_next;
+	}
+	return (NULL);
+}
 
 static void
 nl_schedule_taskqueue(struct nlpcb *nlp)
@@ -179,10 +228,16 @@ tx_check_locked(struct nlpcb *nlp)
 
 	while (true) {
 		struct mbuf *m = queue_head(&nlp->tx_queue);
-		if (m && sbappendaddr_locked(sb, nl_empty_src, m, NULL) != 0) {
-			/* appended successfully */
-			queue_pop(&nlp->tx_queue);
-			appended = true;
+		if (m != NULL) {
+			struct mbuf *ctl = NULL;
+			if (__predict_false(m->m_next != NULL))
+				ctl = extract_msg_info(m);
+			if (sbappendaddr_locked(sb, nl_empty_src, m, ctl) != 0) {
+				/* appended successfully */
+				queue_pop(&nlp->tx_queue);
+				appended = true;
+			} else
+				break;
 		} else
 			break;
 	}
@@ -254,6 +309,13 @@ static void
 nl_process_received(struct nlpcb *nlp)
 {
 	NL_LOG(LOG_DEBUG3, "taskqueue called");
+
+	if (__predict_false(nlp->nl_need_thread_setup)) {
+		nl_set_thread_nlp(curthread, nlp);
+		NLP_LOCK(nlp);
+		nlp->nl_need_thread_setup = false;
+		NLP_UNLOCK(nlp);
+	}
 
 	while (nl_process_received_one(nlp))
 		;
@@ -372,7 +434,10 @@ nl_send_one(struct mbuf *m, struct nlpcb *nlp, int num_messages, int io_flags)
 	}
 
 	struct socket *so = nlp->nl_socket;
-	if (sbappendaddr(&so->so_rcv, nl_empty_src, m, NULL) != 0) {
+	struct mbuf *ctl = NULL;
+	if (__predict_false(m->m_next != NULL))
+		ctl = extract_msg_info(m);
+	if (sbappendaddr(&so->so_rcv, nl_empty_src, m, ctl) != 0) {
 		sorwakeup(so);
 		NLP_LOG(LOG_DEBUG3, nlp, "appended data & woken up");
 	} else {
@@ -430,9 +495,11 @@ nl_receive_message(struct nlmsghdr *hdr, int remaining_length,
 			struct nlmsghdr *hdr_orig = hdr;
 			hdr = linux_netlink_p->msg_from_linux(nlp->nl_proto, hdr, npt);
 			if (hdr == NULL) {
-				npt->hdr = hdr_orig;
+				 /* Failed to translate to kernel format. Report an error back */
+				hdr = hdr_orig;
+				npt->hdr = hdr;
 				if (hdr->nlmsg_flags & NLM_F_ACK)
-					nlmsg_ack(nlp, EAGAIN, hdr, npt);
+					nlmsg_ack(nlp, EOPNOTSUPP, hdr, npt);
 				return (0);
 			}
 		}

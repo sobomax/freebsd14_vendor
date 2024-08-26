@@ -3,7 +3,6 @@
 #
 # Created by: Koine Yuusuke(koinec) <koinec@users.osdn.me>
 #
-# $FreeBSD: 4cfd793f7326ca6355ad14249fcbf96a3b84f0a5 $
 
 '"',0x1e;	"  (0x22)
 '&',0x36;	&  (0x26)

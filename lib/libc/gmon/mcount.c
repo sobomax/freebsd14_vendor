@@ -32,9 +32,6 @@
 #if !defined(_KERNEL) && defined(LIBC_SCCS) && !defined(lint)
 static char sccsid[] = "@(#)mcount.c	8.1 (Berkeley) 6/4/93";
 #endif
-#include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 0d816a73435016edb281606dadbd8943c6d6175d $");
-
 #include <sys/param.h>
 #include <sys/gmon.h>
 #ifdef _KERNEL

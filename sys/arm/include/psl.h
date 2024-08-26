@@ -42,8 +42,6 @@
  * Eventually this will become a set of defines.
  *
  * Created      : 21/07/95
- *
- * $FreeBSD: 000e93dd64a6ae907f858c73913ab47215853270 $
  */
 
 #ifndef _MACHINE_PSL_H_

@@ -1,6 +1,5 @@
 /*-
  * Copyright (c) 2010 The FreeBSD Foundation
- * All rights reserved.
  *
  * This software was developed by Shteryana Sotirova Shopova under
  * sponsorship from the FreeBSD Foundation.
@@ -26,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 92c7ede7b97f9528b9ce9c1f420d417f26feea99 $
+ * $FreeBSD: f29fa89bf603901191fe9f550e5d905b81b36a1d $
  */
 #include <sys/types.h>
 #include <sys/socket.h>

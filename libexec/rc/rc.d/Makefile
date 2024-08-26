@@ -1,4 +1,3 @@
-# $FreeBSD: 40a1a212ca3a43eb5095938d074e653ed1aff48b $
 
 .include <src.opts.mk>
 
@@ -11,9 +10,7 @@ CONFS=	DAEMON \
 	LOGIN \
 	NETWORKING \
 	SERVERS \
-	addswap \
 	adjkerntz \
-	archdep \
 	bgfsck \
 	${_blacklistd} \
 	bridge \
@@ -95,7 +92,6 @@ CONFS=	DAEMON \
 	savecore \
 	securelevel \
 	serial \
-	sppp \
 	statd \
 	static_arp \
 	static_ndp \
@@ -124,6 +120,10 @@ DEVMATCHPACKAGE=	devmatch
 CONFGROUPS+=		DHCLIENT
 DHCLIENT=		dhclient
 DHCLIENTPACKAGE=	dhclient
+
+CONFGROUPS+=		GGATED
+GGATED=			ggated
+GGATEDPACKAGE=		ggate
 
 CONFGROUPS+=		RESOLVCONF
 RESOLVCONF=		resolv
@@ -231,7 +231,8 @@ CONFS+=	ipfilter \
 .endif
 
 .if ${MK_IPFW} != "no"
-CONFS+=		ipfw
+CONFS+=		ipfw \
+		dnctl
 .if ${MK_NETGRAPH} != "no"
 CONFS+=		ipfw_netflow
 .endif
@@ -249,8 +250,10 @@ JAILPACKAGE=	jail
 .endif
 
 .if ${MK_LEGACY_CONSOLE} != "no"
-CONFS+=		moused
-CONFS+=		syscons
+CONFGROUPS+=	CONSOLE
+CONSOLE+=	moused
+CONSOLE+=	syscons
+CONSOLEPACKAGE=	console-tools
 .endif
 
 .if ${MK_LPR} != "no"
@@ -268,10 +271,6 @@ _kpasswdd=	kpasswdd
 DIRS+=	VAR_HEMIDAL
 VAR_HEMIDAL=	/var/heimdal
 VAR_HEMIDAL_MODE=	700
-.endif
-
-.if ${MK_MAIL} != "no"
-CONFS+=		othermta
 .endif
 
 .if ${MK_NS_CACHING} != "no"
@@ -314,6 +313,12 @@ SMRCD=		sendmail
 SMRCDPACKAGE=	sendmail
 .endif
 
+.if ${MK_NUAGEINIT} != "no"
+CONFGROUPS+=	NIUAGEINIT
+NIUAGEINIT=		nuageinit
+NIUAGEINITPACKAGE=	nuageinit
+.endif
+
 .if ${MK_UNBOUND} != "no"
 CONFGROUPS+=	UNBOUND
 UNBOUND+=	local_unbound
@@ -343,6 +348,7 @@ ZFS+=		zfsd
 ZFS+=		zfskeys
 ZFS+=		zpool
 ZFS+=		zpoolreguid
+ZFS+=		zpoolupgrade
 ZFS+=		zvol
 ZFSPACKAGE=	rc
 .endif

@@ -29,13 +29,9 @@
  * SUCH DAMAGE.
  *
  *	@(#)extern.h	8.1 (Berkeley) 6/6/93
- * $FreeBSD: 43a31db704c7b6295a5d30c5d6e79a9bdfc98ca6 $
  */
 
 #include <sys/cdefs.h>
-
-extern uint32_t crc_total;
-extern uint32_t crc32_total;
 
 __BEGIN_DECLS
 int	crc(int, uint32_t *, off_t *);

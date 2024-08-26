@@ -1,4 +1,3 @@
-# $FreeBSD: 817c5ba68777344b1a860528711209f6df4690a9 $
 
 .PATH:		${SRCTOP}/sys/dev/cyapa
 KMOD		= cyapa

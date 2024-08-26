@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2020 Alexander Motin <mav@FreeBSD.org>
  *
@@ -26,8 +26,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 6da1480e94ddb1dfd25bf16251afc463691903ba $");
-
 #include "opt_acpi.h"
 #include "opt_pci.h"
 
@@ -582,7 +580,6 @@ hest_parse_table(struct apei_softc *sc)
 }
 
 static char *apei_ids[] = { "PNP0C33", NULL };
-static devclass_t apei_devclass;
 
 static ACPI_STATUS
 apei_find(ACPI_HANDLE handle, UINT32 level, void *context,
@@ -618,7 +615,7 @@ apei_identify(driver_t *driver, device_t parent)
 	AcpiPutTable(hest);
 
 	/* Only one APEI device can exist. */
-	if (devclass_get_device(apei_devclass, 0))
+	if (devclass_get_device(devclass_find("apei"), 0))
 		return;
 
 	/* Search for ACPI error device to be used. */
@@ -788,8 +785,7 @@ apei_detach(device_t dev)
 			free(ge->copybuf, M_DEVBUF);
 		}
 		if (ge->buf) {
-			pmap_unmapdev((vm_offset_t)ge->buf,
-			    ge->v1.ErrorBlockLength);
+			pmap_unmapdev(ge->buf, ge->v1.ErrorBlockLength);
 		}
 		free(ge, M_DEVBUF);
 	}
@@ -829,5 +825,5 @@ apei_modevent(struct module *mod __unused, int evt, void *cookie __unused)
 	return (err);
 }
 
-DRIVER_MODULE(apei, acpi, apei_driver, apei_devclass, apei_modevent, 0);
+DRIVER_MODULE(apei, acpi, apei_driver, apei_modevent, 0);
 MODULE_DEPEND(apei, acpi, 1, 1, 1);

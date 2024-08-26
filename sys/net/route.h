@@ -29,7 +29,6 @@
  * SUCH DAMAGE.
  *
  *	@(#)route.h	8.4 (Berkeley) 1/9/95
- * $FreeBSD: 3dac437426b05ecdd1bc4edc3b389eab7b9b862e $
  */
 
 #ifndef _NET_ROUTE_H_
@@ -95,11 +94,8 @@ struct rt_metrics {
 
 /*
  * rmx_rtt and rmx_rttvar are stored as microseconds;
- * RTTTOPRHZ(rtt) converts to a value suitable for use
- * by a protocol slowtimo counter.
  */
 #define	RTM_RTTUNIT	1000000	/* units for rtt, rttvar, as units per sec */
-#define	RTTTOPRHZ(r)	((r) / (RTM_RTTUNIT / PR_SLOWHZ))
 
 /* lle state is exported in rmx_state rt_metrics field */
 #define	rmx_state	rmx_weight
@@ -268,6 +264,7 @@ struct rt_msghdr {
 
 #define RTM_VERSION	5	/* Up the ante and ignore older versions */
 
+#ifndef NETLINK_COMPAT
 /*
  * Message types.
  *
@@ -300,6 +297,8 @@ struct rt_msghdr {
 #define	RTM_IFANNOUNCE	0x11	/* (5) iface arrival/departure */
 #define	RTM_IEEE80211	0x12	/* (5) IEEE80211 wireless event */
 
+#endif /* NETLINK_COMPAT*/
+
 /*
  * Bitmask values for rtm_inits and rmx_locks.
  */
@@ -313,6 +312,8 @@ struct rt_msghdr {
 #define RTV_RTTVAR	0x80	/* init or lock _rttvar */
 #define RTV_WEIGHT	0x100	/* init or lock _weight */
 
+#ifndef NETLINK_COMPAT
+
 /*
  * Bitmask values for rtm_addrs.
  */
@@ -324,6 +325,8 @@ struct rt_msghdr {
 #define RTA_IFA		0x20	/* interface addr sockaddr present */
 #define RTA_AUTHOR	0x40	/* sockaddr for author of redirect */
 #define RTA_BRD		0x80	/* for NEWADDR, broadcast or p-p dest addr */
+
+#endif /* NETLINK_COMPAT*/
 
 /*
  * Index offsets for sockaddr array for alternate internal encoding.
@@ -415,8 +418,7 @@ struct ifmultiaddr;
 struct rib_head;
 
 void	 rt_ieee80211msg(struct ifnet *, int, void *, size_t);
-void	 rt_ifmsg(struct ifnet *);
-void	 rt_ifmsg_14(struct ifnet *, int);
+void	 rt_ifmsg(struct ifnet *, int);
 void	 rt_missmsg(int, struct rt_addrinfo *, int, int);
 void	 rt_missmsg_fib(int, struct rt_addrinfo *, int, int, int);
 int	 rt_addrmsg(int, struct ifaddr *, int);
@@ -440,10 +442,7 @@ void	rt_flushifroutes(struct ifnet *ifp);
  * For now the protocol indepedent versions are the same as the AF_INET ones
  * but this will change.. 
  */
-int	 rtioctl_fib(u_long, caddr_t, u_int);
-int	rib_lookup_info(uint32_t, const struct sockaddr *, uint32_t, uint32_t,
-	    struct rt_addrinfo *);
-void	rib_free_info(struct rt_addrinfo *info);
+int	rtioctl_fib(u_long, caddr_t, u_int);
 
 /* New API */
 void rib_flush_routes_family(int family);

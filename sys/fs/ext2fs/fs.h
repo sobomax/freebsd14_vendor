@@ -35,7 +35,6 @@
  * SUCH DAMAGE.
  *
  *	@(#)fs.h	8.7 (Berkeley) 4/19/94
- * $FreeBSD: e07b69b91bce1a2e7a64278c67cec1e694589d2e $
  */
 
 #ifndef _FS_EXT2FS_FS_H_
@@ -56,8 +55,10 @@
  * The first boot and super blocks are given in absolute disk addresses.
  * The byte-offset forms are preferred, as they don't imply a sector size.
  */
-#define	SBSIZE		1024
-#define	SBLOCK		2
+#define	SBLOCK		0
+#define	SBLOCKSIZE	1024
+#define	SBLOCKOFFSET	1024
+#define	SBLOCKBLKSIZE	4096
 
 /*
  * The path name on which the file system is mounted is maintained
@@ -164,6 +165,6 @@
 /*
  * Use if additional debug logging is required.
  */
-/* #define EXT2FS_PRINT_EXTENTS */
+/* #define	EXT2FS_PRINT_EXTENTS */
 
 #endif	/* !_FS_EXT2FS_FS_H_ */

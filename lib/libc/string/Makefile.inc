@@ -1,5 +1,4 @@
 #	@(#)Makefile.inc	8.1 (Berkeley) 6/4/93
-# $FreeBSD: a675f7dbeccaf775cc3069aa0e5d541bce01bcff $
 
 .if ${MK_MACHDEP_OPTIMIZATIONS} != "no"
 .PATH: ${LIBC_SRCTOP}/${LIBC_ARCH}/string
@@ -31,6 +30,15 @@ MISRCS+=bcmp.c bcopy.c bzero.c explicit_bzero.c \
 	wmemcpy.c wmemmove.c wmempcpy.c wmemset.c
 
 SYM_MAPS+=	${LIBC_SRCTOP}/string/Symbol.map
+
+.if ${MK_ASAN} != "no"
+# These source files deliberately read out of bounds since they assume that
+# out-of-bounds memory accesses that don't cross pages are always legal.
+# Note: While this is fine on x86, it does break when running with CHERI.
+CFLAGS.strlen.c+=		-fno-sanitize=address
+CFLAGS.strchrnul.c+=	-fno-sanitize=address
+CFLAGS.memchr.c+=		-fno-sanitize=address
+.endif
 
 
 .if ${MK_MACHDEP_OPTIMIZATIONS} != "no"

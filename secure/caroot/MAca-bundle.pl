@@ -38,7 +38,6 @@ use Carp;
 use MIME::Base64;
 use Getopt::Long;
 
-my $VERSION = '$FreeBSD: 8521b620337ff17c95ed44ee695998f4750a76fc $';
 my $generated = '@' . 'generated';
 my $inputfh = *STDIN;
 my $debug = 0;
@@ -79,7 +78,6 @@ sub print_header($$)
 ##  It contains a certificate trusted for server authentication.
 ##
 ##  Extracted from nss
-##  with $VERSION
 ##
 ##  $generated
 ##
@@ -96,7 +94,6 @@ EOFH
 ##  It contains certificates trusted for server authentication.
 ##
 ##  Extracted from nss
-##  with $VERSION
 ##
 ##  $generated
 ##

@@ -75,8 +75,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 74439d5884ef4e5d3bbf8df47f4de67360ea9cd6 $");
-
 #include "opt_vm.h"
 
 #include <sys/param.h>
@@ -896,11 +894,8 @@ free_page:
 			vm_page_free(m);
 			VM_CNT_INC(v_dfree);
 		} else if ((object->flags & OBJ_DEAD) == 0) {
-			if ((object->flags & OBJ_SWAP) == 0 &&
-			    object->type != OBJT_DEFAULT)
-				pageout_ok = true;
-			else if (disable_swap_pageouts)
-				pageout_ok = false;
+			if ((object->flags & OBJ_SWAP) != 0)
+				pageout_ok = disable_swap_pageouts == 0;
 			else
 				pageout_ok = true;
 			if (!pageout_ok) {
@@ -1408,7 +1403,7 @@ vm_pageout_reinsert_inactive(struct scan_state *ss, struct vm_batchqueue *bq,
 	pq = ss->pq;
 
 	if (m != NULL) {
-		if (vm_batchqueue_insert(bq, m))
+		if (vm_batchqueue_insert(bq, m) != 0)
 			return;
 		vm_pagequeue_lock(pq);
 		delta += vm_pageout_reinsert_inactive_page(pq, marker, m);
@@ -1886,8 +1881,7 @@ vm_pageout_oom_pagecount(struct vmspace *vmspace)
 		if ((entry->eflags & MAP_ENTRY_NEEDS_COPY) != 0 &&
 		    obj->ref_count != 1)
 			continue;
-		if (obj->type == OBJT_DEFAULT || obj->type == OBJT_SWAP ||
-		    obj->type == OBJT_PHYS || obj->type == OBJT_VNODE ||
+		if (obj->type == OBJT_PHYS || obj->type == OBJT_VNODE ||
 		    (obj->flags & OBJ_SWAP) != 0)
 			res += obj->resident_page_count;
 	}

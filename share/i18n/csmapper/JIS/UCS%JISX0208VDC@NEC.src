@@ -1,4 +1,3 @@
-# $FreeBSD: da4705e9970ad483af606e454820bf39490cecb9 $ 
 # $NetBSD: UCS%JISX0208VDC@NEC.src,v 1.1 2003/07/19 20:20:42 tshiozak Exp $
 
 TYPE		ROWCOL

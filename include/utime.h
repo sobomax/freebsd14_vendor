@@ -29,7 +29,6 @@
  * SUCH DAMAGE.
  *
  *	@(#)utime.h	8.1 (Berkeley) 6/2/93
- * $FreeBSD: ec1d28b93e313f8379ab66919d7b24af3631c04a $
  */
 
 #ifndef	_UTIME_H_

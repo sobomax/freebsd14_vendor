@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2006-2007 Ivan Voras <ivoras@freebsd.org>
  * All rights reserved.
@@ -32,8 +32,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 8e4725997ab2c421358ea25d3d24300cd7dfe50f $");
-
 #include <sys/param.h>
 #include <sys/systm.h>
 #include <sys/kernel.h>
@@ -1529,11 +1527,9 @@ g_virstor_dumpconf(struct sbuf *sb, const char *indent, struct g_geom *gp,
 static void
 g_virstor_done(struct bio *b)
 {
-	struct g_virstor_softc *sc;
 	struct bio *parent_b;
 
 	parent_b = b->bio_parent;
-	sc = parent_b->bio_to->geom->softc;
 
 	if (b->bio_error != 0) {
 		LOG_MSG(LVL_ERROR, "Error %d for offset=%ju, length=%ju, %s",

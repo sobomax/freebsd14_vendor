@@ -1,4 +1,3 @@
-# $FreeBSD: e4a1bf30a8f9d2262579fdeda16e14254793b70a $
 
 PACKAGE=			tests
 
@@ -8,6 +7,7 @@ PACKAGE=			tests
 ATF_TESTS_C+=			brk_test
 .endif
 ATF_TESTS_C+=			cpuset_test
+ATF_TESTS_C+=			errno_test
 ATF_TESTS_C+=			queue_test
 ATF_TESTS_C+=			sendfile_test
 
@@ -73,6 +73,13 @@ NETBSD_ATF_TESTS_C+=		write_test
 
 LIBADD.getpid_test+=		pthread
 LIBADD.timer_create_test+=	rt
+
+# Message queue IPC tests need to be executed serially since they variously
+# use global keys and exhaust global IPC limits.
+TEST_METADATA.msgctl_test+=	is_exclusive="true"
+TEST_METADATA.msgget_test+=	is_exclusive="true"
+TEST_METADATA.msgsnd_test+=	is_exclusive="true"
+TEST_METADATA.msgrcv_test+=	is_exclusive="true"
 
 .include "../Makefile.netbsd-tests"
 

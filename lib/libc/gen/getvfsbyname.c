@@ -31,8 +31,6 @@
 
 #include <sys/cdefs.h>
 __SCCSID("@(#)kvm_getvfsbyname.c	8.1 (Berkeley) 4/3/95");
-__FBSDID("$FreeBSD: 91f4490bf50414d706baf49f758f3a06ef5096fb $");
-
 #include <sys/param.h>
 #include <sys/mount.h>
 #include <sys/sysctl.h>

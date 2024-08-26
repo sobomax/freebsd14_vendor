@@ -1,6 +1,4 @@
 
-# $FreeBSD: 7d59c868c853b92a9b53e39afc59a885bdd71d89 $
-
 .PATH:	${SRCTOP}/sys/dev/aic7xxx
 KMOD=	ahc_pci
 

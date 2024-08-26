@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2006 Shteryana Shopova <syrinx@FreeBSD.org>
  * All rights reserved.
@@ -27,8 +27,6 @@
  *
  * Bridge MIB implementation for SNMPd.
  * Bridge ports.
- *
- * $FreeBSD: 1e87406a9a2791fe47b93c95fef3057db883bcb0 $
  */
 
 #include <sys/queue.h>

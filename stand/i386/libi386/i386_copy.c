@@ -24,9 +24,6 @@
  * SUCH DAMAGE.
  */
 
-#include <sys/cdefs.h>
-__FBSDID("$FreeBSD: a1e7c734ebf35336e6c8dda7b60ad0f14f5b32da $");
-
 /*
  * MD primitives supporting placement of module data 
  *

@@ -1,4 +1,3 @@
-/*	$FreeBSD: 3705879397ff6ec6bc21916e89ad610f3d7eec7b $	*/
 /*	$KAME: key_debug.c,v 1.26 2001/06/27 10:46:50 sakane Exp $	*/
 
 /*-
@@ -882,9 +881,11 @@ kdebug_secasv(struct secasvar *sav)
 		kdebug_secnatt(sav->natt);
 	if (sav->replay != NULL) {
 		KEYDBG(DUMP,
-		    SECASVAR_LOCK(sav);
+		    SECASVAR_RLOCK_TRACKER;
+
+		    SECASVAR_RLOCK(sav);
 		    kdebug_secreplay(sav->replay);
-		    SECASVAR_UNLOCK(sav));
+		    SECASVAR_RUNLOCK(sav));
 	}
 	printf("}\n");
 }

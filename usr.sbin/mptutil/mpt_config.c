@@ -31,8 +31,6 @@
  */
 
 #include <sys/cdefs.h>
-__RCSID("$FreeBSD: 58894fb5ecc94590d85213b509273fd964472a9a $");
-
 #include <sys/param.h>
 #include <sys/errno.h>
 #include <err.h>

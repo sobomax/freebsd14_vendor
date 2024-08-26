@@ -1,5 +1,4 @@
 #	$OpenBSD: Makefile,v 1.11 2006/05/25 08:41:52 jmc Exp $
-# $FreeBSD: f177ad15d3b848e25982939ec90baafc10ae3900 $
 #
 # Files are:
 #	/etc/remote		remote host description file

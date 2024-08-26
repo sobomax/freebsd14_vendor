@@ -44,8 +44,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 27a323bce62abef25bc8080d4f0e835d0d59bad0 $");
-
 #include "opt_apic.h"
 #include "opt_atpic.h"
 #include "opt_cpu.h"
@@ -54,7 +52,6 @@ __FBSDID("$FreeBSD: 27a323bce62abef25bc8080d4f0e835d0d59bad0 $");
 #include "opt_isa.h"
 #include "opt_kstack_pages.h"
 #include "opt_maxmem.h"
-#include "opt_mp_watchdog.h"
 #include "opt_perfmon.h"
 #include "opt_platform.h"
 
@@ -117,6 +114,8 @@ __FBSDID("$FreeBSD: 27a323bce62abef25bc8080d4f0e835d0d59bad0 $");
 
 #include <net/netisr.h>
 
+#include <dev/smbios/smbios.h>
+
 #include <machine/bootinfo.h>
 #include <machine/clock.h>
 #include <machine/cpu.h>
@@ -125,7 +124,6 @@ __FBSDID("$FreeBSD: 27a323bce62abef25bc8080d4f0e835d0d59bad0 $");
 #include <x86/mca.h>
 #include <machine/md_var.h>
 #include <machine/metadata.h>
-#include <machine/mp_watchdog.h>
 #include <machine/pc/bios.h>
 #include <machine/pcb.h>
 #include <machine/pcb_ext.h>
@@ -178,6 +176,7 @@ int cold = 1;
 
 long Maxmem = 0;
 long realmem = 0;
+int late_console = 1;
 
 #ifdef PAE
 FEATURE(pae, "Physical Address Extensions");
@@ -202,21 +201,16 @@ extern struct sysentvec elf32_freebsd_sysvec;
 struct init_ops init_ops = {
 	.early_clock_source_init =	i386_clock_source_init,
 	.early_delay =			i8254_delay,
-#ifdef DEV_APIC
-	.msi_init =			msi_init,
-#endif
 };
 
 static void
 i386_clock_source_init(void)
 {
 	i8254_init();
-	tsc_init();
 }
 
 static void
-cpu_startup(dummy)
-	void *dummy;
+cpu_startup(void *dummy)
 {
 	uintmax_t memsize;
 	char *sysenv;
@@ -335,10 +329,6 @@ cpu_setregs(void)
 u_long bootdev;		/* not a struct cdev *- encoding is different */
 SYSCTL_ULONG(_machdep, OID_AUTO, guessed_bootdev,
 	CTLFLAG_RD, &bootdev, 0, "Maybe the Boot device (not in struct cdev *format)");
-
-static char bootmethod[16] = "BIOS";
-SYSCTL_STRING(_machdep, OID_AUTO, bootmethod, CTLFLAG_RD, bootmethod, 0,
-    "System firmware boot method");
 
 /*
  * Initialize 386 and configure to run kernel
@@ -651,7 +641,7 @@ extern inthand_t
  * Display the index and function name of any IDT entries that don't use
  * the default 'rsvd' entry point.
  */
-DB_SHOW_COMMAND(idt, db_show_idt)
+DB_SHOW_COMMAND_FLAGS(idt, db_show_idt, DB_CMD_MEMSAFE)
 {
 	struct gate_descriptor *ip;
 	int idx;
@@ -684,7 +674,7 @@ DB_SHOW_COMMAND(idt, db_show_idt)
 }
 
 /* Show privileged registers. */
-DB_SHOW_COMMAND(sysregs, db_show_sysregs)
+DB_SHOW_COMMAND_FLAGS(sysregs, db_show_sysregs, DB_CMD_MEMSAFE)
 {
 	uint64_t idtr, gdtr;
 
@@ -715,7 +705,7 @@ DB_SHOW_COMMAND(sysregs, db_show_sysregs)
 		db_printf("PAT\t0x%016llx\n", rdmsr(MSR_PAT));
 }
 
-DB_SHOW_COMMAND(dbregs, db_show_dbregs)
+DB_SHOW_COMMAND_FLAGS(dbregs, db_show_dbregs, DB_CMD_MEMSAFE)
 {
 
 	db_printf("dr0\t0x%08x\n", rdr0());
@@ -723,7 +713,7 @@ DB_SHOW_COMMAND(dbregs, db_show_dbregs)
 	db_printf("dr2\t0x%08x\n", rdr2());
 	db_printf("dr3\t0x%08x\n", rdr3());
 	db_printf("dr6\t0x%08x\n", rdr6());
-	db_printf("dr7\t0x%08x\n", rdr7());	
+	db_printf("dr7\t0x%08x\n", rdr7());
 }
 
 DB_SHOW_COMMAND(frame, db_show_frame)
@@ -746,9 +736,7 @@ DB_SHOW_COMMAND(frame, db_show_frame)
 #endif
 
 void
-sdtossd(sd, ssd)
-	struct segment_descriptor *sd;
-	struct soft_segment_descriptor *ssd;
+sdtossd(struct segment_descriptor *sd, struct soft_segment_descriptor *ssd)
 {
 	ssd->ssd_base  = (sd->sd_hibase << 24) | sd->sd_lobase;
 	ssd->ssd_limit = (sd->sd_hilimit << 16) | sd->sd_lolimit;
@@ -911,7 +899,7 @@ getmemsize(int first)
 	u_long memtest;
 	vm_paddr_t physmap[PHYS_AVAIL_ENTRIES];
 	quad_t dcons_addr, dcons_size, physmem_tunable;
-	int hasbrokenint12, i, res;
+	int hasbrokenint12, i, res __diagused;
 	u_int extmem;
 	struct vm86frame vmf;
 	struct vm86context vmc;
@@ -1404,7 +1392,6 @@ init386(int first)
 	caddr_t kmdp;
 	vm_offset_t addend;
 	size_t ucode_len;
-	int late_console;
 
 	thread0.td_kstack = proc0kstack;
 	thread0.td_kstack_pages = TD0_KSTACK_PAGES;
@@ -1443,9 +1430,13 @@ init386(int first)
 	}
 
 	identify_hypervisor();
+	identify_hypervisor_smbios();
 
 	/* Init basic tunables, hz etc */
 	init_param1();
+
+	/* Set bootmethod to BIOS: it's the only supported on i386. */
+	strlcpy(bootmethod, "BIOS", sizeof(bootmethod));
 
 	/*
 	 * Make gdt memory segments.  All segments cover the full 4GB
@@ -1546,11 +1537,15 @@ init386(int first)
 	 * Default to late console initialization to support these drivers.
 	 * This loses mainly printf()s in getmemsize() and early debugging.
 	 */
-	late_console = 1;
 	TUNABLE_INT_FETCH("debug.late_console", &late_console);
 	if (!late_console) {
 		cninit();
 		i386_kdb_init();
+	}
+
+	if (cpu_fxsr && (cpu_feature2 & CPUID2_XSAVE) != 0) {
+		use_xsave = 1;
+		TUNABLE_INT_FETCH("hw.use_xsave", &use_xsave);
 	}
 
 	kmdp = preload_search_by_type("elf kernel");
@@ -1573,6 +1568,7 @@ init386(int first)
 
 	msgbufinit(msgbufp, msgbufsize);
 	npxinit(true);
+
 	/*
 	 * Set up thread0 pcb after npxinit calculated pcb + fpu save
 	 * area size.  Zero out the extended state header in fpu save
@@ -1816,8 +1812,6 @@ f00f_hack(void *unused)
 
 	if (!has_f00f_bug)
 		return;
-
-	GIANT_REQUIRED;
 
 	printf("Intel Pentium detected, installing workaround for F00F bug\n");
 

@@ -38,8 +38,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 786844dda7ce11cb07860858faea67b914e1bcf5 $");
-
 #include <sys/param.h>
 #include <sys/kernel.h>
 #include <sys/lock.h>
@@ -67,16 +65,22 @@ uiomove_fromphys(vm_page_t ma[], vm_offset_t offset, int n, struct uio *uio)
 	size_t cnt;
 	int error = 0;
 	int save = 0;
-	boolean_t mapped;
+	bool mapped;
 
 	KASSERT(uio->uio_rw == UIO_READ || uio->uio_rw == UIO_WRITE,
 	    ("uiomove_fromphys: mode"));
 	KASSERT(uio->uio_segflg != UIO_USERSPACE || uio->uio_td == curthread,
 	    ("uiomove_fromphys proc"));
+	KASSERT(uio->uio_resid >= 0,
+	    ("%s: uio %p resid underflow", __func__, uio));
+
 	save = td->td_pflags & TDP_DEADLKTREAT;
 	td->td_pflags |= TDP_DEADLKTREAT;
-	mapped = FALSE;
+	mapped = false;
 	while (n > 0 && uio->uio_resid) {
+		KASSERT(uio->uio_iovcnt > 0,
+		    ("%s: uio %p iovcnt underflow", __func__, uio));
+
 		iov = uio->uio_iov;
 		cnt = iov->iov_len;
 		if (cnt == 0) {
@@ -90,7 +94,7 @@ uiomove_fromphys(vm_page_t ma[], vm_offset_t offset, int n, struct uio *uio)
 		cnt = min(cnt, PAGE_SIZE - page_offset);
 		if (uio->uio_segflg != UIO_NOCOPY) {
 			mapped = pmap_map_io_transient(
-			    &ma[offset >> PAGE_SHIFT], &vaddr, 1, TRUE);
+			    &ma[offset >> PAGE_SHIFT], &vaddr, 1, true);
 			cp = (char *)vaddr + page_offset;
 		}
 		switch (uio->uio_segflg) {
@@ -114,8 +118,8 @@ uiomove_fromphys(vm_page_t ma[], vm_offset_t offset, int n, struct uio *uio)
 		}
 		if (__predict_false(mapped)) {
 			pmap_unmap_io_transient(&ma[offset >> PAGE_SHIFT],
-			    &vaddr, 1, TRUE);
-			mapped = FALSE;
+			    &vaddr, 1, true);
+			mapped = false;
 		}
 		iov->iov_base = (char *)iov->iov_base + cnt;
 		iov->iov_len -= cnt;
@@ -127,7 +131,7 @@ uiomove_fromphys(vm_page_t ma[], vm_offset_t offset, int n, struct uio *uio)
 out:
 	if (__predict_false(mapped))
 		pmap_unmap_io_transient(&ma[offset >> PAGE_SHIFT], &vaddr, 1,
-		    TRUE);
+		    true);
 	if (save == 0)
 		td->td_pflags &= ~TDP_DEADLKTREAT;
 	return (error);

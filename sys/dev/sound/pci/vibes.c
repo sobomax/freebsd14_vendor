@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2001 Orion Hodson <O.Hodson@cs.ucl.ac.uk>
  * All rights reserved.
@@ -43,8 +43,6 @@
 #include <dev/pci/pcivar.h>
 
 #include "mixer_if.h"
-
-SND_DECLARE_FILE("$FreeBSD: a46efb061a8f415aefa22ae0b838f344fffd7dc2 $");
 
 /* ------------------------------------------------------------------------- */
 /* Constants */
@@ -776,8 +774,8 @@ sv_attach(device_t dev) {
                                /*filter*/NULL, /*filterarg*/NULL,
                                /*maxsize*/sc->bufsz, /*nsegments*/1,
                                /*maxsegz*/0x3ffff, /*flags*/0,
-			       /*lockfunc*/busdma_lock_mutex,
-			       /*lockarg*/&Giant, &sc->parent_dmat) != 0) {
+			       /*lockfunc*/NULL, /*lockarg*/NULL,
+			       &sc->parent_dmat) != 0) {
                 device_printf(dev, "sv_attach: Unable to create dma tag\n");
                 goto fail;
         }
@@ -876,8 +874,9 @@ sv_attach(device_t dev) {
         pcm_addchan(dev, PCMDIR_PLAY, &svpchan_class, sc);
         pcm_addchan(dev, PCMDIR_REC,  &svrchan_class, sc);
 
-        snprintf(status, SND_STATUSLEN, "at io 0x%jx irq %jd %s",
-                 rman_get_start(sc->enh_reg),  rman_get_start(sc->irq),PCM_KLDSTRING(snd_vibes));
+        snprintf(status, SND_STATUSLEN, "port 0x%jx irq %jd on %s",
+                 rman_get_start(sc->enh_reg),  rman_get_start(sc->irq),
+		 device_get_nameunit(device_get_parent(dev)));
         pcm_setstatus(dev, status);
 
         DEB(printf("sv_attach: succeeded\n"));
@@ -939,6 +938,6 @@ static driver_t sonicvibes_driver = {
         PCM_SOFTC_SIZE
 };
 
-DRIVER_MODULE(snd_vibes, pci, sonicvibes_driver, pcm_devclass, 0, 0);
+DRIVER_MODULE(snd_vibes, pci, sonicvibes_driver, 0, 0);
 MODULE_DEPEND(snd_vibes, sound, SOUND_MINVER, SOUND_PREFVER, SOUND_MAXVER);
 MODULE_VERSION(snd_vibes, 1);

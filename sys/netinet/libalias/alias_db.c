@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2001 Charles Mott <cm@linktel.net>
  * All rights reserved.
@@ -27,8 +27,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: ed222c4133d4c295654ab29d3ae08c3ea9b7fa25 $");
-
 #ifdef _KERNEL
 #include <machine/stdarg.h>
 #include <sys/param.h>
@@ -2201,14 +2199,6 @@ LibAliasSetMode(
 getout:
 	LIBALIAS_UNLOCK(la);
 	return (res);
-}
-
-/* never used and never worked, to be removed in FreeBSD 14 */
-int
-LibAliasCheckNewLink(struct libalias *la)
-{
-	(void)la;
-	return (0);
 }
 
 #ifndef NO_FW_PUNCH

@@ -3,7 +3,7 @@
  * All rights reserved.
  *
  * Copyright (c) 2011 The FreeBSD Foundation
- * All rights reserved.
+ *
  * Portions of this software were developed by David Chisnall
  * under sponsorship from the FreeBSD Foundation.
  *
@@ -36,9 +36,6 @@ static const char	elsieid[] = "@(#)strftime.3	8.3";
 #if defined(LIBC_SCCS) && !defined(lint)
 static const char	sccsid[] = "@(#)strftime.c	5.4 (Berkeley) 3/14/89";
 #endif /* LIBC_SCCS and not lint */
-#include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 73089ce46344043dda24b9dd9df6e12041466069 $");
-
 #include "tzfile.h"
 #include <fcntl.h>
 #include <sys/stat.h>
@@ -318,7 +315,7 @@ label:
 					time_t		mkt;
 
 					tm = *t;
-					mkt = mktime(&tm);
+					mkt = timeoff(&tm, t->tm_gmtoff);
 					if (TYPE_SIGNED(time_t))
 						(void) sprintf_l(buf, loc, "%ld",
 							(long) mkt);

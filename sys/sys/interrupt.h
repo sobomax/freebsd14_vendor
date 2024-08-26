@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 1997, Stefan Esser <se@freebsd.org>
  * All rights reserved.
@@ -24,8 +24,6 @@
  * THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- *
- * $FreeBSD: 5feb3ebc9b1f0f2ec09b0cdc71677564c627004f $
  */
 
 #ifndef _SYS_INTERRUPT_H_
@@ -138,8 +136,8 @@ struct intr_event {
 #define	SWI_DELAY	0x2
 
 /*
- * Software interrupt numbers in priority order.  The priority determines
- * the priority of the corresponding interrupt thread.
+ * Software interrupt numbers.  Historically this was used to determine
+ * the relative priority of SWI ithreads.
  */
 #define	SWI_TTY		0
 #define	SWI_NET		1
@@ -149,6 +147,9 @@ struct intr_event {
 #define	SWI_TQ_FAST	5
 #define	SWI_TQ		6
 #define	SWI_TQ_GIANT	6
+
+/* Maximum number of stray interrupts to log */
+#define	INTR_STRAY_LOG_MAX	5
 
 struct proc;
 

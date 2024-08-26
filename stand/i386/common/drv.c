@@ -14,9 +14,6 @@
  * purpose.
  */
 
-#include <sys/cdefs.h>
-__FBSDID("$FreeBSD: e2e4d55e533c52ae71d8c6215db945d26613302a $");
-
 #include <sys/param.h>
 
 #include <btxv86.h>

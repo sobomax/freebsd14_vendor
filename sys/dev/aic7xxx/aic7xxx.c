@@ -48,7 +48,6 @@
 #include "aicasm/aicasm_insformat.h"
 #else
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 0e43ce1e4318b0c5a86036dcf24d0bbff152583f $");
 #include <dev/aic7xxx/aic7xxx_osm.h>
 #include <dev/aic7xxx/aic7xxx_inline.h>
 #include <dev/aic7xxx/aicasm/aicasm_insformat.h>
@@ -1110,7 +1109,7 @@ ahc_handle_scsiint(struct ahc_softc *ahc, u_int intstat)
 					printf("\tCRC Value Mismatch\n");
 				if ((sstat2 & CRCENDERR) != 0)
 					printf("\tNo terminal CRC packet "
-					       "recevied\n");
+					       "received\n");
 				if ((sstat2 & CRCREQERR) != 0)
 					printf("\tIllegal CRC packet "
 					       "request\n");
@@ -3674,7 +3673,6 @@ ahc_handle_ign_wide_residue(struct ahc_softc *ahc, struct ahc_devinfo *devinfo)
 		} else {
 			struct ahc_dma_seg *sg;
 			uint32_t data_cnt;
-			uint32_t data_addr;
 			uint32_t sglen;
 
 			/* Pull in all of the sgptr */
@@ -3690,10 +3688,7 @@ ahc_handle_ign_wide_residue(struct ahc_softc *ahc, struct ahc_devinfo *devinfo)
 				data_cnt &= ~AHC_SG_LEN_MASK;
 			}
 
-			data_addr = ahc_inl(ahc, SHADDR);
-
 			data_cnt += 1;
-			data_addr -= 1;
 			sgptr &= SG_PTR_MASK;
 
 			sg = ahc_sg_bus_to_virt(scb, sgptr);
@@ -3713,8 +3708,6 @@ ahc_handle_ign_wide_residue(struct ahc_softc *ahc, struct ahc_devinfo *devinfo)
 				 * while setting the count to 1.
 				 */
 				data_cnt = 1 | (sglen & (~AHC_SG_LEN_MASK));
-				data_addr = aic_le32toh(sg->addr)
-					  + (sglen & AHC_SG_LEN_MASK) - 1;
 
 				/*
 				 * Increment sg so it points to the
@@ -4938,7 +4931,6 @@ ahc_init(struct ahc_softc *ahc)
 		for (i = 0; i < AHC_TMODE_CMDS; i++)
 			ahc->targetcmds[i].cmd_valid = 0;
 		ahc_sync_tqinfifo(ahc, BUS_DMASYNC_PREREAD);
-		ahc->qoutfifo = (uint8_t *)&ahc->targetcmds[256];
 	}
 	ahc->qinfifo = &ahc->qoutfifo[256];
 
@@ -7188,7 +7180,7 @@ bus_reset:
 				 * In the non-paging case, the sequencer will
 				 * never re-reference the in-core SCB.
 				 * To make sure we are notified during
-				 * reslection, set the MK_MESSAGE flag in
+				 * reselection, set the MK_MESSAGE flag in
 				 * the card's copy of the SCB.
 				 */
 				if ((ahc->flags & AHC_PAGESCBS) == 0) {
@@ -7850,7 +7842,10 @@ ahc_handle_target_cmd(struct ahc_softc *ahc, struct target_cmd *cmd)
 		ahc->pending_device = lstate;
 		aic_freeze_ccb((union ccb *)atio);
 		atio->ccb_h.flags |= CAM_DIS_DISCONNECT;
+	} else {
+		atio->ccb_h.flags &= ~CAM_DIS_DISCONNECT;
 	}
+
 	xpt_done((union ccb*)atio);
 	return (0);
 }

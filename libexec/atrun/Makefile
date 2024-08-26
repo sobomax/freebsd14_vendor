@@ -1,4 +1,3 @@
-# $FreeBSD: 18f89191d399049a311305ba56d6ba27ec64c7c8 $
 
 PACKAGE=at
 MAINSRC=${SRCTOP}/usr.bin/at

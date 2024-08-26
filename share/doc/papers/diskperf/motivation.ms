@@ -27,8 +27,6 @@
 .\"
 .\"	@(#)motivation.ms	6.2 (Berkeley) 4/16/91
 .\"
-.\"	$FreeBSD: 28e85f862d4baa2e0b40f331bc03e949f888f763 $
-.\"
 .ds RH Motivation
 .NH
 Motivation

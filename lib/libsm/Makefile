@@ -1,4 +1,3 @@
-# $FreeBSD: eed69cecbf0f45cde45b2d377a9376363c4c0f6b $
 
 .include <src.opts.mk>
 
@@ -42,3 +41,5 @@ sm_os.h: ${SENDMAIL_DIR}/include/sm/os/sm_os_freebsd.h .NOMETA
 	ln -sf ${.ALLSRC} ${.TARGET}
 
 .include <bsd.lib.mk>
+
+CWARNFLAGS+= ${NO_WDEPRECATED_NON_PROTOTYPE}

@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2010 Alexander Motin <mav@FreeBSD.org>
  * All rights reserved.
@@ -26,27 +26,27 @@
  * SUCH DAMAGE.
  */
 
-#include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 3b8f3974a49528a862881bb600d7e5f73eba9d15 $");
-
 #include <sys/param.h>
 #include <sys/systm.h>
+#include <sys/bio.h>
+#include <sys/eventhandler.h>
 #include <sys/kernel.h>
-#include <sys/module.h>
+#include <sys/kthread.h>
 #include <sys/limits.h>
 #include <sys/lock.h>
-#include <sys/mutex.h>
-#include <sys/bio.h>
-#include <sys/sbuf.h>
-#include <sys/sysctl.h>
 #include <sys/malloc.h>
-#include <sys/eventhandler.h>
+#include <sys/module.h>
+#include <sys/mutex.h>
+#include <sys/proc.h>
+#include <sys/reboot.h>
+#include <sys/sbuf.h>
+#include <sys/sched.h>
+#include <sys/sysctl.h>
+
 #include <vm/uma.h>
+
 #include <geom/geom.h>
 #include <geom/geom_dbg.h>
-#include <sys/proc.h>
-#include <sys/kthread.h>
-#include <sys/sched.h>
 #include <geom/raid/g_raid.h>
 #include "g_raid_md_if.h"
 #include "g_raid_tr_if.h"
@@ -726,7 +726,7 @@ u_int
 g_raid_nsubdisks(struct g_raid_volume *vol, int state)
 {
 	struct g_raid_subdisk *subdisk;
-	struct g_raid_softc *sc;
+	struct g_raid_softc *sc __diagused;
 	u_int i, n ;
 
 	sc = vol->v_softc;
@@ -751,7 +751,7 @@ struct g_raid_subdisk *
 g_raid_get_subdisk(struct g_raid_volume *vol, int state)
 {
 	struct g_raid_subdisk *sd;
-	struct g_raid_softc *sc;
+	struct g_raid_softc *sc __diagused;
 	u_int i;
 
 	sc = vol->v_softc;
@@ -1179,7 +1179,7 @@ g_raid_is_in_locked_range(struct g_raid_volume *vol, const struct bio *bp)
 static void
 g_raid_start_request(struct bio *bp)
 {
-	struct g_raid_softc *sc;
+	struct g_raid_softc *sc __diagused;
 	struct g_raid_volume *vol;
 
 	sc = bp->bio_to->geom->softc;
@@ -1256,7 +1256,7 @@ g_raid_finish_with_locked_ranges(struct g_raid_volume *vol, struct bio *bp)
 void
 g_raid_iodone(struct bio *bp, int error)
 {
-	struct g_raid_softc *sc;
+	struct g_raid_softc *sc __diagused;
 	struct g_raid_volume *vol;
 
 	sc = bp->bio_to->geom->softc;
@@ -2457,6 +2457,9 @@ g_raid_shutdown_post_sync(void *arg, int howto)
 	struct g_geom *gp, *gp2;
 	struct g_raid_softc *sc;
 	struct g_raid_volume *vol;
+
+	if ((howto & RB_NOSYNC) != 0)
+		return;
 
 	mp = arg;
 	g_topology_lock();

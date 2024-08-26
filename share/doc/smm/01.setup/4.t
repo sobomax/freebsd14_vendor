@@ -26,7 +26,6 @@
 .\" SUCH DAMAGE.
 .\"
 .\"	@(#)4.t	8.1 (Berkeley) 7/29/93
-.\" $FreeBSD: aed3367d353f41f9f17410bc4461b70f9661eee4 $
 .\"
 .ds LH "Installing/Operating \*(4B
 .ds CF \*(Dy

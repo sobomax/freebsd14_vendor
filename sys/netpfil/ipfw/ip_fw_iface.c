@@ -24,8 +24,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 3e366db3af9ad62ad060e5e7510c2d1c4a28b757 $");
-
 /*
  * Kernel interface tracking API.
  *
@@ -50,6 +48,7 @@ __FBSDID("$FreeBSD: 3e366db3af9ad62ad060e5e7510c2d1c4a28b757 $");
 #include <sys/eventhandler.h>
 #include <net/if.h>
 #include <net/if_var.h>
+#include <net/if_private.h>
 #include <net/vnet.h>
 
 #include <netinet/in.h>

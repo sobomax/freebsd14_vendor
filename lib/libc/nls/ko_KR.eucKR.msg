@@ -1,4 +1,3 @@
-$ $FreeBSD: bb1fa300b164e61680b0cd8e0d7e5bf6eb1d8dd2 $
 $
 $ Message catalog for ko_KR.eucKR locale
 $

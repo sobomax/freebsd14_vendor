@@ -1,6 +1,5 @@
 /*-
  * Copyright (c) 2015 The FreeBSD Foundation
- * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -25,9 +24,11 @@
  */
 
 #include <machine/asm.h>
-__FBSDID("$FreeBSD: 2f5fd06dec6cdd986f6c53834ee8bde775e43b83 $");
+#include <sys/elf_common.h>
 
 ENTRY(fabs)
 	fabs d0, d0
 	ret
 END(fabs)
+
+GNU_PROPERTY_AARCH64_FEATURE_1_NOTE(GNU_PROPERTY_AARCH64_FEATURE_1_VAL)

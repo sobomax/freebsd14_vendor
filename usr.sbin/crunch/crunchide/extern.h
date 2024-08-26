@@ -1,5 +1,4 @@
 /*	$NetBSD: extern.h,v 1.5 1998/05/06 13:16:57 mycroft Exp $	*/
-/* $FreeBSD: b5f9165a1e1b5b90ce0e575f75bd34f67c48f6f5 $ */
 
 /*-
  * SPDX-License-Identifier: BSD-4-Clause

@@ -38,8 +38,6 @@
  * Author: Archie Cobbs <archie@freebsd.org>
  *
  * Updated by Andrew Thompson <thompsa@FreeBSD.org> for MPSAFE TTY.
- *
- * $FreeBSD: fb1e06ff0f2bc13599291a642de05a14a80b2d11 $
  * $Whistle: ng_tty.c,v 1.21 1999/11/01 09:24:52 julian Exp $
  */
 

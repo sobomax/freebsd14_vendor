@@ -7,7 +7,7 @@ $schema: http://devicetree.org/meta-schemas/core.yaml#
 title: Synopsys Designware Mobile Storage Host Controller Common Properties
 
 allOf:
-  - $ref: "mmc-controller.yaml#"
+  - $ref: mmc-controller.yaml#
 
 maintainers:
   - Ulf Hansson <ulf.hansson@linaro.org>
@@ -62,3 +62,5 @@ properties:
 
   dma-names:
     const: rx-tx
+
+additionalProperties: true

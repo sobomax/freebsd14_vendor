@@ -24,8 +24,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: a96386e877a797e84e9263362b13d3cd3d2abdc8 $");
-
 /*
  * The machine-dependent part of the arm/pl310 driver for Armada 38x SoCs.
  */

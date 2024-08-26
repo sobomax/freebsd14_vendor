@@ -1,4 +1,3 @@
-# $FreeBSD: ab46ba3f23637461128d0f6acfc4cfeb12a5170e $
 
 .PATH: ${SRCTOP}/sys/dev/hid
 

@@ -40,7 +40,6 @@
  *
  *	from: @(#)vm_machdep.c	7.3 (Berkeley) 5/13/91
  *	Utah $Hdr: vm_machdep.c 1.16.1.1 89/06/23$
- * $FreeBSD: e22f36f0b8be87867eaa5531ba3d8bf38fc18996 $
  */
 /*-
  * Copyright (c) 1994, 1995, 1996 Carnegie-Mellon University.
@@ -91,6 +90,7 @@
 #include <machine/frame.h>
 #include <machine/md_var.h>
 #include <machine/pcb.h>
+#include <machine/reg.h>
 
 #include <dev/ofw/openfirm.h>
 
@@ -120,6 +120,10 @@ cpu_fork(struct thread *td1, struct proc *p2, struct thread *td2, int flags)
 
 	if ((flags & RFPROC) == 0)
 		return;
+
+	/* Ensure td1 is up to date before copy. */
+	if (td1 == curthread)
+		cpu_save_thread_regs(td1);
 
 	pcb = (struct pcb *)((td2->td_kstack +
 	    td2->td_kstack_pages * PAGE_SIZE - sizeof(struct pcb)) & ~0x2fUL);
@@ -234,4 +238,14 @@ cpu_procctl(struct thread *td __unused, int idtype __unused, id_t id __unused,
 {
 
 	return (EINVAL);
+}
+
+void
+cpu_sync_core(void)
+{
+	/*
+	 * Linux performs "rfi" there.  Our rendezvous IPI handler on
+	 * the target cpu does "rfi" before and lwsync/sync after the
+	 * action, which is stronger than required.
+	 */
 }

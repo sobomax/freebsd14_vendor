@@ -1,10 +1,9 @@
-# $FreeBSD: 3c310819f876d6cb9bff37e48e65202ae4e6dc91 $
 
 .include <src.opts.mk>
 
 CONFS=	nsmb.conf
 CONFSMODE=	600
-PACKAGE=lib${LIB}
+PACKAGE=	smbutils
 CONTRIBDIR=	${SRCTOP}/contrib/smbfs
 .PATH: ${CONTRIBDIR}/lib/smb
 

@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2004, 2005,
  *	Bosko Milekic <bmilekic@FreeBSD.org>.  All rights reserved.
@@ -28,8 +28,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: a1a0157b88c09a554a0d2df3dc9377adf54f741a $");
-
 #include "opt_param.h"
 #include "opt_kern_tls.h"
 
@@ -39,14 +37,12 @@ __FBSDID("$FreeBSD: a1a0157b88c09a554a0d2df3dc9377adf54f741a $");
 #include <sys/malloc.h>
 #include <sys/systm.h>
 #include <sys/mbuf.h>
-#include <sys/domain.h>
 #include <sys/eventhandler.h>
 #include <sys/kernel.h>
 #include <sys/ktls.h>
 #include <sys/limits.h>
 #include <sys/lock.h>
 #include <sys/mutex.h>
-#include <sys/protosw.h>
 #include <sys/refcount.h>
 #include <sys/sf_buf.h>
 #include <sys/smp.h>
@@ -64,6 +60,9 @@ __FBSDID("$FreeBSD: a1a0157b88c09a554a0d2df3dc9377adf54f741a $");
 #include <vm/vm_map.h>
 #include <vm/uma.h>
 #include <vm/uma_dbg.h>
+
+_Static_assert(MJUMPAGESIZE > MCLBYTES,
+    "Cluster must be smaller than a jumbo page");
 
 /*
  * In FreeBSD, Mbufs and Mbuf Clusters are allocated from UMA
@@ -133,9 +132,9 @@ sysctl_mb_use_ext_pgs(SYSCTL_HANDLER_ARGS)
 	}
 	return (error);
 }
-SYSCTL_PROC(_kern_ipc, OID_AUTO, mb_use_ext_pgs, CTLTYPE_INT | CTLFLAG_RW,
-    &mb_use_ext_pgs, 0,
-    sysctl_mb_use_ext_pgs, "IU",
+SYSCTL_PROC(_kern_ipc, OID_AUTO, mb_use_ext_pgs,
+    CTLTYPE_INT | CTLFLAG_RWTUN | CTLFLAG_NOFETCH,
+    &mb_use_ext_pgs, 0, sysctl_mb_use_ext_pgs, "IU",
     "Use unmapped mbufs for sendfile(2) and TLS offload");
 
 static quad_t maxmbufmem;	/* overall real memory limit for all mbufs */
@@ -223,8 +222,8 @@ sysctl_nmbclusters(SYSCTL_HANDLER_ARGS)
 	return (error);
 }
 SYSCTL_PROC(_kern_ipc, OID_AUTO, nmbclusters,
-    CTLTYPE_INT | CTLFLAG_RW | CTLFLAG_MPSAFE, &nmbclusters, 0,
-    sysctl_nmbclusters, "IU",
+    CTLTYPE_INT | CTLFLAG_RWTUN | CTLFLAG_NOFETCH | CTLFLAG_MPSAFE,
+    &nmbclusters, 0, sysctl_nmbclusters, "IU",
     "Maximum number of mbuf clusters allowed");
 
 static int
@@ -245,8 +244,8 @@ sysctl_nmbjumbop(SYSCTL_HANDLER_ARGS)
 	return (error);
 }
 SYSCTL_PROC(_kern_ipc, OID_AUTO, nmbjumbop,
-    CTLTYPE_INT | CTLFLAG_RW | CTLFLAG_MPSAFE, &nmbjumbop, 0,
-    sysctl_nmbjumbop, "IU",
+    CTLTYPE_INT | CTLFLAG_RWTUN | CTLFLAG_NOFETCH | CTLFLAG_MPSAFE,
+    &nmbjumbop, 0, sysctl_nmbjumbop, "IU",
     "Maximum number of mbuf page size jumbo clusters allowed");
 
 static int
@@ -267,8 +266,8 @@ sysctl_nmbjumbo9(SYSCTL_HANDLER_ARGS)
 	return (error);
 }
 SYSCTL_PROC(_kern_ipc, OID_AUTO, nmbjumbo9,
-    CTLTYPE_INT | CTLFLAG_RW | CTLFLAG_MPSAFE, &nmbjumbo9, 0,
-    sysctl_nmbjumbo9, "IU",
+    CTLTYPE_INT | CTLFLAG_RWTUN | CTLFLAG_NOFETCH | CTLFLAG_MPSAFE,
+    &nmbjumbo9, 0, sysctl_nmbjumbo9, "IU",
     "Maximum number of mbuf 9k jumbo clusters allowed");
 
 static int
@@ -289,8 +288,8 @@ sysctl_nmbjumbo16(SYSCTL_HANDLER_ARGS)
 	return (error);
 }
 SYSCTL_PROC(_kern_ipc, OID_AUTO, nmbjumbo16,
-    CTLTYPE_INT | CTLFLAG_RW | CTLFLAG_MPSAFE, &nmbjumbo16, 0,
-    sysctl_nmbjumbo16, "IU",
+    CTLTYPE_INT | CTLFLAG_RWTUN | CTLFLAG_NOFETCH | CTLFLAG_MPSAFE,
+    &nmbjumbo16, 0, sysctl_nmbjumbo16, "IU",
     "Maximum number of mbuf 16k jumbo clusters allowed");
 
 static int
@@ -311,7 +310,7 @@ sysctl_nmbufs(SYSCTL_HANDLER_ARGS)
 	return (error);
 }
 SYSCTL_PROC(_kern_ipc, OID_AUTO, nmbufs,
-    CTLTYPE_INT | CTLFLAG_RW | CTLFLAG_MPSAFE,
+    CTLTYPE_INT | CTLFLAG_RWTUN | CTLFLAG_NOFETCH | CTLFLAG_MPSAFE,
     &nmbufs, 0, sysctl_nmbufs, "IU",
     "Maximum number of mbufs allowed");
 
@@ -395,14 +394,6 @@ mbuf_init(void *dummy)
 		nmbjumbo16 = uma_zone_set_max(zone_jumbo16, nmbjumbo16);
 	uma_zone_set_warning(zone_jumbo16, "kern.ipc.nmbjumbo16 limit reached");
 	uma_zone_set_maxaction(zone_jumbo16, mb_reclaim);
-
-	/*
-	 * Hook event handler for low-memory situation, used to
-	 * drain protocols and push data back to the caches (UMA
-	 * later pushes it back to VM).
-	 */
-	EVENTHANDLER_REGISTER(vm_lowmem, mb_reclaim, NULL,
-	    EVENTHANDLER_PRI_FIRST);
 
 	snd_tag_count = counter_u64_alloc(M_WAITOK);
 }
@@ -680,13 +671,14 @@ static void
 mb_dtor_mbuf(void *mem, int size, void *arg)
 {
 	struct mbuf *m;
-	unsigned long flags;
+	unsigned long flags __diagused;
 
 	m = (struct mbuf *)mem;
 	flags = (unsigned long)arg;
 
 	KASSERT((m->m_flags & M_NOFREE) == 0, ("%s: M_NOFREE set", __func__));
-	if (!(flags & MB_DTOR_SKIP) && (m->m_flags & M_PKTHDR) && !SLIST_EMPTY(&m->m_pkthdr.tags))
+	KASSERT((flags & 0x1) == 0, ("%s: obsolete MB_DTOR_SKIP passed", __func__));
+	if ((m->m_flags & M_PKTHDR) && !SLIST_EMPTY(&m->m_pkthdr.tags))
 		m_tag_delete_chain(m, NULL);
 }
 
@@ -710,7 +702,7 @@ mb_dtor_pack(void *mem, int size, void *arg)
 	KASSERT(m->m_ext.ext_arg2 == NULL, ("%s: ext_arg2 != NULL", __func__));
 	KASSERT(m->m_ext.ext_size == MCLBYTES, ("%s: ext_size != MCLBYTES", __func__));
 	KASSERT(m->m_ext.ext_type == EXT_PACKET, ("%s: ext_type != EXT_PACKET", __func__));
-#ifdef INVARIANTS
+#if defined(INVARIANTS) && !defined(KMSAN)
 	trash_dtor(m->m_ext.ext_buf, MCLBYTES, arg);
 #endif
 	/*
@@ -769,7 +761,7 @@ mb_zinit_pack(void *mem, int size, int how)
 	    m->m_ext.ext_buf == NULL)
 		return (ENOMEM);
 	m->m_ext.ext_type = EXT_PACKET;	/* Override. */
-#ifdef INVARIANTS
+#if defined(INVARIANTS) && !defined(KMSAN)
 	trash_init(m->m_ext.ext_buf, MCLBYTES, how);
 #endif
 	return (0);
@@ -785,11 +777,11 @@ mb_zfini_pack(void *mem, int size)
 	struct mbuf *m;
 
 	m = (struct mbuf *)mem;
-#ifdef INVARIANTS
+#if defined(INVARIANTS) && !defined(KMSAN)
 	trash_fini(m->m_ext.ext_buf, MCLBYTES);
 #endif
 	uma_zfree_arg(zone_clust, m->m_ext.ext_buf, NULL);
-#ifdef INVARIANTS
+#if defined(INVARIANTS) && !defined(KMSAN)
 	trash_dtor(mem, size, NULL);
 #endif
 }
@@ -811,7 +803,7 @@ mb_ctor_pack(void *mem, int size, void *arg, int how)
 	type = args->type;
 	MPASS((flags & M_NOFREE) == 0);
 
-#ifdef INVARIANTS
+#if defined(INVARIANTS) && !defined(KMSAN)
 	trash_ctor(m->m_ext.ext_buf, MCLBYTES, arg, how);
 #endif
 
@@ -827,26 +819,12 @@ mb_ctor_pack(void *mem, int size, void *arg, int how)
 /*
  * This is the protocol drain routine.  Called by UMA whenever any of the
  * mbuf zones is closed to its limit.
- *
- * No locks should be held when this is called.  The drain routines have to
- * presently acquire some locks which raises the possibility of lock order
- * reversal.
  */
 static void
 mb_reclaim(uma_zone_t zone __unused, int pending __unused)
 {
-	struct epoch_tracker et;
-	struct domain *dp;
-	struct protosw *pr;
 
-	WITNESS_WARN(WARN_GIANTOK | WARN_SLEEPOK | WARN_PANIC, NULL, __func__);
-
-	NET_EPOCH_ENTER(et);
-	for (dp = domains; dp != NULL; dp = dp->dom_next)
-		for (pr = dp->dom_protosw; pr < dp->dom_protoswNPROTOSW; pr++)
-			if (pr->pr_drain != NULL)
-				(*pr->pr_drain)();
-	NET_EPOCH_EXIT(et);
+	EVENTHANDLER_INVOKE(mbuf_lowmem, VM_LOW_MBUFS);
 }
 
 /*
@@ -1218,19 +1196,19 @@ mb_free_ext(struct mbuf *m)
 			break;
 		case EXT_CLUSTER:
 			uma_zfree(zone_clust, m->m_ext.ext_buf);
-			uma_zfree(zone_mbuf, mref);
+			m_free_raw(mref);
 			break;
 		case EXT_JUMBOP:
 			uma_zfree(zone_jumbop, m->m_ext.ext_buf);
-			uma_zfree(zone_mbuf, mref);
+			m_free_raw(mref);
 			break;
 		case EXT_JUMBO9:
 			uma_zfree(zone_jumbo9, m->m_ext.ext_buf);
-			uma_zfree(zone_mbuf, mref);
+			m_free_raw(mref);
 			break;
 		case EXT_JUMBO16:
 			uma_zfree(zone_jumbo16, m->m_ext.ext_buf);
-			uma_zfree(zone_mbuf, mref);
+			m_free_raw(mref);
 			break;
 		case EXT_SFBUF:
 		case EXT_NET_DRV:
@@ -1239,7 +1217,7 @@ mb_free_ext(struct mbuf *m)
 			KASSERT(mref->m_ext.ext_free != NULL,
 			    ("%s: ext_free not set", __func__));
 			mref->m_ext.ext_free(mref);
-			uma_zfree(zone_mbuf, mref);
+			m_free_raw(mref);
 			break;
 		case EXT_EXTREF:
 			KASSERT(m->m_ext.ext_free != NULL,
@@ -1257,7 +1235,7 @@ mb_free_ext(struct mbuf *m)
 	}
 
 	if (freembuf && m != mref)
-		uma_zfree(zone_mbuf, m);
+		m_free_raw(m);
 }
 
 /*
@@ -1295,11 +1273,11 @@ mb_free_extpg(struct mbuf *m)
 			ktls_enqueue_to_free(mref);
 		else
 #endif
-			uma_zfree(zone_mbuf, mref);
+			m_free_raw(mref);
 	}
 
 	if (m != mref)
-		uma_zfree(zone_mbuf, m);
+		m_free_raw(m);
 }
 
 /*
@@ -1391,7 +1369,45 @@ m_get2(int size, int how, short type, int flags)
 
 	n = uma_zalloc_arg(zone_jumbop, m, how);
 	if (n == NULL) {
-		uma_zfree(zone_mbuf, m);
+		m_free_raw(m);
+		return (NULL);
+	}
+
+	return (m);
+}
+
+/*
+ * m_get3() allocates minimum mbuf that would fit "size" argument.
+ * Unlike m_get2() it can allocate clusters up to MJUM16BYTES.
+ */
+struct mbuf *
+m_get3(int size, int how, short type, int flags)
+{
+	struct mb_args args;
+	struct mbuf *m, *n;
+	uma_zone_t zone;
+
+	if (size <= MJUMPAGESIZE)
+		return (m_get2(size, how, type, flags));
+
+	if (size > MJUM16BYTES)
+		return (NULL);
+
+	args.flags = flags;
+	args.type = type;
+
+	m = uma_zalloc_arg(zone_mbuf, &args, how);
+	if (m == NULL)
+		return (NULL);
+
+	if (size <= MJUM9BYTES)
+		zone = zone_jumbo9;
+	else
+		zone = zone_jumbo16;
+
+	n = uma_zalloc_arg(zone, m, how);
+	if (n == NULL) {
+		m_free_raw(m);
 		return (NULL);
 	}
 
@@ -1422,7 +1438,7 @@ m_getjcl(int how, short type, int flags, int size)
 	zone = m_getzone(size);
 	n = uma_zalloc_arg(zone, m, how);
 	if (n == NULL) {
-		uma_zfree(zone_mbuf, m);
+		m_free_raw(m);
 		return (NULL);
 	}
 	MBUF_PROBE5(m__getjcl, how, type, flags, size, m);
@@ -1568,19 +1584,18 @@ m_snd_tag_alloc(struct ifnet *ifp, union if_snd_tag_alloc_params *params,
     struct m_snd_tag **mstp)
 {
 
-	if (ifp->if_snd_tag_alloc == NULL)
-		return (EOPNOTSUPP);
-	return (ifp->if_snd_tag_alloc(ifp, params, mstp));
+	return (if_snd_tag_alloc(ifp, params, mstp));
 }
 
 void
-m_snd_tag_init(struct m_snd_tag *mst, struct ifnet *ifp, u_int type)
+m_snd_tag_init(struct m_snd_tag *mst, struct ifnet *ifp,
+    const struct if_snd_tag_sw *sw)
 {
 
 	if_ref(ifp);
 	mst->ifp = ifp;
 	refcount_init(&mst->refcount, 1);
-	mst->type = type;
+	mst->sw = sw;
 	counter_u64_add(snd_tag_count, 1);
 }
 
@@ -1590,9 +1605,57 @@ m_snd_tag_destroy(struct m_snd_tag *mst)
 	struct ifnet *ifp;
 
 	ifp = mst->ifp;
-	ifp->if_snd_tag_free(mst);
+	mst->sw->snd_tag_free(mst);
 	if_rele(ifp);
 	counter_u64_add(snd_tag_count, -1);
+}
+
+void
+m_rcvif_serialize(struct mbuf *m)
+{
+	u_short idx, gen;
+
+	M_ASSERTPKTHDR(m);
+	idx = if_getindex(m->m_pkthdr.rcvif);
+	gen = if_getidxgen(m->m_pkthdr.rcvif);
+	m->m_pkthdr.rcvidx = idx;
+	m->m_pkthdr.rcvgen = gen;
+	if (__predict_false(m->m_pkthdr.leaf_rcvif != NULL)) {
+		idx = if_getindex(m->m_pkthdr.leaf_rcvif);
+		gen = if_getidxgen(m->m_pkthdr.leaf_rcvif);
+	} else {
+		idx = -1;
+		gen = 0;
+	}
+	m->m_pkthdr.leaf_rcvidx = idx;
+	m->m_pkthdr.leaf_rcvgen = gen;
+}
+
+struct ifnet *
+m_rcvif_restore(struct mbuf *m)
+{
+	struct ifnet *ifp, *leaf_ifp;
+
+	M_ASSERTPKTHDR(m);
+	NET_EPOCH_ASSERT();
+
+	ifp = ifnet_byindexgen(m->m_pkthdr.rcvidx, m->m_pkthdr.rcvgen);
+	if (ifp == NULL || (if_getflags(ifp) & IFF_DYING))
+		return (NULL);
+
+	if (__predict_true(m->m_pkthdr.leaf_rcvidx == (u_short)-1)) {
+		leaf_ifp = NULL;
+	} else {
+		leaf_ifp = ifnet_byindexgen(m->m_pkthdr.leaf_rcvidx,
+		    m->m_pkthdr.leaf_rcvgen);
+		if (__predict_false(leaf_ifp != NULL && (if_getflags(leaf_ifp) & IFF_DYING)))
+			leaf_ifp = NULL;
+	}
+
+	m->m_pkthdr.leaf_rcvif = leaf_ifp;
+	m->m_pkthdr.rcvif = ifp;
+
+	return (ifp);
 }
 
 /*

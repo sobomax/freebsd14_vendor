@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2005 David Xu <davidxu@freebsd.org>
  * Copyright (c) 2016-2017 Robert N. M. Watson
@@ -51,8 +51,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 5c1775a261fc7a9985ee8d51c8129e22840d7777 $");
-
 #include "opt_capsicum.h"
 
 #include <sys/param.h>
@@ -853,12 +851,12 @@ mqfs_lookupx(struct vop_cachedlookup_args *ap)
 	char *pname;
 	struct thread *td;
 
+	td = curthread;
 	cnp = ap->a_cnp;
 	vpp = ap->a_vpp;
 	dvp = ap->a_dvp;
 	pname = cnp->cn_nameptr;
 	namelen = cnp->cn_namelen;
-	td = cnp->cn_thread;
 	flags = cnp->cn_flags;
 	nameiop = cnp->cn_nameiop;
 	pd = VTON(dvp);
@@ -869,7 +867,7 @@ mqfs_lookupx(struct vop_cachedlookup_args *ap)
 	if (dvp->v_type != VDIR)
 		return (ENOTDIR);
 
-	error = VOP_ACCESS(dvp, VEXEC, cnp->cn_cred, cnp->cn_thread);
+	error = VOP_ACCESS(dvp, VEXEC, cnp->cn_cred, td);
 	if (error)
 		return (error);
 
@@ -941,7 +939,6 @@ mqfs_lookupx(struct vop_cachedlookup_args *ap)
 		error = VOP_ACCESS(dvp, VWRITE, cnp->cn_cred, td);
 		if (error)
 			return (error);
-		cnp->cn_flags |= SAVENAME;
 		return (EJUSTRETURN);
 	}
 	return (ENOENT);
@@ -997,8 +994,6 @@ mqfs_create(struct vop_create_args *ap)
 	if (mq == NULL)
 		return (EAGAIN);
 	sx_xlock(&mqfs->mi_lock);
-	if ((cnp->cn_flags & HASBUF) == 0)
-		panic("%s: no name", __func__);
 	pn = mqfs_create_file(pd, cnp->cn_nameptr, cnp->cn_namelen,
 		cnp->cn_cred, ap->a_vap->va_mode);
 	if (pn == NULL) {
@@ -1369,7 +1364,7 @@ struct vop_readdir_args {
 	struct ucred *a_cred;
 	int *a_eofflag;
 	int *a_ncookies;
-	u_long **a_cookies;
+	uint64_t **a_cookies;
 };
 #endif
 
@@ -1492,8 +1487,6 @@ mqfs_mkdir(struct vop_mkdir_args *ap)
 	if (pd->mn_type != mqfstype_root && pd->mn_type != mqfstype_dir)
 		return (ENOTDIR);
 	sx_xlock(&mqfs->mi_lock);
-	if ((cnp->cn_flags & HASBUF) == 0)
-		panic("%s: no name", __func__);
 	pn = mqfs_create_dir(pd, cnp->cn_nameptr, cnp->cn_namelen,
 		ap->a_vap->cn_cred, ap->a_vap->va_mode);
 	if (pn != NULL)
@@ -2350,7 +2343,7 @@ kern_kmq_notify(struct thread *td, int mqd, struct sigevent *sigev)
 		return (error);
 again:
 	FILEDESC_SLOCK(fdp);
-	fp2 = fget_locked(fdp, mqd);
+	fp2 = fget_noref(fdp, mqd);
 	if (fp2 == NULL) {
 		FILEDESC_SUNLOCK(fdp);
 		error = EBADF;
@@ -2482,7 +2475,7 @@ mq_proc_exit(void *arg __unused, struct proc *p)
 	fdp = p->p_fd;
 	FILEDESC_SLOCK(fdp);
 	for (i = 0; i < fdp->fd_nfiles; ++i) {
-		fp = fget_locked(fdp, i);
+		fp = fget_noref(fdp, i);
 		if (fp != NULL && fp->f_ops == &mqueueops) {
 			mq = FPTOMQ(fp);
 			mtx_lock(&mq->mq_mutex);
@@ -2537,8 +2530,7 @@ mqf_close(struct file *fp, struct thread *td)
 }
 
 static int
-mqf_stat(struct file *fp, struct stat *st, struct ucred *active_cred,
-	struct thread *td)
+mqf_stat(struct file *fp, struct stat *st, struct ucred *active_cred)
 {
 	struct mqfs_node *pn = fp->f_data;
 
@@ -2669,6 +2661,7 @@ static struct fileops mqueueops = {
 	.fo_chown		= mqf_chown,
 	.fo_sendfile		= invfo_sendfile,
 	.fo_fill_kinfo		= mqf_fill_kinfo,
+	.fo_cmp			= file_kcmp_generic,
 	.fo_flags		= DFLAG_PASSABLE,
 };
 

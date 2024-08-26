@@ -1,3 +1,2 @@
-.\" $FreeBSD: c1db65c598c2426f070a91660aa0a1e9570964d8 $
 Do not install compressed system documentation.
 Only the uncompressed version will be installed.

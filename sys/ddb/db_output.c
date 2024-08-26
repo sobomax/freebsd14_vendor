@@ -35,8 +35,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 3517187f82069c0eb0f16e830b77ff29db508d06 $");
-
 #include "opt_ddb.h"
 
 #include <sys/param.h>
@@ -260,7 +258,7 @@ db_pager(void)
 	db_printf("--More--\r");
 	done = 0;
 	while (!done) {
-		c = cngetc();
+		c = db_getc();
 		switch (c) {
 		case 'e':
 		case 'j':

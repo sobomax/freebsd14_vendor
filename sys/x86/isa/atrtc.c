@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2008 Poul-Henning Kamp
  * Copyright (c) 2010 Alexander Motin <mav@FreeBSD.org>
@@ -25,13 +25,9 @@
  * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
- *
- * $FreeBSD: 167e7cfbf8fdbdb7779c8e3b6cb02cf169112aac $
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 167e7cfbf8fdbdb7779c8e3b6cb02cf169112aac $");
-
 #include "opt_acpi.h"
 #include "opt_isa.h"
 
@@ -46,6 +42,7 @@ __FBSDID("$FreeBSD: 167e7cfbf8fdbdb7779c8e3b6cb02cf169112aac $");
 #include <sys/module.h>
 #include <sys/proc.h>
 #include <sys/rman.h>
+#include <sys/sysctl.h>
 #include <sys/timeet.h>
 
 #include <isa/rtc.h>
@@ -65,7 +62,7 @@ __FBSDID("$FreeBSD: 167e7cfbf8fdbdb7779c8e3b6cb02cf169112aac $");
 /* tunable to detect a power loss of the rtc */
 static bool atrtc_power_lost = false;
 SYSCTL_BOOL(_machdep, OID_AUTO, atrtc_power_lost, CTLFLAG_RD, &atrtc_power_lost,
-    false, "RTC lost power on last power cycle (probably caused by an emtpy cmos battery)");
+    false, "RTC lost power on last power cycle (probably caused by an empty cmos battery)");
 
 /*
  * atrtc_lock protects low-level access to individual hardware registers.
@@ -376,7 +373,10 @@ atrtc_reg_acpi_cmos_handler(device_t dev)
 	if (acpi_disabled("atrtc"))
 		return (ENXIO);
 
-	sc->acpi_handle = acpi_get_handle(dev);
+	if (ACPI_FAILURE(AcpiGetHandle(ACPI_ROOT_OBJECT, "\\_SB_", &sc->acpi_handle))) {
+		return (ENXIO);
+	}
+
 	if (sc->acpi_handle == NULL ||
 	    ACPI_FAILURE(AcpiInstallAddressSpaceHandler(sc->acpi_handle,
 	      ACPI_ADR_SPACE_CMOS, atrtc_acpi_cmos_handler, NULL, dev))) {
@@ -679,10 +679,8 @@ static driver_t atrtc_acpi_driver = {
 };
 #endif	/* DEV_ACPI */
 
-static devclass_t atrtc_devclass;
-
-DRIVER_MODULE(atrtc, isa, atrtc_isa_driver, atrtc_devclass, 0, 0);
+DRIVER_MODULE(atrtc, isa, atrtc_isa_driver, 0, 0);
 #ifdef DEV_ACPI
-DRIVER_MODULE(atrtc, acpi, atrtc_acpi_driver, atrtc_devclass, 0, 0);
+DRIVER_MODULE(atrtc, acpi, atrtc_acpi_driver, 0, 0);
 #endif
 ISA_PNP_INFO(atrtc_ids);

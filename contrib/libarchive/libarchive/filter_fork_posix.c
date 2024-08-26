@@ -30,8 +30,6 @@
 #if defined(HAVE_PIPE) && defined(HAVE_FCNTL) && \
     (defined(HAVE_FORK) || defined(HAVE_VFORK) || defined(HAVE_POSIX_SPAWNP))
 
-__FBSDID("$FreeBSD: 62085a7099b7de8378871851e8c367328b8939c0 $");
-
 #if defined(HAVE_SYS_TYPES_H)
 #  include <sys/types.h>
 #endif

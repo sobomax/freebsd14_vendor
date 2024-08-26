@@ -1,3 +1,1 @@
-/* $FreeBSD: f14fc879222ed74f4cc07599988c5d565f84c675 $ */
-
-#define VI_VERSION "2.2.0 (2020-08-01)"
+#define VI_VERSION "2.2.1 (2023-09-25)"

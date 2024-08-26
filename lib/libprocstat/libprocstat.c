@@ -36,8 +36,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: a5d26ba9e52d5c87150a759b22cad811a0374264 $");
-
 #include <sys/param.h>
 #include <sys/elf.h>
 #include <sys/time.h>
@@ -68,15 +66,12 @@ __FBSDID("$FreeBSD: a5d26ba9e52d5c87150a759b22cad811a0374264 $");
 #include <sys/mman.h>
 #include <sys/capsicum.h>
 #include <sys/ptrace.h>
-#define	_KERNEL
+#define	_WANT_MOUNT
 #include <sys/mount.h>
 #include <sys/filedesc.h>
 #include <sys/pipe.h>
-#include <ufs/ufs/quota.h>
-#include <ufs/ufs/inode.h>
 #include <fs/devfs/devfs.h>
 #include <fs/devfs/devfs_int.h>
-#undef _KERNEL
 #include <nfs/nfsproto.h>
 #include <nfsclient/nfs.h>
 #include <nfsclient/nfsnode.h>
@@ -352,7 +347,7 @@ struct filestat_list *
 procstat_getfiles(struct procstat *procstat, struct kinfo_proc *kp, int mmapped)
 {
 
-	switch(procstat->type) {
+	switch (procstat->type) {
 	case PROCSTAT_KVM:
 		return (procstat_getfiles_kvm(procstat, kp, mmapped));
 	case PROCSTAT_SYSCTL:
@@ -1532,7 +1527,7 @@ procstat_get_socket_info_kvm(kvm_t *kd, struct filestat *fst,
 	/*
 	 * Protocol specific data.
 	 */
-	switch(dom.dom_family) {
+	switch (dom.dom_family) {
 	case AF_INET:
 	case AF_INET6:
 		if (proto.pr_protocol == IPPROTO_TCP) {
@@ -1605,7 +1600,7 @@ procstat_get_socket_info_sysctl(struct filestat *fst, struct sockstat *sock,
 	/*
 	 * Protocol specific data.
 	 */
-	switch(sock->dom_family) {
+	switch (sock->dom_family) {
 	case AF_INET:
 	case AF_INET6:
 		if (sock->proto == IPPROTO_TCP) {
@@ -1966,7 +1961,7 @@ procstat_getvmmap(struct procstat *procstat, struct kinfo_proc *kp,
     unsigned int *cntp)
 {
 
-	switch(procstat->type) {
+	switch (procstat->type) {
 	case PROCSTAT_KVM:
 		warnx("kvm method is not supported");
 		return (NULL);
@@ -2071,7 +2066,7 @@ gid_t *
 procstat_getgroups(struct procstat *procstat, struct kinfo_proc *kp,
     unsigned int *cntp)
 {
-	switch(procstat->type) {
+	switch (procstat->type) {
 	case PROCSTAT_KVM:
 		return (procstat_getgroups_kvm(procstat->kd, kp, cntp));
 	case PROCSTAT_SYSCTL:
@@ -2149,7 +2144,7 @@ int
 procstat_getumask(struct procstat *procstat, struct kinfo_proc *kp,
     unsigned short *maskp)
 {
-	switch(procstat->type) {
+	switch (procstat->type) {
 	case PROCSTAT_KVM:
 		return (procstat_getumask_kvm(procstat->kd, kp, maskp));
 	case PROCSTAT_SYSCTL:
@@ -2239,7 +2234,7 @@ int
 procstat_getrlimit(struct procstat *procstat, struct kinfo_proc *kp, int which,
     struct rlimit* rlimit)
 {
-	switch(procstat->type) {
+	switch (procstat->type) {
 	case PROCSTAT_KVM:
 		return (procstat_getrlimit_kvm(procstat->kd, kp, which,
 		    rlimit));
@@ -2298,7 +2293,7 @@ int
 procstat_getpathname(struct procstat *procstat, struct kinfo_proc *kp,
     char *pathname, size_t maxlen)
 {
-	switch(procstat->type) {
+	switch (procstat->type) {
 	case PROCSTAT_KVM:
 		/* XXX: Return empty string. */
 		if (maxlen > 0)
@@ -2371,7 +2366,7 @@ procstat_getosrel_core(struct procstat_core *core, int *osrelp)
 int
 procstat_getosrel(struct procstat *procstat, struct kinfo_proc *kp, int *osrelp)
 {
-	switch(procstat->type) {
+	switch (procstat->type) {
 	case PROCSTAT_KVM:
 		return (procstat_getosrel_kvm(procstat->kd, kp, osrelp));
 	case PROCSTAT_SYSCTL:
@@ -2386,7 +2381,7 @@ procstat_getosrel(struct procstat *procstat, struct kinfo_proc *kp, int *osrelp)
 
 #define PROC_AUXV_MAX	256
 
-#if __ELF_WORD_SIZE == 64
+#ifdef PS_ARCH_HAS_FREEBSD32
 static const char *elf32_sv_names[] = {
 	"Linux ELF32",
 	"FreeBSD ELF32",
@@ -2397,7 +2392,7 @@ is_elf32_sysctl(pid_t pid)
 {
 	int error, name[4];
 	size_t len, i;
-	static char sv_name[256];
+	char sv_name[32];
 
 	name[0] = CTL_KERN;
 	name[1] = KERN_PROC;
@@ -2419,7 +2414,6 @@ procstat_getauxv32_sysctl(pid_t pid, unsigned int *cntp)
 {
 	Elf_Auxinfo *auxv;
 	Elf32_Auxinfo *auxv32;
-	void *ptr;
 	size_t len;
 	unsigned int i, count;
 	int name[4];
@@ -2440,8 +2434,8 @@ procstat_getauxv32_sysctl(pid_t pid, unsigned int *cntp)
 			warn("sysctl: kern.proc.auxv: %d: %d", pid, errno);
 		goto out;
 	}
-	count = len / sizeof(Elf_Auxinfo);
-	auxv = malloc(count  * sizeof(Elf_Auxinfo));
+	count = len / sizeof(Elf32_Auxinfo);
+	auxv = malloc(count * sizeof(Elf_Auxinfo));
 	if (auxv == NULL) {
 		warn("malloc(%zu)", count * sizeof(Elf_Auxinfo));
 		goto out;
@@ -2453,15 +2447,24 @@ procstat_getauxv32_sysctl(pid_t pid, unsigned int *cntp)
 		 * necessarily true.
 		 */
 		auxv[i].a_type = auxv32[i].a_type;
-		ptr = &auxv32[i].a_un;
-		auxv[i].a_un.a_val = *((uint32_t *)ptr);
+		/*
+		 * Don't sign extend values.  Existing entries are positive
+		 * integers or pointers.  Under freebsd32, programs typically
+		 * have a full [0, 2^32) address space (perhaps minus the last
+		 * page) and treating this as a signed integer would be
+		 * confusing since these are not kernel pointers.
+		 *
+		 * XXX: A more complete translation would be ABI and
+		 * type-aware.
+		 */
+		auxv[i].a_un.a_val = (uint32_t)auxv32[i].a_un.a_val;
 	}
 	*cntp = count;
 out:
 	free(auxv32);
 	return (auxv);
 }
-#endif /* __ELF_WORD_SIZE == 64 */
+#endif /* PS_ARCH_HAS_FREEBSD32 */
 
 static Elf_Auxinfo *
 procstat_getauxv_sysctl(pid_t pid, unsigned int *cntp)
@@ -2470,7 +2473,7 @@ procstat_getauxv_sysctl(pid_t pid, unsigned int *cntp)
 	int name[4];
 	size_t len;
 
-#if __ELF_WORD_SIZE == 64
+#ifdef PS_ARCH_HAS_FREEBSD32
 	if (is_elf32_sysctl(pid))
 		return (procstat_getauxv32_sysctl(pid, cntp));
 #endif
@@ -2511,7 +2514,7 @@ Elf_Auxinfo *
 procstat_getauxv(struct procstat *procstat, struct kinfo_proc *kp,
     unsigned int *cntp)
 {
-	switch(procstat->type) {
+	switch (procstat->type) {
 	case PROCSTAT_KVM:
 		warnx("kvm method is not supported");
 		return (NULL);
@@ -2625,7 +2628,7 @@ struct kinfo_kstack *
 procstat_getkstack(struct procstat *procstat, struct kinfo_proc *kp,
     unsigned int *cntp)
 {
-	switch(procstat->type) {
+	switch (procstat->type) {
 	case PROCSTAT_KVM:
 		warnx("kvm method is not supported");
 		return (NULL);
@@ -2754,7 +2757,7 @@ fail:
 struct advlock_list *
 procstat_getadvlock(struct procstat *procstat)
 {
-	switch(procstat->type) {
+	switch (procstat->type) {
 	case PROCSTAT_KVM:
 		warnx("kvm method is not supported");
 		return (NULL);

@@ -29,7 +29,6 @@
  * SUCH DAMAGE.
  *
  *	@(#)dirent.h	8.2 (Berkeley) 7/28/94
- * $FreeBSD: 751a016838c0ea29d2dfbedeb027a49bf0b7002c $
  */
 
 #ifndef _DIRENT_H_

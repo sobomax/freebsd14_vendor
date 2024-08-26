@@ -17,7 +17,7 @@
  * This software is provided ``AS IS'' without any warranties of any kind.
  */
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2003-2005 McAfee, Inc.
  * Copyright (c) 2016-2017 Robert N. M. Watson
@@ -56,8 +56,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 0facc9e63b32980b481a546980c907298f870db5 $");
-
 #include "opt_sysvipc.h"
 
 #include <sys/param.h>
@@ -1704,7 +1702,7 @@ freebsd7_freebsd32_msgctl(struct thread *td,
     struct freebsd7_freebsd32_msgctl_args *uap)
 {
 	struct msqid_ds msqbuf;
-	struct msqid_ds32_old msqbuf32;
+	struct msqid_ds_old32 msqbuf32;
 	int error;
 
 	if (uap->cmd == IPC_SET) {

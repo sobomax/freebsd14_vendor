@@ -21,9 +21,6 @@
  * From: FreeBSD: head/lib/libc/gen/nftw.c 239160 2012-08-09 22:05:40Z jilles
  */
 
-#include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 1cf9ba8cb9b68b5ab1261a80e2ee5591fee3af91 $");
-
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <errno.h>

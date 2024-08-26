@@ -1,11 +1,8 @@
-/*	$FreeBSD: 6e384ac44e83fb83f8844d12ec170b0aa28c6530 $	*/
 
 /*
  * Copyright (C) 2012 by Darren Reed.
  *
  * See the IPFILTER.LICENCE file for details on licencing.
- *
- * $FreeBSD: 6e384ac44e83fb83f8844d12ec170b0aa28c6530 $
  * Id: ip_log.c,v 2.75.2.19 2007/09/09 11:32:06 darrenr Exp $
  */
 #include <sys/param.h>
@@ -80,6 +77,7 @@
 #endif
 #if defined(__FreeBSD__)
 # include <net/if_var.h>
+# include <net/if_private.h>
 #endif
 #include <netinet/in.h>
 # include <netinet/in_var.h>

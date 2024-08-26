@@ -34,8 +34,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 6045e49c3e71a2379b52d0ac7dbf9a0980fa55f2 $");
-
 #include <sys/param.h>
 #include <sys/systm.h>
 #include <sys/conf.h>
@@ -482,7 +480,8 @@ dwmmc_card_task(void *arg, int pending __unused)
 #else
 	DWMMC_LOCK(sc);
 
-	if (READ4(sc, SDMMC_CDETECT) == 0) {
+	if (READ4(sc, SDMMC_CDETECT) == 0 ||
+	    (sc->mmc_helper.props & MMC_PROP_BROKEN_CD)) {
 		if (sc->child == NULL) {
 			if (bootverbose)
 				device_printf(sc->dev, "Card inserted\n");
@@ -880,7 +879,7 @@ dwmmc_update_ios(device_t brdev, device_t reqdev)
 	sc = device_get_softc(brdev);
 	ios = &sc->host.ios;
 
-	dprintf("Setting up clk %u bus_width %d, timming: %d\n",
+	dprintf("Setting up clk %u bus_width %d, timing: %d\n",
 		ios->clock, ios->bus_width, ios->timing);
 
 	switch (ios->power_mode) {

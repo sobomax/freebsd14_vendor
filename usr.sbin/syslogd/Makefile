@@ -1,5 +1,4 @@
 #	@(#)Makefile	8.1 (Berkeley) 6/6/93
-# $FreeBSD: f96a72274d60ee3a7c79ddfdef3c11df2a7d40ef $
 
 .include <src.opts.mk>
 
@@ -44,5 +43,8 @@ PPPPACKAGE=	ppp
 .endif
 
 CFLAGS+= -I${SRCTOP}/usr.bin/wall
+
+HAS_TESTS=
+SUBDIR.${MK_TESTS}+= tests
 
 .include <bsd.prog.mk>

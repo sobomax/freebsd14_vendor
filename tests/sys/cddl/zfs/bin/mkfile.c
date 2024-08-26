@@ -22,8 +22,6 @@
  * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
- *
- * $FreeBSD: cb74471a4c639204ec0976084473c88f8ce5ec96 $
  */
 
 #ifndef	lint
@@ -170,7 +168,7 @@ int
 main(int argc, char *argv[])
 {
 	unsigned long long fsize;
-	char ch;
+	int ch;
 
 	/* We have at least 2 arguments. */
 	if (argc < 3) {

@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-NetBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2003 Mathew Kanner
  * Copyright (c) 1998 The NetBSD Foundation, Inc.
@@ -37,8 +37,6 @@
   */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 29d3fe7249d05d3bf63f404dba6d87be74e98474 $");
-
 #include <sys/param.h>
 #include <sys/systm.h>
 #include <sys/queue.h>

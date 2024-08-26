@@ -23,8 +23,6 @@
 # SUCH DAMAGE.
 #
 
-# $FreeBSD: 951b07f209d390031b5353619b75d8175d999e69 $
-
 #
 # This program is a freestanding boot program to load an a.out binary
 # from a CD-ROM booted with no emulation mode as described by the El

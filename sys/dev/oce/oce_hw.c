@@ -38,7 +38,6 @@
  * Costa Mesa, CA 92626
  */
 
-/* $FreeBSD: aa187e76e86b57d338fe81da14b083a4beba3e48 $ */
 
 #include "oce_if.h"
 
@@ -547,7 +546,7 @@ oce_copy_maddr(void *arg, struct sockaddr_dl *sdl, u_int cnt)
 int
 oce_hw_update_multicast(POCE_SOFTC sc)
 {
-	struct ifnet    *ifp = sc->ifp;
+	if_t ifp = sc->ifp;
 	struct mbx_set_common_iface_multicast *req = NULL;
 	OCE_DMA_MEM dma;
 	int rc = 0;

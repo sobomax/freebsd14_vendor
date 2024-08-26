@@ -1,4 +1,3 @@
-/* $FreeBSD: a810519d3ff9e6a3ec11a4740c9d220b73096a55 $ */
 /* Do not modify. This file is auto-generated from ppccpuid.pl. */
 .machine	"any"
 .text

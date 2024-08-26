@@ -1,2 +1,1 @@
-.\" $FreeBSD: 37308951226b0425bb37052ced5f1b65f7d7eb42 $
 Do not build USB-related programs and libraries.

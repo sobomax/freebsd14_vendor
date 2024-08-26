@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2013 EMC Corp.
  * All rights reserved.
@@ -31,8 +31,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: f7a6ef311a40be91d3fce775131bd3dbd398e5d0 $");
-
 #include <sys/param.h>
 #include <sys/ioccom.h>
 
@@ -232,10 +230,6 @@ read_logpage(int fd, uint8_t log_page, uint32_t nsid, uint8_t lsp,
 		nvme_health_information_page_swapbytes(
 		    (struct nvme_health_information_page *)payload);
 		break;
-	case NVME_LOG_FIRMWARE_SLOT:
-		nvme_firmware_page_swapbytes(
-		    (struct nvme_firmware_page *)payload);
-		break;
 	case NVME_LOG_CHANGED_NAMESPACE:
 		nvme_ns_list_swapbytes((struct nvme_ns_list *)payload);
 		break;
@@ -319,11 +313,16 @@ print_log_error(const struct nvme_controller_data *cdata __unused, void *buf, ui
 }
 
 void
-print_temp(uint16_t t)
+print_temp_K(uint16_t t)
 {
 	printf("%u K, %2.2f C, %3.2f F\n", t, (float)t - 273.15, (float)t * 9 / 5 - 459.67);
 }
 
+void
+print_temp_C(uint16_t t)
+{
+	printf("%2.2f K, %u C, %3.2f F\n", (float)t + 273.15, t, (float)t * 9 / 5 + 32);
+}
 
 static void
 print_log_health(const struct nvme_controller_data *cdata __unused, void *buf, uint32_t size __unused)
@@ -350,7 +349,7 @@ print_log_health(const struct nvme_controller_data *cdata __unused, void *buf, u
 	printf(" Volatile memory backup:        %d\n",
 	    !!(warning & NVME_CRIT_WARN_ST_VOLATILE_MEMORY_BACKUP));
 	printf("Temperature:                    ");
-	print_temp(health->temperature);
+	print_temp_K(health->temperature);
 	printf("Available spare:                %u\n",
 	    health->available_spare);
 	printf("Available spare threshold:      %u\n",
@@ -385,7 +384,7 @@ print_log_health(const struct nvme_controller_data *cdata __unused, void *buf, u
 		if (health->temp_sensor[i] == 0)
 			continue;
 		printf("Temperature Sensor %d:           ", i + 1);
-		print_temp(health->temp_sensor[i]);
+		print_temp_K(health->temp_sensor[i]);
 	}
 	printf("Temperature 1 Transition Count: %d\n", health->tmt1tc);
 	printf("Temperature 2 Transition Count: %d\n", health->tmt2tc);
@@ -426,15 +425,10 @@ print_log_firmware(const struct nvme_controller_data *cdata, void *buf, uint32_t
 		else
 			status = "Inactive";
 
-		if (fw->revision[i] == 0LLU)
+		if (fw->revision[i][0] == '\0')
 			printf("Empty\n");
 		else
-			if (isprint(*(char *)&fw->revision[i]))
-				printf("[%s] %.8s\n", status,
-				    (char *)&fw->revision[i]);
-			else
-				printf("[%s] %016jx\n", status,
-				    fw->revision[i]);
+			printf("[%s] %.8s\n", status, fw->revision[i]);
 	}
 }
 
@@ -806,7 +800,7 @@ logpage(const struct cmd *f, int argc, char *argv[])
 		NVME_CTRLR_DATA_LPA_NS_SMART_MASK;
 
 	/*
-	 * The log page attribtues indicate whether or not the controller
+	 * The log page attributes indicate whether or not the controller
 	 * supports the SMART/Health information log page on a per
 	 * namespace basis.
 	 */

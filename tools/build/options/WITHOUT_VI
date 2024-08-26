@@ -1,2 +1,1 @@
-.\" $FreeBSD: 19b2df6935b303776a156282966d53ce21b21121 $
 Do not build and install vi, view, ex and related programs.

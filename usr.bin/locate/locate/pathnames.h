@@ -29,7 +29,6 @@
  * SUCH DAMAGE.
  *
  *	@(#)pathnames.h	8.1 (Berkeley) 6/6/93
- * $FreeBSD: 21fc9a172f81691e26291a89edf2e3a9c751dad9 $
  */
 
 #define	_PATH_FCODES	"/var/db/locate.database"

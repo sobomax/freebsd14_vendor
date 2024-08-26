@@ -1,5 +1,5 @@
 /*-
- * Copyright (c) 2007-2009 Dag-Erling Coïdan Smørgrav
+ * Copyright (c) 2007-2009 Dag-Erling Smørgrav
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -26,8 +26,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 9bfa6754ce544e8329751f317d5f5c8e0ed63fbf $");
-
 #include <sys/param.h>
 #include <sys/wait.h>
 #include <sys/event.h>

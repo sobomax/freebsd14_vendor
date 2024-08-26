@@ -29,7 +29,6 @@
  * SUCH DAMAGE.
  *
  *	From: @(#)systat.h	8.1 (Berkeley) 6/6/93
- * $FreeBSD: 4ced36c329321fe36fdc83b667003ee6d5bf7011 $
  */
 
 #include <sys/stdint.h>

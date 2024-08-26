@@ -10,8 +10,6 @@
 .\"
 .\"     @(#)vi.ref	8.88 (Berkeley) 10/19/96
 .\"
-.\" $FreeBSD: 12a483f1edb1f1d9f29b723ae5d8ae1b1891203b $
-.\"
 .so ref.so
 .tp
 .(l C

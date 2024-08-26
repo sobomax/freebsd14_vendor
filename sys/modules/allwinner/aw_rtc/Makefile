@@ -1,4 +1,3 @@
-# $FreeBSD: 9135d93a501cd5880161f1587f0e6da05d25a9a0 $
 
 .PATH: ${SRCTOP}/sys/arm/allwinner
 

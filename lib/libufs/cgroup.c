@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2003 Juli Mallett.  All rights reserved.
  *
@@ -28,13 +28,13 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 41fe587531bfbadf2d992cb72f2ceeabf3c8fbd7 $");
-
 #include <sys/param.h>
 #include <sys/mount.h>
 #include <sys/disklabel.h>
 #include <sys/stat.h>
 
+#include <ufs/ufs/extattr.h>
+#include <ufs/ufs/quota.h>
 #include <ufs/ufs/ufsmount.h>
 #include <ufs/ufs/dinode.h>
 #include <ufs/ffs/fs.h>

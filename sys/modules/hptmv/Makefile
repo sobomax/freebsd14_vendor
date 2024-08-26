@@ -2,7 +2,6 @@
 # Makefile for RR182x FreeBSD driver
 # Copyright (c)  2004-2005 HighPoint Technologies, Inc. All rights reserved
 #
-# $FreeBSD: 154f4b8b5abd0ec21e5f496a11863442f35adac7 $
 
 HPTMV= ${SRCTOP}/sys/dev/hptmv
 .PATH: ${HPTMV}
@@ -11,10 +10,7 @@ KMOD= hptmv
 SRCS= opt_scsi.h opt_cam.h
 SRCS+= bus_if.h device_if.h pci_if.h
 SRCS+= mv.c entry.c ioctl.c hptproc.c gui_lib.c
-OBJS+= hptmvraid.o
-
-hptmvraid.o:
-	uudecode -p < ${HPTMV}/${MACHINE_CPUARCH}-elf.raid.o.uu > ${.TARGET}
+BLOB_OBJS+= ${HPTMV}/${MACHINE_CPUARCH}-elf.hptmvraid.o
 
 #
 # Debug Options:

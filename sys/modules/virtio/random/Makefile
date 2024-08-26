@@ -1,5 +1,4 @@
 #
-# $FreeBSD: 3421480d95850f017c0a61e485f2272dc2b53b11 $
 #
 # Redistribution and use in source and binary forms, with or without
 # modification, are permitted provided that the following conditions

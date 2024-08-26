@@ -25,7 +25,6 @@
  */
 
 #include "archive_platform.h"
-__FBSDID("$FreeBSD: 0867a268eefe3581bac4a3d79b1f5907b6456db1 $");
 
 #ifdef HAVE_STRING_H
 #include <string.h>

@@ -1,6 +1,5 @@
 /*
  * This file is in the public domain.
- * $FreeBSD: e415327af680807248dd8c5e84ce414b6f656738 $
  */
 
 #ifndef _DEV_ZLIB_ZCALLOC_

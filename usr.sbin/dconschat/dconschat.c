@@ -34,7 +34,6 @@
  * SUCH DAMAGE.
  * 
  * $Id: dconschat.c,v 1.76 2003/10/23 06:21:13 simokawa Exp $
- * $FreeBSD: ee39aa6e90a6c343bbde132bd1ccf0b7f2dac70a $
  */
 
 #include <sys/param.h>
@@ -383,11 +382,7 @@ dconschat_fetch_header(struct dcons_state *dc)
 	}
 	if (ntohl(dbuf.version) != DCONS_VERSION) {
 		snprintf(ebuf, sizeof(ebuf),
-#if __FreeBSD_version < 500000
-		    "wrong version %ld,%d",
-#else
 		    "wrong version %d,%d",
-#endif
 		    ntohl(dbuf.version), DCONS_VERSION);
 		/* XXX exit? */
 		dconschat_ready(dc, 0, ebuf);
@@ -419,13 +414,8 @@ dconschat_fetch_header(struct dcons_state *dc)
 
 		if (verbose) {
 			printf("port %d   size offset   gen   pos\n", j);
-#if __FreeBSD_version < 500000
-			printf("output: %5d %6ld %5d %5d\n"
-				"input : %5d %6ld %5d %5d\n",
-#else
 			printf("output: %5d %6d %5d %5d\n"
 				"input : %5d %6d %5d %5d\n",
-#endif
 			o->size, ntohl(dbuf.ooffset[j]), o->gen, o->pos,
 			i->size, ntohl(dbuf.ioffset[j]), i->gen, i->pos);
 		}
@@ -690,7 +680,6 @@ dconschat_init_socket(struct dcons_state *dc, int port, char *host, int sport)
 	error = kevent(dc->kq, &kev, 1, NULL, 0, &dc->to);
 	if (error < 0)
 		err(1, "kevent");
-	return;
 }
 
 static int

@@ -1,4 +1,3 @@
-# $FreeBSD: 78f4e9bdffde3b7b7e8bdf5b579f2906572777ed $
 
 case ^ in
 [\^^]) ;;

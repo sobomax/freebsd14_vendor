@@ -1,10 +1,9 @@
 #	@(#)Makefile	8.1 (Berkeley) 6/6/93
-# $FreeBSD: 7d56c57457c7705339aa186e05fcebfcb073934c $
 
 CONFS=	locate.rc
 PROG=	locate
 SRCS=	util.c locate.c
-CFLAGS+= -I${.CURDIR} -DMMAP # -DDEBUG (print time) -O2 (10% faster)
+CFLAGS+= -I${.CURDIR} -DMMAP
 SCRIPTS=updatedb.sh mklocatedb.sh concatdb.sh
 MAN=	locate.1 locate.updatedb.8
 

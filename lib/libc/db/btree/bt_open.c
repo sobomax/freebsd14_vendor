@@ -35,9 +35,6 @@
 #if defined(LIBC_SCCS) && !defined(lint)
 static char sccsid[] = "@(#)bt_open.c	8.10 (Berkeley) 8/17/94";
 #endif /* LIBC_SCCS and not lint */
-#include <sys/cdefs.h>
-__FBSDID("$FreeBSD: ce3b8a1ecf1bb251fb5448fb661bc7c155008670 $");
-
 /*
  * Implementation of btree access method for 4.4BSD.
  *
@@ -391,11 +388,10 @@ tmp(void)
 {
 	sigset_t set, oset;
 	int fd, len;
-	char *envtmp = NULL;
+	char *envtmp;
 	char path[MAXPATHLEN];
 
-	if (issetugid() == 0)
-		envtmp = getenv("TMPDIR");
+	envtmp = secure_getenv("TMPDIR");
 	len = snprintf(path,
 	    sizeof(path), "%s/bt.XXXXXXXXXX", envtmp ? envtmp : "/tmp");
 	if (len < 0 || len >= (int)sizeof(path)) {

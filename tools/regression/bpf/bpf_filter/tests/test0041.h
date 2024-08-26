@@ -1,7 +1,5 @@
 /*-
  * Test 0041:	BPF_MISC+BPF_TAX
- *
- * $FreeBSD: 28008de347d913b6f32c9c788f2c843489e169bc $
  */
 
 /* BPF program */

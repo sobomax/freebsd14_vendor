@@ -28,8 +28,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 991f31673b6149f66621bcaf0e36275e39c52da6 $");
-
 /*
  * This code implements a system driver for legacy systems that do not
  * support ACPI or when ACPI support is not present in the kernel.
@@ -99,9 +97,8 @@ static driver_t legacy_driver = {
 	legacy_methods,
 	1,			/* no softc */
 };
-static devclass_t legacy_devclass;
 
-DRIVER_MODULE(legacy, nexus, legacy_driver, legacy_devclass, 0, 0);
+DRIVER_MODULE(legacy, nexus, legacy_driver, 0, 0);
 
 static int
 legacy_probe(device_t dev)
@@ -127,23 +124,23 @@ legacy_pci_cfgregopen(device_t dev)
 		return;
 
 	/* Check for supported chipsets */
-	vid = pci_cfgregread(0, 0, 0, PCIR_VENDOR, 2);
-	did = pci_cfgregread(0, 0, 0, PCIR_DEVICE, 2);
+	vid = pci_cfgregread(0, 0, 0, 0, PCIR_VENDOR, 2);
+	did = pci_cfgregread(0, 0, 0, 0, PCIR_DEVICE, 2);
 	switch (vid) {
 	case 0x8086:
 		switch (did) {
 		case 0x3590:
 		case 0x3592:
 			/* Intel 7520 or 7320 */
-			pciebar = pci_cfgregread(0, 0, 0, 0xce, 2) << 16;
-			pcie_cfgregopen(pciebar, 0, 255);
+			pciebar = pci_cfgregread(0, 0, 0, 0, 0xce, 2) << 16;
+			pcie_cfgregopen(pciebar, 0, 0, 255);
 			break;
 		case 0x2580:
 		case 0x2584:
 		case 0x2590:
 			/* Intel 915, 925, or 915GM */
-			pciebar = pci_cfgregread(0, 0, 0, 0x48, 4);
-			pcie_cfgregopen(pciebar, 0, 255);
+			pciebar = pci_cfgregread(0, 0, 0, 0, 0x48, 4);
+			pcie_cfgregopen(pciebar, 0, 0, 255);
 			break;
 		}
 	}
@@ -312,8 +309,8 @@ static driver_t cpu_driver = {
 	cpu_methods,
 	1,		/* no softc */
 };
-static devclass_t cpu_devclass;
-DRIVER_MODULE(cpu, legacy, cpu_driver, cpu_devclass, 0, 0);
+
+DRIVER_MODULE(cpu, legacy, cpu_driver, 0, 0);
 
 static void
 cpu_identify(driver_t *driver, device_t parent)

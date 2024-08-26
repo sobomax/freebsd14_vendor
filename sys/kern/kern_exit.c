@@ -37,8 +37,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: aca2ca81f057174693aecfc17ca1bd3c1268eb68 $");
-
 #include "opt_ddb.h"
 #include "opt_ktrace.h"
 
@@ -205,12 +203,12 @@ exit_onexit(struct proc *p)
 /*
  * exit -- death of process.
  */
-void
-sys_sys_exit(struct thread *td, struct sys_exit_args *uap)
+int
+sys_exit(struct thread *td, struct exit_args *uap)
 {
 
 	exit1(td, uap->rval, 0);
-	/* NOTREACHED */
+	__unreachable();
 }
 
 void
@@ -239,10 +237,11 @@ exit1(struct thread *td, int rval, int signo)
 
 	p = td->td_proc;
 	/*
-	 * XXX in case we're rebooting we just let init die in order to
-	 * work around an unsolved stack overflow seen very late during
-	 * shutdown on sparc64 when the gmirror worker process exists.
-	 * XXX what to do now that sparc64 is gone... remove if?
+	 * In case we're rebooting we just let init die in order to
+	 * work around an issues where pid 1 might get a fatal signal.
+	 * For instance, if network interface serving NFS root is
+	 * going down due to reboot, page-in requests for text are
+	 * failing.
 	 */
 	if (p == initproc && rebooting == 0) {
 		printf("init died (signal %d, exit %d)\n", signo, rval);
@@ -250,9 +249,11 @@ exit1(struct thread *td, int rval, int signo)
 	}
 
 	/*
-	 * Deref SU mp, since the thread does not return to userspace.
+	 * Process deferred operations, designated with ASTF_KCLEAR.
+	 * For instance, we need to deref SU mp, since the thread does
+	 * not return to userspace, and wait for geom to stabilize.
 	 */
-	td_softdep_cleanup(td);
+	ast_kclear(td);
 
 	/*
 	 * MUST abort all other threads before proceeding past here.
@@ -403,13 +404,6 @@ exit1(struct thread *td, int rval, int signo)
 	fdescfree(td);
 
 	/*
-	 * If this thread tickled GEOM, we need to wait for the giggling to
-	 * stop before we return to userland
-	 */
-	if (td->td_pflags & TDP_GEOM)
-		g_waitidle();
-
-	/*
 	 * Remove ourself from our leader's peer list and wake our leader.
 	 */
 	if (p->p_leader->p_peers != NULL) {
@@ -478,12 +472,15 @@ exit1(struct thread *td, int rval, int signo)
 	 */
 	p->p_list.le_prev = NULL;
 #endif
+	prison_proc_unlink(p->p_ucred->cr_prison, p);
 	sx_xunlock(&allproc_lock);
 
 	sx_xlock(&proctree_lock);
-	PROC_LOCK(p);
-	p->p_flag &= ~(P_TRACED | P_PPWAIT | P_PPTRACE);
-	PROC_UNLOCK(p);
+	if ((p->p_flag & (P_TRACED | P_PPWAIT | P_PPTRACE)) != 0) {
+		PROC_LOCK(p);
+		p->p_flag &= ~(P_TRACED | P_PPWAIT | P_PPTRACE);
+		PROC_UNLOCK(p);
+	}
 
 	/*
 	 * killjobc() might drop and re-acquire proctree_lock to
@@ -693,7 +690,7 @@ exit1(struct thread *td, int rval, int signo)
 	prison_proc_free(p->p_ucred->cr_prison);
 
 	/*
-	 * The state PRS_ZOMBIE prevents other proesses from sending
+	 * The state PRS_ZOMBIE prevents other processes from sending
 	 * signal to the process, to avoid memory leak, we free memory
 	 * for signal queue at the time when the state is set.
 	 */
@@ -743,9 +740,40 @@ struct abort2_args {
 int
 sys_abort2(struct thread *td, struct abort2_args *uap)
 {
+	void *uargs[16];
+	void **uargsp;
+	int error, nargs;
+
+	nargs = uap->nargs;
+	if (nargs < 0 || nargs > nitems(uargs))
+		nargs = -1;
+	uargsp = NULL;
+	if (nargs > 0) {
+		if (uap->args != NULL) {
+			error = copyin(uap->args, uargs,
+			    nargs * sizeof(void *));
+			if (error != 0)
+				nargs = -1;
+			else
+				uargsp = uargs;
+		} else
+			nargs = -1;
+	}
+	return (kern_abort2(td, uap->why, nargs, uargsp));
+}
+
+/*
+ * kern_abort2()
+ * Arguments:
+ *  why - user pointer to why
+ *  nargs - number of arguments copied or -1 if an error occurred in copying
+ *  args - pointer to an array of pointers in kernel format
+ */
+int
+kern_abort2(struct thread *td, const char *why, int nargs, void **uargs)
+{
 	struct proc *p = td->td_proc;
 	struct sbuf *sb;
-	void *uargs[16];
 	int error, i, sig;
 
 	/*
@@ -763,29 +791,24 @@ sys_abort2(struct thread *td, struct abort2_args *uap)
 	 */
 	sig = SIGKILL;
 	/* Prevent from DoSes from user-space. */
-	if (uap->nargs < 0 || uap->nargs > 16)
+	if (nargs == -1)
 		goto out;
-	if (uap->nargs > 0) {
-		if (uap->args == NULL)
-			goto out;
-		error = copyin(uap->args, uargs, uap->nargs * sizeof(void *));
-		if (error != 0)
-			goto out;
-	}
+	KASSERT(nargs >= 0 && nargs <= 16, ("called with too many args (%d)",
+	    nargs));
 	/*
 	 * Limit size of 'reason' string to 128. Will fit even when
 	 * maximal number of arguments was chosen to be logged.
 	 */
-	if (uap->why != NULL) {
-		error = sbuf_copyin(sb, uap->why, 128);
+	if (why != NULL) {
+		error = sbuf_copyin(sb, why, 128);
 		if (error < 0)
 			goto out;
 	} else {
 		sbuf_printf(sb, "(null)");
 	}
-	if (uap->nargs > 0) {
+	if (nargs > 0) {
 		sbuf_printf(sb, "(");
-		for (i = 0;i < uap->nargs; i++)
+		for (i = 0;i < nargs; i++)
 			sbuf_printf(sb, "%s%p", i == 0 ? "" : ", ", uargs[i]);
 		sbuf_printf(sb, ")");
 	}
@@ -804,8 +827,9 @@ out:
 	sbuf_finish(sb);
 	log(LOG_INFO, "%s", sbuf_data(sb));
 	sbuf_delete(sb);
-	exit1(td, 0, sig);
-	return (0);
+	PROC_LOCK(p);
+	sigexit(td, sig);
+	/* NOTREACHED */
 }
 
 #ifdef COMPAT_43
@@ -1248,8 +1272,8 @@ report_alive_proc(struct thread *td, struct proc *p, siginfo_t *siginfo,
 	}
 	if (status != NULL)
 		*status = cont ? SIGCONT : W_STOPCODE(p->p_xsig);
-	PROC_UNLOCK(p);
 	td->td_retval[0] = p->p_pid;
+	PROC_UNLOCK(p);
 }
 
 int

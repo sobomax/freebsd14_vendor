@@ -1,4 +1,3 @@
-# $FreeBSD: 858f2a55ded73759a026573175767af8960c2832 $
 
 .PATH:  ${SRCTOP}/sys/kern
 KMOD=	alq

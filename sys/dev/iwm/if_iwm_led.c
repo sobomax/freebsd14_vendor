@@ -87,8 +87,6 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: f376bd1cb687d1b025ba305f329dfddc37715724 $");
-
 #include "opt_wlan.h"
 #include "opt_iwm.h"
 

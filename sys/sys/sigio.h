@@ -29,7 +29,6 @@
  * SUCH DAMAGE.
  *
  *	@(#)filedesc.h	8.1 (Berkeley) 6/2/93
- * $FreeBSD: 0a4369e070562bb63e026ad81ac4e4429453ed27 $
  */
 
 #ifndef _SYS_SIGIO_H_

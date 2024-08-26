@@ -32,13 +32,10 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 811e6e10354c8bc6f1082cb201b0039533bb0c54 $");
-
 #include "opt_inet.h"
 #include "opt_inet6.h"
 #include "opt_ipsec.h"
 #include "opt_kern_tls.h"
-#include "opt_tcpdebug.h"
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -62,9 +59,6 @@ __FBSDID("$FreeBSD: 811e6e10354c8bc6f1082cb201b0039533bb0c54 $");
 #include <sys/malloc.h>
 #include <sys/refcount.h>
 #include <sys/mbuf.h>
-#ifdef INET6
-#include <sys/domain.h>
-#endif
 #include <sys/priv.h>
 #include <sys/proc.h>
 #include <sys/sdt.h>
@@ -79,6 +73,7 @@ __FBSDID("$FreeBSD: 811e6e10354c8bc6f1082cb201b0039533bb0c54 $");
 #include <net/route/nhop.h>
 #include <net/if.h>
 #include <net/if_var.h>
+#include <net/if_private.h>
 #include <net/vnet.h>
 
 #include <netinet/in.h>
@@ -101,33 +96,33 @@ __FBSDID("$FreeBSD: 811e6e10354c8bc6f1082cb201b0039533bb0c54 $");
 #endif
 
 #include <netinet/tcp.h>
+#ifdef INVARIANTS
+#define TCPSTATES
+#endif
 #include <netinet/tcp_fsm.h>
 #include <netinet/tcp_seq.h>
 #include <netinet/tcp_timer.h>
 #include <netinet/tcp_var.h>
+#include <netinet/tcp_ecn.h>
 #include <netinet/tcp_log_buf.h>
 #include <netinet/tcp_syncache.h>
 #include <netinet/tcp_hpts.h>
+#include <netinet/tcp_lro.h>
 #include <netinet/cc/cc.h>
-#ifdef INET6
-#include <netinet6/tcp6_var.h>
-#endif
 #include <netinet/tcpip.h>
 #include <netinet/tcp_fastopen.h>
+#include <netinet/tcp_accounting.h>
 #ifdef TCPPCAP
 #include <netinet/tcp_pcap.h>
-#endif
-#ifdef TCPDEBUG
-#include <netinet/tcp_debug.h>
-#endif
-#ifdef INET6
-#include <netinet6/ip6protosw.h>
 #endif
 #ifdef TCP_OFFLOAD
 #include <netinet/tcp_offload.h>
 #endif
 #include <netinet/udp.h>
 #include <netinet/udp_var.h>
+#ifdef INET6
+#include <netinet6/tcp6_var.h>
+#endif
 
 #include <netipsec/ipsec_support.h>
 
@@ -136,12 +131,17 @@ __FBSDID("$FreeBSD: 811e6e10354c8bc6f1082cb201b0039533bb0c54 $");
 
 #include <security/mac/mac_framework.h>
 
+#ifdef INET6
+static ip6proto_ctlinput_t tcp6_ctlinput;
+static udp_tun_icmp_t tcp6_ctlinput_viaudp;
+#endif
+
 VNET_DEFINE(int, tcp_mssdflt) = TCP_MSS;
 #ifdef INET6
 VNET_DEFINE(int, tcp_v6mssdflt) = TCP6_MSS;
 #endif
 
-#ifdef NETFLIX_EXP_DETECTION
+#ifdef TCP_SAD_DETECTION
 /*  Sack attack detection thresholds and such */
 SYSCTL_NODE(_net_inet_tcp, OID_AUTO, sack_attack,
     CTLFLAG_RW | CTLFLAG_MPSAFE, 0,
@@ -151,6 +151,11 @@ SYSCTL_INT(_net_inet_tcp_sack_attack, OID_AUTO, force_detection,
     CTLFLAG_RW,
     &tcp_force_detection, 0,
     "Do we force detection even if the INP has it off?");
+int32_t tcp_sad_limit = 10000;
+SYSCTL_INT(_net_inet_tcp_sack_attack, OID_AUTO, limit,
+    CTLFLAG_RW,
+    &tcp_sad_limit, 10000,
+    "If SaD is enabled, what is the limit to sendmap entries (0 = unlimited)?");
 int32_t tcp_sack_to_ack_thresh = 700;	/* 70 % */
 SYSCTL_INT(_net_inet_tcp_sack_attack, OID_AUTO, sack_to_ack_thresh,
     CTLFLAG_RW,
@@ -161,10 +166,10 @@ SYSCTL_INT(_net_inet_tcp_sack_attack, OID_AUTO, move_thresh,
     CTLFLAG_RW,
     &tcp_sack_to_move_thresh, 600,
     "Percentage of sack moves we must see above (10.1 percent is 101)");
-int32_t tcp_restoral_thresh = 650;	/* 65 % (sack:2:ack -5%) */
+int32_t tcp_restoral_thresh = 450;	/* 45 % (sack:2:ack -25%) (mv:ratio -15%) **/
 SYSCTL_INT(_net_inet_tcp_sack_attack, OID_AUTO, restore_thresh,
     CTLFLAG_RW,
-    &tcp_restoral_thresh, 550,
+    &tcp_restoral_thresh, 450,
     "Percentage of sack to ack percentage we must see below to restore(10.1 percent is 101)");
 int32_t tcp_sad_decay_val = 800;
 SYSCTL_INT(_net_inet_tcp_sack_attack, OID_AUTO, decay_per,
@@ -176,11 +181,6 @@ SYSCTL_INT(_net_inet_tcp_sack_attack, OID_AUTO, nummaps,
     CTLFLAG_RW,
     &tcp_map_minimum, 500,
     "Number of Map enteries before we start detection");
-int32_t tcp_attack_on_turns_on_logging = 0;
-SYSCTL_INT(_net_inet_tcp_sack_attack, OID_AUTO, attacks_logged,
-    CTLFLAG_RW,
-    &tcp_attack_on_turns_on_logging, 0,
-   "When we have a positive hit on attack, do we turn on logging?");
 int32_t tcp_sad_pacing_interval = 2000;
 SYSCTL_INT(_net_inet_tcp_sack_attack, OID_AUTO, sad_pacing_int,
     CTLFLAG_RW,
@@ -288,6 +288,7 @@ SYSCTL_INT(_net_inet_tcp, OID_AUTO, ts_offset_per_conn, CTLFLAG_VNET | CTLFLAG_R
 /* How many connections are pacing */
 static volatile uint32_t number_of_tcp_connections_pacing = 0;
 static uint32_t shadow_num_connections = 0;
+static counter_u64_t tcp_pacing_failures;
 
 static int tcp_pacing_limit = 10000;
 SYSCTL_INT(_net_inet_tcp, OID_AUTO, pacing_limit, CTLFLAG_RW,
@@ -297,12 +298,24 @@ SYSCTL_INT(_net_inet_tcp, OID_AUTO, pacing_limit, CTLFLAG_RW,
 SYSCTL_UINT(_net_inet_tcp, OID_AUTO, pacing_count, CTLFLAG_RD,
     &shadow_num_connections, 0, "Number of TCP connections being paced");
 
+SYSCTL_COUNTER_U64(_net_inet_tcp, OID_AUTO, pacing_failures, CTLFLAG_RD,
+    &tcp_pacing_failures, "Number of times we failed to enable pacing to avoid exceeding the limit");
+
 static int	tcp_log_debug = 0;
 SYSCTL_INT(_net_inet_tcp, OID_AUTO, log_debug, CTLFLAG_RW,
     &tcp_log_debug, 0, "Log errors caused by incoming TCP segments");
 
-static int	tcp_tcbhashsize;
-SYSCTL_INT(_net_inet_tcp, OID_AUTO, tcbhashsize, CTLFLAG_RDTUN | CTLFLAG_NOFETCH,
+/*
+ * Target size of TCP PCB hash tables. Must be a power of two.
+ *
+ * Note that this can be overridden by the kernel environment
+ * variable net.inet.tcp.tcbhashsize
+ */
+#ifndef TCBHASHSIZE
+#define TCBHASHSIZE	0
+#endif
+static int	tcp_tcbhashsize = TCBHASHSIZE;
+SYSCTL_INT(_net_inet_tcp, OID_AUTO, tcbhashsize, CTLFLAG_RDTUN,
     &tcp_tcbhashsize, 0, "Size of TCP control-block hashtable");
 
 static int	do_tcpdrain = 1;
@@ -367,28 +380,58 @@ VNET_DEFINE(struct hhook_head *, tcp_hhh[HHOOK_TCP_LAST+1]);
 VNET_DEFINE_STATIC(u_char, ts_offset_secret[TS_OFFSET_SECRET_LENGTH]);
 #define	V_ts_offset_secret	VNET(ts_offset_secret)
 
-static int	tcp_default_fb_init(struct tcpcb *tp);
+static int	tcp_default_fb_init(struct tcpcb *tp, void **ptr);
 static void	tcp_default_fb_fini(struct tcpcb *tp, int tcb_is_purged);
 static int	tcp_default_handoff_ok(struct tcpcb *tp);
 static struct inpcb *tcp_notify(struct inpcb *, int);
 static struct inpcb *tcp_mtudisc_notify(struct inpcb *, int);
-static void tcp_mtudisc(struct inpcb *, int);
+static struct inpcb *tcp_mtudisc(struct inpcb *, int);
+static struct inpcb *tcp_drop_syn_sent(struct inpcb *, int);
 static char *	tcp_log_addr(struct in_conninfo *inc, struct tcphdr *th,
-		    void *ip4hdr, const void *ip6hdr);
+		    const void *ip4hdr, const void *ip6hdr);
+static void	tcp_default_switch_failed(struct tcpcb *tp);
+static ipproto_ctlinput_t	tcp_ctlinput;
+static udp_tun_icmp_t		tcp_ctlinput_viaudp;
 
 static struct tcp_function_block tcp_def_funcblk = {
 	.tfb_tcp_block_name = "freebsd",
-	.tfb_tcp_output = tcp_output,
+	.tfb_tcp_output = tcp_default_output,
 	.tfb_tcp_do_segment = tcp_do_segment,
 	.tfb_tcp_ctloutput = tcp_default_ctloutput,
 	.tfb_tcp_handoff_ok = tcp_default_handoff_ok,
 	.tfb_tcp_fb_init = tcp_default_fb_init,
 	.tfb_tcp_fb_fini = tcp_default_fb_fini,
+	.tfb_switch_failed = tcp_default_switch_failed,
 };
 
 static int tcp_fb_cnt = 0;
 struct tcp_funchead t_functions;
-static struct tcp_function_block *tcp_func_set_ptr = &tcp_def_funcblk;
+VNET_DEFINE_STATIC(struct tcp_function_block *, tcp_func_set_ptr) = &tcp_def_funcblk;
+#define	V_tcp_func_set_ptr VNET(tcp_func_set_ptr)
+
+void
+tcp_record_dsack(struct tcpcb *tp, tcp_seq start, tcp_seq end, int tlp)
+{
+	TCPSTAT_INC(tcps_dsack_count);
+	tp->t_dsack_pack++;
+	if (tlp == 0) {
+		if (SEQ_GT(end, start)) {
+			tp->t_dsack_bytes += (end - start);
+			TCPSTAT_ADD(tcps_dsack_bytes, (end - start));
+		} else {
+			tp->t_dsack_tlp_bytes += (start - end);
+			TCPSTAT_ADD(tcps_dsack_bytes, (start - end));
+		}
+	} else {
+		if (SEQ_GT(end, start)) {
+			tp->t_dsack_bytes += (end - start);
+			TCPSTAT_ADD(tcps_dsack_tlp_bytes, (end - start));
+		} else {
+			tp->t_dsack_tlp_bytes += (start - end);
+			TCPSTAT_ADD(tcps_dsack_tlp_bytes, (start - end));
+		}
+	}
+}
 
 static struct tcp_function_block *
 find_tcp_functions_locked(struct tcp_function_set *fs)
@@ -449,13 +492,44 @@ find_and_ref_tcp_fb(struct tcp_function_block *blk)
 	return(rblk);
 }
 
+/* Find a matching alias for the given tcp_function_block. */
+int
+find_tcp_function_alias(struct tcp_function_block *blk,
+    struct tcp_function_set *fs)
+{
+	struct tcp_function *f;
+	int found;
+
+	found = 0;
+	rw_rlock(&tcp_function_lock);
+	TAILQ_FOREACH(f, &t_functions, tf_next) {
+		if ((f->tf_fb == blk) &&
+		    (strncmp(f->tf_name, blk->tfb_tcp_block_name,
+		        TCP_FUNCTION_NAME_LEN_MAX) != 0)) {
+			/* Matching function block with different name. */
+			strncpy(fs->function_set_name, f->tf_name,
+			    TCP_FUNCTION_NAME_LEN_MAX);
+			found = 1;
+			break;
+		}
+	}
+	/* Null terminate the string appropriately. */
+	if (found) {
+		fs->function_set_name[TCP_FUNCTION_NAME_LEN_MAX - 1] = '\0';
+	} else {
+		fs->function_set_name[0] = '\0';
+	}
+	rw_runlock(&tcp_function_lock);
+	return (found);
+}
+
 static struct tcp_function_block *
 find_and_ref_tcp_default_fb(void)
 {
 	struct tcp_function_block *rblk;
 
 	rw_rlock(&tcp_function_lock);
-	rblk = tcp_func_set_ptr;
+	rblk = V_tcp_func_set_ptr;
 	refcount_acquire(&rblk->tfb_refcnt);
 	rw_runlock(&tcp_function_lock);
 	return (rblk);
@@ -465,17 +539,13 @@ void
 tcp_switch_back_to_default(struct tcpcb *tp)
 {
 	struct tcp_function_block *tfb;
+	void *ptr = NULL;
 
 	KASSERT(tp->t_fb != &tcp_def_funcblk,
 	    ("%s: called by the built-in default stack", __func__));
 
-	/*
-	 * Release the old stack. This function will either find a new one
-	 * or panic.
-	 */
-	if (tp->t_fb->tfb_tcp_fb_fini != NULL)
-		(*tp->t_fb->tfb_tcp_fb_fini)(tp, 0);
-	refcount_release(&tp->t_fb->tfb_refcnt);
+	if (tp->t_fb->tfb_tcp_timer_stop_all != NULL)
+		tp->t_fb->tfb_tcp_timer_stop_all(tp);
 
 	/*
 	 * Now, we'll find a new function block to use.
@@ -497,14 +567,20 @@ tcp_switch_back_to_default(struct tcpcb *tp)
 	/* Try to use that stack. */
 	if (tfb != NULL) {
 		/* Initialize the new stack. If it succeeds, we are done. */
-		tp->t_fb = tfb;
-		if (tp->t_fb->tfb_tcp_fb_init == NULL ||
-		    (*tp->t_fb->tfb_tcp_fb_init)(tp) == 0)
+		if (tfb->tfb_tcp_fb_init == NULL ||
+		    (*tfb->tfb_tcp_fb_init)(tp, &ptr) == 0) {
+			/* Release the old stack */
+			if (tp->t_fb->tfb_tcp_fb_fini != NULL)
+				(*tp->t_fb->tfb_tcp_fb_fini)(tp, 0);
+			refcount_release(&tp->t_fb->tfb_refcnt);
+			/* Now set in all the pointers */
+			tp->t_fb = tfb;
+			tp->t_fb_ptr = ptr;
 			return;
-
+		}
 		/*
 		 * Initialization failed. Release the reference count on
-		 * the stack.
+		 * the looked up default stack.
 		 */
 		refcount_release(&tfb->tfb_refcnt);
 	}
@@ -524,15 +600,21 @@ tcp_switch_back_to_default(struct tcpcb *tp)
 			panic("Default stack rejects a new session?");
 		}
 	}
-	tp->t_fb = tfb;
-	if (tp->t_fb->tfb_tcp_fb_init != NULL &&
-	    (*tp->t_fb->tfb_tcp_fb_init)(tp)) {
+	if (tfb->tfb_tcp_fb_init != NULL &&
+	    (*tfb->tfb_tcp_fb_init)(tp, &ptr)) {
 		/* The default stack cannot fail */
 		panic("Default stack initialization failed");
 	}
+	/* Now release the old stack */
+	if (tp->t_fb->tfb_tcp_fb_fini != NULL)
+		(*tp->t_fb->tfb_tcp_fb_fini)(tp, 0);
+	refcount_release(&tp->t_fb->tfb_refcnt);
+	/* And set in the pointers to the new */
+	tp->t_fb = tfb;
+	tp->t_fb_ptr = ptr;
 }
 
-static void
+static bool
 tcp_recv_udp_tunneled_packet(struct mbuf *m, int off, struct inpcb *inp,
     const struct sockaddr *sa, void *ctx)
 {
@@ -601,9 +683,11 @@ tcp_recv_udp_tunneled_packet(struct mbuf *m, int off, struct inpcb *inp,
 		goto out;
 		break;
 	}
-	return;
+	return (true);
 out:
 	m_freem(m);
+
+	return (true);
 }
 
 static int
@@ -615,7 +699,7 @@ sysctl_net_inet_default_tcp_functions(SYSCTL_HANDLER_ARGS)
 
 	memset(&fs, 0, sizeof(fs));
 	rw_rlock(&tcp_function_lock);
-	blk = find_tcp_fb_locked(tcp_func_set_ptr, NULL);
+	blk = find_tcp_fb_locked(V_tcp_func_set_ptr, NULL);
 	if (blk) {
 		/* Found him */
 		strcpy(fs.function_set_name, blk->tfb_tcp_block_name);
@@ -636,14 +720,14 @@ sysctl_net_inet_default_tcp_functions(SYSCTL_HANDLER_ARGS)
 		error = ENOENT;
 		goto done;
 	}
-	tcp_func_set_ptr = blk;
+	V_tcp_func_set_ptr = blk;
 done:
 	rw_wunlock(&tcp_function_lock);
 	return (error);
 }
 
 SYSCTL_PROC(_net_inet_tcp, OID_AUTO, functions_default,
-    CTLTYPE_STRING | CTLFLAG_RW | CTLFLAG_NEEDGIANT,
+    CTLFLAG_VNET | CTLTYPE_STRING | CTLFLAG_RW | CTLFLAG_NEEDGIANT,
     NULL, 0, sysctl_net_inet_default_tcp_functions, "A",
     "Set/get the default TCP functions");
 
@@ -680,7 +764,7 @@ sysctl_net_inet_list_available(SYSCTL_HANDLER_ARGS)
 		alias = (f->tf_name != f->tf_fb->tfb_tcp_block_name);
 		linesz = snprintf(cp, bufsz, "%-32s%c %-32s %u\n",
 		    f->tf_fb->tfb_tcp_block_name,
-		    (f->tf_fb == tcp_func_set_ptr) ? '*' : ' ',
+		    (f->tf_fb == V_tcp_func_set_ptr) ? '*' : ' ',
 		    alias ? f->tf_name : "-",
 		    f->tf_fb->tfb_refcnt);
 		if (linesz >= bufsz) {
@@ -699,7 +783,7 @@ sysctl_net_inet_list_available(SYSCTL_HANDLER_ARGS)
 }
 
 SYSCTL_PROC(_net_inet_tcp, OID_AUTO, functions_available,
-    CTLTYPE_STRING | CTLFLAG_RD | CTLFLAG_NEEDGIANT,
+    CTLFLAG_VNET | CTLTYPE_STRING | CTLFLAG_RD | CTLFLAG_NEEDGIANT,
     NULL, 0, sysctl_net_inet_list_available, "A",
     "list available TCP Function sets");
 
@@ -714,13 +798,14 @@ VNET_DEFINE(struct socket *, udp6_tun_socket) = NULL;
 #define	V_udp6_tun_socket	VNET(udp6_tun_socket)
 #endif
 
+static struct sx tcpoudp_lock;
+
 static void
 tcp_over_udp_stop(void)
 {
-	/*
-	 * This function assumes sysctl caller holds inp_rinfo_lock()
-	 * for writing!
-	 */
+
+	sx_assert(&tcpoudp_lock, SA_XLOCKED);
+
 #ifdef INET
 	if (V_udp4_tun_socket != NULL) {
 		soclose(V_udp4_tun_socket);
@@ -746,10 +831,9 @@ tcp_over_udp_start(void)
 #ifdef INET6
 	struct sockaddr_in6 sin6;
 #endif
-	/*
-	 * This function assumes sysctl caller holds inp_info_rlock()
-	 * for writing!
-	 */
+
+	sx_assert(&tcpoudp_lock, SA_XLOCKED);
+
 	port = V_tcp_udp_tunneling_port;
 	if (ntohs(port) == 0) {
 		/* Must have a port set */
@@ -837,6 +921,7 @@ sysctl_net_inet_tcp_udp_tunneling_port_check(SYSCTL_HANDLER_ARGS)
 		    (new > TCP_TUNNELING_PORT_MAX)) {
 			error = EINVAL;
 		} else {
+			sx_xlock(&tcpoudp_lock);
 			V_tcp_udp_tunneling_port = new;
 			if (old != 0) {
 				tcp_over_udp_stop();
@@ -847,6 +932,7 @@ sysctl_net_inet_tcp_udp_tunneling_port_check(SYSCTL_HANDLER_ARGS)
 					V_tcp_udp_tunneling_port = 0;
 				}
 			}
+			sx_xunlock(&tcpoudp_lock);
 		}
 	}
 	return (error);
@@ -982,16 +1068,36 @@ tcp_default_handoff_ok(struct tcpcb *tp)
  * it is required to always succeed since it is the stack of last resort!
  */
 static int
-tcp_default_fb_init(struct tcpcb *tp)
+tcp_default_fb_init(struct tcpcb *tp, void **ptr)
 {
+	struct socket *so = tptosocket(tp);
+	int rexmt;
 
-	struct socket *so;
+	INP_WLOCK_ASSERT(tptoinpcb(tp));
+	/* We don't use the pointer */
+	*ptr = NULL;
 
-	INP_WLOCK_ASSERT(tp->t_inpcb);
-
-	KASSERT(tp->t_state >= 0 && tp->t_state < TCPS_TIME_WAIT,
+	KASSERT(tp->t_state < TCPS_TIME_WAIT,
 	    ("%s: connection %p in unexpected state %d", __func__, tp,
 	    tp->t_state));
+
+	/* Make sure we get no interesting mbuf queuing behavior */
+	/* All mbuf queue/ack compress flags should be off */
+	tcp_lro_features_off(tp);
+
+	/* Cancel the GP measurement in progress */
+	tp->t_flags &= ~TF_GPUTINPROG;
+	/* Validate the timers are not in usec, if they are convert */
+	tcp_change_time_units(tp, TCP_TMR_GRANULARITY_TICKS);
+	if ((tp->t_state == TCPS_SYN_SENT) ||
+	    (tp->t_state == TCPS_SYN_RECEIVED))
+		rexmt = tcp_rexmit_initial * tcp_backoff[tp->t_rxtshift];
+	else
+		rexmt = TCP_REXMTVAL(tp) * tcp_backoff[tp->t_rxtshift];
+	if (tp->t_rxtshift == 0)
+		tp->t_rxtcur = rexmt;
+	else
+		TCPT_RANGESET(tp->t_rxtcur, rexmt, tp->t_rttmin, TCPTV_REXMTMAX);
 
 	/*
 	 * Nothing to do for ESTABLISHED or LISTEN states. And, we don't
@@ -1004,7 +1110,6 @@ tcp_default_fb_init(struct tcpcb *tp)
 	 * Make sure some kind of transmission timer is set if there is
 	 * outstanding data.
 	 */
-	so = tp->t_inpcb->inp_socket;
 	if ((!TCPS_HAVEESTABLISHED(tp->t_state) || sbavail(&so->so_snd) ||
 	    tp->snd_una != tp->snd_max) && !(tcp_timer_active(tp, TT_REXMT) ||
 	    tcp_timer_active(tp, TT_PERSIST))) {
@@ -1018,7 +1123,7 @@ tcp_default_fb_init(struct tcpcb *tp)
 		    (int32_t)sbavail(&so->so_snd))
 			tcp_setpersist(tp);
 		else
-			tcp_timer_activate(tp, TT_REXMT, tp->t_rxtcur);
+			tcp_timer_activate(tp, TT_REXMT, TP_RXTCUR(tp));
 	}
 
 	/* All non-embryonic sessions get a keepalive timer. */
@@ -1050,37 +1155,14 @@ static void
 tcp_default_fb_fini(struct tcpcb *tp, int tcb_is_purged)
 {
 
-	INP_WLOCK_ASSERT(tp->t_inpcb);
+	INP_WLOCK_ASSERT(tptoinpcb(tp));
+
+#ifdef TCP_BLACKBOX
+	tcp_log_flowend(tp);
+#endif
+	tp->t_acktime = 0;
 	return;
 }
-
-/*
- * Target size of TCP PCB hash tables. Must be a power of two.
- *
- * Note that this can be overridden by the kernel environment
- * variable net.inet.tcp.tcbhashsize
- */
-#ifndef TCBHASHSIZE
-#define TCBHASHSIZE	0
-#endif
-
-/*
- * XXX
- * Callouts should be moved into struct tcp directly.  They are currently
- * separate because the tcpcb structure is exported to userland for sysctl
- * parsing purposes, which do not know about callouts.
- */
-struct tcpcb_mem {
-	struct	tcpcb		tcb;
-	struct	tcp_timer	tt;
-	struct	cc_var		ccv;
-#ifdef TCP_HHOOK
-	struct	osd		osd;
-#endif
-};
-
-VNET_DEFINE_STATIC(uma_zone_t, tcpcb_zone);
-#define	V_tcpcb_zone			VNET(tcpcb_zone)
 
 MALLOC_DEFINE(M_TCPLOG, "tcplog", "TCP address and flags print buffers");
 MALLOC_DEFINE(M_TCPFUNCTIONS, "tcpfunc", "TCP function set memory");
@@ -1091,26 +1173,7 @@ static struct mtx isn_mtx;
 #define	ISN_LOCK()	mtx_lock(&isn_mtx)
 #define	ISN_UNLOCK()	mtx_unlock(&isn_mtx)
 
-/*
- * TCP initialization.
- */
-static void
-tcp_zone_change(void *tag)
-{
-
-	uma_zone_set_max(V_tcbinfo.ipi_zone, maxsockets);
-	uma_zone_set_max(V_tcpcb_zone, maxsockets);
-	tcp_tw_zone_change();
-}
-
-static int
-tcp_inpcb_init(void *mem, int size, int flags)
-{
-	struct inpcb *inp = mem;
-
-	INP_LOCK_INIT(inp, "inp", "tcpinp");
-	return (0);
-}
+INPCBSTORAGE_DEFINE(tcpcbstor, tcpcb, "tcpinp", "tcp_inpcb", "tcp", "tcphash");
 
 /*
  * Take a value and get the next power of 2 that doesn't overflow.
@@ -1173,22 +1236,6 @@ register_tcp_functions_as_names(struct tcp_function_block *blk, int wait,
 		 */
 		*num_names = 0;
 		return (EINVAL);
-	}
-	if (blk->tfb_tcp_timer_stop_all ||
-	    blk->tfb_tcp_timer_activate ||
-	    blk->tfb_tcp_timer_active ||
-	    blk->tfb_tcp_timer_stop) {
-		/*
-		 * If you define one timer function you
-		 * must have them all.
-		 */
-		if ((blk->tfb_tcp_timer_stop_all == NULL) ||
-		    (blk->tfb_tcp_timer_activate == NULL) ||
-		    (blk->tfb_tcp_timer_active == NULL) ||
-		    (blk->tfb_tcp_timer_stop == NULL)) {
-			*num_names = 0;
-			return (EINVAL);
-		}
 	}
 
 	if (blk->tfb_flags & TCP_FUNC_BEING_REMOVED) {
@@ -1295,7 +1342,7 @@ register_tcp_functions(struct tcp_function_block *blk, int wait)
  * When called with a force argument, attempt to switch all TCBs to
  * use the default stack instead of returning EBUSY.
  *
- * Returns 0 on success (or if the removal would succeed, or an error
+ * Returns 0 on success (or if the removal would succeed), or an error
  * code on failure.
  */
 int
@@ -1303,17 +1350,26 @@ deregister_tcp_functions(struct tcp_function_block *blk, bool quiesce,
     bool force)
 {
 	struct tcp_function *f;
+	VNET_ITERATOR_DECL(vnet_iter);
 
 	if (blk == &tcp_def_funcblk) {
 		/* You can't un-register the default */
 		return (EPERM);
 	}
 	rw_wlock(&tcp_function_lock);
-	if (blk == tcp_func_set_ptr) {
-		/* You can't free the current default */
-		rw_wunlock(&tcp_function_lock);
-		return (EBUSY);
+	VNET_LIST_RLOCK_NOSLEEP();
+	VNET_FOREACH(vnet_iter) {
+		CURVNET_SET(vnet_iter);
+		if (blk == V_tcp_func_set_ptr) {
+			/* You can't free the current default in some vnet. */
+			CURVNET_RESTORE();
+			VNET_LIST_RUNLOCK_NOSLEEP();
+			rw_wunlock(&tcp_function_lock);
+			return (EBUSY);
+		}
+		CURVNET_RESTORE();
 	}
+	VNET_LIST_RUNLOCK_NOSLEEP();
 	/* Mark the block so no more stacks can use it. */
 	blk->tfb_flags |= TCP_FUNC_BEING_REMOVED;
 	/*
@@ -1330,22 +1386,15 @@ deregister_tcp_functions(struct tcp_function_block *blk, bool quiesce,
 		VNET_LIST_RLOCK();
 		VNET_FOREACH(vnet_iter) {
 			CURVNET_SET(vnet_iter);
-			INP_INFO_WLOCK(&V_tcbinfo);
-			CK_LIST_FOREACH(inp, V_tcbinfo.ipi_listhead, inp_list) {
-				INP_WLOCK(inp);
-				if (inp->inp_flags & INP_TIMEWAIT) {
-					INP_WUNLOCK(inp);
-					continue;
-				}
+			struct inpcb_iterator inpi = INP_ALL_ITERATOR(&V_tcbinfo,
+			    INPLOOKUP_WLOCKPCB);
+
+			while ((inp = inp_next(&inpi)) != NULL) {
 				tp = intotcpcb(inp);
-				if (tp == NULL || tp->t_fb != blk) {
-					INP_WUNLOCK(inp);
+				if (tp == NULL || tp->t_fb != blk)
 					continue;
-				}
 				tcp_switch_back_to_default(tp);
-				INP_WUNLOCK(inp);
 			}
-			INP_INFO_WUNLOCK(&V_tcbinfo);
 			CURVNET_RESTORE();
 		}
 		VNET_LIST_RUNLOCK();
@@ -1373,13 +1422,57 @@ deregister_tcp_functions(struct tcp_function_block *blk, bool quiesce,
 	return (0);
 }
 
-void
-tcp_init(void)
+static void
+tcp_drain(void)
 {
-	const char *tcbhash_tuneable;
-	int hashsize;
+	struct epoch_tracker et;
+	VNET_ITERATOR_DECL(vnet_iter);
 
-	tcbhash_tuneable = "net.inet.tcp.tcbhashsize";
+	if (!do_tcpdrain)
+		return;
+
+	NET_EPOCH_ENTER(et);
+	VNET_LIST_RLOCK_NOSLEEP();
+	VNET_FOREACH(vnet_iter) {
+		CURVNET_SET(vnet_iter);
+		struct inpcb_iterator inpi = INP_ALL_ITERATOR(&V_tcbinfo,
+		    INPLOOKUP_WLOCKPCB);
+		struct inpcb *inpb;
+		struct tcpcb *tcpb;
+
+	/*
+	 * Walk the tcpbs, if existing, and flush the reassembly queue,
+	 * if there is one...
+	 * XXX: The "Net/3" implementation doesn't imply that the TCP
+	 *      reassembly queue should be flushed, but in a situation
+	 *	where we're really low on mbufs, this is potentially
+	 *	useful.
+	 */
+		while ((inpb = inp_next(&inpi)) != NULL) {
+			if ((tcpb = intotcpcb(inpb)) != NULL) {
+				tcp_reass_flush(tcpb);
+				tcp_clean_sackreport(tcpb);
+#ifdef TCP_BLACKBOX
+				tcp_log_drain(tcpb);
+#endif
+#ifdef TCPPCAP
+				if (tcp_pcap_aggressive_free) {
+					/* Free the TCP PCAP queues. */
+					tcp_pcap_drain(&(tcpb->t_inpkts));
+					tcp_pcap_drain(&(tcpb->t_outpkts));
+				}
+#endif
+			}
+		}
+		CURVNET_RESTORE();
+	}
+	VNET_LIST_RUNLOCK_NOSLEEP();
+	NET_EPOCH_EXIT(et);
+}
+
+static void
+tcp_vnet_init(void *arg __unused)
+{
 
 #ifdef TCP_HHOOK
 	if (hhook_head_register(HHOOK_TYPE_TCP, HHOOK_TCP_EST_IN,
@@ -1394,8 +1487,97 @@ tcp_init(void)
 		printf("%s: WARNING: unable to initialise TCP stats\n",
 		    __func__);
 #endif
-	hashsize = TCBHASHSIZE;
-	TUNABLE_INT_FETCH(tcbhash_tuneable, &hashsize);
+	in_pcbinfo_init(&V_tcbinfo, &tcpcbstor, tcp_tcbhashsize,
+	    tcp_tcbhashsize);
+
+	syncache_init();
+	tcp_hc_init();
+
+	TUNABLE_INT_FETCH("net.inet.tcp.sack.enable", &V_tcp_do_sack);
+	V_sack_hole_zone = uma_zcreate("sackhole", sizeof(struct sackhole),
+	    NULL, NULL, NULL, NULL, UMA_ALIGN_PTR, 0);
+
+	tcp_fastopen_init();
+
+	COUNTER_ARRAY_ALLOC(V_tcps_states, TCP_NSTATES, M_WAITOK);
+	VNET_PCPUSTAT_ALLOC(tcpstat, M_WAITOK);
+
+	V_tcp_msl = TCPTV_MSL;
+}
+VNET_SYSINIT(tcp_vnet_init, SI_SUB_PROTO_DOMAIN, SI_ORDER_FOURTH,
+    tcp_vnet_init, NULL);
+
+static void
+tcp_init(void *arg __unused)
+{
+	int hashsize;
+
+	tcp_reass_global_init();
+
+	/* XXX virtualize those below? */
+	tcp_delacktime = TCPTV_DELACK;
+	tcp_keepinit = TCPTV_KEEP_INIT;
+	tcp_keepidle = TCPTV_KEEP_IDLE;
+	tcp_keepintvl = TCPTV_KEEPINTVL;
+	tcp_maxpersistidle = TCPTV_KEEP_IDLE;
+	tcp_rexmit_initial = TCPTV_RTOBASE;
+	if (tcp_rexmit_initial < 1)
+		tcp_rexmit_initial = 1;
+	tcp_rexmit_min = TCPTV_MIN;
+	if (tcp_rexmit_min < 1)
+		tcp_rexmit_min = 1;
+	tcp_persmin = TCPTV_PERSMIN;
+	tcp_persmax = TCPTV_PERSMAX;
+	tcp_rexmit_slop = TCPTV_CPU_VAR;
+	tcp_finwait2_timeout = TCPTV_FINWAIT2_TIMEOUT;
+
+	/* Setup the tcp function block list */
+	TAILQ_INIT(&t_functions);
+	rw_init(&tcp_function_lock, "tcp_func_lock");
+	register_tcp_functions(&tcp_def_funcblk, M_WAITOK);
+	sx_init(&tcpoudp_lock, "TCP over UDP configuration");
+#ifdef TCP_BLACKBOX
+	/* Initialize the TCP logging data. */
+	tcp_log_init();
+#endif
+	arc4rand(&V_ts_offset_secret, sizeof(V_ts_offset_secret), 0);
+
+	if (tcp_soreceive_stream) {
+#ifdef INET
+		tcp_protosw.pr_soreceive = soreceive_stream;
+#endif
+#ifdef INET6
+		tcp6_protosw.pr_soreceive = soreceive_stream;
+#endif /* INET6 */
+	}
+
+#ifdef INET6
+	max_protohdr_grow(sizeof(struct ip6_hdr) + sizeof(struct tcphdr));
+#else /* INET6 */
+	max_protohdr_grow(sizeof(struct tcpiphdr));
+#endif /* INET6 */
+
+	ISN_LOCK_INIT();
+	EVENTHANDLER_REGISTER(shutdown_pre_sync, tcp_fini, NULL,
+		SHUTDOWN_PRI_DEFAULT);
+	EVENTHANDLER_REGISTER(vm_lowmem, tcp_drain, NULL, LOWMEM_PRI_DEFAULT);
+	EVENTHANDLER_REGISTER(mbuf_lowmem, tcp_drain, NULL, LOWMEM_PRI_DEFAULT);
+
+	tcp_inp_lro_direct_queue = counter_u64_alloc(M_WAITOK);
+	tcp_inp_lro_wokeup_queue = counter_u64_alloc(M_WAITOK);
+	tcp_inp_lro_compressed = counter_u64_alloc(M_WAITOK);
+	tcp_inp_lro_locks_taken = counter_u64_alloc(M_WAITOK);
+	tcp_extra_mbuf = counter_u64_alloc(M_WAITOK);
+	tcp_would_have_but = counter_u64_alloc(M_WAITOK);
+	tcp_comp_total = counter_u64_alloc(M_WAITOK);
+	tcp_uncomp_total = counter_u64_alloc(M_WAITOK);
+	tcp_bad_csums = counter_u64_alloc(M_WAITOK);
+	tcp_pacing_failures = counter_u64_alloc(M_WAITOK);
+#ifdef TCPPCAP
+	tcp_pcap_init();
+#endif
+
+	hashsize = tcp_tcbhashsize;
 	if (hashsize == 0) {
 		/*
 		 * Auto tune the hash size based on maxsockets.
@@ -1410,9 +1592,9 @@ tcp_init(void)
 		 */
 		if (hashsize < 512)
 			hashsize = 512;
-		if (bootverbose && IS_DEFAULT_VNET(curvnet))
+		if (bootverbose)
 			printf("%s: %s auto tuned to %d\n", __func__,
-			    tcbhash_tuneable, hashsize);
+			    "net.inet.tcp.tcbhashsize", hashsize);
 	}
 	/*
 	 * We require a hashsize to be a power of two.
@@ -1433,101 +1615,16 @@ tcp_init(void)
 		    "clipped from %d to %d.\n", __func__, oldhashsize,
 		    hashsize);
 	}
-	in_pcbinfo_init(&V_tcbinfo, "tcp", &V_tcb, hashsize, hashsize,
-	    "tcp_inpcb", tcp_inpcb_init, IPI_HASHFIELDS_4TUPLE);
-
-	/*
-	 * These have to be type stable for the benefit of the timers.
-	 */
-	V_tcpcb_zone = uma_zcreate("tcpcb", sizeof(struct tcpcb_mem),
-	    NULL, NULL, NULL, NULL, UMA_ALIGN_PTR, 0);
-	uma_zone_set_max(V_tcpcb_zone, maxsockets);
-	uma_zone_set_warning(V_tcpcb_zone, "kern.ipc.maxsockets limit reached");
-
-	tcp_tw_init();
-	syncache_init();
-	tcp_hc_init();
-
-	TUNABLE_INT_FETCH("net.inet.tcp.sack.enable", &V_tcp_do_sack);
-	V_sack_hole_zone = uma_zcreate("sackhole", sizeof(struct sackhole),
-	    NULL, NULL, NULL, NULL, UMA_ALIGN_PTR, 0);
-
-	tcp_fastopen_init();
-
-	V_tcp_msl = TCPTV_MSL;
-
-	/* Skip initialization of globals for non-default instances. */
-	if (!IS_DEFAULT_VNET(curvnet))
-		return;
-
-	tcp_reass_global_init();
-
-	/* XXX virtualize those below? */
-	tcp_delacktime = TCPTV_DELACK;
-	tcp_keepinit = TCPTV_KEEP_INIT;
-	tcp_keepidle = TCPTV_KEEP_IDLE;
-	tcp_keepintvl = TCPTV_KEEPINTVL;
-	tcp_maxpersistidle = TCPTV_KEEP_IDLE;
-	tcp_rexmit_initial = TCPTV_RTOBASE;
-	if (tcp_rexmit_initial < 1)
-		tcp_rexmit_initial = 1;
-	tcp_rexmit_min = TCPTV_MIN;
-	if (tcp_rexmit_min < 1)
-		tcp_rexmit_min = 1;
-	tcp_persmin = TCPTV_PERSMIN;
-	tcp_persmax = TCPTV_PERSMAX;
-	tcp_rexmit_slop = TCPTV_CPU_VAR;
-	tcp_finwait2_timeout = TCPTV_FINWAIT2_TIMEOUT;
 	tcp_tcbhashsize = hashsize;
 
-	/* Setup the tcp function block list */
-	TAILQ_INIT(&t_functions);
-	rw_init(&tcp_function_lock, "tcp_func_lock");
-	register_tcp_functions(&tcp_def_funcblk, M_WAITOK);
-#ifdef TCP_BLACKBOX
-	/* Initialize the TCP logging data. */
-	tcp_log_init();
-#endif
-	arc4rand(&V_ts_offset_secret, sizeof(V_ts_offset_secret), 0);
-
-	if (tcp_soreceive_stream) {
 #ifdef INET
-		tcp_usrreqs.pru_soreceive = soreceive_stream;
+	IPPROTO_REGISTER(IPPROTO_TCP, tcp_input, tcp_ctlinput);
 #endif
 #ifdef INET6
-		tcp6_usrreqs.pru_soreceive = soreceive_stream;
-#endif /* INET6 */
-	}
-
-#ifdef INET6
-#define TCP_MINPROTOHDR (sizeof(struct ip6_hdr) + sizeof(struct tcphdr))
-#else /* INET6 */
-#define TCP_MINPROTOHDR (sizeof(struct tcpiphdr))
-#endif /* INET6 */
-	if (max_protohdr < TCP_MINPROTOHDR)
-		max_protohdr = TCP_MINPROTOHDR;
-	if (max_linkhdr + TCP_MINPROTOHDR > MHLEN)
-		panic("tcp_init");
-#undef TCP_MINPROTOHDR
-
-	ISN_LOCK_INIT();
-	EVENTHANDLER_REGISTER(shutdown_pre_sync, tcp_fini, NULL,
-		SHUTDOWN_PRI_DEFAULT);
-	EVENTHANDLER_REGISTER(maxsockets_change, tcp_zone_change, NULL,
-		EVENTHANDLER_PRI_ANY);
-
-	tcp_inp_lro_direct_queue = counter_u64_alloc(M_WAITOK);
-	tcp_inp_lro_wokeup_queue = counter_u64_alloc(M_WAITOK);
-	tcp_inp_lro_compressed = counter_u64_alloc(M_WAITOK);
-	tcp_inp_lro_locks_taken = counter_u64_alloc(M_WAITOK);
-	tcp_extra_mbuf = counter_u64_alloc(M_WAITOK);
-	tcp_would_have_but = counter_u64_alloc(M_WAITOK);
-	tcp_comp_total = counter_u64_alloc(M_WAITOK);
-	tcp_uncomp_total = counter_u64_alloc(M_WAITOK);
-#ifdef TCPPCAP
-	tcp_pcap_init();
+	IP6PROTO_REGISTER(IPPROTO_TCP, tcp6_input, tcp6_ctlinput);
 #endif
 }
+SYSINIT(tcp_init, SI_SUB_PROTO_DOMAIN, SI_ORDER_THIRD, tcp_init, NULL);
 
 #ifdef VIMAGE
 static void
@@ -1544,26 +1641,27 @@ tcp_destroy(void *unused __unused)
 	 * Sleep to let all tcpcb timers really disappear and cleanup.
 	 */
 	for (;;) {
-		INP_LIST_RLOCK(&V_tcbinfo);
+		INP_INFO_WLOCK(&V_tcbinfo);
 		n = V_tcbinfo.ipi_count;
-		INP_LIST_RUNLOCK(&V_tcbinfo);
+		INP_INFO_WUNLOCK(&V_tcbinfo);
 		if (n == 0)
 			break;
 		pause("tcpdes", hz / 10);
 	}
 	tcp_hc_destroy();
 	syncache_destroy();
-	tcp_tw_destroy();
 	in_pcbinfo_destroy(&V_tcbinfo);
 	/* tcp_discardcb() clears the sack_holes up. */
 	uma_zdestroy(V_sack_hole_zone);
-	uma_zdestroy(V_tcpcb_zone);
 
 	/*
 	 * Cannot free the zone until all tcpcbs are released as we attach
 	 * the allocations to them.
 	 */
 	tcp_fastopen_destroy();
+
+	COUNTER_ARRAY_FREE(V_tcps_states, TCP_NSTATES);
+	VNET_PCPUSTAT_FREE(tcpstat);
 
 #ifdef TCP_HHOOK
 	error = hhook_head_deregister(V_tcp_hhh[HHOOK_TCP_EST_IN]);
@@ -1647,9 +1745,8 @@ tcpip_fillheaders(struct inpcb *inp, uint16_t port, void *ip_ptr, void *tcp_ptr)
 	th->th_dport = inp->inp_fport;
 	th->th_seq = 0;
 	th->th_ack = 0;
-	th->th_x2 = 0;
 	th->th_off = 5;
-	th->th_flags = 0;
+	tcp_set_flags(th, 0);
 	th->th_win = 0;
 	th->th_urp = 0;
 	th->th_sum = 0;		/* in_pseudo() is called later for ipv4 */
@@ -1688,7 +1785,7 @@ tcpip_maketemplate(struct inpcb *inp)
  */
 void
 tcp_respond(struct tcpcb *tp, void *ipgen, struct tcphdr *th, struct mbuf *m,
-    tcp_seq ack, tcp_seq seq, int flags)
+    tcp_seq ack, tcp_seq seq, uint16_t flags)
 {
 	struct tcpopt to;
 	struct inpcb *inp;
@@ -1696,14 +1793,20 @@ tcp_respond(struct tcpcb *tp, void *ipgen, struct tcphdr *th, struct mbuf *m,
 	struct mbuf *optm;
 	struct udphdr *uh = NULL;
 	struct tcphdr *nth;
+	struct tcp_log_buffer *lgb;
 	u_char *optp;
 #ifdef INET6
 	struct ip6_hdr *ip6;
 	int isipv6;
 #endif /* INET6 */
 	int optlen, tlen, win, ulen;
+	int ect = 0;
 	bool incl_opts;
 	uint16_t port;
+	int output_ret;
+#ifdef INVARIANTS
+	int thflags = tcp_get_flags(th);
+#endif
 
 	KASSERT(tp != NULL || m != NULL, ("tcp_respond: tp and m both NULL"));
 	NET_EPOCH_ASSERT();
@@ -1715,9 +1818,8 @@ tcp_respond(struct tcpcb *tp, void *ipgen, struct tcphdr *th, struct mbuf *m,
 	ip = ipgen;
 
 	if (tp != NULL) {
-		inp = tp->t_inpcb;
-		KASSERT(inp != NULL, ("tcp control block w/o inpcb"));
-		INP_WLOCK_ASSERT(inp);
+		inp = tptoinpcb(tp);
+		INP_LOCK_ASSERT(inp);
 	} else
 		inp = NULL;
 
@@ -1840,6 +1942,8 @@ tcp_respond(struct tcpcb *tp, void *ipgen, struct tcphdr *th, struct mbuf *m,
 		m_freem(m->m_next);
 		m->m_next = NULL;
 		m->m_data = (caddr_t)ipgen;
+		/* clear any receive flags for proper bpf timestamping */
+		m->m_flags &= ~(M_TSTMP | M_TSTMP_LRO);
 		/* m_len is set later */
 #ifdef INET6
 		if (isipv6) {
@@ -1885,6 +1989,7 @@ tcp_respond(struct tcpcb *tp, void *ipgen, struct tcphdr *th, struct mbuf *m,
 	m->m_len = tlen;
 	to.to_flags = 0;
 	if (incl_opts) {
+		ect = tcp_ecn_output_established(tp, &flags, 0, false);
 		/* Make sure we have room. */
 		if (M_TRAILINGSPACE(m) < TCP_MAXOLEN) {
 			m->m_next = m_get(M_NOWAIT, MT_DATA);
@@ -1923,7 +2028,7 @@ tcp_respond(struct tcpcb *tp, void *ipgen, struct tcphdr *th, struct mbuf *m,
 			ulen = tlen - sizeof(struct ip6_hdr);
 			uh->uh_ulen = htons(ulen);
 		}
-		ip6->ip6_flow = 0;
+		ip6->ip6_flow = htonl(ect << IPV6_FLOWLABEL_LEN);
 		ip6->ip6_vfc = IPV6_VERSION;
 		if (port)
 			ip6->ip6_nxt = IPPROTO_UDP;
@@ -1942,7 +2047,14 @@ tcp_respond(struct tcpcb *tp, void *ipgen, struct tcphdr *th, struct mbuf *m,
 			uh->uh_ulen = htons(ulen);
 		}
 		ip->ip_len = htons(tlen);
-		ip->ip_ttl = V_ip_defttl;
+		if (inp != NULL) {
+			ip->ip_tos = inp->inp_ip_tos & ~IPTOS_ECN_MASK;
+			ip->ip_ttl = inp->inp_ip_ttl;
+		} else {
+			ip->ip_tos = 0;
+			ip->ip_ttl = V_ip_defttl;
+		}
+		ip->ip_tos |= ect;
 		if (port) {
 			ip->ip_p = IPPROTO_UDP;
 		} else {
@@ -1960,7 +2072,7 @@ tcp_respond(struct tcpcb *tp, void *ipgen, struct tcphdr *th, struct mbuf *m,
 		 * Packet is associated with a socket, so allow the
 		 * label of the response to reflect the socket label.
 		 */
-		INP_WLOCK_ASSERT(inp);
+		INP_LOCK_ASSERT(inp);
 		mac_inpcb_create_mbuf(inp, m);
 	} else {
 		/*
@@ -1972,9 +2084,12 @@ tcp_respond(struct tcpcb *tp, void *ipgen, struct tcphdr *th, struct mbuf *m,
 #endif
 	nth->th_seq = htonl(seq);
 	nth->th_ack = htonl(ack);
-	nth->th_x2 = 0;
 	nth->th_off = (sizeof (struct tcphdr) + optlen) >> 2;
-	nth->th_flags = flags;
+	tcp_set_flags(nth, flags);
+	if (tp && (flags & TH_RST)) {
+		/* Log the reset */
+		tcp_log_end_status(tp, TCP_EI_STATUS_SERVER_RST);
+	}
 	if (tp != NULL)
 		nth->th_win = htons((u_short) (win >> tp->rcv_scale));
 	else
@@ -2004,8 +2119,7 @@ tcp_respond(struct tcpcb *tp, void *ipgen, struct tcphdr *th, struct mbuf *m,
 			nth->th_sum = in6_cksum_pseudo(ip6,
 			    tlen - sizeof(struct ip6_hdr), IPPROTO_TCP, 0);
 		}
-		ip6->ip6_hlim = in6_selecthlim(tp != NULL ? tp->t_inpcb :
-		    NULL, NULL);
+		ip6->ip6_hlim = in6_selecthlim(inp, NULL);
 	}
 #endif /* INET6 */
 #if defined(INET6) && defined(INET)
@@ -2027,18 +2141,65 @@ tcp_respond(struct tcpcb *tp, void *ipgen, struct tcphdr *th, struct mbuf *m,
 		}
 	}
 #endif /* INET */
-#ifdef TCPDEBUG
-	if (tp == NULL || (inp->inp_socket->so_options & SO_DEBUG))
-		tcp_trace(TA_OUTPUT, 0, tp, mtod(m, void *), th, 0);
-#endif
 	TCP_PROBE3(debug__output, tp, th, m);
 	if (flags & TH_RST)
 		TCP_PROBE5(accept__refused, NULL, NULL, m, tp, nth);
+	lgb = NULL;
+	if ((tp != NULL) && tcp_bblogging_on(tp)) {
+		if (INP_WLOCKED(inp)) {
+			union tcp_log_stackspecific log;
+			struct timeval tv;
+
+			memset(&log.u_bbr, 0, sizeof(log.u_bbr));
+			log.u_bbr.inhpts = tcp_in_hpts(tp);
+			log.u_bbr.flex8 = 4;
+			log.u_bbr.pkts_out = tp->t_maxseg;
+			log.u_bbr.timeStamp = tcp_get_usecs(&tv);
+			log.u_bbr.delivered = 0;
+			lgb = tcp_log_event(tp, nth, NULL, NULL, TCP_LOG_OUT,
+			    ERRNO_UNK, 0, &log, false, NULL, NULL, 0, &tv);
+		} else {
+			/*
+			 * We can not log the packet, since we only own the
+			 * read lock, but a write lock is needed. The read lock
+			 * is not upgraded to a write lock, since only getting
+			 * the read lock was done intentionally to improve the
+			 * handling of SYN flooding attacks.
+			 * This happens only for pure SYN segments received in
+			 * the initial CLOSED state, or received in a more
+			 * advanced state than listen and the UDP encapsulation
+			 * port is unexpected.
+			 * The incoming SYN segments do not really belong to
+			 * the TCP connection and the handling does not change
+			 * the state of the TCP connection. Therefore, the
+			 * sending of the RST segments is not logged. Please
+			 * note that also the incoming SYN segments are not
+			 * logged.
+			 *
+			 * The following code ensures that the above description
+			 * is and stays correct.
+			 */
+			KASSERT((thflags & (TH_ACK|TH_SYN)) == TH_SYN &&
+			    (tp->t_state == TCPS_CLOSED ||
+			    (tp->t_state > TCPS_LISTEN && tp->t_port != port)),
+			    ("%s: Logging of TCP segment with flags 0x%b and "
+			    "UDP encapsulation port %u skipped in state %s",
+			    __func__, thflags, PRINT_TH_FLAGS,
+			    ntohs(port), tcpstates[tp->t_state]));
+		}
+	}
+
+	if (flags & TH_ACK)
+		TCPSTAT_INC(tcps_sndacks);
+	else if (flags & (TH_SYN|TH_FIN|TH_RST))
+		TCPSTAT_INC(tcps_sndctrl);
+	TCPSTAT_INC(tcps_sndtotal);
 
 #ifdef INET6
 	if (isipv6) {
 		TCP_PROBE5(send, NULL, tp, ip6, tp, nth);
-		(void)ip6_output(m, NULL, NULL, 0, NULL, NULL, inp);
+		output_ret = ip6_output(m, inp ? inp->in6p_outputopts : NULL,
+		    NULL, 0, NULL, NULL, inp);
 	}
 #endif /* INET6 */
 #if defined(INET) && defined(INET6)
@@ -2047,95 +2208,95 @@ tcp_respond(struct tcpcb *tp, void *ipgen, struct tcphdr *th, struct mbuf *m,
 #ifdef INET
 	{
 		TCP_PROBE5(send, NULL, tp, ip, tp, nth);
-		(void)ip_output(m, NULL, NULL, 0, NULL, inp);
+		output_ret = ip_output(m, NULL, NULL, 0, NULL, inp);
 	}
 #endif
+	if (lgb != NULL)
+		lgb->tlb_errno = output_ret;
 }
 
 /*
- * Create a new TCP control block, making an
- * empty reassembly queue and hooking it to the argument
- * protocol control block.  The `inp' parameter must have
- * come from the zone allocator set up in tcp_init().
+ * Create a new TCP control block, making an empty reassembly queue and hooking
+ * it to the argument protocol control block.  The `inp' parameter must have
+ * come from the zone allocator set up by tcpcbstor declaration.
  */
 struct tcpcb *
 tcp_newtcpcb(struct inpcb *inp)
 {
-	struct tcpcb_mem *tm;
-	struct tcpcb *tp;
+	struct tcpcb *tp = intotcpcb(inp);
 #ifdef INET6
 	int isipv6 = (inp->inp_vflag & INP_IPV6) != 0;
 #endif /* INET6 */
 
-	tm = uma_zalloc(V_tcpcb_zone, M_NOWAIT | M_ZERO);
-	if (tm == NULL)
-		return (NULL);
-	tp = &tm->tcb;
+	/*
+	 * Historically allocation was done with M_ZERO.  There is a lot of
+	 * code that rely on that.  For now take safe approach and zero whole
+	 * tcpcb.  This definitely can be optimized.
+	 */
+	bzero(&tp->t_start_zero, t_zero_size);
 
 	/* Initialise cc_var struct for this tcpcb. */
-	tp->ccv = &tm->ccv;
-	tp->ccv->type = IPPROTO_TCP;
-	tp->ccv->ccvc.tcp = tp;
+	tp->t_ccv.type = IPPROTO_TCP;
+	tp->t_ccv.ccvc.tcp = tp;
 	rw_rlock(&tcp_function_lock);
-	tp->t_fb = tcp_func_set_ptr;
+	tp->t_fb = V_tcp_func_set_ptr;
 	refcount_acquire(&tp->t_fb->tfb_refcnt);
 	rw_runlock(&tcp_function_lock);
 	/*
 	 * Use the current system default CC algorithm.
 	 */
-	CC_LIST_RLOCK();
-	KASSERT(!STAILQ_EMPTY(&cc_list), ("cc_list is empty!"));
-	CC_ALGO(tp) = CC_DEFAULT();
-	CC_LIST_RUNLOCK();
-	/*
-	 * The tcpcb will hold a reference on its inpcb until tcp_discardcb()
-	 * is called.
-	 */
-	in_pcbref(inp);	/* Reference for tcpcb */
-	tp->t_inpcb = inp;
+	cc_attach(tp, CC_DEFAULT_ALGO());
 
 	if (CC_ALGO(tp)->cb_init != NULL)
-		if (CC_ALGO(tp)->cb_init(tp->ccv) > 0) {
+		if (CC_ALGO(tp)->cb_init(&tp->t_ccv, NULL) > 0) {
+			cc_detach(tp);
 			if (tp->t_fb->tfb_tcp_fb_fini)
 				(*tp->t_fb->tfb_tcp_fb_fini)(tp, 1);
-			in_pcbrele_wlocked(inp);
 			refcount_release(&tp->t_fb->tfb_refcnt);
-			uma_zfree(V_tcpcb_zone, tm);
 			return (NULL);
 		}
 
 #ifdef TCP_HHOOK
-	tp->osd = &tm->osd;
-	if (khelp_init_osd(HELPER_CLASS_TCP, tp->osd)) {
+	if (khelp_init_osd(HELPER_CLASS_TCP, &tp->t_osd)) {
 		if (tp->t_fb->tfb_tcp_fb_fini)
 			(*tp->t_fb->tfb_tcp_fb_fini)(tp, 1);
-		in_pcbrele_wlocked(inp);
 		refcount_release(&tp->t_fb->tfb_refcnt);
-		uma_zfree(V_tcpcb_zone, tm);
 		return (NULL);
 	}
 #endif
 
-#ifdef VIMAGE
-	tp->t_vnet = inp->inp_vnet;
-#endif
-	tp->t_timers = &tm->tt;
 	TAILQ_INIT(&tp->t_segq);
+	STAILQ_INIT(&tp->t_inqueue);
 	tp->t_maxseg =
 #ifdef INET6
 		isipv6 ? V_tcp_v6mssdflt :
 #endif /* INET6 */
 		V_tcp_mssdflt;
 
-	/* Set up our timeouts. */
-	callout_init(&tp->t_timers->tt_rexmt, 1);
-	callout_init(&tp->t_timers->tt_persist, 1);
-	callout_init(&tp->t_timers->tt_keep, 1);
-	callout_init(&tp->t_timers->tt_2msl, 1);
-	callout_init(&tp->t_timers->tt_delack, 1);
+	/* All mbuf queue/ack compress flags should be off */
+	tcp_lro_features_off(tp);
 
-	if (V_tcp_do_rfc1323)
-		tp->t_flags = (TF_REQ_SCALE|TF_REQ_TSTMP);
+	tp->t_hpts_cpu = HPTS_CPU_NONE;
+	tp->t_lro_cpu = HPTS_CPU_NONE;
+
+	callout_init_rw(&tp->t_callout, &inp->inp_lock, CALLOUT_RETURNUNLOCKED);
+	for (int i = 0; i < TT_N; i++)
+		tp->t_timers[i] = SBT_MAX;
+
+	switch (V_tcp_do_rfc1323) {
+		case 0:
+			break;
+		default:
+		case 1:
+			tp->t_flags = (TF_REQ_SCALE|TF_REQ_TSTMP);
+			break;
+		case 2:
+			tp->t_flags = TF_REQ_SCALE;
+			break;
+		case 3:
+			tp->t_flags = TF_REQ_TSTMP;
+			break;
+	}
 	if (V_tcp_do_sack)
 		tp->t_flags |= TF_SACK_PERMIT;
 	TAILQ_INIT(&tp->snd_holes);
@@ -2152,13 +2313,14 @@ tcp_newtcpcb(struct inpcb *inp)
 	tp->snd_cwnd = TCP_MAXWIN << TCP_MAX_WINSHIFT;
 	tp->snd_ssthresh = TCP_MAXWIN << TCP_MAX_WINSHIFT;
 	tp->t_rcvtime = ticks;
+	/* We always start with ticks granularity */
+	tp->t_tmr_granularity = TCP_TMR_GRANULARITY_TICKS;
 	/*
 	 * IPv4 TTL initialization is necessary for an IPv6 socket as well,
 	 * because the socket may be bound to an IPv6 wildcard address,
 	 * which may match an IPv4-mapped IPv6 address.
 	 */
 	inp->inp_ip_ttl = V_ip_defttl;
-	inp->inp_ppcb = tp;
 #ifdef TCPPCAP
 	/*
 	 * Init the TCP PCAP queues.
@@ -2171,10 +2333,8 @@ tcp_newtcpcb(struct inpcb *inp)
 #endif
 	tp->t_pacing_rate = -1;
 	if (tp->t_fb->tfb_tcp_fb_init) {
-		if ((*tp->t_fb->tfb_tcp_fb_init)(tp)) {
+		if ((*tp->t_fb->tfb_tcp_fb_init)(tp, &tp->t_fb_ptr)) {
 			refcount_release(&tp->t_fb->tfb_refcnt);
-			in_pcbrele_wlocked(inp);
-			uma_zfree(V_tcpcb_zone, tm);
 			return (NULL);
 		}
 	}
@@ -2182,78 +2342,10 @@ tcp_newtcpcb(struct inpcb *inp)
 	if (V_tcp_perconn_stats_enable == 1)
 		tp->t_stats = stats_blob_alloc(V_tcp_perconn_stats_dflt_tpl, 0);
 #endif
-	return (tp);		/* XXX */
-}
+	if (V_tcp_do_lrd)
+		tp->t_flags |= TF_LRD;
 
-/*
- * Switch the congestion control algorithm back to NewReno for any active
- * control blocks using an algorithm which is about to go away.
- * This ensures the CC framework can allow the unload to proceed without leaving
- * any dangling pointers which would trigger a panic.
- * Returning non-zero would inform the CC framework that something went wrong
- * and it would be unsafe to allow the unload to proceed. However, there is no
- * way for this to occur with this implementation so we always return zero.
- */
-int
-tcp_ccalgounload(struct cc_algo *unload_algo)
-{
-	struct cc_algo *tmpalgo;
-	struct inpcb *inp;
-	struct tcpcb *tp;
-	VNET_ITERATOR_DECL(vnet_iter);
-
-	/*
-	 * Check all active control blocks across all network stacks and change
-	 * any that are using "unload_algo" back to NewReno. If "unload_algo"
-	 * requires cleanup code to be run, call it.
-	 */
-	VNET_LIST_RLOCK();
-	VNET_FOREACH(vnet_iter) {
-		CURVNET_SET(vnet_iter);
-		INP_INFO_WLOCK(&V_tcbinfo);
-		/*
-		 * New connections already part way through being initialised
-		 * with the CC algo we're removing will not race with this code
-		 * because the INP_INFO_WLOCK is held during initialisation. We
-		 * therefore don't enter the loop below until the connection
-		 * list has stabilised.
-		 */
-		CK_LIST_FOREACH(inp, &V_tcb, inp_list) {
-			INP_WLOCK(inp);
-			/* Important to skip tcptw structs. */
-			if (!(inp->inp_flags & INP_TIMEWAIT) &&
-			    (tp = intotcpcb(inp)) != NULL) {
-				/*
-				 * By holding INP_WLOCK here, we are assured
-				 * that the connection is not currently
-				 * executing inside the CC module's functions
-				 * i.e. it is safe to make the switch back to
-				 * NewReno.
-				 */
-				if (CC_ALGO(tp) == unload_algo) {
-					tmpalgo = CC_ALGO(tp);
-					if (tmpalgo->cb_destroy != NULL)
-						tmpalgo->cb_destroy(tp->ccv);
-					CC_DATA(tp) = NULL;
-					/*
-					 * NewReno may allocate memory on
-					 * demand for certain stateful
-					 * configuration as needed, but is
-					 * coded to never fail on memory
-					 * allocation failure so it is a safe
-					 * fallback.
-					 */
-					CC_ALGO(tp) = &newreno_cc_algo;
-				}
-			}
-			INP_WUNLOCK(inp);
-		}
-		INP_INFO_WUNLOCK(&V_tcbinfo);
-		CURVNET_RESTORE();
-	}
-	VNET_LIST_RUNLOCK();
-
-	return (0);
+	return (tp);
 }
 
 /*
@@ -2264,15 +2356,15 @@ tcp_ccalgounload(struct cc_algo *unload_algo)
 struct tcpcb *
 tcp_drop(struct tcpcb *tp, int errno)
 {
-	struct socket *so = tp->t_inpcb->inp_socket;
+	struct socket *so = tptosocket(tp);
 
 	NET_EPOCH_ASSERT();
-	INP_INFO_LOCK_ASSERT(&V_tcbinfo);
-	INP_WLOCK_ASSERT(tp->t_inpcb);
+	INP_WLOCK_ASSERT(tptoinpcb(tp));
 
 	if (TCPS_HAVERCVDSYN(tp->t_state)) {
 		tcp_state_change(tp, TCPS_CLOSED);
-		(void) tp->t_fb->tfb_tcp_output(tp);
+		/* Don't use tcp_output() here due to possible recursion. */
+		(void)tcp_output_nodrop(tp);
 		TCPSTAT_INC(tcps_drops);
 	} else
 		TCPSTAT_INC(tcps_conndrops);
@@ -2285,40 +2377,16 @@ tcp_drop(struct tcpcb *tp, int errno)
 void
 tcp_discardcb(struct tcpcb *tp)
 {
-	struct inpcb *inp = tp->t_inpcb;
-	struct socket *so = inp->inp_socket;
+	struct inpcb *inp = tptoinpcb(tp);
+	struct socket *so = tptosocket(tp);
+	struct mbuf *m;
 #ifdef INET6
-	int isipv6 = (inp->inp_vflag & INP_IPV6) != 0;
-#endif /* INET6 */
-	int released __unused;
+	bool isipv6 = (inp->inp_vflag & INP_IPV6) != 0;
+#endif
 
 	INP_WLOCK_ASSERT(inp);
 
-	/*
-	 * Make sure that all of our timers are stopped before we delete the
-	 * PCB.
-	 *
-	 * If stopping a timer fails, we schedule a discard function in same
-	 * callout, and the last discard function called will take care of
-	 * deleting the tcpcb.
-	 */
-	tp->t_timers->tt_draincnt = 0;
-	tcp_timer_stop(tp, TT_REXMT);
-	tcp_timer_stop(tp, TT_PERSIST);
-	tcp_timer_stop(tp, TT_KEEP);
-	tcp_timer_stop(tp, TT_2MSL);
-	tcp_timer_stop(tp, TT_DELACK);
-	if (tp->t_fb->tfb_tcp_timer_stop_all) {
-		/*
-		 * Call the stop-all function of the methods,
-		 * this function should call the tcp_timer_stop()
-		 * method with each of the function specific timeouts.
-		 * That stop will be called via the tfb_tcp_timer_stop()
-		 * which should use the async drain function of the
-		 * callout system (see tcp_var.h).
-		 */
-		tp->t_fb->tfb_tcp_timer_stop_all(tp);
-	}
+	tcp_timer_stop(tp);
 
 	/* free the reassembly queue, if any */
 	tcp_reass_flush(tp);
@@ -2339,134 +2407,98 @@ tcp_discardcb(struct tcpcb *tp)
 
 	/* Allow the CC algorithm to clean up after itself. */
 	if (CC_ALGO(tp)->cb_destroy != NULL)
-		CC_ALGO(tp)->cb_destroy(tp->ccv);
+		CC_ALGO(tp)->cb_destroy(&tp->t_ccv);
 	CC_DATA(tp) = NULL;
+	/* Detach from the CC algorithm */
+	cc_detach(tp);
 
 #ifdef TCP_HHOOK
-	khelp_destroy_osd(tp->osd);
+	khelp_destroy_osd(&tp->t_osd);
 #endif
 #ifdef STATS
 	stats_blob_destroy(tp->t_stats);
 #endif
 
 	CC_ALGO(tp) = NULL;
-	inp->inp_ppcb = NULL;
-	if (tp->t_timers->tt_draincnt == 0) {
-		/* We own the last reference on tcpcb, let's free it. */
-#ifdef TCP_BLACKBOX
-		tcp_log_tcpcbfini(tp);
-#endif
-		TCPSTATES_DEC(tp->t_state);
-		if (tp->t_fb->tfb_tcp_fb_fini)
-			(*tp->t_fb->tfb_tcp_fb_fini)(tp, 1);
+	if ((m = STAILQ_FIRST(&tp->t_inqueue)) != NULL) {
+		struct mbuf *prev;
 
+		STAILQ_INIT(&tp->t_inqueue);
+		STAILQ_FOREACH_FROM_SAFE(m, &tp->t_inqueue, m_stailqpkt, prev)
+			m_freem(m);
+	}
+	TCPSTATES_DEC(tp->t_state);
+
+	if (tp->t_fb->tfb_tcp_fb_fini)
+		(*tp->t_fb->tfb_tcp_fb_fini)(tp, 1);
+	MPASS(!tcp_in_hpts(tp));
+#ifdef TCP_BLACKBOX
+	tcp_log_tcpcbfini(tp);
+#endif
+
+	/*
+	 * If we got enough samples through the srtt filter,
+	 * save the rtt and rttvar in the routing entry.
+	 * 'Enough' is arbitrarily defined as 4 rtt samples.
+	 * 4 samples is enough for the srtt filter to converge
+	 * to within enough % of the correct value; fewer samples
+	 * and we could save a bogus rtt. The danger is not high
+	 * as tcp quickly recovers from everything.
+	 * XXX: Works very well but needs some more statistics!
+	 *
+	 * XXXRRS: Updating must be after the stack fini() since
+	 * that may be converting some internal representation of
+	 * say srtt etc into the general one used by other stacks.
+	 * Lets also at least protect against the so being NULL
+	 * as RW stated below.
+	 */
+	if ((tp->t_rttupdated >= 4) && (so != NULL)) {
+		struct hc_metrics_lite metrics;
+		uint32_t ssthresh;
+
+		bzero(&metrics, sizeof(metrics));
 		/*
-		 * If we got enough samples through the srtt filter,
-		 * save the rtt and rttvar in the routing entry.
-		 * 'Enough' is arbitrarily defined as 4 rtt samples.
-		 * 4 samples is enough for the srtt filter to converge
-		 * to within enough % of the correct value; fewer samples
-		 * and we could save a bogus rtt. The danger is not high
-		 * as tcp quickly recovers from everything.
-		 * XXX: Works very well but needs some more statistics!
+		 * Update the ssthresh always when the conditions below
+		 * are satisfied. This gives us better new start value
+		 * for the congestion avoidance for new connections.
+		 * ssthresh is only set if packet loss occurred on a session.
 		 *
-		 * XXXRRS: Updating must be after the stack fini() since
-		 * that may be converting some internal representation of
-		 * say srtt etc into the general one used by other stacks.
-		 * Lets also at least protect against the so being NULL
-		 * as RW stated below.
+		 * XXXRW: 'so' may be NULL here, and/or socket buffer may be
+		 * being torn down.  Ideally this code would not use 'so'.
 		 */
-		if ((tp->t_rttupdated >= 4) && (so != NULL)) {
-			struct hc_metrics_lite metrics;
-			uint32_t ssthresh;
-
-			bzero(&metrics, sizeof(metrics));
+		ssthresh = tp->snd_ssthresh;
+		if (ssthresh != 0 && ssthresh < so->so_snd.sb_hiwat / 2) {
 			/*
-			 * Update the ssthresh always when the conditions below
-			 * are satisfied. This gives us better new start value
-			 * for the congestion avoidance for new connections.
-			 * ssthresh is only set if packet loss occurred on a session.
-			 *
-			 * XXXRW: 'so' may be NULL here, and/or socket buffer may be
-			 * being torn down.  Ideally this code would not use 'so'.
+			 * convert the limit from user data bytes to
+			 * packets then to packet data bytes.
 			 */
-			ssthresh = tp->snd_ssthresh;
-			if (ssthresh != 0 && ssthresh < so->so_snd.sb_hiwat / 2) {
-				/*
-				 * convert the limit from user data bytes to
-				 * packets then to packet data bytes.
-				 */
-				ssthresh = (ssthresh + tp->t_maxseg / 2) / tp->t_maxseg;
-				if (ssthresh < 2)
-					ssthresh = 2;
-				ssthresh *= (tp->t_maxseg +
+			ssthresh = (ssthresh + tp->t_maxseg / 2) / tp->t_maxseg;
+			if (ssthresh < 2)
+				ssthresh = 2;
+			ssthresh *= (tp->t_maxseg +
 #ifdef INET6
-					     (isipv6 ? sizeof (struct ip6_hdr) +
-					      sizeof (struct tcphdr) :
+			    (isipv6 ? sizeof (struct ip6_hdr) +
+			    sizeof (struct tcphdr) :
 #endif
-					      sizeof (struct tcpiphdr)
+			    sizeof (struct tcpiphdr)
 #ifdef INET6
-						     )
+			    )
 #endif
-					);
-			} else
-				ssthresh = 0;
-			metrics.rmx_ssthresh = ssthresh;
+			    );
+		} else
+			ssthresh = 0;
+		metrics.rmx_ssthresh = ssthresh;
 
-			metrics.rmx_rtt = tp->t_srtt;
-			metrics.rmx_rttvar = tp->t_rttvar;
-			metrics.rmx_cwnd = tp->snd_cwnd;
-			metrics.rmx_sendpipe = 0;
-			metrics.rmx_recvpipe = 0;
+		metrics.rmx_rtt = tp->t_srtt;
+		metrics.rmx_rttvar = tp->t_rttvar;
+		metrics.rmx_cwnd = tp->snd_cwnd;
+		metrics.rmx_sendpipe = 0;
+		metrics.rmx_recvpipe = 0;
 
-			tcp_hc_update(&inp->inp_inc, &metrics);
-		}
-		refcount_release(&tp->t_fb->tfb_refcnt);
-		tp->t_inpcb = NULL;
-		uma_zfree(V_tcpcb_zone, tp);
-		released = in_pcbrele_wlocked(inp);
-		KASSERT(!released, ("%s: inp %p should not have been released "
-			"here", __func__, inp));
+		tcp_hc_update(&inp->inp_inc, &metrics);
 	}
-}
 
-void
-tcp_timer_discard(void *ptp)
-{
-	struct inpcb *inp;
-	struct tcpcb *tp;
-	struct epoch_tracker et;
-
-	tp = (struct tcpcb *)ptp;
-	CURVNET_SET(tp->t_vnet);
-	NET_EPOCH_ENTER(et);
-	inp = tp->t_inpcb;
-	KASSERT(inp != NULL, ("%s: tp %p tp->t_inpcb == NULL",
-		__func__, tp));
-	INP_WLOCK(inp);
-	KASSERT((tp->t_timers->tt_flags & TT_STOPPED) != 0,
-		("%s: tcpcb has to be stopped here", __func__));
-	tp->t_timers->tt_draincnt--;
-	if (tp->t_timers->tt_draincnt == 0) {
-		/* We own the last reference on this tcpcb, let's free it. */
-#ifdef TCP_BLACKBOX
-		tcp_log_tcpcbfini(tp);
-#endif
-		TCPSTATES_DEC(tp->t_state);
-		if (tp->t_fb->tfb_tcp_fb_fini)
-			(*tp->t_fb->tfb_tcp_fb_fini)(tp, 1);
-		refcount_release(&tp->t_fb->tfb_refcnt);
-		tp->t_inpcb = NULL;
-		uma_zfree(V_tcpcb_zone, tp);
-		if (in_pcbrele_wlocked(inp)) {
-			NET_EPOCH_EXIT(et);
-			CURVNET_RESTORE();
-			return;
-		}
-	}
-	INP_WUNLOCK(inp);
-	NET_EPOCH_EXIT(et);
-	CURVNET_RESTORE();
+	refcount_release(&tp->t_fb->tfb_refcnt);
 }
 
 /*
@@ -2476,10 +2508,9 @@ tcp_timer_discard(void *ptp)
 struct tcpcb *
 tcp_close(struct tcpcb *tp)
 {
-	struct inpcb *inp = tp->t_inpcb;
-	struct socket *so;
+	struct inpcb *inp = tptoinpcb(tp);
+	struct socket *so = tptosocket(tp);
 
-	INP_INFO_LOCK_ASSERT(&V_tcbinfo);
 	INP_WLOCK_ASSERT(inp);
 
 #ifdef TCP_OFFLOAD
@@ -2495,75 +2526,21 @@ tcp_close(struct tcpcb *tp)
 		tcp_fastopen_decrement_counter(tp->t_tfo_pending);
 		tp->t_tfo_pending = NULL;
 	}
+	if (tp->t_fb->tfb_tcp_timer_stop_all != NULL)
+		tp->t_fb->tfb_tcp_timer_stop_all(tp);
 	in_pcbdrop(inp);
 	TCPSTAT_INC(tcps_closed);
 	if (tp->t_state != TCPS_CLOSED)
 		tcp_state_change(tp, TCPS_CLOSED);
 	KASSERT(inp->inp_socket != NULL, ("tcp_close: inp_socket NULL"));
-	so = inp->inp_socket;
 	soisdisconnected(so);
 	if (inp->inp_flags & INP_SOCKREF) {
-		KASSERT(so->so_state & SS_PROTOREF,
-		    ("tcp_close: !SS_PROTOREF"));
 		inp->inp_flags &= ~INP_SOCKREF;
 		INP_WUNLOCK(inp);
-		SOCK_LOCK(so);
-		so->so_state &= ~SS_PROTOREF;
-		sofree(so);
+		sorele(so);
 		return (NULL);
 	}
 	return (tp);
-}
-
-void
-tcp_drain(void)
-{
-	VNET_ITERATOR_DECL(vnet_iter);
-
-	if (!do_tcpdrain)
-		return;
-
-	VNET_LIST_RLOCK_NOSLEEP();
-	VNET_FOREACH(vnet_iter) {
-		CURVNET_SET(vnet_iter);
-		struct inpcb *inpb;
-		struct tcpcb *tcpb;
-
-	/*
-	 * Walk the tcpbs, if existing, and flush the reassembly queue,
-	 * if there is one...
-	 * XXX: The "Net/3" implementation doesn't imply that the TCP
-	 *      reassembly queue should be flushed, but in a situation
-	 *	where we're really low on mbufs, this is potentially
-	 *	useful.
-	 */
-		INP_INFO_WLOCK(&V_tcbinfo);
-		CK_LIST_FOREACH(inpb, V_tcbinfo.ipi_listhead, inp_list) {
-			INP_WLOCK(inpb);
-			if (inpb->inp_flags & INP_TIMEWAIT) {
-				INP_WUNLOCK(inpb);
-				continue;
-			}
-			if ((tcpb = intotcpcb(inpb)) != NULL) {
-				tcp_reass_flush(tcpb);
-				tcp_clean_sackreport(tcpb);
-#ifdef TCP_BLACKBOX
-				tcp_log_drain(tcpb);
-#endif
-#ifdef TCPPCAP
-				if (tcp_pcap_aggressive_free) {
-					/* Free the TCP PCAP queues. */
-					tcp_pcap_drain(&(tcpb->t_inpkts));
-					tcp_pcap_drain(&(tcpb->t_outpkts));
-				}
-#endif
-			}
-			INP_WUNLOCK(inpb);
-		}
-		INP_INFO_WUNLOCK(&V_tcbinfo);
-		CURVNET_RESTORE();
-	}
-	VNET_LIST_RUNLOCK_NOSLEEP();
 }
 
 /*
@@ -2579,12 +2556,7 @@ tcp_notify(struct inpcb *inp, int error)
 {
 	struct tcpcb *tp;
 
-	INP_INFO_LOCK_ASSERT(&V_tcbinfo);
 	INP_WLOCK_ASSERT(inp);
-
-	if ((inp->inp_flags & INP_TIMEWAIT) ||
-	    (inp->inp_flags & INP_DROPPED))
-		return (inp);
 
 	tp = intotcpcb(inp);
 	KASSERT(tp != NULL, ("tcp_notify: tp == NULL"));
@@ -2625,9 +2597,10 @@ tcp_notify(struct inpcb *inp, int error)
 static int
 tcp_pcblist(SYSCTL_HANDLER_ARGS)
 {
-	struct epoch_tracker et;
-	struct inpcb *inp;
+	struct inpcb_iterator inpi = INP_ALL_ITERATOR(&V_tcbinfo,
+	    INPLOOKUP_RLOCKPCB);
 	struct xinpgen xig;
+	struct inpcb *inp;
 	int error;
 
 	if (req->newptr != NULL)
@@ -2660,42 +2633,20 @@ tcp_pcblist(SYSCTL_HANDLER_ARGS)
 	if (error)
 		return (error);
 
-	NET_EPOCH_ENTER(et);
-	for (inp = CK_LIST_FIRST(V_tcbinfo.ipi_listhead);
-	    inp != NULL;
-	    inp = CK_LIST_NEXT(inp, inp_list)) {
-		INP_RLOCK(inp);
-		if (inp->inp_gencnt <= xig.xig_gen) {
-			int crerr;
+	while ((inp = inp_next(&inpi)) != NULL) {
+		if (inp->inp_gencnt <= xig.xig_gen &&
+		    cr_canseeinpcb(req->td->td_ucred, inp) == 0) {
+			struct xtcpcb xt;
 
-			/*
-			 * XXX: This use of cr_cansee(), introduced with
-			 * TCP state changes, is not quite right, but for
-			 * now, better than nothing.
-			 */
-			if (inp->inp_flags & INP_TIMEWAIT) {
-				if (intotw(inp) != NULL)
-					crerr = cr_cansee(req->td->td_ucred,
-					    intotw(inp)->tw_cred);
-				else
-					crerr = EINVAL;	/* Skip this inp. */
-			} else
-				crerr = cr_canseeinpcb(req->td->td_ucred, inp);
-			if (crerr == 0) {
-				struct xtcpcb xt;
-
-				tcp_inptoxtp(inp, &xt);
+			tcp_inptoxtp(inp, &xt);
+			error = SYSCTL_OUT(req, &xt, sizeof xt);
+			if (error) {
 				INP_RUNLOCK(inp);
-				error = SYSCTL_OUT(req, &xt, sizeof xt);
-				if (error)
-					break;
-				else
-					continue;
-			}
+				break;
+			} else
+				continue;
 		}
-		INP_RUNLOCK(inp);
 	}
-	NET_EPOCH_EXIT(et);
 
 	if (!error) {
 		/*
@@ -2741,8 +2692,6 @@ tcp_getcred(SYSCTL_HANDLER_ARGS)
 	    addrs[0].sin_addr, addrs[0].sin_port, INPLOOKUP_RLOCKPCB, NULL);
 	NET_EPOCH_EXIT(et);
 	if (inp != NULL) {
-		if (inp->inp_socket == NULL)
-			error = ENOENT;
 		if (error == 0)
 			error = cr_canseeinpcb(req->td->td_ucred, inp);
 		if (error == 0)
@@ -2809,8 +2758,6 @@ tcp6_getcred(SYSCTL_HANDLER_ARGS)
 			INPLOOKUP_RLOCKPCB, NULL);
 	NET_EPOCH_EXIT(et);
 	if (inp != NULL) {
-		if (inp->inp_socket == NULL)
-			error = ENOENT;
 		if (error == 0)
 			error = cr_canseeinpcb(req->td->td_ucred, inp);
 		if (error == 0)
@@ -2830,109 +2777,106 @@ SYSCTL_PROC(_net_inet6_tcp6, OID_AUTO, getcred,
 #endif /* INET6 */
 
 #ifdef INET
-static void
-tcp_ctlinput_with_port(int cmd, struct sockaddr *sa, void *vip, uint16_t port)
+/* Path MTU to try next when a fragmentation-needed message is received. */
+static inline int
+tcp_next_pmtu(const struct icmp *icp, const struct ip *ip)
 {
-	struct ip *ip = vip;
+	int mtu = ntohs(icp->icmp_nextmtu);
+
+	/* If no alternative MTU was proposed, try the next smaller one. */
+	if (!mtu)
+		mtu = ip_next_mtu(ntohs(ip->ip_len), 1);
+	if (mtu < V_tcp_minmss + sizeof(struct tcpiphdr))
+		mtu = V_tcp_minmss + sizeof(struct tcpiphdr);
+
+	return (mtu);
+}
+
+static void
+tcp_ctlinput_with_port(struct icmp *icp, uint16_t port)
+{
+	struct ip *ip;
 	struct tcphdr *th;
-	struct in_addr faddr;
 	struct inpcb *inp;
 	struct tcpcb *tp;
-	struct inpcb *(*notify)(struct inpcb *, int) = tcp_notify;
-	struct icmp *icp;
+	struct inpcb *(*notify)(struct inpcb *, int);
 	struct in_conninfo inc;
 	tcp_seq icmp_tcp_seq;
-	int mtu;
+	int errno, mtu;
 
-	faddr = ((struct sockaddr_in *)sa)->sin_addr;
-	if (sa->sa_family != AF_INET || faddr.s_addr == INADDR_ANY)
+	errno = icmp_errmap(icp);
+	switch (errno) {
+	case 0:
 		return;
-
-	if (cmd == PRC_MSGSIZE)
+	case EMSGSIZE:
 		notify = tcp_mtudisc_notify;
-	else if (V_icmp_may_rst && (cmd == PRC_UNREACH_ADMIN_PROHIB ||
-		cmd == PRC_UNREACH_PORT || cmd == PRC_UNREACH_PROTOCOL ||
-		cmd == PRC_TIMXCEED_INTRANS) && ip)
-		notify = tcp_drop_syn_sent;
-
-	/*
-	 * Hostdead is ugly because it goes linearly through all PCBs.
-	 * XXX: We never get this from ICMP, otherwise it makes an
-	 * excellent DoS attack on machines with many connections.
-	 */
-	else if (cmd == PRC_HOSTDEAD)
-		ip = NULL;
-	else if ((unsigned)cmd >= PRC_NCMDS || inetctlerrmap[cmd] == 0)
-		return;
-
-	if (ip == NULL) {
-		in_pcbnotifyall(&V_tcbinfo, faddr, inetctlerrmap[cmd], notify);
-		return;
+		break;
+	case ECONNREFUSED:
+		if (V_icmp_may_rst)
+			notify = tcp_drop_syn_sent;
+		else
+			notify = tcp_notify;
+		break;
+	case EHOSTUNREACH:
+		if (V_icmp_may_rst && icp->icmp_type == ICMP_TIMXCEED)
+			notify = tcp_drop_syn_sent;
+		else
+			notify = tcp_notify;
+		break;
+	default:
+		notify = tcp_notify;
 	}
 
-	icp = (struct icmp *)((caddr_t)ip - offsetof(struct icmp, icmp_ip));
+	ip = &icp->icmp_ip;
 	th = (struct tcphdr *)((caddr_t)ip + (ip->ip_hl << 2));
-	inp = in_pcblookup(&V_tcbinfo, faddr, th->th_dport, ip->ip_src,
-	    th->th_sport, INPLOOKUP_WLOCKPCB, NULL);
-	if (inp != NULL && PRC_IS_REDIRECT(cmd)) {
-		/* signal EHOSTDOWN, as it flushes the cached route */
-		inp = (*notify)(inp, EHOSTDOWN);
-		goto out;
-	}
 	icmp_tcp_seq = th->th_seq;
+	inp = in_pcblookup(&V_tcbinfo, ip->ip_dst, th->th_dport, ip->ip_src,
+	    th->th_sport, INPLOOKUP_WLOCKPCB, NULL);
 	if (inp != NULL)  {
-		if (!(inp->inp_flags & INP_TIMEWAIT) &&
-		    !(inp->inp_flags & INP_DROPPED) &&
-		    !(inp->inp_socket == NULL)) {
-			tp = intotcpcb(inp);
-			if (tp->t_port != port) {
-				goto out;
-			}
-			if (SEQ_GEQ(ntohl(icmp_tcp_seq), tp->snd_una) &&
-			    SEQ_LT(ntohl(icmp_tcp_seq), tp->snd_max)) {
-				if (cmd == PRC_MSGSIZE) {
-					/*
-					 * MTU discovery:
-					 * If we got a needfrag set the MTU
-					 * in the route to the suggested new
-					 * value (if given) and then notify.
-					 */
-					mtu = ntohs(icp->icmp_nextmtu);
-					/*
-					 * If no alternative MTU was
-					 * proposed, try the next smaller
-					 * one.
-					 */
-					if (!mtu)
-						mtu = ip_next_mtu(
-						    ntohs(ip->ip_len), 1);
-					if (mtu < V_tcp_minmss +
-					    sizeof(struct tcpiphdr))
-						mtu = V_tcp_minmss +
-						    sizeof(struct tcpiphdr);
-					/*
-					 * Only process the offered MTU if it
-					 * is smaller than the current one.
-					 */
-					if (mtu < tp->t_maxseg +
-					    sizeof(struct tcpiphdr)) {
-						bzero(&inc, sizeof(inc));
-						inc.inc_faddr = faddr;
-						inc.inc_fibnum =
-						    inp->inp_inc.inc_fibnum;
-						tcp_hc_updatemtu(&inc, mtu);
-						tcp_mtudisc(inp, mtu);
-					}
-				} else
-					inp = (*notify)(inp,
-					    inetctlerrmap[cmd]);
-			}
+		tp = intotcpcb(inp);
+#ifdef TCP_OFFLOAD
+		if (tp->t_flags & TF_TOE && errno == EMSGSIZE) {
+			/*
+			 * MTU discovery for offloaded connections.  Let
+			 * the TOE driver verify seq# and process it.
+			 */
+			mtu = tcp_next_pmtu(icp, ip);
+			tcp_offload_pmtu_update(tp, icmp_tcp_seq, mtu);
+			goto out;
+		}
+#endif
+		if (tp->t_port != port)
+			goto out;
+		if (SEQ_GEQ(ntohl(icmp_tcp_seq), tp->snd_una) &&
+		    SEQ_LT(ntohl(icmp_tcp_seq), tp->snd_max)) {
+			if (errno == EMSGSIZE) {
+				/*
+				 * MTU discovery: we got a needfrag and
+				 * will potentially try a lower MTU.
+				 */
+				mtu = tcp_next_pmtu(icp, ip);
+
+				/*
+				 * Only process the offered MTU if it
+				 * is smaller than the current one.
+				 */
+				if (mtu < tp->t_maxseg +
+				    sizeof(struct tcpiphdr)) {
+					bzero(&inc, sizeof(inc));
+					inc.inc_faddr = ip->ip_dst;
+					inc.inc_fibnum =
+					    inp->inp_inc.inc_fibnum;
+					tcp_hc_updatemtu(&inc, mtu);
+					inp = tcp_mtudisc(inp, mtu);
+				}
+			} else
+				inp = (*notify)(inp, errno);
 		}
 	} else {
 		bzero(&inc, sizeof(inc));
 		inc.inc_fport = th->th_dport;
 		inc.inc_lport = th->th_sport;
-		inc.inc_faddr = faddr;
+		inc.inc_faddr = ip->ip_dst;
 		inc.inc_laddr = ip->ip_src;
 		syncache_unreach(&inc, icmp_tcp_seq, port);
 	}
@@ -2941,27 +2885,25 @@ out:
 		INP_WUNLOCK(inp);
 }
 
-void
-tcp_ctlinput(int cmd, struct sockaddr *sa, void *vip)
+static void
+tcp_ctlinput(struct icmp *icmp)
 {
-	tcp_ctlinput_with_port(cmd, sa, vip, htons(0));
+	tcp_ctlinput_with_port(icmp, htons(0));
 }
 
-void
-tcp_ctlinput_viaudp(int cmd, struct sockaddr *sa, void *vip, void *unused)
+static void
+tcp_ctlinput_viaudp(udp_tun_icmp_param_t param)
 {
 	/* Its a tunneled TCP over UDP icmp */
+	struct icmp *icmp = param.icmp;
 	struct ip *outer_ip, *inner_ip;
-	struct icmp *icmp;
 	struct udphdr *udp;
 	struct tcphdr *th, ttemp;
 	int i_hlen, o_len;
 	uint16_t port;
 
-	inner_ip = (struct ip *)vip;
-	icmp = (struct icmp *)((caddr_t)inner_ip -
-	    (sizeof(struct icmp) - sizeof(struct ip)));
 	outer_ip = (struct ip *)((caddr_t)icmp - sizeof(struct ip));
+	inner_ip = &icmp->icmp_ip;
 	i_hlen = inner_ip->ip_hl << 2;
 	o_len = ntohs(outer_ip->ip_len);
 	if (o_len <
@@ -2982,23 +2924,35 @@ tcp_ctlinput_viaudp(int cmd, struct sockaddr *sa, void *vip, void *unused)
 	o_len -= sizeof(struct udphdr);
 	outer_ip->ip_len = htons(o_len);
 	/* Now call in to the normal handling code */
-	tcp_ctlinput_with_port(cmd, sa, vip, port);
+	tcp_ctlinput_with_port(icmp, port);
 }
 #endif /* INET */
 
 #ifdef INET6
+static inline int
+tcp6_next_pmtu(const struct icmp6_hdr *icmp6)
+{
+	int mtu = ntohl(icmp6->icmp6_mtu);
+
+	/*
+	 * If no alternative MTU was proposed, or the proposed MTU was too
+	 * small, set to the min.
+	 */
+	if (mtu < IPV6_MMTU)
+		mtu = IPV6_MMTU - 8;	/* XXXNP: what is the adjustment for? */
+	return (mtu);
+}
+
 static void
-tcp6_ctlinput_with_port(int cmd, struct sockaddr *sa, void *d, uint16_t port)
+tcp6_ctlinput_with_port(struct ip6ctlparam *ip6cp, uint16_t port)
 {
 	struct in6_addr *dst;
-	struct inpcb *(*notify)(struct inpcb *, int) = tcp_notify;
+	struct inpcb *(*notify)(struct inpcb *, int);
 	struct ip6_hdr *ip6;
 	struct mbuf *m;
 	struct inpcb *inp;
 	struct tcpcb *tp;
 	struct icmp6_hdr *icmp6;
-	struct ip6ctlparam *ip6cp = NULL;
-	const struct sockaddr_in6 *sa6_src = NULL;
 	struct in_conninfo inc;
 	struct tcp_ports {
 		uint16_t th_sport;
@@ -3007,50 +2961,49 @@ tcp6_ctlinput_with_port(int cmd, struct sockaddr *sa, void *d, uint16_t port)
 	tcp_seq icmp_tcp_seq;
 	unsigned int mtu;
 	unsigned int off;
+	int errno;
 
-	if (sa->sa_family != AF_INET6 ||
-	    sa->sa_len != sizeof(struct sockaddr_in6))
+	icmp6 = ip6cp->ip6c_icmp6;
+	m = ip6cp->ip6c_m;
+	ip6 = ip6cp->ip6c_ip6;
+	off = ip6cp->ip6c_off;
+	dst = &ip6cp->ip6c_finaldst->sin6_addr;
+
+	errno = icmp6_errmap(icmp6);
+	switch (errno) {
+	case 0:
 		return;
-
-	/* if the parameter is from icmp6, decode it. */
-	if (d != NULL) {
-		ip6cp = (struct ip6ctlparam *)d;
-		icmp6 = ip6cp->ip6c_icmp6;
-		m = ip6cp->ip6c_m;
-		ip6 = ip6cp->ip6c_ip6;
-		off = ip6cp->ip6c_off;
-		sa6_src = ip6cp->ip6c_src;
-		dst = ip6cp->ip6c_finaldst;
-	} else {
-		m = NULL;
-		ip6 = NULL;
-		off = 0;	/* fool gcc */
-		sa6_src = &sa6_any;
-		dst = NULL;
-	}
-
-	if (cmd == PRC_MSGSIZE)
+	case EMSGSIZE:
 		notify = tcp_mtudisc_notify;
-	else if (V_icmp_may_rst && (cmd == PRC_UNREACH_ADMIN_PROHIB ||
-		cmd == PRC_UNREACH_PORT || cmd == PRC_UNREACH_PROTOCOL ||
-		cmd == PRC_TIMXCEED_INTRANS) && ip6 != NULL)
-		notify = tcp_drop_syn_sent;
-
-	/*
-	 * Hostdead is ugly because it goes linearly through all PCBs.
-	 * XXX: We never get this from ICMP, otherwise it makes an
-	 * excellent DoS attack on machines with many connections.
-	 */
-	else if (cmd == PRC_HOSTDEAD)
-		ip6 = NULL;
-	else if ((unsigned)cmd >= PRC_NCMDS || inet6ctlerrmap[cmd] == 0)
-		return;
-
-	if (ip6 == NULL) {
-		in6_pcbnotify(&V_tcbinfo, sa, 0,
-			      (const struct sockaddr *)sa6_src,
-			      0, cmd, NULL, notify);
-		return;
+		break;
+	case ECONNREFUSED:
+		if (V_icmp_may_rst)
+			notify = tcp_drop_syn_sent;
+		else
+			notify = tcp_notify;
+		break;
+	case EHOSTUNREACH:
+		/*
+		 * There are only four ICMPs that may reset connection:
+		 * - administratively prohibited
+		 * - port unreachable
+		 * - time exceeded in transit
+		 * - unknown next header
+		 */
+		if (V_icmp_may_rst &&
+		    ((icmp6->icmp6_type == ICMP6_DST_UNREACH &&
+		     (icmp6->icmp6_code == ICMP6_DST_UNREACH_ADMIN ||
+		      icmp6->icmp6_code == ICMP6_DST_UNREACH_NOPORT)) ||
+		    (icmp6->icmp6_type == ICMP6_TIME_EXCEEDED &&
+		      icmp6->icmp6_code == ICMP6_TIME_EXCEED_TRANSIT) ||
+		    (icmp6->icmp6_type == ICMP6_PARAM_PROB &&
+		      icmp6->icmp6_code == ICMP6_PARAMPROB_NEXTHEADER)))
+			notify = tcp_drop_syn_sent;
+		else
+			notify = tcp_notify;
+		break;
+	default:
+		notify = tcp_notify;
 	}
 
 	/* Check if we can safely get the ports from the tcp hdr */
@@ -3063,64 +3016,54 @@ tcp6_ctlinput_with_port(int cmd, struct sockaddr *sa, void *d, uint16_t port)
 	m_copydata(m, off, sizeof(struct tcp_ports), (caddr_t)&t_ports);
 	inp = in6_pcblookup(&V_tcbinfo, &ip6->ip6_dst, t_ports.th_dport,
 	    &ip6->ip6_src, t_ports.th_sport, INPLOOKUP_WLOCKPCB, NULL);
-	if (inp != NULL && PRC_IS_REDIRECT(cmd)) {
-		/* signal EHOSTDOWN, as it flushes the cached route */
-		inp = (*notify)(inp, EHOSTDOWN);
-		goto out;
-	}
 	off += sizeof(struct tcp_ports);
 	if (m->m_pkthdr.len < (int32_t) (off + sizeof(tcp_seq))) {
 		goto out;
 	}
 	m_copydata(m, off, sizeof(tcp_seq), (caddr_t)&icmp_tcp_seq);
 	if (inp != NULL)  {
-		if (!(inp->inp_flags & INP_TIMEWAIT) &&
-		    !(inp->inp_flags & INP_DROPPED) &&
-		    !(inp->inp_socket == NULL)) {
-			tp = intotcpcb(inp);
-			if (tp->t_port != port) {
-				goto out;
-			}
-			if (SEQ_GEQ(ntohl(icmp_tcp_seq), tp->snd_una) &&
-			    SEQ_LT(ntohl(icmp_tcp_seq), tp->snd_max)) {
-				if (cmd == PRC_MSGSIZE) {
-					/*
-					 * MTU discovery:
-					 * If we got a needfrag set the MTU
-					 * in the route to the suggested new
-					 * value (if given) and then notify.
-					 */
-					mtu = ntohl(icmp6->icmp6_mtu);
-					/*
-					 * If no alternative MTU was
-					 * proposed, or the proposed
-					 * MTU was too small, set to
-					 * the min.
-					 */
-					if (mtu < IPV6_MMTU)
-						mtu = IPV6_MMTU - 8;
-					bzero(&inc, sizeof(inc));
-					inc.inc_fibnum = M_GETFIB(m);
-					inc.inc_flags |= INC_ISIPV6;
-					inc.inc6_faddr = *dst;
-					if (in6_setscope(&inc.inc6_faddr,
-						m->m_pkthdr.rcvif, NULL))
-						goto out;
-					/*
-					 * Only process the offered MTU if it
-					 * is smaller than the current one.
-					 */
-					if (mtu < tp->t_maxseg +
-					    sizeof (struct tcphdr) +
-					    sizeof (struct ip6_hdr)) {
-						tcp_hc_updatemtu(&inc, mtu);
-						tcp_mtudisc(inp, mtu);
-						ICMP6STAT_INC(icp6s_pmtuchg);
-					}
-				} else
-					inp = (*notify)(inp,
-					    inet6ctlerrmap[cmd]);
-			}
+		tp = intotcpcb(inp);
+#ifdef TCP_OFFLOAD
+		if (tp->t_flags & TF_TOE && errno == EMSGSIZE) {
+			/* MTU discovery for offloaded connections. */
+			mtu = tcp6_next_pmtu(icmp6);
+			tcp_offload_pmtu_update(tp, icmp_tcp_seq, mtu);
+			goto out;
+		}
+#endif
+		if (tp->t_port != port)
+			goto out;
+		if (SEQ_GEQ(ntohl(icmp_tcp_seq), tp->snd_una) &&
+		    SEQ_LT(ntohl(icmp_tcp_seq), tp->snd_max)) {
+			if (errno == EMSGSIZE) {
+				/*
+				 * MTU discovery:
+				 * If we got a needfrag set the MTU
+				 * in the route to the suggested new
+				 * value (if given) and then notify.
+				 */
+				mtu = tcp6_next_pmtu(icmp6);
+
+				bzero(&inc, sizeof(inc));
+				inc.inc_fibnum = M_GETFIB(m);
+				inc.inc_flags |= INC_ISIPV6;
+				inc.inc6_faddr = *dst;
+				if (in6_setscope(&inc.inc6_faddr,
+					m->m_pkthdr.rcvif, NULL))
+					goto out;
+				/*
+				 * Only process the offered MTU if it
+				 * is smaller than the current one.
+				 */
+				if (mtu < tp->t_maxseg +
+				    sizeof (struct tcphdr) +
+				    sizeof (struct ip6_hdr)) {
+					tcp_hc_updatemtu(&inc, mtu);
+					tcp_mtudisc(inp, mtu);
+					ICMP6STAT_INC(icp6s_pmtuchg);
+				}
+			} else
+				inp = (*notify)(inp, errno);
 		}
 	} else {
 		bzero(&inc, sizeof(inc));
@@ -3137,21 +3080,20 @@ out:
 		INP_WUNLOCK(inp);
 }
 
-void
-tcp6_ctlinput(int cmd, struct sockaddr *sa, void *d)
+static void
+tcp6_ctlinput(struct ip6ctlparam *ctl)
 {
-	tcp6_ctlinput_with_port(cmd, sa, d, htons(0));
+	tcp6_ctlinput_with_port(ctl, htons(0));
 }
 
-void
-tcp6_ctlinput_viaudp(int cmd, struct sockaddr *sa, void *d, void *unused)
+static void
+tcp6_ctlinput_viaudp(udp_tun_icmp_param_t param)
 {
-	struct ip6ctlparam *ip6cp;
+	struct ip6ctlparam *ip6cp = param.ip6cp;
 	struct mbuf *m;
 	struct udphdr *udp;
 	uint16_t port;
 
-	ip6cp = (struct ip6ctlparam *)d;
 	m = m_pulldown(ip6cp->ip6c_m, ip6cp->ip6c_off, sizeof(struct udphdr), NULL);
 	if (m == NULL) {
 		return;
@@ -3166,7 +3108,7 @@ tcp6_ctlinput_viaudp(int cmd, struct sockaddr *sa, void *d, void *unused)
 		ip6cp->ip6c_m->m_pkthdr.len -= sizeof(struct udphdr);
 	}
 	/* Now call in to the normal handling code */
-	tcp6_ctlinput_with_port(cmd, sa, d, port);
+	tcp6_ctlinput_with_port(ip6cp, port);
 }
 
 #endif /* INET6 */
@@ -3318,17 +3260,13 @@ tcp_new_isn(struct in_conninfo *inc)
  * connection state is SYN-SENT, drop the connection.  This behavior
  * is controlled by the icmp_may_rst sysctl.
  */
-struct inpcb *
+static struct inpcb *
 tcp_drop_syn_sent(struct inpcb *inp, int errno)
 {
 	struct tcpcb *tp;
 
 	NET_EPOCH_ASSERT();
 	INP_WLOCK_ASSERT(inp);
-
-	if ((inp->inp_flags & INP_TIMEWAIT) ||
-	    (inp->inp_flags & INP_DROPPED))
-		return (inp);
 
 	tp = intotcpcb(inp);
 	if (tp->t_state != TCPS_SYN_SENT)
@@ -3354,20 +3292,16 @@ static struct inpcb *
 tcp_mtudisc_notify(struct inpcb *inp, int error)
 {
 
-	tcp_mtudisc(inp, -1);
-	return (inp);
+	return (tcp_mtudisc(inp, -1));
 }
 
-static void
+static struct inpcb *
 tcp_mtudisc(struct inpcb *inp, int mtuoffer)
 {
 	struct tcpcb *tp;
 	struct socket *so;
 
 	INP_WLOCK_ASSERT(inp);
-	if ((inp->inp_flags & INP_TIMEWAIT) ||
-	    (inp->inp_flags & INP_DROPPED))
-		return;
 
 	tp = intotcpcb(inp);
 	KASSERT(tp != NULL, ("tcp_mtudisc: tp == NULL"));
@@ -3397,7 +3331,10 @@ tcp_mtudisc(struct inpcb *inp, int mtuoffer)
 		 */
 		tp->t_fb->tfb_tcp_mtu_chg(tp);
 	}
-	tp->t_fb->tfb_tcp_output(tp);
+	if (tcp_output(tp) < 0)
+		return (NULL);
+	else
+		return (inp);
 }
 
 #ifdef INET
@@ -3476,6 +3413,41 @@ tcp_maxmtu6(struct in_conninfo *inc, struct tcp_ifcap *cap)
 	}
 
 	return (maxmtu);
+}
+
+/*
+ * Handle setsockopt(IPV6_USE_MIN_MTU) by a TCP stack.
+ *
+ * XXXGL: we are updating inpcb here with INC_IPV6MINMTU flag.
+ * The right place to do that is ip6_setpktopt() that has just been
+ * executed.  By the way it just filled ip6po_minmtu for us.
+ */
+void
+tcp6_use_min_mtu(struct tcpcb *tp)
+{
+	struct inpcb *inp = tptoinpcb(tp);
+
+	INP_WLOCK_ASSERT(inp);
+	/*
+	 * In case of the IPV6_USE_MIN_MTU socket
+	 * option, the INC_IPV6MINMTU flag to announce
+	 * a corresponding MSS during the initial
+	 * handshake.  If the TCP connection is not in
+	 * the front states, just reduce the MSS being
+	 * used.  This avoids the sending of TCP
+	 * segments which will be fragmented at the
+	 * IPv6 layer.
+	 */
+	inp->inp_inc.inc_flags |= INC_IPV6MINMTU;
+	if ((tp->t_state >= TCPS_SYN_SENT) &&
+	    (inp->inp_inc.inc_flags & INC_ISIPV6)) {
+		struct ip6_pktopts *opt;
+
+		opt = inp->in6p_outputopts;
+		if (opt != NULL && opt->ip6po_minmtu == IP6PO_MINMTU_ALL &&
+		    tp->t_maxseg > TCP6_MSS)
+			tp->t_maxseg = TCP6_MSS;
+	}
 }
 #endif /* INET6 */
 
@@ -3586,8 +3558,9 @@ sysctl_drop(SYSCTL_HANDLER_ARGS)
 	struct sockaddr_storage addrs[2];
 	struct inpcb *inp;
 	struct tcpcb *tp;
-	struct tcptw *tw;
-	struct sockaddr_in *fin, *lin;
+#ifdef INET
+	struct sockaddr_in *fin = NULL, *lin = NULL;
+#endif
 	struct epoch_tracker et;
 #ifdef INET6
 	struct sockaddr_in6 *fin6, *lin6;
@@ -3595,7 +3568,6 @@ sysctl_drop(SYSCTL_HANDLER_ARGS)
 	int error;
 
 	inp = NULL;
-	fin = lin = NULL;
 #ifdef INET6
 	fin6 = lin6 = NULL;
 #endif
@@ -3624,8 +3596,10 @@ sysctl_drop(SYSCTL_HANDLER_ARGS)
 				return (EINVAL);
 			in6_sin6_2_sin_in_sock((struct sockaddr *)&addrs[0]);
 			in6_sin6_2_sin_in_sock((struct sockaddr *)&addrs[1]);
+#ifdef INET
 			fin = (struct sockaddr_in *)&addrs[0];
 			lin = (struct sockaddr_in *)&addrs[1];
+#endif
 			break;
 		}
 		error = sa6_embedscope(fin6, V_ip6_use_defzone);
@@ -3665,20 +3639,7 @@ sysctl_drop(SYSCTL_HANDLER_ARGS)
 #endif
 	}
 	if (inp != NULL) {
-		if (inp->inp_flags & INP_TIMEWAIT) {
-			/*
-			 * XXXRW: There currently exists a state where an
-			 * inpcb is present, but its timewait state has been
-			 * discarded.  For now, don't allow dropping of this
-			 * type of inpcb.
-			 */
-			tw = intotw(inp);
-			if (tw != NULL)
-				tcp_twclose(tw, 0);
-			else
-				INP_WUNLOCK(inp);
-		} else if ((inp->inp_flags & INP_DROPPED) == 0 &&
-		    !SOLISTENING(inp->inp_socket)) {
+		if (!SOLISTENING(inp->inp_socket)) {
 			tp = intotcpcb(inp);
 			tp = tcp_drop(tp, ECONNABORTED);
 			if (tp != NULL)
@@ -3696,6 +3657,18 @@ SYSCTL_PROC(_net_inet_tcp, TCPCTL_DROP, drop,
     CTLFLAG_NEEDGIANT, NULL, 0, sysctl_drop, "",
     "Drop TCP connection");
 
+static int
+tcp_sysctl_setsockopt(SYSCTL_HANDLER_ARGS)
+{
+	return (sysctl_setsockopt(oidp, arg1, arg2, req, &V_tcbinfo,
+	    &tcp_ctloutput_set));
+}
+
+SYSCTL_PROC(_net_inet_tcp, OID_AUTO, setsockopt,
+    CTLFLAG_VNET | CTLTYPE_STRUCT | CTLFLAG_WR | CTLFLAG_SKIP |
+    CTLFLAG_MPSAFE, NULL, 0, tcp_sysctl_setsockopt, "",
+    "Set socket option for TCP endpoint");
+
 #ifdef KERN_TLS
 static int
 sysctl_switch_tls(SYSCTL_HANDLER_ARGS)
@@ -3703,7 +3676,9 @@ sysctl_switch_tls(SYSCTL_HANDLER_ARGS)
 	/* addrs[0] is a foreign socket, addrs[1] is a local one. */
 	struct sockaddr_storage addrs[2];
 	struct inpcb *inp;
-	struct sockaddr_in *fin, *lin;
+#ifdef INET
+	struct sockaddr_in *fin = NULL, *lin = NULL;
+#endif
 	struct epoch_tracker et;
 #ifdef INET6
 	struct sockaddr_in6 *fin6, *lin6;
@@ -3711,7 +3686,6 @@ sysctl_switch_tls(SYSCTL_HANDLER_ARGS)
 	int error;
 
 	inp = NULL;
-	fin = lin = NULL;
 #ifdef INET6
 	fin6 = lin6 = NULL;
 #endif
@@ -3740,8 +3714,10 @@ sysctl_switch_tls(SYSCTL_HANDLER_ARGS)
 				return (EINVAL);
 			in6_sin6_2_sin_in_sock((struct sockaddr *)&addrs[0]);
 			in6_sin6_2_sin_in_sock((struct sockaddr *)&addrs[1]);
+#ifdef INET
 			fin = (struct sockaddr_in *)&addrs[0];
 			lin = (struct sockaddr_in *)&addrs[1];
+#endif
 			break;
 		}
 		error = sa6_embedscope(fin6, V_ip6_use_defzone);
@@ -3782,21 +3758,14 @@ sysctl_switch_tls(SYSCTL_HANDLER_ARGS)
 	}
 	NET_EPOCH_EXIT(et);
 	if (inp != NULL) {
-		if ((inp->inp_flags & (INP_TIMEWAIT | INP_DROPPED)) != 0 ||
-		    inp->inp_socket == NULL) {
-			error = ECONNRESET;
-			INP_WUNLOCK(inp);
-		} else {
-			struct socket *so;
+		struct socket *so;
 
-			so = inp->inp_socket;
-			soref(so);
-			error = ktls_set_tx_mode(so,
-			    arg2 == 0 ? TCP_TLS_MODE_SW : TCP_TLS_MODE_IFNET);
-			INP_WUNLOCK(inp);
-			SOCK_LOCK(so);
-			sorele(so);
-		}
+		so = inp->inp_socket;
+		soref(so);
+		error = ktls_set_tx_mode(so,
+		    arg2 == 0 ? TCP_TLS_MODE_SW : TCP_TLS_MODE_IFNET);
+		INP_WUNLOCK(inp);
+		sorele(so);
 	} else
 		error = ESRCH;
 	return (error);
@@ -3824,7 +3793,7 @@ SYSCTL_PROC(_net_inet_tcp, OID_AUTO, switch_to_ifnet_tls,
  * and ip6_hdr pointers have to be passed as void pointers.
  */
 char *
-tcp_log_vain(struct in_conninfo *inc, struct tcphdr *th, void *ip4hdr,
+tcp_log_vain(struct in_conninfo *inc, struct tcphdr *th, const void *ip4hdr,
     const void *ip6hdr)
 {
 
@@ -3836,7 +3805,7 @@ tcp_log_vain(struct in_conninfo *inc, struct tcphdr *th, void *ip4hdr,
 }
 
 char *
-tcp_log_addrs(struct in_conninfo *inc, struct tcphdr *th, void *ip4hdr,
+tcp_log_addrs(struct in_conninfo *inc, struct tcphdr *th, const void *ip4hdr,
     const void *ip6hdr)
 {
 
@@ -3848,18 +3817,17 @@ tcp_log_addrs(struct in_conninfo *inc, struct tcphdr *th, void *ip4hdr,
 }
 
 static char *
-tcp_log_addr(struct in_conninfo *inc, struct tcphdr *th, void *ip4hdr,
+tcp_log_addr(struct in_conninfo *inc, struct tcphdr *th, const void *ip4hdr,
     const void *ip6hdr)
 {
 	char *s, *sp;
 	size_t size;
-	struct ip *ip;
+#ifdef INET
+	const struct ip *ip = (const struct ip *)ip4hdr;
+#endif
 #ifdef INET6
-	const struct ip6_hdr *ip6;
-
-	ip6 = (const struct ip6_hdr *)ip6hdr;
+	const struct ip6_hdr *ip6 = (const struct ip6_hdr *)ip6hdr;
 #endif /* INET6 */
-	ip = (struct ip *)ip4hdr;
 
 	/*
 	 * The log line looks like this:
@@ -3922,7 +3890,7 @@ tcp_log_addr(struct in_conninfo *inc, struct tcphdr *th, void *ip4hdr,
 	}
 	sp = s + strlen(s);
 	if (th)
-		sprintf(sp, " tcpflags 0x%b", th->th_flags, PRINT_TH_FLAGS);
+		sprintf(sp, " tcpflags 0x%b", tcp_get_flags(th), PRINT_TH_FLAGS);
 	if (*(s + size - 1) != '\0')
 		panic("%s: string too long", __func__);
 	return (s);
@@ -3958,58 +3926,58 @@ void
 tcp_inptoxtp(const struct inpcb *inp, struct xtcpcb *xt)
 {
 	struct tcpcb *tp = intotcpcb(inp);
-	struct tcptw *tw = intotw(inp);
 	sbintime_t now;
 
 	bzero(xt, sizeof(*xt));
-	if (inp->inp_flags & INP_TIMEWAIT) {
-		xt->t_state = TCPS_TIME_WAIT;
-		xt->xt_encaps_port = tw->t_port;
-	} else {
-		xt->t_state = tp->t_state;
-		xt->t_logstate = tp->t_logstate;
-		xt->t_flags = tp->t_flags;
-		xt->t_sndzerowin = tp->t_sndzerowin;
-		xt->t_sndrexmitpack = tp->t_sndrexmitpack;
-		xt->t_rcvoopack = tp->t_rcvoopack;
-		xt->t_rcv_wnd = tp->rcv_wnd;
-		xt->t_snd_wnd = tp->snd_wnd;
-		xt->t_snd_cwnd = tp->snd_cwnd;
-		xt->t_snd_ssthresh = tp->snd_ssthresh;
-		xt->t_maxseg = tp->t_maxseg;
-		xt->xt_ecn = (tp->t_flags2 & TF2_ECN_PERMIT) ? 1 : 0 +
-			     (tp->t_flags2 & TF2_ACE_PERMIT) ? 2 : 0;
+	xt->t_state = tp->t_state;
+	xt->t_logstate = tcp_get_bblog_state(tp);
+	xt->t_flags = tp->t_flags;
+	xt->t_sndzerowin = tp->t_sndzerowin;
+	xt->t_sndrexmitpack = tp->t_sndrexmitpack;
+	xt->t_rcvoopack = tp->t_rcvoopack;
+	xt->t_rcv_wnd = tp->rcv_wnd;
+	xt->t_snd_wnd = tp->snd_wnd;
+	xt->t_snd_cwnd = tp->snd_cwnd;
+	xt->t_snd_ssthresh = tp->snd_ssthresh;
+	xt->t_dsack_bytes = tp->t_dsack_bytes;
+	xt->t_dsack_tlp_bytes = tp->t_dsack_tlp_bytes;
+	xt->t_dsack_pack = tp->t_dsack_pack;
+	xt->t_maxseg = tp->t_maxseg;
+	xt->xt_ecn = (tp->t_flags2 & TF2_ECN_PERMIT) ? 1 : 0 +
+		     (tp->t_flags2 & TF2_ACE_PERMIT) ? 2 : 0;
 
-		now = getsbinuptime();
-#define	COPYTIMER(ttt)	do {						\
-		if (callout_active(&tp->t_timers->ttt))			\
-			xt->ttt = (tp->t_timers->ttt.c_time - now) /	\
-			    SBT_1MS;					\
-		else							\
-			xt->ttt = 0;					\
+	now = getsbinuptime();
+#define	COPYTIMER(which,where)	do {					\
+	if (tp->t_timers[which] != SBT_MAX)				\
+		xt->where = (tp->t_timers[which] - now) / SBT_1MS;	\
+	else								\
+		xt->where = 0;						\
 } while (0)
-		COPYTIMER(tt_delack);
-		COPYTIMER(tt_rexmt);
-		COPYTIMER(tt_persist);
-		COPYTIMER(tt_keep);
-		COPYTIMER(tt_2msl);
+	COPYTIMER(TT_DELACK, tt_delack);
+	COPYTIMER(TT_REXMT, tt_rexmt);
+	COPYTIMER(TT_PERSIST, tt_persist);
+	COPYTIMER(TT_KEEP, tt_keep);
+	COPYTIMER(TT_2MSL, tt_2msl);
 #undef COPYTIMER
-		xt->t_rcvtime = 1000 * (ticks - tp->t_rcvtime) / hz;
+	xt->t_rcvtime = 1000 * (ticks - tp->t_rcvtime) / hz;
 
-		xt->xt_encaps_port = tp->t_port;
-		bcopy(tp->t_fb->tfb_tcp_block_name, xt->xt_stack,
-		    TCP_FUNCTION_NAME_LEN_MAX);
-		bcopy(CC_ALGO(tp)->name, xt->xt_cc,
-		    TCP_CA_NAME_MAX);
+	xt->xt_encaps_port = tp->t_port;
+	bcopy(tp->t_fb->tfb_tcp_block_name, xt->xt_stack,
+	    TCP_FUNCTION_NAME_LEN_MAX);
+	bcopy(CC_ALGO(tp)->name, xt->xt_cc, TCP_CA_NAME_MAX);
 #ifdef TCP_BLACKBOX
-		(void)tcp_log_get_id(tp, xt->xt_logid);
+	(void)tcp_log_get_id(tp, xt->xt_logid);
 #endif
-	}
 
 	xt->xt_len = sizeof(struct xtcpcb);
 	in_pcbtoxinpcb(inp, &xt->xt_inp);
-	if (inp->inp_socket == NULL)
-		xt->xt_inp.xi_socket.xso_protocol = IPPROTO_TCP;
+	/*
+	 * TCP doesn't use inp_ppcb pointer, we embed inpcb into tcpcb.
+	 * Fixup the pointer that in_pcbtoxinpcb() has set.  When printing
+	 * TCP netstat(1) used to use this pointer, so this fixup needs to
+	 * stay for stable/14.
+	 */
+	xt->xt_inp.inp_ppcb = (uintptr_t)tp;
 }
 
 void
@@ -4051,6 +4019,7 @@ tcp_can_enable_pacing(void)
 		shadow_num_connections = number_of_tcp_connections_pacing;
 		return (1);
 	} else {
+		counter_u64_add(tcp_pacing_failures, 1);
 		return (0);
 	}
 }
@@ -4074,4 +4043,662 @@ tcp_decrement_paced_conn(void)
 			tcp_pacing_warning = 1;
 		}
 	}
+}
+
+static void
+tcp_default_switch_failed(struct tcpcb *tp)
+{
+	/*
+	 * If a switch fails we only need to
+	 * care about two things:
+	 * a) The t_flags2
+	 * and
+	 * b) The timer granularity.
+	 * Timeouts, at least for now, don't use the
+	 * old callout system in the other stacks so
+	 * those are hopefully safe.
+	 */
+	tcp_lro_features_off(tp);
+	tcp_change_time_units(tp, TCP_TMR_GRANULARITY_TICKS);
+}
+
+#ifdef TCP_ACCOUNTING
+int
+tcp_do_ack_accounting(struct tcpcb *tp, struct tcphdr *th, struct tcpopt *to, uint32_t tiwin, int mss)
+{
+	if (SEQ_LT(th->th_ack, tp->snd_una)) {
+		/* Do we have a SACK? */
+		if (to->to_flags & TOF_SACK) {
+			if (tp->t_flags2 & TF2_TCP_ACCOUNTING) {
+				tp->tcp_cnt_counters[ACK_SACK]++;
+			}
+			return (ACK_SACK);
+		} else {
+			if (tp->t_flags2 & TF2_TCP_ACCOUNTING) {
+				tp->tcp_cnt_counters[ACK_BEHIND]++;
+			}
+			return (ACK_BEHIND);
+		}
+	} else if (th->th_ack == tp->snd_una) {
+		/* Do we have a SACK? */
+		if (to->to_flags & TOF_SACK) {
+			if (tp->t_flags2 & TF2_TCP_ACCOUNTING) {
+				tp->tcp_cnt_counters[ACK_SACK]++;
+			}
+			return (ACK_SACK);
+		} else if (tiwin != tp->snd_wnd) {
+			if (tp->t_flags2 & TF2_TCP_ACCOUNTING) {
+				tp->tcp_cnt_counters[ACK_RWND]++;
+			}
+			return (ACK_RWND);
+		} else {
+			if (tp->t_flags2 & TF2_TCP_ACCOUNTING) {
+				tp->tcp_cnt_counters[ACK_DUPACK]++;
+			}
+			return (ACK_DUPACK);
+		}
+	} else {
+		if (!SEQ_GT(th->th_ack, tp->snd_max)) {
+			if (tp->t_flags2 & TF2_TCP_ACCOUNTING) {
+				tp->tcp_cnt_counters[CNT_OF_ACKS_IN] += (((th->th_ack - tp->snd_una) + mss - 1)/mss);
+			}
+		}
+		if (to->to_flags & TOF_SACK) {
+			if (tp->t_flags2 & TF2_TCP_ACCOUNTING) {
+				tp->tcp_cnt_counters[ACK_CUMACK_SACK]++;
+			}
+			return (ACK_CUMACK_SACK);
+		} else {
+			if (tp->t_flags2 & TF2_TCP_ACCOUNTING) {
+				tp->tcp_cnt_counters[ACK_CUMACK]++;
+			}
+			return (ACK_CUMACK);
+		}
+	}
+}
+#endif
+
+void
+tcp_change_time_units(struct tcpcb *tp, int granularity)
+{
+	if (tp->t_tmr_granularity == granularity) {
+		/* We are there */
+		return;
+	}
+	if (granularity == TCP_TMR_GRANULARITY_USEC) {
+		KASSERT((tp->t_tmr_granularity == TCP_TMR_GRANULARITY_TICKS),
+			("Granularity is not TICKS its %u in tp:%p",
+			 tp->t_tmr_granularity, tp));
+		tp->t_rttlow = TICKS_2_USEC(tp->t_rttlow);
+		if (tp->t_srtt > 1) {
+			uint32_t val, frac;
+
+			val = tp->t_srtt >> TCP_RTT_SHIFT;
+			frac = tp->t_srtt & 0x1f;
+			tp->t_srtt = TICKS_2_USEC(val);
+			/*
+			 * frac is the fractional part of the srtt (if any)
+			 * but its in ticks and every bit represents
+			 * 1/32nd of a hz.
+			 */
+			if (frac) {
+				if (hz == 1000) {
+					frac = (((uint64_t)frac * (uint64_t)HPTS_USEC_IN_MSEC) / (uint64_t)TCP_RTT_SCALE);
+				} else {
+					frac = (((uint64_t)frac * (uint64_t)HPTS_USEC_IN_SEC) / ((uint64_t)(hz) * (uint64_t)TCP_RTT_SCALE));
+				}
+				tp->t_srtt += frac;
+			}
+		}
+		if (tp->t_rttvar) {
+			uint32_t val, frac;
+
+			val = tp->t_rttvar >> TCP_RTTVAR_SHIFT;
+			frac = tp->t_rttvar & 0x1f;
+			tp->t_rttvar = TICKS_2_USEC(val);
+			/*
+			 * frac is the fractional part of the srtt (if any)
+			 * but its in ticks and every bit represents
+			 * 1/32nd of a hz.
+			 */
+			if (frac) {
+				if (hz == 1000) {
+					frac = (((uint64_t)frac * (uint64_t)HPTS_USEC_IN_MSEC) / (uint64_t)TCP_RTT_SCALE);
+				} else {
+					frac = (((uint64_t)frac * (uint64_t)HPTS_USEC_IN_SEC) / ((uint64_t)(hz) * (uint64_t)TCP_RTT_SCALE));
+				}
+				tp->t_rttvar += frac;
+			}
+		}
+		tp->t_tmr_granularity = TCP_TMR_GRANULARITY_USEC;
+	} else if (granularity == TCP_TMR_GRANULARITY_TICKS) {
+		/* Convert back to ticks, with  */
+		KASSERT((tp->t_tmr_granularity == TCP_TMR_GRANULARITY_USEC),
+			("Granularity is not USEC its %u in tp:%p",
+			 tp->t_tmr_granularity, tp));
+		if (tp->t_srtt > 1) {
+			uint32_t val, frac;
+
+			val = USEC_2_TICKS(tp->t_srtt);
+			frac = tp->t_srtt % (HPTS_USEC_IN_SEC / hz);
+			tp->t_srtt = val << TCP_RTT_SHIFT;
+			/*
+			 * frac is the fractional part here is left
+			 * over from converting to hz and shifting.
+			 * We need to convert this to the 5 bit
+			 * remainder.
+			 */
+			if (frac) {
+				if (hz == 1000) {
+					frac = (((uint64_t)frac *  (uint64_t)TCP_RTT_SCALE) / (uint64_t)HPTS_USEC_IN_MSEC);
+				} else {
+					frac = (((uint64_t)frac * (uint64_t)(hz) * (uint64_t)TCP_RTT_SCALE) /(uint64_t)HPTS_USEC_IN_SEC);
+				}
+				tp->t_srtt += frac;
+			}
+		}
+		if (tp->t_rttvar) {
+			uint32_t val, frac;
+
+			val = USEC_2_TICKS(tp->t_rttvar);
+			frac = tp->t_rttvar % (HPTS_USEC_IN_SEC / hz);
+			tp->t_rttvar = val <<  TCP_RTTVAR_SHIFT;
+			/*
+			 * frac is the fractional part here is left
+			 * over from converting to hz and shifting.
+			 * We need to convert this to the 4 bit
+			 * remainder.
+			 */
+			if (frac) {
+				if (hz == 1000) {
+					frac = (((uint64_t)frac *  (uint64_t)TCP_RTTVAR_SCALE) / (uint64_t)HPTS_USEC_IN_MSEC);
+				} else {
+					frac = (((uint64_t)frac * (uint64_t)(hz) * (uint64_t)TCP_RTTVAR_SCALE) /(uint64_t)HPTS_USEC_IN_SEC);
+				}
+				tp->t_rttvar += frac;
+			}
+		}
+		tp->t_rttlow = USEC_2_TICKS(tp->t_rttlow);
+		tp->t_tmr_granularity = TCP_TMR_GRANULARITY_TICKS;
+	}
+#ifdef INVARIANTS
+	else {
+		panic("Unknown granularity:%d tp:%p",
+		      granularity, tp);
+	}
+#endif	
+}
+
+void
+tcp_handle_orphaned_packets(struct tcpcb *tp)
+{
+	struct mbuf *save, *m, *prev;
+	/*
+	 * Called when a stack switch is occuring from the fini()
+	 * of the old stack. We assue the init() as already been
+	 * run of the new stack and it has set the t_flags2 to
+	 * what it supports. This function will then deal with any
+	 * differences i.e. cleanup packets that maybe queued that
+	 * the newstack does not support.
+	 */
+
+	if (tp->t_flags2 & TF2_MBUF_L_ACKS)
+		return;
+	if ((tp->t_flags2 & TF2_SUPPORTS_MBUFQ) == 0 &&
+	    !STAILQ_EMPTY(&tp->t_inqueue)) {
+		/*
+		 * It is unsafe to process the packets since a
+		 * reset may be lurking in them (its rare but it
+		 * can occur). If we were to find a RST, then we
+		 * would end up dropping the connection and the
+		 * INP lock, so when we return the caller (tcp_usrreq)
+		 * will blow up when it trys to unlock the inp.
+		 * This new stack does not do any fancy LRO features
+		 * so all we can do is toss the packets.
+		 */
+		m = STAILQ_FIRST(&tp->t_inqueue);
+		STAILQ_INIT(&tp->t_inqueue);
+		STAILQ_FOREACH_FROM_SAFE(m, &tp->t_inqueue, m_stailqpkt, save)
+			m_freem(m);
+	} else {
+		/*
+		 * Here we have a stack that does mbuf queuing but
+		 * does not support compressed ack's. We must
+		 * walk all the mbufs and discard any compressed acks.
+		 */
+		STAILQ_FOREACH_SAFE(m, &tp->t_inqueue, m_stailqpkt, save) {
+			if (m->m_flags & M_ACKCMP) {
+				if (m == STAILQ_FIRST(&tp->t_inqueue))
+					STAILQ_REMOVE_HEAD(&tp->t_inqueue,
+					    m_stailqpkt);
+				else
+					STAILQ_REMOVE_AFTER(&tp->t_inqueue,
+					    prev, m_stailqpkt);
+				m_freem(m);
+			} else
+				prev = m;
+		}
+	}
+}
+
+#ifdef TCP_REQUEST_TRK
+uint32_t
+tcp_estimate_tls_overhead(struct socket *so, uint64_t tls_usr_bytes)
+{
+#ifdef KERN_TLS
+	struct ktls_session *tls;
+	uint32_t rec_oh, records;
+
+	tls = so->so_snd.sb_tls_info;
+	if (tls == NULL)
+	    return (0);
+
+	rec_oh = tls->params.tls_hlen + tls->params.tls_tlen;
+	records = ((tls_usr_bytes + tls->params.max_frame_len - 1)/tls->params.max_frame_len);
+	return (records * rec_oh);
+#else
+	return (0);
+#endif
+}
+
+extern uint32_t tcp_stale_entry_time;
+uint32_t tcp_stale_entry_time = 250000;
+SYSCTL_UINT(_net_inet_tcp, OID_AUTO, usrlog_stale, CTLFLAG_RW,
+    &tcp_stale_entry_time, 250000, "Time that a tcpreq entry without a sendfile ages out");
+
+void
+tcp_req_log_req_info(struct tcpcb *tp, struct tcp_sendfile_track *req,
+    uint16_t slot, uint8_t val, uint64_t offset, uint64_t nbytes)
+{
+	if (tcp_bblogging_on(tp)) {
+		union tcp_log_stackspecific log;
+		struct timeval tv;
+
+		memset(&log.u_bbr, 0, sizeof(log.u_bbr));
+		log.u_bbr.inhpts = tcp_in_hpts(tp);
+		log.u_bbr.flex8 = val;
+		log.u_bbr.rttProp = req->timestamp;
+		log.u_bbr.delRate = req->start;
+		log.u_bbr.cur_del_rate = req->end;
+		log.u_bbr.flex1 = req->start_seq;
+		log.u_bbr.flex2 = req->end_seq;
+		log.u_bbr.flex3 = req->flags;
+		log.u_bbr.flex4 = ((req->localtime >> 32) & 0x00000000ffffffff);
+		log.u_bbr.flex5 = (req->localtime & 0x00000000ffffffff);
+		log.u_bbr.flex7 = slot;
+		log.u_bbr.bw_inuse = offset;
+		/* nbytes = flex6 | epoch */
+		log.u_bbr.flex6 = ((nbytes >> 32) & 0x00000000ffffffff);
+		log.u_bbr.epoch = (nbytes & 0x00000000ffffffff);
+		/* cspr =  lt_epoch | pkts_out */
+		log.u_bbr.lt_epoch = ((req->cspr >> 32) & 0x00000000ffffffff);
+		log.u_bbr.pkts_out |= (req->cspr & 0x00000000ffffffff);
+		log.u_bbr.applimited = tp->t_tcpreq_closed;
+		log.u_bbr.applimited <<= 8;
+		log.u_bbr.applimited |= tp->t_tcpreq_open;
+		log.u_bbr.applimited <<= 8;
+		log.u_bbr.applimited |= tp->t_tcpreq_req;
+		log.u_bbr.timeStamp = tcp_get_usecs(&tv);
+		TCP_LOG_EVENTP(tp, NULL,
+		    &tptosocket(tp)->so_rcv,
+		    &tptosocket(tp)->so_snd,
+		    TCP_LOG_REQ_T, 0,
+		    0, &log, false, &tv);
+	}
+}
+
+void
+tcp_req_free_a_slot(struct tcpcb *tp, struct tcp_sendfile_track *ent)
+{
+	if (tp->t_tcpreq_req > 0)
+		tp->t_tcpreq_req--;
+	if (ent->flags & TCP_TRK_TRACK_FLG_OPEN) {
+		if (tp->t_tcpreq_open > 0)
+			tp->t_tcpreq_open--;
+	} else {
+		if (tp->t_tcpreq_closed > 0)
+			tp->t_tcpreq_closed--;
+	}
+	ent->flags = TCP_TRK_TRACK_FLG_EMPTY;
+}
+
+static void
+tcp_req_check_for_stale_entries(struct tcpcb *tp, uint64_t ts, int rm_oldest)
+{
+	struct tcp_sendfile_track *ent;
+	uint64_t time_delta, oldest_delta;
+	int i, oldest, oldest_set = 0, cnt_rm = 0;
+
+	for(i = 0; i < MAX_TCP_TRK_REQ; i++) {
+		ent = &tp->t_tcpreq_info[i];
+		if (ent->flags != TCP_TRK_TRACK_FLG_USED) {
+			/*
+			 * We only care about closed end ranges
+			 * that are allocated and have no sendfile
+			 * ever touching them. They would be in
+			 * state USED.
+			 */
+			continue;
+		}
+		if (ts >= ent->localtime)
+			time_delta = ts - ent->localtime;
+		else
+			time_delta = 0;
+		if (time_delta &&
+		    ((oldest_delta < time_delta) || (oldest_set == 0))) {
+			oldest_set = 1;
+			oldest = i;
+			oldest_delta = time_delta;
+		}
+		if (tcp_stale_entry_time && (time_delta >= tcp_stale_entry_time)) {
+			/*
+			 * No sendfile in a our time-limit
+			 * time to purge it.
+			 */
+			cnt_rm++;
+			tcp_req_log_req_info(tp, &tp->t_tcpreq_info[i], i, TCP_TRK_REQ_LOG_STALE,
+					      time_delta, 0);
+			tcp_req_free_a_slot(tp, ent);
+		}
+	}
+	if ((cnt_rm == 0) && rm_oldest && oldest_set) {
+		ent = &tp->t_tcpreq_info[oldest];
+		tcp_req_log_req_info(tp, &tp->t_tcpreq_info[i], i, TCP_TRK_REQ_LOG_STALE,
+				      oldest_delta, 1);
+		tcp_req_free_a_slot(tp, ent);
+	}
+}
+
+int
+tcp_req_check_for_comp(struct tcpcb *tp, tcp_seq ack_point)
+{
+	int i, ret=0;
+	struct tcp_sendfile_track *ent;
+
+	/* Clean up any old closed end requests that are now completed */
+	if (tp->t_tcpreq_req == 0)
+		return(0);
+	if (tp->t_tcpreq_closed == 0)
+		return(0);
+	for(i = 0; i < MAX_TCP_TRK_REQ; i++) {
+		ent = &tp->t_tcpreq_info[i];
+		/* Skip empty ones */
+		if (ent->flags == TCP_TRK_TRACK_FLG_EMPTY)
+			continue;
+		/* Skip open ones */
+		if (ent->flags & TCP_TRK_TRACK_FLG_OPEN)
+			continue;
+		if (SEQ_GEQ(ack_point, ent->end_seq)) {
+			/* We are past it -- free it */
+			tcp_req_log_req_info(tp, ent,
+					      i, TCP_TRK_REQ_LOG_FREED, 0, 0);
+			tcp_req_free_a_slot(tp, ent);
+			ret++;
+		}
+	}
+	return (ret);
+}
+
+int
+tcp_req_is_entry_comp(struct tcpcb *tp, struct tcp_sendfile_track *ent, tcp_seq ack_point)
+{
+	if (tp->t_tcpreq_req == 0)
+		return(-1);
+	if (tp->t_tcpreq_closed == 0)
+		return(-1);
+	if (ent->flags == TCP_TRK_TRACK_FLG_EMPTY)
+		return(-1);
+	if (SEQ_GEQ(ack_point, ent->end_seq)) {
+		return (1);
+	}
+	return (0);
+}
+
+struct tcp_sendfile_track *
+tcp_req_find_a_req_that_is_completed_by(struct tcpcb *tp, tcp_seq th_ack, int *ip)
+{
+	/*
+	 * Given an ack point (th_ack) walk through our entries and
+	 * return the first one found that th_ack goes past the
+	 * end_seq.
+	 */
+	struct tcp_sendfile_track *ent;
+	int i;
+
+	if (tp->t_tcpreq_req == 0) {
+		/* none open */
+		return (NULL);
+	}
+	for(i = 0; i < MAX_TCP_TRK_REQ; i++) {
+		ent = &tp->t_tcpreq_info[i];
+		if (ent->flags == TCP_TRK_TRACK_FLG_EMPTY)
+			continue;
+		if ((ent->flags & TCP_TRK_TRACK_FLG_OPEN) == 0) {
+			if (SEQ_GEQ(th_ack, ent->end_seq)) {
+				*ip = i;
+				return (ent);
+			}
+		}
+	}
+	return (NULL);
+}
+
+struct tcp_sendfile_track *
+tcp_req_find_req_for_seq(struct tcpcb *tp, tcp_seq seq)
+{
+	struct tcp_sendfile_track *ent;
+	int i;
+
+	if (tp->t_tcpreq_req == 0) {
+		/* none open */
+		return (NULL);
+	}
+	for(i = 0; i < MAX_TCP_TRK_REQ; i++) {
+		ent = &tp->t_tcpreq_info[i];
+		tcp_req_log_req_info(tp, ent, i, TCP_TRK_REQ_LOG_SEARCH,
+				      (uint64_t)seq, 0);
+		if (ent->flags == TCP_TRK_TRACK_FLG_EMPTY) {
+			continue;
+		}
+		if (ent->flags & TCP_TRK_TRACK_FLG_OPEN) {
+			/*
+			 * An open end request only needs to
+			 * match the beginning seq or be
+			 * all we have (once we keep going on
+			 * a open end request we may have a seq
+			 * wrap).
+			 */
+			if ((SEQ_GEQ(seq, ent->start_seq)) ||
+			    (tp->t_tcpreq_closed == 0))
+				return (ent);
+		} else {
+			/*
+			 * For this one we need to
+			 * be a bit more careful if its
+			 * completed at least.
+			 */
+			if ((SEQ_GEQ(seq, ent->start_seq)) &&
+			    (SEQ_LT(seq, ent->end_seq))) {
+				return (ent);
+			}
+		}
+	}
+	return (NULL);
+}
+
+/* Should this be in its own file tcp_req.c ? */
+struct tcp_sendfile_track *
+tcp_req_alloc_req_full(struct tcpcb *tp, struct tcp_snd_req *req, uint64_t ts, int rec_dups)
+{
+	struct tcp_sendfile_track *fil;
+	int i, allocated;
+
+	/* In case the stack does not check for completions do so now */
+	tcp_req_check_for_comp(tp, tp->snd_una);
+	/* Check for stale entries */
+	if (tp->t_tcpreq_req)
+		tcp_req_check_for_stale_entries(tp, ts,
+		    (tp->t_tcpreq_req >= MAX_TCP_TRK_REQ));
+	/* Check to see if this is a duplicate of one not started */
+	if (tp->t_tcpreq_req) {
+		for(i = 0, allocated = 0; i < MAX_TCP_TRK_REQ; i++) {
+			fil = &tp->t_tcpreq_info[i];
+			if (fil->flags != TCP_TRK_TRACK_FLG_USED)
+				continue;
+			if ((fil->timestamp == req->timestamp) &&
+			    (fil->start == req->start) &&
+			    ((fil->flags & TCP_TRK_TRACK_FLG_OPEN) ||
+			     (fil->end == req->end))) {
+				/*
+				 * We already have this request
+				 * and it has not been started with sendfile.
+				 * This probably means the user was returned
+				 * a 4xx of some sort and its going to age
+				 * out, lets not duplicate it.
+				 */
+				return(fil);
+			}
+		}
+	}
+	/* Ok if there is no room at the inn we are in trouble */
+	if (tp->t_tcpreq_req >= MAX_TCP_TRK_REQ) {
+		tcp_trace_point(tp, TCP_TP_REQ_LOG_FAIL);
+		for(i = 0; i < MAX_TCP_TRK_REQ; i++) {
+			tcp_req_log_req_info(tp, &tp->t_tcpreq_info[i],
+			    i, TCP_TRK_REQ_LOG_ALLOCFAIL, 0, 0);
+		}
+		return (NULL);
+	}
+	for(i = 0, allocated = 0; i < MAX_TCP_TRK_REQ; i++) {
+		fil = &tp->t_tcpreq_info[i];
+		if (fil->flags == TCP_TRK_TRACK_FLG_EMPTY) {
+			allocated = 1;
+			fil->flags = TCP_TRK_TRACK_FLG_USED;
+			fil->timestamp = req->timestamp;
+			fil->localtime = ts;
+			fil->start = req->start;
+			if (req->flags & TCP_LOG_HTTPD_RANGE_END) {
+				fil->end = req->end;
+			} else {
+				fil->end = 0;
+				fil->flags |= TCP_TRK_TRACK_FLG_OPEN;
+			}
+			/*
+			 * We can set the min boundaries to the TCP Sequence space,
+			 * but it might be found to be further up when sendfile
+			 * actually runs on this range (if it ever does).
+			 */
+			fil->sbcc_at_s = tptosocket(tp)->so_snd.sb_ccc;
+			fil->start_seq = tp->snd_una +
+			    tptosocket(tp)->so_snd.sb_ccc;
+			fil->end_seq = (fil->start_seq + ((uint32_t)(fil->end - fil->start)));
+			if (tptosocket(tp)->so_snd.sb_tls_info) {
+				/*
+				 * This session is doing TLS. Take a swag guess
+				 * at the overhead.
+				 */
+				fil->end_seq += tcp_estimate_tls_overhead(
+				    tptosocket(tp), (fil->end - fil->start));
+			}
+			tp->t_tcpreq_req++;
+			if (fil->flags & TCP_TRK_TRACK_FLG_OPEN)
+				tp->t_tcpreq_open++;
+			else
+				tp->t_tcpreq_closed++;
+			tcp_req_log_req_info(tp, fil, i,
+			    TCP_TRK_REQ_LOG_NEW, 0, 0);
+			break;
+		} else
+			fil = NULL;
+	}
+	return (fil);
+}
+
+void
+tcp_req_alloc_req(struct tcpcb *tp, union tcp_log_userdata *user, uint64_t ts)
+{
+	(void)tcp_req_alloc_req_full(tp, &user->tcp_req, ts, 1);
+}
+#endif
+
+void
+tcp_log_socket_option(struct tcpcb *tp, uint32_t option_num, uint32_t option_val, int err)
+{
+	if (tcp_bblogging_on(tp)) {
+		struct tcp_log_buffer *l;
+
+		l = tcp_log_event(tp, NULL,
+		        &tptosocket(tp)->so_rcv,
+		        &tptosocket(tp)->so_snd,
+		        TCP_LOG_SOCKET_OPT,
+		        err, 0, NULL, 1,
+		        NULL, NULL, 0, NULL);
+		if (l) {
+			l->tlb_flex1 = option_num;
+			l->tlb_flex2 = option_val;
+		}
+	}
+}
+
+uint32_t
+tcp_get_srtt(struct tcpcb *tp, int granularity)
+{
+	uint32_t srtt;
+
+	KASSERT(granularity == TCP_TMR_GRANULARITY_USEC ||
+	    granularity == TCP_TMR_GRANULARITY_TICKS,
+	    ("%s: called with unexpected granularity %d", __func__,
+	    granularity));
+
+	srtt = tp->t_srtt;
+
+	/*
+	 * We only support two granularities. If the stored granularity
+	 * does not match the granularity requested by the caller,
+	 * convert the stored value to the requested unit of granularity.
+	 */
+	if (tp->t_tmr_granularity != granularity) {
+		if (granularity == TCP_TMR_GRANULARITY_USEC)
+			srtt = TICKS_2_USEC(srtt);
+		else
+			srtt = USEC_2_TICKS(srtt);
+	}
+
+	/*
+	 * If the srtt is stored with ticks granularity, we need to
+	 * unshift to get the actual value. We do this after the
+	 * conversion above (if one was necessary) in order to maximize
+	 * precision.
+	 */
+	if (tp->t_tmr_granularity == TCP_TMR_GRANULARITY_TICKS)
+		srtt = srtt >> TCP_RTT_SHIFT;
+
+	return (srtt);
+}
+
+void
+tcp_account_for_send(struct tcpcb *tp, uint32_t len, uint8_t is_rxt,
+    uint8_t is_tlp, bool hw_tls)
+{
+
+	if (is_tlp) {
+		tp->t_sndtlppack++;
+		tp->t_sndtlpbyte += len;
+	}
+	/* To get total bytes sent you must add t_snd_rxt_bytes to t_sndbytes */
+	if (is_rxt)
+		tp->t_snd_rxt_bytes += len;
+	else
+		tp->t_sndbytes += len;
+
+#ifdef KERN_TLS
+	if (hw_tls && is_rxt && len != 0) {
+		uint64_t rexmit_percent;
+
+		rexmit_percent = (1000ULL * tp->t_snd_rxt_bytes) /
+		    (10ULL * (tp->t_snd_rxt_bytes + tp->t_sndbytes));
+		if (rexmit_percent > ktls_ifnet_max_rexmit_pct)
+			ktls_disable_ifnet(tp);
+	}
+#endif
 }

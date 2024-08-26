@@ -1,10 +1,10 @@
-# $FreeBSD: c6845ac57e5c5c3862fc6b48608f51b63cc95a77 $
 
 ATF_TESTS_C+=	in_cksum_test
 SRCS.in_cksum_test= in_cksum_test.c ../utils.c
 
 PACKAGE= tests
 
+ATF_TESTS_PYTEST+=	test_ping.py
 ATF_TESTS_SH+=	ping_test
 # Exclusive because each injection test case uses the same IP addresses
 TEST_METADATA.ping_test+=	is_exclusive="true"

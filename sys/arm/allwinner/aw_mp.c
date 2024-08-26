@@ -25,8 +25,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: df798443a44aaaa7ccb2975c89ea52258316d8cc $");
-
 #include <sys/param.h>
 #include <sys/systm.h>
 #include <sys/bus.h>
@@ -39,7 +37,6 @@ __FBSDID("$FreeBSD: df798443a44aaaa7ccb2975c89ea52258316d8cc $");
 #include <vm/pmap.h>
 
 #include <machine/cpu.h>
-#include <machine/cpu-v6.h>
 #include <machine/smp.h>
 #include <machine/fdt.h>
 #include <machine/intr.h>

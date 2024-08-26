@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2020 Advanced Micro Devices, Inc.
  *
@@ -31,8 +31,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: e798bfa373359f3762b92e16f5722282ceac5dc0 $");
-
 #include "xgbe.h"
 #include "xgbe-common.h"
 

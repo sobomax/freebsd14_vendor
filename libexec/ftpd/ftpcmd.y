@@ -45,8 +45,6 @@ static char sccsid[] = "@(#)ftpcmd.y	8.3 (Berkeley) 4/6/94";
 #endif /* not lint */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 917dd5ef79e8fc79e4c7a30a420e33b9864cbd0d $");
-
 #include <sys/param.h>
 #include <sys/socket.h>
 #include <sys/stat.h>
@@ -462,12 +460,12 @@ cmd
 	| LIST check_login CRLF
 		{
 			if ($2)
-				retrieve(_PATH_LS " -lgA", "");
+				retrieve(_PATH_LS " -lA", "");
 		}
 	| LIST check_login SP pathstring CRLF
 		{
 			if ($2)
-				retrieve(_PATH_LS " -lgA %s", $4);
+				retrieve(_PATH_LS " -lA %s", $4);
 			free($4);
 		}
 	| STAT check_login SP pathname CRLF

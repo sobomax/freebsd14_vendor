@@ -37,7 +37,6 @@
 ** SUCH DAMAGE.
 */
 
-/* $FreeBSD: 7167f30a25613f7984253c80e64529bc47feda45 $ */
 
 #include <stdlib.h>
 #include <stdio.h>

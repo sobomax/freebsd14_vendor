@@ -1,4 +1,3 @@
-# $FreeBSD: 14d96e053b648f254d8c049fb968d6acb4a21740 $
 
 .include <src.opts.mk>
 
@@ -10,6 +9,8 @@ TESTS_SUBDIRS+=		${_audit}
 TESTS_SUBDIRS+=		auditpipe
 TESTS_SUBDIRS+=		capsicum
 TESTS_SUBDIRS+=		${_cddl}
+# XXX: Currently broken in CI
+#TESTS_SUBDIRS+=		compat32
 TESTS_SUBDIRS+=		devrandom
 TESTS_SUBDIRS+=		fifo
 TESTS_SUBDIRS+=		file
@@ -29,6 +30,7 @@ TESTS_SUBDIRS+=		netmap
 TESTS_SUBDIRS+=		netpfil
 TESTS_SUBDIRS+=		opencrypto
 TESTS_SUBDIRS+=		posixshm
+TESTS_SUBDIRS+=		ses
 TESTS_SUBDIRS+=		sys
 TESTS_SUBDIRS+=		vfs
 TESTS_SUBDIRS+=		vm

@@ -1,4 +1,3 @@
-# $FreeBSD: 204cfe5059e588c275937c5f7fea0e2792cf2827 $
 
 .PATH: ${SRCTOP}/sys/compat/linux
 .if ${MACHINE_CPUARCH} == "amd64"
@@ -8,14 +7,13 @@
 KMOD=	linux_common
 SRCS=	linux_common.c linux_mib.c linux_mmap.c linux_util.c linux_emul.c \
 	linux_dummy.c linux_errno.c linux_netlink.c \
-	linux.c device_if.h vnode_if.h bus_if.h opt_inet6.h
+	linux.c device_if.h vnode_if.h bus_if.h opt_inet6.h opt_inet.h
 
 .if ${MACHINE_CPUARCH} == "amd64"
 SRCS+=	linux_x86.c linux_vdso_selector_x86.c
 .endif
 
 EXPORT_SYMS=
-EXPORT_SYMS+=	linux_emul_path
 EXPORT_SYMS+=	linux_get_osname
 EXPORT_SYMS+=	linux_get_osrelease
 EXPORT_SYMS+=	linux_use_real_ifname

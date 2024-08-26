@@ -29,7 +29,6 @@
  * SUCH DAMAGE.
  *
  *	@(#)extern.h	8.3 (Berkeley) 4/2/94
- * $FreeBSD: ea4362eeadd9744a345ab136f92d77a025801e71 $
  */
 
 struct kinfo;

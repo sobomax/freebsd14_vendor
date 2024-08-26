@@ -1,5 +1,4 @@
 /* lookup.h */
-/* $FreeBSD: 4940f054696ab2d5f28bc1427155d185eb778932 $ */
 
 #include "bptypes.h"	/* for int32, u_int32 */
 

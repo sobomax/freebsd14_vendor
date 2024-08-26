@@ -1,4 +1,3 @@
-# $FreeBSD: 378541398e5b6b24413af4f17872e3d8052a1434 $
 
 PACKAGE=runtime
 PROG=	setfacl

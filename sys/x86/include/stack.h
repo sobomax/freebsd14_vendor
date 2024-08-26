@@ -22,8 +22,6 @@
  *
  * any improvements or extensions that they make and grant Carnegie the
  * rights to redistribute these changes.
- *
- * $FreeBSD: a3bf394d94140626e60e56ba9d5a97c36ba7de68 $
  */
 
 #ifndef _X86_STACK_H

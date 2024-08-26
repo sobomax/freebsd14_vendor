@@ -1,4 +1,3 @@
-# $FreeBSD: 24ea2760400b16910a4bfbc64d585c7ce6bc1400 $
 set -e
 until false; false; do
 	break

@@ -43,8 +43,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 8350122bc3376110f86e4684a6591038bc299133 $");
-
 #include <dev/mpt/mpt.h>
 #include <dev/mpt/mpt_raid.h>
 
@@ -296,6 +294,7 @@ mpt_raid_attach(struct mpt_softc *mpt)
 		goto cleanup;
 	}
 
+	memset(&csa, 0, sizeof(csa));
 	xpt_setup_ccb(&csa.ccb_h, mpt->path, 5);
 	csa.ccb_h.func_code = XPT_SASYNC_CB;
 	csa.event_enable = AC_FOUND_DEVICE;
@@ -336,6 +335,7 @@ mpt_raid_detach(struct mpt_softc *mpt)
 	handler.reply_handler = mpt_raid_reply_handler;
 	mpt_deregister_handler(mpt, MPT_HANDLER_REPLY, handler,
 			       raid_handler_id);
+	memset(&csa, 0, sizeof(csa));
 	xpt_setup_ccb(&csa.ccb_h, mpt->path, /*priority*/5);
 	csa.ccb_h.func_code = XPT_SASYNC_CB;
 	csa.event_enable = 0;
@@ -1071,6 +1071,7 @@ mpt_adjust_queue_depth(struct mpt_softc *mpt, struct mpt_raid_volume *mpt_vol,
 {
 	struct ccb_relsim crs;
 
+	memset(&crs, 0, sizeof(crs));
 	xpt_setup_ccb(&crs.ccb_h, path, /*priority*/5);
 	crs.ccb_h.func_code = XPT_REL_SIMQ;
 	crs.ccb_h.flags = CAM_DEV_QFREEZE;

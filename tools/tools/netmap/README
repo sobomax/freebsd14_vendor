@@ -1,4 +1,3 @@
-$FreeBSD: ff84b11f2fcbd9e571295770b0e06bdbf08f0967 $
 
 This directory contains applications that use the netmap API
 

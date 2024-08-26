@@ -6,8 +6,6 @@
  *
  * If you figure out how to do this on another system,
  * please let me know.  <gwr@mc.com>
- *
- * $FreeBSD: 56b7c8ed301637698f0d19d5e841da3e70f8894e $
  */
 
 #include <sys/types.h>
@@ -119,9 +117,7 @@ getether(ifname, eap)
 #include <net/if_types.h>
 
 int
-getether(ifname, eap)
-	char *ifname;				/* interface name from ifconfig structure */
-	char *eap;					/* Ether address (output) */
+getether(char *ifname, char *eap)
 {
 	int fd, rc = -1;
 	int n;

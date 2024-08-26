@@ -1,5 +1,4 @@
 #!/bin/sh
-# $FreeBSD: 3ce5fa6bd54a4c57c3a0a2ad65d91985c0e83e0e $
 
 # Will image the test directory (default /tmp/loadertest) if it doesn't exist
 

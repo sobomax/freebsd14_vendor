@@ -21,7 +21,6 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: 736fb412eae9e6d507cefbfe2a3d5e713613ffc0 $
 #
 
 # This is a tools-level test intended to verify that cp(1) and mv(1)

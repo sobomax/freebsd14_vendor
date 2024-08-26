@@ -30,8 +30,6 @@
 #include "opt_gdb.h"
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 4abf89a4fb37590f32846058fd76c869e2c75cee $");
-
 #include <sys/param.h>
 #include <sys/types.h>
 #include <sys/kdb.h>
@@ -44,6 +42,7 @@ __FBSDID("$FreeBSD: 4abf89a4fb37590f32846058fd76c869e2c75cee $");
 #include <machine/cpu.h>
 #include <machine/debug_monitor.h>
 #include <machine/kdb.h>
+#include <machine/pcb.h>
 
 #ifdef DDB
 #include <ddb/ddb.h>
@@ -60,6 +59,11 @@ static int dbg_breakpoint_num;
 static struct debug_monitor_state kernel_monitor = {
 	.dbg_flags = DBGMON_KERNEL
 };
+
+static int dbg_setup_watchpoint(struct debug_monitor_state *, vm_offset_t,
+    vm_size_t, enum dbg_access_t);
+static int dbg_remove_watchpoint(struct debug_monitor_state *, vm_offset_t,
+    vm_size_t);
 
 /* Called from the exception handlers */
 void dbg_monitor_enter(struct thread *);
@@ -379,7 +383,7 @@ dbg_find_slot(struct debug_monitor_state *monitor, enum dbg_t type,
 	return (-1);
 }
 
-int
+static int
 dbg_setup_watchpoint(struct debug_monitor_state *monitor, vm_offset_t addr,
     vm_size_t size, enum dbg_access_t access)
 {
@@ -446,7 +450,7 @@ dbg_setup_watchpoint(struct debug_monitor_state *monitor, vm_offset_t addr,
 	return (0);
 }
 
-int
+static int
 dbg_remove_watchpoint(struct debug_monitor_state *monitor, vm_offset_t addr,
     vm_size_t size)
 {
@@ -508,11 +512,13 @@ dbg_register_sync(struct debug_monitor_state *monitor)
 void
 dbg_monitor_init(void)
 {
+	uint64_t aa64dfr0;
 	u_int i;
 
 	/* Find out many breakpoints and watchpoints we can use */
-	dbg_watchpoint_num = ((READ_SPECIALREG(id_aa64dfr0_el1) >> 20) & 0xf) + 1;
-	dbg_breakpoint_num = ((READ_SPECIALREG(id_aa64dfr0_el1) >> 12) & 0xf) + 1;
+	aa64dfr0 = READ_SPECIALREG(id_aa64dfr0_el1);
+	dbg_watchpoint_num = ID_AA64DFR0_WRPs_VAL(aa64dfr0);
+	dbg_breakpoint_num = ID_AA64DFR0_BRPs_VAL(aa64dfr0);
 
 	if (bootverbose && PCPU_GET(cpuid) == 0) {
 		printf("%d watchpoints and %d breakpoints supported\n",

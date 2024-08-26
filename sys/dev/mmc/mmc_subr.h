@@ -48,8 +48,6 @@
  * herein shall be construed as an obligation by the SD Group, the SD-3C LLC
  * or the SD Card Association to disclose or distribute any technical
  * information, know-how or other confidential information to any third party.
- *
- * $FreeBSD: 14c3c5b94ee403255d51963bc0d3bf4a017d1433 $
  */
 
 #ifndef DEV_MMC_SUBR_H

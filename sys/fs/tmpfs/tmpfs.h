@@ -1,7 +1,7 @@
 /*	$NetBSD: tmpfs.h,v 1.26 2007/02/22 06:37:00 thorpej Exp $	*/
 
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-NetBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2005, 2006 The NetBSD Foundation, Inc.
  * All rights reserved.
@@ -30,8 +30,6 @@
  * CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
- *
- * $FreeBSD: 30c80ad70d483a9885bb8187e767f1e5f5a7915c $
  */
 
 #ifndef _FS_TMPFS_TMPFS_H_
@@ -133,6 +131,20 @@ RB_HEAD(tmpfs_dir, tmpfs_dirent);
 	(TMPFS_DIRCOOKIE_DUP | TMPFS_DIRCOOKIE_MASK)
 
 /*
+ * Internal representation of a tmpfs extended attribute entry.
+ */
+LIST_HEAD(tmpfs_extattr_list, tmpfs_extattr);
+
+struct tmpfs_extattr {
+	LIST_ENTRY(tmpfs_extattr)	ea_extattrs;
+	int			ea_namespace;	/* attr namespace */
+	char			*ea_name;	/* attr name */
+	unsigned char		ea_namelen;	/* attr name length */
+	char			*ea_value;	/* attr value buffer */
+	ssize_t			ea_size;	/* attr value size */
+};
+
+/*
  * Internal representation of a tmpfs file system node.
  *
  * This structure is splitted in two parts: one holds attributes common
@@ -169,7 +181,7 @@ struct tmpfs_node {
 	 * types instead of a custom enumeration is to make things simpler
 	 * and faster, as we do not need to convert between two types.
 	 */
-	enum vtype		tn_type;	/* (c) */
+	__enum_uint8(vtype)	tn_type;	/* (c) */
 
 	/*
 	 * See the top comment. Reordered here to fill LP64 hole.
@@ -238,6 +250,9 @@ struct tmpfs_node {
 
 	/* Transient refcounter on this node. */
 	u_int		tn_refcount;		/* 0<->1 (m) + (i) */
+
+	/* Extended attributes of this node. */
+	struct tmpfs_extattr_list	tn_extattrs;	/* (v) */
 
 	/* misc data field for different tn_type node */
 	union {
@@ -384,6 +399,12 @@ struct tmpfs_mount {
 	/* Number of nodes currently that are in use. */
 	ino_t			tm_nodes_inuse;
 
+	/* Memory used by extended attributes */
+	uint64_t		tm_ea_memory_inuse;
+
+	/* Maximum memory available for extended attributes */
+	uint64_t		tm_ea_memory_max;
+
 	/* Refcounter on this struct tmpfs_mount. */
 	uint64_t		tm_refcount;
 
@@ -405,6 +426,9 @@ struct tmpfs_mount {
 	bool			tm_nonc;
 	/* Do not update mtime on writes through mmaped areas. */
 	bool			tm_nomtime;
+
+	/* Read from page cache directly. */
+	bool			tm_pgread;
 };
 #define	TMPFS_LOCK(tm) mtx_lock(&(tm)->tm_allnode_lock)
 #define	TMPFS_UNLOCK(tm) mtx_unlock(&(tm)->tm_allnode_lock)
@@ -432,7 +456,7 @@ struct tmpfs_dir_cursor {
  */
 
 void	tmpfs_ref_node(struct tmpfs_node *node);
-int	tmpfs_alloc_node(struct mount *mp, struct tmpfs_mount *, enum vtype,
+int	tmpfs_alloc_node(struct mount *mp, struct tmpfs_mount *, __enum_uint8(vtype),
 	    uid_t uid, gid_t gid, mode_t mode, struct tmpfs_node *,
 	    const char *, dev_t, struct tmpfs_node **);
 int	tmpfs_fo_close(struct file *fp, struct thread *td);
@@ -457,10 +481,11 @@ struct tmpfs_dirent *	tmpfs_dir_lookup(struct tmpfs_node *node,
 			    struct tmpfs_node *f,
 			    struct componentname *cnp);
 int	tmpfs_dir_getdents(struct tmpfs_mount *, struct tmpfs_node *,
-	    struct uio *, int, u_long *, int *);
+	    struct uio *, int, uint64_t *, int *);
 int	tmpfs_dir_whiteout_add(struct vnode *, struct componentname *);
 void	tmpfs_dir_whiteout_remove(struct vnode *, struct componentname *);
 int	tmpfs_reg_resize(struct vnode *, off_t, boolean_t);
+int	tmpfs_reg_punch_hole(struct vnode *vp, off_t *, off_t *);
 int	tmpfs_chflags(struct vnode *, u_long, struct ucred *, struct thread *);
 int	tmpfs_chmod(struct vnode *, mode_t, struct ucred *, struct thread *);
 int	tmpfs_chown(struct vnode *, uid_t, gid_t, struct ucred *,
@@ -479,6 +504,8 @@ struct tmpfs_dirent *tmpfs_dir_first(struct tmpfs_node *dnode,
 	    struct tmpfs_dir_cursor *dc);
 struct tmpfs_dirent *tmpfs_dir_next(struct tmpfs_node *dnode,
 	    struct tmpfs_dir_cursor *dc);
+bool	tmpfs_pages_check_avail(struct tmpfs_mount *tmp, size_t req_pages);
+void	tmpfs_extattr_free(struct tmpfs_extattr* ea);
 static __inline void
 tmpfs_update(struct vnode *vp)
 {
@@ -490,7 +517,6 @@ tmpfs_update(struct vnode *vp)
  * Convenience macros to simplify some logical expressions.
  */
 #define IMPLIES(a, b) (!(a) || (b))
-#define IFF(a, b) (IMPLIES(a, b) && IMPLIES(b, a))
 
 /*
  * Checks that the directory entry pointed by 'de' matches the name 'name'
@@ -515,6 +541,13 @@ tmpfs_update(struct vnode *vp)
  */
 #if !defined(TMPFS_PAGES_MINRESERVED)
 #define TMPFS_PAGES_MINRESERVED		(4 * 1024 * 1024 / PAGE_SIZE)
+#endif
+
+/*
+ * Amount of memory to reserve for extended attributes.
+ */
+#if !defined(TMPFS_EA_MEMORY_RESERVED)
+#define TMPFS_EA_MEMORY_RESERVED	(16 * 1024 * 1024)
 #endif
 
 size_t tmpfs_mem_avail(void);

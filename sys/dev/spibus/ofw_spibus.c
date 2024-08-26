@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2009, Nathan Whitehorn <nwhitehorn@FreeBSD.org>
  * Copyright (c) 2013 The FreeBSD Foundation
@@ -31,8 +31,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: f24b12dccb90b1f35efa67d075681fffaeb10e7a $");
-
 #include <sys/param.h>
 #include <sys/bus.h>
 #include <sys/kernel.h>
@@ -217,7 +215,7 @@ static device_method_t ofw_spibus_methods[] = {
 	DEVMETHOD(device_attach,	ofw_spibus_attach),
 
 	/* Bus interface */
-	DEVMETHOD(bus_child_pnpinfo_str, ofw_bus_gen_child_pnpinfo_str),
+	DEVMETHOD(bus_child_pnpinfo,	ofw_bus_gen_child_pnpinfo),
 	DEVMETHOD(bus_add_child,	ofw_spibus_add_child),
 	DEVMETHOD(bus_get_resource_list, ofw_spibus_get_resource_list),
 
@@ -232,10 +230,8 @@ static device_method_t ofw_spibus_methods[] = {
 	DEVMETHOD_END
 };
 
-devclass_t ofw_spibus_devclass;
-
 DEFINE_CLASS_1(spibus, ofw_spibus_driver, ofw_spibus_methods,
     sizeof(struct spibus_softc), spibus_driver);
-DRIVER_MODULE(ofw_spibus, spi, ofw_spibus_driver, ofw_spibus_devclass, 0, 0);
+DRIVER_MODULE(ofw_spibus, spi, ofw_spibus_driver, 0, 0);
 MODULE_VERSION(ofw_spibus, 1);
 MODULE_DEPEND(ofw_spibus, spibus, 1, 1, 1);

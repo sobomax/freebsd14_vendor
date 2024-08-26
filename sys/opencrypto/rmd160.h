@@ -1,4 +1,3 @@
-/*	$FreeBSD: 2fa81e0fa8460930b01c194fba50d141a15666f0 $	*/
 /*	$OpenBSD: rmd160.h,v 1.3 2002/03/14 01:26:51 millert Exp $	*/
 /*-
  * Copyright (c) 2001 Markus Friedl.  All rights reserved.

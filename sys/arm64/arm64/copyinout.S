@@ -28,8 +28,6 @@
  */
 
 #include <machine/asm.h>
-__FBSDID("$FreeBSD: 86e3c55f9a09b30735d4102cc92e216620a05c05 $");
-
 #include <sys/errno.h>
 
 #include <machine/vmparam.h>

@@ -1,10 +1,10 @@
-# $FreeBSD: 9dd950496b1bb06f7c80cc37415067237af480e7 $
 
 .include <src.opts.mk>
 .include "${.CURDIR:H}/config.mk"
 
 SRCDIR=	${NCURSES_DIR}/panel
 
+PACKAGE=	clibs
 LIB=	panelw
 SHLIB_MAJOR=	6
 

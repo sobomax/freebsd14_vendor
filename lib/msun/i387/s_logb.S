@@ -34,8 +34,6 @@
  */
 
 #include <machine/asm.h>
-__FBSDID("$FreeBSD: 8304aa240efca634ce61c60f71dc6b339555d75a $")
-
 ENTRY(logb)
 	fldl	4(%esp)
 	fxtract

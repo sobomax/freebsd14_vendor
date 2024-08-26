@@ -37,7 +37,6 @@
  * SUCH DAMAGE.
  *
  *	from: @(#)param.h	5.8 (Berkeley) 6/28/91
- * $FreeBSD: 807b492324faee3294717016f72205de270bdbb4 $
  */
 
 #ifndef _ARM_INCLUDE_PARAM_H_

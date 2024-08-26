@@ -21,8 +21,6 @@
  * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
- *
- * $FreeBSD: 26f6fd65c5764516c317debe8707e4977ebd0025 $
  */
 
 #include "opt_rss.h"
@@ -41,6 +39,16 @@ static void mlx5e_rl_sysctl_add_stats_u64_oid(struct mlx5e_rl_priv_data *rl, uns
       struct sysctl_oid *node, const char *name, const char *desc);
 static int mlx5e_rl_tx_limit_add(struct mlx5e_rl_priv_data *, uint64_t value);
 static int mlx5e_rl_tx_limit_clr(struct mlx5e_rl_priv_data *, uint64_t value);
+static if_snd_tag_modify_t mlx5e_rl_snd_tag_modify;
+static if_snd_tag_query_t mlx5e_rl_snd_tag_query;
+static if_snd_tag_free_t mlx5e_rl_snd_tag_free;
+
+static const struct if_snd_tag_sw mlx5e_rl_snd_tag_sw = {
+	.snd_tag_modify = mlx5e_rl_snd_tag_modify,
+	.snd_tag_query = mlx5e_rl_snd_tag_query,
+	.snd_tag_free = mlx5e_rl_snd_tag_free,
+	.type = IF_SND_TAG_TYPE_RATE_LIMIT
+};
 
 static void
 mlx5e_rl_build_sq_param(struct mlx5e_rl_priv_data *rl,
@@ -505,7 +513,7 @@ mlx5e_rlw_channel_set_rate_locked(struct mlx5e_rl_worker *rlw,
 
 		/* get current burst size in bytes */
 		temp = rl->param.tx_burst_size *
-		    MLX5E_SW2HW_MTU(rlw->priv->ifp->if_mtu);
+		    MLX5E_SW2HW_MTU(if_getmtu(rlw->priv->ifp));
 
 		/* limit burst size to 64K currently */
 		if (temp > 65535)
@@ -750,7 +758,7 @@ mlx5e_rl_open_tis(struct mlx5e_priv *priv)
 static void
 mlx5e_rl_close_tis(struct mlx5e_priv *priv)
 {
-	mlx5_core_destroy_tis(priv->mdev, priv->rl.tisn);
+	mlx5_core_destroy_tis(priv->mdev, priv->rl.tisn, 0);
 }
 
 static void
@@ -946,7 +954,6 @@ mlx5e_rl_init(struct mlx5e_priv *priv)
 		for (i = 0; i < rl->param.tx_channels_per_worker_def; i++) {
 			struct mlx5e_rl_channel *channel = rlw->channels + i;
 			channel->worker = rlw;
-			channel->tag.type = IF_SND_TAG_TYPE_RATE_LIMIT;
 			STAILQ_INSERT_TAIL(&rlw->index_list_head, channel, entry);
 		}
 		MLX5E_RL_WORKER_UNLOCK(rlw);
@@ -1193,7 +1200,7 @@ mlx5e_find_available_tx_ring_index(struct mlx5e_rl_worker *rlw,
 }
 
 int
-mlx5e_rl_snd_tag_alloc(struct ifnet *ifp,
+mlx5e_rl_snd_tag_alloc(if_t ifp,
     union if_snd_tag_alloc_params *params,
     struct m_snd_tag **ppmt)
 {
@@ -1202,7 +1209,7 @@ mlx5e_rl_snd_tag_alloc(struct ifnet *ifp,
 	struct mlx5e_priv *priv;
 	int error;
 
-	priv = ifp->if_softc;
+	priv = if_getsoftc(ifp);
 
 	/* check if there is support for packet pacing or if device is going away */
 	if (!MLX5_CAP_GEN(priv->mdev, qos) ||
@@ -1226,14 +1233,14 @@ mlx5e_rl_snd_tag_alloc(struct ifnet *ifp,
 
 	/* store pointer to mbuf tag */
 	MPASS(channel->tag.refcount == 0);
-	m_snd_tag_init(&channel->tag, ifp, IF_SND_TAG_TYPE_RATE_LIMIT);
+	m_snd_tag_init(&channel->tag, ifp, &mlx5e_rl_snd_tag_sw);
 	*ppmt = &channel->tag;
 done:
 	return (error);
 }
 
 
-int
+static int
 mlx5e_rl_snd_tag_modify(struct m_snd_tag *pmt, union if_snd_tag_modify_params *params)
 {
 	struct mlx5e_rl_channel *channel =
@@ -1242,7 +1249,7 @@ mlx5e_rl_snd_tag_modify(struct m_snd_tag *pmt, union if_snd_tag_modify_params *p
 	return (mlx5e_rl_modify(channel->worker, channel, params->rate_limit.max_rate));
 }
 
-int
+static int
 mlx5e_rl_snd_tag_query(struct m_snd_tag *pmt, union if_snd_tag_query_params *params)
 {
 	struct mlx5e_rl_channel *channel =
@@ -1251,7 +1258,7 @@ mlx5e_rl_snd_tag_query(struct m_snd_tag *pmt, union if_snd_tag_query_params *par
 	return (mlx5e_rl_query(channel->worker, channel, params));
 }
 
-void
+static void
 mlx5e_rl_snd_tag_free(struct m_snd_tag *pmt)
 {
 	struct mlx5e_rl_channel *channel =
@@ -1439,7 +1446,6 @@ mlx5e_rl_sysctl_handler(SYSCTL_HANDLER_ARGS)
 	unsigned mode_modify;
 	unsigned was_opened;
 	uint64_t value;
-	uint64_t old;
 	int error;
 
 	PRIV_LOCK(priv);
@@ -1449,13 +1455,11 @@ mlx5e_rl_sysctl_handler(SYSCTL_HANDLER_ARGS)
 	MLX5E_RL_RUNLOCK(rl);
 
 	if (req != NULL) {
-		old = value;
 		error = sysctl_handle_64(oidp, &value, 0, req);
 		if (error || req->newptr == NULL ||
 		    value == rl->param.arg[arg2])
 			goto done;
 	} else {
-		old = 0;
 		error = 0;
 	}
 

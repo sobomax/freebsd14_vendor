@@ -1,4 +1,3 @@
-/* $FreeBSD: e530f694458dd51caac363c6eb41bfa3cdd54b41 $ */
 /* Do not modify. This file is auto-generated from ppc-mont.pl. */
 .machine	"any"
 .text

@@ -1,4 +1,3 @@
-/* $FreeBSD: ce0910a1b9983dee638a01b4aeb14d1c47fc015a $ */
 #ifndef _EFI_IP_H
 #define _EFI_IP_H
 

@@ -1,6 +1,5 @@
 #!/bin/sh
 #
-# $FreeBSD: 57ec8566dae3f6da5ea431663535d5cc12669247 $
 #
 
 # PROVIDE: yppasswdd

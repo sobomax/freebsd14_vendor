@@ -1,4 +1,3 @@
-# $FreeBSD: 0338e8a224e370b5844478e9418f811b02697cc6 $
 
 case `false` in
 no) exit 3 ;;

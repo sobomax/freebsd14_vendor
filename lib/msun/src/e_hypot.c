@@ -11,10 +11,7 @@
  * ====================================================
  */
 
-#include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 7c455bb6652f2ef8e83b08f4b0642648504ddba7 $");
-
-/* __ieee754_hypot(x,y)
+/* hypot(x,y)
  *
  * Method :                  
  *	If (assume round-to-nearest) z=x*x+y*y 
@@ -52,7 +49,7 @@ __FBSDID("$FreeBSD: 7c455bb6652f2ef8e83b08f4b0642648504ddba7 $");
 #include "math_private.h"
 
 double
-__ieee754_hypot(double x, double y)
+hypot(double x, double y)
 {
 	double a,b,t1,t2,y1,y2,w;
 	int32_t j,k,ha,hb;

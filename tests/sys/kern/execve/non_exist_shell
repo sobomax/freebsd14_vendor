@@ -1,4 +1,3 @@
 #! /foo/bar/baz
-# $FreeBSD: f9ee705bd9e98565b8f59d7252843e0ffa0686e4 $
 
 echo foo

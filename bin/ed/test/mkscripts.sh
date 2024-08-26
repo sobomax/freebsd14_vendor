@@ -1,7 +1,6 @@
 #!/bin/sh -
 # This script generates ed test scripts (.ed) from .t files
 #	
-# $FreeBSD: 1b8b3ee5318276c8b4b0a0e221083db25f917d87 $
 
 PATH="/bin:/usr/bin:/usr/local/bin/:."
 ED=$1

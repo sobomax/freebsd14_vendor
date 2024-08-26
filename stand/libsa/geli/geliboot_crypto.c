@@ -23,8 +23,6 @@
  * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
- *
- * $FreeBSD: 2cdd4483d3236f005de295b2e52dcfb98229c1d3 $
  */
 
 #include <stdio.h>
@@ -42,7 +40,7 @@ geliboot_crypt(u_int algo, geli_op_t enc, u_char *data, size_t datasize,
 	cipherInstance cipher;
 	struct aes_xts_ctx xtsctx, *ctxp;
 	size_t xts_len;
-	int err, blks, i;
+	int err, blks;
 
 	switch (algo) {
 	case CRYPTO_AES_CBC:
@@ -85,16 +83,12 @@ geliboot_crypt(u_int algo, geli_op_t enc, u_char *data, size_t datasize,
 
 		switch (enc) {
 		case GELI_DECRYPT:
-			for (i = 0; i < datasize; i += AES_XTS_BLOCKSIZE) {
-				enc_xform_aes_xts.decrypt(ctxp, data + i,
-				    data + i);
-			}
+			enc_xform_aes_xts.decrypt_multi(ctxp, data, data,
+			    datasize);
 			break;
 		case GELI_ENCRYPT:
-			for (i = 0; i < datasize; i += AES_XTS_BLOCKSIZE) {
-				enc_xform_aes_xts.encrypt(ctxp, data + i,
-				    data + i);
-			}
+			enc_xform_aes_xts.encrypt_multi(ctxp, data, data,
+			    datasize);
 			break;
 		}
 		break;

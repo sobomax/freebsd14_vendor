@@ -4,8 +4,6 @@
 chacha-merged.c version 20080118
 D. J. Bernstein
 Public domain.
-
- $FreeBSD: 32262b04d56835189e2826b7ae144cab3c42fd17 $
 */
 
 #ifndef CHACHA_H

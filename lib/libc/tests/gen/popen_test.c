@@ -29,9 +29,6 @@
  * with BSD extensions.
  */
 
-#include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 5c615b7146e9bdc09856ed5f51f9aa70a5e687c7 $");
-
 #include <sys/param.h>
 #include <sys/wait.h>
 #include <errno.h>

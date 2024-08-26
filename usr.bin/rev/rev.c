@@ -42,8 +42,6 @@ static char sccsid[] = "@(#)rev.c	8.3 (Berkeley) 5/4/95";
 #endif
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: f042596392582583b68cac0a40087adc5d19c921 $");
-
 #include <sys/types.h>
 
 #include <err.h>
@@ -55,7 +53,7 @@ __FBSDID("$FreeBSD: f042596392582583b68cac0a40087adc5d19c921 $");
 #include <unistd.h>
 #include <wchar.h>
 
-static void usage(void);
+static void usage(void) __dead2;
 
 int
 main(int argc, char *argv[])

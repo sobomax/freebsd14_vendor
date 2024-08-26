@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2002-2009 Luigi Rizzo, Universita` di Pisa
  * Copyright (c) 2014 Yandex LLC
@@ -30,8 +30,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 6d2a119ecbe079008f9eddc20b159dbb8bc65d6c $");
-
 /*
  * Control socket and rule management routines for ipfw.
  * Control is currently implemented via IP_FW3 setsockopt() code.
@@ -566,6 +564,8 @@ import_rule0(struct rule_check_info *ci)
 			break;
 		case O_SETFIB:
 		case O_SETDSCP:
+		case O_SETMARK:
+		case O_MARK:
 			if (cmd->arg1 == IP_FW_TABLEARG)
 				cmd->arg1 = IP_FW_TARG;
 			else
@@ -650,6 +650,8 @@ export_rule0(struct ip_fw *krule, struct ip_fw_rule0 *urule, int len)
 			break;
 		case O_SETFIB:
 		case O_SETDSCP:
+		case O_SETMARK:
+		case O_MARK:
 			if (cmd->arg1 == IP_FW_TARG)
 				cmd->arg1 = IP_FW_TABLEARG;
 			else
@@ -1939,6 +1941,7 @@ check_ipfw_rule_body(ipfw_insn *cmd, int cmd_len, struct rule_check_info *ci)
 			break;
 
 		case O_DSCP:
+		case O_MARK:
 			if (cmdlen != F_INSN_SIZE(ipfw_insn_u32) + 1)
 				goto bad_size;
 			break;
@@ -2000,12 +2003,21 @@ check_ipfw_rule_body(ipfw_insn *cmd, int cmd_len, struct rule_check_info *ci)
  			goto check_action;
 		case O_CHECK_STATE:
 			ci->object_opcodes++;
+			goto check_size;
+		case O_SETMARK:
+			if (cmdlen != F_INSN_SIZE(ipfw_insn_u32))
+				goto bad_size;
+			goto check_action;
+		case O_REJECT:
+			/* "unreach needfrag" has variable len. */
+			if ((cmdlen == F_INSN_SIZE(ipfw_insn) ||
+			    cmdlen == F_INSN_SIZE(ipfw_insn_u16)))
+				goto check_action;
 			/* FALLTHROUGH */
 		case O_FORWARD_MAC: /* XXX not implemented yet */
 		case O_COUNT:
 		case O_ACCEPT:
 		case O_DENY:
-		case O_REJECT:
 		case O_SETDSCP:
 #ifdef INET6
 		case O_UNREACH6:
@@ -2835,7 +2847,6 @@ rewrite_rule_uidx(struct ip_fw_chain *chain, struct rule_check_info *ci)
 {
 	int error;
 	ipfw_insn *cmd;
-	uint8_t type;
 	struct obj_idx *p, *pidx_first, *pidx_last;
 	struct tid_info ti;
 
@@ -2852,7 +2863,6 @@ rewrite_rule_uidx(struct ip_fw_chain *chain, struct rule_check_info *ci)
 		    M_IPFW, M_WAITOK | M_ZERO);
 
 	error = 0;
-	type = 0;
 	memset(&ti, 0, sizeof(ti));
 
 	/* Use set rule is assigned to. */
@@ -3794,7 +3804,7 @@ ipfw_ctl(struct sockopt *sopt)
 {
 #define	RULE_MAXSIZE	(512*sizeof(u_int32_t))
 	int error;
-	size_t size, valsize;
+	size_t size;
 	struct ip_fw *buf;
 	struct ip_fw_rule0 *rule;
 	struct ip_fw_chain *chain;
@@ -3806,8 +3816,6 @@ ipfw_ctl(struct sockopt *sopt)
 	chain = &V_layer3_chain;
 	error = 0;
 
-	/* Save original valsize before it is altered via sooptcopyin() */
-	valsize = sopt->sopt_valsize;
 	opt = sopt->sopt_name;
 
 	/*
@@ -4394,7 +4402,8 @@ objhash_hash_idx(struct namedobj_instance *ni, uint32_t val)
 }
 
 struct named_object *
-ipfw_objhash_lookup_name(struct namedobj_instance *ni, uint32_t set, char *name)
+ipfw_objhash_lookup_name(struct namedobj_instance *ni, uint32_t set,
+    const char *name)
 {
 	struct named_object *no;
 	uint32_t hash;

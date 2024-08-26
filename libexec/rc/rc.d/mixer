@@ -24,7 +24,6 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: d815fb75425e01425b74054e67242e61c3a8cfcb $
 #
 
 # PROVIDE: mixer
@@ -58,7 +57,7 @@ mixer_save()
 
 	dev="/dev/${1}"
 	if [ -r ${dev} ]; then
-		/usr/sbin/mixer -f ${dev} -s > /var/db/${1}-state 2>/dev/null
+		/usr/sbin/mixer -f ${dev} -o > /var/db/${1}-state 2>/dev/null
 	fi
 }
 

@@ -1,4 +1,3 @@
-# $FreeBSD: c900a24e3899d4518026fd9d7e3b3529a9d56cdf $
 
 # netlib gdtoa sources
 .PATH: ${LIBC_SRCTOP}/gdtoa

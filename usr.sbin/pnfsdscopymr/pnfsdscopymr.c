@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2017 Rick Macklem
  *
@@ -27,8 +27,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 9526d04eababf3b0c10ba3b22d707cfe09568921 $");
-
 #include <err.h>
 #include <errno.h>
 #include <getopt.h>
@@ -53,7 +51,7 @@ __FBSDID("$FreeBSD: 9526d04eababf3b0c10ba3b22d707cfe09568921 $");
 #include <fs/nfs/nfs.h>
 #include <fs/nfs/nfsrvstate.h>
 
-static void usage(void);
+static void usage(void) __dead2;
 
 static struct option longopts[] = {
 	{ "migrate",	required_argument,	NULL,	'm'	},

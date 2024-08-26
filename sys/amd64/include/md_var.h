@@ -27,9 +27,11 @@
  * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
- *
- * $FreeBSD: 13dedac784d1b50a10acf6e9334ea4add1e2e41e $
  */
+
+#ifdef __i386__
+#include <i386/md_var.h>
+#else /* !__i386__ */
 
 #ifndef _MACHINE_MD_VAR_H_
 #define	_MACHINE_MD_VAR_H_
@@ -60,6 +62,7 @@ struct	sysentvec;
 
 void	amd64_conf_fast_syscall(void);
 void	amd64_db_resume_dbreg(void);
+vm_paddr_t amd64_loadaddr(void);
 void	amd64_lower_shared_page(struct sysentvec *);
 void	amd64_bsp_pcpu_init1(struct pcpu *pc);
 void	amd64_bsp_pcpu_init2(uint64_t rsp0);
@@ -96,3 +99,5 @@ int	set_fpcontext(struct thread *td, struct __mcontext *mcp,
 	    char *xfpustate, size_t xfpustate_len);
 
 #endif /* !_MACHINE_MD_VAR_H_ */
+
+#endif /* __i386__ */

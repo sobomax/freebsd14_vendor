@@ -42,9 +42,6 @@
  * will switch the back end storage.
  */
 
-#include <sys/cdefs.h>
-__FBSDID("$FreeBSD: e5a804ff15e8f19fcf4d810b4b043d83ea7683c6 $");
-
 #include <stdbool.h>
 #include <sys/queue.h>
 #include "stand.h"

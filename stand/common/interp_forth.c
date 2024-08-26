@@ -24,16 +24,12 @@
  * SUCH DAMAGE.
  */
 
-#include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 19f1c75dc19134028e85ca31546a13558cfc02e7 $");
-
 #include <sys/param.h>		/* to pick up __FreeBSD_version */
 #include <string.h>
 #include <stand.h>
 #include "bootstrap.h"
 #include "ficl.h"
 
-extern unsigned bootprog_rev;
 INTERP_DEFINE("4th");
 
 /* #define BFORTH_DEBUG */

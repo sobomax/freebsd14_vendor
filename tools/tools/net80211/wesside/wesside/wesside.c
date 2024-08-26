@@ -4,8 +4,6 @@
  *
  * XXX GENERAL: I DON'T CHECK FOR PACKET LENGTHS AND STUFF LIKE THAT and buffer
  * overflows.  this whole thing is experimental n e way.
- *
- * $FreeBSD: d1e6fd8fe6d7967d506cb248b2487e6ce55872fd $
  */
 
 #include <sys/types.h>

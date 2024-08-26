@@ -28,8 +28,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 0d19a2a2233bd738d1c0c227f3d2934925136bc2 $");
-
 /*
  * Mac-io ATA controller
  */
@@ -149,7 +147,7 @@ static driver_t ata_macio_driver = {
 	sizeof(struct ata_macio_softc),
 };
 
-DRIVER_MODULE(ata, macio, ata_macio_driver, ata_devclass, NULL, NULL);
+DRIVER_MODULE(ata, macio, ata_macio_driver, NULL, NULL);
 MODULE_DEPEND(ata, ata, 1, 1, 1);
 
 static int

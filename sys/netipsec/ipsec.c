@@ -1,4 +1,3 @@
-/*	$FreeBSD: 3c63ebbd20add918d59590198b38b3dfecf997ad $	*/
 /*	$KAME: ipsec.c,v 1.103 2001/05/24 07:14:18 sakane Exp $	*/
 
 /*-
@@ -112,6 +111,7 @@ VNET_PCPUSTAT_SYSUNINIT(ipsec4stat);
 
 /* DF bit on encap. 0: clear 1: set 2: copy */
 VNET_DEFINE(int, ip4_ipsec_dfbit) = 0;
+VNET_DEFINE(int, ip4_ipsec_min_pmtu) = 576;
 VNET_DEFINE(int, ip4_esp_trans_deflev) = IPSEC_LEVEL_USE;
 VNET_DEFINE(int, ip4_esp_net_deflev) = IPSEC_LEVEL_USE;
 VNET_DEFINE(int, ip4_ah_trans_deflev) = IPSEC_LEVEL_USE;
@@ -196,6 +196,9 @@ SYSCTL_INT(_net_inet_ipsec, IPSECCTL_AH_CLEARTOS, ah_cleartos,
 SYSCTL_INT(_net_inet_ipsec, IPSECCTL_DFBIT, dfbit,
 	CTLFLAG_VNET | CTLFLAG_RW, &VNET_NAME(ip4_ipsec_dfbit), 0,
 	"Do not fragment bit on encap.");
+SYSCTL_INT(_net_inet_ipsec, IPSECCTL_MIN_PMTU, min_pmtu,
+	CTLFLAG_VNET | CTLFLAG_RW, &VNET_NAME(ip4_ipsec_min_pmtu), 0,
+	"Lowest acceptable PMTU value.");
 SYSCTL_INT(_net_inet_ipsec, IPSECCTL_ECN, ecn,
 	CTLFLAG_VNET | CTLFLAG_RW, &VNET_NAME(ip4_ipsec_ecn), 0,
 	"Explicit Congestion Notification handling.");
@@ -662,10 +665,7 @@ ipsec4_capability(struct mbuf *m, u_int cap)
 		return (0);
 	case IPSEC_CAP_OPERABLE:
 		/* Do we have active security policies? */
-		if (key_havesp(IPSEC_DIR_INBOUND) != 0 ||
-		    key_havesp(IPSEC_DIR_OUTBOUND) != 0)
-			return (1);
-		return (0);
+		return (key_havesp_any());
 	};
 	return (EOPNOTSUPP);
 }
@@ -831,10 +831,7 @@ ipsec6_capability(struct mbuf *m, u_int cap)
 		return (0);
 	case IPSEC_CAP_OPERABLE:
 		/* Do we have active security policies? */
-		if (key_havesp(IPSEC_DIR_INBOUND) != 0 ||
-		    key_havesp(IPSEC_DIR_OUTBOUND) != 0)
-			return (1);
-		return (0);
+		return (key_havesp_any());
 	};
 	return (EOPNOTSUPP);
 }
@@ -1089,7 +1086,7 @@ ipsec_in_reject(struct secpolicy *sp, struct inpcb *inp, const struct mbuf *m)
  * Compute the byte size to be occupied by IPsec header.
  * In case it is tunnelled, it includes the size of outer IP header.
  */
-static size_t
+size_t
 ipsec_hdrsiz_internal(struct secpolicy *sp)
 {
 	size_t size;

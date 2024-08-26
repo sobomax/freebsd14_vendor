@@ -1,6 +1,8 @@
-# $FreeBSD: ec493416a573764b40c7626739d1842a87a6bdb1 $
 
+PACKAGE=	console-tools
 PROG=	kbdmap
+CFLAGS+=	-I${SRCTOP}/contrib/bsddialog/lib
+LIBADD=	bsddialog
 LINKS=	${BINDIR}/kbdmap ${BINDIR}/vidfont
 MLINKS=	kbdmap.1 vidfont.1
 

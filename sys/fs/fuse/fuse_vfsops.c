@@ -61,8 +61,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 4ff0fff4f47ae4f05e4897390aed19dcd6374804 $");
-
 #include <sys/param.h>
 #include <sys/buf.h>
 #include <sys/module.h>
@@ -149,10 +147,10 @@ fuse_getdevice(const char *fspec, struct thread *td, struct cdev **fdevp)
 	 * and verify that it refers to a sensible disk device.
 	 */
 
-	NDINIT(ndp, LOOKUP, FOLLOW, UIO_SYSSPACE, fspec, td);
+	NDINIT(ndp, LOOKUP, FOLLOW, UIO_SYSSPACE, fspec);
 	if ((err = namei(ndp)) != 0)
 		return err;
-	NDFREE(ndp, NDF_ONLY_PNBUF);
+	NDFREE_PNBUF(ndp);
 	devvp = ndp->ni_vp;
 
 	if (devvp->v_type != VCHR) {
@@ -543,7 +541,7 @@ fuse_vfsop_vget(struct mount *mp, ino_t ino, int flags, struct vnode **vpp)
 	struct fuse_vnode_data *fvdat;
 	struct timespec now;
 	const char dot[] = ".";
-	enum vtype vtyp;
+	__enum_uint8(vtype) vtyp;
 	int error;
 
 	if (!(data->dataflags & FSESS_EXPORT_SUPPORT)) {
@@ -624,8 +622,7 @@ fuse_vfsop_root(struct mount *mp, int lkflags, struct vnode **vpp)
 				SDT_PROBE2(fusefs, , vfsops, trace, 1,
 					"root vnode race");
 				FUSE_UNLOCK();
-				VOP_UNLOCK(*vpp);
-				vrele(*vpp);
+				vput(*vpp);
 				vrecycle(*vpp);
 				*vpp = data->vroot;
 			} else

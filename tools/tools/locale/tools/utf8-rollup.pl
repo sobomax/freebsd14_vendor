@@ -1,6 +1,6 @@
 #!/usr/local/bin/perl -wC
 
-# SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+# SPDX-License-Identifier: BSD-2-Clause
 #
 # Copyright 2009 Edwin Groothuis <edwin@FreeBSD.org>
 # Copyright 2015 John Marino <draco@marino.st>
@@ -26,7 +26,6 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: b275828d52c905e1d35da863392c391dbe043b73 $
 
 use strict;
 use Getopt::Long;

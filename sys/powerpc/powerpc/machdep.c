@@ -55,8 +55,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: f0dfee710c3a9a86d17310c9058343a8f8143f0d $");
-
 #include "opt_ddb.h"
 #include "opt_kstack_pages.h"
 #include "opt_platform.h"
@@ -137,7 +135,11 @@ int cacheline_size = 128;
 #else
 int cacheline_size = 32;
 #endif
+#ifdef __powerpc64__
+int hw_direct_map = -1;
+#else
 int hw_direct_map = 1;
+#endif
 
 #ifdef BOOKE
 extern vm_paddr_t kernload;
@@ -151,7 +153,7 @@ static char init_kenv[2048];
 static struct trapframe frame0;
 
 char		machine[] = "powerpc";
-SYSCTL_STRING(_hw, HW_MACHINE, machine, CTLFLAG_RD, machine, 0, "");
+SYSCTL_STRING(_hw, HW_MACHINE, machine, CTLFLAG_RD | CTLFLAG_CAPRD, machine, 0, "");
 
 static void	cpu_startup(void *);
 SYSINIT(cpu, SI_SUB_CPU, SI_ORDER_FIRST, cpu_startup, NULL);
@@ -267,7 +269,6 @@ powerpc_init(vm_offset_t fdt, vm_offset_t toc, vm_offset_t ofentry, void *mdp,
 	bool		symbols_provided = false;
 	vm_offset_t ksym_start;
 	vm_offset_t ksym_end;
-	vm_offset_t ksym_sz;
 #endif
 
 	/* First guess at start/end kernel positions */
@@ -319,7 +320,7 @@ powerpc_init(vm_offset_t fdt, vm_offset_t toc, vm_offset_t ofentry, void *mdp,
 		 */
 		char *envp = NULL;
 		uintptr_t md_offset = 0;
-		vm_paddr_t kernelstartphys, kernelendphys;
+		vm_paddr_t kernelendphys;
 
 #ifdef AIM
 		if ((uintptr_t)&powerpc_init > DMAP_BASE_ADDRESS)
@@ -346,8 +347,6 @@ powerpc_init(vm_offset_t fdt, vm_offset_t toc, vm_offset_t ofentry, void *mdp,
 				if (fdt != 0)
 					fdt += md_offset;
 			}
-			kernelstartphys = MD_FETCH(kmdp, MODINFO_ADDR,
-			    vm_offset_t);
 			/* kernelstartphys is already relocated. */
 			kernelendphys = MD_FETCH(kmdp, MODINFOMD_KERNEND,
 			    vm_offset_t);
@@ -357,7 +356,6 @@ powerpc_init(vm_offset_t fdt, vm_offset_t toc, vm_offset_t ofentry, void *mdp,
 #ifdef DDB
 			ksym_start = MD_FETCH(kmdp, MODINFOMD_SSYM, uintptr_t);
 			ksym_end = MD_FETCH(kmdp, MODINFOMD_ESYM, uintptr_t);
-			ksym_sz = *(Elf_Size*)ksym_start;
 
 			db_fetch_ksymtab(ksym_start, ksym_end, md_offset);
 			/* Symbols provided by loader. */
@@ -529,7 +527,6 @@ load_external_symtab(void) {
 	int i;
 
 	Elf_Ehdr *ehdr;
-	Elf_Phdr *phdr;
 	Elf_Shdr *shdr;
 
 	vm_offset_t ksym_start, ksym_sz, kstr_start, kstr_sz,
@@ -585,7 +582,6 @@ load_external_symtab(void) {
 	kernelimg = (u_char *)pmap_early_io_map(start, (end - start));
 #endif
 
-	phdr = (Elf_Phdr *)(kernelimg + ehdr->e_phoff);
 	shdr = (Elf_Shdr *)(kernelimg + ehdr->e_shoff);
 
 	ksym_start = 0;
@@ -840,44 +836,6 @@ DB_SHOW_COMMAND(frame, db_show_frame)
 #endif
 }
 #endif
-
-#undef bzero
-void
-bzero(void *buf, size_t len)
-{
-	caddr_t	p;
-
-	p = buf;
-
-	while (((vm_offset_t) p & (sizeof(u_long) - 1)) && len) {
-		*p++ = 0;
-		len--;
-	}
-
-	while (len >= sizeof(u_long) * 8) {
-		*(u_long*) p = 0;
-		*((u_long*) p + 1) = 0;
-		*((u_long*) p + 2) = 0;
-		*((u_long*) p + 3) = 0;
-		len -= sizeof(u_long) * 8;
-		*((u_long*) p + 4) = 0;
-		*((u_long*) p + 5) = 0;
-		*((u_long*) p + 6) = 0;
-		*((u_long*) p + 7) = 0;
-		p += sizeof(u_long) * 8;
-	}
-
-	while (len >= sizeof(u_long)) {
-		*(u_long*) p = 0;
-		len -= sizeof(u_long);
-		p += sizeof(u_long);
-	}
-
-	while (len) {
-		*p++ = 0;
-		len--;
-	}
-}
 
 /* __stack_chk_fail_local() is called in secure-plt (32-bit). */
 #if !defined(__powerpc64__)

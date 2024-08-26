@@ -1,4 +1,3 @@
-/* $FreeBSD: 092f2090f02f1e43333cd546bedb92d25678b10d $ */
 /* Do not modify. This file is auto-generated from sha512p8-ppc.pl. */
 .machine	"any"
 .text

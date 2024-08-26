@@ -1,4 +1,3 @@
-# $FreeBSD: 49c5ab1b0cfb441800e38568af8aee71980399d7 $
 # Although POSIX does not specify the effect of NUL bytes in scripts,
 # we ignore them.
 

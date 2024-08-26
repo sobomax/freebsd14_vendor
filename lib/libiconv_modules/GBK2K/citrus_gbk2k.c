@@ -1,4 +1,3 @@
-/* $FreeBSD: 87ec6ebecc6ab84311ad8a62b057fd79f62439b3 $ */
 /* $NetBSD: citrus_gbk2k.c,v 1.7 2008/06/14 16:01:07 tnozaki Exp $ */
 
 /*-

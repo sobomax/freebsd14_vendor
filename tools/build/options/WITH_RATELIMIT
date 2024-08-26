@@ -1,4 +1,3 @@
-.\" $FreeBSD: 0566fadcf22e54f60467d364942055caac8fbc7c $
 Build the system with rate limit support.
 .Pp
 This makes

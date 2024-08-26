@@ -15,7 +15,6 @@
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  *
  * $OpenBSD: if_urtwnreg.h,v 1.3 2010/11/16 18:02:59 damien Exp $
- * $FreeBSD: 5c2880bb1921c3004ef6d9aaed62033b7e2708bd $
  */
 
 #ifndef R92C_ROM_IMAGE_H

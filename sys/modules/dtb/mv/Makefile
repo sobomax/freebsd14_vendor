@@ -1,4 +1,3 @@
-# $FreeBSD: 6866fba671e83684318ec8ae0d565290c64b0512 $
 # All the dts files for Marvell systems we support.
 
 .if ${MACHINE_ARCH} == "armv7"

@@ -28,8 +28,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 937bd9352da513a3aa5be07a2ecf120db7ee8de8 $");
-
 /*
  * This is the top-level N-PHY support for the Broadcom softmac driver.
  */

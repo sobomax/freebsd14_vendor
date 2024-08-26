@@ -24,7 +24,6 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 #include "test.h"
-__FBSDID("$FreeBSD: 3f543927a41e9e3312e4da2c995878a4124a18c6 $");
 
 static void
 test_winzip_aes(const char *refname, int need_libz)

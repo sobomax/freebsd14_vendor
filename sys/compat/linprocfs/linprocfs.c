@@ -1,7 +1,7 @@
 /*-
  * SPDX-License-Identifier: BSD-4-Clause
  *
- * Copyright (c) 2000 Dag-Erling Coïdan Smørgrav
+ * Copyright (c) 2000 Dag-Erling Smørgrav
  * Copyright (c) 1999 Pierre Beyssac
  * Copyright (c) 1993 Jan-Simon Pendry
  * Copyright (c) 1993
@@ -43,11 +43,8 @@
 
 #include "opt_inet.h"
 
-#include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 9166e46355eccb6b75d9ba0c1748ca4862aea191 $");
-
 #include <sys/param.h>
-#include <sys/queue.h>
+#include <sys/systm.h>
 #include <sys/blist.h>
 #include <sys/conf.h>
 #include <sys/exec.h>
@@ -64,6 +61,7 @@ __FBSDID("$FreeBSD: 9166e46355eccb6b75d9ba0c1748ca4862aea191 $");
 #include <sys/namei.h>
 #include <sys/proc.h>
 #include <sys/ptrace.h>
+#include <sys/queue.h>
 #include <sys/resourcevar.h>
 #include <sys/resource.h>
 #include <sys/sbuf.h>
@@ -74,7 +72,6 @@ __FBSDID("$FreeBSD: 9166e46355eccb6b75d9ba0c1748ca4862aea191 $");
 #include <sys/syscallsubr.h>
 #include <sys/sysctl.h>
 #include <sys/sysent.h>
-#include <sys/systm.h>
 #include <sys/time.h>
 #include <sys/tty.h>
 #include <sys/user.h>
@@ -204,10 +201,7 @@ linprocfs_domeminfo(PFS_FILL_ARGS)
 static int
 linprocfs_docpuinfo(PFS_FILL_ARGS)
 {
-	int hw_model[2];
-	char model[128];
 	uint64_t freq;
-	size_t size;
 	u_int cache_size[4];
 	u_int regs[4] = { 0 };
 	int fqmhz, fqkhz;
@@ -307,12 +301,6 @@ linprocfs_docpuinfo(PFS_FILL_ARGS)
 		"acc_power",
 	};
 
-	hw_model[0] = CTL_HW;
-	hw_model[1] = HW_MODEL;
-	model[0] = '\0';
-	size = sizeof(model);
-	if (kernel_sysctl(td, hw_model, 2, &model, &size, 0, 0, 0, 0) != 0)
-		strcpy(model, "unknown");
 #ifdef __i386__
 	switch (cpu_vendor_id) {
 	case CPU_VENDOR_AMD:
@@ -356,7 +344,7 @@ linprocfs_docpuinfo(PFS_FILL_ARGS)
 		    "cpuid level\t: %d\n"
 		    "wp\t\t: %s\n",
 		    i, cpu_vendor, CPUID_TO_FAMILY(cpu_id),
-		    CPUID_TO_MODEL(cpu_id), model, cpu_id & CPUID_STEPPING,
+		    CPUID_TO_MODEL(cpu_id), cpu_model, cpu_id & CPUID_STEPPING,
 		    fqmhz, fqkhz,
 		    (cache_size[2] >> 16), 0, mp_ncpus, i, mp_ncpus,
 		    i, i, /*cpu_id & CPUID_LOCAL_APIC_ID ??*/
@@ -526,29 +514,26 @@ _sbuf_mntoptions_helper(struct sbuf *sb, uint64_t f_flags)
 static int
 linprocfs_domtab(PFS_FILL_ARGS)
 {
-	struct nameidata nd;
-	const char *lep, *mntto, *mntfrom, *fstype;
+	const char *mntto, *mntfrom, *fstype;
 	char *dlep, *flep;
+	struct vnode *vp;
+	struct pwd *pwd;
 	size_t lep_len;
 	int error;
 	struct statfs *buf, *sp;
 	size_t count;
 
-	/* resolve symlinks etc. in the emulation tree prefix */
 	/*
-	 * Ideally, this would use the current chroot rather than some
-	 * hardcoded path.
+	 * Resolve emulation tree prefix
 	 */
-	NDINIT(&nd, LOOKUP, FOLLOW, UIO_SYSSPACE, linux_emul_path, td);
 	flep = NULL;
-	error = namei(&nd);
-	lep = linux_emul_path;
-	if (error == 0) {
-		if (vn_fullpath(nd.ni_vp, &dlep, &flep) == 0)
-			lep = dlep;
-		vrele(nd.ni_vp);
-	}
-	lep_len = strlen(lep);
+	pwd = pwd_hold(td);
+	vp = pwd->pwd_adir;
+	error = vn_fullpath_global(vp, &dlep, &flep);
+	pwd_drop(pwd);
+	if (error != 0)
+		return (error);
+	lep_len = strlen(dlep);
 
 	buf = NULL;
 	error = kern_getfsstat(td, &buf, SIZE_T_MAX, &count,
@@ -567,7 +552,7 @@ linprocfs_domtab(PFS_FILL_ARGS)
 		}
 
 		/* determine mount point */
-		if (strncmp(mntto, lep, lep_len) == 0 && mntto[lep_len] == '/')
+		if (strncmp(mntto, dlep, lep_len) == 0 && mntto[lep_len] == '/')
 			mntto += lep_len;
 
 		sbuf_printf(sb, "%s %s %s ", mntfrom, mntto, fstype);
@@ -584,28 +569,25 @@ linprocfs_domtab(PFS_FILL_ARGS)
 static int
 linprocfs_doprocmountinfo(PFS_FILL_ARGS)
 {
-	struct nameidata nd;
 	const char *mntfrom, *mntto, *fstype;
-	const char *lep;
 	char *dlep, *flep;
 	struct statfs *buf, *sp;
 	size_t count, lep_len;
+	struct vnode *vp;
+	struct pwd *pwd;
 	int error;
 
 	/*
-	 * Ideally, this would use the current chroot rather than some
-	 * hardcoded path.
+	 * Resolve emulation tree prefix
 	 */
-	NDINIT(&nd, LOOKUP, FOLLOW, UIO_SYSSPACE, linux_emul_path, td);
 	flep = NULL;
-	error = namei(&nd);
-	lep = linux_emul_path;
-	if (error == 0) {
-		if (vn_fullpath(nd.ni_vp, &dlep, &flep) == 0)
-			lep = dlep;
-		vrele(nd.ni_vp);
-	}
-	lep_len = strlen(lep);
+	pwd = pwd_hold(td);
+	vp = pwd->pwd_adir;
+	error = vn_fullpath_global(vp, &dlep, &flep);
+	pwd_drop(pwd);
+	if (error != 0)
+		return (error);
+	lep_len = strlen(dlep);
 
 	buf = NULL;
 	error = kern_getfsstat(td, &buf, SIZE_T_MAX, &count,
@@ -620,7 +602,7 @@ linprocfs_doprocmountinfo(PFS_FILL_ARGS)
 			continue;
 		}
 
-		if (strncmp(mntto, lep, lep_len) == 0 && mntto[lep_len] == '/')
+		if (strncmp(mntto, dlep, lep_len) == 0 && mntto[lep_len] == '/')
 			mntto += lep_len;
 #if 0
 		/*
@@ -1111,7 +1093,7 @@ linprocfs_doprocstatus(PFS_FILL_ARGS)
 				state = "X (exiting)";
 				break;
 			}
-			switch(td2->td_state) {
+			switch(TD_GET_STATE(td2)) {
 			case TDS_INHIBITED:
 				state = "S (sleeping)";
 				break;
@@ -1479,11 +1461,48 @@ linprocfs_doprocmem(PFS_FILL_ARGS)
  * Filler function for proc/net/dev
  */
 static int
+linprocfs_donetdev_cb(if_t ifp, void *arg)
+{
+	char ifname[LINUX_IFNAMSIZ];
+	struct sbuf *sb = arg;
+
+	if (ifname_bsd_to_linux_ifp(ifp, ifname, sizeof(ifname)) <= 0)
+		return (ENODEV);
+
+	sbuf_printf(sb, "%6.6s: ", ifname);
+	sbuf_printf(sb, "%7ju %7ju %4ju %4ju %4lu %5lu %10lu %9ju ",
+	    (uintmax_t)if_getcounter(ifp, IFCOUNTER_IBYTES),
+	    (uintmax_t)if_getcounter(ifp, IFCOUNTER_IPACKETS),
+	    (uintmax_t)if_getcounter(ifp, IFCOUNTER_IERRORS),
+	    (uintmax_t)if_getcounter(ifp, IFCOUNTER_IQDROPS),
+						/* rx_missed_errors */
+	    0UL,				/* rx_fifo_errors */
+	    0UL,				/* rx_length_errors +
+						 * rx_over_errors +
+						 * rx_crc_errors +
+						 * rx_frame_errors */
+	    0UL,				/* rx_compressed */
+	    (uintmax_t)if_getcounter(ifp, IFCOUNTER_IMCASTS));
+						/* XXX-BZ rx only? */
+	sbuf_printf(sb, "%8ju %7ju %4ju %4ju %4lu %5ju %7lu %10lu\n",
+	    (uintmax_t)if_getcounter(ifp, IFCOUNTER_OBYTES),
+	    (uintmax_t)if_getcounter(ifp, IFCOUNTER_OPACKETS),
+	    (uintmax_t)if_getcounter(ifp, IFCOUNTER_OERRORS),
+	    (uintmax_t)if_getcounter(ifp, IFCOUNTER_OQDROPS),
+	    0UL,				/* tx_fifo_errors */
+	    (uintmax_t)if_getcounter(ifp, IFCOUNTER_COLLISIONS),
+	    0UL,				/* tx_carrier_errors +
+						 * tx_aborted_errors +
+						 * tx_window_errors +
+						 * tx_heartbeat_errors*/
+	    0UL);				/* tx_compressed */
+	return (0);
+}
+
+static int
 linprocfs_donetdev(PFS_FILL_ARGS)
 {
 	struct epoch_tracker et;
-	char ifname[16]; /* XXX LINUX_IFNAMSIZ */
-	struct ifnet *ifp;
 
 	sbuf_printf(sb, "%6s|%58s|%s\n"
 	    "%6s|%58s|%58s\n",
@@ -1494,36 +1513,7 @@ linprocfs_donetdev(PFS_FILL_ARGS)
 
 	CURVNET_SET(TD_TO_VNET(curthread));
 	NET_EPOCH_ENTER(et);
-	CK_STAILQ_FOREACH(ifp, &V_ifnet, if_link) {
-		ifname_bsd_to_linux_ifp(ifp, ifname, sizeof(ifname));
-		sbuf_printf(sb, "%6.6s: ", ifname);
-		sbuf_printf(sb, "%7ju %7ju %4ju %4ju %4lu %5lu %10lu %9ju ",
-		    (uintmax_t )ifp->if_get_counter(ifp, IFCOUNTER_IBYTES),
-		    (uintmax_t )ifp->if_get_counter(ifp, IFCOUNTER_IPACKETS),
-		    (uintmax_t )ifp->if_get_counter(ifp, IFCOUNTER_IERRORS),
-		    (uintmax_t )ifp->if_get_counter(ifp, IFCOUNTER_IQDROPS),
-							/* rx_missed_errors */
-		    0UL,				/* rx_fifo_errors */
-		    0UL,				/* rx_length_errors +
-							 * rx_over_errors +
-							 * rx_crc_errors +
-							 * rx_frame_errors */
-		    0UL,				/* rx_compressed */
-		    (uintmax_t )ifp->if_get_counter(ifp, IFCOUNTER_IMCASTS));
-							/* XXX-BZ rx only? */
-		sbuf_printf(sb, "%8ju %7ju %4ju %4ju %4lu %5ju %7lu %10lu\n",
-		    (uintmax_t )ifp->if_get_counter(ifp, IFCOUNTER_OBYTES),
-		    (uintmax_t )ifp->if_get_counter(ifp, IFCOUNTER_OPACKETS),
-		    (uintmax_t )ifp->if_get_counter(ifp, IFCOUNTER_OERRORS),
-		    (uintmax_t )ifp->if_get_counter(ifp, IFCOUNTER_OQDROPS),
-		    0UL,				/* tx_fifo_errors */
-		    (uintmax_t )ifp->if_get_counter(ifp, IFCOUNTER_COLLISIONS),
-		    0UL,				/* tx_carrier_errors +
-							 * tx_aborted_errors +
-							 * tx_window_errors +
-							 * tx_heartbeat_errors*/
-		    0UL);				/* tx_compressed */
-	}
+	if_foreach(linprocfs_donetdev_cb, sb);
 	NET_EPOCH_EXIT(et);
 	CURVNET_RESTORE();
 

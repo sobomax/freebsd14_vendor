@@ -1,2 +1,1 @@
-.\" $FreeBSD: 8bd874e5df98eb6e5269cd356135ec97438c509b $
 Check staged files are not stale.

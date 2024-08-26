@@ -1,4 +1,3 @@
-# $FreeBSD: 7deecf4719b441e21d5eb4fcd08de8e61545632c $
 
 .PATH: ${SRCTOP}/sys/dev/rtsx
 

@@ -30,8 +30,6 @@
  *
  *	@(#)extern.h	8.3 (Berkeley) 4/2/94
  *
- * $FreeBSD: 60fd15ba0939a4bebffafbe0135adebb9dd31c49 $
- *
  */
 
 #define OK_EXIT		0

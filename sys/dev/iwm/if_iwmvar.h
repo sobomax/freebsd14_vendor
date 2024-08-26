@@ -1,5 +1,4 @@
 /*	$OpenBSD: if_iwmvar.h,v 1.7 2015/03/02 13:51:10 jsg Exp $	*/
-/*	$FreeBSD: ea15f90064a42a706ce6046aa7c59c9a4e61bd2f $ */
 
 /*
  * Copyright (c) 2014 genua mbh <info@genua.de>
@@ -511,7 +510,7 @@ struct iwm_softc {
 	/* phy contexts.  we only use the first one */
 	struct iwm_phy_ctxt	sc_phyctxt[IWM_NUM_PHY_CTX];
 
-	struct iwm_notif_statistics_v10 sc_stats;
+	struct iwm_notif_statistics sc_stats;
 	int			sc_noise;
 
 	struct iwm_rx_radiotap_header sc_rxtap;

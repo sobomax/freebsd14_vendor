@@ -4,8 +4,6 @@
 __RCSID("$NetBSD: infinity.c,v 1.2 1998/11/14 19:31:02 christos Exp $");
 #endif /* LIBC_SCCS and not lint */
 #endif
-__FBSDID("$FreeBSD: f5324389d5b6b849fd159267a2e9f83e5af7ab45 $");
-
 /* infinity.c */
 
 #include <math.h>

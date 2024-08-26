@@ -1,4 +1,3 @@
-# $FreeBSD: fc51bf5fb711db06ffff4f6b8cb1da79668d2a24 $
 #
 # Directory permissions management.
 

@@ -1,5 +1,4 @@
 #!/bin/sh
-# $FreeBSD: 06aa8d31d28e420371b7b2ccb78bc3083f5eeb40 $
 
 libkey() {
 	libkey="lib_symbols_$1"
@@ -49,7 +48,7 @@ fi
 mime=$(file -L --mime-type $1)
 isbin=0
 case $mime in
-*application/x-executable) isbin=1 ;;
+*application/x-executable|*application/x-pie-executable) isbin=1 ;;
 *application/x-sharedlib);;
 *) echo "Not an elf file" >&2 ; exit 1;;
 esac

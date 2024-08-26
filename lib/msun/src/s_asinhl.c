@@ -12,9 +12,6 @@
  * ====================================================
  */
 
-#include <sys/cdefs.h>
-__FBSDID("$FreeBSD: ba28f599c3ca9aba4292db12a0e4a13b8af4a889 $");
-
 /*
  * See s_asinh.c for complete comments.
  *

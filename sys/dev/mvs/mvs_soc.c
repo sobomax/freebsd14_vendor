@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2010 Alexander Motin <mav@FreeBSD.org>
  * All rights reserved.
@@ -27,8 +27,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 6243c2ce19519041835c6f0d5f03ba298fa9834c $");
-
 #include <sys/param.h>
 #include <sys/module.h>
 #include <sys/systm.h>
@@ -43,6 +41,7 @@ __FBSDID("$FreeBSD: 6243c2ce19519041835c6f0d5f03ba298fa9834c $");
 #include <machine/resource.h>
 #include <machine/bus.h>
 #include <sys/rman.h>
+#include <sys/sbuf.h>
 #include <arm/mv/mvreg.h>
 #include <arm/mv/mvvar.h>
 #include <dev/ofw/ofw_bus.h>
@@ -207,7 +206,7 @@ static int
 mvs_ctlr_setup(device_t dev)
 {
 	struct mvs_controller *ctlr = device_get_softc(dev);
-	int ccc = ctlr->ccc, cccc = ctlr->cccc, ccim = 0;
+	int ccc = ctlr->ccc, cccc = ctlr->cccc;
 
 	/* Mask chip interrupts */
 	ATA_OUTL(ctlr->r_mem, CHIP_SOC_MIM, 0x00000000);
@@ -224,8 +223,6 @@ mvs_ctlr_setup(device_t dev)
 	ccc *= 150;
 	ATA_OUTL(ctlr->r_mem, HC_ICT, cccc);
 	ATA_OUTL(ctlr->r_mem, HC_ITT, ccc);
-	if (ccc)
-		ccim |= IC_HC0_COAL_DONE;
 	/* Enable chip interrupts */
 	ctlr->gmim = ((ccc ? IC_HC0_COAL_DONE :
 	    (IC_DONE_HC0 & CHIP_SOC_HC0_MASK(ctlr->channels))) |
@@ -429,12 +426,10 @@ mvs_print_child(device_t dev, device_t child)
 }
 
 static int
-mvs_child_location_str(device_t dev, device_t child, char *buf,
-    size_t buflen)
+mvs_child_location(device_t dev, device_t child, struct sbuf *sb)
 {
 
-	snprintf(buf, buflen, "channel=%d",
-	    (int)(intptr_t)device_get_ivars(child));
+	sbuf_printf(sb, "channel=%d", (int)(intptr_t)device_get_ivars(child));
 	return (0);
 }
 
@@ -456,7 +451,7 @@ static device_method_t mvs_methods[] = {
 	DEVMETHOD(bus_release_resource,     mvs_release_resource),
 	DEVMETHOD(bus_setup_intr,   mvs_setup_intr),
 	DEVMETHOD(bus_teardown_intr,mvs_teardown_intr),
-	DEVMETHOD(bus_child_location_str, mvs_child_location_str),
+	DEVMETHOD(bus_child_location, mvs_child_location),
 	DEVMETHOD(bus_get_dma_tag,  mvs_get_dma_tag),
 	DEVMETHOD(mvs_edma,         mvs_edma),
 	{ 0, 0 }
@@ -466,6 +461,6 @@ static driver_t mvs_driver = {
         mvs_methods,
         sizeof(struct mvs_controller)
 };
-DRIVER_MODULE(mvs, simplebus, mvs_driver, mvs_devclass, 0, 0);
+DRIVER_MODULE(mvs, simplebus, mvs_driver, 0, 0);
 MODULE_VERSION(mvs, 1);
 MODULE_DEPEND(mvs, cam, 1, 1, 1);

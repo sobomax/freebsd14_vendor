@@ -31,9 +31,6 @@
  *	$NetBSD: conf.c,v 1.2 1997/03/22 09:03:29 thorpej Exp $	 
  */
 
-#include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 066c2aa8749246eeef9f078c1e7f8fac093d0666 $");
-
 #include <stand.h>
 
 #include "libuserboot.h"

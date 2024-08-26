@@ -1,4 +1,3 @@
-.\" $FreeBSD: b885bc1136928af0c5d47015047f8841512bfac8 $
 Do not build process accounting tools such as
 .Xr accton 8
 and

@@ -1,7 +1,5 @@
 /*
  * Structures and definitions for SCSI commands to the SG passthrough device.
- *
- * $FreeBSD: 210eec5f4f4606457a4c4ed0fe475a42e783accc $
  */
 
 #ifndef _SCSI_SG_H

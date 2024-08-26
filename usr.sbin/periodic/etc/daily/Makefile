@@ -1,4 +1,3 @@
-# $FreeBSD: 2bffdba05d2bf907fa1c049f25967352af33b65b $
 
 .include <src.opts.mk>
 
@@ -14,7 +13,6 @@ CONFS=	100.clean-disks \
 	210.backup-aliases \
 	221.backup-gpart \
 	222.backup-gmirror \
-	330.news \
 	400.status-disks \
 	401.status-graid \
 	406.status-gmirror \
@@ -62,7 +60,8 @@ SENDMAILPACKAGE=	sendmail
 .if ${MK_ZFS} != "no"
 CONFS+=	223.backup-zfs \
 	404.status-zfs \
-	800.scrub-zfs
+	800.scrub-zfs  \
+	801.trim-zfs
 .endif
 
 .include <bsd.prog.mk>

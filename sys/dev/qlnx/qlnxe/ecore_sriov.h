@@ -24,8 +24,6 @@
  *  ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  *  POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: 57097df309480148894661db8e7f62771b0717a4 $
- *
  */
 
 #ifndef __ECORE_SRIOV_H__
@@ -222,7 +220,7 @@ struct ecore_pf_iov {
 #ifdef CONFIG_ECORE_SRIOV
 /**
  * @brief Read sriov related information and allocated resources
- *  reads from configuraiton space, shmem, etc.
+ *  reads from configuration space, shmem, etc.
  *
  * @param p_hwfn
  *

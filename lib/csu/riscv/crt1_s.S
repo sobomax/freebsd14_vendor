@@ -34,8 +34,6 @@
  */
 
 #include <machine/asm.h>
-__FBSDID("$FreeBSD: e6b23008a4d01d34d2b9d7141996fa5a9cc81bea $");
-
 ENTRY(_start)
 	mv	a3, a2		# cleanup
 	addi	a1, a0, 8	# get argv

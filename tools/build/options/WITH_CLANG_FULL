@@ -1,3 +1,2 @@
-.\" $FreeBSD: 3e78ad904e74ff94e5875dc94bee4301edda5a0d $
 Build the ARCMigrate, Rewriter and StaticAnalyzer components of the
 Clang C/C++ compiler.

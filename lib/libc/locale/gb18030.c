@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright 2013 Garrett D'Amore <garrett@damore.org>
  * Copyright 2010 Nexenta Systems, Inc.  All rights reserved.
@@ -7,7 +7,7 @@
  * All rights reserved.
  *
  * Copyright (c) 2011 The FreeBSD Foundation
- * All rights reserved.
+ *
  * Portions of this software were developed by David Chisnall
  * under sponsorship from the FreeBSD Foundation.
  *
@@ -40,8 +40,6 @@
  */
 
 #include <sys/param.h>
-__FBSDID("$FreeBSD: b4f80678d8401cb4fd7ef16c286f198d944ac17d $");
-
 #include <errno.h>
 #include <runetype.h>
 #include <stdlib.h>

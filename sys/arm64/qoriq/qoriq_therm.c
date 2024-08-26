@@ -1,6 +1,6 @@
 /*-
  *
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright  2020 Michal Meloun <mmel@FreeBSD.org>
  *
@@ -27,8 +27,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: c5a79fa3287b96a5c2e97cbf858606c8dd74dae2 $");
-
 /*
  * Thermometer driver for QorIQ  SoCs.
  */
@@ -281,7 +279,6 @@ qoriq_therm_init_sysctl(struct qoriq_therm_softc *sc)
 	int i;
 	struct sysctl_oid *oid, *tmp;
 
-	sysctl_ctx_init(&qoriq_therm_sysctl_ctx);
 	/* create node for hw.temp */
 	oid = SYSCTL_ADD_NODE(&qoriq_therm_sysctl_ctx,
 	    SYSCTL_STATIC_CHILDREN(_hw), OID_AUTO, "temperature",
@@ -360,6 +357,8 @@ qoriq_therm_attach(device_t dev)
 	sc->dev = dev;
 	node = ofw_bus_get_node(sc->dev);
 	sc->little_endian = OF_hasprop(node, "little-endian");
+
+	sysctl_ctx_init(&qoriq_therm_sysctl_ctx);
 
 	rid = 0;
 	sc->mem_res = bus_alloc_resource_any(dev, SYS_RES_MEMORY, &rid,
@@ -512,8 +511,6 @@ static device_method_t qoriq_qoriq_therm_methods[] = {
 	DEVMETHOD_END
 };
 
-static devclass_t qoriq_qoriq_therm_devclass;
 static DEFINE_CLASS_0(soctherm, qoriq_qoriq_therm_driver, qoriq_qoriq_therm_methods,
     sizeof(struct qoriq_therm_softc));
-DRIVER_MODULE(qoriq_soctherm, simplebus, qoriq_qoriq_therm_driver,
-    qoriq_qoriq_therm_devclass, NULL, NULL);
+DRIVER_MODULE(qoriq_soctherm, simplebus, qoriq_qoriq_therm_driver, NULL, NULL);

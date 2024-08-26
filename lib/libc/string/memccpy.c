@@ -32,13 +32,10 @@
 #if defined(LIBC_SCCS) && !defined(lint)
 static char sccsid[] = "@(#)memccpy.c	8.1 (Berkeley) 6/4/93";
 #endif /* LIBC_SCCS and not lint */
-#include <sys/cdefs.h>
-__FBSDID("$FreeBSD: e4c9d0e17edd4070c287d3549821b22f9daf419e $");
-
 #include <string.h>
 
 void *
-memccpy(void *t, const void *f, int c, size_t n)
+memccpy(void * restrict t, const void * restrict f, int c, size_t n)
 {
 
 	if (n) {

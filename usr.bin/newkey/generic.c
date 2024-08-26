@@ -39,8 +39,6 @@ static char sccsid[] = "@(#)generic.c 1.2 91/03/11 Copyr 1986 Sun Micro";
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 324cb5b604ad0b4ea59255b81f81cc79c73c38a6 $");
-
 #include <sys/file.h>
 
 #include <rpc/rpc.h>

@@ -1,4 +1,3 @@
-# $FreeBSD: 596aa57fd2dfcc259381c2bd5332c3946542fb79 $
 #	@(#)Makefile	8.1 (Berkeley) 6/2/93
 
 PACKAGE=runtime

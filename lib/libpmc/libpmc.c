@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2003-2008 Joseph Koshy
  * All rights reserved.
@@ -27,8 +27,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 0ccefad5ca7d32d1e48095b6a1ef9b5432fda5a1 $");
-
 #include <sys/types.h>
 #include <sys/param.h>
 #include <sys/module.h>
@@ -65,11 +63,11 @@ static int armv7_allocate_pmc(enum pmc_event _pe, char *_ctrspec,
 #if defined(__aarch64__)
 static int arm64_allocate_pmc(enum pmc_event _pe, char *_ctrspec,
     struct pmc_op_pmcallocate *_pmc_config);
+static int cmn600_pmu_allocate_pmc(enum pmc_event _pe, char *_ctrspec,
+    struct pmc_op_pmcallocate *_pmc_config);
+static int dmc620_pmu_allocate_pmc(enum pmc_event _pe, char *_ctrspec,
+    struct pmc_op_pmcallocate *_pmc_config);
 #endif
-#if defined(__mips__)
-static int mips_allocate_pmc(enum pmc_event _pe, char* ctrspec,
-			     struct pmc_op_pmcallocate *_pmc_config);
-#endif /* __mips__ */
 static int soft_allocate_pmc(enum pmc_event _pe, char *_ctrspec,
     struct pmc_op_pmcallocate *_pmc_config);
 
@@ -78,8 +76,7 @@ static int powerpc_allocate_pmc(enum pmc_event _pe, char* ctrspec,
 			     struct pmc_op_pmcallocate *_pmc_config);
 #endif /* __powerpc__ */
 
-#define PMC_CALL(cmd, params)				\
-	syscall(pmc_syscall, PMC_OP_##cmd, (params))
+#define PMC_CALL(op, params)	syscall(pmc_syscall, (op), (params))
 
 /*
  * Event aliases provide a way for the user to ask for generic events
@@ -138,13 +135,11 @@ PMC_CLASSDEP_TABLE(iaf, IAF);
 PMC_CLASSDEP_TABLE(k8, K8);
 PMC_CLASSDEP_TABLE(armv7, ARMV7);
 PMC_CLASSDEP_TABLE(armv8, ARMV8);
-PMC_CLASSDEP_TABLE(beri, BERI);
-PMC_CLASSDEP_TABLE(mips24k, MIPS24K);
-PMC_CLASSDEP_TABLE(mips74k, MIPS74K);
-PMC_CLASSDEP_TABLE(octeon, OCTEON);
+PMC_CLASSDEP_TABLE(cmn600_pmu, CMN600_PMU);
+PMC_CLASSDEP_TABLE(dmc620_pmu_cd2, DMC620_PMU_CD2);
+PMC_CLASSDEP_TABLE(dmc620_pmu_c, DMC620_PMU_C);
 PMC_CLASSDEP_TABLE(ppc7450, PPC7450);
 PMC_CLASSDEP_TABLE(ppc970, PPC970);
-PMC_CLASSDEP_TABLE(power8, POWER8);
 PMC_CLASSDEP_TABLE(e500, E500);
 
 static struct pmc_event_descr soft_event_table[PMC_EV_DYN_COUNT];
@@ -219,17 +214,13 @@ PMC_CLASS_TABLE_DESC(cortex_a9, ARMV7, cortex_a9, armv7);
 PMC_CLASS_TABLE_DESC(cortex_a53, ARMV8, cortex_a53, arm64);
 PMC_CLASS_TABLE_DESC(cortex_a57, ARMV8, cortex_a57, arm64);
 PMC_CLASS_TABLE_DESC(cortex_a76, ARMV8, cortex_a76, arm64);
+PMC_CLASS_TABLE_DESC(cmn600_pmu, CMN600_PMU, cmn600_pmu, cmn600_pmu);
+PMC_CLASS_TABLE_DESC(dmc620_pmu_cd2, DMC620_PMU_CD2, dmc620_pmu_cd2, dmc620_pmu);
+PMC_CLASS_TABLE_DESC(dmc620_pmu_c, DMC620_PMU_C, dmc620_pmu_c, dmc620_pmu);
 #endif
-#if defined(__mips__)
-PMC_CLASS_TABLE_DESC(beri, BERI, beri, mips);
-PMC_CLASS_TABLE_DESC(mips24k, MIPS24K, mips24k, mips);
-PMC_CLASS_TABLE_DESC(mips74k, MIPS74K, mips74k, mips);
-PMC_CLASS_TABLE_DESC(octeon, OCTEON, octeon, mips);
-#endif /* __mips__ */
 #if defined(__powerpc__)
 PMC_CLASS_TABLE_DESC(ppc7450, PPC7450, ppc7450, powerpc);
 PMC_CLASS_TABLE_DESC(ppc970, PPC970, ppc970, powerpc);
-PMC_CLASS_TABLE_DESC(power8, POWER8, power8, powerpc);
 PMC_CLASS_TABLE_DESC(e500, E500, e500, powerpc);
 #endif
 
@@ -797,65 +788,147 @@ arm64_allocate_pmc(enum pmc_event pe, char *ctrspec,
 
 	return (0);
 }
-#endif
-
-#if defined(__mips__)
-
-static struct pmc_event_alias beri_aliases[] = {
-	EV_ALIAS("instructions",	"INST"),
-	EV_ALIAS(NULL, NULL)
-};
-
-static struct pmc_event_alias mips24k_aliases[] = {
-	EV_ALIAS("instructions",	"INSTR_EXECUTED"),
-	EV_ALIAS("branches",		"BRANCH_COMPLETED"),
-	EV_ALIAS("branch-mispredicts",	"BRANCH_MISPRED"),
-	EV_ALIAS(NULL, NULL)
-};
-
-static struct pmc_event_alias mips74k_aliases[] = {
-	EV_ALIAS("instructions",	"INSTR_EXECUTED"),
-	EV_ALIAS("branches",		"BRANCH_INSNS"),
-	EV_ALIAS("branch-mispredicts",	"MISPREDICTED_BRANCH_INSNS"),
-	EV_ALIAS(NULL, NULL)
-};
-
-static struct pmc_event_alias octeon_aliases[] = {
-	EV_ALIAS("instructions",	"RET"),
-	EV_ALIAS("branches",		"BR"),
-	EV_ALIAS("branch-mispredicts",	"BRMIS"),
-	EV_ALIAS(NULL, NULL)
-};
-
-#define	MIPS_KW_OS		"os"
-#define	MIPS_KW_USR		"usr"
-#define	MIPS_KW_ANYTHREAD	"anythread"
 
 static int
-mips_allocate_pmc(enum pmc_event pe, char *ctrspec __unused,
-		  struct pmc_op_pmcallocate *pmc_config __unused)
+cmn600_pmu_allocate_pmc(enum pmc_event pe, char *ctrspec,
+    struct pmc_op_pmcallocate *pmc_config)
 {
-	char *p;
-
-	(void) pe;
+	uint32_t nodeid, occupancy, xpport, xpchannel;
+	char *e, *p, *q;
+	unsigned int i;
+	char *xpport_names[] = { "East", "West", "North", "South", "devport0",
+	    "devport1" };
+	char *xpchannel_names[] = { "REQ", "RSP", "SNP", "DAT" };
 
 	pmc_config->pm_caps |= (PMC_CAP_READ | PMC_CAP_WRITE);
-	
+	pmc_config->pm_caps |= PMC_CAP_SYSTEM;
+	pmc_config->pm_md.pm_cmn600.pma_cmn600_config = 0;
+	/*
+	 * CMN600 extra fields:
+	 * * nodeid - node coordinates x[2-3],y[2-3],p[1],s[2]
+	 * 		width of x and y fields depend on matrix size.
+	 * * occupancy - numeric value to select desired filter.
+	 * * xpport - East, West, North, South, devport0, devport1 (or 0, 1, ..., 5)
+	 * * xpchannel - REQ, RSP, SNP, DAT (or 0, 1, 2, 3)
+	 */
+
 	while ((p = strsep(&ctrspec, ",")) != NULL) {
-		if (KWMATCH(p, MIPS_KW_OS))
-			pmc_config->pm_caps |= PMC_CAP_SYSTEM;
-		else if (KWMATCH(p, MIPS_KW_USR))
-			pmc_config->pm_caps |= PMC_CAP_USER;
-		else if (KWMATCH(p, MIPS_KW_ANYTHREAD))
-			pmc_config->pm_caps |= (PMC_CAP_USER | PMC_CAP_SYSTEM);
-		else
+		if (KWPREFIXMATCH(p, "nodeid=")) {
+			q = strchr(p, '=');
+			if (*++q == '\0') /* skip '=' */
+				return (-1);
+
+			nodeid = strtol(q, &e, 0);
+			if (e == q || *e != '\0')
+				return (-1);
+
+			pmc_config->pm_md.pm_cmn600.pma_cmn600_nodeid |= nodeid;
+
+		} else if (KWPREFIXMATCH(p, "occupancy=")) {
+			q = strchr(p, '=');
+			if (*++q == '\0') /* skip '=' */
+				return (-1);
+
+			occupancy = strtol(q, &e, 0);
+			if (e == q || *e != '\0')
+				return (-1);
+
+			pmc_config->pm_md.pm_cmn600.pma_cmn600_occupancy = occupancy;
+		} else if (KWPREFIXMATCH(p, "xpport=")) {
+			q = strchr(p, '=');
+			if (*++q == '\0') /* skip '=' */
+				return (-1);
+
+			xpport = strtol(q, &e, 0);
+			if (e == q || *e != '\0') {
+				for (i = 0; i < nitems(xpport_names); i++) {
+					if (strcasecmp(xpport_names[i], q) == 0) {
+						xpport = i;
+						break;
+					}
+				}
+				if (i == nitems(xpport_names))
+					return (-1);
+			}
+
+			pmc_config->pm_md.pm_cmn600.pma_cmn600_config |= xpport << 2;
+		} else if (KWPREFIXMATCH(p, "xpchannel=")) {
+			q = strchr(p, '=');
+			if (*++q == '\0') /* skip '=' */
+				return (-1);
+
+			xpchannel = strtol(q, &e, 0);
+			if (e == q || *e != '\0') {
+				for (i = 0; i < nitems(xpchannel_names); i++) {
+					if (strcasecmp(xpchannel_names[i], q) == 0) {
+						xpchannel = i;
+						break;
+					}
+				}
+				if (i == nitems(xpchannel_names))
+					return (-1);
+			}
+
+			pmc_config->pm_md.pm_cmn600.pma_cmn600_config |= xpchannel << 5;
+		} else
 			return (-1);
 	}
 
 	return (0);
 }
 
-#endif /* __mips__ */
+static int
+dmc620_pmu_allocate_pmc(enum pmc_event pe, char *ctrspec,
+    struct pmc_op_pmcallocate *pmc_config)
+{
+	char		*e, *p, *q;
+	uint64_t	match, mask;
+	uint32_t	count;
+
+	pmc_config->pm_caps |= (PMC_CAP_READ | PMC_CAP_WRITE);
+	pmc_config->pm_caps |= PMC_CAP_SYSTEM;
+	pmc_config->pm_md.pm_dmc620.pm_dmc620_config = 0;
+
+	while ((p = strsep(&ctrspec, ",")) != NULL) {
+		if (KWPREFIXMATCH(p, "count=")) {
+			q = strchr(p, '=');
+			if (*++q == '\0') /* skip '=' */
+				return (-1);
+
+			count = strtol(q, &e, 0);
+			if (e == q || *e != '\0')
+				return (-1);
+
+			pmc_config->pm_caps |= PMC_CAP_THRESHOLD;
+			pmc_config->pm_md.pm_dmc620.pm_dmc620_config |= count;
+
+		} else if (KWMATCH(p, "inv")) {
+			pmc_config->pm_caps |= PMC_CAP_INVERT;
+		} else if (KWPREFIXMATCH(p, "match=")) {
+			match = strtol(q, &e, 0);
+			if (e == q || *e != '\0')
+				return (-1);
+
+			pmc_config->pm_caps |= PMC_CAP_QUALIFIER;
+			pmc_config->pm_md.pm_dmc620.pm_dmc620_match = match;
+		} else if (KWPREFIXMATCH(p, "mask=")) {
+			q = strchr(p, '=');
+			if (*++q == '\0') /* skip '=' */
+				return (-1);
+
+			mask = strtol(q, &e, 0);
+			if (e == q || *e != '\0')
+				return (-1);
+
+			pmc_config->pm_md.pm_dmc620.pm_dmc620_mask = mask;
+			pmc_config->pm_caps |= PMC_CAP_QUALIFIER;
+		} else
+			return (-1);
+	}
+
+	return (0);
+}
+#endif
 
 #if defined(__powerpc__)
 
@@ -867,12 +940,6 @@ static struct pmc_event_alias ppc7450_aliases[] = {
 };
 
 static struct pmc_event_alias ppc970_aliases[] = {
-	EV_ALIAS("instructions", "INSTR_COMPLETED"),
-	EV_ALIAS("cycles",       "CYCLES"),
-	EV_ALIAS(NULL, NULL)
-};
-
-static struct pmc_event_alias power8_aliases[] = {
 	EV_ALIAS("instructions", "INSTR_COMPLETED"),
 	EV_ALIAS("cycles",       "CYCLES"),
 	EV_ALIAS(NULL, NULL)
@@ -1017,11 +1084,6 @@ pmc_allocate(const char *ctrspec, enum pmc_mode mode,
 	if (pmc_pmu_enabled()) {
 		if (pmc_pmu_pmcallocate(ctrname, &pmc_config) == 0)
 			goto found;
-
-		/* Otherwise, reset any changes */
-		pmc_config.pm_ev = 0;
-		pmc_config.pm_caps = 0;
-		pmc_config.pm_class = 0;
 	}
 	free(spec_copy);
 	spec_copy = NULL;
@@ -1082,7 +1144,7 @@ pmc_allocate(const char *ctrspec, enum pmc_mode mode,
 	}
 
 found:
-	if (PMC_CALL(PMCALLOCATE, &pmc_config) == 0) {
+	if (PMC_CALL(PMC_OP_PMCALLOCATE, &pmc_config) == 0) {
 		*pmcid = pmc_config.pm_pmcid;
 		retval = 0;
 	}
@@ -1101,7 +1163,7 @@ pmc_attach(pmc_id_t pmc, pid_t pid)
 	pmc_attach_args.pm_pmc = pmc;
 	pmc_attach_args.pm_pid = pid;
 
-	return (PMC_CALL(PMCATTACH, &pmc_attach_args));
+	return (PMC_CALL(PMC_OP_PMCATTACH, &pmc_attach_args));
 }
 
 int
@@ -1125,8 +1187,9 @@ pmc_configure_logfile(int fd)
 {
 	struct pmc_op_configurelog cla;
 
+	cla.pm_flags = 0;
 	cla.pm_logfd = fd;
-	if (PMC_CALL(CONFIGURELOG, &cla) < 0)
+	if (PMC_CALL(PMC_OP_CONFIGURELOG, &cla) < 0)
 		return (-1);
 	return (0);
 }
@@ -1150,7 +1213,7 @@ pmc_detach(pmc_id_t pmc, pid_t pid)
 
 	pmc_detach_args.pm_pmc = pmc;
 	pmc_detach_args.pm_pid = pid;
-	return (PMC_CALL(PMCDETACH, &pmc_detach_args));
+	return (PMC_CALL(PMC_OP_PMCDETACH, &pmc_detach_args));
 }
 
 int
@@ -1161,7 +1224,7 @@ pmc_disable(int cpu, int pmc)
 	ssa.pm_cpu = cpu;
 	ssa.pm_pmc = pmc;
 	ssa.pm_state = PMC_STATE_DISABLED;
-	return (PMC_CALL(PMCADMIN, &ssa));
+	return (PMC_CALL(PMC_OP_PMCADMIN, &ssa));
 }
 
 int
@@ -1172,7 +1235,7 @@ pmc_enable(int cpu, int pmc)
 	ssa.pm_cpu = cpu;
 	ssa.pm_pmc = pmc;
 	ssa.pm_state = PMC_STATE_FREE;
-	return (PMC_CALL(PMCADMIN, &ssa));
+	return (PMC_CALL(PMC_OP_PMCADMIN, &ssa));
 }
 
 /*
@@ -1236,21 +1299,17 @@ pmc_event_names_of_class(enum pmc_class cl, const char ***eventnames,
 			break;
 		}
 		break;
-	case PMC_CLASS_BERI:
-		ev = beri_event_table;
-		count = PMC_EVENT_TABLE_SIZE(beri);
+	case PMC_CLASS_CMN600_PMU:
+		ev = cmn600_pmu_event_table;
+		count = PMC_EVENT_TABLE_SIZE(cmn600_pmu);
 		break;
-	case PMC_CLASS_MIPS24K:
-		ev = mips24k_event_table;
-		count = PMC_EVENT_TABLE_SIZE(mips24k);
+	case PMC_CLASS_DMC620_PMU_CD2:
+		ev = dmc620_pmu_cd2_event_table;
+		count = PMC_EVENT_TABLE_SIZE(dmc620_pmu_cd2);
 		break;
-	case PMC_CLASS_MIPS74K:
-		ev = mips74k_event_table;
-		count = PMC_EVENT_TABLE_SIZE(mips74k);
-		break;
-	case PMC_CLASS_OCTEON:
-		ev = octeon_event_table;
-		count = PMC_EVENT_TABLE_SIZE(octeon);
+	case PMC_CLASS_DMC620_PMU_C:
+		ev = dmc620_pmu_c_event_table;
+		count = PMC_EVENT_TABLE_SIZE(dmc620_pmu_c);
 		break;
 	case PMC_CLASS_PPC7450:
 		ev = ppc7450_event_table;
@@ -1259,10 +1318,6 @@ pmc_event_names_of_class(enum pmc_class cl, const char ***eventnames,
 	case PMC_CLASS_PPC970:
 		ev = ppc970_event_table;
 		count = PMC_EVENT_TABLE_SIZE(ppc970);
-		break;
-	case PMC_CLASS_POWER8:
-		ev = power8_event_table;
-		count = PMC_EVENT_TABLE_SIZE(power8);
 		break;
 	case PMC_CLASS_E500:
 		ev = e500_event_table;
@@ -1292,13 +1347,13 @@ pmc_event_names_of_class(enum pmc_class cl, const char ***eventnames,
 int
 pmc_flush_logfile(void)
 {
-	return (PMC_CALL(FLUSHLOG,0));
+	return (PMC_CALL(PMC_OP_FLUSHLOG, 0));
 }
 
 int
 pmc_close_logfile(void)
 {
-	return (PMC_CALL(CLOSELOG,0));
+	return (PMC_CALL(PMC_OP_CLOSELOG, 0));
 }
 
 int
@@ -1306,7 +1361,7 @@ pmc_get_driver_stats(struct pmc_driverstats *ds)
 {
 	struct pmc_op_getdriverstats gms;
 
-	if (PMC_CALL(GETDRIVERSTATS, &gms) < 0)
+	if (PMC_CALL(PMC_OP_GETDRIVERSTATS, &gms) < 0)
 		return (-1);
 
 	/* copy out fields in the current userland<->library interface */
@@ -1327,7 +1382,7 @@ pmc_get_msr(pmc_id_t pmc, uint32_t *msr)
 	struct pmc_op_getmsr gm;
 
 	gm.pm_pmcid = pmc;
-	if (PMC_CALL(PMCGETMSR, &gm) < 0)
+	if (PMC_CALL(PMC_OP_PMCGETMSR, &gm) < 0)
 		return (-1);
 	*msr = gm.pm_msr;
 	return (0);
@@ -1357,7 +1412,7 @@ pmc_init(void)
 
 	/* check the kernel module's ABI against our compiled-in version */
 	abi_version = PMC_VERSION;
-	if (PMC_CALL(GETMODULEVERSION, &abi_version) < 0)
+	if (PMC_CALL(PMC_OP_GETMODULEVERSION, &abi_version) < 0)
 		return (pmc_syscall = -1);
 
 	/* ignore patch & minor numbers for the comparison */
@@ -1367,7 +1422,7 @@ pmc_init(void)
 	}
 
 	bzero(&op_cpu_info, sizeof(op_cpu_info));
-	if (PMC_CALL(GETCPUINFO, &op_cpu_info) < 0)
+	if (PMC_CALL(PMC_OP_GETCPUINFO, &op_cpu_info) < 0)
 		return (pmc_syscall = -1);
 
 	cpu_info.pm_cputype = op_cpu_info.pm_cputype;
@@ -1378,20 +1433,17 @@ pmc_init(void)
 		memcpy(&cpu_info.pm_classes[n], &op_cpu_info.pm_classes[n],
 		    sizeof(cpu_info.pm_classes[n]));
 
-	pmc_class_table = malloc(PMC_CLASS_TABLE_SIZE *
+	pmc_class_table = calloc(PMC_CLASS_TABLE_SIZE,
 	    sizeof(struct pmc_class_descr *));
 
 	if (pmc_class_table == NULL)
 		return (-1);
 
-	for (n = 0; n < PMC_CLASS_TABLE_SIZE; n++)
-		pmc_class_table[n] = NULL;
-
 	/*
 	 * Get soft events list.
 	 */
 	soft_event_info.pm_class = PMC_CLASS_SOFT;
-	if (PMC_CALL(GETDYNEVENTINFO, &soft_event_info) < 0)
+	if (PMC_CALL(PMC_OP_GETDYNEVENTINFO, &soft_event_info) < 0)
 		return (pmc_syscall = -1);
 
 	/* Map soft events to static list. */
@@ -1410,13 +1462,97 @@ pmc_init(void)
 	 * Fill in the class table.
 	 */
 	n = 0;
-
-	/* Fill soft events information. */
-	pmc_class_table[n++] = &soft_class_table_descr;
+	for (unsigned i = 0; i < PMC_CLASS_TABLE_SIZE; i++) {
+		switch (cpu_info.pm_classes[i].pm_class) {
 #if defined(__amd64__) || defined(__i386__)
-	if (cpu_info.pm_cputype != PMC_CPU_GENERIC)
-		pmc_class_table[n++] = &tsc_class_table_descr;
+		case PMC_CLASS_TSC:
+			pmc_class_table[n++] = &tsc_class_table_descr;
+			break;
+
+		case PMC_CLASS_K8:
+			pmc_class_table[n++] = &k8_class_table_descr;
+			break;
 #endif
+
+		case PMC_CLASS_SOFT:
+			pmc_class_table[n++] = &soft_class_table_descr;
+			break;
+
+#if defined(__arm__)
+		case PMC_CLASS_ARMV7:
+			switch (cpu_info.pm_cputype) {
+			case PMC_CPU_ARMV7_CORTEX_A8:
+				pmc_class_table[n++] =
+				    &cortex_a8_class_table_descr;
+				break;
+			case PMC_CPU_ARMV7_CORTEX_A9:
+				pmc_class_table[n++] =
+				    &cortex_a9_class_table_descr;
+				break;
+			default:
+				errno = ENXIO;
+				return (pmc_syscall = -1);
+			}
+			break;
+#endif
+
+#if defined(__aarch64__)
+		case PMC_CLASS_ARMV8:
+			switch (cpu_info.pm_cputype) {
+			case PMC_CPU_ARMV8_CORTEX_A53:
+				pmc_class_table[n++] =
+				    &cortex_a53_class_table_descr;
+				break;
+			case PMC_CPU_ARMV8_CORTEX_A57:
+				pmc_class_table[n++] =
+				    &cortex_a57_class_table_descr;
+				break;
+			case PMC_CPU_ARMV8_CORTEX_A76:
+				pmc_class_table[n++] =
+				    &cortex_a76_class_table_descr;
+				break;
+			default:
+				errno = ENXIO;
+				return (pmc_syscall = -1);
+			}
+			break;
+
+		case PMC_CLASS_DMC620_PMU_CD2:
+			pmc_class_table[n++] =
+			    &dmc620_pmu_cd2_class_table_descr;
+			break;
+
+		case PMC_CLASS_DMC620_PMU_C:
+			pmc_class_table[n++] = &dmc620_pmu_c_class_table_descr;
+			break;
+
+		case PMC_CLASS_CMN600_PMU:
+			pmc_class_table[n++] = &cmn600_pmu_class_table_descr;
+			break;
+#endif
+
+#if defined(__powerpc__)
+		case PMC_CLASS_PPC7450:
+			pmc_class_table[n++] = &ppc7450_class_table_descr;
+			break;
+
+		case PMC_CLASS_PPC970:
+			pmc_class_table[n++] = &ppc970_class_table_descr;
+			break;
+
+		case PMC_CLASS_E500:
+			pmc_class_table[n++] = &e500_class_table_descr;
+			break;
+#endif
+
+		default:
+#if defined(DEBUG)
+			printf("pm_class: 0x%x\n",
+			    cpu_info.pm_classes[i].pm_class);
+#endif
+			break;
+		}
+	}
 
 #define	PMC_MDEP_INIT(C) pmc_mdep_event_aliases = C##_aliases
 
@@ -1425,7 +1561,6 @@ pmc_init(void)
 #if defined(__amd64__) || defined(__i386__)
 	case PMC_CPU_AMD_K8:
 		PMC_MDEP_INIT(k8);
-		pmc_class_table[n] = &k8_class_table_descr;
 		break;
 #endif
 	case PMC_CPU_GENERIC:
@@ -1434,61 +1569,31 @@ pmc_init(void)
 #if defined(__arm__)
 	case PMC_CPU_ARMV7_CORTEX_A8:
 		PMC_MDEP_INIT(cortex_a8);
-		pmc_class_table[n] = &cortex_a8_class_table_descr;
 		break;
 	case PMC_CPU_ARMV7_CORTEX_A9:
 		PMC_MDEP_INIT(cortex_a9);
-		pmc_class_table[n] = &cortex_a9_class_table_descr;
 		break;
 #endif
 #if defined(__aarch64__)
 	case PMC_CPU_ARMV8_CORTEX_A53:
 		PMC_MDEP_INIT(cortex_a53);
-		pmc_class_table[n] = &cortex_a53_class_table_descr;
 		break;
 	case PMC_CPU_ARMV8_CORTEX_A57:
 		PMC_MDEP_INIT(cortex_a57);
-		pmc_class_table[n] = &cortex_a57_class_table_descr;
 		break;
 	case PMC_CPU_ARMV8_CORTEX_A76:
 		PMC_MDEP_INIT(cortex_a76);
-		pmc_class_table[n] = &cortex_a76_class_table_descr;
 		break;
 #endif
-#if defined(__mips__)
-	case PMC_CPU_MIPS_BERI:
-		PMC_MDEP_INIT(beri);
-		pmc_class_table[n] = &beri_class_table_descr;
-		break;
-	case PMC_CPU_MIPS_24K:
-		PMC_MDEP_INIT(mips24k);
-		pmc_class_table[n] = &mips24k_class_table_descr;
-		break;
-	case PMC_CPU_MIPS_74K:
-		PMC_MDEP_INIT(mips74k);
-		pmc_class_table[n] = &mips74k_class_table_descr;
-		break;
-	case PMC_CPU_MIPS_OCTEON:
-		PMC_MDEP_INIT(octeon);
-		pmc_class_table[n] = &octeon_class_table_descr;
-		break;
-#endif /* __mips__ */
 #if defined(__powerpc__)
 	case PMC_CPU_PPC_7450:
 		PMC_MDEP_INIT(ppc7450);
-		pmc_class_table[n] = &ppc7450_class_table_descr;
 		break;
 	case PMC_CPU_PPC_970:
 		PMC_MDEP_INIT(ppc970);
-		pmc_class_table[n] = &ppc970_class_table_descr;
-		break;
-	case PMC_CPU_PPC_POWER8:
-		PMC_MDEP_INIT(power8);
-		pmc_class_table[n] = &power8_class_table_descr;
 		break;
 	case PMC_CPU_PPC_E500:
 		PMC_MDEP_INIT(e500);
-		pmc_class_table[n] = &e500_class_table_descr;
 		break;
 #endif
 	default:
@@ -1497,7 +1602,7 @@ pmc_init(void)
 		 * about.  This shouldn't happen since the abi version check
 		 * should have caught this.
 		 */
-#if defined(__amd64__) || defined(__i386__)
+#if defined(__amd64__) || defined(__i386__) || defined(__powerpc64__)
 		break;
 #endif
 		errno = ENXIO;
@@ -1603,27 +1708,27 @@ _pmc_name_of_event(enum pmc_event pe, enum pmc_cputype cpu)
 		default:	/* Unknown CPU type. */
 			break;
 		}
-	} else if (pe >= PMC_EV_BERI_FIRST && pe <= PMC_EV_BERI_LAST) {
-		ev = beri_event_table;
-		evfence = beri_event_table + PMC_EVENT_TABLE_SIZE(beri);
-	} else if (pe >= PMC_EV_MIPS24K_FIRST && pe <= PMC_EV_MIPS24K_LAST) {
-		ev = mips24k_event_table;
-		evfence = mips24k_event_table + PMC_EVENT_TABLE_SIZE(mips24k);
-	} else if (pe >= PMC_EV_MIPS74K_FIRST && pe <= PMC_EV_MIPS74K_LAST) {
-		ev = mips74k_event_table;
-		evfence = mips74k_event_table + PMC_EVENT_TABLE_SIZE(mips74k);
-	} else if (pe >= PMC_EV_OCTEON_FIRST && pe <= PMC_EV_OCTEON_LAST) {
-		ev = octeon_event_table;
-		evfence = octeon_event_table + PMC_EVENT_TABLE_SIZE(octeon);
+	} else if (pe >= PMC_EV_CMN600_PMU_FIRST &&
+	    pe <= PMC_EV_CMN600_PMU_LAST) {
+		ev = cmn600_pmu_event_table;
+		evfence = cmn600_pmu_event_table +
+		    PMC_EVENT_TABLE_SIZE(cmn600_pmu);
+	} else if (pe >= PMC_EV_DMC620_PMU_CD2_FIRST &&
+	    pe <= PMC_EV_DMC620_PMU_CD2_LAST) {
+		ev = dmc620_pmu_cd2_event_table;
+		evfence = dmc620_pmu_cd2_event_table +
+		    PMC_EVENT_TABLE_SIZE(dmc620_pmu_cd2);
+	} else if (pe >= PMC_EV_DMC620_PMU_C_FIRST &&
+	    pe <= PMC_EV_DMC620_PMU_C_LAST) {
+		ev = dmc620_pmu_c_event_table;
+		evfence = dmc620_pmu_c_event_table +
+		    PMC_EVENT_TABLE_SIZE(dmc620_pmu_c);
 	} else if (pe >= PMC_EV_PPC7450_FIRST && pe <= PMC_EV_PPC7450_LAST) {
 		ev = ppc7450_event_table;
 		evfence = ppc7450_event_table + PMC_EVENT_TABLE_SIZE(ppc7450);
 	} else if (pe >= PMC_EV_PPC970_FIRST && pe <= PMC_EV_PPC970_LAST) {
 		ev = ppc970_event_table;
 		evfence = ppc970_event_table + PMC_EVENT_TABLE_SIZE(ppc970);
-	} else if (pe >= PMC_EV_POWER8_FIRST && pe <= PMC_EV_POWER8_LAST) {
-		ev = power8_event_table;
-		evfence = power8_event_table + PMC_EVENT_TABLE_SIZE(power8);
 	} else if (pe >= PMC_EV_E500_FIRST && pe <= PMC_EV_E500_LAST) {
 		ev = e500_event_table;
 		evfence = e500_event_table + PMC_EVENT_TABLE_SIZE(e500);
@@ -1720,7 +1825,7 @@ pmc_pmcinfo(int cpu, struct pmc_pmcinfo **ppmci)
 
 	pmci->pm_cpu  = cpu;
 
-	if (PMC_CALL(GETPMCINFO, pmci) < 0) {
+	if (PMC_CALL(PMC_OP_GETPMCINFO, pmci) < 0) {
 		free(pmci);
 		return (-1);
 	}
@@ -1739,7 +1844,7 @@ pmc_read(pmc_id_t pmc, pmc_value_t *value)
 	pmc_read_op.pm_flags = PMC_F_OLDVALUE;
 	pmc_read_op.pm_value = -1;
 
-	if (PMC_CALL(PMCRW, &pmc_read_op) < 0)
+	if (PMC_CALL(PMC_OP_PMCRW, &pmc_read_op) < 0)
 		return (-1);
 
 	*value = pmc_read_op.pm_value;
@@ -1752,7 +1857,7 @@ pmc_release(pmc_id_t pmc)
 	struct pmc_op_simple	pmc_release_args;
 
 	pmc_release_args.pm_pmcid = pmc;
-	return (PMC_CALL(PMCRELEASE, &pmc_release_args));
+	return (PMC_CALL(PMC_OP_PMCRELEASE, &pmc_release_args));
 }
 
 int
@@ -1764,7 +1869,7 @@ pmc_rw(pmc_id_t pmc, pmc_value_t newvalue, pmc_value_t *oldvaluep)
 	pmc_rw_op.pm_flags = PMC_F_NEWVALUE | PMC_F_OLDVALUE;
 	pmc_rw_op.pm_value = newvalue;
 
-	if (PMC_CALL(PMCRW, &pmc_rw_op) < 0)
+	if (PMC_CALL(PMC_OP_PMCRW, &pmc_rw_op) < 0)
 		return (-1);
 
 	*oldvaluep = pmc_rw_op.pm_value;
@@ -1779,7 +1884,7 @@ pmc_set(pmc_id_t pmc, pmc_value_t value)
 	sc.pm_pmcid = pmc;
 	sc.pm_count = value;
 
-	if (PMC_CALL(PMCSETCOUNT, &sc) < 0)
+	if (PMC_CALL(PMC_OP_PMCSETCOUNT, &sc) < 0)
 		return (-1);
 	return (0);
 }
@@ -1790,7 +1895,7 @@ pmc_start(pmc_id_t pmc)
 	struct pmc_op_simple	pmc_start_args;
 
 	pmc_start_args.pm_pmcid = pmc;
-	return (PMC_CALL(PMCSTART, &pmc_start_args));
+	return (PMC_CALL(PMC_OP_PMCSTART, &pmc_start_args));
 }
 
 int
@@ -1799,7 +1904,7 @@ pmc_stop(pmc_id_t pmc)
 	struct pmc_op_simple	pmc_stop_args;
 
 	pmc_stop_args.pm_pmcid = pmc;
-	return (PMC_CALL(PMCSTOP, &pmc_stop_args));
+	return (PMC_CALL(PMC_OP_PMCSTOP, &pmc_stop_args));
 }
 
 int
@@ -1826,7 +1931,7 @@ pmc_write(pmc_id_t pmc, pmc_value_t value)
 	pmc_write_op.pm_pmcid = pmc;
 	pmc_write_op.pm_flags = PMC_F_NEWVALUE;
 	pmc_write_op.pm_value = value;
-	return (PMC_CALL(PMCRW, &pmc_write_op));
+	return (PMC_CALL(PMC_OP_PMCRW, &pmc_write_op));
 }
 
 int
@@ -1835,5 +1940,5 @@ pmc_writelog(uint32_t userdata)
 	struct pmc_op_writelog wl;
 
 	wl.pm_userdata = userdata;
-	return (PMC_CALL(WRITELOG, &wl));
+	return (PMC_CALL(PMC_OP_WRITELOG, &wl));
 }

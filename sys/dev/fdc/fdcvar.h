@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2004-2005 M. Warner Losh <imp@FreeBSD.org>
  *
@@ -23,8 +23,6 @@
  * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
- *
- * $FreeBSD: 3a2159db134853661a067c71e0162981b11c90d1 $
  */
 
 /* XXX should audit this file to see if additional copyrights needed */
@@ -69,8 +67,6 @@ struct fdc_data {
 	struct mtx fdc_mtx;
 	struct proc *fdc_thread;
 };
-
-extern devclass_t fdc_devclass;
 
 enum fdc_device_ivars {
 	FDC_IVAR_FDUNIT,

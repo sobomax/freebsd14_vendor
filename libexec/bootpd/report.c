@@ -1,4 +1,3 @@
-/* $FreeBSD: 290e19e74063de0b941b71351330b580133fd5fd $ */
 
 /*
  * report() - calls syslog
@@ -33,8 +32,7 @@ extern char *progname;
 static int stderr_only = 1;
 
 void
-report_init(nolog)
-	int nolog;
+report_init(int nolog)
 {
 	stderr_only = nolog;
 #ifdef SYSLOG
@@ -120,7 +118,7 @@ report(int priority, const char *fmt,...)
  * Return pointer to static string which gives full filesystem error message.
  */
 const char *
-get_errmsg()
+get_errmsg(void)
 {
 	return strerror(errno);
 }

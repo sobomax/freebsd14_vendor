@@ -1,4 +1,3 @@
-# $FreeBSD: 385692c820ca2c1c188686faa402fc771cdcc8ac $
 
 BINDIR?=	/usr/bin
 

@@ -1,8 +1,7 @@
 /*	$NetBSD: fpu_extern.h,v 1.3 2005/12/11 12:18:42 christos Exp $	*/
-/* $FreeBSD: f3a7fcf71da56310ddd0c6f566bd61d0f0516ef4 $ */
 
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-NetBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 1995 The NetBSD Foundation, Inc.
  * All rights reserved.

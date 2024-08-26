@@ -1,9 +1,10 @@
 #
 # DEFAULTS -- Default kernel configuration file for FreeBSD/amd64
 #
-# $FreeBSD: f8334bd9af2073c2cfc1a3d9a490edb9bd8307ed $
 
 machine		amd64
+
+options 	EARLY_AP_STARTUP
 
 # Bus support.
 device		isa
@@ -21,4 +22,9 @@ options 	GEOM_PART_EBR
 options 	GEOM_PART_MBR
 options 	GEOM_PART_GPT
 
+# Default congestion control algorithm
+options 	CC_CUBIC		# include CUBIC congestion control
+
 options 	NEW_PCIB
+
+options 	NETLINK			# netlink(4) support

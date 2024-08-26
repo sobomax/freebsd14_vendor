@@ -10,9 +10,6 @@
  * ====================================================
  */
 
-#include <sys/cdefs.h>
-__FBSDID("$FreeBSD: fc43538dfa655ae717ff07bd3a7ed7fa954f4ad0 $");
-
 /* long double version of hypot().  See e_hypot.c for most comments. */
 
 #include <float.h>

@@ -1,4 +1,3 @@
-# $FreeBSD: c8146e7d4b195a74b78bdf5d70549f383b7e86d0 $
 
 echo 1..9
 

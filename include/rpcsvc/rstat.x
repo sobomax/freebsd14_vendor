@@ -51,8 +51,6 @@
 %/*static char sccsid[] = "from: @(#)rstat.x	2.2 88/08/01 4.0 RPCSRC";*/
 %#endif /* not lint */
 %#include <sys/cdefs.h>
-%__FBSDID("$FreeBSD: a34456082afaf6b2f613d126d5dac4d61368434a $");
-
 #endif /* def RPC_HDR */
 
 const RSTAT_CPUSTATES = 4;

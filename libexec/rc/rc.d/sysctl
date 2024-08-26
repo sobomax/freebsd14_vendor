@@ -1,6 +1,5 @@
 #!/bin/sh
 #
-# $FreeBSD: 11b10ee984de8e8101ecff201a7a1e545cfb78b9 $
 #
 
 # PROVIDE: sysctl

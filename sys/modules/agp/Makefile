@@ -1,4 +1,3 @@
-# $FreeBSD: a96dfc9fa7c4a14edc8a7aabac7cea2f05257948 $
 
 .PATH: ${SRCTOP}/sys/dev/agp
 

@@ -1,5 +1,5 @@
 /* SPDX-License-Identifier: BSD-3-Clause */
-/*  Copyright (c) 2022, Intel Corporation
+/*  Copyright (c) 2024, Intel Corporation
  *  All rights reserved.
  *
  *  Redistribution and use in source and binary forms, with or without
@@ -28,7 +28,6 @@
  *  ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  *  POSSIBILITY OF SUCH DAMAGE.
  */
-/*$FreeBSD: 730b78b0f81e2f8ed1ab600b76b8f4b56b753f8b $*/
 
 #include "ice_ddp_common.h"
 #include "ice_type.h"
@@ -469,6 +468,7 @@ static u32 ice_get_pkg_segment_id(enum ice_mac_type mac_type)
 	switch (mac_type) {
 	case ICE_MAC_GENERIC:
 	case ICE_MAC_GENERIC_3K:
+	case ICE_MAC_GENERIC_3K_E825:
 	default:
 		seg_id = SEGMENT_TYPE_ICE_E810;
 		break;
@@ -488,6 +488,9 @@ static u32 ice_get_pkg_sign_type(enum ice_mac_type mac_type)
 	switch (mac_type) {
 	case ICE_MAC_GENERIC_3K:
 		sign_type = SEGMENT_SIGN_TYPE_RSA3K;
+		break;
+	case ICE_MAC_GENERIC_3K_E825:
+		sign_type = SEGMENT_SIGN_TYPE_RSA3K_E825;
 		break;
 	case ICE_MAC_GENERIC:
 	default:
@@ -1470,14 +1473,14 @@ struct ice_buf_build *ice_pkg_buf_alloc(struct ice_hw *hw)
 	return bld;
 }
 
-static bool ice_is_gtp_u_profile(u16 prof_idx)
+static bool ice_is_gtp_u_profile(u32 prof_idx)
 {
 	return (prof_idx >= ICE_PROFID_IPV6_GTPU_TEID &&
 		prof_idx <= ICE_PROFID_IPV6_GTPU_IPV6_TCP) ||
 	       prof_idx == ICE_PROFID_IPV4_GTPU_TEID;
 }
 
-static bool ice_is_gtp_c_profile(u16 prof_idx)
+static bool ice_is_gtp_c_profile(u32 prof_idx)
 {
 	switch (prof_idx) {
 	case ICE_PROFID_IPV4_GTPC_TEID:

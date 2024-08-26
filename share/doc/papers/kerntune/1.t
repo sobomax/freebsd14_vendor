@@ -27,7 +27,6 @@
 .\" SUCH DAMAGE.
 .\"
 .\"	@(#)1.t	1.2 (Berkeley) 11/8/90
-.\" $FreeBSD: 5570a622a1584a323ae7444004a54e393b815207 $
 .\"
 .ds RH Introduction
 .NH 1

@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2020 Oskar Holmlund <oskar.holmlund@ohdata.se>
  *
@@ -23,13 +23,9 @@
  * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
- *
- * $FreeBSD: 148494f9033159eed1963f51b79e6cad6885e5ed $
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 148494f9033159eed1963f51b79e6cad6885e5ed $");
-
 struct clock_cell_info {
 	cell_t		*clock_cells;
 	uint8_t		*clock_cells_ncells;

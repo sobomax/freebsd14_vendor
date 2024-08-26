@@ -1,6 +1,5 @@
-# $FreeBSD: ce7b1900ae005d770f297519711e6c3e2a6599cc $
 #
-# SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+# SPDX-License-Identifier: BSD-2-Clause
 #
 # Copyright (c) 2018 Kristof Provost <kp@FreeBSD.org>
 #
@@ -101,11 +100,11 @@ set_skip_dynamic_body()
 	vnet_mkjail alcatraz
 	jexec alcatraz pfctl -e
 	pft_set_rules alcatraz "set skip on epair" \
-		"block"
+		"block on ! lo"
 
 	epair=$(vnet_mkepair)
 	ifconfig ${epair}a 192.0.2.2/24 up
-	ifconfig ${epair}b vnet alcatraz
+	vnet_ifmove ${epair}b alcatraz
 
 	jexec alcatraz ifconfig ${epair}b 192.0.2.1/24 up
 

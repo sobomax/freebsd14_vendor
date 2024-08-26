@@ -1,4 +1,3 @@
-# $FreeBSD: 5ea77b3032fc6ef5e476b253055fb251ca78dded $
 
 .PATH: ${SRCTOP}/sys/dev/sound/macio
 

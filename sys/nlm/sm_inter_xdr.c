@@ -5,8 +5,6 @@
 
 #include <nlm/sm_inter.h>
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: b225078d06ff0f639168fab8fe0c34a8418cd1d3 $");
-
 bool_t
 xdr_sm_name(XDR *xdrs, sm_name *objp)
 {

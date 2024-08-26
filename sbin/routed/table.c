@@ -27,14 +27,9 @@
  * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
- *
- * $FreeBSD: 648a1d1a6b25bdcd3025343c9b5b31b1cff6da50 $
  */
 
 #include "defs.h"
-
-__RCSID("$FreeBSD: 648a1d1a6b25bdcd3025343c9b5b31b1cff6da50 $");
-
 static struct rt_spare *rts_better(struct rt_entry *);
 static struct rt_spare rts_empty = {0,0,0,HOPCNT_INFINITY,0,0,0};
 static void  set_need_flash(void);

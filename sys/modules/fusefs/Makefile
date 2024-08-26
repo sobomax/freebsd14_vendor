@@ -1,4 +1,3 @@
-# $FreeBSD: 36605fed5d60d03ea6e604e64e239e5f179825ea $
 
 .PATH: ${SRCTOP}/sys/fs/fuse
 

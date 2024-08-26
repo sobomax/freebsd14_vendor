@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2009-2012 Alexander Motin <mav@FreeBSD.org>
  * All rights reserved.
@@ -27,8 +27,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 45171a34cfbf2bf6d7da668d8c94e8ecf9d2dc42 $");
-
 #include <sys/param.h>
 #include <sys/module.h>
 #include <sys/systm.h>
@@ -39,6 +37,7 @@ __FBSDID("$FreeBSD: 45171a34cfbf2bf6d7da668d8c94e8ecf9d2dc42 $");
 #include <sys/malloc.h>
 #include <sys/lock.h>
 #include <sys/mutex.h>
+#include <sys/sbuf.h>
 #include <sys/sysctl.h>
 #include <machine/stdarg.h>
 #include <machine/resource.h>
@@ -702,14 +701,13 @@ ahci_print_child(device_t dev, device_t child)
 }
 
 int
-ahci_child_location_str(device_t dev, device_t child, char *buf,
-    size_t buflen)
+ahci_child_location(device_t dev, device_t child, struct sbuf *sb)
 {
 	intptr_t ivars;
 
 	ivars = (intptr_t)device_get_ivars(child);
 	if ((ivars & AHCI_EM_UNIT) == 0)
-		snprintf(buf, buflen, "channel=%d", (int)ivars & AHCI_UNIT);
+		sbuf_printf(sb, "channel=%d", (int)ivars & AHCI_UNIT);
 	return (0);
 }
 
@@ -1056,7 +1054,6 @@ ahci_ch_resume(device_t dev)
 	return (0);
 }
 
-devclass_t ahcich_devclass;
 static device_method_t ahcich_methods[] = {
 	DEVMETHOD(device_probe,     ahci_ch_probe),
 	DEVMETHOD(device_attach,    ahci_ch_attach),
@@ -1070,7 +1067,7 @@ static driver_t ahcich_driver = {
         ahcich_methods,
         sizeof(struct ahci_channel)
 };
-DRIVER_MODULE(ahcich, ahci, ahcich_driver, ahcich_devclass, NULL, NULL);
+DRIVER_MODULE(ahcich, ahci, ahcich_driver, NULL, NULL);
 
 struct ahci_dc_cb_args {
 	bus_addr_t maddr;
@@ -2178,7 +2175,8 @@ completeall:
 		ahci_reset(ch);
 		return;
 	}
-	ccb->ccb_h = ch->hold[i]->ccb_h;	/* Reuse old header. */
+	xpt_setup_ccb(&ccb->ccb_h, ch->hold[i]->ccb_h.path,
+	    ch->hold[i]->ccb_h.pinfo.priority);
 	if (ccb->ccb_h.func_code == XPT_ATA_IO) {
 		/* READ LOG */
 		ccb->ccb_h.recovery_type = RECOVERY_READ_LOG;
@@ -2908,8 +2906,6 @@ ahcipoll(struct cam_sim *sim)
 		ahci_reset_to(ch);
 	}
 }
-
-devclass_t ahci_devclass;
 
 MODULE_VERSION(ahci, 1);
 MODULE_DEPEND(ahci, cam, 1, 1, 1);

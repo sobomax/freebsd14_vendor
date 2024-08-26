@@ -30,8 +30,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 789e7a77ba80a94c53b999870ec0ff907be4c939 $");
-
 #include <sys/param.h>
 #include <sys/capsicum.h>
 #include <sys/cdio.h>
@@ -73,19 +71,7 @@ freebsd32_ioctl_memrange(struct thread *td,
 	CP(mro32, mro, mo_arg[0]);
 	CP(mro32, mro, mo_arg[1]);
 
-	com = 0;
-	switch (uap->com) {
-	case MEMRANGE_GET32:
-		com = MEMRANGE_GET;
-		break;
-
-	case MEMRANGE_SET32:
-		com = MEMRANGE_SET;
-		break;
-
-	default:
-		panic("%s: unknown MEMRANGE %#x", __func__, uap->com);
-	}
+	com = _IOC_NEWTYPE(uap->com, struct mem_range_op);
 
 	if ((error = fo_ioctl(fp, com, (caddr_t)&mro, td->td_ucred, td)) != 0)
 		return (error);

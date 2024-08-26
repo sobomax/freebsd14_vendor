@@ -29,7 +29,6 @@
  * SUCH DAMAGE.
  *
  *	$KAME: nd6.h,v 1.76 2001/12/18 02:10:31 itojun Exp $
- * $FreeBSD: d653a432dbe4939479532ae3266514ba89b411d2 $
  */
 
 #ifndef _NETINET6_ND6_H_
@@ -99,7 +98,7 @@ struct nd_ifinfo {
 
 #ifdef _KERNEL
 #define ND_IFINFO(ifp) \
-	(((struct in6_ifextra *)(ifp)->if_afdata[AF_INET6])->nd_ifinfo)
+	(((struct in6_ifextra *)if_getafdata(ifp, AF_INET6))->nd_ifinfo)
 #define IN6_LINKMTU(ifp) \
 	((ND_IFINFO(ifp)->linkmtu && ND_IFINFO(ifp)->linkmtu < (ifp)->if_mtu) \
 	    ? ND_IFINFO(ifp)->linkmtu \

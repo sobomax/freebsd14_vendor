@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 1999,2000,2001 Jonathan Lemon <jlemon@FreeBSD.org>
  * Copyright 2004 John-Mark Gurney <jmg@FreeBSD.org>
@@ -29,8 +29,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 90a725b6e0f0ba392cb82ced729fefd447f6f6ed $");
-
 #include "opt_ktrace.h"
 #include "opt_kqueue.h"
 
@@ -45,7 +43,6 @@ __FBSDID("$FreeBSD: 90a725b6e0f0ba392cb82ced729fefd447f6f6ed $");
 #include <sys/limits.h>
 #include <sys/lock.h>
 #include <sys/mutex.h>
-#include <sys/rwlock.h>
 #include <sys/proc.h>
 #include <sys/malloc.h>
 #include <sys/unistd.h>
@@ -108,7 +105,7 @@ static int	kqueue_acquire(struct file *fp, struct kqueue **kqp);
 static void	kqueue_release(struct kqueue *kq, int locked);
 static void	kqueue_destroy(struct kqueue *kq);
 static void	kqueue_drain(struct kqueue *kq, struct thread *td);
-static int	kqueue_expand(struct kqueue *kq, struct filterops *fops,
+static int	kqueue_expand(struct kqueue *kq, const struct filterops *fops,
 		    uintptr_t ident, int mflag);
 static void	kqueue_task(void *arg, int pending);
 static int	kqueue_scan(struct kqueue *kq, int maxevents,
@@ -116,7 +113,7 @@ static int	kqueue_scan(struct kqueue *kq, int maxevents,
 		    const struct timespec *timeout,
 		    struct kevent *keva, struct thread *td);
 static void 	kqueue_wakeup(struct kqueue *kq);
-static struct filterops *kqueue_fo_find(int filt);
+static const struct filterops *kqueue_fo_find(int filt);
 static void	kqueue_fo_release(int filt);
 struct g_kevent_args;
 static int	kern_kevent_generic(struct thread *td,
@@ -142,6 +139,7 @@ static struct fileops kqueueops = {
 	.fo_chmod = invfo_chmod,
 	.fo_chown = invfo_chown,
 	.fo_sendfile = invfo_sendfile,
+	.fo_cmp = file_kcmp_generic,
 	.fo_fill_kinfo = kqueue_fill_kinfo,
 };
 
@@ -222,7 +220,7 @@ SYSCTL_UINT(_kern, OID_AUTO, kq_calloutmax, CTLFLAG_RW,
 		knote_enqueue((kn));					\
 	if (!(islock))							\
 		KQ_UNLOCK((kn)->kn_kq);					\
-} while(0)
+} while (0)
 #define KQ_LOCK(kq) do {						\
 	mtx_lock(&(kq)->kq_lock);					\
 } while (0)
@@ -312,7 +310,7 @@ kn_leave_flux(struct knote *kn)
 	knl->kl_assert_lock((knl)->kl_lockarg, LA_UNLOCKED);		\
 } while (0)
 #else /* !INVARIANTS */
-#define	KNL_ASSERT_LOCKED(knl) do {} while(0)
+#define	KNL_ASSERT_LOCKED(knl) do {} while (0)
 #define	KNL_ASSERT_UNLOCKED(knl) do {} while (0)
 #endif /* INVARIANTS */
 
@@ -342,10 +340,9 @@ extern struct filterops fs_filtops;
  * Table for all system-defined filters.
  */
 static struct mtx	filterops_lock;
-MTX_SYSINIT(kqueue_filterops, &filterops_lock, "protect sysfilt_ops",
-	MTX_DEF);
+MTX_SYSINIT(kqueue_filterops, &filterops_lock, "protect sysfilt_ops", MTX_DEF);
 static struct {
-	struct filterops *for_fop;
+	const struct filterops *for_fop;
 	int for_nolock;
 	int for_refcnt;
 } sysfilt_ops[EVFILT_SYSCOUNT] = {
@@ -1058,6 +1055,19 @@ sys_kqueue(struct thread *td, struct kqueue_args *uap)
 	return (kern_kqueue(td, 0, NULL));
 }
 
+int
+sys_kqueuex(struct thread *td, struct kqueuex_args *uap)
+{
+	int flags;
+
+	if ((uap->flags & ~(KQUEUE_CLOEXEC)) != 0)
+		return (EINVAL);
+	flags = 0;
+	if ((uap->flags & KQUEUE_CLOEXEC) != 0)
+		flags |= O_CLOEXEC;
+	return (kern_kqueue(td, flags, NULL));
+}
+
 static void
 kqueue_init(struct kqueue *kq)
 {
@@ -1107,7 +1117,7 @@ kern_kqueue(struct thread *td, int flags, struct filecaps *fcaps)
 
 struct g_kevent_args {
 	int	fd;
-	void	*changelist;
+	const void *changelist;
 	int	nchanges;
 	void	*eventlist;
 	int	nevents;
@@ -1212,7 +1222,7 @@ static int
 kevent11_copyout(void *arg, struct kevent *kevp, int count)
 {
 	struct freebsd11_kevent_args *uap;
-	struct kevent_freebsd11 kev11;
+	struct freebsd11_kevent kev11;
 	int error, i;
 
 	KASSERT(count <= KQ_NEVENTS, ("count (%d) > KQ_NEVENTS", count));
@@ -1241,7 +1251,7 @@ static int
 kevent11_copyin(void *arg, struct kevent *kevp, int count)
 {
 	struct freebsd11_kevent_args *uap;
-	struct kevent_freebsd11 kev11;
+	struct freebsd11_kevent kev11;
 	int error, i;
 
 	KASSERT(count <= KQ_NEVENTS, ("count (%d) > KQ_NEVENTS", count));
@@ -1271,7 +1281,7 @@ freebsd11_kevent(struct thread *td, struct freebsd11_kevent_args *uap)
 		.arg = uap,
 		.k_copyout = kevent11_copyout,
 		.k_copyin = kevent11_copyin,
-		.kevent_size = sizeof(struct kevent_freebsd11),
+		.kevent_size = sizeof(struct freebsd11_kevent),
 	};
 	struct g_kevent_args gk_args = {
 		.fd = uap->fd,
@@ -1282,7 +1292,7 @@ freebsd11_kevent(struct thread *td, struct freebsd11_kevent_args *uap)
 		.timeout = uap->timeout,
 	};
 
-	return (kern_kevent_generic(td, &gk_args, &k_ops, "kevent_freebsd11"));
+	return (kern_kevent_generic(td, &gk_args, &k_ops, "freebsd11_kevent"));
 }
 #endif
 
@@ -1388,7 +1398,7 @@ kern_kevent_anonymous(struct thread *td, int nevents,
 }
 
 int
-kqueue_add_filteropts(int filt, struct filterops *filtops)
+kqueue_add_filteropts(int filt, const struct filterops *filtops)
 {
 	int error;
 
@@ -1436,7 +1446,7 @@ kqueue_del_filteropts(int filt)
 	return error;
 }
 
-static struct filterops *
+static const struct filterops *
 kqueue_fo_find(int filt)
 {
 
@@ -1479,7 +1489,7 @@ static int
 kqueue_register(struct kqueue *kq, struct kevent *kev, struct thread *td,
     int mflag)
 {
-	struct filterops *fops;
+	const struct filterops *fops;
 	struct file *fp;
 	struct knote *kn, *tkn;
 	struct knlist *knl;
@@ -1502,6 +1512,13 @@ kqueue_register(struct kqueue *kq, struct kevent *kev, struct thread *td,
 		return EINVAL;
 
 	if (kev->flags & EV_ADD) {
+		/* Reject an invalid flag pair early */
+		if (kev->flags & EV_KEEPUDATA) {
+			tkn = NULL;
+			error = EINVAL;
+			goto done;
+		}
+
 		/*
 		 * Prevent waiting with locks.  Non-sleepable
 		 * allocation failures are handled in the loop, only
@@ -1690,7 +1707,8 @@ findkn:
 	kn_enter_flux(kn);
 	KQ_UNLOCK(kq);
 	knl = kn_list_lock(kn);
-	kn->kn_kevent.udata = kev->udata;
+	if ((kev->flags & EV_KEEPUDATA) == 0)
+		kn->kn_kevent.udata = kev->udata;
 	if (!fops->f_isfd && fops->f_touch != NULL) {
 		fops->f_touch(kn, kev, EVENT_REGISTER);
 	} else {
@@ -1774,8 +1792,8 @@ kqueue_release(struct kqueue *kq, int locked)
 		KQ_UNLOCK(kq);
 }
 
-void
-kqueue_drain_schedtask(void)
+static void
+ast_kqueue(struct thread *td, int tda __unused)
 {
 	taskqueue_quiesce(taskqueue_kqueue_ctx);
 }
@@ -1783,8 +1801,6 @@ kqueue_drain_schedtask(void)
 static void
 kqueue_schedtask(struct kqueue *kq)
 {
-	struct thread *td;
-
 	KQ_OWNED(kq);
 	KASSERT(((kq->kq_state & KQ_TASKDRAIN) != KQ_TASKDRAIN),
 	    ("scheduling kqueue task while draining"));
@@ -1792,10 +1808,7 @@ kqueue_schedtask(struct kqueue *kq)
 	if ((kq->kq_state & KQ_TASKSCHED) != KQ_TASKSCHED) {
 		taskqueue_enqueue(taskqueue_kqueue_ctx, &kq->kq_task);
 		kq->kq_state |= KQ_TASKSCHED;
-		td = curthread;
-		thread_lock(td);
-		td->td_flags |= TDF_ASTPENDING | TDF_KQTICKLED;
-		thread_unlock(td);
+		ast_sched(curthread, TDA_KQUEUE);
 	}
 }
 
@@ -1805,7 +1818,7 @@ kqueue_schedtask(struct kqueue *kq)
  * Return 0 on success (or no work necessary), return errno on failure.
  */
 static int
-kqueue_expand(struct kqueue *kq, struct filterops *fops, uintptr_t ident,
+kqueue_expand(struct kqueue *kq, const struct filterops *fops, uintptr_t ident,
     int mflag)
 {
 	struct klist *list, *tmp_knhash, *to_free;
@@ -2178,8 +2191,7 @@ kqueue_poll(struct file *fp, int events, struct ucred *active_cred,
 
 /*ARGSUSED*/
 static int
-kqueue_stat(struct file *fp, struct stat *st, struct ucred *active_cred,
-	struct thread *td)
+kqueue_stat(struct file *fp, struct stat *st, struct ucred *active_cred)
 {
 
 	bzero((void *)st, sizeof *st);
@@ -2504,30 +2516,6 @@ knlist_mtx_assert_lock(void *arg, int what)
 		mtx_assert((struct mtx *)arg, MA_NOTOWNED);
 }
 
-static void
-knlist_rw_rlock(void *arg)
-{
-
-	rw_rlock((struct rwlock *)arg);
-}
-
-static void
-knlist_rw_runlock(void *arg)
-{
-
-	rw_runlock((struct rwlock *)arg);
-}
-
-static void
-knlist_rw_assert_lock(void *arg, int what)
-{
-
-	if (what == LA_LOCKED)
-		rw_assert((struct rwlock *)arg, RA_LOCKED);
-	else
-		rw_assert((struct rwlock *)arg, RA_UNLOCKED);
-}
-
 void
 knlist_init(struct knlist *knl, void *lock, void (*kl_lock)(void *),
     void (*kl_unlock)(void *),
@@ -2571,14 +2559,6 @@ knlist_alloc(struct mtx *lock)
 	knl = malloc(sizeof(struct knlist), M_KQUEUE, M_WAITOK);
 	knlist_init_mtx(knl, lock);
 	return (knl);
-}
-
-void
-knlist_init_rw_reader(struct knlist *knl, struct rwlock *lock)
-{
-
-	knlist_init(knl, lock, knlist_rw_rlock, knlist_rw_runlock,
-	    knlist_rw_assert_lock);
 }
 
 void
@@ -2806,6 +2786,7 @@ knote_init(void)
 
 	knote_zone = uma_zcreate("KNOTE", sizeof(struct knote), NULL, NULL,
 	    NULL, NULL, UMA_ALIGN_PTR, 0);
+	ast_register(TDA_KQUEUE, ASTR_ASTF_REQUIRED, 0, ast_kqueue);
 }
 SYSINIT(knote, SI_SUB_PSEUDO, SI_ORDER_ANY, knote_init, NULL);
 

@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 1999 Luoqi Chen <luoqi@freebsd.org>
  * All rights reserved.
@@ -26,7 +26,6 @@
  * SUCH DAMAGE.
  *
  *	from: FreeBSD: src/sys/i386/include/globaldata.h,v 1.27 2001/04/27
- * $FreeBSD: a3a6900f692dda97db99a637fe5a6ab10b9abbb1 $
  */
 
 #ifndef	_MACHINE_PCPU_H_
@@ -36,8 +35,6 @@
 
 #include <sys/_lock.h>
 #include <sys/_mutex.h>
-
-#define	ALT_STACK_SIZE	128
 
 struct vmspace;
 
@@ -136,7 +133,6 @@ set_tls(void *tls)
 
 #define	PCPU_GET(member)	(get_pcpu()->pc_ ## member)
 #define	PCPU_ADD(member, value)	(get_pcpu()->pc_ ## member += (value))
-#define	PCPU_INC(member)	PCPU_ADD(member, 1)
 #define	PCPU_PTR(member)	(&get_pcpu()->pc_ ## member)
 #define	PCPU_SET(member,value)	(get_pcpu()->pc_ ## member = (value))
 

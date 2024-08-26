@@ -30,11 +30,12 @@
  * SUCH DAMAGE.
  *
  *	@(#)udp.h	8.1 (Berkeley) 6/10/93
- * $FreeBSD: 263a64fbe5887a4f2cd9f44e36eb932ca52ac973 $
  */
 
 #ifndef _NETINET_UDP_H_
 #define	_NETINET_UDP_H_
+
+#include <sys/types.h>
 
 /*
  * UDP protocol header.

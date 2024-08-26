@@ -31,9 +31,6 @@
  * From: @(#)uname.c	8.1 (Berkeley) 1/4/94
  */
 
-#include <sys/cdefs.h>
-__FBSDID("$FreeBSD: fba5eaeebc886fe64ed421c1654cd42657cc8475 $");
-
 #include <sys/param.h>
 #include <sys/sysctl.h>
 #include <sys/utsname.h>

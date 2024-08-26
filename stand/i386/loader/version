@@ -1,4 +1,3 @@
-$FreeBSD: 7a2acaf1859a6f5b27cb8d40d88e9cd7ac717825 $
 
 NOTE ANY CHANGES YOU MAKE TO THE BOOTBLOCKS HERE.  The format of this
 file is important.  Make sure the current version number is on line 6.

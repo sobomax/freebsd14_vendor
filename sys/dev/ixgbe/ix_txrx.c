@@ -30,7 +30,6 @@
   POSSIBILITY OF SUCH DAMAGE.
 
 ******************************************************************************/
-/*$FreeBSD: 589f4c72c9cef2a13167adaa7c34ceca75619ad3 $*/
 
 #ifndef IXGBE_STANDALONE_BUILD
 #include "opt_inet.h"

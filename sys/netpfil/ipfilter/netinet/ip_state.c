@@ -1,4 +1,3 @@
-/*	$FreeBSD: 463416f454a94f116dbde57d1eafa6127de2e8fb $ */
 
 /*
  * Copyright (C) 2012 by Darren Reed.
@@ -1255,7 +1254,7 @@ ipf_state_matchisps(ipstate_t *is1, ipstate_t *is2)
 		case IPPROTO_TCP :
 		case IPPROTO_UDP :
 		case IPPROTO_GRE :
-			/* greinfo_t can be also interprted as port pair */
+			/* greinfo_t can be also interpreted as port pair */
 			rv = ipf_state_matchports(&is1->is_ps.is_us,
 						  &is2->is_ps.is_us);
 			break;
@@ -4551,9 +4550,7 @@ ipf_checkicmp6matchingstate(fr_info_t *fin)
 /* Initialise the array of timeout queues for TCP.                          */
 /* ------------------------------------------------------------------------ */
 void
-ipf_sttab_init(softc, tqp)
-	ipf_main_softc_t *softc;
-	ipftq_t *tqp;
+ipf_sttab_init(ipf_main_softc_t *softc, ipftq_t *tqp)
 {
 	int i;
 

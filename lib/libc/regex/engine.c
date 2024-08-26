@@ -35,9 +35,6 @@
  *	@(#)engine.c	8.5 (Berkeley) 3/20/94
  */
 
-#include <sys/cdefs.h>
-__FBSDID("$FreeBSD: bb40018c07e1d948eddd23a6a0d93004ccd4dc08 $");
-
 #include <stdbool.h>
 
 /*

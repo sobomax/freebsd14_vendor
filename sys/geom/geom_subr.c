@@ -36,8 +36,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: ecd1bc243f8b201f41b7ed13b476971cdf4ed2e7 $");
-
 #include "opt_ddb.h"
 
 #include <sys/param.h>
@@ -71,7 +69,7 @@ SDT_PROVIDER_DEFINE(geom);
 
 struct class_list_head g_classes = LIST_HEAD_INITIALIZER(g_classes);
 static struct g_tailq_head geoms = TAILQ_HEAD_INITIALIZER(geoms);
-char *g_wait_event, *g_wait_up, *g_wait_down, *g_wait_sim;
+char *g_wait_event, *g_wait_up, *g_wait_down;
 
 struct g_hh00 {
 	struct g_class		*mp;
@@ -222,7 +220,6 @@ retry:
 
 	/* Bar new entries */
 	mp->taste = NULL;
-	mp->config = NULL;
 
 	LIST_FOREACH(gp, &mp->geom, geom) {
 		error = mp->destroy_geom(NULL, mp, gp);
@@ -478,7 +475,7 @@ g_wither_geom_close(struct g_geom *gp, int error)
 }
 
 /*
- * This function is called (repeatedly) until we cant wash away more
+ * This function is called (repeatedly) until we can't wash away more
  * withered bits at present.
  */
 void

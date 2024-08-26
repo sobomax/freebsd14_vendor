@@ -29,8 +29,6 @@
  * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
- *
- * $FreeBSD: 8aad8a7b95f28820065ac56e9e63399dc699eeef $
  */
 
 #include <sys/param.h>
@@ -82,6 +80,7 @@ int uflag = 0;
 
 const char *managedconf_script;
 const char *otherconf_script;
+const char *alwaysconf_script;
 const char *resolvconf_script = "/sbin/resolvconf";
 
 cap_channel_t *capllflags, *capscript, *capsendmsg, *capsyslog;
@@ -126,11 +125,11 @@ main(int argc, char **argv)
 
 	progname = basename(argv[0]);
 	if (strcmp(progname, "rtsold") == 0) {
-		opts = "adDfFim1M:O:p:R:u";
+		opts = "adDfFim1M:O:A:p:R:u";
 		once = 0;
 		pidfilepath = NULL;
 	} else {
-		opts = "adDFiM:O:R:u";
+		opts = "adDFiM:O:A:R:u";
 		fflag = 1;
 		once = 1;
 	}
@@ -166,6 +165,9 @@ main(int argc, char **argv)
 			break;
 		case 'O':
 			otherconf_script = optarg;
+			break;
+		case 'A':
+			alwaysconf_script = optarg;
 			break;
 		case 'p':
 			pidfilepath = optarg;
@@ -204,6 +206,9 @@ main(int argc, char **argv)
 	if (otherconf_script != NULL && *otherconf_script != '/')
 		errx(1, "configuration script (%s) must be an absolute path",
 		    otherconf_script);
+	if (alwaysconf_script != NULL && *alwaysconf_script != '/')
+		errx(1, "configuration script (%s) must be an absolute path",
+		    alwaysconf_script);
 	if (*resolvconf_script != '/')
 		errx(1, "configuration script (%s) must be an absolute path",
 		    resolvconf_script);
@@ -336,11 +341,10 @@ init_capabilities(void)
 {
 #ifdef WITH_CASPER
 	const char *const scripts[] =
-	    { resolvconf_script, managedconf_script, otherconf_script };
-	const char *scripts_set[nitems(scripts)];
+	    { resolvconf_script, managedconf_script, otherconf_script,
+	    alwaysconf_script };
 	cap_channel_t *capcasper;
 	nvlist_t *limits;
-	int count;
 
 	capcasper = cap_init();
 	if (capcasper == NULL)
@@ -353,12 +357,11 @@ init_capabilities(void)
 	capscript = cap_service_open(capcasper, "rtsold.script");
 	if (capscript == NULL)
 		return (-1);
-	count = 0;
+	limits = nvlist_create(0);
 	for (size_t i = 0; i < nitems(scripts); i++)
 		if (scripts[i] != NULL)
-			scripts_set[count++] = scripts[i];
-	limits = nvlist_create(0);
-	nvlist_add_string_array(limits, "scripts", scripts_set, count);
+			nvlist_append_string_array(limits, "scripts",
+			    scripts[i]);
 	if (cap_limit_set(capscript, limits) != 0)
 		return (-1);
 
@@ -619,6 +622,7 @@ rtsol_check_timer(void)
 				if (probe) {
 					ifi->managedconfig = 0;
 					ifi->otherconfig = 0;
+					ifi->alwaysconfig = 0;
 				}
 				if (probe && mobile_node) {
 					error = cap_probe_defrouters(capsendmsg,
@@ -789,13 +793,17 @@ usage(const char *progname)
 
 	if (strcmp(progname, "rtsold") == 0) {
 		fprintf(stderr, "usage: rtsold [-dDfFm1] [-O script-name] "
+		    "[-M script-name ] [-A script-name ] "
 		    "[-p pidfile] [-R script-name] interface ...\n");
 		fprintf(stderr, "usage: rtsold [-dDfFm1] [-O script-name] "
+		    "[-M script-name ] [-A script-name ] "
 		    "[-p pidfile] [-R script-name] -a\n");
 	} else {
 		fprintf(stderr, "usage: rtsol [-dDF] [-O script-name] "
+		    "[-M script-name ] [-A script-name ] "
 		    "[-p pidfile] [-R script-name] interface ...\n");
 		fprintf(stderr, "usage: rtsol [-dDF] [-O script-name] "
+		    "[-M script-name ] [-A script-name ] "
 		    "[-p pidfile] [-R script-name] -a\n");
 	}
 	exit(1);

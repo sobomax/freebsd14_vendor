@@ -1,4 +1,3 @@
-# $FreeBSD: 5e9257d7b37eab7dad6a3412df1b7bc177328f84 $
 
 SRCS=		callout.cc		\
 		case_file.cc		\
@@ -23,8 +22,8 @@ CFLAGS+= -I${SRCTOP}/sys
 CFLAGS+= -include ${SRCTOP}/sys/contrib/openzfs/include/os/freebsd/spl/sys/ccompile.h
 CFLAGS+= -I${SRCTOP}/cddl/usr.sbin
 
-# use issetugid(2)
-CFLAGS+= -D_MACHINE_FLOAT_H_ -DHAVE_ISSETUGID
+CFLAGS+= -DHAVE_ISSETUGID
+CFLAGS+= -DHAVE_EXECVPE
 
 LIBADD+=	devdctl zfs util geom bsdxml sbuf nvpair avl uutil zutil
 

@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2022 Alexander V. Chernikov <melifaro@FreeBSD.org>
  *
@@ -26,7 +26,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: dc0c387126130dff9f5fbf0f1217e42fa14b0041 $");
 #include "opt_inet.h"
 #include "opt_inet6.h"
 #include <sys/types.h>
@@ -41,6 +40,7 @@ __FBSDID("$FreeBSD: dc0c387126130dff9f5fbf0f1217e42fa14b0041 $");
 #include <net/route/nhop.h>
 
 #include <net/route/route_ctl.h>
+#include <netinet/in.h>
 #include <netlink/netlink.h>
 #include <netlink/netlink_ctl.h>
 #include <netlink/netlink_var.h>
@@ -49,7 +49,7 @@ __FBSDID("$FreeBSD: dc0c387126130dff9f5fbf0f1217e42fa14b0041 $");
 #define	DEBUG_MOD_NAME	nl_parser
 #define	DEBUG_MAX_LEVEL	LOG_DEBUG3
 #include <netlink/netlink_debug.h>
-_DECLARE_DEBUG(LOG_DEBUG);
+_DECLARE_DEBUG(LOG_INFO);
 
 bool
 nlmsg_report_err_msg(struct nl_pstate *npt, const char *fmt, ...)
@@ -76,6 +76,25 @@ nlmsg_report_err_offset(struct nl_pstate *npt, uint32_t off)
 		return (false);
 	npt->err_off = off;
 	return (true);
+}
+
+void
+nlmsg_report_cookie(struct nl_pstate *npt, struct nlattr *nla)
+{
+	MPASS(nla->nla_type == NLMSGERR_ATTR_COOKIE);
+	MPASS(nla->nla_len >= sizeof(struct nlattr));
+	npt->cookie = nla;
+}
+
+void
+nlmsg_report_cookie_u32(struct nl_pstate *npt, uint32_t val)
+{
+	struct nlattr *nla = npt_alloc(npt, sizeof(*nla) + sizeof(uint32_t));
+
+	nla->nla_type = NLMSGERR_ATTR_COOKIE;
+	nla->nla_len = sizeof(*nla) + sizeof(uint32_t);
+	memcpy(nla + 1, &val, sizeof(uint32_t));
+	nlmsg_report_cookie(npt, nla);
 }
 
 static const struct nlattr_parser *
@@ -129,7 +148,7 @@ nl_parse_attrs_raw(struct nlattr *nla_head, int len, const struct nlattr_parser 
 			if (error != 0) {
 				uint32_t off = (char *)nla - (char *)npt->hdr;
 				nlmsg_report_err_offset(npt, off);
-				NL_LOG(LOG_DEBUG3, "parse failed att offset %u", off);
+				NL_LOG(LOG_DEBUG3, "parse failed at offset %u", off);
 				return (error);
 			}
 		} else {
@@ -295,10 +314,22 @@ nlattr_get_ipvia(struct nlattr *nla, struct nl_pstate *npt, const void *arg, voi
 
 
 int
+nlattr_get_uint8(struct nlattr *nla, struct nl_pstate *npt, const void *arg, void *target)
+{
+	if (__predict_false(NLA_DATA_LEN(nla) != sizeof(uint8_t))) {
+		NLMSG_REPORT_ERR_MSG(npt, "nla type %d size(%u) is not uint8",
+		    nla->nla_type, NLA_DATA_LEN(nla));
+		return (EINVAL);
+	}
+	*((uint8_t *)target) = *((const uint8_t *)NL_RTA_DATA_CONST(nla));
+	return (0);
+}
+
+int
 nlattr_get_uint16(struct nlattr *nla, struct nl_pstate *npt, const void *arg, void *target)
 {
 	if (__predict_false(NLA_DATA_LEN(nla) != sizeof(uint16_t))) {
-		NLMSG_REPORT_ERR_MSG(npt, "nla type %d size(%u) is not uint32",
+		NLMSG_REPORT_ERR_MSG(npt, "nla type %d size(%u) is not uint16",
 		    nla->nla_type, NLA_DATA_LEN(nla));
 		return (EINVAL);
 	}
@@ -327,6 +358,30 @@ nlattr_get_uint64(struct nlattr *nla, struct nl_pstate *npt, const void *arg, vo
 		return (EINVAL);
 	}
 	memcpy(target, NL_RTA_DATA_CONST(nla), sizeof(uint64_t));
+	return (0);
+}
+
+int
+nlattr_get_in_addr(struct nlattr *nla, struct nl_pstate *npt, const void *arg, void *target)
+{
+	if (__predict_false(NLA_DATA_LEN(nla) != sizeof(in_addr_t))) {
+		NLMSG_REPORT_ERR_MSG(npt, "nla type %d size(%u) is not in_addr_t",
+		    nla->nla_type, NLA_DATA_LEN(nla));
+		return (EINVAL);
+	}
+	memcpy(target, NLA_DATA_CONST(nla), sizeof(in_addr_t));
+	return (0);
+}
+
+int
+nlattr_get_in6_addr(struct nlattr *nla, struct nl_pstate *npt, const void *arg, void *target)
+{
+	if (__predict_false(NLA_DATA_LEN(nla) != sizeof(struct in6_addr))) {
+		NLMSG_REPORT_ERR_MSG(npt, "nla type %d size(%u) is not struct in6_addr",
+		    nla->nla_type, NLA_DATA_LEN(nla));
+		return (EINVAL);
+	}
+	memcpy(target, NLA_DATA_CONST(nla), sizeof(struct in6_addr));
 	return (0);
 }
 

@@ -23,7 +23,6 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: 10450dff2399bd77b656ae35fdf042265d08e34e $
 
 .include <src.opts.mk>
 .include <bsd.init.mk>

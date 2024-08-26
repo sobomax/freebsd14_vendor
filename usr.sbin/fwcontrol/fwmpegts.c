@@ -33,18 +33,13 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  * 
- * $FreeBSD: 509d941021c8dc686eb869844adf0739eb39ff3f $
  */
 #include <sys/param.h>
 #include <sys/ioctl.h>
 #include <sys/time.h>
 #include <sys/types.h>
 #include <sys/uio.h>
-
-#if __FreeBSD_version >= 500000
 #include <arpa/inet.h>
-#endif
-
 #include <err.h>
 #include <errno.h>
 #include <unistd.h>

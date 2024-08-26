@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2008 Marcel Moolenaar
  * Copyright (c) 2001 Benno Rice
@@ -27,16 +27,10 @@
  * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
- *
- * $FreeBSD: 9b8138c8dbb6a8d52122cff9bda7fe42d5ebd461 $
  */
 
 #ifndef _MACHINE_ATOMIC_H_
 #define	_MACHINE_ATOMIC_H_
-
-#ifndef _SYS_CDEFS_H_
-#error this file needs sys/cdefs.h as a prerequisite
-#endif
 
 #include <sys/atomic_common.h>
 
@@ -777,7 +771,7 @@ atomic_fcmpset_char(volatile u_char *p, u_char *cmpval, u_char newval)
 		"b 2f\n\t"			/* we've succeeded */
 		"1:\n\t"
 		"stbcx. %0, 0, %3\n\t"       	/* clear reservation (74xx) */
-		"stwx %0, 0, %7\n\t"
+		"stbx %0, 0, %7\n\t"
 		"li %0, 0\n\t"			/* failure - retval = 0 */
 		"2:\n\t"
 		: "=&r" (ret), "=m" (*p), "=m" (*cmpval)
@@ -802,7 +796,7 @@ atomic_fcmpset_short(volatile u_short *p, u_short *cmpval, u_short newval)
 		"b 2f\n\t"			/* we've succeeded */
 		"1:\n\t"
 		"sthcx. %0, 0, %3\n\t"       	/* clear reservation (74xx) */
-		"stwx %0, 0, %7\n\t"
+		"sthx %0, 0, %7\n\t"
 		"li %0, 0\n\t"			/* failure - retval = 0 */
 		"2:\n\t"
 		: "=&r" (ret), "=m" (*p), "=m" (*cmpval)

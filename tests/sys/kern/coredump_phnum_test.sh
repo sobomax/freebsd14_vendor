@@ -27,7 +27,6 @@
 #  IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 #  POSSIBILITY OF SUCH DAMAGES.
 #
-# $FreeBSD: 9eca4fff8517cc7422cdd6cd683eedfff8cdd27a $
 
 atf_test_case coredump_phnum cleanup
 coredump_phnum_head()

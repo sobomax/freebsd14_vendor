@@ -25,8 +25,6 @@
  */
 
 #include <machine/asm.h>
-__FBSDID("$FreeBSD: ac083ae636ac9d755d3a2e23e8129aeb0400cb82 $");
-
 /*
  * double fabs(double)
  */

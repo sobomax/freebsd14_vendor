@@ -37,8 +37,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: fe8a7d50839f06a43a3b59c2cd556f5208aa4e16 $");
-
 #include "opt_quota.h"
 #include "opt_ufs.h"
 
@@ -84,13 +82,9 @@ ufs_root(struct mount *mp, int flags, struct vnode **vpp)
  * Do operations associated with quotas
  */
 int
-ufs_quotactl(struct mount *mp, int cmds, uid_t id, void *arg)
+ufs_quotactl(struct mount *mp, int cmds, uid_t id, void *arg, bool *mp_busy)
 {
 #ifndef QUOTA
-	if ((cmds >> SUBCMDSHIFT) == Q_QUOTAON ||
-	    (cmds >> SUBCMDSHIFT) == Q_QUOTAOFF)
-		vfs_unbusy(mp);
-
 	return (EOPNOTSUPP);
 #else
 	struct thread *td;
@@ -110,28 +104,27 @@ ufs_quotactl(struct mount *mp, int cmds, uid_t id, void *arg)
 			break;
 
 		default:
-			if (cmd == Q_QUOTAON || cmd == Q_QUOTAOFF)
-				vfs_unbusy(mp);
 			return (EINVAL);
 		}
 	}
-	if ((u_int)type >= MAXQUOTAS) {
-		if (cmd == Q_QUOTAON || cmd == Q_QUOTAOFF)
-			vfs_unbusy(mp);
+	if ((uint64_t)type >= MAXQUOTAS)
 		return (EINVAL);
-	}
 
 	switch (cmd) {
 	case Q_QUOTAON:
-		error = quotaon(td, mp, type, arg);
+		error = quotaon(td, mp, type, arg, mp_busy);
 		break;
 
 	case Q_QUOTAOFF:
 		vfs_ref(mp);
+		KASSERT(*mp_busy,
+		    ("%s called without busied mount", __func__));
+		vn_start_write(NULL, &mp, V_WAIT);
 		vfs_unbusy(mp);
-		vn_start_write(NULL, &mp, V_WAIT | V_MNTREF);
+		*mp_busy = false;
 		error = quotaoff(td, mp, type);
 		vn_finished_write(mp);
+		vfs_rel(mp);
 		break;
 
 	case Q_SETQUOTA32:

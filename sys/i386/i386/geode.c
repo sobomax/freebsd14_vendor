@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2003-2004 Poul-Henning Kamp
  * All rights reserved.
@@ -27,8 +27,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 4d8bf0477abe9a43d27fe241bf96d72cb8a90b48 $");
-
 #include <sys/param.h>
 #include <sys/systm.h>
 #include <sys/timetc.h>
@@ -380,6 +378,4 @@ static driver_t geode_driver = {
 	0,
 };
 
-static devclass_t geode_devclass;
-
-DRIVER_MODULE(geode, pci, geode_driver, geode_devclass, 0, 0);
+DRIVER_MODULE(geode, pci, geode_driver, 0, 0);

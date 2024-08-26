@@ -1,4 +1,3 @@
-# $FreeBSD: 5b63bfecc0f0aa6f613f821514d7a338a6956ea9 $
 PATH=/var/empty
 case $(command -pV ls) in
 */var/empty/ls*)

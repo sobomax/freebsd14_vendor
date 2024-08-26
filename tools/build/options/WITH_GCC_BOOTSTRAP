@@ -1,4 +1,3 @@
-.\" $FreeBSD: 2ba53112cd1cd0e466bf87cd07d7ef0c91ad6d42 $
 Build gcc and g++ as part of the bootstrap process.
 This option is deprecated and will be removed before
 .Fx 13 .

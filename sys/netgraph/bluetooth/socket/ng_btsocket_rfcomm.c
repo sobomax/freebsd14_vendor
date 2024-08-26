@@ -3,7 +3,7 @@
  */
 
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2001-2003 Maksim Yevmenkin <m_evmenkin@yahoo.com>
  * All rights reserved.
@@ -30,7 +30,6 @@
  * SUCH DAMAGE.
  *
  * $Id: ng_btsocket_rfcomm.c,v 1.28 2003/09/14 23:29:06 max Exp $
- * $FreeBSD: 5659dc2ce74297554b0cfa94132b3cef6827e615 $
  */
 
 #include <sys/param.h>
@@ -328,13 +327,9 @@ ng_btsocket_rfcomm_check_fcs(u_int8_t *data, int type, u_int8_t fcs)
  * Initialize everything
  */
 
-void
-ng_btsocket_rfcomm_init(void)
+static void
+ng_btsocket_rfcomm_init(void *arg __unused)
 {
-
-	/* Skip initialization of globals for non-default instances. */
-	if (!IS_DEFAULT_VNET(curvnet))
-		return;
 
 	ng_btsocket_rfcomm_debug_level = NG_BTSOCKET_WARN_LEVEL;
 	ng_btsocket_rfcomm_timo = 60;
@@ -353,6 +348,8 @@ ng_btsocket_rfcomm_init(void)
 	mtx_init(&ng_btsocket_rfcomm_sockets_mtx,
 		"btsocks_rfcomm_sockets_mtx", NULL, MTX_DEF);
 } /* ng_btsocket_rfcomm_init */
+SYSINIT(ng_btsocket_rfcomm_init, SI_SUB_PROTO_DOMAIN, SI_ORDER_THIRD,
+    ng_btsocket_rfcomm_init, NULL);
 
 /*
  * Abort connection on socket
@@ -639,7 +636,7 @@ ng_btsocket_rfcomm_connect(struct socket *so, struct sockaddr *nam,
  */
 
 int
-ng_btsocket_rfcomm_control(struct socket *so, u_long cmd, caddr_t data,
+ng_btsocket_rfcomm_control(struct socket *so, u_long cmd, void *data,
 		struct ifnet *ifp, struct thread *td)
 {
 	return (EINVAL);
@@ -894,6 +891,7 @@ ng_btsocket_rfcomm_listen(struct socket *so, int backlog, struct thread *td)
 		 * from socreate()
 		 */
 		if (l2so == NULL) {
+			solisten_proto_abort(so);
 			error = socreate_error;
 			goto out;
 		}
@@ -907,8 +905,10 @@ ng_btsocket_rfcomm_listen(struct socket *so, int backlog, struct thread *td)
 		 */
 		error = ng_btsocket_rfcomm_session_create(&s, l2so,
 					NG_HCI_BDADDR_ANY, NULL, td);
-		if (error != 0)
+		if (error != 0) {
+			solisten_proto_abort(so);
 			goto out;
+		}
 		l2so = NULL;
 	}
 	SOCK_LOCK(so);
@@ -1636,8 +1636,8 @@ ng_btsocket_rfcomm_session_send(ng_btsocket_rfcomm_session_p s)
 			return (0); /* we are done */
 
 		/* Call send function on the L2CAP socket */
-		error = (*s->l2so->so_proto->pr_usrreqs->pru_send)(s->l2so,
-				0, m, NULL, NULL, curthread /* XXX */);
+		error = s->l2so->so_proto->pr_send(s->l2so, 0, m, NULL, NULL,
+		    curthread /* XXX */);
 		if (error != 0) {
 			NG_BTSOCKET_RFCOMM_ERR(
 "%s: Could not send data to L2CAP socket, error=%d\n", __func__, error);

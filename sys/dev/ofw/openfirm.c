@@ -58,8 +58,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 788a76d17a47c891607846d7aa2c8c99bbbdff91 $");
-
 #include "opt_platform.h"
 
 #include <sys/param.h>

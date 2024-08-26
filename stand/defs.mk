@@ -1,4 +1,3 @@
-# $FreeBSD: 765fd046a8790be90eb079632cbb669829f89324 $
 
 .if !defined(__BOOT_DEFS_MK__)
 __BOOT_DEFS_MK__=${MFILE}
@@ -63,6 +62,7 @@ BINDIR?=	/boot
 # LUAPATH is where we search for and install lua scripts.
 LUAPATH?=	/boot/lua
 FLUASRC?=	${SRCTOP}/libexec/flua
+FLUALIB?=	${SRCTOP}/lib/flua
 
 LIBSA=		${BOOTOBJ}/libsa/libsa.a
 .if ${MACHINE} == "i386"
@@ -185,10 +185,6 @@ CFLAGS+=	-mno-relax
 # when this test succeeds rather than require dd to be a bootstrap tool.
 DD_NOSTATUS!=(dd status=none count=0 2> /dev/null && echo status=none) || true
 DD=dd ${DD_NOSTATUS}
-
-.if ${MACHINE_CPUARCH} == "mips"
-CFLAGS+=	-G0 -fno-pic -mno-abicalls
-.endif
 
 #
 # Have a sensible default

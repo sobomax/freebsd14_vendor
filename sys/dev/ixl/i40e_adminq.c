@@ -30,7 +30,6 @@
   POSSIBILITY OF SUCH DAMAGE.
 
 ******************************************************************************/
-/*$FreeBSD: efca7f1e61ff5645cb72686e461c91dba77e1d14 $*/
 
 #include "i40e_status.h"
 #include "i40e_type.h"

@@ -1,4 +1,3 @@
-/*	$FreeBSD: 34fe7ad49dc298bfbe767a047659892c4be05782 $	*/
 /*	$KAME: if.c,v 1.17 2001/01/21 15:27:30 itojun Exp $	*/
 
 /*-

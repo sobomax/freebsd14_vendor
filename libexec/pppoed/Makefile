@@ -1,4 +1,3 @@
-# $FreeBSD: 09c3ee629c24d3095f8d88157ef396480724bf52 $
 
 PROG=	pppoed
 LIBADD=	netgraph

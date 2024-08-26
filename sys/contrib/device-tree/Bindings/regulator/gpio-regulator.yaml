@@ -15,7 +15,7 @@ description:
   regulator.txt, can also be used.
 
 allOf:
-  - $ref: "regulator.yaml#"
+  - $ref: regulator.yaml#
 
 properties:
   compatible:
@@ -85,11 +85,16 @@ properties:
       - current
     default: voltage
 
+  vin-supply:
+    description: Input supply phandle.
+
 required:
   - compatible
   - regulator-name
   - gpios
   - states
+
+unevaluatedProperties: false
 
 examples:
   - |

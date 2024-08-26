@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 3481507d2c330216f25f183f818af4c18d995d5b $
+ * $FreeBSD: 2e4efc60544a78119008efedfad25e97aa17529f $
  */
 
 #ifndef _OPENSOLARIS_SYS_MISC_H_
@@ -51,8 +51,6 @@ struct opensolaris_utsname {
 	char	version[32];
 	char	*machine;
 };
-
-extern char hw_serial[11];
 
 #define	task_io_account_read(n)
 #define	task_io_account_write(n)

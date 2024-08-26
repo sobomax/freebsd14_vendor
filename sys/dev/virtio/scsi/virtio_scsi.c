@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2012, Bryan Venteicher <bryanv@FreeBSD.org>
  * All rights reserved.
@@ -29,8 +29,6 @@
 /* Driver for VirtIO SCSI devices. */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 51d9e5f532f7febdddf68a1dff7cc88f0685542a $");
-
 #include <sys/param.h>
 #include <sys/systm.h>
 #include <sys/kernel.h>
@@ -237,10 +235,8 @@ static driver_t vtscsi_driver = {
 	vtscsi_methods,
 	sizeof(struct vtscsi_softc)
 };
-static devclass_t vtscsi_devclass;
 
-VIRTIO_DRIVER_MODULE(virtio_scsi, vtscsi_driver, vtscsi_devclass,
-    vtscsi_modevent, 0);
+VIRTIO_DRIVER_MODULE(virtio_scsi, vtscsi_driver, vtscsi_modevent, NULL);
 MODULE_VERSION(virtio_scsi, 1);
 MODULE_DEPEND(virtio_scsi, virtio, 1, 1, 1);
 MODULE_DEPEND(virtio_scsi, cam, 1, 1, 1);
@@ -700,6 +696,7 @@ vtscsi_register_async(struct vtscsi_softc *sc)
 {
 	struct ccb_setasync csa;
 
+	memset(&csa, 0, sizeof(csa));
 	xpt_setup_ccb(&csa.ccb_h, sc->vtscsi_path, 5);
 	csa.ccb_h.func_code = XPT_SASYNC_CB;
 	csa.event_enable = AC_LOST_DEVICE | AC_FOUND_DEVICE;
@@ -716,6 +713,7 @@ vtscsi_deregister_async(struct vtscsi_softc *sc)
 {
 	struct ccb_setasync csa;
 
+	memset(&csa, 0, sizeof(csa));
 	xpt_setup_ccb(&csa.ccb_h, sc->vtscsi_path, 5);
 	csa.ccb_h.func_code = XPT_SASYNC_CB;
 	csa.event_enable = 0;
@@ -1793,7 +1791,7 @@ vtscsi_transport_reset_event(struct vtscsi_softc *sc,
 static void
 vtscsi_handle_event(struct vtscsi_softc *sc, struct virtio_scsi_event *event)
 {
-	int error;
+	int error __diagused;
 
 	if ((event->event & VIRTIO_SCSI_T_EVENTS_MISSED) == 0) {
 		switch (event->event) {
@@ -2338,7 +2336,6 @@ vtscsi_printf_req(struct vtscsi_request *req, const char *func,
 	struct sbuf sb;
 	va_list ap;
 	char str[192];
-	char path_str[64];
 
 	if (req == NULL)
 		return;
@@ -2354,8 +2351,7 @@ vtscsi_printf_req(struct vtscsi_request *req, const char *func,
 		    cam_sim_name(sc->vtscsi_sim), cam_sim_unit(sc->vtscsi_sim),
 		    cam_sim_bus(sc->vtscsi_sim));
 	} else {
-		xpt_path_string(ccb->ccb_h.path, path_str, sizeof(path_str));
-		sbuf_cat(&sb, path_str);
+		xpt_path_sbuf(ccb->ccb_h.path, &sb);
 		if (ccb->ccb_h.func_code == XPT_SCSI_IO) {
 			scsi_command_string(&ccb->csio, &sb);
 			sbuf_printf(&sb, "length %d ", ccb->csio.dxfer_len);

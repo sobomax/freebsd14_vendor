@@ -24,9 +24,6 @@
  * SUCH DAMAGE.
  */
 
-#include <sys/cdefs.h>
-__FBSDID("$FreeBSD: d195bf723b37da3766010bf2eb3367944075472a $");
-
 #include <stand.h>
 #include <string.h>
 
@@ -546,7 +543,6 @@ command_lsdev(int argc, char *argv[])
 	return (CMD_OK);
 }
 
-#ifndef __mips__
 static int
 command_readtest(int argc, char *argv[])
 {
@@ -577,7 +573,6 @@ command_readtest(int argc, char *argv[])
 }
 
 COMMAND_SET(readtest, "readtest", "Time a file read", command_readtest);
-#endif
 
 static int
 command_quit(int argc, char *argv[])

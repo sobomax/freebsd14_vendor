@@ -11,8 +11,6 @@
 # Copyright 2009 Douglas Barton
 # dougb@FreeBSD.org
 
-# $FreeBSD: 790154595798b6bb53a7f05e0289c316b6af4310 $
-
 PATH=/bin:/usr/bin:/usr/sbin
 
 display_usage () {

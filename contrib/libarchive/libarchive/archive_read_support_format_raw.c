@@ -23,7 +23,6 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 #include "archive_platform.h"
-__FBSDID("$FreeBSD: b6328a952611099bcfa5bca6e2b866893ca155b2 $");
 
 #ifdef HAVE_ERRNO_H
 #include <errno.h>

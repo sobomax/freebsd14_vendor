@@ -22,8 +22,6 @@
  * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
- *
- * $FreeBSD: f552b1b653a6aa1afce7cf5b3756c9e5fc2e51b9 $
  */
 
 #ifndef _MLX5_EN_H_
@@ -107,7 +105,6 @@
 #define	MLX5E_PARAMS_DEFAULT_RX_CQ_MODERATION_PKTS      0x20
 #define	MLX5E_PARAMS_DEFAULT_TX_CQ_MODERATION_USEC      0x10
 #define	MLX5E_PARAMS_DEFAULT_TX_CQ_MODERATION_PKTS      0x20
-#define	MLX5E_PARAMS_DEFAULT_MIN_RX_WQES                0x80
 #define	MLX5E_PARAMS_DEFAULT_RX_HASH_LOG_TBL_SZ         0x7
 #define	MLX5E_CACHELINE_SIZE CACHE_LINE_SIZE
 #define	MLX5E_HW2SW_MTU(hwmtu) \
@@ -208,7 +205,9 @@ typedef void (mlx5e_cq_comp_t)(struct mlx5_core_cq *, struct mlx5_eqe *);
   m(+1, u64, tx_defragged, "tx_defragged", "Transmit queue defragged") \
   m(+1, u64, rx_wqe_err, "rx_wqe_err", "Receive WQE errors") \
   m(+1, u64, tx_jumbo_packets, "tx_jumbo_packets", "TX packets greater than 1518 octets") \
-  m(+1, u64, rx_steer_missed_packets, "rx_steer_missed_packets", "RX packets dropped by steering rule(s)")
+  m(+1, u64, rx_steer_missed_packets, "rx_steer_missed_packets", "RX packets dropped by steering rule(s)") \
+  m(+1, u64, rx_decrypted_ok_packets, "rx_decrypted_ok_packets", "RX packets successfully decrypted by steering rule(s)") \
+  m(+1, u64, rx_decrypted_error_packets, "rx_decrypted_error_packets", "RX packets not decrypted by steering rule(s)")
 
 #define	MLX5E_VPORT_STATS_NUM (0 MLX5E_VPORT_STATS(MLX5E_STATS_COUNT))
 
@@ -609,7 +608,9 @@ struct mlx5e_port_stats_debug {
   m(+1, u64, lro_bytes, "lro_bytes", "Received LRO bytes")	\
   m(+1, u64, sw_lro_queued, "sw_lro_queued", "Packets queued for SW LRO")	\
   m(+1, u64, sw_lro_flushed, "sw_lro_flushed", "Packets flushed from SW LRO")	\
-  m(+1, u64, wqe_err, "wqe_err", "Received packets")
+  m(+1, u64, wqe_err, "wqe_err", "Received packets") \
+  m(+1, u64, decrypted_ok_packets, "decrypted_ok_packets", "Received packets successfully decrypted by steering rule(s)") \
+  m(+1, u64, decrypted_error_packets, "decrypted_error_packets", "Received packets not decrypted by steering rule(s)")
 
 #define	MLX5E_RQ_STATS_NUM (0 MLX5E_RQ_STATS(MLX5E_STATS_COUNT))
 
@@ -672,7 +673,6 @@ struct mlx5e_params {
 	u16	rx_cq_moderation_pkts;
 	u16	tx_cq_moderation_usec;
 	u16	tx_cq_moderation_pkts;
-	u16	min_rx_wqes;
 	bool	hw_lro_en;
 	bool	cqe_zipping_en;
 	u32	lro_wqe_sz;
@@ -766,7 +766,7 @@ struct mlx5e_rq {
 	u32	wqe_sz;
 	u32	nsegs;
 	struct mlx5e_rq_mbuf *mbuf;
-	struct ifnet *ifp;
+	if_t	ifp;
 	struct mlx5e_cq cq;
 	struct lro_ctrl lro;
 	volatile int enabled;
@@ -955,7 +955,6 @@ struct mlx5_flow_rule;
 
 struct mlx5e_eth_addr_info {
 	u8	addr [ETH_ALEN + 2];
-	u32	tt_vec;
 	/* flow table rule per traffic type */
 	struct mlx5_flow_rule	*ft_rule[MLX5E_NUM_TT];
 };
@@ -1051,6 +1050,7 @@ struct mlx5e_xmit_args {
 
 #include <dev/mlx5/mlx5_en/en_rl.h>
 #include <dev/mlx5/mlx5_en/en_hw_tls.h>
+#include <dev/mlx5/mlx5_en/en_hw_tls_rx.h>
 
 #define	MLX5E_TSTMP_PREC 10
 
@@ -1087,7 +1087,7 @@ struct mlx5e_priv {
 	struct mlx5e_rq	drop_rq;
 	u32	pdn;
 	u32	tdn;
-	struct mlx5_core_mr mr;
+	struct mlx5_core_mkey mr;
 
 	u32	tisn[MLX5E_MAX_TX_NUM_TC];
 	u32	rqtn;
@@ -1109,7 +1109,7 @@ struct mlx5e_priv {
 	struct work_struct set_rx_mode_work;
 	MLX5_DECLARE_DOORBELL_LOCK(doorbell_lock)
 
-	struct ifnet *ifp;
+	if_t	ifp;
 	struct sysctl_ctx_list sysctl_ctx;
 	struct sysctl_oid *sysctl_ifnet;
 	struct sysctl_oid *sysctl_hw;
@@ -1132,12 +1132,14 @@ struct mlx5e_priv {
 	struct mlx5e_rl_priv_data rl;
 
 	struct mlx5e_tls tls;
+	struct mlx5e_tls_rx tls_rx;
 
 	struct callout tstmp_clbr;
 	int	clbr_done;
 	int	clbr_curr;
 	struct mlx5e_clbr_point clbr_points[2];
 	u_int	clbr_gen;
+	uint64_t cclk;
 
 	struct mlx5e_dcbx dcbx;
 	bool	sw_is_port_buf_owner;
@@ -1193,10 +1195,10 @@ struct mlx5e_eeprom {
 
 bool	mlx5e_do_send_cqe(struct mlx5e_sq *);
 int	mlx5e_get_full_header_size(const struct mbuf *, const struct tcphdr **);
-int	mlx5e_xmit(struct ifnet *, struct mbuf *);
+int	mlx5e_xmit(if_t, struct mbuf *);
 
-int	mlx5e_open_locked(struct ifnet *);
-int	mlx5e_close_locked(struct ifnet *);
+int	mlx5e_open_locked(if_t);
+int	mlx5e_close_locked(if_t);
 
 void	mlx5e_cq_error_event(struct mlx5_core_cq *mcq, int event);
 void	mlx5e_dump_err_cqe(struct mlx5e_cq *, u32, const struct mlx5_err_cqe *);
@@ -1214,14 +1216,14 @@ int	mlx5e_open_flow_rules(struct mlx5e_priv *priv);
 void	mlx5e_close_flow_rules(struct mlx5e_priv *priv);
 void	mlx5e_set_rx_mode_work(struct work_struct *work);
 
-void	mlx5e_vlan_rx_add_vid(void *, struct ifnet *, u16);
-void	mlx5e_vlan_rx_kill_vid(void *, struct ifnet *, u16);
+void	mlx5e_vlan_rx_add_vid(void *, if_t, u16);
+void	mlx5e_vlan_rx_kill_vid(void *, if_t, u16);
 void	mlx5e_enable_vlan_filter(struct mlx5e_priv *priv);
 void	mlx5e_disable_vlan_filter(struct mlx5e_priv *priv);
 
-void	mlx5e_vxlan_start(void *arg, struct ifnet *ifp, sa_family_t family,
+void	mlx5e_vxlan_start(void *arg, if_t ifp, sa_family_t family,
 	    u_int port);
-void	mlx5e_vxlan_stop(void *arg, struct ifnet *ifp, sa_family_t family,
+void	mlx5e_vxlan_stop(void *arg, if_t ifp, sa_family_t family,
 	    u_int port);
 int	mlx5e_add_all_vxlan_rules(struct mlx5e_priv *priv);
 void	mlx5e_del_all_vxlan_rules(struct mlx5e_priv *priv);
@@ -1303,10 +1305,5 @@ void	mlx5e_iq_static_destroy(struct mlx5e_iq *);
 void	mlx5e_iq_notify_hw(struct mlx5e_iq *);
 int	mlx5e_iq_get_producer_index(struct mlx5e_iq *);
 void	mlx5e_iq_load_memory_single(struct mlx5e_iq *, u16, void *, size_t, u64 *, u32);
-
-if_snd_tag_alloc_t mlx5e_ul_snd_tag_alloc;
-if_snd_tag_modify_t mlx5e_ul_snd_tag_modify;
-if_snd_tag_query_t mlx5e_ul_snd_tag_query;
-if_snd_tag_free_t mlx5e_ul_snd_tag_free;
 
 #endif					/* _MLX5_EN_H_ */

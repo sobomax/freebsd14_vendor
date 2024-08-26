@@ -1,5 +1,5 @@
 /* SPDX-License-Identifier: BSD-3-Clause */
-/*  Copyright (c) 2022, Intel Corporation
+/*  Copyright (c) 2024, Intel Corporation
  *  All rights reserved.
  *
  *  Redistribution and use in source and binary forms, with or without
@@ -28,7 +28,6 @@
  *  ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  *  POSSIBILITY OF SUCH DAMAGE.
  */
-/*$FreeBSD: 36c420478131a53966e230ee0c8600dc21a057f8 $*/
 
 #include "ice_common.h"
 #include "ice_ddp_common.h"
@@ -673,6 +672,7 @@ enum ice_status ice_replay_tunnels(struct ice_hw *hw)
 		if (status) {
 			ice_debug(hw, ICE_DBG_PKG, "ERR: 0x%x - destroy tunnel port 0x%x\n",
 				  status, port);
+			hw->tnl.tbl[i].ref = refs;
 			break;
 		}
 

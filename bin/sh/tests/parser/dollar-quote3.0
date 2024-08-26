@@ -1,4 +1,3 @@
-# $FreeBSD: a7e68527791cd953e4ed10d8698eb6378ff844fb $
 
 unset LC_ALL
 LC_CTYPE=en_US.ISO8859-1

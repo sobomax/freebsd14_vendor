@@ -11,8 +11,6 @@
  * implied warranties, including, without limitation, the implied
  * warranties of merchantability and fitness for a particular
  * purpose.
- *
- * $FreeBSD: 21371a563805b591ae4e217e5404a0d3740627cf $
  */
 
 #ifndef _RBX_H_

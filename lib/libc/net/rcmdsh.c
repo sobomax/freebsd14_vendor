@@ -35,9 +35,6 @@
  * Chris Siebenmann <cks@utcc.utoronto.ca>.
  */
 
-#include <sys/cdefs.h>
-__FBSDID("$FreeBSD: b321b5a51a2fcfccb1c394f405cbbb0baaa9ee0c $");
-
 #include "namespace.h"
 #include <sys/types.h>
 #include <sys/socket.h>

@@ -34,8 +34,6 @@
 
 #include <sys/cdefs.h>
 __SCCSID("@(#)getcap.c	8.3 (Berkeley) 3/25/94");
-__FBSDID("$FreeBSD: 364423fff0e002d1cee1c60829dd762e70b04bbd $");
-
 #include "namespace.h"
 #include <sys/types.h>
 

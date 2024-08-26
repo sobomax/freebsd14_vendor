@@ -21,9 +21,7 @@
 .\" OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 .\" SUCH DAMAGE.
 .\"
-.\" $FreeBSD: 15f92ea735ef834471153d80f7c3cd9d1b2c8a72 $
-.\"
-.Dd October 28, 2021
+.Dd October 17, 2022
 .Dt CONFIG 5
 .Os
 .Sh NAME
@@ -259,8 +257,6 @@ The ARM architecture
 The AMD x86-64 architecture.
 .It Cm i386
 The Intel x86 based PC architecture.
-.It Cm mips
-The MIPS architecture.
 .It Cm powerpc
 The IBM PowerPC architecture.
 .It Cm riscv
@@ -403,32 +399,6 @@ Options specific to architecture
 .Ar arch
 are specified in the file
 .Pa sys/conf/options . Ns Aq Ar arch .
-.\" -------- PROFILE --------
-.Pp
-.It Ic profile Ar number
-Enables kernel profiling if
-.Ar number
-is non-zero.
-If
-.Ar number
-is 2 or greater, the kernel is configured for
-high-resolution profiling.
-Kernels can also be built for profiling using the
-.Fl p
-option to
-.Xr config 8 .
-.El
-.Ss Obsolete Directives
-The following kernel configuration directives are obsolete.
-.Bl -tag -width indent
-.\" -------- CONFIG --------
-.It Ic config
-This directive was used to specify the device to be used for the root
-file system.
-From
-.Fx 4.0
-onwards, this information is passed to a booting kernel by
-.Xr loader 8 .
 .El
 .Sh FILES
 .Bl -tag -width ".Pa sys/conf/Makefile. Ns Ar arch" -compact

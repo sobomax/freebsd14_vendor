@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2000-2004
  *	Poul-Henning Kamp.  All rights reserved.
@@ -32,8 +32,6 @@
  *
  *	@(#)kernfs_vnops.c	8.15 (Berkeley) 5/21/95
  * From: FreeBSD: src/sys/miscfs/kernfs/kernfs_vnops.c 1.43
- *
- * $FreeBSD: a1a06eb6c3e6b38324486dc62621e192ef269e35 $
  */
 
 /*
@@ -85,8 +83,6 @@ static MALLOC_DEFINE(M_CDEVPDATA, "DEVFSP", "Metainfo for cdev-fp data");
 
 struct mtx	devfs_de_interlock;
 MTX_SYSINIT(devfs_de_interlock, &devfs_de_interlock, "devfs interlock", MTX_DEF);
-struct sx	clone_drain_lock;
-SX_SYSINIT(clone_drain_lock, &clone_drain_lock, "clone events drain lock");
 struct mtx	cdevpriv_mtx;
 MTX_SYSINIT(cdevpriv_mtx, &cdevpriv_mtx, "cdevpriv lock", MTX_DEF);
 
@@ -120,9 +116,8 @@ static int
 devfs_fp_check(struct file *fp, struct cdev **devp, struct cdevsw **dswp,
     int *ref)
 {
-
 	*dswp = devvn_refthread(fp->f_vnode, devp, ref);
-	if (*devp != fp->f_data) {
+	if (*dswp == NULL || *devp != fp->f_data) {
 		if (*dswp != NULL)
 			dev_relthread(*devp, *ref);
 		return (ENXIO);
@@ -181,6 +176,26 @@ devfs_set_cdevpriv(void *priv, d_priv_dtor_t *priv_dtr)
 		free(p, M_CDEVPDATA);
 		error = EBUSY;
 	}
+	return (error);
+}
+
+int
+devfs_foreach_cdevpriv(struct cdev *dev, int (*cb)(void *data, void *arg),
+    void *arg)
+{
+	struct cdev_priv *cdp;
+	struct cdev_privdata *p;
+	int error;
+
+	cdp = cdev2priv(dev);
+	error = 0;
+	mtx_lock(&cdevpriv_mtx);
+	LIST_FOREACH(p, &cdp->cdp_fdpriv, cdpd_list) {
+		error = cb(p->cdpd_data, arg);
+		if (error != 0)
+			break;
+	}
+	mtx_unlock(&cdevpriv_mtx);
 	return (error);
 }
 
@@ -508,20 +523,6 @@ devfs_allocv_drop_refs(int drop_dm_lock, struct devfs_mount *dmp,
 	return (not_found);
 }
 
-static void
-devfs_insmntque_dtr(struct vnode *vp, void *arg)
-{
-	struct devfs_dirent *de;
-
-	de = (struct devfs_dirent *)arg;
-	mtx_lock(&devfs_de_interlock);
-	vp->v_data = NULL;
-	de->de_vnode = NULL;
-	mtx_unlock(&devfs_de_interlock);
-	vgone(vp);
-	vput(vp);
-}
-
 /*
  * devfs_allocv shall be entered with dmp->dm_lock held, and it drops
  * it on return.
@@ -618,12 +619,19 @@ loop:
 	vp->v_data = de;
 	de->de_vnode = vp;
 	mtx_unlock(&devfs_de_interlock);
-	error = insmntque1(vp, mp, devfs_insmntque_dtr, de);
+	error = insmntque1(vp, mp);
 	if (error != 0) {
+		mtx_lock(&devfs_de_interlock);
+		vp->v_data = NULL;
+		de->de_vnode = NULL;
+		mtx_unlock(&devfs_de_interlock);
+		vgone(vp);
+		vput(vp);
 		(void) devfs_allocv_drop_refs(1, dmp, de);
 		return (error);
 	}
 	if (devfs_allocv_drop_refs(0, dmp, de)) {
+		vgone(vp);
 		vput(vp);
 		return (ENOENT);
 	}
@@ -631,6 +639,7 @@ loop:
 	mac_devfs_vnode_associate(mp, de, vp);
 #endif
 	sx_xunlock(&dmp->dm_lock);
+	vn_set_state(vp, VSTATE_CONSTRUCTED);
 	*vpp = vp;
 	return (0);
 }
@@ -682,7 +691,7 @@ devfs_close(struct vop_close_args *ap)
 
 	/*
 	 * XXX: Don't call d_close() if we were called because of
-	 * XXX: insmntque1() failure.
+	 * XXX: insmntque() failure.
 	 */
 	if (vp->v_data == NULL)
 		return (0);
@@ -1045,11 +1054,11 @@ devfs_lookupx(struct vop_lookup_args *ap, int *dm_unlock)
 	int error, flags, nameiop, dvplocked;
 	char specname[SPECNAMELEN + 1], *pname;
 
+	td = curthread;
 	cnp = ap->a_cnp;
 	vpp = ap->a_vpp;
 	dvp = ap->a_dvp;
 	pname = cnp->cn_nameptr;
-	td = cnp->cn_thread;
 	flags = cnp->cn_flags;
 	nameiop = cnp->cn_nameiop;
 	mp = dvp->v_mount;
@@ -1111,10 +1120,8 @@ devfs_lookupx(struct vop_lookup_args *ap, int *dm_unlock)
 		cdev = NULL;
 		DEVFS_DMP_HOLD(dmp);
 		sx_xunlock(&dmp->dm_lock);
-		sx_slock(&clone_drain_lock);
 		EVENTHANDLER_INVOKE(dev_clone,
 		    td->td_ucred, pname, strlen(pname), &cdev);
-		sx_sunlock(&clone_drain_lock);
 
 		if (cdev == NULL)
 			sx_xlock(&dmp->dm_lock);
@@ -1153,7 +1160,6 @@ devfs_lookupx(struct vop_lookup_args *ap, int *dm_unlock)
 	if (de == NULL || de->de_flags & DE_WHITEOUT) {
 		if ((nameiop == CREATE || nameiop == RENAME) &&
 		    (flags & (LOCKPARENT | WANTPARENT)) && (flags & ISLASTCN)) {
-			cnp->cn_flags |= SAVENAME;
 			return (EJUSTRETURN);
 		}
 		return (ENOENT);
@@ -1678,6 +1684,10 @@ devfs_revoke(struct vop_revoke_args *ap)
 	dev_lock();
 	cdp->cdp_inuse--;
 	if (!(cdp->cdp_flags & CDP_ACTIVE) && cdp->cdp_inuse == 0) {
+		KASSERT((cdp->cdp_flags & CDP_ON_ACTIVE_LIST) != 0,
+		    ("%s: cdp %p (%s) not on active list",
+		    __func__, cdp, dev->si_name));
+		cdp->cdp_flags &= ~CDP_ON_ACTIVE_LIST;
 		TAILQ_REMOVE(&cdevp_list, cdp, cdp_list);
 		dev_unlock();
 		dev_rel(&cdp->cdp_c);
@@ -1839,10 +1849,10 @@ devfs_setlabel(struct vop_setlabel_args *ap)
 #endif
 
 static int
-devfs_stat_f(struct file *fp, struct stat *sb, struct ucred *cred, struct thread *td)
+devfs_stat_f(struct file *fp, struct stat *sb, struct ucred *cred)
 {
 
-	return (vnops.fo_stat(fp, sb, cred, td));
+	return (vnops.fo_stat(fp, sb, cred));
 }
 
 static int
@@ -2022,6 +2032,14 @@ dev2udev(struct cdev *x)
 	return (cdev2priv(x)->cdp_inode);
 }
 
+static int
+devfs_cmp_f(struct file *fp1, struct file *fp2, struct thread *td)
+{
+	if (fp2->f_type != DTYPE_VNODE || fp2->f_ops != &devfs_ops_f)
+		return (3);
+	return (kcmp_cmp((uintptr_t)fp1->f_data, (uintptr_t)fp2->f_data));
+}
+
 static struct fileops devfs_ops_f = {
 	.fo_read =	devfs_read_f,
 	.fo_write =	devfs_write_f,
@@ -2037,6 +2055,7 @@ static struct fileops devfs_ops_f = {
 	.fo_seek =	vn_seek,
 	.fo_fill_kinfo = vn_fill_kinfo,
 	.fo_mmap =	devfs_mmap_f,
+	.fo_cmp =	devfs_cmp_f,
 	.fo_flags =	DFLAG_PASSABLE | DFLAG_SEEKABLE
 };
 
@@ -2065,6 +2084,7 @@ static struct vop_vector devfs_vnodeops = {
 	.vop_lock1 =		vop_lock,
 	.vop_unlock =		vop_unlock,
 	.vop_islocked =		vop_islocked,
+	.vop_add_writecount =	vop_stdadd_writecount_nomsync,
 };
 VFS_VOP_VECTOR_REGISTER(devfs_vnodeops);
 
@@ -2106,6 +2126,7 @@ static struct vop_vector devfs_specops = {
 	.vop_lock1 =		vop_lock,
 	.vop_unlock =		vop_unlock,
 	.vop_islocked =		vop_islocked,
+	.vop_add_writecount =	vop_stdadd_writecount_nomsync,
 };
 VFS_VOP_VECTOR_REGISTER(devfs_specops);
 

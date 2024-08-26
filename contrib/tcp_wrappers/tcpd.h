@@ -3,7 +3,7 @@
   * 
   * Author: Wietse Venema, Eindhoven University of Technology, The Netherlands.
   *
-  * $FreeBSD: 1078073c8e3ab9ce77eb0d1690d50a11d5226008 $
+  * $FreeBSD: 194cde378c1cf56334d2495ba76bd9c733332c8d $
   */
 
 #ifdef INET6
@@ -70,6 +70,7 @@ extern char paranoid[];
 #define	HOSTNAME_KNOWN(s) (STR_NE((s),unknown) && STR_NE((s),paranoid))
 
 #define	NOT_INADDR(s) (s[strspn(s,"01234567890./")] != 0)
+#define	NOT_INADDR6(s) (strchr(s, ':') == NULL)
 
 /* Global functions. */
 

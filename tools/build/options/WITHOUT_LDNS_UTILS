@@ -1,4 +1,3 @@
-.\" $FreeBSD: f061f01db4ae1fd335191efbc5961ce0f02da2ac $
 Setting this variable will prevent building the LDNS utilities
 .Xr drill 1
 and

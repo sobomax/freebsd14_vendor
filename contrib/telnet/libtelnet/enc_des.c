@@ -32,8 +32,6 @@
 static const char sccsid[] = "@(#)enc_des.c	8.3 (Berkeley) 5/30/95";
 #endif /* not lint */
 #endif
-#include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 2c12ad5e0cf2f59dd5ee6bd179de0560750f143d $");
 
 #ifdef	ENCRYPTION
 # ifdef	AUTHENTICATION

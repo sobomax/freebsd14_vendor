@@ -1,4 +1,3 @@
-# $FreeBSD: b0849962aa01708c95f539d4303689e517a12b40 $
 
 PACKAGE=	tests
 

@@ -1,4 +1,3 @@
-/*	$FreeBSD: bdbd85476af33ec16511f567a9355b43dc2f2444 $ */
 /*
  * Copyright (c) 2014 genua mbh <info@genua.de>
  * Copyright (c) 2014 Fixup Software Ltd.

@@ -42,8 +42,6 @@ static char sccsid[] = "@(#)pwd_mkdb.c	8.5 (Berkeley) 4/20/94";
 #endif
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 261e7951a126f14f362f4c7abd964b086c0b8cb8 $");
-
 #include <sys/param.h>
 #include <sys/endian.h>
 #include <sys/stat.h>
@@ -123,13 +121,10 @@ main(int argc, char *argv[])
 	makeold = 0;
 	username = NULL;
 	oldfp = NULL;
-	while ((ch = getopt(argc, argv, "CNd:ips:u:v")) != -1)
+	while ((ch = getopt(argc, argv, "Cd:iNps:u:v")) != -1)
 		switch(ch) {
 		case 'C':                       /* verify only */
 			Cflag = 1;
-			break;
-		case 'N':			/* do not wait for lock	*/
-			nblock = LOCK_NB;	/* will fail if locked */
 			break;
 		case 'd':
 			dflag++;
@@ -137,6 +132,9 @@ main(int argc, char *argv[])
 			break;
 		case 'i':
 			iflag++;
+			break;
+		case 'N':			/* do not wait for lock	*/
+			nblock = LOCK_NB;	/* will fail if locked */
 			break;
 		case 'p':			/* create V7 "file.orig" */
 			makeold = 1;
@@ -675,6 +673,6 @@ usage(void)
 {
 
 	(void)fprintf(stderr,
-"usage: pwd_mkdb [-BCiLNp] [-d directory] [-s cachesize] [-u username] file\n");
+"usage: pwd_mkdb [-CiNp] [-d directory] [-s cachesize] [-u username] file\n");
 	exit(1);
 }

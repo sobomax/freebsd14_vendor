@@ -23,7 +23,6 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 #include "test.h"
-__FBSDID("$FreeBSD: b6f0b3c85170152825b7d6658eb1279f79202d08 $");
 
 /*
  * Exercise symlink recreation.

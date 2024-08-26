@@ -1,4 +1,3 @@
-# $FreeBSD: daedc627e5dc4aaa5f00e9e793c210c134659925 $
 
 .include <bsd.init.mk>
 
@@ -65,7 +64,7 @@ CFLAGS+=	-I${LDRSRC}
 FILES=	${BOOT1}.efi
 FILESMODE_${BOOT1}.efi=	${BINMODE}
 
-LDSCRIPT=	${EFISRC}/loader/arch/${MACHINE}/ldscript.${MACHINE}
+LDSCRIPT=	${EFISRC}/loader/arch/${MACHINE}/${MACHINE}.ldscript
 LDFLAGS+=	-Wl,-T${LDSCRIPT},-Bsymbolic,-znotext -pie
 .if ${LINKER_TYPE} == "bfd" && ${LINKER_VERSION} >= 23400
 LDFLAGS+=	-Wl,--no-dynamic-linker
@@ -74,7 +73,7 @@ LDFLAGS+=	-Wl,--no-dynamic-linker
 .if ${MACHINE_CPUARCH} == "aarch64"
 CFLAGS+=	-mgeneral-regs-only
 .endif
-.if ${MACHINE_CPUARCH} == "amd64" || ${MACHINE_CPUARCH} == "i386"
+.if ${MACHINE_CPUARCH} == "amd64"
 CFLAGS+=	-fPIC
 LDFLAGS+=	-Wl,-znocombreloc
 .endif
@@ -82,17 +81,18 @@ LDFLAGS+=	-Wl,-znocombreloc
 LIBEFI=		${BOOTOBJ}/efi/libefi/libefi.a
 
 #
-# Add libsa for the runtime functions used by the compiler - for example
-# __aeabi_* (arm) or __divdi3 (i386).
-# as well as required string and memory functions for all platforms.
+# Add libsa for the runtime functions used by the compiler as well as required
+# string and memory functions for all platforms.
 #
 DPADD+=		${LIBEFI} ${LIBSA}
 LDADD+=		${LIBEFI} ${LIBSA}
 
 DPADD+=		${LDSCRIPT}
 
+CLEANFILES+=	${BOOT1}.efi
+
 ${BOOT1}.efi: ${PROG}
-	if ${NM} ${.ALLSRC} | grep ' U '; then \
+	@if ${NM} ${.ALLSRC} | grep ' U '; then \
 		echo "Undefined symbols in ${.ALLSRC}"; \
 		exit 1; \
 	fi

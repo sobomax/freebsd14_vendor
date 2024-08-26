@@ -1,10 +1,10 @@
-# $FreeBSD: 78b65020452a991bbba6bb7c2dd7696bf08ee729 $
 
 .include <src.opts.mk>
 
 .PATH: ${SRCTOP}/cddl/contrib/opensolaris/tools/ctf/common
 .PATH: ${SRCTOP}/cddl/contrib/opensolaris/tools/ctf/cvt
 
+PACKAGE=	ctf-tools
 PROG=		ctfconvert
 SRCS=		alist.c \
 		ctf.c \

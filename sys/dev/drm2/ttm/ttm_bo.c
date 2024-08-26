@@ -29,8 +29,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: d5c11ecff25d491b537d5ff416e5d769bc11aa10 $");
-
 #include <dev/drm2/drmP.h>
 #include <dev/drm2/ttm/ttm_module.h>
 #include <dev/drm2/ttm/ttm_bo_driver.h>

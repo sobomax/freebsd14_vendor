@@ -23,13 +23,15 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 2be1b76e43346d1e095578caf25b79378c66a23b $
+ * $FreeBSD: d46a7d2c0143fa87209882df2c1adb3ba30af53b $
  */
 
 #ifndef _OPENSOLARIS_SYS_DISP_H_
 #define	_OPENSOLARIS_SYS_DISP_H_
 
 #include <sys/proc.h>
+
+#define	KPREEMPT_SYNC		(-1)
 
 #define	kpreempt(x)	kern_yield(PRI_USER)
 

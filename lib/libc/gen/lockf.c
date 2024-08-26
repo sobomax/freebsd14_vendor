@@ -1,6 +1,6 @@
 /*	$NetBSD: lockf.c,v 1.3 2008/04/28 20:22:59 martin Exp $	*/
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-NetBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 1997 The NetBSD Foundation, Inc.
  * All rights reserved.
@@ -29,9 +29,6 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-
-#include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 20f016dd1694c0ead0562a3316d4eada15bc499f $");
 
 #include "namespace.h"
 #include <errno.h>

@@ -26,8 +26,6 @@
  * The views and conclusions contained in the software and documentation are
  * those of the authors and should not be interpreted as representing official
  * policies, either expressed or implied, of the FreeBSD Project.
- *
- * $FreeBSD: 60bc90f5e1cfb33b43ac228d2d3668acff22cc3b $
  */
 
 #ifndef	_SYS_EF10_IMPL_H

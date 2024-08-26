@@ -29,9 +29,6 @@
  * SUCH DAMAGE.
  */
 
-#include <sys/cdefs.h>
-
-__FBSDID("$FreeBSD: a3401506c5ce238dc6f033dc8bf9f4948d0fa4f6 $");
 
 #ifdef lint
 static const char sccsid[] = "@(#)keyboard.c	8.1 (Berkeley) 6/6/93";

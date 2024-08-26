@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2014 The FreeBSD Foundation
  *
@@ -26,8 +26,6 @@
  * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
- *
- * $FreeBSD: c2f215c106070b5d29d72c17c0418bd76de4e158 $
  */
 
 /*
@@ -147,11 +145,11 @@ icl_conn_task_done(struct icl_conn *ic, void *prv)
 }
 
 static inline int
-icl_conn_transfer_setup(struct icl_conn *ic, union ctl_io *io,
-    uint32_t *transfer_tagp, void **prvp)
+icl_conn_transfer_setup(struct icl_conn *ic, struct icl_pdu *ip,
+    union ctl_io *io, uint32_t *transfer_tagp, void **prvp)
 {
 
-	return (ICL_CONN_TRANSFER_SETUP(ic, io, transfer_tagp, prvp));
+	return (ICL_CONN_TRANSFER_SETUP(ic, ip, io, transfer_tagp, prvp));
 }
 
 static inline void

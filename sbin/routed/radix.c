@@ -29,8 +29,6 @@
  * SUCH DAMAGE.
  *
  *	@(#)radix.c	8.4 (Berkeley) 11/2/94
- *
- * $FreeBSD: 2372b8c68581c78f29a1dd595ad4dbddf28cb514 $
  */
 
 /*
@@ -38,9 +36,6 @@
  */
 
 #include "defs.h"
-
-__RCSID("$FreeBSD: 2372b8c68581c78f29a1dd595ad4dbddf28cb514 $");
-
 #define log(x, msg) syslog(x, msg)
 #define panic(s) {log(LOG_ERR,s); exit(1);}
 #define min(a,b) (((a)<(b))?(a):(b))

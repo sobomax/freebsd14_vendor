@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 1999, 2000 John D. Polstra.
  * All rights reserved.
@@ -24,8 +24,6 @@
  * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
- *
- * $FreeBSD: c9ec047ec34e8b8443f0bb17f7d6bbded923062c $
  */
 
 #ifndef RTLD_MACHDEP_H
@@ -73,15 +71,6 @@ typedef struct {
 	
 extern void *__tls_get_addr(tls_index *ti);
 
-#define	RTLD_DEFAULT_STACK_PF_EXEC	PF_X
-#define	RTLD_DEFAULT_STACK_EXEC		PROT_EXEC
-
-extern void arm_abi_variant_hook(Elf_Auxinfo **);
-
-#ifdef __ARM_FP
-#define md_abi_variant_hook(x)		arm_abi_variant_hook(x)
-#else
 #define md_abi_variant_hook(x)
-#endif
 
 #endif

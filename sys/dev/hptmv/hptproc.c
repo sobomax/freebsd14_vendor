@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2004-2005 HighPoint Technologies, Inc.
  * All rights reserved.
@@ -24,8 +24,6 @@
  * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
- *
- * $FreeBSD: 90d65250c75223eb22036c5cae0676d97e72af48 $
  */
 /*
  * hptproc.c  sysctl support
@@ -340,13 +338,13 @@ hpt_set_info(int length)
 			
 			if (err==0) {
 				if (piop->nOutBufferSize)
-					copyout(ke_area + piop->nInBufferSize, (void*)(ULONG_PTR)piop->lpOutBuffer, piop->nOutBufferSize);
+					err = -copyout(ke_area + piop->nInBufferSize, (void*)(ULONG_PTR)piop->lpOutBuffer, piop->nOutBufferSize);
 				
-				if (piop->lpBytesReturned)
-					copyout(&dwRet, (void*)(ULONG_PTR)piop->lpBytesReturned, sizeof(DWORD));
+				if (err == 0 && piop->lpBytesReturned)
+					err = -copyout(&dwRet, (void*)(ULONG_PTR)piop->lpBytesReturned, sizeof(DWORD));
 			
 				free(ke_area, M_DEVBUF);
-				return length;
+				return err == 0 ? length : err;
 			}
 			else  KdPrintW(("Kernel_ioctl(): return %d\n", err));
 
@@ -379,7 +377,6 @@ get_disk_name(char *name, PDevice pDev)
 static int
 hpt_copy_info(HPT_GET_INFO *pinfo, char *fmt, ...) 
 {
-	int printfretval;
 	va_list ap;
 	
 	if(fmt == NULL) {
@@ -389,7 +386,7 @@ hpt_copy_info(HPT_GET_INFO *pinfo, char *fmt, ...)
 	else 
 	{
 		va_start(ap, fmt);
-		printfretval = vsnprintf(hptproc_buffer, sizeof(hptproc_buffer), fmt, ap);
+		vsnprintf(hptproc_buffer, sizeof(hptproc_buffer), fmt, ap);
 		va_end(ap);
 		return(SYSCTL_OUT(pinfo, hptproc_buffer, strlen(hptproc_buffer)));
 	}
@@ -637,19 +634,11 @@ out:
 
 #define xhptregister_node(name) hptregister_node(name)
 
-#if __FreeBSD_version >= 1100024
 #define hptregister_node(name) \
     SYSCTL_ROOT_NODE(OID_AUTO, name, CTLFLAG_RW | CTLFLAG_MPSAFE, 0, \
         "Get/Set " #name " state root node"); \
         SYSCTL_OID(_ ## name, OID_AUTO, status, \
             CTLTYPE_STRING | CTLFLAG_RW | CTLFLAG_NEEDGIANT, \
             NULL, 0, hpt_status, "A", "Get/Set " #name " state")
-#else
-#define hptregister_node(name) \
-	SYSCTL_NODE(, OID_AUTO, name, CTLFLAG_RW, 0, "Get/Set " #name " state root node"); \
-	SYSCTL_OID(_ ## name, OID_AUTO, status, \
-	CTLTYPE_STRING | CTLFLAG_RW | CTLFLAG_MPSAFE, \
-	NULL, 0, hpt_status, "A", "Get/Set " #name " state")
-#endif
-	
+
 xhptregister_node(PROC_DIR_NAME);

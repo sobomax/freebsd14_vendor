@@ -25,8 +25,6 @@
  * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
- *
- * $FreeBSD: 84abe17f310e05d5e5031d17df873007cf2a7357 $
  */
 
 #ifndef _MACHINE_HYPERVISOR_H_
@@ -45,9 +43,13 @@
 #define	CNTHCTL_EL1PCTEN	(1 << 0) /*Allow EL0/1 physical counter access*/
 
 /* CPTR_EL2 - Architecture feature trap register */
+/* Valid if HCR_EL2.E2H == 0 */
 #define	CPTR_RES0	0x7fefc800
 #define	CPTR_RES1	0x000033ff
 #define	CPTR_TFP	0x00000400
+/* Valid if HCR_EL2.E2H == 1 */
+#define	CPTR_FPEN	0x00300000
+/* Unconditionally valid */
 #define	CPTR_TTA	0x00100000
 #define	CPTR_TCPAC	0x80000000
 
@@ -229,5 +231,23 @@
 #define	VTTBR_VMID_SHIFT	48
 /* Assumed to be 0 by locore.S */
 #define	VTTBR_HOST		0x0000000000000000
+
+/* MDCR_EL2 - Hyp Debug Control Register */
+#define	MDCR_EL2_HPMN_MASK	0x1f
+#define	MDCR_EL2_HPMN_SHIFT	0
+#define	MDCR_EL2_TPMCR_SHIFT	5
+#define	MDCR_EL2_TPMCR		(0x1UL << MDCR_EL2_TPMCR_SHIFT)
+#define	MDCR_EL2_TPM_SHIFT	6
+#define	MDCR_EL2_TPM		(0x1UL << MDCR_EL2_TPM_SHIFT)
+#define	MDCR_EL2_HPME_SHIFT	7
+#define	MDCR_EL2_HPME		(0x1UL << MDCR_EL2_HPME_SHIFT)
+#define	MDCR_EL2_TDE_SHIFT	8
+#define	MDCR_EL2_TDE		(0x1UL << MDCR_EL2_TDE_SHIFT)
+#define	MDCR_EL2_TDA_SHIFT	9
+#define	MDCR_EL2_TDA		(0x1UL << MDCR_EL2_TDA_SHIFT)
+#define	MDCR_EL2_TDOSA_SHIFT	10
+#define	MDCR_EL2_TDOSA		(0x1UL << MDCR_EL2_TDOSA_SHIFT)
+#define	MDCR_EL2_TDRA_SHIFT	11
+#define	MDCR_EL2_TDRA		(0x1UL << MDCR_EL2_TDRA_SHIFT)
 
 #endif /* !_MACHINE_HYPERVISOR_H_ */

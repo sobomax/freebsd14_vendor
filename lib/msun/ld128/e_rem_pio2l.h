@@ -13,9 +13,6 @@
  * Optimized by Bruce D. Evans.
  */
 
-#include <sys/cdefs.h>
-__FBSDID("$FreeBSD: fcef399a83a699c1d659876d233055e0e8db76ea $");
-
 /* ld128 version of __ieee754_rem_pio2l(x,y)
  * 
  * return the remainder of x rem pi/2 in y[0]+y[1] 

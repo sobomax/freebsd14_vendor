@@ -1,4 +1,3 @@
-# $FreeBSD: ef0d9dcb6786bea1ef8d63d46be2161379f35aeb $
 
 .include <kmod.opts.mk>
 
@@ -61,9 +60,7 @@ SRCS+=	vmcb.c		\
 	amdvi_hw.c	\
 	svm_msr.c
 
-.if ${KERN_OPTS:MBHYVE_SNAPSHOT} != ""
-SRCS+=	vmm_snapshot.c
-.endif
+SRCS.BHYVE_SNAPSHOT=	vmm_snapshot.c
 
 CLEANFILES=	vmx_assym.h vmx_genassym.o svm_assym.h svm_genassym.o
 

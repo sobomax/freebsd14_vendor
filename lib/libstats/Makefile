@@ -1,4 +1,3 @@
-# $FreeBSD: 89e10aa64c5f4283e9ab0cdf7df6ef75488231e2 $
 
 LIB=		stats
 SHLIBDIR?= 	/lib

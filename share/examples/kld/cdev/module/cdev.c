@@ -66,8 +66,6 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- *
- * $FreeBSD: f86b9a41563b25271fc7f074e24b11575ec0e9fa $
  */
 #include <sys/param.h>
 #include <sys/uio.h>

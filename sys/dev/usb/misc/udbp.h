@@ -33,8 +33,6 @@
  *
  * This file was derived from src/sys/netgraph/ng_sample.h, revision 1.1
  * written by Julian Elischer, Whistle Communications.
- *
- * $FreeBSD: ec455f1426cc0a9f8bc577f4cf271194a50a44cf $
  */
 
 #ifndef	_NETGRAPH_UDBP_H_
@@ -65,7 +63,7 @@ struct ngudbpstat {
 
 /*
  * This is used to define the 'parse type' for a struct ngudbpstat, which
- * is bascially a description of how to convert a binary struct ngudbpstat
+ * is basically a description of how to convert a binary struct ngudbpstat
  * to an ASCII string and back.  See ng_parse.h for more info.
  *
  * This needs to be kept in sync with the above structure definition

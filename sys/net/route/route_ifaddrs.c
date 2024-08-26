@@ -29,7 +29,6 @@
  * SUCH DAMAGE.
  *
  *	@(#)route.c	8.3.1.1 (Berkeley) 2/23/95
- * $FreeBSD: a456ffa28696905e2075ee31c42be256e26eaf49 $
  */
 
 #include "opt_route.h"
@@ -46,6 +45,7 @@
 
 #include <net/if.h>
 #include <net/if_var.h>
+#include <net/if_private.h>
 #include <net/if_dl.h>
 #include <net/route.h>
 #include <net/route/route_ctl.h>

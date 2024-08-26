@@ -26,8 +26,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 241e99dab17a1d9342dd89bdabd4d1ba52bd772b $");
-
 #define NEED_BRSSL_H
 #include "../libsecureboot-priv.h"
 #include <brssl.h>

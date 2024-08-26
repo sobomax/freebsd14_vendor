@@ -1,5 +1,4 @@
 #
-# $FreeBSD: c7fe271e28f7cf5fa3d8ff2d3c61f6f9b29e3bf7 $
 #
 # Copyright (c) 2011 Ben Gray. All rights reserved.
 #

@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2006 IronPort Systems Inc. <ambrisko@ironport.com>
  * All rights reserved.
@@ -27,8 +27,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: ec9ede66e55690d525b2205b340b9bab5ae710f5 $");
-
 #include <sys/param.h>
 #include <sys/systm.h>
 #include <sys/bus.h>
@@ -110,7 +108,7 @@ SYSCTL_INT(_hw_ipmi, OID_AUTO, wd_startup_countdown, CTLFLAG_RDTUN,
 SYSCTL_INT(_hw_ipmi, OID_AUTO, wd_pretimeout_countdown, CTLFLAG_RWTUN,
 	&wd_pretimeout_countdown, 0,
 	"IPMI watchdog pre-timeout countdown (seconds)");
-SYSCTL_INT(_hw_ipmi, OID_AUTO, cyle_wait, CTLFLAG_RWTUN,
+SYSCTL_INT(_hw_ipmi, OID_AUTO, cycle_wait, CTLFLAG_RWTUN,
 	&cycle_wait, 0,
 	"IPMI power cycle on reboot delay time (seconds)");
 
@@ -208,6 +206,15 @@ ipmi_dtor(void *arg)
 	IPMI_LOCK(sc);
 	if (dev->ipmi_requests) {
 		/* Throw away any pending requests for this device. */
+		TAILQ_FOREACH_SAFE(req, &sc->ipmi_pending_requests_highpri, ir_link,
+		    nreq) {
+			if (req->ir_owner == dev) {
+				TAILQ_REMOVE(&sc->ipmi_pending_requests_highpri, req,
+				    ir_link);
+				dev->ipmi_requests--;
+				ipmi_free_request(req);
+			}
+		}
 		TAILQ_FOREACH_SAFE(req, &sc->ipmi_pending_requests, ir_link,
 		    nreq) {
 			if (req->ir_owner == dev) {
@@ -579,13 +586,19 @@ ipmi_dequeue_request(struct ipmi_softc *sc)
 
 	IPMI_LOCK_ASSERT(sc);
 
-	while (!sc->ipmi_detaching && TAILQ_EMPTY(&sc->ipmi_pending_requests))
+	while (!sc->ipmi_detaching && TAILQ_EMPTY(&sc->ipmi_pending_requests) &&
+	    TAILQ_EMPTY(&sc->ipmi_pending_requests_highpri))
 		cv_wait(&sc->ipmi_request_added, &sc->ipmi_requests_lock);
 	if (sc->ipmi_detaching)
 		return (NULL);
 
-	req = TAILQ_FIRST(&sc->ipmi_pending_requests);
-	TAILQ_REMOVE(&sc->ipmi_pending_requests, req, ir_link);
+	req = TAILQ_FIRST(&sc->ipmi_pending_requests_highpri);
+	if (req != NULL)
+		TAILQ_REMOVE(&sc->ipmi_pending_requests_highpri, req, ir_link);
+	else {
+		req = TAILQ_FIRST(&sc->ipmi_pending_requests);
+		TAILQ_REMOVE(&sc->ipmi_pending_requests, req, ir_link);
+	}
 	return (req);
 }
 
@@ -597,6 +610,17 @@ ipmi_polled_enqueue_request(struct ipmi_softc *sc, struct ipmi_request *req)
 	IPMI_LOCK_ASSERT(sc);
 
 	TAILQ_INSERT_TAIL(&sc->ipmi_pending_requests, req, ir_link);
+	cv_signal(&sc->ipmi_request_added);
+	return (0);
+}
+
+int
+ipmi_polled_enqueue_request_highpri(struct ipmi_softc *sc, struct ipmi_request *req)
+{
+
+	IPMI_LOCK_ASSERT(sc);
+
+	TAILQ_INSERT_TAIL(&sc->ipmi_pending_requests_highpri, req, ir_link);
 	cv_signal(&sc->ipmi_request_added);
 	return (0);
 }
@@ -730,7 +754,7 @@ ipmi_wd_event(void *arg, unsigned int cmd, int *error)
 }
 
 static void
-ipmi_shutdown_event(void *arg, unsigned int cmd, int *error)
+ipmi_shutdown_event(void *arg, int howto)
 {
 	struct ipmi_softc *sc = arg;
 
@@ -743,6 +767,10 @@ ipmi_shutdown_event(void *arg, unsigned int cmd, int *error)
 	 * Zero value in wd_shutdown_countdown will disable watchdog;
 	 * Negative value in wd_shutdown_countdown will keep existing state;
 	 *
+	 * System halt is a special case of shutdown where wd_shutdown_countdown
+	 * is ignored and watchdog is disabled to ensure that the system remains
+	 * halted as requested.
+	 *
 	 * Revert to using a power cycle to ensure that the watchdog will
 	 * do something useful here.  Having the watchdog send an NMI
 	 * instead is useless during shutdown, and might be ignored if an
@@ -750,7 +778,7 @@ ipmi_shutdown_event(void *arg, unsigned int cmd, int *error)
 	 */
 
 	wd_in_shutdown = true;
-	if (wd_shutdown_countdown == 0) {
+	if (wd_shutdown_countdown == 0 || (howto & RB_HALT) != 0) {
 		/* disable watchdog */
 		ipmi_set_watchdog(sc, 0);
 		sc->ipmi_watchdog_active = 0;
@@ -794,7 +822,7 @@ ipmi_power_cycle(void *arg, int howto)
 	}
 
 	/*
-	 * BMCs are notoriously slow, give it cyle_wait seconds for the power
+	 * BMCs are notoriously slow, give it cycle_wait seconds for the power
 	 * down leg of the power cycle. If that fails, fallback to the next
 	 * hanlder in the shutdown_final chain and/or the platform failsafe.
 	 */
@@ -817,6 +845,7 @@ ipmi_startup(void *arg)
 	mtx_init(&sc->ipmi_requests_lock, "ipmi requests", NULL, MTX_DEF);
 	mtx_init(&sc->ipmi_io_lock, "ipmi io", NULL, MTX_DEF);
 	cv_init(&sc->ipmi_request_added, "ipmireq");
+	TAILQ_INIT(&sc->ipmi_pending_requests_highpri);
 	TAILQ_INIT(&sc->ipmi_pending_requests);
 
 	/* Initialize interface-dependent state. */
@@ -1033,8 +1062,6 @@ ipmi_release_resources(device_t dev)
 			    sc->ipmi_io_rid + i, sc->ipmi_io_res[i]);
 }
 
-devclass_t ipmi_devclass;
-
 /* XXX: Why? */
 static void
 ipmi_unload(void *arg)
@@ -1043,9 +1070,7 @@ ipmi_unload(void *arg)
 	int		count;
 	int		i;
 
-	if (ipmi_devclass == NULL)
-		return;
-	if (devclass_get_devices(ipmi_devclass, &devs, &count) != 0)
+	if (devclass_get_devices(devclass_find("ipmi"), &devs, &count) != 0)
 		return;
 	for (i = 0; i < count; i++)
 		device_delete_child(device_get_parent(devs[i]), devs[i]);

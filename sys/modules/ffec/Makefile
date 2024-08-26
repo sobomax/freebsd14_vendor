@@ -1,4 +1,3 @@
-# $FreeBSD: cf5437ba26ba9f244123afda42e58ea61ef3ca26 $
 
 .PATH: ${SRCTOP}/sys/dev/ffec
 

@@ -1,4 +1,3 @@
-/*	$FreeBSD: 367c25f44d5171975a028b8ccfbbf6a89fefa903 $	*/
 
 /*
  * ++Copyright++ 1983, 1990, 1993

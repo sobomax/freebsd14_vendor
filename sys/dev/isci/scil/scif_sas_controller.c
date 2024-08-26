@@ -53,8 +53,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: b3987984afa2cf09eca3a39653bc69101dd8a0b3 $");
-
 /**
  * @file
  *
@@ -561,7 +559,7 @@ SCI_STATUS scif_user_parameters_set(
 
    // In the future more could be done to prevent setting parameters at the
    // wrong time, but for now we'll simply set the values even if it is too
-   // late for them to take affect.
+   // late for them to take effect.
    return SCI_SUCCESS;
 }
 

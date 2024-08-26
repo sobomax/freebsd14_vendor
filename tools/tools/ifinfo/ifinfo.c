@@ -25,8 +25,6 @@
  * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
- *
- * $FreeBSD: dea7d6ff8244afd9f2a66b64d168deb2bfe32038 $
  */
 #include <sys/types.h>
 #include <sys/socket.h>		/* for PF_LINK */

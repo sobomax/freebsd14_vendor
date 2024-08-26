@@ -1,6 +1,4 @@
 /*-
- * SPDX-License-Identifier: BSD-4-Clause
- *
  * Copyright (c) 1996 John S. Dyson
  * Copyright (c) 2012 Giovanni Trematerra
  * All rights reserved.
@@ -92,8 +90,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: ad166ee992e9bb7dabf7bb9dc71cdf14cfd9680b $");
-
 #include <sys/param.h>
 #include <sys/systm.h>
 #include <sys/conf.h>
@@ -170,6 +166,7 @@ struct fileops pipeops = {
 	.fo_chown = pipe_chown,
 	.fo_sendfile = invfo_sendfile,
 	.fo_fill_kinfo = pipe_fill_kinfo,
+	.fo_cmp = file_kcmp_generic,
 	.fo_flags = DFLAG_PASSABLE
 };
 
@@ -209,6 +206,7 @@ static int pipefragretry;
 static int pipeallocfail;
 static int piperesizefail;
 static int piperesizeallowed = 1;
+static long pipe_mindirect = PIPE_MINDIRECT;
 
 SYSCTL_LONG(_kern_ipc, OID_AUTO, maxpipekva, CTLFLAG_RDTUN | CTLFLAG_NOFETCH,
 	   &maxpipekva, 0, "Pipe KVA limit");
@@ -262,6 +260,29 @@ pipeinit(void *dummy __unused)
 	pipedev_ino = devfs_alloc_cdp_inode();
 	KASSERT(pipedev_ino > 0, ("pipe dev inode not initialized"));
 }
+
+static int
+sysctl_handle_pipe_mindirect(SYSCTL_HANDLER_ARGS)
+{
+	int error = 0;
+	long tmp_pipe_mindirect = pipe_mindirect;
+
+	error = sysctl_handle_long(oidp, &tmp_pipe_mindirect, arg2, req);
+	if (error != 0 || req->newptr == NULL)
+		return (error);
+
+	/*
+	 * Don't allow pipe_mindirect to be set so low that we violate
+	 * atomicity requirements.
+	 */
+	if (tmp_pipe_mindirect <= PIPE_BUF)
+		return (EINVAL);
+	pipe_mindirect = tmp_pipe_mindirect;
+	return (0);
+}
+SYSCTL_OID(_kern_ipc, OID_AUTO, pipe_mindirect, CTLTYPE_LONG | CTLFLAG_RW,
+    &pipe_mindirect, 0, sysctl_handle_pipe_mindirect, "L",
+    "Minimum write size triggering VM optimization");
 
 static int
 pipe_zone_ctor(void *mem, int size, void *arg, int flags)
@@ -697,6 +718,25 @@ pipe_read(struct file *fp, struct uio *uio, struct ucred *active_cred,
 	int size;
 
 	rpipe = fp->f_data;
+
+	/*
+	 * Try to avoid locking the pipe if we have nothing to do.
+	 *
+	 * There are programs which share one pipe amongst multiple processes
+	 * and perform non-blocking reads in parallel, even if the pipe is
+	 * empty.  This in particular is the case with BSD make, which when
+	 * spawned with a high -j number can find itself with over half of the
+	 * calls failing to find anything.
+	 */
+	if ((fp->f_flag & FNONBLOCK) != 0 && !mac_pipe_check_read_enabled()) {
+		if (__predict_false(uio->uio_resid == 0))
+			return (0);
+		if ((atomic_load_short(&rpipe->pipe_state) & PIPE_EOF) == 0 &&
+		    atomic_load_int(&rpipe->pipe_buffer.cnt) == 0 &&
+		    atomic_load_int(&rpipe->pipe_pages.cnt) == 0)
+			return (EAGAIN);
+	}
+
 	PIPE_LOCK(rpipe);
 	++rpipe->pipe_busy;
 	error = pipelock(rpipe, 1);
@@ -1140,8 +1180,8 @@ pipe_write(struct file *fp, struct uio *uio, struct ucred *active_cred,
 		 * away on us.
 		 */
 		if (uio->uio_segflg == UIO_USERSPACE &&
-		    uio->uio_iov->iov_len >= PIPE_MINDIRECT &&
-		    wpipe->pipe_buffer.size >= PIPE_MINDIRECT &&
+		    uio->uio_iov->iov_len >= pipe_mindirect &&
+		    wpipe->pipe_buffer.size >= pipe_mindirect &&
 		    (fp->f_flag & FNONBLOCK) == 0) {
 			error = pipe_direct_write(wpipe, uio);
 			if (error != 0)
@@ -1490,8 +1530,7 @@ locked_error:
  * be a natural race.
  */
 static int
-pipe_stat(struct file *fp, struct stat *ub, struct ucred *active_cred,
-    struct thread *td)
+pipe_stat(struct file *fp, struct stat *ub, struct ucred *active_cred)
 {
 	struct pipe *pipe;
 #ifdef MAC
@@ -1512,7 +1551,7 @@ pipe_stat(struct file *fp, struct stat *ub, struct ucred *active_cred,
 
 	/* For named pipes ask the underlying filesystem. */
 	if (pipe->pipe_type & PIPE_TYPE_NAMED) {
-		return (vnops.fo_stat(fp, ub, active_cred, td));
+		return (vnops.fo_stat(fp, ub, active_cred));
 	}
 
 	bzero(ub, sizeof(*ub));
@@ -1625,14 +1664,18 @@ pipe_free_kmem(struct pipe *cpipe)
 static void
 pipeclose(struct pipe *cpipe)
 {
+#ifdef MAC
 	struct pipepair *pp;
+#endif
 	struct pipe *ppipe;
 
 	KASSERT(cpipe != NULL, ("pipeclose: cpipe == NULL"));
 
 	PIPE_LOCK(cpipe);
 	pipelock(cpipe, 0);
+#ifdef MAC
 	pp = cpipe->pipe_pair;
+#endif
 
 	/*
 	 * If the other side is blocked, wake it up saying that
@@ -1730,6 +1773,10 @@ pipe_kqfilter(struct file *fp, struct knote *kn)
 		cpipe = PIPE_PEER(cpipe);
 		break;
 	default:
+		if ((cpipe->pipe_type & PIPE_TYPE_NAMED) != 0) {
+			PIPE_UNLOCK(cpipe);
+			return (vnops.fo_kqfilter(fp, kn));
+		}
 		PIPE_UNLOCK(cpipe);
 		return (EINVAL);
 	}

@@ -69,8 +69,6 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- *
- * $FreeBSD: 7d069768cb6f2f4a2cb49ac6a7c39078dd81fc1b $
  */
 #include <sys/types.h>
 #include <sys/ioccom.h>

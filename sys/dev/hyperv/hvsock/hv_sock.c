@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2020 Microsoft Corp.
  * All rights reserved.
@@ -27,8 +27,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 5ca00d9f242ff6da6bf4a6c2482fb176d680d9bd $");
-
 #include <sys/param.h>
 #include <sys/bus.h>
 #include <sys/domain.h>
@@ -74,6 +72,8 @@ SYSCTL_INT(_net_hvsock, OID_AUTO, hvs_dbg_level, CTLFLAG_RWTUN, &hvs_dbg_level,
 
 MALLOC_DEFINE(M_HVSOCK, "hyperv_socket", "hyperv socket control structures");
 
+static int hvs_dom_probe(void);
+
 /* The MTU is 16KB per host side's design */
 #define HVSOCK_MTU_SIZE		(1024 * 16)
 #define HVSOCK_SEND_BUF_SZ	(PAGE_SIZE - sizeof(struct vmpipe_proto_header))
@@ -84,51 +84,38 @@ MALLOC_DEFINE(M_HVSOCK, "hyperv_socket", "hyperv socket control structures");
 					 roundup2(payload_len, 8) + \
 					 sizeof(uint64_t))
 
-
-static struct domain		hv_socket_domain;
-
 /*
  * HyperV Transport sockets
  */
-static struct pr_usrreqs	hvs_trans_usrreqs = {
-	.pru_attach =		hvs_trans_attach,
-	.pru_bind =		hvs_trans_bind,
-	.pru_listen =		hvs_trans_listen,
-	.pru_accept =		hvs_trans_accept,
-	.pru_connect =		hvs_trans_connect,
-	.pru_peeraddr =		hvs_trans_peeraddr,
-	.pru_sockaddr =		hvs_trans_sockaddr,
-	.pru_soreceive =	hvs_trans_soreceive,
-	.pru_sosend =		hvs_trans_sosend,
-	.pru_disconnect =	hvs_trans_disconnect,
-	.pru_close =		hvs_trans_close,
-	.pru_detach =		hvs_trans_detach,
-	.pru_shutdown =		hvs_trans_shutdown,
-	.pru_abort =		hvs_trans_abort,
-};
-
-/*
- * Definitions of protocols supported in HyperV socket domain
- */
-static struct protosw		hv_socket_protosw[] = {
-{
+static struct protosw hv_socket_protosw = {
 	.pr_type =		SOCK_STREAM,
-	.pr_domain =		&hv_socket_domain,
 	.pr_protocol =		HYPERV_SOCK_PROTO_TRANS,
 	.pr_flags =		PR_CONNREQUIRED,
-	.pr_init =		hvs_trans_init,
-	.pr_usrreqs =		&hvs_trans_usrreqs,
-},
+	.pr_attach =		hvs_trans_attach,
+	.pr_bind =		hvs_trans_bind,
+	.pr_listen =		hvs_trans_listen,
+	.pr_accept =		hvs_trans_accept,
+	.pr_connect =		hvs_trans_connect,
+	.pr_peeraddr =		hvs_trans_peeraddr,
+	.pr_sockaddr =		hvs_trans_sockaddr,
+	.pr_soreceive =		hvs_trans_soreceive,
+	.pr_sosend =		hvs_trans_sosend,
+	.pr_disconnect =	hvs_trans_disconnect,
+	.pr_close =		hvs_trans_close,
+	.pr_detach =		hvs_trans_detach,
+	.pr_shutdown =		hvs_trans_shutdown,
+	.pr_abort =		hvs_trans_abort,
 };
 
 static struct domain		hv_socket_domain = {
 	.dom_family =		AF_HYPERV,
 	.dom_name =		"hyperv",
-	.dom_protosw =		hv_socket_protosw,
-	.dom_protoswNPROTOSW =	&hv_socket_protosw[nitems(hv_socket_protosw)]
+	.dom_probe =		hvs_dom_probe,
+	.dom_nprotosw =		1,
+	.dom_protosw =		{ &hv_socket_protosw },
 };
 
-VNET_DOMAIN_SET(hv_socket_);
+DOMAIN_SET(hv_socket_);
 
 #define MAX_PORT			((uint32_t)0xFFFFFFFF)
 #define MIN_PORT			((uint32_t)0x0)
@@ -323,15 +310,19 @@ hvs_trans_unlock(void)
 	sx_xunlock(&hvs_trans_socks_sx);
 }
 
-void
-hvs_trans_init(void)
+static int
+hvs_dom_probe(void)
 {
-	/* Skip initialization of globals for non-default instances. */
-	if (!IS_DEFAULT_VNET(curvnet))
-		return;
 
+	/* Don't even give us a chance to attach on non-HyperV. */
 	if (vm_guest != VM_GUEST_HV)
-		return;
+		return (ENXIO);
+	return (0);
+}
+
+static void
+hvs_trans_init(void *arg __unused)
+{
 
 	HVSOCK_DBG(HVSOCK_DBG_VERBOSE,
 	    "%s: HyperV Socket hvs_trans_init called\n", __func__);
@@ -344,6 +335,8 @@ hvs_trans_init(void)
 	LIST_INIT(&hvs_trans_bound_socks);
 	LIST_INIT(&hvs_trans_connected_socks);
 }
+SYSINIT(hvs_trans_init, SI_SUB_PROTO_DOMAIN, SI_ORDER_THIRD,
+    hvs_trans_init, NULL);
 
 /*
  * Called in two cases:
@@ -354,9 +347,6 @@ int
 hvs_trans_attach(struct socket *so, int proto, struct thread *td)
 {
 	struct hvs_pcb *pcb = so2hvspcb(so);
-
-	if (vm_guest != VM_GUEST_HV)
-		return (ESOCKTNOSUPPORT);
 
 	HVSOCK_DBG(HVSOCK_DBG_VERBOSE,
 	    "%s: HyperV Socket hvs_trans_attach called\n", __func__);
@@ -383,9 +373,6 @@ void
 hvs_trans_detach(struct socket *so)
 {
 	struct hvs_pcb *pcb;
-
-	if (vm_guest != VM_GUEST_HV)
-		return;
 
 	HVSOCK_DBG(HVSOCK_DBG_VERBOSE,
 	    "%s: HyperV Socket hvs_trans_detach called\n", __func__);
@@ -604,9 +591,6 @@ hvs_trans_disconnect(struct socket *so)
 {
 	struct hvs_pcb *pcb;
 
-	if (vm_guest != VM_GUEST_HV)
-		return (ESOCKTNOSUPPORT);
-
 	HVSOCK_DBG(HVSOCK_DBG_VERBOSE,
 	    "%s: HyperV Socket hvs_trans_disconnect called\n", __func__);
 
@@ -764,7 +748,7 @@ hvs_trans_soreceive(struct socket *so, struct sockaddr **paddr,
 		 * Wait and block until (more) data comes in.
 		 * Note: Drops the sockbuf lock during wait.
 		 */
-		error = sbwait(sb);
+		error = sbwait(so, SO_RCV);
 
 		if (error)
 			break;
@@ -778,7 +762,7 @@ out:
 	SOCKBUF_UNLOCK(sb);
 	SOCK_IO_RECV_UNLOCK(so);
 
-	/* We recieved a FIN in this call */
+	/* We received a FIN in this call */
 	if (so->so_error == ESHUTDOWN) {
 		if (so->so_snd.sb_state & SBS_CANTSENDMORE) {
 			/* Send has already closed */
@@ -860,7 +844,7 @@ hvs_trans_sosend(struct socket *so, struct sockaddr *addr, struct uio *uio,
 				 * Sleep wait until space avaiable to send
 				 * Note: Drops the sockbuf lock during wait.
 				 */
-				error = sbwait(sb);
+				error = sbwait(so, SO_SND);
 
 				if (error)
 					break;
@@ -930,9 +914,6 @@ hvs_trans_close(struct socket *so)
 {
 	struct hvs_pcb *pcb;
 
-	if (vm_guest != VM_GUEST_HV)
-		return;
-
 	HVSOCK_DBG(HVSOCK_DBG_VERBOSE,
 	    "%s: HyperV Socket hvs_trans_close called\n", __func__);
 
@@ -973,9 +954,6 @@ void
 hvs_trans_abort(struct socket *so)
 {
 	struct hvs_pcb *pcb = so2hvspcb(so);
-
-	if (vm_guest != VM_GUEST_HV)
-		return;
 
 	HVSOCK_DBG(HVSOCK_DBG_VERBOSE,
 	    "%s: HyperV Socket hvs_trans_abort called\n", __func__);
@@ -1760,8 +1738,6 @@ static driver_t hvsock_driver = {
 	sizeof(struct hvsock_sc)
 };
 
-static devclass_t hvsock_devclass;
-
-DRIVER_MODULE(hvsock, vmbus, hvsock_driver, hvsock_devclass, NULL, NULL);
+DRIVER_MODULE(hvsock, vmbus, hvsock_driver, NULL, NULL);
 MODULE_VERSION(hvsock, 1);
 MODULE_DEPEND(hvsock, vmbus, 1, 1, 1);

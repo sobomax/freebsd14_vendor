@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2020, 2021 Rubicon Communications, LLC (Netgate)
  * Copyright (c) 2021 The FreeBSD Foundation
@@ -29,8 +29,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: afb9a51ce2e31077683c78b3192e297ec1df5da4 $");
-
 #include <sys/param.h>
 #include <sys/bus.h>
 #include <sys/counter.h>
@@ -164,7 +162,7 @@ safexcel_rdr_intr(struct safexcel_softc *sc, int ringidx)
 {
 	TAILQ_HEAD(, cryptop) cq;
 	struct cryptop *crp, *tmp;
-	struct safexcel_cmd_descr *cdesc;
+	struct safexcel_cmd_descr *cdesc __diagused;
 	struct safexcel_res_descr *rdesc;
 	struct safexcel_request *req;
 	struct safexcel_ring *ring;
@@ -1318,7 +1316,7 @@ safexcel_setkey_xcbcmac(const uint8_t *key, int klen, uint32_t *hashkey)
 }
 
 static void
-safexcel_setkey_hmac_digest(struct auth_hash *ahash, union authctx *ctx,
+safexcel_setkey_hmac_digest(const struct auth_hash *ahash, union authctx *ctx,
     char *buf)
 {
 	int hashwords, i;
@@ -1360,7 +1358,7 @@ safexcel_setkey_hmac(const struct crypto_session_params *csp,
     const uint8_t *key, int klen, uint8_t *ipad, uint8_t *opad)
 {
 	union authctx ctx;
-	struct auth_hash *ahash;
+	const struct auth_hash *ahash;
 
 	ahash = crypto_auth_hash(csp);
 	hmac_init_ipad(ahash, key, klen, &ctx);
@@ -2602,14 +2600,12 @@ static device_method_t safexcel_methods[] = {
 	DEVMETHOD_END
 };
 
-static devclass_t safexcel_devclass;
-
 static driver_t safexcel_driver = {
 	.name 		= "safexcel",
 	.methods 	= safexcel_methods,
 	.size		= sizeof(struct safexcel_softc),
 };
 
-DRIVER_MODULE(safexcel, simplebus, safexcel_driver, safexcel_devclass, 0, 0);
+DRIVER_MODULE(safexcel, simplebus, safexcel_driver, 0, 0);
 MODULE_VERSION(safexcel, 1);
 MODULE_DEPEND(safexcel, crypto, 1, 1, 1);

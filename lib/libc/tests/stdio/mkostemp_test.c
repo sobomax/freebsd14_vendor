@@ -28,9 +28,6 @@
  * Test program for mkostemp().
  */
 
-#include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 0dd475b4ec61b9d4774fbf448b4ae582be866a0c $");
-
 #include <sys/stat.h>
 
 #include <errno.h>

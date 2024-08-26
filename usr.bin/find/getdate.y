@@ -13,8 +13,6 @@
 /* SUPPRESS 288 on yyerrlab *//* Label unused */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: d1326537c67b94bcf958d93530feaa3af2829fbd $");
-
 #include <stdio.h>
 #include <ctype.h>
 

@@ -1,4 +1,3 @@
-# $FreeBSD: aedfb698f131dfad2353fce19db670ce9691c500 $
 
 SHELL=	/bin/sh
 ED=	${.OBJDIR}/ed

@@ -5,8 +5,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 0355e54682bc3d511e3421667a0b2299b19dd875 $");
-
 #include "igc_api.h"
 
 static void igc_config_collision_dist_generic(struct igc_hw *hw);

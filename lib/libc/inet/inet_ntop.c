@@ -20,9 +20,6 @@
 #if defined(LIBC_SCCS) && !defined(lint)
 static const char rcsid[] = "$Id: inet_ntop.c,v 1.5 2005/11/03 22:59:52 marka Exp $";
 #endif /* LIBC_SCCS and not lint */
-#include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 650ffaf178d640cc411b8496c2d80d4268992de9 $");
-
 #include "port_before.h"
 
 #include <sys/param.h>

@@ -1,6 +1,4 @@
 .\"
-.\" $FreeBSD: f3ab716dfbf0df695274eba8a9f5f5fd64951c77 $
-.\"
 .NH
 Managing Jails and the Jail File System Environment
 .NH 2

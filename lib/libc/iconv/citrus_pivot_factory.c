@@ -1,4 +1,3 @@
-/* $FreeBSD: c307a9d5aa323b9b6a0d6476ad82beae237f8176 $ */
 /* $NetBSD: citrus_pivot_factory.c,v 1.7 2009/04/12 14:20:19 lukem Exp $ */
 
 /*-
@@ -29,7 +28,6 @@
  * SUCH DAMAGE.
  */
 
-#include <sys/cdefs.h>
 #include <sys/queue.h>
 
 #include <assert.h>

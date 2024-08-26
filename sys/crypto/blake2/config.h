@@ -1,5 +1,4 @@
 /* This file is in the public domain */
-/* $FreeBSD: 0471a1fedc20a5a1f7319002b68517a9aa3dfb95 $ */
 #pragma once
 
 #include <sys/endian.h>

@@ -18,8 +18,6 @@
  *
  * CDDL HEADER END
  *
- * $FreeBSD: 79190dbf930740a522b2b8ec614f2b4c4d82d1b5 $
- *
  */
 
 #ifndef _FBT_ISA_H_

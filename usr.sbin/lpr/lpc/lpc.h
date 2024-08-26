@@ -29,8 +29,6 @@
  * SUCH DAMAGE.
  *
  *	@(#)lpc.h	8.1 (Berkeley) 6/6/93
- *
- * $FreeBSD: a2350d865564948aae6d98106c26d8d30a4d35cd $
  */
 
 /*

@@ -1,5 +1,4 @@
 #
-# $FreeBSD: 73a289a09544b6cb4ff5408e09d12c82eb1ff790 $
 #
 # Copyright (c) 2012 Huang Wen Hui. All rights reserved.
 #

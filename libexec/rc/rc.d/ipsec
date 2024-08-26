@@ -1,6 +1,5 @@
 #!/bin/sh
 #
-# $FreeBSD: c9d82d09723aa46a90e533ee0eb4a3973c571a68 $
 #
 
 # PROVIDE: ipsec

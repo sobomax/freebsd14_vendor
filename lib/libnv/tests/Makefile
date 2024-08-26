@@ -1,4 +1,3 @@
-# $FreeBSD: 713fb73fd2d4e85b2744b1b6f87ff13a4db7c665 $
 
 ATF_TESTS_C= \
 	nvlist_send_recv_test

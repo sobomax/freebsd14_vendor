@@ -1,4 +1,3 @@
-# $FreeBSD: 860b327ca7683a4920b28c046f91e2c76bef5fee $
 
 .PATH: ${SRCTOP}/cddl/contrib/opensolaris/common/ctf
 .PATH: ${SRCTOP}/cddl/contrib/opensolaris/lib/libctf/common

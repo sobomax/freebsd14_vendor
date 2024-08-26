@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2000-2004 Poul-Henning Kamp <phk@FreeBSD.org>
  * Copyright (c) 2012 The FreeBSD Foundation
@@ -28,8 +28,6 @@
  * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
- *
- * $FreeBSD: 0f76ca6149f17e486d04ba064fa96ff4d94f9be7 $
  */
 
 #include <sys/param.h>
@@ -60,7 +58,7 @@ static struct md_ioctl mdio;
 static enum {UNSET, ATTACH, DETACH, RESIZE, LIST} action = UNSET;
 static int nflag;
 
-static void usage(void);
+static void usage(void) __dead2;
 static void md_set_file(const char *);
 static int md_find(const char *, const char *);
 static int md_query(const char *, const int, const char *);
@@ -89,7 +87,8 @@ usage(void)
 "       mdconfig file\n");
 	fprintf(stderr, "\t\ttype = {malloc, vnode, swap}\n");
 	fprintf(stderr, "\t\toption = {cache, cluster, compress, force,\n");
-	fprintf(stderr, "\t\t          readonly, reserve, ro, verify}\n");
+	fprintf(stderr, "\t\t          mustdealloc, readonly, reserve, ro,\n");
+	fprintf(stderr, "\t\t          verify}\n");
 	fprintf(stderr, "\t\tsize = %%d (512 byte blocks), %%db (B),\n");
 	fprintf(stderr, "\t\t       %%dk (kB), %%dm (MB), %%dg (GB), \n");
 	fprintf(stderr, "\t\t       %%dt (TB), or %%dp (PB)\n");
@@ -194,6 +193,10 @@ main(int argc, char **argv)
 				mdio.md_options |= MD_FORCE;
 			else if (!strcmp(optarg, "noforce"))
 				mdio.md_options &= ~MD_FORCE;
+			else if (!strcmp(optarg, "mustdealloc"))
+				mdio.md_options |= MD_MUSTDEALLOC;
+			else if (!strcmp(optarg, "nomustdealloc"))
+				mdio.md_options &= ~MD_MUSTDEALLOC;
 			else if (!strcmp(optarg, "readonly"))
 				mdio.md_options |= MD_READONLY;
 			else if (!strcmp(optarg, "noreadonly"))

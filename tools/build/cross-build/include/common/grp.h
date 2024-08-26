@@ -32,8 +32,6 @@
  * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
- *
- * $FreeBSD: 08a8bc54056913de1a7e752d444bc25b1954537e $
  */
 #pragma once
 
@@ -44,8 +42,6 @@
 int pwcache_groupdb(int (*a_setgroupent)(int), void (*a_endgrent)(void),
     struct group *(*a_getgrnam)(const char *),
     struct group *(*a_getgrgid)(gid_t));
-
-int gid_from_group(const char *name, gid_t *gid);
 
 int gid_from_group(const char *name, gid_t *gid);
 

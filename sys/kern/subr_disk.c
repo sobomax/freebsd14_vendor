@@ -14,8 +14,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: c08ba99d01fd06e87b8da7203717e2921b0e2910 $");
-
 #include "opt_geom.h"
 
 #include <sys/param.h>

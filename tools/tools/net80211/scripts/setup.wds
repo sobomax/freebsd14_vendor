@@ -4,7 +4,6 @@
 # Assumes an ap vap is already setup.
 # Can be run multiple times to create multiple WDS vaps.
 #
-# $FreeBSD: 6df8059baba69717985d528cb1abd3bd85584dea $
 #
 PATH=.:$PATH
 . config

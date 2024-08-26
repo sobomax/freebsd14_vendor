@@ -25,8 +25,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 44199bdd7b8fd485b5a694fd6975a8e3234e6877 $");
-
 #include <sys/param.h>
 #include <sys/systm.h>
 #include <sys/bus.h>
@@ -66,7 +64,6 @@ CTASSERT(SYS_RES_IRQ != PROTO_RES_BUSDMA &&
     SYS_RES_MEMORY != PROTO_RES_BUSDMA &&
     SYS_RES_IOPORT != PROTO_RES_BUSDMA);
 
-devclass_t proto_devclass;
 char proto_driver_name[] = "proto";
 
 static d_open_t proto_open;

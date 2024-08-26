@@ -59,9 +59,6 @@
  *
  */
 
-#include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 12b92a1a98b9fa87a457a188124f83363b1c9a93 $");
-
 #include <float.h>
 #include <math.h>
 

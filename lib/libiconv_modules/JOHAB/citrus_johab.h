@@ -1,4 +1,3 @@
-/* $FreeBSD: c91ffea023a05a18815e2dbb5c1836e8d4f6e7ae $ */
 /* $NetBSD: citrus_johab.h,v 1.1 2006/10/18 17:54:55 tnozaki Exp $ */
 
 /*-

@@ -18,8 +18,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 3d4e80ab61adfb79d10aa27f17b60013fe731744 $");
-
 /*
  * Driver for Intel PRO/Wireless 3945ABG 802.11 network adapters.
  *
@@ -302,9 +300,8 @@ static driver_t wpi_driver = {
 	wpi_methods,
 	sizeof (struct wpi_softc)
 };
-static devclass_t wpi_devclass;
 
-DRIVER_MODULE(wpi, pci, wpi_driver, wpi_devclass, NULL, NULL);
+DRIVER_MODULE(wpi, pci, wpi_driver, NULL, NULL);
 
 MODULE_VERSION(wpi, 1);
 
@@ -1909,7 +1906,6 @@ static void
 wpi_rx_done(struct wpi_softc *sc, struct wpi_rx_desc *desc,
     struct wpi_rx_data *data)
 {
-	struct epoch_tracker et;
 	struct ieee80211com *ic = &sc->sc_ic;
 	struct wpi_rx_ring *ring = &sc->rxq;
 	struct wpi_rx_stat *stat;
@@ -2029,7 +2025,6 @@ wpi_rx_done(struct wpi_softc *sc, struct wpi_rx_desc *desc,
 	}
 
 	WPI_UNLOCK(sc);
-	NET_EPOCH_ENTER(et);
 
 	/* Send the frame to the 802.11 layer. */
 	if (ni != NULL) {
@@ -2039,7 +2034,6 @@ wpi_rx_done(struct wpi_softc *sc, struct wpi_rx_desc *desc,
 	} else
 		(void)ieee80211_input_all(ic, m, stat->rssi, WPI_RSSI_OFFSET);
 
-	NET_EPOCH_EXIT(et);
 	WPI_LOCK(sc);
 
 	return;
@@ -2771,7 +2765,7 @@ wpi_cmd2(struct wpi_softc *sc, struct wpi_buf *buf)
 		ring->pending = 0;
 		sc->sc_update_tx_ring(sc, ring);
 	} else
-		ieee80211_node_incref(data->ni);
+		(void) ieee80211_ref_node(data->ni);
 
 end:	DPRINTF(sc, WPI_DEBUG_TRACE, error ? TRACE_STR_END_ERR : TRACE_STR_END,
 	    __func__);

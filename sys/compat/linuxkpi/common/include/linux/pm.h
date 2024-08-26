@@ -26,8 +26,6 @@
  * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
- *
- * $FreeBSD: 74f0d330f505b5874a0a1085f663528b2279e5b9 $
  */
 
 #ifndef	_LINUXKPI_LINUX_PM_H
@@ -47,6 +45,10 @@ typedef struct pm_message {
 } pm_message_t;
 
 struct dev_pm_domain {
+};
+
+struct dev_pm_info {
+	atomic_t usage_count;
 };
 
 #define	PM_EVENT_FREEZE		0x0001

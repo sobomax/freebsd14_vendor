@@ -29,8 +29,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: a660674cbacec5d748497688c5289fc9e8afa29d $");
-
 #include "opt_bus.h"
 
 #include <sys/param.h>
@@ -237,7 +235,5 @@ static device_method_t ehci_fdt_methods[] = {
 DEFINE_CLASS_1(ehci, ehci_fdt_driver, ehci_fdt_methods,
     sizeof(ehci_softc_t), generic_ehci_driver);
 
-static devclass_t ehci_fdt_devclass;
-
-DRIVER_MODULE(generic_ehci, simplebus, ehci_fdt_driver, ehci_fdt_devclass, 0, 0);
+DRIVER_MODULE(generic_ehci, simplebus, ehci_fdt_driver, 0, 0);
 MODULE_DEPEND(generic_ehci, usb, 1, 1, 1);

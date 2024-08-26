@@ -33,7 +33,6 @@
  * SUCH DAMAGE.
  *
  *	@(#)kvm_private.h	8.1 (Berkeley) 6/4/93
- * $FreeBSD: d4ec1ff1837b3c692c7633cf398c63b071010551 $
  */
 
 #include <sys/endian.h>

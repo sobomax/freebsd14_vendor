@@ -23,7 +23,6 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: 5e2e610a80bffd2de29f6ede1890eca9acd261b3 $
 
 atf_test_case F_flag
 F_flag_head()

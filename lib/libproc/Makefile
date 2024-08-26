@@ -1,4 +1,3 @@
-# $FreeBSD: 7fe6dd958ebd5ea65b74aa7a432726fd98b4c613 $
 
 .include <src.opts.mk>
 
@@ -15,15 +14,7 @@ INCS=	libproc.h
 
 CFLAGS+=	-I${.CURDIR}
 
-.if ${MK_CXX} == "no"
-CFLAGS+=	-DNO_CXA_DEMANGLE
-.elif ${MK_LIBCPLUSPLUS} != "no"
-LIBADD+=		cxxrt
-.else
-LIBADD+=	supcplusplus
-.endif
-
-LIBADD+=	elf procstat rtld_db util z
+LIBADD+=	cxxrt elf procstat rtld_db util z
 
 .if ${MK_CDDL} != "no"
 LIBADD+=	ctf

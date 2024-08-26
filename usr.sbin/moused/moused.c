@@ -47,8 +47,6 @@
  **/
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 08aa16f6103bd6843c11d4cabf6e03ee944960e4 $");
-
 #include <sys/param.h>
 #include <sys/consio.h>
 #include <sys/mouse.h>
@@ -3013,7 +3011,7 @@ pnpparse(pnpid_t *id, char *buf, int len)
     id->revision = ((buf[1] & 0x3f) << 6) | (buf[2] & 0x3f);
     debug("PnP rev %d.%02d", id->revision / 100, id->revision % 100);
 
-    /* EISA vender and product ID */
+    /* EISA vendor and product ID */
     id->eisaid = &buf[3];
     id->neisaid = 7;
 
@@ -3053,7 +3051,7 @@ pnpparse(pnpid_t *id, char *buf, int len)
 	}
 	/*
 	 * PnP COM spec prior to v0.96 allowed '*' in this field,
-	 * it's not allowed now; just igore it.
+	 * it's not allowed now; just ignore it.
 	 */
 	if (buf[j] == '*')
 	    ++j;

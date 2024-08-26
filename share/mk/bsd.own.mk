@@ -1,4 +1,3 @@
-# $FreeBSD: 09d7dfbd25c82bc4218aafbeaa8dd4ca4dedb59d $
 #
 # The include file <bsd.own.mk> set common variables for owner,
 # group, mode, and directories. Defaults are in brackets.
@@ -172,7 +171,7 @@ NOBINMODE?=	444
 KMODDIR?=	/boot/modules
 KMODOWN?=	${BINOWN}
 KMODGRP?=	${BINGRP}
-KMODMODE?=	${BINMODE}
+KMODMODE?=	${NOBINMODE}
 DTBDIR?=	/boot/dtb
 DTBODIR?=	/boot/dtb/overlays
 DTBOWN?=	root
@@ -248,7 +247,7 @@ _LINKMODE?=	${LINKMODE:U${NOBINMODE}}
 _SYMLINKOWN?=	${SYMLINKOWN:U${BINOWN}}
 _SYMLINKGRP?=	${SYMLINKGRP:U${BINGRP}}
 _SYMLINKMODE?=	${SYMLINKMODE:U755}
-HRDLINK?=	-l h -o ${_LINKOWN} -g ${_LINKGRP} -m ${_LINKMODE}
+HRDLINK?=	-l mr -o ${_LINKOWN} -g ${_LINKGRP} -m ${_LINKMODE}
 MANHRDLINK?=	-l h -o ${MANOWN} -g ${MANGRP} -m ${MANMODE}
 SYMLINK?=	-l s -o ${_SYMLINKOWN} -g ${_SYMLINKGRP} -m ${_SYMLINKMODE}
 LSYMLINK?=	-l s -o ${LIBOWN} -g ${LIBGRP} -m ${LIBMODE}
@@ -264,6 +263,8 @@ INSTALL_RSYMLINK?=	${INSTALL} ${RSYMLINK}
 .if !defined(DEBUG_FLAGS)
 STRIP?=		-s
 .endif
+
+TAR_CMD?=	tar
 
 COMPRESS_CMD?=	gzip -cn
 COMPRESS_EXT?=	.gz

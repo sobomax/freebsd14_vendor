@@ -24,7 +24,6 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 #include "test.h"
-__FBSDID("$FreeBSD: 26c9320e3008d06b87aaf5dbabdb69ab96b8a650 $");
 
 static int
 make_files(void)

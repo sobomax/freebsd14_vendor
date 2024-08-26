@@ -34,7 +34,6 @@
  * SUCH DAMAGE.
  *
  *	@(#)errno.h	8.5 (Berkeley) 1/21/94
- * $FreeBSD: e53a8d4c6c7f3af2eb3afcb24deccc8d0b37000f $
  */
 
 #ifndef _SYS_ERRNO_H_

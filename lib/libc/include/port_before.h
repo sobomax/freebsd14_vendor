@@ -1,4 +1,3 @@
-/* $FreeBSD: 430d23363c87f7eced9b33ff25247e5d071fe0f1 $ */
 
 #ifndef _PORT_BEFORE_H_
 #define _PORT_BEFORE_H_

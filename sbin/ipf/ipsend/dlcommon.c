@@ -1,4 +1,3 @@
-/*	$FreeBSD: 86554660240da58dea493942e9206d37e2ed4236 $	*/
 
 /*
  * Common (shared) DLPI test routines.

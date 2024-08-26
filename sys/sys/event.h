@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 1999,2000,2001 Jonathan Lemon <jlemon@FreeBSD.org>
  * All rights reserved.
@@ -24,8 +24,6 @@
  * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
- *
- * $FreeBSD: b6704f4b4b5098a03c1ec25a227cd873f3df03e6 $
  */
 
 #ifndef _SYS_EVENT_H_
@@ -60,9 +58,10 @@
 	    .udata = (f),			\
 	    .ext = {0},				\
 	};					\
-} while(0)
+} while (0)
 #else /* Pre-C99 or not STDC (e.g., C++) */
-/* The definition of the local variable kevp could possibly conflict
+/*
+ * The definition of the local variable kevp could possibly conflict
  * with a user-defined value passed in parameters a-f.
  */
 #define EV_SET(kevp_, a, b, c, d, e, f) do {	\
@@ -77,7 +76,7 @@
 	(kevp)->ext[1] = 0;			\
 	(kevp)->ext[2] = 0;			\
 	(kevp)->ext[3] = 0;			\
-} while(0)
+} while (0)
 #endif
 
 struct kevent {
@@ -92,7 +91,7 @@ struct kevent {
 
 #if defined(_WANT_FREEBSD11_KEVENT)
 /* Older structure used in FreeBSD 11.x and older. */
-struct kevent_freebsd11 {
+struct freebsd11_kevent {
 	__uintptr_t	ident;		/* identifier for this event */
 	short		filter;		/* filter for event */
 	unsigned short	flags;
@@ -120,7 +119,7 @@ struct kevent32 {
 };
 
 #ifdef _WANT_FREEBSD11_KEVENT
-struct kevent32_freebsd11 {
+struct freebsd11_kevent32 {
 	__uint32_t	ident;		/* identifier for this event */
 	short		filter;		/* filter for event */
 	unsigned short	flags;
@@ -137,6 +136,7 @@ struct kevent32_freebsd11 {
 #define EV_ENABLE	0x0004		/* enable event */
 #define EV_DISABLE	0x0008		/* disable event (not reported) */
 #define EV_FORCEONESHOT	0x0100		/* enable _ONESHOT and force trigger */
+#define EV_KEEPUDATA	0x0200		/* do not update the udata field */
 
 /* flags */
 #define EV_ONESHOT	0x0010		/* only report one occurrence */
@@ -215,6 +215,9 @@ struct kevent32_freebsd11 {
 #define NOTE_USECONDS		0x00000004	/* data is microseconds */
 #define NOTE_NSECONDS		0x00000008	/* data is nanoseconds */
 #define	NOTE_ABSTIME		0x00000010	/* timeout is absolute */
+
+/* Flags for kqueuex(2) */
+#define	KQUEUE_CLOEXEC	0x00000001	/* close on exec */
 
 struct knote;
 SLIST_HEAD(klist, knote);
@@ -303,7 +306,7 @@ struct knote {
 		struct		aioliojob *p_lio;	/* LIO job pointer */
 		void		*p_v;		/* generic other pointer */
 	} kn_ptr;
-	struct			filterops *kn_fop;
+	const struct		filterops *kn_fop;
 
 #define kn_id		kn_kevent.ident
 #define kn_filter	kn_kevent.filter
@@ -335,7 +338,6 @@ int	knlist_empty(struct knlist *knl);
 void	knlist_init(struct knlist *knl, void *lock, void (*kl_lock)(void *),
 	    void (*kl_unlock)(void *), void (*kl_assert_lock)(void *, int));
 void	knlist_init_mtx(struct knlist *knl, struct mtx *lock);
-void	knlist_init_rw_reader(struct knlist *knl, struct rwlock *lock);
 void	knlist_destroy(struct knlist *knl);
 void	knlist_cleardel(struct knlist *knl, struct thread *td,
 	    int islocked, int killkn);
@@ -346,7 +348,7 @@ void	knlist_cleardel(struct knlist *knl, struct thread *td,
 void	knote_fdclose(struct thread *p, int fd);
 int 	kqfd_register(int fd, struct kevent *kev, struct thread *p,
 	    int mflag);
-int	kqueue_add_filteropts(int filt, struct filterops *filtops);
+int	kqueue_add_filteropts(int filt, const struct filterops *filtops);
 int	kqueue_del_filteropts(int filt);
 void	kqueue_drain_schedtask(void);
 
@@ -357,6 +359,8 @@ struct timespec;
 
 __BEGIN_DECLS
 int     kqueue(void);
+int     kqueuex(unsigned flags);
+int     kqueue1(int flags);
 int     kevent(int kq, const struct kevent *changelist, int nchanges,
 	    struct kevent *eventlist, int nevents,
 	    const struct timespec *timeout);

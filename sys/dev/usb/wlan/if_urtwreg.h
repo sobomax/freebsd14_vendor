@@ -1,4 +1,3 @@
-/*	$FreeBSD: 5021e5ac352b559007720072bf60c5f083a21a69 $	*/
 
 /*-
  * Copyright (c) 2008 Weongyo Jeong <weongyo@FreeBSD.org>

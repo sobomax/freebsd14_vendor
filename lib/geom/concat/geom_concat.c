@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2004-2005 Pawel Jakub Dawidek <pjd@FreeBSD.org>
  * All rights reserved.
@@ -27,8 +27,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 801bea61cdfdcd8b47cac103b1c55af49cd375e9 $");
-
 #include <sys/param.h>
 #include <errno.h>
 #include <paths.h>
@@ -53,6 +51,13 @@ static void concat_dump(struct gctl_req *req);
 static void concat_label(struct gctl_req *req);
 
 struct g_command class_commands[] = {
+	{ "append", G_FLAG_VERBOSE, NULL,
+	    {
+		{ 'h', "hardcode", NULL, G_TYPE_BOOL },
+		G_OPT_SENTINEL
+	    },
+	    "[-hv] name prov"
+	},
 	{ "clear", G_FLAG_VERBOSE, concat_main, G_NULL_OPTS,
 	    "[-v] prov ..."
 	},

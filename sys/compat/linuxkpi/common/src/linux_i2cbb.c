@@ -25,8 +25,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 7d1fd453d3573d55eb5c8250a93f16b8132f3c02 $");
-
 #include <sys/param.h>
 #include <sys/systm.h>
 #include <sys/bus.h>
@@ -164,17 +162,15 @@ static device_method_t lkpi_iicbb_methods[] = {
 	DEVMETHOD_END
 };
 
-static devclass_t lkpi_iicbb_devclass;
-
 driver_t lkpi_iicbb_driver = {
 	"lkpi_iicbb",
 	lkpi_iicbb_methods,
 	sizeof(struct lkpi_iicbb_softc),
 };
 
-DRIVER_MODULE(lkpi_iicbb, drmn, lkpi_iicbb_driver, lkpi_iicbb_devclass, 0, 0);
-DRIVER_MODULE(lkpi_iicbb, drm, lkpi_iicbb_driver, lkpi_iicbb_devclass, 0, 0);
-DRIVER_MODULE(iicbb, lkpi_iicbb, iicbb_driver, iicbb_devclass, 0, 0);
+DRIVER_MODULE(lkpi_iicbb, drmn, lkpi_iicbb_driver, 0, 0);
+DRIVER_MODULE(lkpi_iicbb, drm, lkpi_iicbb_driver, 0, 0);
+DRIVER_MODULE(iicbb, lkpi_iicbb, iicbb_driver, 0, 0);
 MODULE_DEPEND(linuxkpi, iicbb, IICBUS_MINVER, IICBUS_PREFVER, IICBUS_MAXVER);
 
 static void

@@ -36,8 +36,6 @@ static char sccsid[] = "@(#)fortran.c	8.3 (Berkeley) 4/2/94";
 #endif
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 4174d4fda91fd61a5dbc8903adf379ecf8fc6e22 $");
-
 #include <ctype.h>
 #include <limits.h>
 #include <stdio.h>

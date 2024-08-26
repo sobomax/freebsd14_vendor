@@ -32,8 +32,6 @@
  * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
- *
- * $FreeBSD: 01fbe99c863ada4e3d2b3cacf4a07a02a2544fd5 $
  */
 #include <limits.h>
 #if __has_include_next(<sys/limits.h>)

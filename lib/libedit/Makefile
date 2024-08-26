@@ -1,6 +1,5 @@
 #	$NetBSD: Makefile,v 1.56 2016/03/02 19:24:20 christos Exp $
 #	@(#)Makefile	8.1 (Berkeley) 6/4/93
-# $FreeBSD: bf7d45957356d2d0f40122f50366ee7ff703f353 $
 
 PACKAGE=clibs
 
@@ -13,7 +12,7 @@ SHLIBDIR?= /lib
 WARNS?=	3
 LIB=	edit
 
-LIBADD=	ncursesw
+LIBADD=	tinfow
 
 SRCS=	chared.c chartype.c common.c el.c eln.c emacs.c filecomplete.c \
 	hist.c history.c historyn.c keymacro.c literal.c map.c \

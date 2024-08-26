@@ -1,4 +1,3 @@
-# $FreeBSD: 8c3a9acf82a6ef415460e8ca1175bfcc6cfdc512 $
 
 PACKAGE=lib${LIB}
 .PATH:	${SRCTOP}/contrib/pf/libevent

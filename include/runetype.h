@@ -32,7 +32,6 @@
  * SUCH DAMAGE.
  *
  *	@(#)runetype.h	8.1 (Berkeley) 6/2/93
- * $FreeBSD: 93007809dbf8a92f83925d607ff130ca022f5ea3 $
  */
 
 #ifndef	_RUNETYPE_H_

@@ -32,8 +32,6 @@
  * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
- *
- * $FreeBSD: e0e5b756981aaefd93e820465acb6a5ae38cd427 $
  */
 
 /* #define TWS_DEBUG on */
@@ -61,10 +59,12 @@ void tws_init_qs(struct tws_softc *sc);
 #endif
 
 #ifdef TWS_TRACE_DEBUG_ON
+    #define __tws_debug
     #define TWS_TRACE_DEBUG(sc, desc, val1, val2) \
             tws_trace(__FILE__, __func__, __LINE__, sc, desc, \
                                    (u_int64_t)val1, (u_int64_t)val2)
 #else
+    #define __tws_debug __unused
     #define TWS_TRACE_DEBUG(sc, desc, val1, val2)
 #endif
 

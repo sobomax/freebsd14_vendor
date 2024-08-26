@@ -1,5 +1,4 @@
 #       from @(#)Makefile.inc	8.1 (Berkeley) 6/4/93
-# $FreeBSD: 7c2db8bf5ea468f12c9fd755219281a05813b681 $
 
 .PATH: ${LIBC_SRCTOP}/db/man
 

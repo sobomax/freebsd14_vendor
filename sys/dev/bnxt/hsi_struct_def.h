@@ -28,8 +28,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: db3baa8d75c7770f4e710ce8124ec7af9a94db59 $");
-
 /*
  * Copyright(c) 2001-2021, Broadcom. All rights reserved. The
  * term Broadcom refers to Broadcom Inc. and/or its subsidiaries.

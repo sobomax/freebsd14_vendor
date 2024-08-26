@@ -28,8 +28,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 69adcff67930275a96e6367145dff316aa4d94d1 $");
-
 #include <sys/param.h>
 #include <sys/types.h>
 #include <sys/kernel.h>
@@ -187,7 +185,7 @@ linuxkpi___napi_schedule(struct napi_struct *napi)
 	}
 }
 
-void
+bool
 linuxkpi_napi_schedule(struct napi_struct *napi)
 {
 
@@ -197,8 +195,12 @@ linuxkpi_napi_schedule(struct napi_struct *napi)
 	 * iwlwifi calls this sequence instead of napi_schedule()
 	 * to be able to test the prep result.
 	 */
-	if (napi_schedule_prep(napi))
+	if (napi_schedule_prep(napi)) {
 		__napi_schedule(napi);
+		return (true);
+	}
+
+	return (false);
 }
 
 void

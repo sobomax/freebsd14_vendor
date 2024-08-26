@@ -33,7 +33,6 @@
  * SUCH DAMAGE.
  *
  *	from: FreeBSD: src/sys/i386/include/globaldata.h,v 1.27 2001/04/27
- * $FreeBSD: bdb2a4e2c5dfc697cb3dad67c736c00d926a4a8b $
  */
 
 #ifndef	_MACHINE_PCPU_H_
@@ -41,8 +40,6 @@
 
 #include <machine/cpu.h>
 #include <machine/cpufunc.h>
-
-#define	ALT_STACK_SIZE	128
 
 /* Keep in sync with db_show_mdpcpu() */
 #define	PCPU_MD_FIELDS							\
@@ -80,7 +77,6 @@ get_curthread(void)
 
 #define	PCPU_GET(member)	(get_pcpu()->pc_ ## member)
 #define	PCPU_ADD(member, value)	(get_pcpu()->pc_ ## member += (value))
-#define	PCPU_INC(member)	PCPU_ADD(member, 1)
 #define	PCPU_PTR(member)	(&get_pcpu()->pc_ ## member)
 #define	PCPU_SET(member,value)	(get_pcpu()->pc_ ## member = (value))
 

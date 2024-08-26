@@ -1,4 +1,3 @@
-#$FreeBSD: 1484e3029d6e5b426c9235197aa5a0c652cb8720 $
 
 #.PATH:  ${.CURDIR}
 .PATH: ${.CURDIR}/../../dev/liquidio

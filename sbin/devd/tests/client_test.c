@@ -23,8 +23,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 90081d963f4b879812a98e497634964db5145af7 $");
-
 #include <stdbool.h>
 #include <stdio.h>
 

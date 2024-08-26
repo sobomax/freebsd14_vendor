@@ -1,4 +1,3 @@
-# $FreeBSD: fca60eae07e159d0b24ec065e027d57289f2e654 $
 
 # mptable: broken (not 64 bit clean)
 # pnpinfo: crashes (not really useful anyway)
@@ -18,14 +17,7 @@ SUBDIR+=	boot0cfg
 SUBDIR+=	btxld
 .endif
 SUBDIR+=	cpucontrol
-.if ${MK_HYPERV} != "no"
-SUBDIR+=	hyperv
-.endif
-SUBDIR+=	kgmon
 SUBDIR+=	lptcontrol
 SUBDIR+=	mptable
-.if ${MK_NDIS} != "no"
-SUBDIR+=	ndiscvt
-.endif
 SUBDIR+=	spkrtest
 SUBDIR+=	zzz

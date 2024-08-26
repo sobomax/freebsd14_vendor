@@ -31,12 +31,7 @@
  * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
- *
- * @(#) Header: rpc.c,v 1.12 93/09/28 08:31:56 leres Exp  (LBL)
  */
-
-#include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 0f011e13a309cba7357b270e7790e0284dc9709d $");
 
 /*
  * RPC functions used by NFS and bootparams.

@@ -1,4 +1,3 @@
-# $FreeBSD: a28162060e7623df9f0197843cd8c90c9646f0d8 $
 #
 # Please see the file src/etc/mtree/README before making changes to this file.
 #
@@ -18,6 +17,12 @@
     c++
         v1
             __algorithm
+                pstl_backends
+                    cpu_backends
+                    ..
+                ..
+            ..
+            __atomic
             ..
             __bit
             ..
@@ -29,7 +34,15 @@
             ..
             __concepts
             ..
+            __condition_variable
+            ..
             __coroutine
+            ..
+            __debug_utils
+            ..
+            __exception
+            ..
+            __expected
             ..
             __filesystem
             ..
@@ -37,9 +50,25 @@
             ..
             __functional
             ..
+            __fwd
+            ..
+            __ios
+            ..
             __iterator
             ..
+            __locale_dir
+                locale_base_api
+                ..
+            ..
+            __math
+            ..
+            __mdspan
+            ..
             __memory
+            ..
+            __memory_resource
+            ..
+            __mutex
             ..
             __numeric
             ..
@@ -47,13 +76,25 @@
             ..
             __ranges
             ..
+            __stop_token
+            ..
+            __string
+            ..
+            __system_error
+            ..
             __thread
+            ..
+            __tuple
+            ..
+            __type_traits
             ..
             __utility
             ..
             __variant
             ..
             experimental
+                __simd
+                ..
             ..
             ext
             ..
@@ -169,10 +210,6 @@
         unionfs
         ..
     ..
-    gcc
-        4.2
-        ..
-    ..
     geom
         cache
         ..
@@ -201,6 +238,8 @@
         shsec
         ..
         stripe
+        ..
+        union
         ..
         virstor
         ..
@@ -275,16 +314,6 @@
     ..
     netipsec
     ..
-    netnatm
-        api
-        ..
-        msg
-        ..
-        saal
-        ..
-        sig
-        ..
-    ..
     netpfil
         pf
         ..
@@ -299,6 +328,8 @@
     ..
     opencsd
         c_api
+        ..
+        ete
         ..
         etmv3
         ..

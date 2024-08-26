@@ -26,7 +26,6 @@
 # File : Makefile
 # Author : David C Somayajulu, Qlogic Corporation, Aliso Viejo, CA 92656.
 #
-# $FreeBSD: 49a7779d905496ad54935844d081c71c79cd43fb $
 #
 
 .PATH: ${SRCTOP}/sys/dev/qlxgb

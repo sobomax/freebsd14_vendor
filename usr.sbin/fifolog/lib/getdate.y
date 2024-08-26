@@ -12,7 +12,6 @@
 **  Picked up from CVS and slightly cleaned up by to WARNS=5 level by
 **  Poul-Henning Kamp <phk@FreeBSD.org>
 **
-** $FreeBSD: 53a515c4d17e3986fac02651ff05f4a2efef690f $
 */
 
 #include <stdio.h>
@@ -24,9 +23,11 @@
 
 #include "libfifolog.h"
 
+#define yyparse getdate_yyparse
 #define yylex getdate_yylex
 #define yyerror getdate_yyerror
 
+static int yyparse(void);
 static int yylex(void);
 static int yyerror(const char *);
 
@@ -816,30 +817,18 @@ yylex(void)
 time_t
 get_date(char *p)
 {
-    struct tm		*tm, gmt;
+    struct tm		*tm;
     time_t		Start;
     time_t		tod;
     time_t nowtime;
-    struct tm *gmt_ptr;
 
     yyInput = p;
 
     (void)time (&nowtime);
 
-    gmt_ptr = gmtime (&nowtime);
-    if (gmt_ptr != NULL)
-    {
-	/* Make a copy, in case localtime modifies *tm (I think
-	   that comment now applies to *gmt_ptr, but I am too
-	   lazy to dig into how gmtime and locatime allocate the
-	   structures they return pointers to).  */
-	gmt = *gmt_ptr;
-    }
-
     if (! (tm = localtime (&nowtime)))
 	return -1;
 
-    tm = localtime(&nowtime);
     yyYear = tm->tm_year + 1900;
     yyMonth = tm->tm_mon + 1;
     yyDay = tm->tm_mday;

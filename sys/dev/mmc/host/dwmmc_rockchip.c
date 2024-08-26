@@ -25,8 +25,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 44fbf720f9084a01b7bd00ae207dbb53f68984b7 $");
-
 #include <sys/param.h>
 #include <sys/kernel.h>
 #include <sys/bus.h>
@@ -133,15 +131,11 @@ static device_method_t rockchip_dwmmc_methods[] = {
 	DEVMETHOD_END
 };
 
-static devclass_t rockchip_dwmmc_devclass;
-
 DEFINE_CLASS_1(rockchip_dwmmc, rockchip_dwmmc_driver, rockchip_dwmmc_methods,
     sizeof(struct dwmmc_softc), dwmmc_driver);
 
-DRIVER_MODULE(rockchip_dwmmc, simplebus, rockchip_dwmmc_driver,
-    rockchip_dwmmc_devclass, 0, 0);
-DRIVER_MODULE(rockchip_dwmmc, ofwbus, rockchip_dwmmc_driver,
-    rockchip_dwmmc_devclass, NULL, NULL);
+DRIVER_MODULE(rockchip_dwmmc, simplebus, rockchip_dwmmc_driver, 0, 0);
+DRIVER_MODULE(rockchip_dwmmc, ofwbus, rockchip_dwmmc_driver, NULL, NULL);
 #ifndef MMCCAM
 MMC_DECLARE_BRIDGE(rockchip_dwmmc);
 #endif

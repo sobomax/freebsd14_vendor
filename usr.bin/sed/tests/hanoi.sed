@@ -1,7 +1,6 @@
 # Towers of Hanoi in sed.
 #
 #	@(#)hanoi.sed	8.1 (Berkeley) 6/6/93
-# $FreeBSD: 6a45deaa94c7bbc8426ec7e9778f860422618f30 $
 #
 #
 # Ex:

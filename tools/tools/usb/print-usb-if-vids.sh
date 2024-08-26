@@ -24,7 +24,6 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: 17d8e050d18194b1519c04d10f70cc3c8d536d96 $
 
 
 fetch -o /tmp/usb.if http://www.usb.org/developers/tools/comp_dump/

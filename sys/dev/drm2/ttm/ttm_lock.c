@@ -36,8 +36,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 870877e59c9d7a650d0748c3a7e41c998a696e93 $");
-
 #include <dev/drm2/ttm/ttm_lock.h>
 #include <dev/drm2/ttm/ttm_module.h>
 
@@ -247,7 +245,7 @@ static void ttm_vt_lock_remove(struct ttm_base_object **p_base)
 {
 	struct ttm_base_object *base = *p_base;
 	struct ttm_lock *lock = container_of(base, struct ttm_lock, base);
-	int ret;
+	int ret __diagused;
 
 	*p_base = NULL;
 	ret = __ttm_vt_unlock(lock);

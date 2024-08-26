@@ -23,7 +23,6 @@
 # (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
 # THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
-# $FreeBSD: fd25b81b072bb6e9c2e75537ed4870cf38f2f913 $
 
 #include <sys/param.h>
 #include <sys/lock.h>
@@ -104,6 +103,13 @@ CODE {
 	default_ioctl(struct g_part_table *table __unused, struct g_provider *pp __unused,
 	    u_long cmd __unused, void *data __unused, int fflag __unused,
 	    struct thread *td __unused)
+	{
+		return (ENOIOCTL);
+	}
+
+	static int
+	default_getattr(struct g_part_table *table __unused,
+	    struct g_part_entry *entry __unused, struct bio *bp __unused)
 	{
 		return (ENOIOCTL);
 	}
@@ -259,3 +265,10 @@ METHOD int write {
 	struct g_part_table *table;
 	struct g_consumer *cp;
 };
+
+# getattr() - get the specified attribute, if any
+METHOD int getattr {
+	struct g_part_table *table;
+	struct g_part_entry *entry;
+	struct bio *bp;
+} DEFAULT default_getattr;

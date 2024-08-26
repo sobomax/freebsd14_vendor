@@ -27,8 +27,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 465fd90b87f786207949793b207fecb9e6ca0b91 $");
-
 /*
  * Dispatch platform calls to the appropriate platform implementation
  * through a previously registered kernel object.

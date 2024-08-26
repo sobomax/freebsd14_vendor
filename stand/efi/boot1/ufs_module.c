@@ -28,13 +28,11 @@
  * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
- *
- * $FreeBSD: edd7918e00b6b04321db1963b92cbbdd921cba95 $
  */
 
 #include <stdarg.h>
 #include <stdbool.h>
-#include <sys/cdefs.h>
+
 #include <sys/param.h>
 #include <sys/disk/bsd.h>
 #include <efi.h>

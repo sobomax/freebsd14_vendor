@@ -23,9 +23,6 @@
  * SUCH DAMAGE.
  */
 
-#include <sys/cdefs.h>
-__FBSDID("$FreeBSD: cee5b89932105c89a019a1083e2456d0378fb80c $");
-
 /*
  * MD bootstrap main() and assorted miscellaneous
  * commands.

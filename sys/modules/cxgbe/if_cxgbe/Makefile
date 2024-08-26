@@ -1,5 +1,4 @@
 #
-# $FreeBSD: 723029264baca876a37977280348aa0833b47310 $
 #
 
 .include <kmod.opts.mk>
@@ -23,9 +22,7 @@ SRCS+=	t4_filter.c
 SRCS+=	t4_hw.c
 SRCS+=	t4_if.c t4_if.h
 SRCS+=	t4_iov.c
-.if ${KERN_OPTS:MKERN_TLS} != ""
-SRCS+=	t6_kern_tls.c
-.endif
+SRCS.KERN_TLS+=	t6_kern_tls.c
 SRCS+=	t4_keyctx.c
 SRCS+=	t4_l2t.c
 SRCS+=	t4_main.c

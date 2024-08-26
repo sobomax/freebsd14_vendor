@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2005-2009 Ariff Abdullah <ariff@FreeBSD.org>
  * Copyright (c) 1999 Cameron Grant <cg@FreeBSD.org>
@@ -26,8 +26,6 @@
  * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
- *
- * $FreeBSD: 62787a3e689c8bb255a39208578a59e6420ad902 $
  */
 
 /*
@@ -64,6 +62,7 @@
 #include <sys/poll.h>
 #include <sys/sbuf.h>
 #include <sys/soundcard.h>
+#include <sys/sndstat.h>
 #include <sys/sysctl.h>
 #include <sys/kobj.h>
 #include <vm/vm.h>
@@ -89,7 +88,6 @@ struct snd_mixer;
 #include <dev/sound/pcm/feeder.h>
 #include <dev/sound/pcm/mixer.h>
 #include <dev/sound/pcm/dsp.h>
-#include <dev/sound/clone.h>
 #include <dev/sound/unit.h>
 
 #define	PCM_SOFTC_SIZE	(sizeof(struct snddev_info))
@@ -112,8 +110,6 @@ struct snd_mixer;
 #define PCMMAXUNIT		(snd_max_u())
 #define PCMMAXDEV		(snd_max_d())
 #define PCMMAXCHAN		(snd_max_c())
-
-#define PCMMAXCLONE		PCMMAXCHAN
 
 #define PCMUNIT(x)		(snd_unit2u(dev2unit(x)))
 #define PCMDEV(x)		(snd_unit2d(dev2unit(x)))
@@ -288,9 +284,6 @@ struct snd_mixer;
 #define SND_DEV_DSP_SPDIFOUT	19	/* /dev/dsp_spdifout */
 #define SND_DEV_DSP_SPDIFIN	20	/* /dev/dsp_spdifin  */
 
-#define SND_DEV_LAST		SND_DEV_DSP_SPDIFIN
-#define SND_DEV_MAX		PCMMAXDEV
-
 #define DSP_DEFAULT_SPEED	8000
 
 #define ON		1
@@ -321,7 +314,6 @@ int pcm_chnalloc(struct snddev_info *d, struct pcm_channel **ch, int direction,
     pid_t pid, char *comm, int devunit);
 int pcm_chnrelease(struct pcm_channel *c);
 int pcm_chnref(struct pcm_channel *c, int ref);
-int pcm_inprog(struct snddev_info *d, int delta);
 
 struct pcm_channel *pcm_chn_create(struct snddev_info *d, struct pcm_channel *parent, kobj_class_t cls, int dir, int num, void *devinfo);
 int pcm_chn_destroy(struct pcm_channel *ch);
@@ -346,22 +338,8 @@ void snd_mtxassert(void *m);
 #define	snd_mtxlock(m) mtx_lock(m)
 #define	snd_mtxunlock(m) mtx_unlock(m)
 
-typedef int (*sndstat_handler)(struct sbuf *s, device_t dev, int verbose);
-int sndstat_register(device_t dev, char *str, sndstat_handler handler);
-int sndstat_registerfile(char *str);
+int sndstat_register(device_t dev, char *str);
 int sndstat_unregister(device_t dev);
-int sndstat_unregisterfile(char *str);
-
-#define SND_DECLARE_FILE(version) \
-	_SND_DECLARE_FILE(__LINE__, version)
-
-#define _SND_DECLARE_FILE(uniq, version) \
-	__SND_DECLARE_FILE(uniq, version)
-
-#define __SND_DECLARE_FILE(uniq, version) \
-	static char sndstat_vinfo[] = version; \
-	SYSINIT(sdf_ ## uniq, SI_SUB_DRIVERS, SI_ORDER_MIDDLE, sndstat_registerfile, sndstat_vinfo); \
-	SYSUNINIT(sdf_ ## uniq, SI_SUB_DRIVERS, SI_ORDER_MIDDLE, sndstat_unregisterfile, sndstat_vinfo);
 
 /* usage of flags in device config entry (config file) */
 #define DV_F_DRQ_MASK	0x00000007	/* mask for secondary drq */
@@ -389,17 +367,15 @@ struct snddev_info {
 			} opened;
 		} pcm;
 	} channels;
-	TAILQ_HEAD(dsp_cdevinfo_linkhead, dsp_cdevinfo) dsp_cdevinfo_pool;
-	struct snd_clone *clones;
 	unsigned devcount, playcount, reccount, pvchancount, rvchancount ;
 	unsigned flags;
-	int inprog;
 	unsigned int bufsz;
 	void *devinfo;
 	device_t dev;
 	char status[SND_STATUSLEN];
 	struct mtx *lock;
 	struct cdev *mixer_dev;
+	struct cdev *dsp_dev;
 	uint32_t pvchanrate, pvchanformat;
 	uint32_t rvchanrate, rvchanformat;
 	int32_t eqpreamp;
@@ -535,7 +511,7 @@ int	sound_oss_card_info(oss_card_info *);
 		mtx_unlock(&Giant);					\
 	}								\
 } while (0)
-#else /* SND_DIAGNOSTIC */
+#else /* !SND_DIAGNOSTIC */
 #define PCM_WAIT(x)		do {					\
 	PCM_LOCKASSERT(x);						\
 	while ((x)->flags & SD_F_BUSY)					\
@@ -606,17 +582,11 @@ int	sound_oss_card_info(oss_card_info *);
 		mtx_unlock(&Giant);					\
 	}								\
 } while (0)
-#endif /* !SND_DIAGNOSTIC */
+#endif /* SND_DIAGNOSTIC */
 
 #define PCM_GIANT_LEAVE(x)						\
 	PCM_GIANT_EXIT(x);						\
 } while (0)
-
-#ifdef KLD_MODULE
-#define PCM_KLDSTRING(a) ("kld " # a)
-#else
-#define PCM_KLDSTRING(a) ""
-#endif
 
 #endif /* _KERNEL */
 

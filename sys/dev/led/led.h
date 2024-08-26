@@ -5,8 +5,6 @@
  * can do whatever you want with this stuff. If we meet some day, and you think
  * this stuff is worth it, you can buy me a beer in return.   Poul-Henning Kamp
  * ----------------------------------------------------------------------------
- *
- * $FreeBSD: 84992c203903d2255048b074c256fe3915e1d794 $
  */
 
 #ifndef _DEV_LED_H

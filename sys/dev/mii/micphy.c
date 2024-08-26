@@ -29,8 +29,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 9ebb72f5b413f117067efa006610e864f57011d7 $");
-
 /*
  * Micrel KSZ8081/KSZ9021/KSZ9031 Gigabit Ethernet Transceiver
  */
@@ -95,15 +93,13 @@ static device_method_t micphy_methods[] = {
 	DEVMETHOD_END
 };
 
-static devclass_t micphy_devclass;
-
 static driver_t micphy_driver = {
 	"micphy",
 	micphy_methods,
 	sizeof(struct mii_softc)
 };
 
-DRIVER_MODULE(micphy, miibus, micphy_driver, micphy_devclass, 0, 0);
+DRIVER_MODULE(micphy, miibus, micphy_driver, 0, 0);
 
 static const struct mii_phydesc micphys[] = {
 	MII_PHY_DESC(MICREL, KSZ8081),
@@ -279,6 +275,8 @@ micphy_attach(device_t dev)
 		ksz9031_load_values(sc, cfg->phynode);
 	else
 		ksz9021_load_values(sc, cfg->phynode);
+
+	mii_fdt_free_config(cfg);
 
 	return (0);
 }

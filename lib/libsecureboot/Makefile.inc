@@ -1,4 +1,3 @@
-# $FreeBSD: e0faf287a245d9bb52ac577334656a86d1f71b18 $
 
 .if empty(BEARSSL)
 .include "../libbearssl/Makefile.inc"
@@ -10,6 +9,8 @@ _${__this}_:
 libsecureboot_src:= ${.PARSEDIR}
 
 CFLAGS+= -I${libsecureboot_src}/h
+
+CFLAGS+= -DHAVE_BR_X509_TIME_CHECK
 
 .PATH: ${.PARSEDIR}
 
@@ -57,6 +58,10 @@ _2ndLAST_PEM_USE: .USE
 	sed -n "`grep -n .-BEGIN ${.ALLSRC:M*.pem} | tail -2 | \
 	sed 's,:.*,,' | xargs | (read a b; echo $$a,$$(($$b - 1)))`p" ${.ALLSRC:M*.pem} > ${.TARGET}
 
+# rules to populate the [tv]*.pem files we use to generate ta.h
+# and can add/alter VE_*_LIST as desired.
+.-include "local.trust.mk"
+
 # list of hashes we support
 VE_HASH_LIST?= SHA256
 
@@ -72,10 +77,6 @@ VE_SIGNATURE_EXT_LIST?= sig
 
 # needs to be yes for FIPS 140-2 compliance
 VE_SELF_TESTS?= no
-
-# rules to populate the [tv]*.pem files we use to generate ta.h
-# and can add/alter VE_*_LIST as desired.
-.-include "local.trust.mk"
 
 # this is what we use as our trust anchor
 CFLAGS+= -I. -DTRUST_ANCHOR_STR=ta_PEM
@@ -124,7 +125,11 @@ BUILD_UTC?= ${SOURCE_DATE_EPOCH}
 BUILD_UTC_FILE:= ${.PARSEDIR:tA}/${.PARSEFILE}
 .endif
 # you can of course set BUILD_UTC to any value you like
-BUILD_UTC?= ${${STAT:Ustat} -f %m ${BUILD_UTC_FILE}:L:sh}
+.if ${MAKE_VERSION} > 20230509
+BUILD_UTC?= ${BUILD_UTC_FILE:mtime}
+.else
+BUILD_UTC?= ${${STAT:Ustat} -L -f %m ${BUILD_UTC_FILE}:L:sh}
+.endif
 
 # Generate ta.h containing one or more PEM encoded trust anchors in ta_PEM.
 #

@@ -1,4 +1,3 @@
-/*	$FreeBSD: 145e451279c6a5cc465898203cdd3a0bc4697637 $	*/
 
 /*
  * Copyright (C) 2012 by Darren Reed.
@@ -75,7 +74,6 @@
 
 #if !defined(lint)
 static const char sccsid[] = "@(#)ip_frag.c	1.11 3/24/96 (C) 1993-2000 Darren Reed";
-static const char rcsid[] = "@(#)$FreeBSD: 145e451279c6a5cc465898203cdd3a0bc4697637 $";
 /* static const char rcsid[] = "@(#)$Id: ip_frag.c,v 2.77.2.12 2007/09/20 12:51:51 darrenr Exp $"; */
 #endif
 

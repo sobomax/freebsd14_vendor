@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2000 Orion Hodson <O.Hodson@cs.ucl.ac.uk>
  * All rights reserved.
@@ -60,8 +60,6 @@
 
 #include "mixer_if.h"
 #include "mpufoi_if.h"
-
-SND_DECLARE_FILE("$FreeBSD: 30868de323b3cd651ed81a6bb957009781b08f48 $");
 
 /* Supported chip ID's */
 #define CMI8338A_PCI_ID   0x010013f6
@@ -421,7 +419,7 @@ cmichan_setspeed(kobj_t obj, void *data, u_int32_t speed)
 {
 	struct sc_chinfo *ch = data;
 	struct sc_info	*sc = ch->parent;
-	u_int32_t r, rsp;
+	u_int32_t r, rsp __unused;
 
 	r = cmpci_rate_to_regvalue(speed);
 	snd_mtxlock(sc->lock);
@@ -992,8 +990,9 @@ cmi_attach(device_t dev)
 	pcm_addchan(dev, PCMDIR_PLAY, &cmichan_class, sc);
 	pcm_addchan(dev, PCMDIR_REC, &cmichan_class, sc);
 
-	snprintf(status, SND_STATUSLEN, "at io 0x%jx irq %jd %s",
-		 rman_get_start(sc->reg), rman_get_start(sc->irq),PCM_KLDSTRING(snd_cmi));
+	snprintf(status, SND_STATUSLEN, "port 0x%jx irq %jd on %s",
+		 rman_get_start(sc->reg), rman_get_start(sc->irq),
+		 device_get_nameunit(device_get_parent(dev)));
 	pcm_setstatus(dev, status);
 
 	DEB(printf("cmi_attach: succeeded\n"));
@@ -1106,7 +1105,7 @@ static driver_t cmi_driver = {
 	PCM_SOFTC_SIZE
 };
 
-DRIVER_MODULE(snd_cmi, pci, cmi_driver, pcm_devclass, 0, 0);
+DRIVER_MODULE(snd_cmi, pci, cmi_driver, 0, 0);
 MODULE_DEPEND(snd_cmi, sound, SOUND_MINVER, SOUND_PREFVER, SOUND_MAXVER);
 MODULE_DEPEND(snd_cmi, midi, 1,1,1);
 MODULE_VERSION(snd_cmi, 1);

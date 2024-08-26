@@ -1,4 +1,3 @@
-/* $FreeBSD: fe27da24b383bf9a2feca31460fdd7fedfad46f6 $ */
 /* $NetBSD: citrus_dechanyu.c,v 1.4 2011/11/19 18:20:13 tnozaki Exp $ */
 
 /*-

@@ -1,6 +1,5 @@
-/* $FreeBSD: 338c17983d9235e9725fab7d4a2b1f021559784f $ */
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2008-2022 Hans Petter Selasky.
  * Copyright (c) 2021-2022 Idwer Vollering.
@@ -970,7 +969,7 @@ usb_error_t
 usb_msc_eject(struct usb_device *udev, uint8_t iface_index, int method)
 {
 	struct bbb_transfer *sc;
-	usb_error_t err;
+	usb_error_t err __usbdebug_used;
 
 	sc = bbb_attach(udev, iface_index, UICLASS_MASS);
 	if (sc == NULL)

@@ -33,11 +33,11 @@
  * SUCH DAMAGE.
  */
 
+#include "opt_ddb.h"
+#include "opt_kstack_pages.h"
 #include "opt_platform.h"
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 6a910ad6dc1e4d7f964512bf112f17be95d72c87 $");
-
 #include <sys/param.h>
 #include <sys/systm.h>
 #include <sys/boot.h>
@@ -81,6 +81,7 @@ __FBSDID("$FreeBSD: 6a910ad6dc1e4d7f964512bf112f17be95d72c87 $");
 #include <vm/vm_pager.h>
 
 #include <machine/cpu.h>
+#include <machine/fpe.h>
 #include <machine/intr.h>
 #include <machine/kdb.h>
 #include <machine/machdep.h>
@@ -92,8 +93,8 @@ __FBSDID("$FreeBSD: 6a910ad6dc1e4d7f964512bf112f17be95d72c87 $");
 #include <machine/trap.h>
 #include <machine/vmparam.h>
 
-#ifdef FPE
-#include <machine/fpe.h>
+#ifdef DDB
+#include <ddb/ddb.h>
 #endif
 
 #ifdef FDT
@@ -131,7 +132,7 @@ cpu_startup(void *dummy)
 {
 
 	sbi_print_version();
-	identify_cpu();
+	printcpuinfo(0);
 
 	printf("real memory  = %ju (%ju MB)\n", ptoa((uintmax_t)realmem),
 	    ptoa((uintmax_t)realmem) / (1024 * 1024));
@@ -291,7 +292,7 @@ init_proc0(vm_offset_t kstack)
 
 	proc_linkup0(&proc0, &thread0);
 	thread0.td_kstack = kstack;
-	thread0.td_kstack_pages = kstack_pages;
+	thread0.td_kstack_pages = KSTACK_PAGES;
 	thread0.td_pcb = (struct pcb *)(thread0.td_kstack +
 	    thread0.td_kstack_pages * PAGE_SIZE) - 1;
 	thread0.td_pcb->pcb_fpflags = 0;
@@ -460,7 +461,7 @@ parse_metadata(void)
 #ifdef DDB
 	ksym_start = MD_FETCH(kmdp, MODINFOMD_SSYM, uintptr_t);
 	ksym_end = MD_FETCH(kmdp, MODINFOMD_ESYM, uintptr_t);
-	db_fetch_ksymtab(ksym_start, ksym_end);
+	db_fetch_ksymtab(ksym_start, ksym_end, 0);
 #endif
 #ifdef FDT
 	try_load_dtb(kmdp);
@@ -539,6 +540,11 @@ initriscv(struct riscv_bootparams *rvbp)
 	physmem_hardware_regions(mem_regions, mem_regions_sz);
 #endif
 
+	/*
+	 * Identify CPU/ISA features.
+	 */
+	identify_cpu(0);
+
 	/* Do basic tuning, hz etc */
 	init_param1();
 
@@ -595,16 +601,9 @@ initriscv(struct riscv_bootparams *rvbp)
 
 	early_boot = 0;
 
+	if (bootverbose && kstack_pages != KSTACK_PAGES)
+		printf("kern.kstack_pages = %d ignored for thread0\n",
+		    kstack_pages);
+
 	TSEXIT();
-}
-
-#undef bzero
-void
-bzero(void *buf, size_t len)
-{
-	uint8_t *p;
-
-	p = buf;
-	while(len-- > 0)
-		*p++ = 0;
 }

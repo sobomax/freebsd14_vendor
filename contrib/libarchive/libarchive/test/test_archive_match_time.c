@@ -24,7 +24,6 @@
  */
 
 #include "test.h"
-__FBSDID("$FreeBSD: 23754a1538b18664c5e846d628d328513981146b $");
 
 #define __LIBARCHIVE_BUILD 1
 #include "archive_getdate.h"

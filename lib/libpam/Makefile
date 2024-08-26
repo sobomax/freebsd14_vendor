@@ -22,7 +22,6 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: 95d92288081376adc87c6e089e411c323a4a5df5 $
 
 # The modules link in libpam.  They build the static modules as well.
 SUBDIR+=	libpam modules pam.d

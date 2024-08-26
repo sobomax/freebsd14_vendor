@@ -1,4 +1,3 @@
-# $FreeBSD: 36aa4bdcbcd31a919f913c99e0fa307540d6380f $
 set -e
 if false; then
 	:

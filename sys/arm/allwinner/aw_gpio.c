@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2013 Ganbold Tsagaankhuu <ganbold@freebsd.org>
  * Copyright (c) 2012 Oleksandr Tymoshenko <gonzo@freebsd.org>
@@ -29,8 +29,6 @@
  *
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 1221384fb87564ca584c20ebf88d7a552ca2f4d8 $");
-
 #include <sys/param.h>
 #include <sys/systm.h>
 #include <sys/bus.h>
@@ -656,17 +654,29 @@ aw_gpio_pin_get_locked(struct aw_gpio_softc *sc,uint32_t pin,
     unsigned int *val)
 {
 	uint32_t bank, reg_data;
+	int32_t func;
+	int err;
 
 	AW_GPIO_LOCK_ASSERT(sc);
 
 	if (pin > sc->conf->padconf->npins)
 		return (EINVAL);
 
+	func = aw_gpio_get_function(sc, pin);
+	if (func == sc->conf->padconf->pins[pin].eint_func) {	/* "pl_eintX */
+		err = aw_gpio_set_function(sc, pin, AW_GPIO_INPUT);
+		if (err != 0)
+			return (err);
+	}
+
 	bank = sc->conf->padconf->pins[pin].port;
 	pin = sc->conf->padconf->pins[pin].pin;
 
 	reg_data = AW_GPIO_READ(sc, AW_GPIO_GP_DAT(bank));
 	*val = (reg_data & (1 << pin)) ? 1 : 0;
+
+	if (func == sc->conf->padconf->pins[pin].eint_func)
+		(void)aw_gpio_set_function(sc, pin, func);
 
 	return (0);
 }
@@ -1475,13 +1485,11 @@ static device_method_t aw_gpio_methods[] = {
 	DEVMETHOD_END
 };
 
-static devclass_t aw_gpio_devclass;
-
 static driver_t aw_gpio_driver = {
 	"gpio",
 	aw_gpio_methods,
 	sizeof(struct aw_gpio_softc),
 };
 
-EARLY_DRIVER_MODULE(aw_gpio, simplebus, aw_gpio_driver, aw_gpio_devclass, 0, 0,
+EARLY_DRIVER_MODULE(aw_gpio, simplebus, aw_gpio_driver, 0, 0,
     BUS_PASS_INTERRUPT + BUS_PASS_ORDER_LATE);

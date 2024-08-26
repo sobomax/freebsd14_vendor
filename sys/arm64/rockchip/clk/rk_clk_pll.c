@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2018 Emmanuel Vadot <manu@freebsd.org>
  *
@@ -23,13 +23,9 @@
  * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
- *
- * $FreeBSD: 99026c54672775b89a1c475c1f2d95ff273fb3ab $
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 99026c54672775b89a1c475c1f2d95ff273fb3ab $");
-
 #include <sys/param.h>
 #include <sys/systm.h>
 #include <sys/bus.h>
@@ -373,10 +369,6 @@ rk3066_clk_pll_register(struct clkdom *clkdom, struct rk_clk_pll_def *clkdef)
 static int
 rk3328_clk_pll_init(struct clknode *clk, device_t dev)
 {
-	struct rk_clk_pll_sc *sc;
-
-	sc = clknode_get_softc(clk);
-
 	clknode_init_parent_idx(clk, 0);
 
 	return (0);
@@ -585,9 +577,6 @@ rk3328_clk_pll_register(struct clkdom *clkdom, struct rk_clk_pll_def *clkdef)
 static int
 rk3399_clk_pll_init(struct clknode *clk, device_t dev)
 {
-	struct rk_clk_pll_sc *sc;
-
-	sc = clknode_get_softc(clk);
 	clknode_init_parent_idx(clk, 0);
 
 	return (0);

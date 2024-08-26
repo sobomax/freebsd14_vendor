@@ -1,3 +1,2 @@
-.\" $FreeBSD: cc4ef91da9ee21b5f75092fc4626c45a700a7ba6 $
 Do not build or install
 .Xr bootpd 8 .

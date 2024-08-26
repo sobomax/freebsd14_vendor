@@ -1,4 +1,3 @@
-/* $FreeBSD: 534d4ac8160adac7507fed2739b54d898554b981 $ */
 
 char *
 x(void)

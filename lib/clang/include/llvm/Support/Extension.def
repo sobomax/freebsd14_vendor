@@ -1,3 +1,2 @@
-// $FreeBSD: 07fb3782b6c3ca7461f1adf3a2c04408bf8d2779 $
 //extension handlers
 #undef HANDLE_EXTENSION

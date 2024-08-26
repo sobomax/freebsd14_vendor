@@ -21,13 +21,9 @@
  * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
- *
- * $FreeBSD: 4e845be68e8b5187837cbefd4c8b7bea37bc10c4 $
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 4e845be68e8b5187837cbefd4c8b7bea37bc10c4 $");
-
 #include <sys/param.h>
 #include <sys/kernel.h>
 #include <sys/systm.h>
@@ -202,9 +198,9 @@ mmc_cam_sim_alloc(device_t dev, const char *name, struct mmc_sim *mmc_sim)
 	kobj_desc = &mmc_sim_cam_poll_desc;
 	kobj_method = kobj_lookup_method(((kobj_t)dev)->ops->cls, NULL,
 	    kobj_desc);
-	mmc_sim->sim = cam_sim_alloc_dev(mmc_cam_sim_default_action,
+	mmc_sim->sim = cam_sim_alloc(mmc_cam_sim_default_action,
 	    kobj_method == &kobj_desc->deflt ? NULL : mmc_cam_default_poll,
-	    mmc_sim->name, mmc_sim, dev,
+	    mmc_sim->name, mmc_sim, device_get_unit(dev),
 	    &mmc_sim->mtx, 1, 1, mmc_sim->devq);
 
 	if (mmc_sim->sim == NULL) {

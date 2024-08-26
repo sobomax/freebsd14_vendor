@@ -1,4 +1,3 @@
-/*	$FreeBSD: 2e7c0c9cffa36c4ddedbc9c60ec8efdad56d99b5 $	*/
 /*	$KAME: esp.h,v 1.16 2000/10/18 21:28:00 itojun Exp $	*/
 
 /*-

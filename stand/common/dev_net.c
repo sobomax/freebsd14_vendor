@@ -29,9 +29,6 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 24bfbe9636e3bc27f051050661de862317f8b6a9 $");
-
 /*-
  * This module implements a "raw device" interface suitable for
  * use by the stand-alone I/O library NFS code.  This interface

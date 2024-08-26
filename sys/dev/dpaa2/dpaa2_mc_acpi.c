@@ -27,8 +27,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: fb0b467b5009038d02e729c7e42f45306087486f $");
-
 /*
  * The DPAA2 Management Complex (MC) Bus Driver (ACPI-based).
  *

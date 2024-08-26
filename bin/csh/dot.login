@@ -1,4 +1,3 @@
-# $FreeBSD: 8d87604f4f7d4c3caf0c595689fbe87136be483d $
 #
 # .login - csh login script, read by login shell, after `.cshrc' at login.
 #

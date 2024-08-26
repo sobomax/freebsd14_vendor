@@ -26,8 +26,6 @@
  * THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- *
- * $FreeBSD: 922100edb3adcce0b7493b9cf122dcff53c81544 $
  */
 
 #ifndef _MACHINE_SIGFRAME_H_
@@ -75,7 +73,7 @@ struct osigframe {
 #endif
 #ifdef COMPAT_FREEBSD4
 /* FreeBSD 4.x */
-struct sigframe4 {
+struct freebsd4_sigframe {
 	register_t	sf_signum;
 	register_t	sf_siginfo;	/* code or pointer to sf_si */
 	register_t	sf_ucontext;	/* points to sf_uc */
@@ -85,7 +83,7 @@ struct sigframe4 {
 		__siginfohandler_t	*sf_action;
 		__sighandler_t		*sf_handler;
 	} sf_ahu;
-	struct ucontext4 sf_uc;		/* = *sf_ucontext */
+	struct freebsd4_ucontext sf_uc;		/* = *sf_ucontext */
 	siginfo_t	sf_si;		/* = *sf_siginfo (SA_SIGINFO case) */
 };
 #endif

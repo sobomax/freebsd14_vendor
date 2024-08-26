@@ -1,7 +1,7 @@
-# $FreeBSD: 3a3a6a029f875dc7be526978561a895b5e9ab4ae $
 
 PROG=	decryptcore
 
+CFLAGS+=-DOPENSSL_API_COMPAT=0x10100000L
 LIBADD=	crypto pjdlog
 
 MAN=	decryptcore.8

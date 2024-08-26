@@ -1,4 +1,3 @@
-# $FreeBSD: 31ce91d085c0098600b8b6b934504b3709a2c793 $
 
 .PATH:  ${SRCTOP}/sys/netpfil/ipfw
 KMOD=   dummynet

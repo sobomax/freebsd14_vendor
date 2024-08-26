@@ -1,6 +1,5 @@
 #!/bin/sh
 #
-# $FreeBSD: 8cca1ea4d9497b28c1d688ad09d481a48ffb8937 $
 #
 
 # If there is a global system configuration file, suck it in.

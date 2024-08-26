@@ -8,7 +8,7 @@
  * Chris Torek.
  *
  * Copyright (c) 2011 The FreeBSD Foundation
- * All rights reserved.
+ *
  * Portions of this software were developed by David Chisnall
  * under sponsorship from the FreeBSD Foundation.
  *
@@ -40,9 +40,6 @@
 #if defined(LIBC_SCCS) && !defined(lint)
 static char sccsid[] = "@(#)vfprintf.c	8.1 (Berkeley) 6/4/93";
 #endif /* LIBC_SCCS and not lint */
-#include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 70f5074e2f723c9822c0940e5616175c63a845fb $");
-
 /*
  * Actual printf innards.
  *
@@ -318,6 +315,8 @@ __vfprintf(FILE *fp, locale_t locale, const char *fmt0, va_list ap)
 	int width;		/* width from format (%8d), or 0 */
 	int prec;		/* precision from format; <0 for N/A */
 	int saved_errno;
+	int error;
+	char errnomsg[NL_TEXTMAX];
 	char sign;		/* sign prefix (' ', '+', '-', or \0) */
 	struct grouping_state gs; /* thousands' grouping info */
 
@@ -612,9 +611,65 @@ reswitch:	switch (ch) {
 		case 't':
 			flags |= PTRDIFFT;
 			goto rflag;
+		case 'w':
+			/*
+			 * Fixed-width integer types.  On all platforms we
+			 * support, int8_t is equivalent to char, int16_t
+			 * is equivalent to short, int32_t is equivalent
+			 * to int, int64_t is equivalent to long long int.
+			 * Furthermore, int_fast8_t, int_fast16_t and
+			 * int_fast32_t are equivalent to int, and
+			 * int_fast64_t is equivalent to long long int.
+			 */
+			flags &= ~(CHARINT|SHORTINT|LONGINT|LLONGINT|INTMAXT);
+			if (fmt[0] == 'f') {
+				flags |= FASTINT;
+				fmt++;
+			} else {
+				flags &= ~FASTINT;
+			}
+			if (fmt[0] == '8') {
+				if (!(flags & FASTINT))
+					flags |= CHARINT;
+				else
+					/* no flag set = 32 */ ;
+				fmt += 1;
+			} else if (fmt[0] == '1' && fmt[1] == '6') {
+				if (!(flags & FASTINT))
+					flags |= SHORTINT;
+				else
+					/* no flag set = 32 */ ;
+				fmt += 2;
+			} else if (fmt[0] == '3' && fmt[1] == '2') {
+				/* no flag set = 32 */ ;
+				fmt += 2;
+			} else if (fmt[0] == '6' && fmt[1] == '4') {
+				flags |= LLONGINT;
+				fmt += 2;
+			} else {
+				if (flags & FASTINT) {
+					flags &= ~FASTINT;
+					fmt--;
+				}
+				goto invalid;
+			}
+			goto rflag;
 		case 'z':
 			flags |= SIZET;
 			goto rflag;
+		case 'B':
+		case 'b':
+			if (flags & INTMAX_SIZE)
+				ujval = UJARG();
+			else
+				ulval = UARG();
+			base = 2;
+			/* leading 0b/B only if non-zero */
+			if (flags & ALT &&
+			    (flags & INTMAX_SIZE ? ujval != 0 : ulval != 0))
+				ox[1] = ch;
+			goto nosign;
+			break;
 		case 'C':
 			flags |= LONGINT;
 			/*FALLTHROUGH*/
@@ -779,7 +834,9 @@ fp_common:
 			break;
 #endif /* !NO_FLOATING_POINT */
 		case 'm':
-			cp = strerror(saved_errno);
+			error = __strerror_rl(saved_errno, errnomsg,
+			    sizeof(errnomsg), locale);
+			cp = error == 0 ? errnomsg : "<strerror failure>";
 			size = (prec >= 0) ? strnlen(cp, prec) : strlen(cp);
 			sign = '\0';
 			break;
@@ -921,6 +978,7 @@ number:			if ((dprec = prec) >= 0)
 		default:	/* "%?" prints ?, unless ? is NUL */
 			if (ch == '\0')
 				goto done;
+invalid:
 			/* pretend it was %c with argument ch */
 			cp = buf;
 			*cp = ch;

@@ -2,7 +2,6 @@
 #
 # Created by: Koine Yuusuke(koinec) <koinec@users.osdn.me>
 #
-# $FreeBSD: 8674c280280bd1e9e0f2a7c6d9b55279e2181d30 $
 
 # for those who create the Keyboard Layout File. ******************************
 #  To create the keyboard layout file, first copy this 'default' file into the

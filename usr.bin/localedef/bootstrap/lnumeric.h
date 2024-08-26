@@ -32,8 +32,6 @@
  * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
- *
- * $FreeBSD: 8f2334b6cd824652a5eda93e74024ddc57557ced $
  */
 #include "namespace.h"
 #define	lc_monetary_T	localedef_bootstrap_lc_monetary_T

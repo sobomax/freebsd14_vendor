@@ -23,7 +23,6 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  */
-/* $FreeBSD: 28424c4facd346c7c2285ffc856f32e938c1e12d $ */
 /*
  * A VHBA device to test REPORT LUN functionality.
  */

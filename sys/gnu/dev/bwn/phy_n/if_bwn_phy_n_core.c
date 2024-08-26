@@ -25,8 +25,6 @@
 */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 6b47a5990d3b7fcd47693a6bac903b278e9f97c6 $");
-
 /*
  * The Broadcom Wireless LAN controller driver.
  */

@@ -28,9 +28,6 @@
  * Limited test program for nftw() as specified by IEEE Std. 1003.1-2008.
  */
 
-#include <sys/cdefs.h>
-__FBSDID("$FreeBSD: b120f01ff4f12d7c6fb2145bbdff2fbad528e818 $");
-
 #include <sys/wait.h>
 #include <err.h>
 #include <errno.h>

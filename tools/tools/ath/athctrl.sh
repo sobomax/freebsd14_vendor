@@ -4,7 +4,6 @@
 # point-to-point use at a specific distance.  Based on a
 # program by Gunter Burchardt.
 #
-# $FreeBSD: 5adee1c3c4a4479c489ceb4832bdcae386ba7ad5 $
 #
 DEV=ath0
 d=0

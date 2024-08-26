@@ -1,4 +1,3 @@
-# $FreeBSD: bd548f06951e99297d6c57121ddc3f283ea5859f $
 
 PACKAGE=	tests
 
@@ -14,6 +13,8 @@ ${PACKAGE}FILES+=	tools-posix.test
 
 SCRIPTS+=	run
 
+ATF_TESTS_C+=	acl-api-test
+
 TAP_TESTS_SH+=	00
 TAP_TESTS_SH+=	01
 TAP_TESTS_SH+=	02
@@ -21,7 +22,9 @@ TAP_TESTS_SH+=	03
 TAP_TESTS_SH+=	04
 
 .for t in ${TAP_TESTS_SH}
-TEST_METADATA.$t+=	required_user="root"
+# Tests hard-code a ZFS pool name of "acltools" and so cannot run in parallel.
+TEST_METADATA.$t+=	required_user="root" \
+			is_exclusive=true
 .endfor
 
 _ACL_PROGS=		getfacl setfacl

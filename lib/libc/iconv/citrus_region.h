@@ -1,4 +1,3 @@
-/* $FreeBSD: 0a78eec2b85cd1cae8f7b0979e633105aa1c6013 $ */
 /* $NetBSD: citrus_region.h,v 1.7 2008/02/09 14:56:20 junyoung Exp $ */
 
 /*-

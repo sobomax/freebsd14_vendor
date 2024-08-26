@@ -30,8 +30,6 @@
  * CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF
  * THE POSSIBILITY OF SUCH DAMAGE.
- *
- * $FreeBSD: ccbd09c6dbf3c099fa3e8fb83b0809750d5db9ae $
  */
 
 /*
@@ -1018,7 +1016,7 @@ typedef enum {
 
 struct ti_softc {
 	device_t		ti_dev;
-	struct ifnet		*ti_ifp;
+	if_t			ti_ifp;
 	bus_space_handle_t	ti_bhandle;
 	bus_space_tag_t		ti_btag;
 	void			*ti_intrhand;

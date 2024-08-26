@@ -1,4 +1,3 @@
-# $FreeBSD: df3a9a48961c06b497ce485881ffd10ada0bd144 $
 
 # This test assumes that whatever mechanism cd -P uses to determine the
 # pathname to the current directory if it is longer than PATH_MAX requires

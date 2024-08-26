@@ -37,8 +37,6 @@ static const char sccsid[] = "@(#)function.c	8.10 (Berkeley) 5/4/95";
 #endif
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 0b78d9cafce15599d7b01524b589161e6b34cf0a $");
-
 #include <sys/param.h>
 #include <sys/ucred.h>
 #include <sys/stat.h>
@@ -1345,7 +1343,7 @@ c_perm(OPTION *option, char ***argvp)
 	if (*perm == '-') {
 		new->flags |= F_ATLEAST;
 		++perm;
-	} else if (*perm == '+') {
+	} else if (*perm == '+' || *perm == '/') {
 		new->flags |= F_ANY;
 		++perm;
 	}
@@ -1815,3 +1813,42 @@ f_quit(PLAN *plan __unused, FTSENT *entry __unused)
 }
 
 /* c_quit == c_simple */
+
+/*
+ * -readable
+ *
+ *  	File is readable
+ */
+int
+f_readable(PLAN *plan __unused, FTSENT *entry)
+{
+	return (access(entry->fts_path, R_OK) == 0);
+}
+
+/* c_readable == c_simple */
+
+/*
+ * -writable
+ *
+ *  	File is writable
+ */
+int
+f_writable(PLAN *plan __unused, FTSENT *entry)
+{
+	return (access(entry->fts_path, W_OK) == 0);
+}
+
+/* c_writable == c_simple */
+
+/*
+ * -executable
+ *
+ *  	File is executable
+ */
+int
+f_executable(PLAN *plan __unused, FTSENT *entry)
+{
+	return (access(entry->fts_path, X_OK) == 0);
+}
+
+/* c_executable == c_simple */

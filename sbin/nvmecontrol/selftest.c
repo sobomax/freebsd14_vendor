@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2020 Chuck Tuffli
  *
@@ -26,8 +26,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 17945248f8e3979f3d833913579010f6ca4bc1ad $");
-
 #include <sys/param.h>
 #include <sys/ioccom.h>
 

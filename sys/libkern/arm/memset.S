@@ -26,8 +26,6 @@
  */
 
 #include <machine/asm.h>
-__FBSDID("$FreeBSD: dd06e6b0ed6885f385163efefe6058db5412151b $");
-
 /*
  * This implements
  *  void __aeabi_memset(void *dest, size_t len, int c)

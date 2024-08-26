@@ -17,9 +17,6 @@
  *	$OpenBSD: strtonum.c,v 1.7 2013/04/17 18:40:58 tedu Exp $
  */
 
-#include <sys/cdefs.h>
-__FBSDID("$FreeBSD: aa433d835b36ac117fad53ff2eb9380818260612 $");
-
 #include <errno.h>
 #include <limits.h>
 #include <stdlib.h>

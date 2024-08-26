@@ -31,8 +31,6 @@
 
 #include <sys/cdefs.h>
 __RCSID("$NetBSD: timespec_get.c,v 1.2 2016/10/04 12:48:15 christos Exp $");
-__FBSDID("$FreeBSD: 1dd0147e933d0158bd70a61538c6126b8331ed1d $");
-
 #include <time.h>
 
 /* ISO/IEC 9899:201x 7.27.2.5 The timespec_get function */
@@ -44,6 +42,10 @@ timespec_get(struct timespec *ts, int base)
 	switch (base) {
 	case TIME_UTC:
 		if (clock_gettime(CLOCK_REALTIME, ts) == -1)
+			return 0;
+		break;
+	case TIME_MONOTONIC:
+		if (clock_gettime(CLOCK_MONOTONIC, ts) == -1)
 			return 0;
 		break;
 	default:

@@ -3,9 +3,6 @@
  *
  */
 
-#include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 4759c4417d197999bb8f15fbae38c42c10990e05 $");
-
 /*
  * "Plug and Play" functionality.
  *

@@ -10,8 +10,6 @@
  *
  * modified 03-25-03 for 12 hour option
  *     - Samy Al Bahra <samy@kerneled.com>
- *
- * $FreeBSD: 04cc00b37d6fc86c6f0872105e08af1f77018e46 $
  */
 
 #include <err.h>
@@ -43,7 +41,7 @@ static void set(int, int);
 static void standt(int);
 static void movto(int, int);
 static void sighndl(int);
-static void usage(void);
+static void usage(void) __dead2;
 
 static void
 sighndl(int signo)

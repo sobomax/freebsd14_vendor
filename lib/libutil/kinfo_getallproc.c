@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2007 Robert N. M. Watson
  * Copyright (c) 2009 Ulf Lilleengen
@@ -25,13 +25,9 @@
  * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
- *
- * $FreeBSD: 609d77a259ac7c63a1fa4be4a261a96cdbe35c7d $
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 609d77a259ac7c63a1fa4be4a261a96cdbe35c7d $");
-
 #include <sys/param.h>
 #include <sys/sysctl.h>
 #include <sys/user.h>

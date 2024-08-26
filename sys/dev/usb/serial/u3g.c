@@ -15,8 +15,6 @@
  * WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
  * ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
- *
- * $FreeBSD: d577508fff37687812d169c8e5cb90c8e76b1e4e $
  */
 
 /*
@@ -190,8 +188,6 @@ static device_method_t u3g_methods[] = {
 	DEVMETHOD_END
 };
 
-static devclass_t u3g_devclass;
-
 static driver_t u3g_driver = {
 	.name = "u3g",
 	.methods = u3g_methods,
@@ -257,6 +253,7 @@ static const STRUCT_USB_HOST_ID u3g_devs[] = {
 	U3G_DEV(HP, HS2300, 0),
 	U3G_DEV(HP, UN2420_QDL, 0),
 	U3G_DEV(HP, UN2420, 0),
+	U3G_DEV(HP, LT4132, U3GINIT_HUAWEISCSI2),
 	U3G_DEV(HUAWEI, E1401, U3GINIT_HUAWEI),
 	U3G_DEV(HUAWEI, E1402, U3GINIT_HUAWEI),
 	U3G_DEV(HUAWEI, E1403, U3GINIT_HUAWEI),
@@ -413,6 +410,8 @@ static const STRUCT_USB_HOST_ID u3g_devs[] = {
 	U3G_DEV(OPTION, GTMAXHSUPA, 0),
 	U3G_DEV(OPTION, GTMAXHSUPAE, 0),
 	U3G_DEV(OPTION, VODAFONEMC3G, 0),
+	U3G_DEV(PANASONIC, CFF9_3G_QDL, 0),
+	U3G_DEV(PANASONIC, CFF9_3G, 0),
 	U3G_DEV(QISDA, H20_1, 0),
 	U3G_DEV(QISDA, H20_2, 0),
 	U3G_DEV(QISDA, H21_1, 0),
@@ -514,8 +513,25 @@ static const STRUCT_USB_HOST_ID u3g_devs[] = {
 	U3G_DEV(QUANTA, Q111, 0),
 	U3G_DEV(QUECTEL, EC25, 0),
 	U3G_DEV(QUECTEL, EM05, 0),
-	U3G_DEV(QUECTEL, EM12_G, 0),
-	U3G_DEV(QUECTEL, EP06_E, 0),
+	U3G_DEV(QUECTEL, EC21, 0),
+	U3G_DEV(QUECTEL, EG91, 0),
+	U3G_DEV(QUECTEL, EG95, 0),
+	U3G_DEV(QUECTEL, EP06, 0),
+	U3G_DEV(QUECTEL, EG065K, 0),
+	U3G_DEV(QUECTEL, EM12, 0),
+	U3G_DEV(QUECTEL, BG96, 0),
+	U3G_DEV(QUECTEL, BG95, 0),
+	U3G_DEV(QUECTEL, AG35, 0),
+	U3G_DEV(QUECTEL, AG15, 0),
+	U3G_DEV(QUECTEL, AG520, 0),
+	U3G_DEV(QUECTEL, AG550, 0),
+	U3G_DEV(QUECTEL, EM160R, 0),
+	U3G_DEV(QUECTEL, RG500, 0),
+	U3G_DEV(QUECTEL, RG520, 0),
+	U3G_DEV(QUECTEL, EC200, 0),
+	U3G_DEV(QUECTEL, EC200S, 0),
+	U3G_DEV(QUECTEL, EC200T, 0),
+	U3G_DEV(QUECTEL, UC200, 0),
 	U3G_DEV(SIERRA, AC402, 0),
 	U3G_DEV(SIERRA, AC595U, 0),
 	U3G_DEV(SIERRA, AC313U, 0),
@@ -619,7 +635,7 @@ static const STRUCT_USB_HOST_ID u3g_devs[] = {
 #undef	U3G_DEV
 };
 
-DRIVER_MODULE(u3g, uhub, u3g_driver, u3g_devclass, u3g_driver_loaded, 0);
+DRIVER_MODULE(u3g, uhub, u3g_driver, u3g_driver_loaded, NULL);
 MODULE_DEPEND(u3g, ucom, 1, 1, 1);
 MODULE_DEPEND(u3g, usb, 1, 1, 1);
 MODULE_VERSION(u3g, 1);
@@ -766,7 +782,7 @@ u3g_sael_m460_init(struct usb_device *udev)
 		}
 		if (err) {
 			DPRINTFN(1, "request %u failed\n",
-			    (unsigned int)n);
+			    (unsigned)n);
 			/*
 			 * Some of the requests will fail. Stop doing
 			 * requests when we are getting timeouts so

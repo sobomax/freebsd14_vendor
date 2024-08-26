@@ -15,8 +15,6 @@
  * WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
  * ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
- *
- * $FreeBSD: ea1327b11a6a6dea0921dff5b91bf5d0911fe07a $
  */
 #include "opt_ah.h"
 
@@ -733,3 +731,26 @@ void
 ar5211GetDfsThresh(struct ath_hal *ah, HAL_PHYERR_PARAM *pe)
 {
 }
+
+/*
+ * Get the current NAV value from the hardware.
+ */
+u_int
+ar5211GetNav(struct ath_hal *ah)
+{
+	uint32_t reg;
+
+	reg = OS_REG_READ(ah, AR_NAV);
+	return (reg);
+}
+
+/*
+ * Set the current NAV value to the hardware.
+ */
+void
+ar5211SetNav(struct ath_hal *ah, u_int val)
+{
+
+	OS_REG_WRITE(ah, AR_NAV, val);
+}
+

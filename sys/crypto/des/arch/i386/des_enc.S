@@ -1,5 +1,4 @@
 /* $NetBSD: des_enc.S,v 1.1 2001/09/09 11:01:02 tls Exp $ */
-/* $FreeBSD: de1278b5ae93f5192b5c8403264e98bdb06fbaea $ */
 
 /* Copyright (C) 1995-1997 Eric Young (eay@cryptsoft.com)
  * All rights reserved.

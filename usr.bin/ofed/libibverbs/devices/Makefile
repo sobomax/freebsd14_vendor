@@ -1,4 +1,3 @@
-# $FreeBSD: 1cb3a4cf31ee142923bafe2c76e33147e036c99b $
 
 PACKAGE=	rdma
 PROG=	ibv_devices

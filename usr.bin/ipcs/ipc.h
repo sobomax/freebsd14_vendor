@@ -28,8 +28,6 @@
  *
  * The split of ipcs.c into ipcs.c and ipc.c to accommodate the
  * changes in ipcrm.c was done by Edwin Groothuis <edwin@FreeBSD.org>
- *
- * $FreeBSD: c1b131ac935349474602284fdbe009bc897279fd $
  */
 
 /* Part of struct nlist symbols[] */

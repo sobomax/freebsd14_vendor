@@ -1,5 +1,4 @@
 #!/bin/sh
-# $FreeBSD: d186e3e30a4b923916a05fcdaa4fac8c7cd5fffd $
 
 for i in 6:12 8:14 8:16 10:18 10:20 11:22 12:24 14:28 16:32
 do

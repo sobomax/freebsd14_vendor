@@ -1,4 +1,3 @@
-# $FreeBSD: 45d2a991b2e185513bc3f519c074f0a7748a10ea $
 
 .PATH:	${SRCTOP}/sys/dev/xz
 .PATH:	${SRCTOP}/sys/contrib/xz-embedded/freebsd

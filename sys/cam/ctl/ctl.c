@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2003-2009 Silicon Graphics International Corp.
  * Copyright (c) 2012 The FreeBSD Foundation
@@ -45,8 +45,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 097a5942650e97a5bd0fdba3036dd793f4449699 $");
-
 #include <sys/param.h>
 #include <sys/systm.h>
 #include <sys/ctype.h>
@@ -435,7 +433,7 @@ SYSCTL_INT(_kern_cam_ctl, OID_AUTO, max_luns, CTLFLAG_RDTUN,
 /*
  * Maximum number of ports registered at one time.
  */
-#define	CTL_DEFAULT_MAX_PORTS		256
+#define	CTL_DEFAULT_MAX_PORTS		1024
 static int ctl_max_ports = CTL_DEFAULT_MAX_PORTS;
 TUNABLE_INT("kern.cam.ctl.max_ports", &ctl_max_ports);
 SYSCTL_INT(_kern_cam_ctl, OID_AUTO, max_ports, CTLFLAG_RDTUN,
@@ -2443,7 +2441,7 @@ ctl_serialize_other_sc_cmd(struct ctl_scsiio *ctsio)
 	case CTL_ACTION_OVERLAP_TAG:
 		LIST_REMOVE(&ctsio->io_hdr, ooa_links);
 		mtx_unlock(&lun->lun_lock);
-		ctl_set_overlapped_tag(ctsio, ctsio->tag_num);
+		ctl_set_overlapped_tag(ctsio, ctsio->tag_num & 0xff);
 badjuju:
 		ctl_copy_sense_data_back((union ctl_io *)ctsio, &msg_info);
 		msg_info.hdr.original_sc = ctsio->io_hdr.remote_io;
@@ -2491,6 +2489,7 @@ ctl_ioctl_fill_ooa(struct ctl_lun *lun, uint32_t *cur_fill_num,
 		entry = &kern_entries[*cur_fill_num];
 
 		entry->tag_num = io->scsiio.tag_num;
+		entry->tag_type = io->scsiio.tag_type;
 		entry->lun_num = lun->lun;
 #ifdef CTL_TIME_IO
 		entry->start_bt = io->io_hdr.start_bt;
@@ -8271,7 +8270,7 @@ ctl_persistent_reserve_out(struct ctl_scsiio *ctsio)
 	struct ctl_softc *softc = CTL_SOFTC(ctsio);
 	struct ctl_lun *lun = CTL_LUN(ctsio);
 	int retval;
-	u_int32_t param_len;
+	uint32_t param_len;
 	struct scsi_per_res_out *cdb;
 	struct scsi_per_res_out_parms* param;
 	uint32_t residx;
@@ -10990,7 +10989,7 @@ ctl_seq_check(union ctl_io *io1, union ctl_io *io2)
 {
 	uint64_t lba1, lba2;
 	uint64_t len1, len2;
-	int retval;
+	int retval __diagused;
 
 	if (io1->io_hdr.flags & CTL_FLAG_SERSEQ_DONE)
 		return (CTL_ACTION_PASS);
@@ -12594,7 +12593,7 @@ ctl_datamove(union ctl_io *io)
 	 * the data move.
 	 */
 	if (io->io_hdr.flags & CTL_FLAG_ABORT) {
-		printf("ctl_datamove: tag 0x%04x on (%u:%u:%u) aborted\n",
+		printf("ctl_datamove: tag 0x%jx on (%u:%u:%u) aborted\n",
 		       io->scsiio.tag_num, io->io_hdr.nexus.initid,
 		       io->io_hdr.nexus.targ_port,
 		       io->io_hdr.nexus.targ_lun);
@@ -12996,7 +12995,7 @@ ctl_datamove_remote(union ctl_io *io)
 	 * have been done if need be on the other controller.
 	 */
 	if (io->io_hdr.flags & CTL_FLAG_ABORT) {
-		printf("%s: tag 0x%04x on (%u:%u:%u) aborted\n", __func__,
+		printf("%s: tag 0x%jx on (%u:%u:%u) aborted\n", __func__,
 		       io->scsiio.tag_num, io->io_hdr.nexus.initid,
 		       io->io_hdr.nexus.targ_port,
 		       io->io_hdr.nexus.targ_lun);
@@ -13036,25 +13035,7 @@ ctl_process_done(union ctl_io *io)
 		ctl_scsi_path_string(io, path_str, sizeof(path_str));
 		sbuf_new(&sb, str, sizeof(str), SBUF_FIXEDLEN);
 
-		sbuf_cat(&sb, path_str);
-		switch (io->io_hdr.io_type) {
-		case CTL_IO_SCSI:
-			ctl_scsi_command_string(&io->scsiio, NULL, &sb);
-			sbuf_printf(&sb, "\n");
-			sbuf_cat(&sb, path_str);
-			sbuf_printf(&sb, "Tag: 0x%04x/%d, Prio: %d\n",
-				    io->scsiio.tag_num, io->scsiio.tag_type,
-				    io->scsiio.priority);
-			break;
-		case CTL_IO_TASK:
-			sbuf_printf(&sb, "Task Action: %d Tag: 0x%04x/%d\n",
-				    io->taskio.task_action,
-				    io->taskio.tag_num, io->taskio.tag_type);
-			break;
-		default:
-			panic("%s: Invalid CTL I/O type %d\n",
-			    __func__, io->io_hdr.io_type);
-		}
+		ctl_io_sbuf(io, &sb);
 		sbuf_cat(&sb, path_str);
 		sbuf_printf(&sb, "ctl_process_done: %jd seconds\n",
 			    (intmax_t)time_uptime - io->io_hdr.start_time);

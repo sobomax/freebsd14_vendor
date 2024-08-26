@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2001 Orion Hodson <oho@acm.org>
  * All rights reserved.
@@ -47,8 +47,6 @@
 #include <dev/pci/pcivar.h>
 
 #include "mixer_if.h"
-
-SND_DECLARE_FILE("$FreeBSD: d12b262e825ec52991f7478ee01686e5b7ee8151 $");
 
 /* Debugging macro's */
 #undef DEB
@@ -849,8 +847,9 @@ als_pci_attach(device_t dev)
 	pcm_addchan(dev, PCMDIR_PLAY, &alspchan_class, sc);
 	pcm_addchan(dev, PCMDIR_REC,  &alsrchan_class, sc);
 
-	snprintf(status, SND_STATUSLEN, "at io 0x%jx irq %jd %s",
-		 rman_get_start(sc->reg), rman_get_start(sc->irq),PCM_KLDSTRING(snd_als4000));
+	snprintf(status, SND_STATUSLEN, "port 0x%jx irq %jd on %s",
+		 rman_get_start(sc->reg), rman_get_start(sc->irq),
+		 device_get_nameunit(device_get_parent(dev)));
 	pcm_setstatus(dev, status);
 	return 0;
 
@@ -936,6 +935,6 @@ static driver_t als_driver = {
 	PCM_SOFTC_SIZE,
 };
 
-DRIVER_MODULE(snd_als4000, pci, als_driver, pcm_devclass, 0, 0);
+DRIVER_MODULE(snd_als4000, pci, als_driver, 0, 0);
 MODULE_DEPEND(snd_als4000, sound, SOUND_MINVER, SOUND_PREFVER, SOUND_MAXVER);
 MODULE_VERSION(snd_als4000, 1);

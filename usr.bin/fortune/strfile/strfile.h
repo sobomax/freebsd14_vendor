@@ -31,7 +31,6 @@
  *
  *	@(#)strfile.h	8.1 (Berkeley) 5/31/93
  */
-/* $FreeBSD: 5d4f875584119314132fcaf722973d8f19141743 $ */
 
 #include <sys/types.h>
 

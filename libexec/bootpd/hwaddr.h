@@ -1,7 +1,5 @@
 /* 
  * hwaddr.h
- *
- * $FreeBSD: bd68857648a1494b78751cf1838e109e7e5f734e $
  */
 
 #ifndef	HWADDR_H

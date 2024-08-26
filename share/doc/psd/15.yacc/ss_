@@ -35,8 +35,6 @@
 .\" IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 .\"
 .\"	@(#)ss..	8.1 (Berkeley) 6/8/93
-.\"
-.\" $FreeBSD: 7dd9ea84cdf9cd656e9a13c99955a83220e80253 $
 .EH 'PSD:15-%''Yacc: Yet Another Compiler-Compiler'
 .OH 'Yacc: Yet Another Compiler-Compiler''PSD:15-%'
 .\".RP

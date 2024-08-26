@@ -1,4 +1,3 @@
-# $FreeBSD: 10b7b4b293e648d5b834b52675b834f05a3d0a6f $ 
 # $NetBSD: KOI8-CyrillicOld%UCS.src,v 1.1 2006/04/08 14:15:48 tnozaki Exp $
 
 TYPE		ROWCOL

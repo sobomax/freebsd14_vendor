@@ -1,4 +1,3 @@
-# $FreeBSD: 66c8add0393f6f4a89ae726c3d6f42ef9a679e10 $
 files		"../mv/files.arm7"
 cpu		CPU_CORTEXA
 machine		arm	armv7

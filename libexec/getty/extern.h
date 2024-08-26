@@ -29,7 +29,6 @@
  * SUCH DAMAGE.
  *
  *	from: @(#)extern.h	8.1 (Berkeley) 6/4/93
- * $FreeBSD: 6872acb4f6f7863a3e9defff8bb71f85b17ebcea $
  */
 
 struct delayval;

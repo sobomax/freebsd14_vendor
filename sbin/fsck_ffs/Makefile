@@ -1,4 +1,3 @@
-# $FreeBSD: 351ec432095d646cb93620c79355de16d4f59d5d $
 #	@(#)Makefile	8.2 (Berkeley) 4/27/95
 
 PACKAGE=ufs

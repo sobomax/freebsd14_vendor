@@ -7,14 +7,20 @@ $schema: http://devicetree.org/meta-schemas/core.yaml#
 title: Actions Semi Owl SoCs SD/MMC/SDIO controller
 
 allOf:
-  - $ref: "mmc-controller.yaml"
+  - $ref: mmc-controller.yaml
 
 maintainers:
   - Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 
 properties:
   compatible:
-    const: actions,owl-mmc
+    oneOf:
+      - const: actions,owl-mmc
+      - items:
+          - enum:
+              - actions,s500-mmc
+              - actions,s700-mmc
+          - const: actions,owl-mmc
 
   reg:
     maxItems: 1
@@ -42,6 +48,8 @@ required:
   - resets
   - dmas
   - dma-names
+
+unevaluatedProperties: false
 
 examples:
   - |

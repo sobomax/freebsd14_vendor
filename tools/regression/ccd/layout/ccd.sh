@@ -1,5 +1,4 @@
 #!/bin/sh
-# $FreeBSD: 62d4726528a834c44a0000e3334bfcb76fe7a321 $
 
 set -e
 

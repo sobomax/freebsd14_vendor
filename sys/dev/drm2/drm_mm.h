@@ -31,8 +31,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 1bbc00377fabb945345ce32e46b989229f623593 $");
-
 #ifndef _DRM_MM_H_
 #define _DRM_MM_H_
 

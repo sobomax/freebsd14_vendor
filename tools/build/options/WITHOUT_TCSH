@@ -1,4 +1,3 @@
-.\" $FreeBSD: 96aa699012e905f383a54730e10b27876be198ea $
 Do not build and install
 .Pa /bin/csh
 (which is

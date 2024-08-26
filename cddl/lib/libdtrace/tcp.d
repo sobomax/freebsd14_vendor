@@ -17,8 +17,6 @@
  * information: Portions Copyright [yyyy] [name of copyright owner]
  *
  * CDDL HEADER END
- *
- * $FreeBSD: afcfdfadaf1e46f937c2fafc8811def63fabfb17 $
  */
 /*
  * Copyright (c) 2010, Oracle and/or its affiliates. All rights reserved.
@@ -204,7 +202,7 @@ typedef struct tcpinfoh {
 #pragma D binding "1.6.3" translator
 translator csinfo_t < struct tcpcb *p > {
 	cs_addr =	NULL;
-	cs_cid =	(uint64_t)(p == NULL ? 0 : p->t_inpcb);
+	cs_cid =	(uint64_t)(p == NULL ? 0 : &p->t_inpcb);
 	cs_pid =	0;
 	cs_zoneid =	0;
 };
@@ -214,16 +212,16 @@ translator tcpsinfo_t < struct tcpcb *p > {
 	tcps_addr =		(uintptr_t)p;
 	tcps_local =		-1; /* XXX */
 	tcps_active =		-1; /* XXX */
-	tcps_lport =		p == NULL ? 0 : ntohs(p->t_inpcb->inp_inc.inc_ie.ie_lport);
-	tcps_rport =		p == NULL ? 0 : ntohs(p->t_inpcb->inp_inc.inc_ie.ie_fport);
+	tcps_lport =		p == NULL ? 0 : ntohs(p->t_inpcb.inp_inc.inc_ie.ie_lport);
+	tcps_rport =		p == NULL ? 0 : ntohs(p->t_inpcb.inp_inc.inc_ie.ie_fport);
 	tcps_laddr =		p == NULL ? "<unknown>" :
-	    p->t_inpcb->inp_vflag == INP_IPV4 ?
-	    inet_ntoa(&p->t_inpcb->inp_inc.inc_ie.ie_dependladdr.id46_addr.ia46_addr4.s_addr) :
-	    inet_ntoa6(&p->t_inpcb->inp_inc.inc_ie.ie_dependladdr.id6_addr);
+	    p->t_inpcb.inp_vflag == INP_IPV4 ?
+	    inet_ntoa(&p->t_inpcb.inp_inc.inc_ie.ie_dependladdr.id46_addr.ia46_addr4.s_addr) :
+	    inet_ntoa6(&p->t_inpcb.inp_inc.inc_ie.ie_dependladdr.id6_addr);
 	tcps_raddr =		p == NULL ? "<unknown>" :
-	    p->t_inpcb->inp_vflag == INP_IPV4 ?
-	    inet_ntoa(&p->t_inpcb->inp_inc.inc_ie.ie_dependfaddr.id46_addr.ia46_addr4.s_addr) :
-	    inet_ntoa6(&p->t_inpcb->inp_inc.inc_ie.ie_dependfaddr.id6_addr);
+	    p->t_inpcb.inp_vflag == INP_IPV4 ?
+	    inet_ntoa(&p->t_inpcb.inp_inc.inc_ie.ie_dependfaddr.id46_addr.ia46_addr4.s_addr) :
+	    inet_ntoa6(&p->t_inpcb.inp_inc.inc_ie.ie_dependfaddr.id6_addr);
 	tcps_state =		p == NULL ? -1 : p->t_state;
 	tcps_iss =		p == NULL ? 0  : p->iss;
 	tcps_irs =		p == NULL ? 0  : p->irs;
@@ -250,9 +248,9 @@ translator tcpsinfo_t < struct tcpcb *p > {
 	tcps_retransmit =	p == NULL ? -1 : p->t_rxtshift > 0 ? 1 : 0;
 	tcps_srtt =		p == NULL ? -1 : p->t_srtt;   /* smoothed RTT in units of (TCP_RTT_SCALE*hz) */
 	tcps_debug =		p == NULL ? 0 :
-	    p->t_inpcb->inp_socket->so_options & 1;
+	    p->t_inpcb.inp_socket->so_options & 1;
 	tcps_cookie =		p == NULL ? -1 :
-	    p->t_inpcb->inp_socket->so_user_cookie;
+	    p->t_inpcb.inp_socket->so_user_cookie;
 	tcps_dupacks =		p == NULL ? -1 : p->t_dupacks;
 	tcps_rtttime =		p == NULL ? -1 : p->t_rtttime;
 	tcps_rtseq =		p == NULL ? -1 : p->t_rtseq;
@@ -265,7 +263,7 @@ translator tcpinfo_t < struct tcphdr *p > {
 	tcp_dport =	p == NULL ? 0  : ntohs(p->th_dport);
 	tcp_seq =	p == NULL ? -1 : ntohl(p->th_seq);
 	tcp_ack =	p == NULL ? -1 : ntohl(p->th_ack);
-	tcp_offset =	p == NULL ? -1 : (p->th_off >> 2);
+	tcp_offset =	p == NULL ? -1 : (p->th_off << 2);
 	tcp_flags =	p == NULL ? 0  : p->th_flags;
 	tcp_window =	p == NULL ? 0  : ntohs(p->th_win);
 	tcp_checksum =	p == NULL ? 0  : ntohs(p->th_sum);
@@ -284,7 +282,7 @@ translator tcpinfoh_t < struct tcphdr *p > {
 	tcp_dport =	p == NULL ? 0  : ntohs(p->th_dport);
 	tcp_seq =	p == NULL ? -1 : p->th_seq;
 	tcp_ack =	p == NULL ? -1 : p->th_ack;
-	tcp_offset =	p == NULL ? -1 : (p->th_off >> 2);
+	tcp_offset =	p == NULL ? -1 : (p->th_off << 2);
 	tcp_flags =	p == NULL ? 0  : p->th_flags;
 	tcp_window =	p == NULL ? 0  : p->th_win;
 	tcp_checksum =	p == NULL ? 0  : ntohs(p->th_sum);

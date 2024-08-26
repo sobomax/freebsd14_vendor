@@ -27,8 +27,6 @@
  * SUCH DAMAGE.
  *
  *
- * $FreeBSD: 80da4f523165f2cab8c9b2aca322aeb2a53d4600 $
- *
  */
 
 #ifndef __PCI_HOST_GENERIC_H_
@@ -80,8 +78,6 @@ struct generic_pcie_core_softc {
 	int			bus_start;
 	int			bus_end;
 	int			ecam;
-	bus_space_tag_t		bst;
-	bus_space_handle_t	bsh;
 	device_t		dev;
 	bus_space_handle_t	ioh;
 	bus_dma_tag_t		dmat;
@@ -90,6 +86,8 @@ struct generic_pcie_core_softc {
 
 /* Quirks */
 #define PCIE_ECAM_DESIGNWARE_QUIRK	(1 << 0)
+/* Child will map resources to access config registers */
+#define PCIE_CUSTOM_CONFIG_SPACE_QUIRK	(1 << 1)
 
 DECLARE_CLASS(generic_pcie_core_driver);
 

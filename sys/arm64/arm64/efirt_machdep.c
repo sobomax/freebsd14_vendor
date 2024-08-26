@@ -35,8 +35,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 343235a7d255619f33465d2ec2a9a02c5f3f6c3f $");
-
 #include <sys/param.h>
 #include <sys/efi.h>
 #include <sys/kernel.h>
@@ -48,10 +46,7 @@ __FBSDID("$FreeBSD: 343235a7d255619f33465d2ec2a9a02c5f3f6c3f $");
 #include <sys/systm.h>
 #include <sys/vmmeter.h>
 
-#include <machine/metadata.h>
-#include <machine/pcb.h>
 #include <machine/pte.h>
-#include <machine/vfp.h>
 #include <machine/vmparam.h>
 
 #include <vm/vm.h>
@@ -108,9 +103,9 @@ efi_1t1_l3(vm_offset_t va)
 	if (*l0 == 0) {
 		m = efi_1t1_page();
 		mphys = VM_PAGE_TO_PHYS(m);
-		*l0 = mphys | L0_TABLE;
+		*l0 = PHYS_TO_PTE(mphys) | L0_TABLE;
 	} else {
-		mphys = *l0 & ~ATTR_MASK;
+		mphys = PTE_TO_PHYS(*l0);
 	}
 
 	l1 = (pd_entry_t *)PHYS_TO_DMAP(mphys);
@@ -119,9 +114,9 @@ efi_1t1_l3(vm_offset_t va)
 	if (*l1 == 0) {
 		m = efi_1t1_page();
 		mphys = VM_PAGE_TO_PHYS(m);
-		*l1 = mphys | L1_TABLE;
+		*l1 = PHYS_TO_PTE(mphys) | L1_TABLE;
 	} else {
-		mphys = *l1 & ~ATTR_MASK;
+		mphys = PTE_TO_PHYS(*l1);
 	}
 
 	l2 = (pd_entry_t *)PHYS_TO_DMAP(mphys);
@@ -130,9 +125,9 @@ efi_1t1_l3(vm_offset_t va)
 	if (*l2 == 0) {
 		m = efi_1t1_page();
 		mphys = VM_PAGE_TO_PHYS(m);
-		*l2 = mphys | L2_TABLE;
+		*l2 = PHYS_TO_PTE(mphys) | L2_TABLE;
 	} else {
-		mphys = *l2 & ~ATTR_MASK;
+		mphys = PTE_TO_PHYS(*l2);
 	}
 
 	l3 = (pt_entry_t *)PHYS_TO_DMAP(mphys);
@@ -150,13 +145,8 @@ efi_1t1_l3(vm_offset_t va)
 vm_offset_t
 efi_phys_to_kva(vm_paddr_t paddr)
 {
-	vm_offset_t vaddr;
-
-	if (PHYS_IN_DMAP(paddr)) {
-		vaddr = PHYS_TO_DMAP(paddr);
-		if (pmap_klookup(vaddr, NULL))
-			return (vaddr);
-	}
+	if (PHYS_IN_DMAP(paddr))
+		return (PHYS_TO_DMAP(paddr));
 
 	/* TODO: Map memory not in the DMAP */
 
@@ -191,7 +181,7 @@ efi_create_1t1_map(struct efi_md *map, int ndesc, int descsz)
 	    descsz)) {
 		if ((p->md_attr & EFI_MD_ATTR_RT) == 0)
 			continue;
-		if (p->md_virt != NULL && (uint64_t)p->md_virt != p->md_phys) {
+		if (p->md_virt != 0 && p->md_virt != p->md_phys) {
 			if (bootverbose)
 				printf("EFI Runtime entry %d is mapped\n", i);
 			goto fail;
@@ -220,7 +210,10 @@ efi_create_1t1_map(struct efi_md *map, int ndesc, int descsz)
 		else
 			mode = VM_MEMATTR_DEVICE;
 
-		printf("MAP %lx mode %x pages %lu\n", p->md_phys, mode, p->md_pages);
+		if (bootverbose) {
+			printf("MAP %lx mode %x pages %lu\n",
+			    p->md_phys, mode, p->md_pages);
+		}
 
 		l3_attr = ATTR_DEFAULT | ATTR_S1_IDX(mode) |
 		    ATTR_S1_AP(ATTR_S1_AP_RW) | ATTR_S1_nG | L3_PAGE;

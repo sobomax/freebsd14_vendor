@@ -14,7 +14,7 @@
   * 
   * Author: Wietse Venema, Eindhoven University of Technology, The Netherlands.
   *
-  * $FreeBSD: 51a6fcee4b9a85b06b61f545dcf12a67ec550a82 $
+  * $FreeBSD: e98e6772ad727402f48adf0b747e65613a490918 $
   */
 
 #ifndef lint
@@ -52,8 +52,7 @@ static void sock_sink(int);
   * that lack DNS-style trailing dot magic, such as local files or NIS maps.
   */
 
-static struct hostent *gethostbyname_dot(name)
-char   *name;
+static struct hostent *gethostbyname_dot(char *name)
 {
     char    dot_name[MAXHOSTNAMELEN + 1];
 
@@ -75,8 +74,7 @@ char   *name;
 
 /* sock_host - look up endpoint addresses and install conversion methods */
 
-void    sock_host(request)
-struct request_info *request;
+void    sock_host(struct request_info *request)
 {
 #ifdef INET6
     static struct sockaddr_storage client;
@@ -139,8 +137,7 @@ struct request_info *request;
 
 /* sock_hostaddr - map endpoint address to printable form */
 
-void    sock_hostaddr(host)
-struct host_info *host;
+void    sock_hostaddr(struct host_info *host)
 {
 #ifdef INET6
     struct sockaddr *sin = host->sin;
@@ -166,8 +163,7 @@ struct host_info *host;
 
 /* sock_hostname - map endpoint address to host name */
 
-void    sock_hostname(host)
-struct host_info *host;
+void    sock_hostname(struct host_info *host)
 {
 #ifdef INET6
     struct sockaddr *sin = host->sin;

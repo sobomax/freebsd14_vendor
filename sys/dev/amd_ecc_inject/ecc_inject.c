@@ -22,8 +22,6 @@
  * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
- *
- * $FreeBSD: c0f3c142a3c8bbf369505a602c2a9353ada4a487 $
  */
 
 #include <sys/param.h>
@@ -177,7 +175,7 @@ ecc_ei_inject_one(void *arg, size_t size)
 static void
 ecc_ei_inject(int count)
 {
-	vm_offset_t memory;
+	void *memory;
 	int injected;
 
 	KASSERT((quadrant & ~QUADRANT_MASK) == 0,
@@ -191,7 +189,7 @@ ecc_ei_inject(int count)
 	    VM_MEMATTR_UNCACHEABLE);
 
 	for (injected = 0; injected < count; injected++) {
-		ecc_ei_inject_one((void*)memory, PAGE_SIZE);
+		ecc_ei_inject_one(memory, PAGE_SIZE);
 		if (delay_ms != 0 && injected != count - 1)
 			pause_sbt("ecc_ei_inject", delay_ms * SBT_1MS, 0, 0);
 	}
@@ -237,9 +235,9 @@ tsc_modevent(module_t mod __unused, int type, void *data __unused)
 	case MOD_SHUTDOWN:
 		break;
 	default:
-		return (EOPNOTSUPP);
+		error = EOPNOTSUPP;
 	}
-	return (0);
+	return (error);
 }
 
 DEV_MODULE(tsc, tsc_modevent, NULL);

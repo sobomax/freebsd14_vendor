@@ -32,8 +32,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 72e631c70e595212b18f880d7b6cb4bdc9bf5426 $");
-
 #include <sys/param.h>
 #include <sys/systm.h>
 #include <sys/ktr.h>
@@ -108,7 +106,7 @@ __FBSDID("$FreeBSD: 72e631c70e595212b18f880d7b6cb4bdc9bf5426 $");
 	else								\
 		error = (action);					\
 	return (error);							\
-} while(0)
+} while (0)
 
 int
 proc_read_regs(struct thread *td, struct reg *regs)
@@ -192,8 +190,21 @@ proc_read_regset(struct thread *td, int note, struct iovec *iov)
 	if (regset == NULL)
 		return (EINVAL);
 
+	if (regset->get == NULL)
+		return (EINVAL);
+
+	size = regset->size;
+	/*
+	 * The regset is dynamically sized, e.g. the size could change
+	 * depending on the hardware, or may have a per-thread size.
+	 */
+	if (size == 0) {
+		if (!regset->get(regset, td, NULL, &size))
+			return (EINVAL);
+	}
+
 	if (iov->iov_base == NULL) {
-		iov->iov_len = regset->size;
+		iov->iov_len = size;
 		if (iov->iov_len == 0)
 			return (EINVAL);
 
@@ -201,14 +212,10 @@ proc_read_regset(struct thread *td, int note, struct iovec *iov)
 	}
 
 	/* The length is wrong, return an error */
-	if (iov->iov_len != regset->size)
-		return (EINVAL);
-
-	if (regset->get == NULL)
+	if (iov->iov_len != size)
 		return (EINVAL);
 
 	error = 0;
-	size = regset->size;
 	p = td->td_proc;
 
 	/* Drop the proc lock while allocating the temp buffer */
@@ -220,7 +227,7 @@ proc_read_regset(struct thread *td, int note, struct iovec *iov)
 	if (!regset->get(regset, td, buf, &size)) {
 		error = EINVAL;
 	} else {
-		KASSERT(size == regset->size,
+		KASSERT(size == regset->size || regset->size == 0,
 		    ("%s: Getter function changed the size", __func__));
 
 		iov->iov_len = size;
@@ -247,14 +254,23 @@ proc_write_regset(struct thread *td, int note, struct iovec *iov)
 	if (regset == NULL)
 		return (EINVAL);
 
+	size = regset->size;
+	/*
+	 * The regset is dynamically sized, e.g. the size could change
+	 * depending on the hardware, or may have a per-thread size.
+	 */
+	if (size == 0) {
+		if (!regset->get(regset, td, NULL, &size))
+			return (EINVAL);
+	}
+
 	/* The length is wrong, return an error */
-	if (iov->iov_len != regset->size)
+	if (iov->iov_len != size)
 		return (EINVAL);
 
 	if (regset->set == NULL)
 		return (EINVAL);
 
-	size = regset->size;
 	p = td->td_proc;
 
 	/* Drop the proc lock while allocating the temp buffer */
@@ -597,11 +613,11 @@ sys_ptrace(struct thread *td, struct ptrace_args *uap)
 		struct fpreg fpreg;
 		struct reg reg;
 		struct iovec vec;
-		char args[sizeof(td->td_sa.args)];
+		syscallarg_t args[nitems(td->td_sa.args)];
 		struct ptrace_sc_ret psr;
 		int ptevents;
 	} r;
-	register_t pscr_args[nitems(td->td_sa.args)];
+	syscallarg_t pscr_args[nitems(td->td_sa.args)];
 	void *addr;
 	int error;
 
@@ -1099,9 +1115,7 @@ kern_ptrace(struct thread *td, int req, pid_t pid, void *addr, int data)
 		CTR2(KTR_PTRACE, "PT_SUSPEND: tid %d (pid %d)", td2->td_tid,
 		    p->p_pid);
 		td2->td_dbgflags |= TDB_SUSPEND;
-		thread_lock(td2);
-		td2->td_flags |= TDF_NEEDSUSPCHK;
-		thread_unlock(td2);
+		ast_sched(td2, TDA_SUSPEND);
 		break;
 
 	case PT_RESUME:
@@ -1170,7 +1184,7 @@ kern_ptrace(struct thread *td, int req, pid_t pid, void *addr, int data)
 		/* See the explanation in linux_ptrace_get_syscall_info(). */
 		bcopy(td2->td_sa.args, addr, SV_PROC_ABI(td->td_proc) ==
 		    SV_ABI_LINUX ? sizeof(td2->td_sa.args) :
-		    td2->td_sa.callp->sy_narg * sizeof(register_t));
+		    td2->td_sa.callp->sy_narg * sizeof(syscallarg_t));
 		break;
 
 	case PT_GET_SC_RET:
@@ -1290,7 +1304,7 @@ kern_ptrace(struct thread *td, int req, pid_t pid, void *addr, int data)
 					    SIGSTOP);
 				}
 				td3->td_dbgflags &= ~(TDB_XSIG | TDB_FSTP |
-				    TDB_SUSPEND);
+				    TDB_SUSPEND | TDB_BORN);
 			}
 
 			if ((p->p_flag2 & P2_PTRACE_FSTP) != 0) {
@@ -1631,7 +1645,7 @@ coredump_cleanup_nofp:
 		tsr->ts_sa.code = pscr->pscr_syscall;
 		tsr->ts_nargs = pscr->pscr_nargs;
 		memcpy(&tsr->ts_sa.args, pscr->pscr_args,
-		    sizeof(register_t) * tsr->ts_nargs);
+		    sizeof(syscallarg_t) * tsr->ts_nargs);
 
 		PROC_LOCK(p);
 		error = proc_can_ptrace(td, p);

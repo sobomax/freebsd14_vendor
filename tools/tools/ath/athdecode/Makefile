@@ -1,5 +1,4 @@
 #
-# $FreeBSD: d829b52890c8ee5bc7627d1596c0e88e27466578 $
 
 PROG=	athdecode
 

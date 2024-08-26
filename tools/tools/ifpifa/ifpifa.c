@@ -52,9 +52,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-
-__FBSDID("$FreeBSD: 3f2a8190fdefc25c3e9b661c76b5e828d9d170f8 $");
-
 static struct nlist	nl[] = {
 #define N_IFNET         0
         { .n_name = "_ifnet", },

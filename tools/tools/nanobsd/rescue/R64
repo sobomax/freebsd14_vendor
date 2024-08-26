@@ -1,7 +1,6 @@
 #
 # R64 -- Generic kernel configuration file with modifications for rescue.
 #
-# $FreeBSD: 17900e2de08178c3bcb1baaa31b5893ce6b2233f $
 
 include GENERIC
 

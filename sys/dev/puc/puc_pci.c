@@ -1,7 +1,7 @@
 /*	$NetBSD: puc.c,v 1.7 2000/07/29 17:43:38 jlam Exp $	*/
 
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD AND BSD-3-Clause
+ * SPDX-License-Identifier: BSD-2-Clause AND BSD-3-Clause
  *
  * Copyright (c) 2002 JF Hay.  All rights reserved.
  * Copyright (c) 2000 M. Warner Losh <imp@FreeBSD.org>
@@ -60,8 +60,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 3432f6d33b6b30203f66f0ec243f3199c8f2474d $");
-
 #include <sys/param.h>
 #include <sys/systm.h>
 #include <sys/kernel.h>
@@ -185,8 +183,8 @@ static device_method_t puc_pci_methods[] = {
     DEVMETHOD(bus_setup_intr,		puc_bus_setup_intr),
     DEVMETHOD(bus_teardown_intr,	puc_bus_teardown_intr),
     DEVMETHOD(bus_print_child,		puc_bus_print_child),
-    DEVMETHOD(bus_child_pnpinfo_str,	puc_bus_child_pnpinfo_str),
-    DEVMETHOD(bus_child_location_str,	puc_bus_child_location_str),
+    DEVMETHOD(bus_child_pnpinfo,	puc_bus_child_pnpinfo),
+    DEVMETHOD(bus_child_location,	puc_bus_child_location),
 
     DEVMETHOD_END
 };
@@ -197,6 +195,6 @@ static driver_t puc_pci_driver = {
 	sizeof(struct puc_softc),
 };
 
-DRIVER_MODULE(puc, pci, puc_pci_driver, puc_devclass, 0, 0);
+DRIVER_MODULE(puc, pci, puc_pci_driver, 0, 0);
 MODULE_PNP_INFO("U16:vendor;U16:device;U16:#;U16:#;D:#", pci, puc,
     puc_pci_devices, nitems(puc_pci_devices) - 1);

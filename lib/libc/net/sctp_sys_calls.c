@@ -32,9 +32,6 @@
  * THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 7c3652ff5d3cf287fc6d848c5010aab35a1ff578 $");
-
 #include <stdbool.h>
 #include <stddef.h>
 #include <stdio.h>

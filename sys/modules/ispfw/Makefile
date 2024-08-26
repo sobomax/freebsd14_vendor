@@ -24,11 +24,12 @@
 # SUCH DAMAGE.
 #
 
-# $FreeBSD: 6dd6661494d5b6107c8edf7ac3a4c98b10d539d9 $ 
-
 
 SUBDIR = ispfw
 SUBDIR += isp_2400
 SUBDIR += isp_2500
+SUBDIR += isp_2600
+SUBDIR += isp_2700
+SUBDIR += isp_2800
 
 .include <bsd.subdir.mk>

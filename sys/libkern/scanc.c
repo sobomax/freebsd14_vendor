@@ -32,8 +32,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: ee920b20d081afee019fe042b565af261d1d37a7 $");
-
 #include <sys/libkern.h>
 
 int

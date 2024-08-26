@@ -1,4 +1,3 @@
-/*	$FreeBSD: a6c699ddc701cce0b58fe0e5e83d204f5668c34f $	*/
 
 /*
  * Copyright (C) 2012 by Darren Reed.

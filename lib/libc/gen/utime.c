@@ -31,8 +31,6 @@
 
 #include <sys/cdefs.h>
 __SCCSID("@(#)utime.c	8.1 (Berkeley) 6/4/93");
-__FBSDID("$FreeBSD: 3474849571b78fa7a2b1ac13914f9e0c24c29638 $");
-
 #include <sys/time.h>
 
 #include <utime.h>

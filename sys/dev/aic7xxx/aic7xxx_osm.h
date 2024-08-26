@@ -30,8 +30,6 @@
  * SUCH DAMAGE.
  *
  * $Id: //depot/aic7xxx/freebsd/dev/aic7xxx/aic7xxx_osm.h#18 $
- *
- * $FreeBSD: 820ecb563b6b18427feab4ce5fb80f892e066090 $
  */
 
 #ifndef _AIC7XXX_FREEBSD_H_
@@ -67,9 +65,6 @@
 
 #include <cam/scsi/scsi_all.h>
 #include <cam/scsi/scsi_message.h>
-
-/*************************** Attachment Bookkeeping ***************************/
-extern devclass_t ahc_devclass;
 
 /****************************** Platform Macros *******************************/
 #define	SIM_IS_SCSIBUS_B(ahc, sim)	\

@@ -1,4 +1,3 @@
-# $FreeBSD: d07ee6d5c70c94b918fd3f76f786e63ac52b9c4b $
 
 .PATH: ${SRCTOP}/usr.sbin/ypserv
 

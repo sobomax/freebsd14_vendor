@@ -1,4 +1,3 @@
-.\" $FreeBSD: 62a1046c976f3c9a39c22ee0965fddee8bbe60b9 $
 On 64-bit platforms, do not build 32-bit library set and a
 .Nm ld-elf32.so.1
 runtime linker.

@@ -6,10 +6,7 @@
 # Invoke like so: awk -f ps3-hv-asm.awk < ps3-hvcall.master > ps3-hvcall.S
 #
 
-# $FreeBSD: 8b8165bde66da1a1aaae0ec3d8f28306873b9c78 $
-
 BEGIN {
-	printf("/* $FreeBSD: 8b8165bde66da1a1aaae0ec3d8f28306873b9c78 $ */\n\n");
 	printf("#include <machine/asm.h>\n\n");
 	printf("#define hc .long 0x44000022\n\n");
 }

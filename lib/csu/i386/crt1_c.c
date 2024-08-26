@@ -22,54 +22,9 @@
  * THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- *
- * $FreeBSD: 0d82cda6fa1f40d2df4739f14e4cd482ba5e506f $
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 0d82cda6fa1f40d2df4739f14e4cd482ba5e506f $");
+#include "csu_common.h"
 
-#include <stdlib.h>
-
-#include "libc_private.h"
-#include "ignore_init.c"
-
-typedef void (*fptr)(void);
-
-extern void _start(char *, ...);
-
-#ifdef GCRT
-extern void _mcleanup(void);
-extern void monstartup(void *, void *);
-extern int eprol;
-extern int etext;
-#endif
-
-void _start1(fptr, int, char *[]) __dead2;
-
-/* The entry function, C part. */
-void
-_start1(fptr cleanup, int argc, char *argv[])
-{
-	char **env;
-
-	env = argv + argc + 1;
-	handle_argv(argc, argv, env);
-	if (&_DYNAMIC != NULL) {
-		atexit(cleanup);
-	} else {
-		process_irelocs();
-		_init_tls();
-	}
-
-#ifdef GCRT
-	atexit(_mcleanup);
-	monstartup(&eprol, &etext);
-__asm__("eprol:");
-#endif
-
-	handle_static_init(argc, argv, env);
-	exit(main(argc, argv, env));
-}
-
-__asm(".hidden	_start1");
+void _start(char *, ...) __dead2;

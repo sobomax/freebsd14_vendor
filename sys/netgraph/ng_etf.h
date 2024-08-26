@@ -3,7 +3,7 @@
  */
 
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2001, FreeBSD Incorporated 
  * All rights reserved.
@@ -31,8 +31,6 @@
  * SUCH DAMAGE.
  *
  * Author: Julian Elischer <julian@freebsd.org>
- *
- * $FreeBSD: 885a4078f191963bd771d50ecfd2c2207b2d3ce7 $
  */
 
 #ifndef _NETGRAPH_NG_ETF_H_

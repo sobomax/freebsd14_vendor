@@ -37,8 +37,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 02be770d8cd722dd413b9b6c91a05faa7a58df74 $");
-
 #include <sys/param.h>
 #include <sys/systm.h>
 #include <sys/sysproto.h>
@@ -593,13 +591,13 @@ ogetrlimit(struct thread *td, struct ogetrlimit_args *uap)
 #endif /* COMPAT_43 */
 
 #ifndef _SYS_SYSPROTO_H_
-struct __setrlimit_args {
+struct setrlimit_args {
 	u_int	which;
 	struct	rlimit *rlp;
 };
 #endif
 int
-sys_setrlimit(struct thread *td, struct __setrlimit_args *uap)
+sys_setrlimit(struct thread *td, struct setrlimit_args *uap)
 {
 	struct rlimit alim;
 	int error;
@@ -656,7 +654,7 @@ int
 kern_proc_setrlimit(struct thread *td, struct proc *p, u_int which,
     struct rlimit *limp)
 {
-	struct plimit *newlim, *oldlim;
+	struct plimit *newlim, *oldlim, *oldlim_td;
 	struct rlimit *alimp;
 	struct rlimit oldssiz;
 	int error;
@@ -738,8 +736,18 @@ kern_proc_setrlimit(struct thread *td, struct proc *p, u_int which,
 	*alimp = *limp;
 	p->p_limit = newlim;
 	PROC_UPDATE_COW(p);
+	oldlim_td = NULL;
+	if (td == curthread && PROC_COW_CHANGECOUNT(td, p) == 1) {
+		oldlim_td = lim_cowsync();
+		thread_cow_synced(td);
+	}
 	PROC_UNLOCK(p);
-	lim_free(oldlim);
+	if (oldlim_td != NULL) {
+		MPASS(oldlim_td == oldlim);
+		lim_freen(oldlim, 2);
+	} else {
+		lim_free(oldlim);
+	}
 
 	if (which == RLIMIT_STACK &&
 	    /*
@@ -780,14 +788,14 @@ kern_proc_setrlimit(struct thread *td, struct proc *p, u_int which,
 }
 
 #ifndef _SYS_SYSPROTO_H_
-struct __getrlimit_args {
+struct getrlimit_args {
 	u_int	which;
 	struct	rlimit *rlp;
 };
 #endif
 /* ARGSUSED */
 int
-sys_getrlimit(struct thread *td, struct __getrlimit_args *uap)
+sys_getrlimit(struct thread *td, struct getrlimit_args *uap)
 {
 	struct rlimit rlim;
 	int error;
@@ -874,11 +882,6 @@ rufetchtd(struct thread *td, struct rusage *ru)
 	*ru = td->td_ru;
 	calcru1(p, &td->td_rux, &ru->ru_utime, &ru->ru_stime);
 }
-
-/* XXX: the MI version is too slow to use: */
-#ifndef __HAVE_INLINE_FLSLL
-#define	flsll(x)	(fls((x) >> 32) != 0 ? fls((x) >> 32) + 32 : fls(x))
-#endif
 
 static uint64_t
 mul64_by_fraction(uint64_t a, uint64_t b, uint64_t c)
@@ -1015,7 +1018,7 @@ calcru1(struct proc *p, struct rusage_ext *ruxp, struct timeval *up,
 		uu = ruxp->rux_uu;
 		su = ruxp->rux_su;
 		tu = ruxp->rux_tu;
-	} else { /* tu < ruxp->rux_tu */
+	} else if (vm_guest == VM_GUEST_NO) {  /* tu < ruxp->rux_tu */
 		/*
 		 * What happened here was likely that a laptop, which ran at
 		 * a reduced clock frequency at boot, kicked into high gear.
@@ -1216,6 +1219,26 @@ lim_hold(struct plimit *limp)
 	return (limp);
 }
 
+struct plimit *
+lim_cowsync(void)
+{
+	struct thread *td;
+	struct proc *p;
+	struct plimit *oldlimit;
+
+	td = curthread;
+	p = td->td_proc;
+	PROC_LOCK_ASSERT(p, MA_OWNED);
+
+	if (td->td_limit == p->p_limit)
+		return (NULL);
+
+	oldlimit = td->td_limit;
+	td->td_limit = lim_hold(p->p_limit);
+
+	return (oldlimit);
+}
+
 void
 lim_fork(struct proc *p1, struct proc *p2)
 {
@@ -1244,6 +1267,33 @@ lim_freen(struct plimit *limp, int n)
 
 	if (refcount_releasen(&limp->pl_refcnt, n))
 		free((void *)limp, M_PLIMIT);
+}
+
+void
+limbatch_add(struct limbatch *lb, struct thread *td)
+{
+	struct plimit *limp;
+
+	MPASS(td->td_limit != NULL);
+	limp = td->td_limit;
+
+	if (lb->limp != limp) {
+		if (lb->count != 0) {
+			lim_freen(lb->limp, lb->count);
+			lb->count = 0;
+		}
+		lb->limp = limp;
+	}
+
+	lb->count++;
+}
+
+void
+limbatch_final(struct limbatch *lb)
+{
+
+	MPASS(lb->count != 0);
+	lim_freen(lb->limp, lb->count);
 }
 
 /*

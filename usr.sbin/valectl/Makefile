@@ -1,5 +1,5 @@
-# $FreeBSD: f9322fa05047a5fbb514f1b2cd5195c36ae0cd79 $
 
+PACKAGE=	netmap
 PROG=	valectl
 MAN=	valectl.8
 

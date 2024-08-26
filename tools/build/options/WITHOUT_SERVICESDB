@@ -1,3 +1,2 @@
-.\" $FreeBSD: c603ec0ba1238360c6f7ed9dabe13ab3005af0c7 $
 Do not install
 .Pa /var/db/services.db .

@@ -21,8 +21,6 @@
  * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
- *
- * $FreeBSD: 48103af6ac6e699a62baade4e6b9f850f07ef72a $
  */
 
 /*
@@ -30,8 +28,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 48103af6ac6e699a62baade4e6b9f850f07ef72a $");
-
 #include <sys/param.h>
 #include <sys/systm.h>
 #include <sys/bus.h>
@@ -71,6 +67,10 @@ __FBSDID("$FreeBSD: 48103af6ac6e699a62baade4e6b9f850f07ef72a $");
 #define	 DLEN_READ		(1 << 4)
 #define	RSB_DATA0		0x1c
 #define	RSB_DATA1		0x20
+#define	RSB_PMCR		0x28
+#define	 RSB_PMCR_START		(1 << 31)
+#define	 RSB_PMCR_DATA(x)	(x << 16)
+#define	 RSB_PMCR_REG(x)	(x << 8)
 #define	RSB_CMD			0x2c
 #define	 CMD_SRTA		0xe8
 #define	 CMD_RD8		0x8b
@@ -92,6 +92,10 @@ __FBSDID("$FreeBSD: 48103af6ac6e699a62baade4e6b9f850f07ef72a $");
 #define	RSB_ADDR_PMIC_PRIMARY	0x3a3
 #define	RSB_ADDR_PMIC_SECONDARY	0x745
 #define	RSB_ADDR_PERIPH_IC	0xe89
+
+#define	PMIC_MODE_REG	0x3e
+#define	PMIC_MODE_I2C	0x00
+#define	PMIC_MODE_RSB	0x7c
 
 #define	A31_P2WI	1
 #define	A23_RSB		2
@@ -436,6 +440,9 @@ rsb_attach(device_t dev)
 		goto fail;
 	}
 
+	/* Set the PMIC into RSB mode as ATF might have leave it in I2C mode */
+	RSB_WRITE(sc, RSB_PMCR, RSB_PMCR_REG(PMIC_MODE_REG) | RSB_PMCR_DATA(PMIC_MODE_RSB) | RSB_PMCR_START);
+
 	sc->iicbus = device_add_child(dev, "iicbus", -1);
 	if (sc->iicbus == NULL) {
 		device_printf(dev, "cannot add iicbus child device\n");
@@ -490,11 +497,9 @@ static driver_t rsb_driver = {
 	sizeof(struct rsb_softc),
 };
 
-static devclass_t rsb_devclass;
-
-EARLY_DRIVER_MODULE(iicbus, rsb, iicbus_driver, iicbus_devclass, 0, 0,
+EARLY_DRIVER_MODULE(iicbus, rsb, iicbus_driver, 0, 0,
     BUS_PASS_SUPPORTDEV + BUS_PASS_ORDER_MIDDLE);
-EARLY_DRIVER_MODULE(rsb, simplebus, rsb_driver, rsb_devclass, 0, 0,
+EARLY_DRIVER_MODULE(rsb, simplebus, rsb_driver, 0, 0,
     BUS_PASS_SUPPORTDEV + BUS_PASS_ORDER_MIDDLE);
 MODULE_VERSION(rsb, 1);
 MODULE_DEPEND(rsb, iicbus, 1, 1, 1);

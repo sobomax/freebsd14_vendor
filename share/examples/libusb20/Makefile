@@ -1,4 +1,3 @@
-# $FreeBSD: abb8ffd8133edf5841411e7168e71c2626d4f0d4 $
 
 PACKAGE=examples
 FILESDIR=${SHAREDIR}/examples/libusb20

@@ -34,8 +34,6 @@
 __RCSID("$NetBSD: wcspbrk.c,v 1.1 2000/12/23 23:14:37 itojun Exp $");
 #endif /* LIBC_SCCS and not lint */
 #endif
-__FBSDID("$FreeBSD: 0e9ccf66e31282292555fc0172f3de5386eb5f6a $");
-
 #include <wchar.h>
 
 wchar_t *

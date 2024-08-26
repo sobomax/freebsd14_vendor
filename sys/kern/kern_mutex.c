@@ -36,8 +36,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 6343ad4456238b8d17ffa4c5e348900b064cc92e $");
-
 #include "opt_adaptive_mutexes.h"
 #include "opt_ddb.h"
 #include "opt_hwpmc_hooks.h"

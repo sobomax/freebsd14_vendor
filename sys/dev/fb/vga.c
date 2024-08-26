@@ -31,8 +31,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 88ce75b922e1ba6f1e2eeeedd0b8586feff406e5 $");
-
 #include "opt_vga.h"
 #include "opt_fb.h"
 #ifndef FB_DEBUG
@@ -104,55 +102,6 @@ vga_attach_unit(int unit, vga_softc_t *sc, int flags)
 		return error;
 	return (*sw->init)(unit, sc->adp, flags);
 }
-
-/* cdev driver functions */
-
-#ifdef FB_INSTALL_CDEV
-
-int
-vga_open(struct cdev *dev, vga_softc_t *sc, int flag, int mode, struct thread *td)
-{
-	if (sc == NULL)
-		return ENXIO;
-	if (mode & (O_CREAT | O_APPEND | O_TRUNC))
-		return ENODEV;
-
-	return genfbopen(&sc->gensc, sc->adp, flag, mode, td);
-}
-
-int
-vga_close(struct cdev *dev, vga_softc_t *sc, int flag, int mode, struct thread *td)
-{
-	return genfbclose(&sc->gensc, sc->adp, flag, mode, td);
-}
-
-int
-vga_read(struct cdev *dev, vga_softc_t *sc, struct uio *uio, int flag)
-{
-	return genfbread(&sc->gensc, sc->adp, uio, flag);
-}
-
-int
-vga_write(struct cdev *dev, vga_softc_t *sc, struct uio *uio, int flag)
-{
-	return genfbread(&sc->gensc, sc->adp, uio, flag);
-}
-
-int
-vga_ioctl(struct cdev *dev, vga_softc_t *sc, u_long cmd, caddr_t arg, int flag,
-	  struct thread *td)
-{
-	return genfbioctl(&sc->gensc, sc->adp, cmd, arg, flag, td);
-}
-
-int
-vga_mmap(struct cdev *dev, vga_softc_t *sc, vm_ooffset_t offset,
-    vm_paddr_t *paddr, int prot, vm_memattr_t *memattr)
-{
-	return genfbmmap(&sc->gensc, sc->adp, offset, paddr, prot, memattr);
-}
-
-#endif /* FB_INSTALL_CDEV */
 
 /* LOW-LEVEL */
 
@@ -2905,6 +2854,7 @@ get_palette(video_adapter_t *adp, int base, int count,
     u_char *r;
     u_char *g;
     u_char *b;
+    int error;
 
     if (count < 0 || base < 0 || count > 256 || base > 256 ||
 	base + count > 256)
@@ -2914,19 +2864,26 @@ get_palette(video_adapter_t *adp, int base, int count,
     g = r + count;
     b = g + count;
     if (vga_save_palette2(adp, base, count, r, g, b)) {
-	free(r, M_DEVBUF);
-	return ENODEV;
+	error = ENODEV;
+	goto out;
     }
-    copyout(r, red, count);
-    copyout(g, green, count);
-    copyout(b, blue, count);
+    error = copyout(r, red, count);
+    if (error != 0)
+	goto out;
+    error = copyout(g, green, count);
+    if (error != 0)
+	goto out;
+    error = copyout(b, blue, count);
+    if (error != 0)
+	goto out;
     if (trans != NULL) {
 	bzero(r, count);
-	copyout(r, trans, count);
+	error = copyout(r, trans, count);
     }
+out:
     free(r, M_DEVBUF);
 
-    return 0;
+    return error;
 }
 
 static int

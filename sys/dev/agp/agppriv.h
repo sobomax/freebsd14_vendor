@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2000 Doug Rabson
  * All rights reserved.
@@ -24,8 +24,6 @@
  * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
- *
- *	$FreeBSD: f6fa3c5526bdab0be8e1ab4003676a09cc614a26 $
  */
 
 #ifndef _PCI_AGPPRIV_H_
@@ -76,6 +74,7 @@ struct agp_softc {
 	int			as_nextid;	/* next memory block id */
 	int			as_isopen;	/* user device is open */
 	struct cdev		*as_devnode;	/* from make_dev */
+	struct cdev		*as_devalias;
 	struct mtx		as_lock;	/* lock for access to GATT */
 };
 

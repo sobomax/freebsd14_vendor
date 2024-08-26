@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 1999-2001 Robert N. M. Watson
  * All rights reserved.
@@ -26,8 +26,6 @@
  * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
- *
- * $FreeBSD: 781cc782f4153c124b2c9f85773a616fcff4e75c $
  */
 /*
  * Developed by the TrustedBSD Project.
@@ -67,7 +65,7 @@ struct ufs_extattr_fileheader {
 struct ufs_extattr_header {
 	u_int	ueh_flags;	/* flags for attribute */
 	u_int	ueh_len;	/* local defined length; <= uef_size */
-	u_int32_t	ueh_i_gen;	/* generation number for sanity */
+	uint32_t	ueh_i_gen;	/* generation number for sanity */
 	/* data follows the header */
 };
 
@@ -104,10 +102,6 @@ struct extattr {
 #define	EXTATTR_BASE_LENGTH(eap) \
 	roundup2((sizeof(struct extattr) - 1 + (eap)->ea_namelength), 8)
 
-#ifdef _KERNEL
-
-#include <sys/_sx.h>
-
 struct vnode;
 LIST_HEAD(ufs_extattr_list_head, ufs_extattr_list_entry);
 struct ufs_extattr_list_entry {
@@ -118,6 +112,9 @@ struct ufs_extattr_list_entry {
 	struct vnode	*uele_backing_vnode;
 };
 
+#include <sys/_lock.h>
+#include <sys/_sx.h>
+
 struct ucred;
 struct ufs_extattr_per_mount {
 	struct sx	uepm_lock;
@@ -125,6 +122,8 @@ struct ufs_extattr_per_mount {
 	struct ucred	*uepm_ucred;
 	int	uepm_flags;
 };
+
+#ifdef _KERNEL
 
 struct vop_getextattr_args;
 struct vop_deleteextattr_args;

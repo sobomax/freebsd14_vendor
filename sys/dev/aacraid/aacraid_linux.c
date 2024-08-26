@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2002 Scott Long
  * Copyright (c) 2002-2010 Adaptec, Inc.
@@ -29,8 +29,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 7592a0d5a8cbba2e026bcd126c2adb8e13c00d50 $");
-
 /*
  * Linux ioctl handler for the aac device driver
  */

@@ -25,8 +25,6 @@
  * Sun Microsystems, Inc.
  * 2550 Garcia Avenue
  * Mountain View, California  94043
- *
- * $FreeBSD: 754affe9a430700d0af14362933e530850a9ad36 $
  */
 
 /*

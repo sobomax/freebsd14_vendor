@@ -1,5 +1,4 @@
 #	from @(#)Makefile.inc	8.2 (Berkeley) 2/21/94
-# $FreeBSD: a8905ef0299724c294524223148d66331c24297f $
 #
 CFLAGS+=-D__DBINTERFACE_PRIVATE
 

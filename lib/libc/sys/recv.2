@@ -26,9 +26,8 @@
 .\" SUCH DAMAGE.
 .\"
 .\"     @(#)recv.2	8.3 (Berkeley) 2/21/94
-.\" $FreeBSD: 95a9e83446a0187a57cc1c08c5551e25c72b2aea $
 .\"
-.Dd August 19, 2018
+.Dd July 30, 2022
 .Dt RECV 2
 .Os
 .Sh NAME
@@ -344,7 +343,7 @@ and
 The argument
 .Fa s
 does not refer to a socket.
-.It Bq Er EMSGSIZE
+.It Bq Er EMFILE
 The
 .Fn recvmsg
 system call
@@ -352,9 +351,20 @@ was used to receive rights (file descriptors) that were in flight on the
 connection.
 However, the receiving program did not have enough free file
 descriptor slots to accept them.
-In this case the descriptors are
-closed, any pending data can be returned by another call to
+In this case the descriptors are closed, with pending data either discarded
+in the case of the unreliable datagram protocol or preserved in the case of a
+reliable protocol.
+The pending data can be retrieved with another call to
 .Fn recvmsg .
+.It Bq Er EMSGSIZE
+The
+.Fa msg_iovlen
+member of the
+.Fa msghdr
+structure pointed to by
+.Fa msg
+is less than or equal to 0, or is greater than
+.Va IOV_MAX .
 .It Bq Er EAGAIN
 The socket is marked non-blocking and the receive operation
 would block, or

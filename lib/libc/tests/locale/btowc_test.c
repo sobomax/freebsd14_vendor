@@ -31,9 +31,6 @@
  * The function is tested in the "C" and "ja_JP.eucJP" locales.
  */
 
-#include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 01a1133e89d518507b3a432cf868c446239262f6 $");
-
 #include <limits.h>
 #include <locale.h>
 #include <stdio.h>

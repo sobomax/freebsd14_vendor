@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2016 Adam Starak <starak.adam@gmail.com>
  * All rights reserved.
@@ -25,11 +25,11 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: a35ddc482105217da5e07d50df8910c0a13570cc $
+ * $FreeBSD: 6597be30c9f270b1db6d8b71a77255420dca5768 $
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: a35ddc482105217da5e07d50df8910c0a13570cc $");
+__FBSDID("$FreeBSD: 6597be30c9f270b1db6d8b71a77255420dca5768 $");
 
 #ifdef _KERNEL
 

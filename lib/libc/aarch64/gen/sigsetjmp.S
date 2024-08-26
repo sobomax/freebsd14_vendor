@@ -1,6 +1,5 @@
 /*-
  * Copyright (c) 2014 The FreeBSD Foundation
- * All rights reserved.
  *
  * This software was developed by Andrew Turner under
  * sponsorship from the FreeBSD Foundation.
@@ -28,9 +27,8 @@
  */
 
 #include <machine/asm.h>
-__FBSDID("$FreeBSD: 917e1ef6ee56a7587298b11e449c2fdfccbf0b34 $");
-
 #include <machine/setjmp.h>
+#include <sys/elf_common.h>
 
 ENTRY(sigsetjmp)
 	cmp	x1, #0
@@ -55,3 +53,5 @@ ENTRY(siglongjmp)
 .Lmagic:
 	.quad	_JB_MAGIC__SETJMP
 END(siglongjmp)
+
+GNU_PROPERTY_AARCH64_FEATURE_1_NOTE(GNU_PROPERTY_AARCH64_FEATURE_1_VAL)

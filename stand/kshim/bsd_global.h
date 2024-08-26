@@ -1,4 +1,3 @@
-/* $FreeBSD: 63bba757736dcdd98298bc9b4d8bc80413393c0e $ */
 /*-
  * Copyright (c) 2013 Hans Petter Selasky. All rights reserved.
  *

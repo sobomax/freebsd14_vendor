@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# $FreeBSD: 7169bbcce73227a8b3591b881b24254d50ccc0f2 $
+# $FreeBSD: cd45d47163202945ab563b580292d3b0cb0bb176 $
 #
 
 set -e
@@ -39,3 +39,4 @@ cd $unbound
 	--with-conf-file=/var/unbound/unbound.conf \
 	--with-run-dir=/var/unbound \
 	--with-username=unbound
+mv config.h ../../lib/libunbound

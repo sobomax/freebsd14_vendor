@@ -1,4 +1,3 @@
-# $FreeBSD: 10d2b59208e512f49f61fe39aed604ad81488ffc $
 
 printf -- '-1-\n'
 set -- -abc

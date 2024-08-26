@@ -1,6 +1,5 @@
 #!/bin/sh
 #
-# $FreeBSD: 866b703b828f285e3ccc04108f3b9970b708e67f $
 #
 
 # PROVIDE: zvol

@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2002-2019 Jeffrey Roberson <jeff@FreeBSD.org>
  * Copyright (c) 2004, 2005 Bosko Milekic <bmilekic@FreeBSD.org>
@@ -50,8 +50,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: e78142294ac9d33722f4e0db420bf2ea41a876a3 $");
-
 #include "opt_ddb.h"
 #include "opt_param.h"
 #include "opt_vm.h"
@@ -69,7 +67,7 @@ __FBSDID("$FreeBSD: e78142294ac9d33722f4e0db420bf2ea41a876a3 $");
 #include <sys/malloc.h>
 #include <sys/ktr.h>
 #include <sys/lock.h>
-#include <sys/sysctl.h>
+#include <sys/msan.h>
 #include <sys/mutex.h>
 #include <sys/proc.h>
 #include <sys/random.h>
@@ -79,6 +77,7 @@ __FBSDID("$FreeBSD: e78142294ac9d33722f4e0db420bf2ea41a876a3 $");
 #include <sys/sleepqueue.h>
 #include <sys/smp.h>
 #include <sys/smr.h>
+#include <sys/sysctl.h>
 #include <sys/taskqueue.h>
 #include <sys/vmmeter.h>
 
@@ -151,7 +150,7 @@ static uma_zone_t slabzones[2];
 static uma_zone_t hashzone;
 
 /* The boot-time adjusted value for cache line alignment. */
-int uma_align_cache = 64 - 1;
+static unsigned int uma_cache_align_mask = 64 - 1;
 
 static MALLOC_DEFINE(M_UMAHASH, "UMAHash", "UMA Hash Buckets");
 static MALLOC_DEFINE(M_UMA, "UMA", "UMA Misc");
@@ -330,7 +329,7 @@ static uma_keg_t uma_kcreate(uma_zone_t zone, size_t size, uma_init uminit,
 static int zone_import(void *, void **, int, int, int);
 static void zone_release(void *, void **, int);
 static bool cache_alloc(uma_zone_t, uma_cache_t, void *, int);
-static bool cache_free(uma_zone_t, uma_cache_t, void *, void *, int);
+static bool cache_free(uma_zone_t, uma_cache_t, void *, int);
 
 static int sysctl_vm_zone_count(SYSCTL_HANDLER_ARGS);
 static int sysctl_vm_zone_stats(SYSCTL_HANDLER_ARGS);
@@ -631,6 +630,60 @@ kasan_mark_slab_invalid(uma_keg_t keg __unused, void *mem __unused)
 {
 }
 #endif /* KASAN */
+
+#ifdef KMSAN
+static inline void
+kmsan_mark_item_uninitialized(uma_zone_t zone, void *item)
+{
+	void *pcpu_item;
+	size_t sz;
+	int i;
+
+	if ((zone->uz_flags &
+	    (UMA_ZFLAG_CACHE | UMA_ZONE_SECONDARY | UMA_ZONE_MALLOC)) != 0) {
+		/*
+		 * Cache zones should not be instrumented by default, as UMA
+		 * does not have enough information to do so correctly.
+		 * Consumers can mark items themselves if it makes sense to do
+		 * so.
+		 *
+		 * Items from secondary zones are initialized by the parent
+		 * zone and thus cannot safely be marked by UMA.
+		 *
+		 * malloc zones are handled directly by malloc(9) and friends,
+		 * since they can provide more precise origin tracking.
+		 */
+		return;
+	}
+	if (zone->uz_keg->uk_init != NULL) {
+		/*
+		 * By definition, initialized items cannot be marked.  The
+		 * best we can do is mark items from these zones after they
+		 * are freed to the keg.
+		 */
+		return;
+	}
+
+	sz = zone->uz_size;
+	if ((zone->uz_flags & UMA_ZONE_PCPU) == 0) {
+		kmsan_orig(item, sz, KMSAN_TYPE_UMA, KMSAN_RET_ADDR);
+		kmsan_mark(item, sz, KMSAN_STATE_UNINIT);
+	} else {
+		pcpu_item = zpcpu_base_to_offset(item);
+		for (i = 0; i <= mp_maxid; i++) {
+			kmsan_orig(zpcpu_get_cpu(pcpu_item, i), sz,
+			    KMSAN_TYPE_UMA, KMSAN_RET_ADDR);
+			kmsan_mark(zpcpu_get_cpu(pcpu_item, i), sz,
+			    KMSAN_STATE_INITED);
+		}
+	}
+}
+#else /* !KMSAN */
+static inline void
+kmsan_mark_item_uninitialized(uma_zone_t zone __unused, void *item __unused)
+{
+}
+#endif /* KMSAN */
 
 /*
  * Acquire the domain lock and record contention.
@@ -1052,7 +1105,7 @@ zone_maxaction(uma_zone_t zone)
  *	Nothing
  */
 static void
-uma_timeout(void *unused __unused, int pending __unused)
+uma_timeout(void *context __unused, int pending __unused)
 {
 	bucket_enable();
 	zone_foreach(zone_timeout, NULL);
@@ -1707,6 +1760,8 @@ keg_alloc_slab(uma_keg_t keg, uma_zone_t zone, int domain, int flags,
 	uint8_t sflags;
 	int i;
 
+	TSENTER();
+
 	KASSERT(domain >= 0 && domain < vm_ndomains,
 	    ("keg_alloc_slab: domain %d out of range", domain));
 
@@ -1750,6 +1805,9 @@ keg_alloc_slab(uma_keg_t keg, uma_zone_t zone, int domain, int flags,
 	/* For HASH zones all pages go to the same uma_domain. */
 	if ((keg->uk_flags & UMA_ZFLAG_HASH) != 0)
 		domain = 0;
+
+	kmsan_mark(mem, size,
+	    (aflags & M_ZERO) != 0 ? KMSAN_STATE_INITED : KMSAN_STATE_UNINIT);
 
 	/* Point the slab into the allocated memory */
 	if (!(keg->uk_flags & UMA_ZFLAG_OFFPAGE))
@@ -1800,6 +1858,7 @@ keg_alloc_slab(uma_keg_t keg, uma_zone_t zone, int domain, int flags,
 	dom->ud_pages += keg->uk_ppera;
 	dom->ud_free_items += keg->uk_ipers;
 
+	TSEXIT();
 	return (slab);
 
 fail:
@@ -1831,7 +1890,7 @@ startup_alloc(uma_zone_t zone, vm_size_t bytes, int domain, uint8_t *pflag,
 
 	pa = VM_PAGE_TO_PHYS(m);
 	for (i = 0; i < pages; i++, pa += PAGE_SIZE) {
-#if defined(__aarch64__) || defined(__amd64__) || defined(__mips__) || \
+#if defined(__aarch64__) || defined(__amd64__) || \
     defined(__riscv) || defined(__powerpc64__)
 		if ((wait & M_NODUMP) == 0)
 			dump_add_page(pa);
@@ -1859,7 +1918,7 @@ startup_free(void *mem, vm_size_t bytes)
 	if (va >= bootstart && va + bytes <= bootmem)
 		pmap_remove(kernel_pmap, va, va + bytes);
 	for (; bytes != 0; bytes -= PAGE_SIZE, m++) {
-#if defined(__aarch64__) || defined(__amd64__) || defined(__mips__) || \
+#if defined(__aarch64__) || defined(__amd64__) || \
     defined(__riscv) || defined(__powerpc64__)
 		dump_drop_page(VM_PAGE_TO_PHYS(m));
 #endif
@@ -1886,7 +1945,7 @@ page_alloc(uma_zone_t zone, vm_size_t bytes, int domain, uint8_t *pflag,
 	void *p;	/* Returned page */
 
 	*pflag = UMA_SLAB_KERNEL;
-	p = (void *)kmem_malloc_domainset(DOMAINSET_FIXED(domain), bytes, wait);
+	p = kmem_malloc_domainset(DOMAINSET_FIXED(domain), bytes, wait);
 
 	return (p);
 }
@@ -1946,7 +2005,7 @@ fail:
 }
 
 /*
- * Allocates a number of pages from within an object
+ * Allocates a number of pages not belonging to a VM object
  *
  * Arguments:
  *	bytes  The number of bytes requested
@@ -2043,7 +2102,7 @@ page_free(void *mem, vm_size_t size, uint8_t flags)
 	KASSERT((flags & UMA_SLAB_KERNEL) != 0,
 	    ("UMA: page_free used with invalid flags %x", flags));
 
-	kmem_free((vm_offset_t)mem, size);
+	kmem_free(mem, size);
 }
 
 /*
@@ -2784,7 +2843,7 @@ zone_ctor(void *mem, int size, void *udata, int flags)
 		STAILQ_INIT(&zdom->uzd_buckets);
 	}
 
-#if defined(INVARIANTS) && !defined(KASAN)
+#if defined(INVARIANTS) && !defined(KASAN) && !defined(KMSAN)
 	if (arg->uminit == trash_init && arg->fini == trash_fini)
 		zone->uz_flags |= UMA_ZFLAG_TRASH | UMA_ZFLAG_CTORDTOR;
 #elif defined(KASAN)
@@ -3184,20 +3243,44 @@ uma_kcreate(uma_zone_t zone, size_t size, uma_init uminit, uma_fini fini,
 	args.size = size;
 	args.uminit = uminit;
 	args.fini = fini;
-	args.align = (align == UMA_ALIGN_CACHE) ? uma_align_cache : align;
+	args.align = align;
 	args.flags = flags;
 	args.zone = zone;
 	return (zone_alloc_item(kegs, &args, UMA_ANYDOMAIN, M_WAITOK));
 }
 
+
+static void
+check_align_mask(unsigned int mask)
+{
+
+	KASSERT(powerof2(mask + 1),
+	    ("UMA: %s: Not the mask of a power of 2 (%#x)", __func__, mask));
+	/*
+	 * Make sure the stored align mask doesn't have its highest bit set,
+	 * which would cause implementation-defined behavior when passing it as
+	 * the 'align' argument of uma_zcreate().  Such very large alignments do
+	 * not make sense anyway.
+	 */
+	KASSERT(mask <= INT_MAX,
+	    ("UMA: %s: Mask too big (%#x)", __func__, mask));
+}
+
 /* Public functions */
 /* See uma.h */
 void
-uma_set_align(int align)
+uma_set_cache_align_mask(unsigned int mask)
 {
 
-	if (align != UMA_ALIGN_CACHE)
-		uma_align_cache = align;
+	check_align_mask(mask);
+	uma_cache_align_mask = mask;
+}
+
+/* Returns the alignment mask to use to request cache alignment. */
+unsigned int
+uma_get_cache_align_mask(void)
+{
+	return (uma_cache_align_mask);
 }
 
 /* See uma.h */
@@ -3209,8 +3292,7 @@ uma_zcreate(const char *name, size_t size, uma_ctor ctor, uma_dtor dtor,
 	struct uma_zctor_args args;
 	uma_zone_t res;
 
-	KASSERT(powerof2(align + 1), ("invalid zone alignment %d for \"%s\"",
-	    align, name));
+	check_align_mask(align);
 
 	/* This stuff is essential for the zone ctor */
 	memset(&args, 0, sizeof(args));
@@ -3220,7 +3302,7 @@ uma_zcreate(const char *name, size_t size, uma_ctor ctor, uma_dtor dtor,
 	args.dtor = dtor;
 	args.uminit = uminit;
 	args.fini = fini;
-#if defined(INVARIANTS) && !defined(KASAN)
+#if defined(INVARIANTS) && !defined(KASAN) && !defined(KMSAN)
 	/*
 	 * Inject procedures which check for memory use after free if we are
 	 * allowed to scramble the memory while it is not allocated.  This
@@ -3380,6 +3462,7 @@ item_ctor(uma_zone_t zone, int uz_flags, int size, void *udata, int flags,
 #endif
 
 	kasan_mark_item_valid(zone, item);
+	kmsan_mark_item_uninitialized(zone, item);
 
 #ifdef INVARIANTS
 	skipdbg = uma_dbg_zskip(zone, item);
@@ -3447,6 +3530,9 @@ item_domain(void *item)
 #endif
 
 #if defined(INVARIANTS) || defined(DEBUG_MEMGUARD) || defined(WITNESS)
+#if defined(INVARIANTS) && (defined(DDB) || defined(STACK))
+#include <sys/stack.h>
+#endif
 #define	UMA_ZALLOC_DEBUG
 static int
 uma_zalloc_debug(uma_zone_t zone, void **itemp, void *udata, int flags)
@@ -3468,6 +3554,31 @@ uma_zalloc_debug(uma_zone_t zone, void **itemp, void *udata, int flags)
 	    ("uma_zalloc_debug: called within spinlock or critical section"));
 	KASSERT((zone->uz_flags & UMA_ZONE_PCPU) == 0 || (flags & M_ZERO) == 0,
 	    ("uma_zalloc_debug: allocating from a pcpu zone with M_ZERO"));
+
+	_Static_assert(M_NOWAIT != 0 && M_WAITOK != 0,
+	    "M_NOWAIT and M_WAITOK must be non-zero for this assertion:");
+#if 0
+	/*
+	 * Give the #elif clause time to find problems, then remove it
+	 * and enable this.  (Remove <sys/stack.h> above, too.)
+	 */
+	KASSERT((flags & (M_NOWAIT|M_WAITOK)) == M_NOWAIT ||
+	    (flags & (M_NOWAIT|M_WAITOK)) == M_WAITOK,
+	    ("uma_zalloc_debug: must pass one of M_NOWAIT or M_WAITOK"));
+#elif defined(DDB) || defined(STACK)
+	if (__predict_false((flags & (M_NOWAIT|M_WAITOK)) != M_NOWAIT &&
+	    (flags & (M_NOWAIT|M_WAITOK)) != M_WAITOK)) {
+		static int stack_count;
+		struct stack st;
+
+		if (stack_count < 10) {
+			++stack_count;
+			printf("uma_zalloc* called with bad WAIT flags:\n");
+			stack_save(&st);
+			stack_print(&st);
+		}
+	}
+#endif
 #endif
 
 #ifdef DEBUG_MEMGUARD
@@ -3566,6 +3677,9 @@ uma_zalloc_smr(uma_zone_t zone, int flags)
 {
 	uma_cache_bucket_t bucket;
 	uma_cache_t cache;
+
+	CTR3(KTR_UMA, "uma_zalloc_smr zone %s(%p) flags %d", zone->uz_name,
+	    zone, flags);
 
 #ifdef UMA_ZALLOC_DEBUG
 	void *item;
@@ -3740,12 +3854,6 @@ uma_zalloc_domain(uma_zone_t zone, void *udata, int domain, int flags)
 	CTR4(KTR_UMA, "uma_zalloc_domain zone %s(%p) domain %d flags %d",
 	    zone->uz_name, zone, domain, flags);
 
-	if (flags & M_WAITOK) {
-		WITNESS_WARN(WARN_GIANTOK | WARN_SLEEPOK, NULL,
-		    "uma_zalloc_domain: zone \"%s\"", zone->uz_name);
-	}
-	KASSERT(curthread->td_critnest == 0 || SCHEDULER_STOPPED(),
-	    ("uma_zalloc_domain: called with spinlock or critical section held"));
 	KASSERT((zone->uz_flags & UMA_ZONE_SMR) == 0,
 	    ("uma_zalloc_domain: called with SMR zone."));
 #ifdef NUMA
@@ -3754,6 +3862,11 @@ uma_zalloc_domain(uma_zone_t zone, void *udata, int domain, int flags)
 
 	if (vm_ndomains == 1)
 		return (uma_zalloc_arg(zone, udata, flags));
+
+#ifdef UMA_ZALLOC_DEBUG
+	if (uma_zalloc_debug(zone, &item, udata, flags) == EJUSTRETURN)
+		return (item);
+#endif
 
 	/*
 	 * Try to allocate from the bucket cache before falling back to the keg.
@@ -4319,7 +4432,13 @@ uma_zfree_smr(uma_zone_t zone, void *item)
 {
 	uma_cache_t cache;
 	uma_cache_bucket_t bucket;
-	int itemdomain, uz_flags;
+	int itemdomain;
+#ifdef NUMA
+	int uz_flags;
+#endif
+
+	CTR3(KTR_UMA, "uma_zfree_smr zone %s(%p) item %p",
+	    zone->uz_name, zone, item);
 
 #ifdef UMA_ZALLOC_DEBUG
 	KASSERT((zone->uz_flags & UMA_ZONE_SMR) != 0,
@@ -4330,9 +4449,9 @@ uma_zfree_smr(uma_zone_t zone, void *item)
 		return;
 #endif
 	cache = &zone->uz_cpu[curcpu];
-	uz_flags = cache_uz_flags(cache);
 	itemdomain = 0;
 #ifdef NUMA
+	uz_flags = cache_uz_flags(cache);
 	if ((uz_flags & UMA_ZONE_FIRSTTOUCH) != 0)
 		itemdomain = item_domain(item);
 #endif
@@ -4352,7 +4471,7 @@ uma_zfree_smr(uma_zone_t zone, void *item)
 			critical_exit();
 			return;
 		}
-	} while (cache_free(zone, cache, NULL, item, itemdomain));
+	} while (cache_free(zone, cache, NULL, itemdomain));
 	critical_exit();
 
 	/*
@@ -4372,7 +4491,8 @@ uma_zfree_arg(uma_zone_t zone, void *item, void *udata)
 	/* Enable entropy collection for RANDOM_ENABLE_UMA kernel option */
 	random_harvest_fast_uma(&zone, sizeof(zone), RANDOM_UMA);
 
-	CTR2(KTR_UMA, "uma_zfree_arg zone %s(%p)", zone->uz_name, zone);
+	CTR3(KTR_UMA, "uma_zfree_arg zone %s(%p) item %p",
+	    zone->uz_name, zone, item);
 
 #ifdef UMA_ZALLOC_DEBUG
 	KASSERT((zone->uz_flags & UMA_ZONE_SMR) == 0,
@@ -4446,7 +4566,7 @@ uma_zfree_arg(uma_zone_t zone, void *item, void *udata)
 			critical_exit();
 			return;
 		}
-	} while (cache_free(zone, cache, udata, item, itemdomain));
+	} while (cache_free(zone, cache, udata, itemdomain));
 	critical_exit();
 
 	/*
@@ -4587,8 +4707,7 @@ zone_free_bucket(uma_zone_t zone, uma_bucket_t bucket, void *udata,
  * the caller should retry.
  */
 static __noinline bool
-cache_free(uma_zone_t zone, uma_cache_t cache, void *udata, void *item,
-    int itemdomain)
+cache_free(uma_zone_t zone, uma_cache_t cache, void *udata, int itemdomain)
 {
 	uma_cache_bucket_t cbucket;
 	uma_bucket_t newbucket, bucket;
@@ -5729,7 +5848,7 @@ get_uma_stats(uma_keg_t kz, uma_zone_t z, uint64_t *allocs, uint64_t *used,
 	return (((int64_t)*used + *cachefree) * kz->uk_size);
 }
 
-DB_SHOW_COMMAND(uma, db_show_uma)
+DB_SHOW_COMMAND_FLAGS(uma, db_show_uma, DB_CMD_MEMSAFE)
 {
 	const char *fmt_hdr, *fmt_entry;
 	uma_keg_t kz;
@@ -5802,7 +5921,7 @@ DB_SHOW_COMMAND(uma, db_show_uma)
 	}
 }
 
-DB_SHOW_COMMAND(umacache, db_show_umacache)
+DB_SHOW_COMMAND_FLAGS(umacache, db_show_umacache, DB_CMD_MEMSAFE)
 {
 	uma_zone_t z;
 	uint64_t allocs, frees;

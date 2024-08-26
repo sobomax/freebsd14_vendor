@@ -1,4 +1,3 @@
-# $FreeBSD: 4cefca6af6903192d4eb65f4c2148e291ad5c647 $
 
 PACKAGE=	nfs
 

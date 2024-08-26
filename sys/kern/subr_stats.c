@@ -22,8 +22,6 @@
  * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
- *
- * $FreeBSD: ff8ddbac4d8173065410dce880760fabb6027dd7 $
  */
 
 /*
@@ -31,8 +29,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: ff8ddbac4d8173065410dce880760fabb6027dd7 $");
-
 #include <sys/param.h>
 #include <sys/arb.h>
 #include <sys/ctype.h>
@@ -1112,13 +1108,19 @@ stats_v1_blob_clone(struct statsblobv1 **dst, size_t dstmaxsz,
 		 */
 #ifdef _KERNEL
 		if (flags & SB_CLONE_USRDSTNOFAULT)
-			copyout_nofault(src, *dst,
+			error = copyout_nofault(src, *dst,
 			    offsetof(struct statsblob, maxsz));
 		else if (flags & SB_CLONE_USRDST)
-			copyout(src, *dst, offsetof(struct statsblob, maxsz));
+			error = copyout(src, *dst,
+			    offsetof(struct statsblob, maxsz));
 		else
 #endif
 			memcpy(*dst, src, offsetof(struct statsblob, maxsz));
+#ifdef _KERNEL
+		if (error != 0)
+			goto out;
+#endif
+
 
 		if (dstmaxsz >= src->cursz) {
 			postcurszlen = src->cursz -
@@ -1130,14 +1132,18 @@ stats_v1_blob_clone(struct statsblobv1 **dst, size_t dstmaxsz,
 		}
 #ifdef _KERNEL
 		if (flags & SB_CLONE_USRDSTNOFAULT)
-			copyout_nofault(&(src->cursz), &((*dst)->cursz),
+			error = copyout_nofault(&(src->cursz), &((*dst)->cursz),
 			    postcurszlen);
 		else if (flags & SB_CLONE_USRDST)
-			copyout(&(src->cursz), &((*dst)->cursz), postcurszlen);
+			error = copyout(&(src->cursz), &((*dst)->cursz),
+			    postcurszlen);
 		else
 #endif
 			memcpy(&((*dst)->cursz), &(src->cursz), postcurszlen);
 	}
+#ifdef _KERNEL
+out:
+#endif
 
 	return (error);
 }

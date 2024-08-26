@@ -5,8 +5,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 2029184ce66a14e216474e356c651da97028290f $");
-
 #include "igc_hw.h"
 #include "igc_i225.h"
 #include "igc_mac.h"

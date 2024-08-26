@@ -1,6 +1,5 @@
 #!/bin/sh
 #
-# $FreeBSD: 3e50a39ff66a2eaeb1ad8117f0954de749f36d88 $
 #
 
 # PROVIDE: rpcbind

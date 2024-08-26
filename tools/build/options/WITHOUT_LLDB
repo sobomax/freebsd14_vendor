@@ -1,2 +1,1 @@
-.\" $FreeBSD: db9b98aaf93ac4f4086ac583ad50289538b47684 $
 Do not build the LLDB debugger.

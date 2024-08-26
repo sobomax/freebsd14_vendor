@@ -1,4 +1,3 @@
-# $FreeBSD: 47a679fe2a245302cdd77c6fa043d421117b16e8 $
 
 .PATH: ${SRCTOP}/sys/dev/sis
 

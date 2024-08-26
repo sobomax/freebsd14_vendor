@@ -1,4 +1,3 @@
-# $FreeBSD: 5152147634210aea9c4a6d1be882e31200e3a1e6 $
 
 .include <src.opts.mk>
 
@@ -13,5 +12,13 @@ CFLAGS+= -DINET6
 .endif
 
 WARNS?=	3
+
+.if ${MK_ASAN} != "no"
+# Work around "error: duplicate symbol: getifaddrs" when building with ASAN.
+# The ASAN interceptors also define getifaddrs, but we want to prefer the local
+# stub symbol here, so using a shared sanitizer runtime moves the local
+# definition first in the symbol resolution order.
+LDFLAGS+=-shared-libasan
+.endif
 
 .include <bsd.test.mk>

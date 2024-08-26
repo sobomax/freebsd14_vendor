@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2008 Weongyo Jeong <weongyo@freebsd.org>
  * Copyright (c) 2007 Marvell Semiconductor, Inc.
@@ -33,7 +33,6 @@
 
 #include <sys/cdefs.h>
 #ifdef __FreeBSD__
-__FBSDID("$FreeBSD: 2c397e1fe6d44c75ebd242d907d406aa8e3b4a89 $");
 #endif
 
 #include "opt_malo.h"
@@ -1032,8 +1031,8 @@ malo_tx_start(struct malo_softc *sc, struct ieee80211_node *ni,
 {
 #define	IS_DATA_FRAME(wh)						\
 	((wh->i_fc[0] & (IEEE80211_FC0_TYPE_MASK)) == IEEE80211_FC0_TYPE_DATA)
-	int error, ismcast, iswep;
-	int copyhdrlen, hdrlen, pktlen;
+	int error, iswep;
+	int hdrlen, pktlen;
 	struct ieee80211_frame *wh;
 	struct ieee80211com *ic = &sc->malo_ic;
 	struct ieee80211vap *vap = ni->ni_vap;
@@ -1044,13 +1043,10 @@ malo_tx_start(struct malo_softc *sc, struct ieee80211_node *ni,
 
 	wh = mtod(m0, struct ieee80211_frame *);
 	iswep = wh->i_fc[1] & IEEE80211_FC1_PROTECTED;
-	ismcast = IEEE80211_IS_MULTICAST(wh->i_addr1);
-	copyhdrlen = hdrlen = ieee80211_anyhdrsize(wh);
+	hdrlen = ieee80211_anyhdrsize(wh);
 	pktlen = m0->m_pkthdr.len;
 	if (IEEE80211_QOS_HAS_SEQ(wh)) {
 		qos = *(uint16_t *)ieee80211_getqos(wh);
-		if (IEEE80211_IS_DSTODS(wh))
-			copyhdrlen -= sizeof(qos);
 	} else
 		qos = 0;
 
@@ -1746,7 +1742,7 @@ malo_newstate(struct ieee80211vap *vap, enum ieee80211_state nstate, int arg)
 		DPRINTF(sc, MALO_DEBUG_STATE,
 		    "%s: %s(RUN): iv_flags 0x%08x bintvl %d bssid %s "
 		    "capinfo 0x%04x chan %d associd 0x%x mode %d rate %d\n",
-		    vap->iv_ifp->if_xname, __func__, vap->iv_flags,
+		    if_name(vap->iv_ifp), __func__, vap->iv_flags,
 		    ni->ni_intval, ether_sprintf(ni->ni_bssid), ni->ni_capinfo,
 		    ieee80211_chan2ieee(ic, ic->ic_curchan),
 		    ni->ni_associd, mode, tp->ucastrate);
@@ -1936,7 +1932,6 @@ malo_set_channel(struct ieee80211com *ic)
 static void
 malo_rx_proc(void *arg, int npending)
 {
-	struct epoch_tracker et;
 	struct malo_softc *sc = arg;
 	struct ieee80211com *ic = &sc->malo_ic;
 	struct malo_rxbuf *bf;
@@ -2069,13 +2064,11 @@ malo_rx_proc(void *arg, int npending)
 		/* dispatch */
 		ni = ieee80211_find_rxnode(ic,
 		    (struct ieee80211_frame_min *)wh);
-		NET_EPOCH_ENTER(et);
 		if (ni != NULL) {
 			(void) ieee80211_input(ni, m, rssi, ds->nf);
 			ieee80211_free_node(ni);
 		} else
 			(void) ieee80211_input_all(ic, m, rssi, ds->nf);
-		NET_EPOCH_EXIT(et);
 rx_next:
 		/* NB: ignore ENOMEM so we process more descriptors */
 		(void) malo_rxbuf_init(sc, bf);

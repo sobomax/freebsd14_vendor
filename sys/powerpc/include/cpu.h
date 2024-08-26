@@ -31,7 +31,6 @@
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
  *	$NetBSD: cpu.h,v 1.11 2000/05/26 21:19:53 thorpej Exp $
- * $FreeBSD: 6eaa4a48a900af43bed27a697feccd4631359f9e $
  */
 
 #ifndef _MACHINE_CPU_H_

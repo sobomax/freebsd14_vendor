@@ -20,8 +20,6 @@
 # CDDL HEADER END
 #
 
-# $FreeBSD: 38b32f473da047c983df80fab955fcd2dd6028fc $
-
 #
 # ident	"@(#)zvol_swap_001_pos.ksh	1.3	08/05/14 SMI"
 #

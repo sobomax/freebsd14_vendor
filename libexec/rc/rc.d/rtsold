@@ -1,6 +1,5 @@
 #!/bin/sh
 #
-# $FreeBSD: 0bc7d9287adfb6501897488a20d0dea3f75ed86e $
 #
 
 # PROVIDE: rtsold

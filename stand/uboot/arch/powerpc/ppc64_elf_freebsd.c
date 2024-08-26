@@ -24,9 +24,6 @@
  * SUCH DAMAGE.
  */
 
-#include <sys/cdefs.h>
-__FBSDID("$FreeBSD: feabcde3bf4ab1a771dc21578c0a4fe00821b281 $");
-
 #define __ELF_WORD_SIZE 64
 
 #include <sys/param.h>

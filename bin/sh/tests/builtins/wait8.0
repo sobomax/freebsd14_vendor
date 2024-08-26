@@ -1,4 +1,3 @@
-# $FreeBSD: b59ff59622eba599ac07487a31f5037503a051e8 $
 
 exit 44 & p44=$!
 exit 45 & p45=$!

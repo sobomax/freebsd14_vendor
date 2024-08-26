@@ -1,5 +1,4 @@
 /*	$NetBSD: rpcb_svc.c,v 1.1 2000/06/02 23:15:41 fvdl Exp $	*/
-/*	$FreeBSD: 474f8ec77d17f76351c8f27cd4cebba2c6db0fa7 $ */
 
 /*-
  * SPDX-License-Identifier: BSD-3-Clause

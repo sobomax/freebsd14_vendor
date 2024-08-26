@@ -7,8 +7,6 @@
 /* VMCI QueuePair API implementation. */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 0e2f83b20c676ff60c2ec7d05e9f2ea01bdd8253 $");
-
 #include "vmci.h"
 #include "vmci_driver.h"
 #include "vmci_event.h"

@@ -36,8 +36,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 1fc162d360cd6a78d3e2ca055e6f8e59a44dad9e $");
-
 #include <dev/drm2/drmP.h>
 #include <dev/drm2/ttm/ttm_module.h>
 #include <dev/drm2/ttm/ttm_bo_driver.h>
@@ -245,7 +243,7 @@ void ttm_dma_tt_fini(struct ttm_dma_tt *ttm_dma)
 
 void ttm_tt_unbind(struct ttm_tt *ttm)
 {
-	int ret;
+	int ret __diagused;
 
 	if (ttm->state == tt_bound) {
 		ret = ttm->func->unbind(ttm);

@@ -6,7 +6,7 @@
  * This software is provided ``AS IS'' without any warranties of any kind.
  */
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2003-2005 McAfee, Inc.
  * Copyright (c) 2016-2017 Robert N. M. Watson
@@ -45,8 +45,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 65fe2a2335721beb7411e0b6811b69b67cb84831 $");
-
 #include "opt_sysvipc.h"
 
 #include <sys/param.h>
@@ -254,13 +252,13 @@ static struct syscall_helper_data sem_syscalls[] = {
 #include <compat/freebsd32/freebsd32_util.h>
 
 static struct syscall_helper_data sem32_syscalls[] = {
-	SYSCALL32_INIT_HELPER(freebsd32_semctl),
+	SYSCALL32_INIT_HELPER(freebsd32___semctl),
 	SYSCALL32_INIT_HELPER_COMPAT(semget),
 	SYSCALL32_INIT_HELPER_COMPAT(semop),
 	SYSCALL32_INIT_HELPER(freebsd32_semsys),
 #if defined(COMPAT_FREEBSD4) || defined(COMPAT_FREEBSD5) || \
     defined(COMPAT_FREEBSD6) || defined(COMPAT_FREEBSD7)
-	SYSCALL32_INIT_HELPER(freebsd7_freebsd32_semctl),
+	SYSCALL32_INIT_HELPER(freebsd7_freebsd32___semctl),
 #endif
 	SYSCALL_INIT_LAST
 };
@@ -1765,16 +1763,7 @@ static sy_call_t *semcalls[] = {
  * Entry point for all SEM calls.
  */
 int
-sys_semsys(td, uap)
-	struct thread *td;
-	/* XXX actually varargs. */
-	struct semsys_args /* {
-		int	which;
-		int	a2;
-		int	a3;
-		int	a4;
-		int	a5;
-	} */ *uap;
+sys_semsys(struct thread *td, struct semsys_args *uap)
 {
 	int error;
 
@@ -1877,8 +1866,8 @@ freebsd32_semsys(struct thread *td, struct freebsd32_semsys_args *uap)
 	AUDIT_ARG_SVIPC_WHICH(uap->which);
 	switch (uap->which) {
 	case 0:
-		return (freebsd7_freebsd32_semctl(td,
-		    (struct freebsd7_freebsd32_semctl_args *)&uap->a2));
+		return (freebsd7_freebsd32___semctl(td,
+		    (struct freebsd7_freebsd32___semctl_args *)&uap->a2));
 	default:
 		return (sys_semsys(td, (struct semsys_args *)uap));
 	}
@@ -1890,13 +1879,13 @@ freebsd32_semsys(struct thread *td, struct freebsd32_semsys_args *uap)
 #if defined(COMPAT_FREEBSD4) || defined(COMPAT_FREEBSD5) || \
     defined(COMPAT_FREEBSD6) || defined(COMPAT_FREEBSD7)
 int
-freebsd7_freebsd32_semctl(struct thread *td,
-    struct freebsd7_freebsd32_semctl_args *uap)
+freebsd7_freebsd32___semctl(struct thread *td,
+    struct freebsd7_freebsd32___semctl_args *uap)
 {
-	struct semid_ds32_old dsbuf32;
+	struct semid_ds_old32 dsbuf32;
 	struct semid_ds dsbuf;
 	union semun semun;
-	union semun32 arg;
+	union semun_old32 arg;
 	register_t rval;
 	int error;
 
@@ -1963,7 +1952,7 @@ freebsd7_freebsd32_semctl(struct thread *td,
 #endif
 
 int
-freebsd32_semctl(struct thread *td, struct freebsd32_semctl_args *uap)
+freebsd32___semctl(struct thread *td, struct freebsd32___semctl_args *uap)
 {
 	struct semid_ds32 dsbuf32;
 	struct semid_ds dsbuf;

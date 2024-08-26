@@ -24,8 +24,6 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: f008c878a1eb258217e5dff74726a9dbfa88f145 $
- *
  */
 
 #ifndef _IF_MVNETAVAR_H_
@@ -140,7 +138,7 @@ struct mvneta_tx_ring {
 	/* Index of this queue */
 	int				qidx;
 	/* IFNET pointer */
-	struct ifnet			*ifp;
+	if_t				ifp;
 	/* Ring buffer for IFNET */
 	struct buf_ring			*br;
 	/* Real descriptors array. shared by TxDMA */
@@ -258,8 +256,10 @@ struct mvneta_softc {
 	struct mtx	mtx;
 	struct resource *res[2];
 	void            *ih_cookie[1];
+	
+	uint64_t	clk_freq;
 
-	struct ifnet	*ifp;
+	if_t		ifp;
 	uint32_t        mvneta_if_flags;
 	uint32_t        mvneta_media;
 	uint32_t	tx_csum_limit;
@@ -321,6 +321,7 @@ struct mvneta_softc {
 int mvneta_attach(device_t);
 
 #ifdef FDT
+boolean_t mvneta_has_switch_fdt(device_t);
 int mvneta_fdt_mac_address(struct mvneta_softc *, uint8_t *);
 #endif
 

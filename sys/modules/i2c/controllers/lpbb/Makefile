@@ -1,4 +1,3 @@
-# $FreeBSD: 10b7e6a9561e78f27119a5f3ca4b5ac6451adc3e $
 
 .PATH:		${SRCTOP}/sys/dev/ppbus
 KMOD		= lpbb

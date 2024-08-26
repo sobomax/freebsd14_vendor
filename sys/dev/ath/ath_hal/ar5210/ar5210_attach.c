@@ -15,8 +15,6 @@
  * WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
  * ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
- *
- * $FreeBSD: 22afc12a6dcc704ef238512e58aed45579744755 $
  */
 #include "opt_ah.h"
 
@@ -145,6 +143,8 @@ static const struct ath_hal_private ar5210hal = {{
 	.ah_getDfsThresh		= ar5210GetDfsThresh,
 	/* XXX procRadarEvent */
 	/* XXX isFastClockEnabled */
+	.ah_getNav			= ar5210GetNav,
+	.ah_setNav			= ar5210SetNav,
 
 	/* Key Cache Functions */
 	.ah_getKeyCacheSize		= ar5210GetKeyCacheSize,

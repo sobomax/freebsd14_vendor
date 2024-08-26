@@ -1,6 +1,5 @@
 #!/bin/sh
 #
-# $FreeBSD: 0fdbee024d4eb65ef9d946699d4a4559380a3484 $
 #
 
 # PROVIDE: bootparams

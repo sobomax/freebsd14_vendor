@@ -11,8 +11,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 3134c4b03928593882e964fd9581fe8c4a6f1cc4 $");
-
 #include <sys/capsicum.h>
 #include <sys/ioctl.h>
 #include <sys/queue.h>
@@ -533,7 +531,7 @@ usage(char const *whine)
 
 	fprintf(stderr, "%s\n", whine);
 	fprintf(stderr,
-	    "Usage: ministat [-C column] [-c confidence] [-d delimiter(s)] [-Ans] [-w width] [file [file ...]]\n");
+	    "Usage: ministat [-C column] [-c confidence] [-d delimiter(s)] [-Anqs] [-w width] [file [file ...]]\n");
 	fprintf(stderr, "\tconfidence = {");
 	for (i = 0; i < NCONF; i++) {
 		fprintf(stderr, "%s%g%%",
@@ -545,6 +543,7 @@ usage(char const *whine)
 	fprintf(stderr, "\t-C : column number to extract (starts and defaults to 1)\n");
 	fprintf(stderr, "\t-d : delimiter(s) string, default to \" \\t\"\n");
 	fprintf(stderr, "\t-n : print summary statistics only, no graph/test\n");
+	fprintf(stderr, "\t-q : suppress printing summary-statistics headers and data-set names\n");
 	fprintf(stderr, "\t-s : print avg/median/stddev bars on separate lines\n");
 	fprintf(stderr, "\t-w : width of graph/test output (default 74 or terminal width)\n");
 	exit (2);
@@ -564,6 +563,7 @@ main(int argc, char **argv)
 	int column = 1;
 	int flag_s = 0;
 	int flag_n = 0;
+	int flag_q = 0;
 	int termwidth = 74;
 	int suppress_plot = 0;
 
@@ -578,7 +578,7 @@ main(int argc, char **argv)
 	}
 
 	ci = -1;
-	while ((c = getopt(argc, argv, "AC:c:d:snw:")) != -1)
+	while ((c = getopt(argc, argv, "AC:c:d:snqw:")) != -1)
 		switch (c) {
 		case 'A':
 			suppress_plot = 1;
@@ -607,6 +607,9 @@ main(int argc, char **argv)
 			break;
 		case 'n':
 			flag_n = 1;
+			break;
+		case 'q':
+			flag_q = 1;
 			break;
 		case 's':
 			flag_s = 1;
@@ -664,8 +667,10 @@ main(int argc, char **argv)
 			fclose(setfiles[i]);
 	}
 
-	for (i = 0; i < nds; i++)
-		printf("%c %s\n", symbol[i+1], ds[i]->name);
+	if (!flag_q) {
+		for (i = 0; i < nds; i++)
+			printf("%c %s\n", symbol[i+1], ds[i]->name);
+	}
 
 	if (!flag_n && !suppress_plot) {
 		SetupPlot(termwidth, flag_s, nds);
@@ -675,7 +680,8 @@ main(int argc, char **argv)
 			PlotSet(ds[i], i + 1);
 		DumpPlot();
 	}
-	VitalsHead();
+	if (!flag_q)
+		VitalsHead();
 	Vitals(ds[0], 1);
 	for (i = 1; i < nds; i++) {
 		Vitals(ds[i], i + 1);

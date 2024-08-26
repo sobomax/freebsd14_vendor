@@ -27,7 +27,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 393cf795c76a5753607731e95b8796bc1035dae3 $");
 /* clang-format off */
 
 /*

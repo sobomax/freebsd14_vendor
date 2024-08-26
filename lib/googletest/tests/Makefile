@@ -1,4 +1,3 @@
-# $FreeBSD: 1df9936ff6cfdfe1d52a259877813b39a9e36894 $
 
 .PATH:		${SRCTOP}/tests
 KYUAFILE=	yes

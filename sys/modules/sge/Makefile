@@ -1,4 +1,3 @@
-# $FreeBSD: bd741161b8f5202332bcec189a831cba4c35667d $
 
 .PATH: ${SRCTOP}/sys/dev/sge
 

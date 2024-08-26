@@ -25,8 +25,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: eab79e9dfbc304a228030821e85569298e81a112 $");
-
 #include "opt_platform.h"
 #include <sys/param.h>
 #include <sys/conf.h>
@@ -49,7 +47,9 @@ __FBSDID("$FreeBSD: eab79e9dfbc304a228030821e85569298e81a112 $");
 #endif
 #include <dev/extres/regulator/regulator.h>
 
+#ifdef FDT
 #include "regdev_if.h"
+#endif
 
 SYSCTL_NODE(_hw, OID_AUTO, regulator, CTLFLAG_RD | CTLFLAG_MPSAFE, NULL,
     "Regulators");

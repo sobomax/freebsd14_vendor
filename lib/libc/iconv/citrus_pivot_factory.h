@@ -1,4 +1,3 @@
-/* $FreeBSD: adbfc8c77524e7cacda86ebef3abec650a3213b9 $ */
 /* $NetBSD: citrus_pivot_factory.h,v 1.1 2003/06/25 09:51:39 tshiozak Exp $ */
 
 /*-

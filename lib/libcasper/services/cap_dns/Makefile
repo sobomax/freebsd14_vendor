@@ -1,6 +1,5 @@
-# $FreeBSD: b59b329d06537ba05769288979aa401f80f7fd7d $
 
-SHLIBDIR?=	/lib/casper
+SHLIBDIR?=	/lib
 
 .include <src.opts.mk>
 

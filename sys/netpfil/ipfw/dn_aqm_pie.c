@@ -1,7 +1,5 @@
 /*
  * PIE - Proportional Integral controller Enhanced AQM algorithm.
- *
- * $FreeBSD: d3982db5fd41099e1fc0dd62c16c8457c9d034d8 $
  * 
  * Copyright (C) 2016 Centre for Advanced Internet Architectures,
  *  Swinburne University of Technology, Melbourne, Australia.
@@ -328,8 +326,9 @@ static struct mbuf *
 pie_extract_head(struct dn_queue *q, aqm_time_t *pkt_ts, int getts)
 {
 	struct m_tag *mtag;
-	struct mbuf *m = q->mq.head;
+	struct mbuf *m;
 
+next:	m = q->mq.head;
 	if (m == NULL)
 		return m;
 	q->mq.head = m->m_nextpkt;
@@ -350,6 +349,11 @@ pie_extract_head(struct dn_queue *q, aqm_time_t *pkt_ts, int getts)
 			*pkt_ts = *(aqm_time_t *)(mtag + 1);
 			m_tag_delete(m,mtag); 
 		}
+	}
+	if (m->m_pkthdr.rcvif != NULL &&
+	    __predict_false(m_rcvif_restore(m) == NULL)) {
+		m_freem(m);
+		goto next;
 	}
 	return m;
 }
@@ -404,7 +408,6 @@ static struct mbuf *
 aqm_pie_dequeue(struct dn_queue *q)
 {
 	struct mbuf *m;
-	struct dn_flow *ni;	/* stats for scheduler instance */	
 	struct dn_aqm_pie_parms *pprms;
 	struct pie_status *pst;
 	aqm_time_t now;
@@ -413,7 +416,6 @@ aqm_pie_dequeue(struct dn_queue *q)
 
 	pst  = q->aqm_status;
 	pprms = pst->parms;
-	ni = &q->_si->ni;
 
 	/*we extarct packet ts only when Departure Rate Estimation dis not used*/
 	m = pie_extract_head(q, &pkt_ts, !(pprms->flags & PIE_DEPRATEEST_ENABLED));
@@ -593,8 +595,10 @@ aqm_pie_init(struct dn_queue *q)
 		}
 
 		pst = q->aqm_status;
+		dummynet_sched_lock();
 		/* increase reference count for PIE module */
 		pie_desc.ref_count++;
+		dummynet_sched_unlock();
 		
 		pst->pq = q;
 		pst->parms = pprms;
@@ -628,9 +632,9 @@ pie_callout_cleanup(void *x)
 	mtx_unlock(&pst->lock_mtx);
 	mtx_destroy(&pst->lock_mtx);
 	free(x, M_DUMMYNET);
-	DN_BH_WLOCK();
+	dummynet_sched_lock();
 	pie_desc.ref_count--;
-	DN_BH_WUNLOCK();
+	dummynet_sched_unlock();
 }
 
 /* 

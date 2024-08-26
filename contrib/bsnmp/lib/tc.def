@@ -1,6 +1,5 @@
 #-
 # Copyright (C) 2010 The FreeBSD Foundation
-# All rights reserved.
 #
 # This software was developed by Shteryana Sotirova Shopova under
 # sponsorship from the FreeBSD Foundation.
@@ -26,7 +25,7 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: 1c408b844122366e8f94188c85d434111dc6c51a $
+# $FreeBSD: b43d467eba48ab38af3a8da5d7235715ba4d3bdf $
 #
 
 typedef RowStatus ENUM (

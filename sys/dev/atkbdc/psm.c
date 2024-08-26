@@ -59,8 +59,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 5ecddd7616ee4c102f7d1788f47870c0278a27fd $");
-
 #include "opt_isa.h"
 #include "opt_psm.h"
 #include "opt_evdev.h"
@@ -476,7 +474,6 @@ struct psm_softc {		/* Driver status information */
 	struct evdev_dev *evdev_r;	/* Relative reporting device */
 #endif
 };
-static devclass_t psm_devclass;
 
 /* driver state flags (state) */
 #define	PSM_VALID		0x80
@@ -4132,14 +4129,12 @@ psmsmoother(struct psm_softc *sc, finger_t *f, int smoother_id,
 		int x0, y0;
 		int cursor, peer, window;
 		int dx, dy, dxp, dyp;
-		int max_width, max_pressure;
 		int margin_top, margin_right, margin_bottom, margin_left;
 		int na_top, na_right, na_bottom, na_left;
-		int window_min, window_max;
+		int window_max;
 		int multiplicator;
 		int weight_current, weight_previous, weight_len_squared;
 		int div_min, div_max, div_len;
-		int vscroll_hor_area, vscroll_ver_area;
 		int two_finger_scroll;
 		int max_x, max_y;
 		int len, weight_prev_x, weight_prev_y;
@@ -4149,8 +4144,6 @@ psmsmoother(struct psm_softc *sc, finger_t *f, int smoother_id,
 
 		/* Read sysctl. */
 		/* XXX Verify values? */
-		max_width = sc->syninfo.max_width;
-		max_pressure = sc->syninfo.max_pressure;
 		margin_top = sc->syninfo.margin_top;
 		margin_right = sc->syninfo.margin_right;
 		margin_bottom = sc->syninfo.margin_bottom;
@@ -4159,7 +4152,6 @@ psmsmoother(struct psm_softc *sc, finger_t *f, int smoother_id,
 		na_right = sc->syninfo.na_right;
 		na_bottom = sc->syninfo.na_bottom;
 		na_left = sc->syninfo.na_left;
-		window_min = sc->syninfo.window_min;
 		window_max = sc->syninfo.window_max;
 		multiplicator = sc->syninfo.multiplicator;
 		weight_current = sc->syninfo.weight_current;
@@ -4168,8 +4160,6 @@ psmsmoother(struct psm_softc *sc, finger_t *f, int smoother_id,
 		div_min = sc->syninfo.div_min;
 		div_max = sc->syninfo.div_max;
 		div_len = sc->syninfo.div_len;
-		vscroll_hor_area = sc->syninfo.vscroll_hor_area;
-		vscroll_ver_area = sc->syninfo.vscroll_ver_area;
 		two_finger_scroll = sc->syninfo.two_finger_scroll;
 		max_x = sc->syninfo.max_x;
 		max_y = sc->syninfo.max_y;
@@ -5449,7 +5439,7 @@ enable_kmouse(struct psm_softc *sc, enum probearg arg)
 	if ((status[1] == PSMD_RES_LOW) || (status[2] == rate[i - 1]))
 		return (FALSE);
 
-	/* the device appears be enabled by this sequence, diable it for now */
+	/* the device appears be enabled by this sequence, disable it for now */
 	disable_aux_dev(kbdc);
 	empty_aux_buffer(kbdc, 5);
 
@@ -7403,9 +7393,8 @@ found:
  * All values should be numbers derived from getmicrouptime().
  */
 static int
-timeelapsed(start, secs, usecs, now)
-	const struct timeval *start, *now;
-	int secs, usecs;
+timeelapsed(const struct timeval *start, int secs, int usecs,
+    const struct timeval *now)
 {
 	struct timeval snow, tv;
 
@@ -7449,7 +7438,7 @@ psmresume(device_t dev)
 	return (err);
 }
 
-DRIVER_MODULE(psm, atkbdc, psm_driver, psm_devclass, 0, 0);
+DRIVER_MODULE(psm, atkbdc, psm_driver, 0, 0);
 #ifdef EVDEV_SUPPORT
 MODULE_DEPEND(psm, evdev, 1, 1, 1);
 #endif
@@ -7469,8 +7458,6 @@ MODULE_DEPEND(psm, evdev, 1, 1, 1);
  * copy the IRQ resource to the PS/2 mouse device instance hanging
  * under the keyboard controller, then probe and attach it.
  */
-
-static	devclass_t			psmcpnp_devclass;
 
 static	device_probe_t			psmcpnp_probe;
 static	device_attach_t			psmcpnp_attach;
@@ -7630,7 +7617,7 @@ psmcpnp_attach(device_t dev)
 	return (0);
 }
 
-DRIVER_MODULE(psmcpnp, isa, psmcpnp_driver, psmcpnp_devclass, 0, 0);
-DRIVER_MODULE(psmcpnp, acpi, psmcpnp_driver, psmcpnp_devclass, 0, 0);
+DRIVER_MODULE(psmcpnp, isa, psmcpnp_driver, 0, 0);
+DRIVER_MODULE(psmcpnp, acpi, psmcpnp_driver, 0, 0);
 ISA_PNP_INFO(psmcpnp_ids);
 #endif /* DEV_ISA */

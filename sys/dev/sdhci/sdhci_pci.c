@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2008 Alexander Motin <mav@FreeBSD.org>
  * All rights reserved.
@@ -26,8 +26,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 5d22a819410c2c9c339e3a62ce59e2869f140edf $");
-
 #include "opt_mmccam.h"
 
 #include <sys/param.h>
@@ -525,10 +523,8 @@ static driver_t sdhci_pci_driver = {
 	sdhci_methods,
 	sizeof(struct sdhci_pci_softc),
 };
-static devclass_t sdhci_pci_devclass;
 
-DRIVER_MODULE(sdhci_pci, pci, sdhci_pci_driver, sdhci_pci_devclass, NULL,
-    NULL);
+DRIVER_MODULE(sdhci_pci, pci, sdhci_pci_driver, NULL, NULL);
 SDHCI_DEPEND(sdhci_pci);
 
 #ifndef MMCCAM

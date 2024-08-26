@@ -27,8 +27,6 @@
 .\"
 .\"	@(#)3.t	8.1 (Berkeley) 6/8/93
 .\"
-.\"	$FreeBSD: 6a2380432c560925f87d934919e7b5c784f23e47 $
-.\"
 .\".ds RH "Network Library Routines
 .bp
 .nr H1 3

@@ -1,4 +1,3 @@
-/*	$FreeBSD: 5efa5ce2dd9c6fb0e2ea42d291abe7b73834acd9 $	*/
 /*	$KAME: advcap.c,v 1.11 2003/05/19 09:46:50 keiichi Exp $	*/
 
 /*-

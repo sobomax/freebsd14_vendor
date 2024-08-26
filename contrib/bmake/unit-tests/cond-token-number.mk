@@ -1,4 +1,4 @@
-# $NetBSD: cond-token-number.mk,v 1.7 2022/01/02 02:57:39 rillig Exp $
+# $NetBSD: cond-token-number.mk,v 1.9 2023/06/01 20:56:35 rillig Exp $
 #
 # Tests for number tokens in .if conditions.
 #
@@ -12,6 +12,7 @@
 # accepted by the condition parser.
 #
 # See the ch_isdigit call in CondParser_String.
+# expect+1: Malformed conditional (-0)
 .if -0
 .  error
 .else
@@ -22,6 +23,7 @@
 # accepted by the condition parser.
 #
 # See the ch_isdigit call in CondParser_String.
+# expect+1: Malformed conditional (+0)
 .if +0
 .  error
 .else
@@ -32,6 +34,7 @@
 # accepted by the condition parser.
 #
 # See the ch_isdigit call in CondParser_String.
+# expect+1: Malformed conditional (!-1)
 .if !-1
 .  error
 .else
@@ -42,6 +45,7 @@
 # accepted by the condition parser.
 #
 # See the ch_isdigit call in CondParser_String.
+# expect+1: Malformed conditional (!+1)
 .if !+1
 .  error
 .else
@@ -85,7 +89,21 @@ HEX=	dead
 .  error
 .endif
 
-# Ensure that parsing continues until here.
-.info End of the tests.
+# Very small numbers round to 0.
+.if 12345e-400
+.  error
+.endif
+.if 12345e-200
+.else
+.  error
+.endif
 
-all: # nothing
+# Very large numbers round up to infinity on IEEE 754 implementations, or to
+# the largest representable number (VAX); in particular, make does not fall
+# back to checking whether a variable of that name is defined.
+.if 12345e400
+.else
+.  error
+.endif
+
+all:

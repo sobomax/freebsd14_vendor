@@ -38,8 +38,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 799801905d54b5dc97aff9a1f6907982c6e3b7bb $");
-
 #include "opt_mac.h"
 
 #include <sys/param.h>
@@ -179,7 +177,7 @@ MAC_CHECK_PROBE_DEFINE2(pipe_check_read, "struct ucred *",
     "struct pipepair *");
 
 int
-mac_pipe_check_read(struct ucred *cred, struct pipepair *pp)
+mac_pipe_check_read_impl(struct ucred *cred, struct pipepair *pp)
 {
 	int error;
 

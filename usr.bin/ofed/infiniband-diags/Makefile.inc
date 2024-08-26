@@ -1,4 +1,3 @@
-# $FreeBSD: c3ba3a255c5594ddb6ae7e190b7e3ed7dcf035f8 $
 
 _spath=	${SRCTOP}/contrib/ofed/infiniband-diags
 .PATH: ${_spath}/src ${_spath}/man

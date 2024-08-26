@@ -29,8 +29,6 @@
  * File : ecore_iwarp.c
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 5d2cef62ed212c36768f6c86e2c87482411c125d $");
-
 #include "bcm_osal.h"
 #include "ecore.h"
 #include "ecore_status.h"

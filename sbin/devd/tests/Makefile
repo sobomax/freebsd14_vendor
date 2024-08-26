@@ -1,4 +1,3 @@
-# $FreeBSD: c0a346f94d3344ff8b1ade257ecfe8f1ff03cacc $
 
 ATF_TESTS_C=	client_test
 TEST_METADATA.client_test=	required_files="/var/run/devd.pid"

@@ -1,5 +1,4 @@
 /*	$NetBSD: if_media.h,v 1.3 1997/03/26 01:19:27 thorpej Exp $	*/
-/* $FreeBSD: 1506a8fe38a1a6c84d6843f2506e6504d2cd97a8 $ */
 
 /*-
  * SPDX-License-Identifier: BSD-4-Clause

@@ -1,6 +1,5 @@
-# $FreeBSD: 1e201c5aaba4f1399a2bbfa4e090778b83e1ef2c $
 
-.PATH:	${SRCTOP}/sys/dev/iicbus
+.PATH:	${SRCTOP}/sys/dev/iicbus/sensor
 KMOD=	max44009
 SRCS=	max44009.c
 

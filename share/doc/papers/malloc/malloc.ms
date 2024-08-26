@@ -6,8 +6,6 @@
 .\" this stuff is worth it, you can buy me a beer in return.   Poul-Henning Kamp
 .\" ----------------------------------------------------------------------------
 .\"
-.\" $FreeBSD: 4f3cf7d80def3c9771357533a3b09d37d9521c5d $
-.\"
 .ds RH Malloc and free
 .NH
 Malloc and free

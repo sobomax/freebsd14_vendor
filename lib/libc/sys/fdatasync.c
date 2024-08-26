@@ -1,6 +1,5 @@
 /*
  * Copyright (c) 2016 The FreeBSD Foundation.
- * All rights reserved.
  *
  * Portions of this software were developed by Konstantin Belousov
  * under sponsorship from the FreeBSD Foundation.
@@ -29,9 +28,6 @@
  * OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
  * EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-
-#include <sys/cdefs.h>
-__FBSDID("$FreeBSD: fed97913d31e7efed2577b9d59d50188a34df1f2 $");
 
 #include <sys/types.h>
 #include <sys/fcntl.h>

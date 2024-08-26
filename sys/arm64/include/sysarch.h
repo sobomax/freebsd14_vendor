@@ -27,8 +27,11 @@
  * SUCH DAMAGE.
  *
  *	from: FreeBSD: src/sys/i386/include/sysarch.h,v 1.14 2000/09/21
- * $FreeBSD: 4d6c547fd3df310b982b01bb7e64632251e0758a $
  */
+
+#ifdef __arm__
+#include <arm/sysarch.h>
+#else /* !__arm__ */
 
 /*
  * Architecture specific syscalls (arm64)
@@ -45,3 +48,5 @@ __END_DECLS
 #endif
 
 #endif /* !_MACHINE_SYSARCH_H_ */
+
+#endif /* !__arm__ */

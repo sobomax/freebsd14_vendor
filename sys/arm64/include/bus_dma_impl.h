@@ -24,8 +24,6 @@
  * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
- *
- * $FreeBSD: 1488bd3a55da69b3ec5024f26a693e3944a334ca $
  */
 
 #ifndef _MACHINE_BUS_DMA_IMPL_H_
@@ -84,7 +82,6 @@ struct bus_dma_impl {
 	    bus_dmasync_op_t op);
 };
 
-void bus_dma_dflt_lock(void *arg, bus_dma_lock_op_t op);
 int bus_dma_run_filter(struct bus_dma_tag_common *dmat, bus_addr_t paddr);
 int common_bus_dma_tag_create(struct bus_dma_tag_common *parent,
     bus_size_t alignment,

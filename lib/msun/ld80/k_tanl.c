@@ -11,9 +11,6 @@
  * ====================================================
  */
 
-#include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 80ceef61f1c435c36bae6a255223e6e59067b96b $");
-
 /*
  * ld80 version of k_tan.c.  See ../src/k_tan.c for most comments.
  */

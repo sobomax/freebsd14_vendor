@@ -1,4 +1,3 @@
-# $FreeBSD: c3e6b23249c4c0e5549c95ec418c4c22531ccea8 $
 
 PACKAGE=	runtime
 LIB=	ypclnt

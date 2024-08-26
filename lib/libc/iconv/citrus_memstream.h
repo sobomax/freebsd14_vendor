@@ -1,4 +1,3 @@
-/* $FreeBSD: 4c398a8c7a5b4f638aebe3890cd7e440440fa8d7 $ */
 /* $NetBSD: citrus_memstream.h,v 1.3 2005/05/14 17:55:42 tshiozak Exp $ */
 
 /*-

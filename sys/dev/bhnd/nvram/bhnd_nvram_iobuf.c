@@ -28,8 +28,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: d0b9fc11a365f91173c70b4ee7552d64b81c1703 $");
-
 #ifdef _KERNEL
 #include <sys/param.h>
 #include <sys/malloc.h>

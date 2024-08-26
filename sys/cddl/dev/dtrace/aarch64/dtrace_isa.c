@@ -18,8 +18,6 @@
  * information: Portions Copyright [yyyy] [name of copyright owner]
  *
  * CDDL HEADER END
- *
- * $FreeBSD: 8e184591b916948108a105d31d141d7cd78394d0 $
  */
 /*
  * Copyright 2005 Sun Microsystems, Inc.  All rights reserved.
@@ -63,7 +61,6 @@ dtrace_getpcstack(pc_t *pcstack, int pcstack_limit, int aframes,
 {
 	struct unwind_state state;
 	int scp_offset;
-	register_t sp;
 	int depth;
 
 	depth = 0;
@@ -74,10 +71,7 @@ dtrace_getpcstack(pc_t *pcstack, int pcstack_limit, int aframes,
 
 	aframes++;
 
-	__asm __volatile("mov %0, sp" : "=&r" (sp));
-
 	state.fp = (uintptr_t)__builtin_frame_address(0);
-	state.sp = sp;
 	state.pc = (uintptr_t)dtrace_getpcstack;
 
 	while (depth < pcstack_limit) {
@@ -137,7 +131,7 @@ dtrace_getustack_common(uint64_t *pcstack, int pcstack_limit, uintptr_t pc,
 			break;
 
 		pc = dtrace_fuword64((void *)(fp +
-		    offsetof(struct arm64_frame, f_retaddr)));
+		    offsetof(struct unwind_state, pc)));
 		fp = dtrace_fuword64((void *)fp);
 
 		if (fp == oldfp) {
@@ -172,7 +166,7 @@ dtrace_getupcstack(uint64_t *pcstack, int pcstack_limit)
 {
 	proc_t *p = curproc;
 	struct trapframe *tf;
-	uintptr_t pc, sp, fp;
+	uintptr_t pc, fp;
 	volatile uint16_t *flags =
 	    (volatile uint16_t *)&cpu_core[curcpu].cpuc_dtrace_flags;
 	int n;
@@ -196,7 +190,6 @@ dtrace_getupcstack(uint64_t *pcstack, int pcstack_limit)
 		return;
 
 	pc = tf->tf_elr;
-	sp = tf->tf_sp;
 	fp = tf->tf_x[29];
 
 	if (DTRACE_CPUFLAG_ISSET(CPU_DTRACE_ENTRY)) {
@@ -260,17 +253,13 @@ dtrace_getstackdepth(int aframes)
 {
 	struct unwind_state state;
 	int scp_offset;
-	register_t sp;
 	int depth;
 	bool done;
 
 	depth = 1;
 	done = false;
 
-	__asm __volatile("mov %0, sp" : "=&r" (sp));
-
 	state.fp = (uintptr_t)__builtin_frame_address(0);
-	state.sp = sp;
 	state.pc = (uintptr_t)dtrace_getstackdepth;
 
 	do {
@@ -287,12 +276,22 @@ dtrace_getstackdepth(int aframes)
 }
 
 ulong_t
-dtrace_getreg(struct trapframe *rp, uint_t reg)
+dtrace_getreg(struct trapframe *frame, uint_t reg)
 {
-
-	printf("IMPLEMENT ME: %s\n", __func__);
-
-	return (0);
+	switch (reg) {
+	case REG_X0 ... REG_X29:
+		return (frame->tf_x[reg]);
+	case REG_LR:
+		return (frame->tf_lr);
+	case REG_SP:
+		return (frame->tf_sp);
+	case REG_PC:
+		return (frame->tf_elr);
+	default:
+		DTRACE_CPUFLAG_SET(CPU_DTRACE_ILLOP);
+		return (0);
+	}
+	/* NOTREACHED */
 }
 
 static int

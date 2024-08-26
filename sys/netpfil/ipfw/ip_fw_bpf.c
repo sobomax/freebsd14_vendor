@@ -25,8 +25,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: a6a6be95e5073d726c2c3522ccead327150786a2 $");
-
 #include <sys/param.h>
 #include <sys/systm.h>
 #include <sys/mbuf.h>
@@ -38,6 +36,7 @@ __FBSDID("$FreeBSD: a6a6be95e5073d726c2c3522ccead327150786a2 $");
 #include <net/if_pflog.h>
 #include <net/if_var.h>
 #include <net/if_clone.h>
+#include <net/if_private.h>
 #include <net/if_types.h>
 #include <net/vnet.h>
 #include <net/bpf.h>

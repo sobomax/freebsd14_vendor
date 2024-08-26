@@ -1,4 +1,3 @@
-# $FreeBSD: b0ae002fd5e911a9ed09ea0442687256a95d808f $
 
 LIB=	calendar
 

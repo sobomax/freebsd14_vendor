@@ -49,7 +49,6 @@
 /*%
  *	@(#)resolv.h	8.1 (Berkeley) 6/2/93
  *	$Id: resolv.h,v 1.30 2009/03/03 01:52:48 each Exp $
- * $FreeBSD: 2226c481c7e6ce991058134c1f94ee4c5b9b6273 $
  */
 
 #ifndef _RESOLV_H_
@@ -60,6 +59,7 @@
 #include <sys/cdefs.h>
 #include <sys/socket.h>
 #include <stdio.h>
+#include <netinet/in.h>
 #include <arpa/nameser.h>
 
 /*%

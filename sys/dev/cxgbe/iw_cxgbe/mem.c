@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2009-2013 Chelsio, Inc. All rights reserved.
  *
@@ -32,8 +32,6 @@
  * SOFTWARE.
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 35b9f6f20088b2323ff884824a6f71a8d08b2791 $");
-
 #include "opt_inet.h"
 
 #ifdef TCP_OFFLOAD
@@ -610,7 +608,7 @@ int c4iw_dealloc_mw(struct ib_mw *mw)
 
 struct ib_mr *c4iw_alloc_mr(struct ib_pd *pd,
 			    enum ib_mr_type mr_type,
-			    u32 max_num_sg)
+			    u32 max_num_sg, struct ib_udata *udata)
 {
 	struct c4iw_dev *rhp;
 	struct c4iw_pd *php;
@@ -700,7 +698,7 @@ int c4iw_map_mr_sg(struct ib_mr *ibmr, struct scatterlist *sg,
 }
 
 
-int c4iw_dereg_mr(struct ib_mr *ib_mr)
+int c4iw_dereg_mr(struct ib_mr *ib_mr, struct ib_udata *udata)
 {
 	struct c4iw_dev *rhp;
 	struct c4iw_mr *mhp;

@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2013 David Chisnall
  * All rights reserved.
@@ -28,8 +28,6 @@
  * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
- *
- * $FreeBSD: 052178949cb2dfe92cb74bd056e16fda4fab17ea $
  */
 
 #include "input_buffer.hh"
@@ -349,8 +347,11 @@ input_buffer::consume_integer(unsigned long long &outInt)
 		return false;
 	}
 	char *end= const_cast<char*>(&buffer[size]);
+	errno = 0;
 	outInt = strtoull(&buffer[cursor], &end, 0);
-	if (end == &buffer[cursor])
+	if (end == &buffer[cursor] ||
+	    (outInt == std::numeric_limits<unsigned long long>::max() &&
+	     errno == ERANGE))
 	{
 		return false;
 	}

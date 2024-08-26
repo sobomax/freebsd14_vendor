@@ -1,6 +1,4 @@
 
-# $FreeBSD: 301e095e5c2aae93b20bf5932d74231a417249c1 $
-
 .PATH:	${SRCTOP}/sys/dev/aic7xxx
 KMOD=		ahc_isa
 

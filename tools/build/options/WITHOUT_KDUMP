@@ -1,4 +1,3 @@
-.\" $FreeBSD: 763a89fd28f2416168fbd09d1811ad8eea90c289 $
 Do not build
 .Xr kdump 1
 and

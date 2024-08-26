@@ -1,5 +1,4 @@
 #	$NetBSD: Makefile,v 1.4 2006/11/09 15:25:37 jmmv Exp $
-# $FreeBSD: 49f7b8c8941e90fed28bb30ffa0222a119d7dd97 $
 
 tests=	t_mount
 tests+=	t_statvfs

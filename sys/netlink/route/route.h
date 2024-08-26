@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2022 Alexander V. Chernikov <melifaro@FreeBSD.org>
  *
@@ -282,8 +282,8 @@ struct rtvia {
 	NL_RTAX_RTO_MIN			= 13, /* not supported */
 	NL_RTAX_INITRWND		= 14, /* not supported */
 	NL_RTAX_QUICKACK		= 15, /* not supported */
-	NL_RTAX_CC_ALGO			= 15, /* not supported */
-	NL_RTAX_FASTOPEN_NO_COOKIE	= 16, /* not supported */
+	NL_RTAX_CC_ALGO			= 16, /* not supported */
+	NL_RTAX_FASTOPEN_NO_COOKIE	= 17, /* not supported */
 	__NL_RTAX_MAX
 };
 #define NL_RTAX_MAX (__NL_RTAX_MAX - 1)

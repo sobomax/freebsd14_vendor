@@ -33,8 +33,6 @@
 #if 0
 static char sccsid[] = "@(#)from: subr.c	8.1 (Berkeley) 6/4/93";
 #endif
-static const char rcsid[] =
-    "$FreeBSD: 68682df6d5bd7a825358d3674d8f7c4da0f36b76 $";
 #endif /* not lint */
 
 /*

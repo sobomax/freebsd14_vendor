@@ -8,8 +8,6 @@ use and modify. Please send modifications and/or suggestions + bug fixes to
 */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 5bbd5b4becef4f44dfcb2ad7e48deb33d64a2442 $");
-
 #ifdef YP
 #include <rpc/rpc.h>
 #include <rpcsvc/yp_prot.h>

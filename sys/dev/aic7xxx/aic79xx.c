@@ -48,7 +48,6 @@
 #include "aicasm/aicasm_insformat.h"
 #else
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 30c383288d0f0fbbb228ee952613c91011feb621 $");
 #include <dev/aic7xxx/aic79xx_osm.h>
 #include <dev/aic7xxx/aic79xx_inline.h>
 #include <dev/aic7xxx/aicasm/aicasm_insformat.h>
@@ -4887,7 +4886,6 @@ ahd_handle_ign_wide_residue(struct ahd_softc *ahd, struct ahd_devinfo *devinfo)
 			 */
 		} else {
 			uint32_t data_cnt;
-			uint64_t data_addr;
 			uint32_t sglen;
 
 			/* Pull in the rest of the sgptr */
@@ -4901,9 +4899,7 @@ ahd_handle_ign_wide_residue(struct ahd_softc *ahd, struct ahd_devinfo *devinfo)
 				 */
 				data_cnt &= ~AHD_SG_LEN_MASK;
 			}
-			data_addr = ahd_inq(ahd, SHADDR);
 			data_cnt += 1;
-			data_addr -= 1;
 			sgptr &= SG_PTR_MASK;
 			if ((ahd->flags & AHD_64BIT_ADDRESSING) != 0) {
 				struct ahd_dma64_seg *sg;
@@ -4925,9 +4921,6 @@ ahd_handle_ign_wide_residue(struct ahd_softc *ahd, struct ahd_devinfo *devinfo)
 					 * bits while setting the count to 1.
 					 */
 					data_cnt = 1|(sglen&(~AHD_SG_LEN_MASK));
-					data_addr = aic_le64toh(sg->addr)
-						  + (sglen & AHD_SG_LEN_MASK)
-						  - 1;
 
 					/*
 					 * Increment sg so it points to the
@@ -4957,9 +4950,6 @@ ahd_handle_ign_wide_residue(struct ahd_softc *ahd, struct ahd_devinfo *devinfo)
 					 * bits while setting the count to 1.
 					 */
 					data_cnt = 1|(sglen&(~AHD_SG_LEN_MASK));
-					data_addr = aic_le32toh(sg->addr)
-						  + (sglen & AHD_SG_LEN_MASK)
-						  - 1;
 
 					/*
 					 * Increment sg so it points to the
@@ -9451,7 +9441,7 @@ bus_reset:
 				/*
 				 * The sequencer will never re-reference the
 				 * in-core SCB.  To make sure we are notified
-				 * during reslection, set the MK_MESSAGE flag in
+				 * during reselection, set the MK_MESSAGE flag in
 				 * the card's copy of the SCB.
 				 */
 				ahd_outb(ahd, SCB_CONTROL,
@@ -10327,7 +10317,10 @@ ahd_handle_target_cmd(struct ahd_softc *ahd, struct target_cmd *cmd)
 		ahd->pending_device = lstate;
 		ahd_freeze_ccb((union ccb *)atio);
 		atio->ccb_h.flags |= CAM_DIS_DISCONNECT;
+	} else {
+		atio->ccb_h.flags &= ~CAM_DIS_DISCONNECT;
 	}
+
 	xpt_done((union ccb*)atio);
 	return (0);
 }

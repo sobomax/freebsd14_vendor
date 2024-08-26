@@ -26,8 +26,6 @@
  * CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
- *
- * $FreeBSD: ba95e27701d8989ba93080c2aa3b2ee17ef5aa2b $
  */
 
 /*
@@ -176,4 +174,4 @@ const char *get_wide_encoding(void);
 int max_wide(void);
 
 //#define	_(x)	gettext(x)
-#define	INTERR	fprintf(stderr,"internal fault (%s:%d)", __FILE__, __LINE__)
+#define	INTERR	fprintf(stderr,"internal fault (%s:%d)\n", __FILE__, __LINE__)

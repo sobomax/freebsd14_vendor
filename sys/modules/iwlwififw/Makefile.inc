@@ -1,4 +1,3 @@
-# $FreeBSD: 1ad4bb7ea608d33e9980656006aca3594bdbbe94 $
 
 # Common rules for building iwlwifi firmware.
 

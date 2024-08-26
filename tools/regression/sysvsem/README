@@ -1,4 +1,3 @@
-$FreeBSD: 33b9706817dae3ac5798a607a70ceafc0b2a54df $
 
 SysV IPC Semaphore Regression Utility.
 

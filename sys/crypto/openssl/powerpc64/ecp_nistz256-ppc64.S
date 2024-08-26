@@ -1,4 +1,3 @@
-/* $FreeBSD: 034be70013054910908aa697ddbb2b96bd971a86 $ */
 /* Do not modify. This file is auto-generated from ecp_nistz256-ppc64.pl. */
 .machine	"any"
 .abiversion	2

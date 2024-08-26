@@ -1,5 +1,4 @@
 /*
- * $FreeBSD: b04fe67b476de572ee3a9d6570b232708590d5e8 $
  */
 #ifndef _SYS_CK_H_
 #define _SYS_CK_H_
@@ -13,6 +12,8 @@
 #define CK_STAILQ_ENTRY STAILQ_ENTRY
 #define CK_LIST_HEAD LIST_HEAD
 #define CK_LIST_ENTRY LIST_ENTRY
+#define CK_SLIST_HEAD SLIST_HEAD
+#define CK_SLIST_ENTRY SLIST_ENTRY
 #endif
 
 #endif /* !_SYS_CK_H_ */

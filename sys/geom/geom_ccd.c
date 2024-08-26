@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: (BSD-2-Clause-NetBSD AND BSD-3-Clause)
+ * SPDX-License-Identifier: (BSD-2-Clause AND BSD-3-Clause)
  *
  * Copyright (c) 2003 Poul-Henning Kamp.
  * Copyright (c) 1996, 1997 The NetBSD Foundation, Inc.
@@ -80,8 +80,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 8e3859f0ce2fbb81eb68a6a98e5b8ddb02609f62 $");
-
 #include <sys/param.h>
 #include <sys/systm.h>
 #include <sys/kernel.h>
@@ -166,10 +164,10 @@ struct ccd_s {
 	u_int		 sc_ndisks;		/* number of components */
 	struct ccdcinfo	 *sc_cinfo;		/* component info */
 	struct ccdiinfo	 *sc_itable;		/* interleave table */
-	u_int32_t	 sc_secsize;		/* # bytes per sector */
+	uint32_t	 sc_secsize;		/* # bytes per sector */
 	int		 sc_pick;		/* side of mirror picked */
 	daddr_t		 sc_blk[2];		/* mirror localization */
-	u_int32_t	 sc_offset;		/* actual offset used */
+	uint32_t	 sc_offset;		/* actual offset used */
 };
 
 static g_start_t g_ccd_start;

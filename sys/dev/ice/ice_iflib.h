@@ -1,5 +1,5 @@
 /* SPDX-License-Identifier: BSD-3-Clause */
-/*  Copyright (c) 2022, Intel Corporation
+/*  Copyright (c) 2024, Intel Corporation
  *  All rights reserved.
  *
  *  Redistribution and use in source and binary forms, with or without
@@ -28,7 +28,6 @@
  *  ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  *  POSSIBILITY OF SUCH DAMAGE.
  */
-/*$FreeBSD: 9e073b332dd053a8536147ae918db725de44be6a $*/
 
 /**
  * @file ice_iflib.h
@@ -194,6 +193,29 @@ struct ice_rx_queue {
 };
 
 /**
+ * @struct ice_mirr_if
+ * @brief structure representing a mirroring interface
+ */
+struct ice_mirr_if {
+	struct ice_softc *back;
+	struct ifnet *ifp;
+	struct ice_vsi *vsi;
+
+	device_t subdev;
+	if_ctx_t subctx;
+	if_softc_ctx_t subscctx;
+
+	u16 num_irq_vectors;
+	u16 *if_imap;
+	u16 *os_imap;
+	struct ice_irq_vector *rx_irqvs;
+
+	u32 state;
+
+	bool if_attached;
+};
+
+/**
  * @struct ice_softc
  * @brief main structure representing one device
  *
@@ -263,7 +285,7 @@ struct ice_softc {
 	struct ice_resmgr rx_qmgr;
 
 	/* Interrupt allocation manager */
-	struct ice_resmgr imgr;
+	struct ice_resmgr dev_imgr;
 	u16 *pf_imap;
 	int lan_vectors;
 
@@ -303,7 +325,7 @@ struct ice_softc {
 	/* NVM link override settings */
 	struct ice_link_default_override_tlv ldo_tlv;
 
-	u16 fw_debug_dump_cluster_mask;
+	u32 fw_debug_dump_cluster_mask;
 
 	struct sx *iflib_ctx_lock;
 
@@ -311,6 +333,11 @@ struct ice_softc {
 	ice_declare_bitmap(feat_cap, ICE_FEATURE_COUNT);
 	ice_declare_bitmap(feat_en, ICE_FEATURE_COUNT);
 
+	struct ice_resmgr os_imgr;
+	/* For mirror interface */
+	struct ice_mirr_if *mirr_if;
+	int extra_vectors;
+	int last_rid;
 };
 
 #endif /* _ICE_IFLIB_H_ */

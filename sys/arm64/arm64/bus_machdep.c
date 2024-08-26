@@ -32,8 +32,6 @@
 #include "opt_platform.h"
 
 #include <sys/param.h>
-__FBSDID("$FreeBSD: 69d7c5b591b22459de413ab09af81a43dda4d040 $");
-
 #include <vm/vm.h>
 #include <vm/pmap.h>
 
@@ -99,9 +97,13 @@ static int
 generic_bs_map(void *t, bus_addr_t bpa, bus_size_t size, int flags,
     bus_space_handle_t *bshp)
 {
+	vm_memattr_t ma;
 	void *va;
 
-	va = pmap_mapdev(bpa, size);
+	ma = VM_MEMATTR_DEVICE;
+	if (flags == BUS_SPACE_MAP_NONPOSTED)
+		ma = VM_MEMATTR_DEVICE_NP;
+	va = pmap_mapdev_attr(bpa, size, ma);
 	if (va == NULL)
 		return (ENOMEM);
 	*bshp = (bus_space_handle_t)va;
@@ -112,7 +114,7 @@ static void
 generic_bs_unmap(void *t, bus_space_handle_t bsh, bus_size_t size)
 {
 
-	pmap_unmapdev(bsh, size);
+	pmap_unmapdev((void *)bsh, size);
 }
 
 static void

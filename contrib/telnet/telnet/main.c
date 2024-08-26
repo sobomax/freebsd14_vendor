@@ -32,8 +32,6 @@
 static const char sccsid[] = "@(#)main.c	8.3 (Berkeley) 5/30/95";
 #endif
 #endif
-#include <sys/cdefs.h>
-__FBSDID("$FreeBSD: befb3eecee662cb262937aaec2011f52d12daf1f $");
 
 #include <sys/param.h>
 #include <sys/socket.h>
@@ -63,6 +61,7 @@ char *ipsec_policy_out = NULL;
 #endif
 
 extern int tos;
+extern int quiet_mode;
 
 int family = AF_UNSPEC;
 
@@ -152,7 +151,7 @@ main(int argc, char *argv[])
 #define IPSECOPT
 #endif
 	while ((ch = getopt(argc, argv,
-			    "468B:EKLNS:X:acde:fFk:l:n:rs:uxy" IPSECOPT)) != -1)
+			    "468B:EKLNQS:X:acde:fFk:l:n:rs:uxy" IPSECOPT)) != -1)
 #undef IPSECOPT
 	{
 		switch(ch) {
@@ -183,6 +182,9 @@ main(int argc, char *argv[])
 			break;
 		case 'N':
 			doaddrlookup = 0;
+			break;
+		case 'Q':
+			quiet_mode = 1;
 			break;
 		case 'S':
 #ifdef	HAS_GETTOS

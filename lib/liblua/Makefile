@@ -1,4 +1,3 @@
-#! $FreeBSD: 0ca74e4545db497998184bf61e94ef3de8408f0b $
 
 LUASRC?=	${SRCTOP}/contrib/lua/src
 .PATH: ${LUASRC}

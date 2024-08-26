@@ -1,4 +1,3 @@
-# $FreeBSD: 7c392dacdb09272576ff7b220a184f392b423302 $
 
 .PATH: ${SRCTOP}/sys/dev/gem
 

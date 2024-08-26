@@ -24,8 +24,6 @@
  */
 
 #include <sys/cdefs.h>
-__RCSID("$FreeBSD: a0cc4a877b7dda45a3192df904bebcc8d4052afd $");
-
 #include <sys/stat.h>
 #include <sys/param.h>
 #include <sys/mman.h>

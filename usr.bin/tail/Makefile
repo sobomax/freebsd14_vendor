@@ -1,10 +1,10 @@
-# $FreeBSD: 5d53b23957a73146d087872306c902aff3c4f385 $
 #	@(#)Makefile	8.1 (Berkeley) 6/6/93
 
 .include <src.opts.mk>
 
 PROG=	tail
 SRCS=	forward.c misc.c read.c reverse.c tail.c
+LIBADD=	util
 
 .if ${MK_CASPER} != "no" && !defined(RESCUE)
 LIBADD+= casper

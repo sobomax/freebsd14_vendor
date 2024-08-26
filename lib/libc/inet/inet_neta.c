@@ -20,9 +20,6 @@
 #if defined(LIBC_SCCS) && !defined(lint)
 static const char rcsid[] = "$Id: inet_neta.c,v 1.3 2005/04/27 04:56:20 sra Exp $";
 #endif
-#include <sys/cdefs.h>
-__FBSDID("$FreeBSD: ab2a97ad2a7dcec6337ceb260d0b57d630ae4598 $");
-
 #include "port_before.h"
 
 #include <sys/types.h>

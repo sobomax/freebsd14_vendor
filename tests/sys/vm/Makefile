@@ -1,4 +1,3 @@
-# $FreeBSD: 8ef8a45e5f39489c5efcf0eb89f5e072cac49c1a $
 
 PACKAGE=	tests
 
@@ -8,5 +7,14 @@ ATF_TESTS_C+=	mlock_test \
 		mmap_test \
 		page_fault_signal \
 		shared_shadow_inval_test
+
+BINDIR=		${TESTSDIR}
+ATF_TESTS_SH+=	mmap_map_32bit_test
+PROGS+=		mmap_map_32bit_helper
+
+SUBDIR=		soxstack
+TESTS_SUBDIRS+=	stack
+
+SUBDIR_DEPEND_stack=soxstack
 
 .include <bsd.test.mk>

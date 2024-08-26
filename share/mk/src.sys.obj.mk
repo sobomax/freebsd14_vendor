@@ -1,4 +1,3 @@
-# $FreeBSD: 3b48fc3c55140db69de348162db7872bae8aeb1c $
 #
 # Early setup of MAKEOBJDIR
 #
@@ -220,11 +219,6 @@ OBJROOT=	${SRCTOP}/
 .endif
 .endif	# defined(NO_OBJ)
 
-.if !defined(HOST_TARGET)
-# we need HOST_TARGET etc below.
-.include <host-target.mk>
-.export HOST_TARGET
-.endif
 HOST_OBJTOP?=	${OBJROOT}${HOST_TARGET}
 
 .endif	# ${MK_DIRDEPS_BUILD} == "no"

@@ -1,8 +1,6 @@
 %{
 /*
  * Copyright is disclaimed as to the contents of this file.
- *
- * $FreeBSD: 119b30000e70304ec0145381fd256d843048b0c1 $
  */
 
 #include <sys/types.h>

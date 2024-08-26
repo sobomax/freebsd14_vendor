@@ -11,7 +11,6 @@
 #
 # Sort options by "Matthew Emmerton" <matt@gsicomp.on.ca>
 #
-# $FreeBSD: e729a100b7be17561dc192f6b07bd57db4afb37c $
 #
 # This shell script will make a cross reference of the symbols of a kernel.
 #

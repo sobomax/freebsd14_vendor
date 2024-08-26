@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2022 Alexander V. Chernikov
  *
@@ -25,15 +25,16 @@
  * SUCH DAMAGE.
  */
 
-#include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 86b861fdbc477ec162a099b35c59fa75bd2bbbd3 $");
 #include "opt_inet.h"
 #include "opt_inet6.h"
+
 #include <sys/types.h>
+#include <sys/ck.h>
+#include <sys/lock.h>
 #include <sys/malloc.h>
 #include <sys/rmlock.h>
 #include <sys/socket.h>
-#include <sys/ck.h>
+#include <sys/vnode.h>
 
 #include <net/if.h>
 #include <net/if_dl.h>
@@ -52,7 +53,7 @@ __FBSDID("$FreeBSD: 86b861fdbc477ec162a099b35c59fa75bd2bbbd3 $");
 #define	DEBUG_MOD_NAME	nl_linux
 #define	DEBUG_MAX_LEVEL	LOG_DEBUG3
 #include <netlink/netlink_debug.h>
-_DECLARE_DEBUG(LOG_DEBUG);
+_DECLARE_DEBUG(LOG_INFO);
 
 static bool
 valid_rta_size(const struct rtattr *rta, int sz)
@@ -307,7 +308,7 @@ rtnl_if_flags_to_linux(unsigned int if_flags)
 		case IFF_ALLMULTI:
 			result |= flag;
 			break;
-		case IFF_KNOWSEPOCH:
+		case IFF_NEEDSEPOCH:
 		case IFF_DRV_OACTIVE:
 		case IFF_SIMPLEX:
 		case IFF_LINK0:
@@ -317,9 +318,9 @@ rtnl_if_flags_to_linux(unsigned int if_flags)
 		case IFF_PPROMISC:
 		case IFF_MONITOR:
 		case IFF_STATICARP:
+		case IFF_STICKYARP:
 		case IFF_DYING:
 		case IFF_RENAMING:
-		case IFF_NOGROUP:
 			/* No Linux analogue */
 			break;
 		case IFF_MULTICAST:
@@ -343,7 +344,7 @@ rtnl_newlink_to_linux(struct nlmsghdr *hdr, struct nlpcb *nlp,
 	/* Convert interface type */
 	switch (ifinfo->ifi_type) {
 	case IFT_ETHER:
-		ifinfo->ifi_type = 1; // ARPHRD_ETHER
+		ifinfo->ifi_type = LINUX_ARPHRD_ETHER;
 		break;
 	}
 	ifinfo->ifi_flags = rtnl_if_flags_to_linux(ifinfo->ifi_flags);
@@ -606,13 +607,13 @@ static struct linux_netlink_provider linux_netlink_v1 = {
 };
 
 void
-linux_netlink_register()
+linux_netlink_register(void)
 {
 	linux_netlink_p = &linux_netlink_v1;
 }
 
 void
-linux_netlink_deregister()
+linux_netlink_deregister(void)
 {
 	linux_netlink_p = NULL;
 }

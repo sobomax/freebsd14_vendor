@@ -28,13 +28,9 @@
  * IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF
  * THE POSSIBILITY OF SUCH DAMAGES.
- *
- * $FreeBSD: 25c1c82dca5b808c60f2566afb62295ecc998134 $
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 25c1c82dca5b808c60f2566afb62295ecc998134 $");
-
 #include <sys/param.h>
 #include <sys/malloc.h>
 #include <sys/kernel.h>

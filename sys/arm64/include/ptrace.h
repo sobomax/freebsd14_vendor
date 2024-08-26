@@ -1,4 +1,3 @@
-/* $FreeBSD: 0705ee6daab07a6f1bae4d429fd9a0ba385802fd $ */
 
 #ifndef _MACHINE_PTRACE_H_
 #define _MACHINE_PTRACE_H_

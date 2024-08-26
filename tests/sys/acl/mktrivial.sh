@@ -23,7 +23,6 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: 100a0a3f726a2bd15b41af3181ee34153873268b $
 #
 
 # This shell script generates an input file for the "run" script, used

@@ -1,4 +1,3 @@
-# $FreeBSD: a2f9d83cc59a8155d5e2ef2906e040284942050d $
 
 PACKAGE=	pkg-bootstrap
 

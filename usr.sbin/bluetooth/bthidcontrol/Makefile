@@ -1,5 +1,4 @@
 # $Id: Makefile,v 1.2 2004/02/13 21:44:41 max Exp $
-# $FreeBSD: 0bdfed6fa682e39973e4a1b0a5fa948d9d02917c $
 
 .PATH:	${.CURDIR:H}/bthidd
 

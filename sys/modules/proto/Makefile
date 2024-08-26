@@ -1,4 +1,3 @@
-# $FreeBSD: 331c2c6835d2c28dcd08efab9a9b1abaca65950a $
 
 .PATH: ${SRCTOP}/sys/dev/proto
 

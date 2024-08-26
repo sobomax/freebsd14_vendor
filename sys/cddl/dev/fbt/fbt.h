@@ -20,8 +20,6 @@
  *
  * Portions Copyright 2006-2008 John Birrell jb@freebsd.org
  *
- * $FreeBSD: aa9bce564fa0d8fb09af1add4f327fee6333f7aa $
- *
  */
 
 /*
@@ -33,6 +31,9 @@
 #define _FBT_H_
 
 #include "fbt_isa.h"
+
+#define	FBT_ENTRY	"entry"
+#define	FBT_RETURN	"return"
 
 /*
  * fbt_probe is a bit of a misnomer.  One of these structures is created for

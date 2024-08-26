@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 1998 Kazutaka YOKOTA and Michael Smith
  * Copyright (c) 2009-2013 Jung-uk Kim <jkim@FreeBSD.org>
@@ -28,8 +28,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: f1d75873f98339c94a2de836c7e919ecef9d160a $");
-
 #include "opt_vga.h"
 #include "opt_vesa.h"
 
@@ -1305,7 +1303,8 @@ vesa_set_mode(video_adapter_t *adp, int mode)
 			}
 			int10_set_mode(adp->va_initial_bios_mode);
 			if (adp->va_info.vi_flags & V_INFO_LINEAR)
-				pmap_unmapdev(adp->va_buffer, vesa_vmem_max);
+				pmap_unmapdev((void *)adp->va_buffer,
+				    vesa_vmem_max);
 			/* 
 			 * Once (*prevvidsw->get_info)() succeeded, 
 			 * (*prevvidsw->set_mode)() below won't fail...
@@ -1350,7 +1349,7 @@ vesa_set_mode(video_adapter_t *adp, int mode)
 		adp->va_flags |= V_ADP_DAC8;
 
 	if (adp->va_info.vi_flags & V_INFO_LINEAR)
-		pmap_unmapdev(adp->va_buffer, vesa_vmem_max);
+		pmap_unmapdev((void *)adp->va_buffer, vesa_vmem_max);
 
 #if VESA_DEBUG > 0
 	printf("VESA: mode set!\n");
@@ -1699,12 +1698,12 @@ get_palette(video_adapter_t *adp, int base, int count,
 	b = g + count;
 	error = vesa_bios_save_palette2(base, count, r, g, b, bits);
 	if (error == 0) {
-		copyout(r, red, count);
-		copyout(g, green, count);
-		copyout(b, blue, count);
+		(void)copyout(r, red, count);
+		(void)copyout(g, green, count);
+		(void)copyout(b, blue, count);
 		if (trans != NULL) {
 			bzero(r, count);
-			copyout(r, trans, count);
+			(void)copyout(r, trans, count);
 		}
 	}
 	free(r, M_DEVBUF);
@@ -1730,12 +1729,12 @@ set_palette(video_adapter_t *adp, int base, int count,
 		return (1);
 
 	bits = (adp->va_flags & V_ADP_DAC8) != 0 ? 8 : 6;
-	r = malloc(count * 3, M_DEVBUF, M_WAITOK);
+	r = malloc(count * 3, M_DEVBUF, M_WAITOK | M_ZERO);
 	g = r + count;
 	b = g + count;
-	copyin(red, r, count);
-	copyin(green, g, count);
-	copyin(blue, b, count);
+	(void)copyin(red, r, count);
+	(void)copyin(green, g, count);
+	(void)copyin(blue, b, count);
 
 	error = vesa_bios_load_palette2(base, count, r, g, b, bits);
 	free(r, M_DEVBUF);

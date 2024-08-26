@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2006 IronPort Systems
  * All rights reserved.
@@ -27,8 +27,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 892b4f7a9fbab65abbcf256599bc58cb90c9020e $");
-
 #include <sys/param.h>
 #include <sys/systm.h>
 #include <sys/capsicum.h>

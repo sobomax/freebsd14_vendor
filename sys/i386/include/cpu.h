@@ -32,7 +32,6 @@
  * SUCH DAMAGE.
  *
  *	from: @(#)cpu.h	5.4 (Berkeley) 5/9/91
- * $FreeBSD: df35c9e92cc7368d6d68b0b4d8dc5817212104ff $
  */
 
 #ifndef _MACHINE_CPU_H_
@@ -41,6 +40,9 @@
 /*
  * Definitions unique to i386 cpu support.
  */
+#ifdef _KERNEL
+#include <sys/systm.h>			/* For cpu_ticks(). */
+#endif
 #include <machine/psl.h>
 #include <machine/frame.h>
 #include <machine/segments.h>

@@ -1,5 +1,4 @@
 /*
- * $FreeBSD: 654f33c7fa426fc4be0ce09cb5b90c19643af989 $
  */
 
 #ifndef PMU_EVENTS_H

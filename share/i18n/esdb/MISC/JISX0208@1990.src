@@ -1,4 +1,3 @@
-# $FreeBSD: 31b7443ff5496bf33717e26338d7da064f96826c $ 
 # $NetBSD: Shift_JIS.src,v 1.2 2003/07/16 06:57:36 tshiozak Exp $
 
 NAME		"JISX0208:1990"

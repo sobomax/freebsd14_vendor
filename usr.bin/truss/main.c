@@ -32,8 +32,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 942f980080710e5177d4923e0bdb74386e6db73f $");
-
 /*
  * The main module for truss.  Surprisingly simple, but, then, the other
  * files handle the bulk of the work.  And, of course, the kernel has to

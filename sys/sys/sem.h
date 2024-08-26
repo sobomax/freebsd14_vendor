@@ -1,4 +1,3 @@
-/* $FreeBSD: bf1e31e4aca1d367cececf31d0c4b6ab12ee929e $ */
 /*	$NetBSD: sem.h,v 1.5 1994/06/29 06:45:15 cgd Exp $	*/
 
 /*

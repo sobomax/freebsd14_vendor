@@ -25,9 +25,6 @@
  */
 
  #include <machine/asm.h>
-
- __FBSDID("$FreeBSD: d6445941168dd13a18c143ae3a33bd611eed5996 $");
-
 	.globl  CNAME(_ctx_done)
 	.globl  CNAME(abort)
 

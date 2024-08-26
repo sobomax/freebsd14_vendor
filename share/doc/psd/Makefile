@@ -1,5 +1,4 @@
 #	From: @(#)Makefile	8.1 (Berkeley) 6/8/93
-# $FreeBSD: 9e0eed2082f56ec498507d8b035e177d846f9e3b $
 
 # The following modules do not build/install:
 # 10.gdb

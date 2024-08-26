@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (C) 2012-2013 Intel Corporation
  * All rights reserved.
@@ -28,8 +28,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: ff024b451767d5b4c7b5547e2f2e8522b90f145e $");
-
 #include <sys/param.h>
 
 #include <ctype.h>
@@ -124,6 +122,38 @@ nvme_print_controller(struct nvme_controller_data *cdata)
 		printf("Unlimited\n");
 	else
 		printf("%ld bytes\n", PAGE_SIZE * (1L << cdata->mdts));
+	printf("Sanitize Crypto Erase:       %s\n",
+		((cdata->sanicap >> NVME_CTRLR_DATA_SANICAP_CES_SHIFT) &
+		    NVME_CTRLR_DATA_SANICAP_CES_MASK) ?
+		    "Supported" : "Not Supported");
+	printf("Sanitize Block Erase:        %s\n",
+		((cdata->sanicap >> NVME_CTRLR_DATA_SANICAP_BES_SHIFT) &
+		    NVME_CTRLR_DATA_SANICAP_BES_MASK) ?
+		    "Supported" : "Not Supported");
+	printf("Sanitize Overwrite:          %s\n",
+		((cdata->sanicap >> NVME_CTRLR_DATA_SANICAP_OWS_SHIFT) &
+		    NVME_CTRLR_DATA_SANICAP_OWS_MASK) ?
+		    "Supported" : "Not Supported");
+	printf("Sanitize NDI:                %s\n",
+		((cdata->sanicap >> NVME_CTRLR_DATA_SANICAP_NDI_SHIFT) &
+		    NVME_CTRLR_DATA_SANICAP_NDI_MASK) ?
+		    "Supported" : "Not Supported");
+	printf("Sanitize NODMMAS:            ");
+	switch (((cdata->sanicap >> NVME_CTRLR_DATA_SANICAP_NODMMAS_SHIFT) &
+	    NVME_CTRLR_DATA_SANICAP_NODMMAS_MASK)) {
+	case NVME_CTRLR_DATA_SANICAP_NODMMAS_UNDEF:
+		printf("Undefined\n");
+		break;
+	case NVME_CTRLR_DATA_SANICAP_NODMMAS_NO:
+		printf("No\n");
+		break;
+	case NVME_CTRLR_DATA_SANICAP_NODMMAS_YES:
+		printf("Yes\n");
+		break;
+	default:
+		printf("Unknown\n");
+		break;
+	}
 	printf("Controller ID:               0x%04x\n", cdata->ctrlr_id);
 	printf("Version:                     %d.%d.%d\n",
 	    (cdata->ver >> 16) & 0xffff, (cdata->ver >> 8) & 0xff,

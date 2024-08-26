@@ -1,4 +1,3 @@
-# $FreeBSD: 3ab6e436aa75be0a0c245fe8330f5d205462bf03 $
 #
 # Author: Philip Paeps <philip@freebsd.org>
 

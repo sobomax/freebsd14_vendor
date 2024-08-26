@@ -1,4 +1,3 @@
-.\" $FreeBSD: 34818b8c9594581c24a44631158b70ffc8229fff $
 Opportunistically skip building a cross-compiler during the
 bootstrap phase of the build.
 If the currently installed compiler matches the planned bootstrap compiler

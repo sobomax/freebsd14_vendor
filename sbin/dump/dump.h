@@ -29,8 +29,6 @@
  * SUCH DAMAGE.
  *
  *	@(#)dump.h	8.2 (Berkeley) 4/28/95
- *
- * $FreeBSD: fc8c845fc576488c36e173c79f649fc1e1859752 $
  */
 
 /*

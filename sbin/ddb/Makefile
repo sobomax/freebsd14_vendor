@@ -1,4 +1,3 @@
-# $FreeBSD: f1bf75e41b3615845e314bdd8bfd5999272a1d99 $
 
 CONFS=	ddb.conf
 PACKAGE=runtime

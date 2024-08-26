@@ -1,5 +1,4 @@
 #
-# $FreeBSD: d6155b6955a68c8986c061b00f291f9384a1ec3e $
 #
 
 PACKAGE=	runtime
@@ -52,7 +51,6 @@ CFLAGS+=	-DUNALIGNED_OK
 
 VERSION_DEF=	${.CURDIR}/Versions.def
 SYMBOL_MAPS=	${.CURDIR}/Symbol.map
-CFLAGS+=	-DSYMBOL_VERSIONING
 
 INCS=		zconf.h zlib.h
 
@@ -63,9 +61,9 @@ ZLIB_VERSION!=	sed -n '/define.*ZLIB_VERSION/{s,[^0-9.],,gp;q;}' ${ZLIBSRC}/zlib
 zlib.pc: zlib.pc.in
 	sed -e 's,@prefix@,/usr,g ; \
 		s,@exec_prefix@,$${prefix},g ; \
-		s,@libdir@,$${exec_prefix}/lib,g ; \
-		s,@sharedlibdir@,$${libdir},g ; \
-		s,@includedir@,$${prefix}/include,g ; \
+		s,@libdir@,${LIBDIR},g ; \
+		s,@sharedlibdir@,${SHLIBDIR},g ; \
+		s,@includedir@,${INCLUDEDIR},g ; \
 		s,@VERSION@,${ZLIB_VERSION},g ;' \
 		${.ALLSRC} > ${.TARGET}
 
@@ -83,3 +81,5 @@ test: example minigzip
 PCFILES=	zlib.pc
 
 .include <bsd.lib.mk>
+
+CWARNFLAGS+=	${NO_WDEPRECATED_NON_PROTOTYPE} ${NO_WSTRICT_PROTOTYPES}

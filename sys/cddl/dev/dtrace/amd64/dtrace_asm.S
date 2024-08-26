@@ -20,8 +20,6 @@
  *
  * Portions Copyright 2008 John Birrell <jb@freebsd.org>
  *
- * $FreeBSD: 3270aedfb3c8c43c60a6857a91df965c76710ab3 $
- *
  */
 /*
  * Copyright 2007 Sun Microsystems, Inc.  All rights reserved.
@@ -37,7 +35,6 @@
 #include "assym.inc"
 
 #define INTR_POP				\
-	MEXITCOUNT;				\
 	movq	TF_RDI(%rsp),%rdi;		\
 	movq	TF_RSI(%rsp),%rsi;		\
 	movq	TF_RDX(%rsp),%rdx;		\

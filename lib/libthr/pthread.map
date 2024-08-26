@@ -1,5 +1,4 @@
 /*
- * $FreeBSD: 15195ce0847b978a62ef132d2a58b9eb2c8d5f10 $
  */
 
 /*
@@ -334,4 +333,8 @@ FBSD_1.6 {
 	 pthread_getname_np;
 	 pthread_peekjoin_np;
 	 pthread_setname_np;
+};
+
+FBSD_1.8 {
+	 pthread_sigqueue;
 };

@@ -27,7 +27,6 @@
  * SUCH DAMAGE.
  *
  *	@(#)disklabel.h	8.2 (Berkeley) 7/10/94
- * $FreeBSD: 1241059b02ea0d75a25707005c4673413b43971d $
  */
 
 #ifndef _SYS_DISK_MBR_H_

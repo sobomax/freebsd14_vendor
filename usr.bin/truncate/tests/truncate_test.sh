@@ -26,7 +26,6 @@
 # (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
-# $FreeBSD: 267df3131b3e5f0398a0b2b76b2de4817583d98c $
 #
 
 # Helper function that is always used to create and fill stderr.txt for these
@@ -59,6 +58,7 @@ create_stderr_usage_file()
 	_custom_create_file print \
 	    "usage: truncate [-c] -s [+|-|%|/]size[K|k|M|m|G|g|T|t] file ..."
 	_custom_create_file print "       truncate [-c] -r rfile file ..."
+	_custom_create_file print "       truncate [-c] -d [-o offset[K|k|M|m|G|g|T|t]] -l length[K|k|M|m|G|g|T|t] file ..."
 }
 
 atf_test_case illegal_option

@@ -1,4 +1,3 @@
-# $FreeBSD: 0c43685fa236fcbf754da0d6fb69268653cdfd5b $
 
 .include <src.opts.mk>
 
@@ -18,14 +17,15 @@ ibnetdisc_cache.c \
 query_smp.c
 
 MAN= \
-ibnd_debug.3 \
-ibnd_destroy_fabric.3 \
 ibnd_discover_fabric.3 \
-ibnd_find_node_dr.3 \
 ibnd_find_node_guid.3 \
-ibnd_iter_nodes.3 \
-ibnd_iter_nodes_type.3 \
-ibnd_show_progress.3
+ibnd_iter_nodes.3
+
+MLINKS+=ibnd_discover_fabric.3 ibnd_debug.3
+MLINKS+=ibnd_discover_fabric.3 ibnd_destroy_fabric.3
+MLINKS+=ibnd_discover_fabric.3 ibnd_show_progress.3
+MLINKS+=ibnd_find_node_guid.3 ibnd_find_node_dr.3
+MLINKS+=ibnd_iter_nodes.3 ibnd_iter_nodes_type.3
 
 LIBADD=		osmcomp ibmad ibumad
 CFLAGS+=	-DHAVE_CONFIG_H=1

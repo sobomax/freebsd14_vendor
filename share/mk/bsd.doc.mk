@@ -1,5 +1,4 @@
 #	from: @(#)bsd.doc.mk	5.3 (Berkeley) 1/2/91
-# $FreeBSD: 725b8033444c9e500f1fc0b940955d169b02eae3 $
 #
 # The include file <bsd.doc.mk> handles installing BSD troff documents.
 #

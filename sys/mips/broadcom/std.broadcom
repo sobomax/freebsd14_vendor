@@ -1,9 +1,0 @@
-# $FreeBSD: 68aa974ae6120a2edcf5e3cd539b6b24267a9a54 $
-#
-
-machine		mips mipsel
-
-makeoptions	INTRNG
-options		INTRNG
-
-files		"../broadcom/files.broadcom"

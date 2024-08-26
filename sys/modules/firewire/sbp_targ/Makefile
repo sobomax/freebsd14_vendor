@@ -1,4 +1,3 @@
-# $FreeBSD: 2be9c565eca713934e7fb84d5e30bbf120c6ab1d $
 
 # Makefile for the SBP-II Target mode
 

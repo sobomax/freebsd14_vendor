@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2011 Nathan Whitehorn
  * All rights reserved.
@@ -27,8 +27,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 55d2b2d3a92f0f9d036677b72a9c0937bd6bfec1 $");
-
 #include <sys/param.h>
 #include <sys/systm.h>
 #include <sys/module.h>
@@ -74,9 +72,7 @@ static driver_t rtasdev_driver = {
 	0
 };
 
-static devclass_t rtasdev_devclass;
-
-DRIVER_MODULE(rtasdev, ofwbus, rtasdev_driver, rtasdev_devclass, 0, 0);
+DRIVER_MODULE(rtasdev, ofwbus, rtasdev_driver, 0, 0);
 
 static int
 rtasdev_probe(device_t dev)
@@ -159,13 +155,13 @@ rtas_shutdown(void *arg, int howto)
 {
 	cell_t token, status;
 
-	if (howto & RB_HALT) {
+	if ((howto & RB_POWEROFF) != 0) {
 		token = rtas_token_lookup("power-off");
 		if (token == -1)
 			return;
 
 		rtas_call_method(token, 2, 1, 0, 0, &status);
-	} else {
+	} else if ((howto & RB_HALT) == 0) {
 		token = rtas_token_lookup("system-reboot");
 		if (token == -1)
 			return;

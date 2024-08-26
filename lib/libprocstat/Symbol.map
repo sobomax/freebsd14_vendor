@@ -1,5 +1,4 @@
 /*
- * $FreeBSD: 3d0f37b5981e5c6ef543eab56fe867c32b9446e4 $
  */
 FBSD_1.2 {
 	procstat_close;

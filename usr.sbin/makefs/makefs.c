@@ -38,8 +38,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 987f4159b403a694da5f56cb11f387fb93eef4f4 $");
-
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <assert.h>
@@ -77,6 +75,9 @@ static fstype_t fstypes[] = {
 	ENTRY(cd9660),
 	ENTRY(ffs),
 	ENTRY(msdos),
+#ifdef HAVE_ZFS
+	ENTRY(zfs),
+#endif
 	{ .type = NULL	},
 };
 
@@ -164,7 +165,7 @@ main(int argc, char *argv[])
 			break;
 
 		case 'D':
-			dupsok = 1;
+			dupsok++;
 			break;
 
 		case 'd':
@@ -270,7 +271,6 @@ main(int argc, char *argv[])
 			fsoptions.sparse = 1;
 			break;
 
-		case '?':
 		default:
 			usage(fstype, &fsoptions);
 			/* NOTREACHED */

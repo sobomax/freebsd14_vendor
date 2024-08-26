@@ -1,4 +1,3 @@
-# $FreeBSD: f07c95fe4e7e232d3b914e865b84cb614c097a64 $
 
 .PATH: ${SRCTOP}/sys/dev/mpt
 

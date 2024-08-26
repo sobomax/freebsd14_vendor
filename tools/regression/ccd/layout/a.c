@@ -1,4 +1,3 @@
-/* $FreeBSD: 33eea10f2a3cdba430c60ed7363f3f4ed1ee80ce $ */
 #include <unistd.h>
 
 static uint32_t buf[512/4];

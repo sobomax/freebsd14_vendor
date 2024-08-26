@@ -1,3 +1,2 @@
-.\" $FreeBSD: 324081f993f10a62f145394f12fd13d24d8c86a7 $
 Do not build or install programs
 for operating floppy disk driver.

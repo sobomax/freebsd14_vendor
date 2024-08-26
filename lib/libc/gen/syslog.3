@@ -26,9 +26,8 @@
 .\" SUCH DAMAGE.
 .\"
 .\"     @(#)syslog.3	8.1 (Berkeley) 6/4/93
-.\" $FreeBSD: 2cb2c0d198b3a8015a456aa0dc50e143c2dab676 $
 .\"
-.Dd November 25, 2018
+.Dd July 3, 2023
 .Dt SYSLOG 3
 .Os
 .Sh NAME
@@ -131,6 +130,11 @@ The
 .Fa ident
 argument
 is a string that will be prepended to every message.
+It may be formatted as
+.Fa ident[N]
+in which case decimal number
+.Fa N
+replaces the process id within messages.
 The
 .Fa logopt
 argument
@@ -159,7 +163,7 @@ Log the process id with each message: useful for identifying
 instantiations of daemons.
 On
 .Fx ,
-this option is enabled by default.
+this option is enabled by default and cannot be disabled.
 .El
 .Pp
 The

@@ -39,9 +39,6 @@
  */
 
 #include <machine/asm.h>
-
-__FBSDID("$FreeBSD: e718a06109b41111a7adf68778b7dc531bb9b4cc $");
-
 #include "assym.inc"
 
 

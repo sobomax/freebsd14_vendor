@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2008-2009 Ariff Abdullah <ariff@FreeBSD.org>
  * All rights reserved.
@@ -33,8 +33,6 @@
 #include <dev/sound/pcm/sound.h>
 
 #include "feeder_if.h"
-
-SND_DECLARE_FILE("$FreeBSD: fe114b727ffd411902a38045fa7ae2fee3b30900 $");
 
 /* chain state */
 struct feeder_chain_state {

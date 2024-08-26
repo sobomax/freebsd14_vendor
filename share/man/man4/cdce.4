@@ -26,7 +26,6 @@
 .\" POSSIBILITY OF SUCH DAMAGE.
 .\"
 .\" $NetBSD: cdce.4,v 1.4 2004/12/08 18:35:56 peter Exp $
-.\" $FreeBSD: 99d04bd12d07a89f04b9568aeacacb6e891ab0da $
 .\"
 .Dd February 10, 2023
 .Dt CDCE 4
@@ -89,8 +88,12 @@ Mobile
 .Nm
 Network Devices may need a connect command sequence via u3g
 serial command port before they activate the NCM/ECM/ACM network
-interface. Example: echo 'AT^NDISUP=1,1,"internet"' > /dev/cuaU[0].0,
-where "internet" is your providers apn name.
+interface.
+For example:
+.Dl echo 'AT^NDISUP=1,1,"internet"' > /dev/cuaU[0].0
+where
+.Dq internet
+is your providers apn name.
 .Sh HARDWARE
 The following devices are supported by the
 .Nm

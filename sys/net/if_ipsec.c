@@ -26,8 +26,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: e830bcc73d6bb410cc9c6053e27861742ddec7a0 $");
-
 #include "opt_inet.h"
 #include "opt_inet6.h"
 #include "opt_ipsec.h"
@@ -52,6 +50,7 @@ __FBSDID("$FreeBSD: e830bcc73d6bb410cc9c6053e27861742ddec7a0 $");
 
 #include <net/if.h>
 #include <net/if_var.h>
+#include <net/if_private.h>
 #include <net/if_clone.h>
 #include <net/if_types.h>
 #include <net/bpf.h>
@@ -1024,6 +1023,7 @@ static int
 ipsec_set_tunnel(struct ipsec_softc *sc, struct sockaddr *src,
     struct sockaddr *dst, uint32_t reqid)
 {
+	struct epoch_tracker et;
 	struct ipsec_iflist *iflist;
 	struct secpolicy *sp[IPSEC_SPCOUNT];
 	int i;
@@ -1053,7 +1053,9 @@ ipsec_set_tunnel(struct ipsec_softc *sc, struct sockaddr *src,
 		sc->ifp->if_drv_flags &= ~IFF_DRV_RUNNING;
 		return (ENOMEM);
 	}
+	NET_EPOCH_ENTER(et);
 	ipsec_set_running(sc);
+	NET_EPOCH_EXIT(et);
 	return (0);
 }
 

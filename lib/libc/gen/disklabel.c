@@ -31,8 +31,6 @@
 
 #include <sys/cdefs.h>
 __SCCSID("@(#)disklabel.c	8.2 (Berkeley) 5/3/95");
-__FBSDID("$FreeBSD: d02644e1e1ce9627cf28f6959f2df39258ea8062 $");
-
 #include <sys/param.h>
 #define DKTYPENAMES
 #define FSTYPENAMES

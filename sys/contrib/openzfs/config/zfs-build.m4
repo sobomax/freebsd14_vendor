@@ -81,7 +81,7 @@ AC_DEFUN([ZFS_AC_DEBUG], [
 AC_DEFUN([ZFS_AC_DEBUGINFO_ENABLE], [
 	DEBUG_CFLAGS="$DEBUG_CFLAGS -g -fno-inline $NO_IPA_SRA"
 
-	KERNEL_DEBUG_CFLAGS="$KERNEL_DEBUG_CFLAGS -fno-inline $NO_IPA_SRA"
+	KERNEL_DEBUG_CFLAGS="$KERNEL_DEBUG_CFLAGS -fno-inline $KERNEL_NO_IPA_SRA"
 	KERNEL_MAKE="$KERNEL_MAKE CONFIG_DEBUG_INFO=y"
 
 	DEBUGINFO_ZFS="_with_debuginfo"
@@ -211,13 +211,17 @@ AC_DEFUN([ZFS_AC_CONFIG_ALWAYS], [
 
 	ZFS_AC_CONFIG_ALWAYS_CC_NO_CLOBBERED
 	ZFS_AC_CONFIG_ALWAYS_CC_INFINITE_RECURSION
+	ZFS_AC_CONFIG_ALWAYS_KERNEL_CC_INFINITE_RECURSION
 	ZFS_AC_CONFIG_ALWAYS_CC_IMPLICIT_FALLTHROUGH
 	ZFS_AC_CONFIG_ALWAYS_CC_FRAME_LARGER_THAN
 	ZFS_AC_CONFIG_ALWAYS_CC_NO_FORMAT_TRUNCATION
 	ZFS_AC_CONFIG_ALWAYS_CC_NO_FORMAT_ZERO_LENGTH
+	ZFS_AC_CONFIG_ALWAYS_CC_FORMAT_OVERFLOW
 	ZFS_AC_CONFIG_ALWAYS_CC_NO_OMIT_FRAME_POINTER
 	ZFS_AC_CONFIG_ALWAYS_CC_NO_IPA_SRA
+	ZFS_AC_CONFIG_ALWAYS_KERNEL_CC_NO_IPA_SRA
 	ZFS_AC_CONFIG_ALWAYS_CC_ASAN
+	ZFS_AC_CONFIG_ALWAYS_CC_UBSAN
 	ZFS_AC_CONFIG_ALWAYS_TOOLCHAIN_SIMD
 	ZFS_AC_CONFIG_ALWAYS_SYSTEM
 	ZFS_AC_CONFIG_ALWAYS_ARCH
@@ -259,17 +263,26 @@ AC_DEFUN([ZFS_AC_CONFIG], [
 		AC_SUBST(TEST_JOBS)
 	])
 
+	ZFS_INIT_SYSV=
+	ZFS_INIT_SYSTEMD=
+	ZFS_WANT_MODULES_LOAD_D=
+
 	case "$ZFS_CONFIG" in
 		kernel) ZFS_AC_CONFIG_KERNEL ;;
 		user)	ZFS_AC_CONFIG_USER   ;;
 		all)    ZFS_AC_CONFIG_USER
 			ZFS_AC_CONFIG_KERNEL ;;
+		dist)                        ;;
 		srpm)                        ;;
 		*)
 		AC_MSG_RESULT([Error!])
 		AC_MSG_ERROR([Bad value "$ZFS_CONFIG" for --with-config,
 		              user kernel|user|all|srpm]) ;;
 	esac
+
+	AM_CONDITIONAL([INIT_SYSV],           [test "x$ZFS_INIT_SYSV" = "xyes"])
+	AM_CONDITIONAL([INIT_SYSTEMD],        [test "x$ZFS_INIT_SYSTEMD" = "xyes"])
+	AM_CONDITIONAL([WANT_MODULES_LOAD_D], [test "x$ZFS_WANT_MODULES_LOAD_D" = "xyes"])
 
 	AM_CONDITIONAL([CONFIG_USER],
 	    [test "$ZFS_CONFIG" = user -o "$ZFS_CONFIG" = all])
@@ -323,6 +336,7 @@ AC_DEFUN([ZFS_AC_RPM], [
 	RPM_DEFINE_COMMON=${RPM_DEFINE_COMMON}' --define "$(DEBUG_KMEM_ZFS) 1"'
 	RPM_DEFINE_COMMON=${RPM_DEFINE_COMMON}' --define "$(DEBUG_KMEM_TRACKING_ZFS) 1"'
 	RPM_DEFINE_COMMON=${RPM_DEFINE_COMMON}' --define "$(ASAN_ZFS) 1"'
+	RPM_DEFINE_COMMON=${RPM_DEFINE_COMMON}' --define "$(UBSAN_ZFS) 1"'
 
 	AS_IF([test "x$enable_debuginfo" = xyes], [
 		RPM_DEFINE_COMMON=${RPM_DEFINE_COMMON}' --define "__strip /bin/true"'
@@ -343,6 +357,9 @@ AC_DEFUN([ZFS_AC_RPM], [
 	])
 	AS_IF([test -n "$udevruledir" ], [
 		RPM_DEFINE_UTIL=${RPM_DEFINE_UTIL}' --define "_udevruledir $(udevruledir)"'
+	])
+	AS_IF([test -n "$bashcompletiondir" ], [
+		RPM_DEFINE_UTIL=${RPM_DEFINE_UTIL}' --define "_bashcompletiondir $(bashcompletiondir)"'
 	])
 	RPM_DEFINE_UTIL=${RPM_DEFINE_UTIL}' $(DEFINE_SYSTEMD)'
 	RPM_DEFINE_UTIL=${RPM_DEFINE_UTIL}' $(DEFINE_PYZFS)'
@@ -450,6 +467,7 @@ AC_DEFUN([ZFS_AC_DPKG], [
 	AC_SUBST(HAVE_DPKGBUILD)
 	AC_SUBST(DPKGBUILD)
 	AC_SUBST(DPKGBUILD_VERSION)
+	AC_SUBST([CFGOPTS], ["$CFGOPTS"])
 ])
 
 dnl #
@@ -518,6 +536,8 @@ AC_DEFUN([ZFS_AC_DEFAULT_PACKAGE], [
 			VENDOR=alpine ;
 		elif test -f /bin/freebsd-version ; then
 			VENDOR=freebsd ;
+		elif test -f /etc/openEuler-release ; then
+			VENDOR=openeuler ;
 		else
 			VENDOR= ;
 		fi],
@@ -542,6 +562,7 @@ AC_DEFUN([ZFS_AC_DEFAULT_PACKAGE], [
 		ubuntu)     DEFAULT_PACKAGE=deb  ;;
 		debian)     DEFAULT_PACKAGE=deb  ;;
 		freebsd)    DEFAULT_PACKAGE=pkg  ;;
+		openeuler)  DEFAULT_PACKAGE=rpm  ;;
 		*)          DEFAULT_PACKAGE=rpm  ;;
 	esac
 	AC_MSG_RESULT([$DEFAULT_PACKAGE])
@@ -555,36 +576,17 @@ AC_DEFUN([ZFS_AC_DEFAULT_PACKAGE], [
 	AC_MSG_RESULT([$initdir])
 	AC_SUBST(initdir)
 
-	AC_MSG_CHECKING([default init script type and shell])
+	AC_MSG_CHECKING([default shell])
 	case "$VENDOR" in
-		toss)       DEFAULT_INIT_SCRIPT=redhat ;;
-		redhat)     DEFAULT_INIT_SCRIPT=redhat ;;
-		fedora)     DEFAULT_INIT_SCRIPT=fedora ;;
-		gentoo)     DEFAULT_INIT_SCRIPT=openrc ;;
-		alpine)     DEFAULT_INIT_SCRIPT=openrc ;;
-		arch)       DEFAULT_INIT_SCRIPT=lsb    ;;
-		sles)       DEFAULT_INIT_SCRIPT=lsb    ;;
-		slackware)  DEFAULT_INIT_SCRIPT=lsb    ;;
-		lunar)      DEFAULT_INIT_SCRIPT=lunar  ;;
-		ubuntu)     DEFAULT_INIT_SCRIPT=lsb    ;;
-		debian)     DEFAULT_INIT_SCRIPT=lsb    ;;
-		freebsd)    DEFAULT_INIT_SCRIPT=freebsd;;
-		*)          DEFAULT_INIT_SCRIPT=lsb    ;;
+		gentoo|alpine)	DEFAULT_INIT_SHELL=/sbin/openrc-run
+				IS_SYSV_RC=false	;;
+		*)		DEFAULT_INIT_SHELL=/bin/sh
+				IS_SYSV_RC=true		;;
 	esac
 
-	# On gentoo, it's possible that OpenRC isn't installed.  Check if
-	# /sbin/openrc-run exists, and if not, fall back to generic defaults.
-
-	DEFAULT_INIT_SHELL="/bin/sh"
-	AS_IF([test "$DEFAULT_INIT_SCRIPT" = "openrc"], [
-		AS_IF([test -x "/sbin/openrc-run"],
-			[DEFAULT_INIT_SHELL="/sbin/openrc-run"],
-			[DEFAULT_INIT_SCRIPT=lsb])
-	])
-
-	AC_MSG_RESULT([$DEFAULT_INIT_SCRIPT:$DEFAULT_INIT_SHELL])
-	AC_SUBST(DEFAULT_INIT_SCRIPT)
+	AC_MSG_RESULT([$DEFAULT_INIT_SHELL])
 	AC_SUBST(DEFAULT_INIT_SHELL)
+	AC_SUBST(IS_SYSV_RC)
 
 	AC_MSG_CHECKING([default nfs server init script])
 	AS_IF([test "$VENDOR" = "debian"],
@@ -602,6 +604,7 @@ AC_DEFUN([ZFS_AC_DEFAULT_PACKAGE], [
 		redhat)     initconfdir=/etc/sysconfig ;;
 		fedora)     initconfdir=/etc/sysconfig ;;
 		sles)       initconfdir=/etc/sysconfig ;;
+		openeuler)  initconfdir=/etc/sysconfig ;;
 		ubuntu)     initconfdir=/etc/default   ;;
 		debian)     initconfdir=/etc/default   ;;
 		freebsd)    initconfdir=$sysconfdir/rc.conf.d;;
@@ -619,6 +622,18 @@ AC_DEFUN([ZFS_AC_DEFAULT_PACKAGE], [
 		AC_MSG_RESULT([no])
 	fi
 	AC_SUBST(RPM_DEFINE_INITRAMFS)
+
+	AC_MSG_CHECKING([default bash completion directory])
+	case "$VENDOR" in
+		ubuntu)     bashcompletiondir=/usr/share/bash-completion/completions   ;;
+		debian)     bashcompletiondir=/usr/share/bash-completion/completions   ;;
+		freebsd)    bashcompletiondir=$sysconfdir/bash_completion.d;;
+		gentoo)     bashcompletiondir=/usr/share/bash-completion/completions   ;;
+		*)          bashcompletiondir=/etc/bash_completion.d   ;;
+	esac
+	AC_MSG_RESULT([$bashcompletiondir])
+	AC_SUBST(bashcompletiondir)
+
 ])
 
 dnl #

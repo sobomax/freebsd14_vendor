@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2006 Marcel Moolenaar
  * All rights reserved.
@@ -27,8 +27,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: bb52b7370d1615f8e5554c78dc7dabd79eea4364 $");
-
 #include "opt_isa.h"
 
 #include <sys/param.h>
@@ -112,4 +110,4 @@ ppc_acpi_probe(device_t dev)
 	return (ppc_probe(dev, 0));
 }
 
-DRIVER_MODULE(ppc, acpi, ppc_acpi_driver, ppc_devclass, 0, 0);
+DRIVER_MODULE(ppc, acpi, ppc_acpi_driver, 0, 0);

@@ -1,4 +1,3 @@
-# $FreeBSD: 5c89e93aa5affdd9bfd74a524254972e617ce4bb $
 
 .PATH: ${SRCTOP}/sys/dev/ral
 

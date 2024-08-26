@@ -35,8 +35,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: be863cc9d70a54e815b2ba81b0d05e5562536c53 $");
-
 #include "opt_bootp.h"
 #include "opt_nfsroot.h"
 #include "opt_kern_tls.h"
@@ -52,7 +50,6 @@ __FBSDID("$FreeBSD: be863cc9d70a54e815b2ba81b0d05e5562536c53 $");
 #include <sys/lock.h>
 #include <sys/malloc.h>
 #include <sys/mbuf.h>
-#include <sys/module.h>
 #include <sys/mount.h>
 #include <sys/proc.h>
 #include <sys/socket.h>
@@ -148,14 +145,17 @@ static struct vfsops nfs_vfsops = {
 	.vfs_sysctl =		nfs_sysctl,
 	.vfs_purge =		nfs_purge,
 };
+/*
+ * This macro declares that the file system type is named "nfs".
+ * It also declares a module name of "nfs" and uses vfs_modevent()
+ * as the event handling function.
+ * The main module declaration is found in sys/fs/nfsclient/nfs_clport.c
+ * for "nfscl" and is needed so that a custom event handling
+ * function gets called.  MODULE_DEPEND() macros are found there.
+ */
 VFS_SET(nfs_vfsops, nfs, VFCF_NETWORK | VFCF_SBDRY);
 
-/* So that loader and kldload(2) can find us, wherever we are.. */
 MODULE_VERSION(nfs, 1);
-MODULE_DEPEND(nfs, nfscommon, 1, 1, 1);
-MODULE_DEPEND(nfs, krpc, 1, 1, 1);
-MODULE_DEPEND(nfs, nfssvc, 1, 1, 1);
-MODULE_DEPEND(nfs, xdr, 1, 1, 1);
 
 /*
  * This structure is now defined in sys/nfs/nfs_diskless.c so that it
@@ -291,13 +291,37 @@ nfs_statfs(struct mount *mp, struct statfs *sbp)
 	struct nfsstatfs sb;
 	int error = 0, attrflag, gotfsinfo = 0, ret;
 	struct nfsnode *np;
+	char *fakefh;
 
 	td = curthread;
 
 	error = vfs_busy(mp, MBF_NOWAIT);
 	if (error)
 		return (error);
-	error = ncl_nget(mp, nmp->nm_fh, nmp->nm_fhsize, &np, LK_EXCLUSIVE);
+	if ((nmp->nm_privflag & NFSMNTP_FAKEROOTFH) != 0) {
+		if (nmp->nm_fhsize == 0) {
+			error = nfsrpc_getdirpath(nmp, NFSMNT_DIRPATH(nmp),
+			    td->td_ucred, td);
+			if (error != 0) {
+				/*
+				 * We cannot do anything yet.  Hopefully what
+				 * is in mnt_stat is sufficient.
+				 */
+				if (sbp != &mp->mnt_stat)
+					*sbp = mp->mnt_stat;
+				strncpy(&sbp->f_fstypename[0],
+				    mp->mnt_vfc->vfc_name, MFSNAMELEN);
+				vfs_unbusy(mp);
+				return (0);
+			}
+		}
+		fakefh = malloc(NFSX_FHMAX + 1, M_TEMP, M_WAITOK | M_ZERO);
+		error = ncl_nget(mp, fakefh, NFSX_FHMAX + 1, &np, LK_EXCLUSIVE);
+		free(fakefh, M_TEMP);
+	} else {
+		error = ncl_nget(mp, nmp->nm_fh, nmp->nm_fhsize, &np,
+		    LK_EXCLUSIVE);
+	}
 	if (error) {
 		vfs_unbusy(mp);
 		return (error);
@@ -307,14 +331,25 @@ nfs_statfs(struct mount *mp, struct statfs *sbp)
 	if (NFSHASNFSV3(nmp) && !NFSHASGOTFSINFO(nmp)) {
 		mtx_unlock(&nmp->nm_mtx);
 		error = nfsrpc_fsinfo(vp, &fs, td->td_ucred, td, &nfsva,
-		    &attrflag, NULL);
+		    &attrflag);
 		if (!error)
 			gotfsinfo = 1;
 	} else
 		mtx_unlock(&nmp->nm_mtx);
 	if (!error)
-		error = nfsrpc_statfs(vp, &sb, &fs, td->td_ucred, td, &nfsva,
-		    &attrflag, NULL);
+		error = nfsrpc_statfs(vp, &sb, &fs, NULL, td->td_ucred, td,
+		    &nfsva, &attrflag);
+	if ((nmp->nm_privflag & NFSMNTP_FAKEROOTFH) != 0 &&
+	    error == NFSERR_WRONGSEC) {
+		/* Cannot get new stats, so return what is in mnt_stat. */
+		if (sbp != &mp->mnt_stat)
+			*sbp = mp->mnt_stat;
+		strncpy(&sbp->f_fstypename[0], mp->mnt_vfc->vfc_name,
+		    MFSNAMELEN);
+		vput(vp);
+		vfs_unbusy(mp);
+		return (0);
+	}
 	if (error != 0)
 		NFSCL_DEBUG(2, "statfs=%d\n", error);
 	if (attrflag == 0) {
@@ -336,7 +371,7 @@ nfs_statfs(struct mount *mp, struct statfs *sbp)
 			nfsva.na_vattr.va_size = 512 * 1024;
 		}
 	}
-	(void) nfscl_loadattrcache(&vp, &nfsva, NULL, NULL, 0, 1);
+	(void) nfscl_loadattrcache(&vp, &nfsva, NULL, 0, 1);
 	if (!error) {
 	    mtx_lock(&nmp->nm_mtx);
 	    if (gotfsinfo || (nmp->nm_flag & NFSMNT_NFSV4))
@@ -368,11 +403,10 @@ ncl_fsinfo(struct nfsmount *nmp, struct vnode *vp, struct ucred *cred,
 	struct nfsvattr nfsva;
 	int error, attrflag;
 
-	error = nfsrpc_fsinfo(vp, &fs, cred, td, &nfsva, &attrflag, NULL);
+	error = nfsrpc_fsinfo(vp, &fs, cred, td, &nfsva, &attrflag);
 	if (!error) {
 		if (attrflag)
-			(void) nfscl_loadattrcache(&vp, &nfsva, NULL, NULL, 0,
-			    1);
+			(void) nfscl_loadattrcache(&vp, &nfsva, NULL, 0, 1);
 		mtx_lock(&nmp->nm_mtx);
 		nfscl_loadfsinfo(nmp, &fs);
 		mtx_unlock(&nmp->nm_mtx);
@@ -749,7 +783,7 @@ static const char *nfs_opts[] = { "from", "nfs_args",
     "nfsv3", "sec", "principal", "nfsv4", "gssname", "allgssname", "dirpath",
     "minorversion", "nametimeo", "negnametimeo", "nocto", "noncontigwr",
     "pnfs", "wcommitsize", "oneopenown", "tls", "tlscertname", "nconnect",
-    NULL };
+    "syskrb5", NULL };
 
 /*
  * Parse the "from" mountarg, passed by the generic mount(8) program
@@ -1205,6 +1239,8 @@ nfs_mount(struct mount *mp)
 		 */
 		aconn--;
 	}
+	if (vfs_getopt(mp->mnt_optnew, "syskrb5", NULL, NULL) == 0)
+		newflag |= NFSMNT_SYSKRB5;
 	if (vfs_getopt(mp->mnt_optnew, "sec",
 		(void **) &secname, NULL) == 0)
 		nfs_sec_name(secname, &args.flags);
@@ -1387,6 +1423,39 @@ nfs_mount(struct mount *mp)
 		goto out;
 	}
 
+	if ((newflag & NFSMNT_SYSKRB5) != 0 &&
+	    ((args.flags & NFSMNT_NFSV4) == 0 || minvers == 0)) {
+		/*
+		 * This option requires the use of SP4_NONE, which
+		 * is only in NFSv4.1/4.2.
+		 */
+		vfs_mount_error(mp, "syskrb5 should only be used "
+		    "for NFSv4.1/4.2 mounts");
+		error = EINVAL;
+		goto out;
+	}
+
+	if ((newflag & NFSMNT_SYSKRB5) != 0 &&
+	    (args.flags & NFSMNT_KERB) == 0) {
+		/*
+		 * This option modifies the behaviour of sec=krb5[ip].
+		 */
+		vfs_mount_error(mp, "syskrb5 should only be used "
+		    "for sec=krb5[ip] mounts");
+		error = EINVAL;
+		goto out;
+	}
+
+	if ((newflag & NFSMNT_SYSKRB5) != 0 && krbname[0] != '\0') {
+		/*
+		 * This option is used as an alternative to "gssname".
+		 */
+		vfs_mount_error(mp, "syskrb5 should not be used "
+		    "with the gssname option");
+		error = EINVAL;
+		goto out;
+	}
+
 	args.fh = nfh;
 	error = mountnfs(&args, mp, nam, hst, krbname, krbnamelen, dirpath,
 	    dirlen, srvkrbname, srvkrbnamelen, &vp, td->td_ucred, td,
@@ -1448,6 +1517,7 @@ mountnfs(struct nfs_args *argp, struct mount *mp, struct sockaddr *nam,
 	struct nfsclds *dsp, *tdsp;
 	uint32_t lease;
 	bool tryminvers;
+	char *fakefh;
 	static u_int64_t clval = 0;
 #ifdef KERN_TLS
 	u_int maxlen;
@@ -1621,6 +1691,12 @@ mountnfs(struct nfs_args *argp, struct mount *mp, struct sockaddr *nam,
 			error = EINVAL;
 			goto bad;
 		}
+		if (NFSHASSYSKRB5(nmp) && nmp->nm_minorvers == 0) {
+			vfs_mount_error(mp, "syskrb5 should only be used "
+			    "for NFSv4.1/4.2 mounts");
+			error = EINVAL;
+			goto bad;
+		}
 	}
 
 	if (nmp->nm_fhsize == 0 && (nmp->nm_flag & NFSMNT_NFSV4) &&
@@ -1635,10 +1711,13 @@ mountnfs(struct nfs_args *argp, struct mount *mp, struct sockaddr *nam,
 			error = nfsrpc_getdirpath(nmp, NFSMNT_DIRPATH(nmp),
 			    cred, td);
 			NFSCL_DEBUG(3, "aft dirp=%d\n", error);
-			if (error)
+			if (error != 0 && (!NFSHASSYSKRB5(nmp) ||
+			    error != NFSERR_WRONGSEC))
 				(void) nfs_catnap(PZERO, error, "nfsgetdirp");
-		} while (error && --trycnt > 0);
-		if (error)
+		} while (error != 0 && --trycnt > 0 &&
+		    (!NFSHASSYSKRB5(nmp) || error != NFSERR_WRONGSEC));
+		if (error != 0 && (!NFSHASSYSKRB5(nmp) ||
+		    error != NFSERR_WRONGSEC))
 			goto bad;
 	}
 
@@ -1649,16 +1728,27 @@ mountnfs(struct nfs_args *argp, struct mount *mp, struct sockaddr *nam,
 	 * the nfsnode gets flushed out of the cache. Ufs does not have
 	 * this problem, because one can identify root inodes by their
 	 * number == UFS_ROOTINO (2).
+	 * For the "syskrb5" mount, the file handle might not have
+	 * been acquired.  As such, use a "fake" file handle which
+	 * can never be returned by a server for the root vnode.
 	 */
-	if (nmp->nm_fhsize > 0) {
+	if (nmp->nm_fhsize > 0 || NFSHASSYSKRB5(nmp)) {
 		/*
 		 * Set f_iosize to NFS_DIRBLKSIZ so that bo_bsize gets set
 		 * non-zero for the root vnode. f_iosize will be set correctly
 		 * by nfs_statfs() before any I/O occurs.
 		 */
 		mp->mnt_stat.f_iosize = NFS_DIRBLKSIZ;
-		error = ncl_nget(mp, nmp->nm_fh, nmp->nm_fhsize, &np,
-		    LK_EXCLUSIVE);
+		if (nmp->nm_fhsize == 0) {
+			fakefh = malloc(NFSX_FHMAX + 1, M_TEMP, M_WAITOK |
+			    M_ZERO);
+			error = ncl_nget(mp, fakefh, NFSX_FHMAX + 1, &np,
+			    LK_EXCLUSIVE);
+			free(fakefh, M_TEMP);
+			nmp->nm_privflag |= NFSMNTP_FAKEROOTFH;
+		} else
+			error = ncl_nget(mp, nmp->nm_fh, nmp->nm_fhsize, &np,
+			    LK_EXCLUSIVE);
 		if (error)
 			goto bad;
 		*vpp = NFSTOV(np);
@@ -1668,8 +1758,10 @@ mountnfs(struct nfs_args *argp, struct mount *mp, struct sockaddr *nam,
 		 * mountpoint.  This has the side effect of filling in
 		 * (*vpp)->v_type with the correct value.
 		 */
-		ret = nfsrpc_getattrnovp(nmp, nmp->nm_fh, nmp->nm_fhsize, 1,
-		    cred, td, &nfsva, NULL, &lease);
+		ret = ENXIO;
+		if (nmp->nm_fhsize > 0)
+			ret = nfsrpc_getattrnovp(nmp, nmp->nm_fh,
+			    nmp->nm_fhsize, 1, cred, td, &nfsva, NULL, &lease);
 		if (ret) {
 			/*
 			 * Just set default values to get things going.
@@ -1684,9 +1776,9 @@ mountnfs(struct nfs_args *argp, struct mount *mp, struct sockaddr *nam,
 			nfsva.na_vattr.va_gen = 1;
 			nfsva.na_vattr.va_blocksize = NFS_FABLKSIZE;
 			nfsva.na_vattr.va_size = 512 * 1024;
-			lease = 60;
+			lease = 20;
 		}
-		(void) nfscl_loadattrcache(vpp, &nfsva, NULL, NULL, 0, 1);
+		(void) nfscl_loadattrcache(vpp, &nfsva, NULL, 0, 1);
 		if ((argp->flags & NFSMNT_NFSV4) != 0) {
 			NFSCL_DEBUG(3, "lease=%d\n", (int)lease);
 			NFSLOCKCLSTATE();
@@ -1870,9 +1962,20 @@ nfs_root(struct mount *mp, int flags, struct vnode **vpp)
 	struct nfsmount *nmp;
 	struct nfsnode *np;
 	int error;
+	char *fakefh;
 
 	nmp = VFSTONFS(mp);
-	error = ncl_nget(mp, nmp->nm_fh, nmp->nm_fhsize, &np, flags);
+	if ((nmp->nm_privflag & NFSMNTP_FAKEROOTFH) != 0) {
+		/* Attempt to get the actual root file handle. */
+		if (nmp->nm_fhsize == 0)
+			error = nfsrpc_getdirpath(nmp, NFSMNT_DIRPATH(nmp),
+			    curthread->td_ucred, curthread);
+		fakefh = malloc(NFSX_FHMAX + 1, M_TEMP, M_WAITOK | M_ZERO);
+		error = ncl_nget(mp, fakefh, NFSX_FHMAX + 1, &np, flags);
+		free(fakefh, M_TEMP);
+	} else {
+		error = ncl_nget(mp, nmp->nm_fh, nmp->nm_fhsize, &np, flags);
+	}
 	if (error)
 		return error;
 	vp = NFSTOV(np);
@@ -1917,14 +2020,16 @@ nfs_sync(struct mount *mp, int waitfor)
 	}
 	MNT_IUNLOCK(mp);
 
+	if (waitfor == MNT_LAZY)
+		return (0);
+
 	/*
 	 * Force stale buffer cache information to be flushed.
 	 */
 loop:
 	MNT_VNODE_FOREACH_ALL(vp, mp, mvp) {
 		/* XXX Racy bv_cnt check. */
-		if (NFSVOPISLOCKED(vp) || vp->v_bufobj.bo_dirty.bv_cnt == 0 ||
-		    waitfor == MNT_LAZY) {
+		if (NFSVOPISLOCKED(vp) || vp->v_bufobj.bo_dirty.bv_cnt == 0) {
 			VI_UNLOCK(vp);
 			continue;
 		}
@@ -2113,6 +2218,8 @@ void nfscl_retopts(struct nfsmount *nmp, char *buffer, size_t buflen)
 	    &buf, &blen);
 	nfscl_printopt(nmp, (nmp->nm_newflag & NFSMNT_TLS) != 0, ",tls", &buf,
 	    &blen);
+	nfscl_printopt(nmp, (nmp->nm_newflag & NFSMNT_SYSKRB5) != 0,
+	    ",syskrb5", &buf, &blen);
 	nfscl_printopt(nmp, (nmp->nm_flag & NFSMNT_NOCONN) != 0, ",noconn",
 	    &buf, &blen);
 	nfscl_printoptval(nmp, nmp->nm_aconnect + 1, ",nconnect", &buf, &blen);

@@ -1,3 +1,2 @@
-.\" $FreeBSD: 7fdb12c94cddf903e97892f9a32ca527c7e9462d $
 Do not build profiled libraries for use with
 .Xr gprof 8 .

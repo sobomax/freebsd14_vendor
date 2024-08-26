@@ -31,8 +31,6 @@
 
 #include <sys/cdefs.h>
 __SCCSID("@(#)getlogin.c	8.1 (Berkeley) 6/4/93");
-__FBSDID("$FreeBSD: a8bc2fd0688f04fe4b7284e7b4a702d1470b776e $");
-
 #include <sys/param.h>
 #include <errno.h>
 #include <pwd.h>

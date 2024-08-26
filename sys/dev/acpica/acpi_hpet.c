@@ -26,8 +26,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: e35e3808a980bab86175a48c349d8e2e4d458f2f $");
-
 #include "opt_acpi.h"
 
 #if defined(__amd64__)
@@ -68,8 +66,6 @@ __FBSDID("$FreeBSD: e35e3808a980bab86175a48c349d8e2e4d458f2f $");
 #define HPET_VENDID_SW		0x1166
 
 ACPI_SERIAL_DECL(hpet, "ACPI HPET support");
-
-static devclass_t hpet_devclass;
 
 /* ACPI CA debugging */
 #define _COMPONENT	ACPI_TIMER
@@ -173,7 +169,8 @@ hpet_vdso_timehands32(struct vdso_timehands32 *vdso_th32,
 	vdso_th32->th_algo = VDSO_TH_ALGO_X86_HPET;
 	vdso_th32->th_x86_shift = 0;
 	vdso_th32->th_x86_hpet_idx = device_get_unit(sc->dev);
-	vdso_th32->th_x86_pvc_last_systime = 0;
+	vdso_th32->th_x86_pvc_last_systime[0] = 0;
+	vdso_th32->th_x86_pvc_last_systime[1] = 0;
 	vdso_th32->th_x86_pvc_stable_mask = 0;
 	bzero(vdso_th32->th_res, sizeof(vdso_th32->th_res));
 	return (sc->mmap_allow != 0);
@@ -421,7 +418,7 @@ hpet_identify(driver_t *driver, device_t parent)
 	int		i;
 
 	/* Only one HPET device can be added. */
-	if (devclass_get_device(hpet_devclass, 0))
+	if (devclass_get_device(devclass_find("hpet"), 0))
 		return;
 	for (i = 1; ; i++) {
 		/* Search for HPET table. */
@@ -646,7 +643,7 @@ hpet_attach(device_t dev)
 	 * The only way to use HPET there is to specify IRQs manually
 	 * and/or use legacy_route. Legacy_route mode works on both.
 	 */
-	if (vm_guest)
+	if (vm_guest != VM_GUEST_NO)
 		sc->allowed_irqs = 0x00000000;
 	/* Let user override. */
 	resource_int_value(device_get_name(dev), device_get_unit(dev),
@@ -1009,5 +1006,5 @@ static driver_t	hpet_driver = {
 	sizeof(struct hpet_softc),
 };
 
-DRIVER_MODULE(hpet, acpi, hpet_driver, hpet_devclass, 0, 0);
+DRIVER_MODULE(hpet, acpi, hpet_driver, 0, 0);
 MODULE_DEPEND(hpet, acpi, 1, 1, 1);

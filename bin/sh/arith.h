@@ -27,7 +27,6 @@
  * SUCH DAMAGE.
  *
  *	@(#)arith.h	1.1 (Berkeley) 5/4/95
- * $FreeBSD: 569d0c58651f5a4d310034c769d18645a8199933 $
  */
 
 #include "shell.h"

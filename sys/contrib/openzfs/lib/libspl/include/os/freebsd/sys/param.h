@@ -7,7 +7,7 @@
  * with the License.
  *
  * You can obtain a copy of the license at usr/src/OPENSOLARIS.LICENSE
- * or http://www.opensolaris.org/os/licensing.
+ * or https://opensource.org/licenses/CDDL-1.0.
  * See the License for the specific language governing permissions
  * and limitations under the License.
  *
@@ -56,7 +56,5 @@
 
 extern size_t spl_pagesize(void);
 #define	PAGESIZE	(spl_pagesize())
-
-extern int execvpe(const char *name, char * const argv[], char * const envp[]);
 
 #endif

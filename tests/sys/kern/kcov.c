@@ -30,8 +30,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 64f75b8902ef8394311a97b7405f3b9b35695108 $");
-
 #include <sys/param.h>
 #include <sys/ioctl.h>
 #include <sys/kcov.h>
@@ -408,7 +406,7 @@ ATF_TC_BODY(kcov_thread_cmp, tc)
 }
 
 struct multi_thread_data {
-	char *buf;
+	uint64_t *buf;
 	int fd;
 	u_int mode;
 	int thread;

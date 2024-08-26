@@ -13,18 +13,15 @@
  * ====================================================
  */
 
-#include <sys/cdefs.h>
-__FBSDID("$FreeBSD: d49e9041f849dbe10f1862017fe6cd1cace6e8fd $");
-
 #include "math.h"
 #include "math_private.h"
 
 #ifdef _SCALB_INT
 float
-__ieee754_scalbf(float x, int fn)
+scalbf(float x, int fn)
 #else
 float
-__ieee754_scalbf(float x, float fn)
+scalbf(float x, float fn)
 #endif
 {
 #ifdef _SCALB_INT

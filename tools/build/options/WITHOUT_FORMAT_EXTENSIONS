@@ -1,4 +1,3 @@
-.\" $FreeBSD: 05ae981f7b9c6aa97778bf396769da5dc6e504b7 $
 Do not enable
 .Fl fformat-extensions
 when compiling the kernel.

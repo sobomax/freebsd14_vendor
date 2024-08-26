@@ -1,7 +1,6 @@
-/* $FreeBSD: 9c4666c41bba14215267b3a5be6b516c39b3281e $ */
 
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2000-2002 Hiroyuki Aizu <aizu@navi.org>
  * Copyright (c) 2006 Hans Petter Selasky
@@ -202,7 +201,6 @@ ua_probe(device_t dev)
 	    (func->func != SCF_PCM)) {
 		return (ENXIO);
 	}
-	device_set_desc(dev, "USB audio");
 
 	return (BUS_PROBE_DEFAULT);
 }
@@ -236,7 +234,7 @@ static driver_t ua_pcm_driver = {
 	PCM_SOFTC_SIZE,
 };
 
-DRIVER_MODULE(ua_pcm, uaudio, ua_pcm_driver, pcm_devclass, 0, 0);
-MODULE_DEPEND(ua_pcm, uaudio, 1, 1, 1);
+DRIVER_MODULE(ua_pcm, uaudio, ua_pcm_driver, 0, 0);
+MODULE_DEPEND(ua_pcm, snd_uaudio, 1, 1, 1);
 MODULE_DEPEND(ua_pcm, sound, SOUND_MINVER, SOUND_PREFVER, SOUND_MAXVER);
 MODULE_VERSION(ua_pcm, 1);

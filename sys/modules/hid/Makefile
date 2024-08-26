@@ -1,4 +1,3 @@
-# $FreeBSD: 72368487bc6c0a6d62b240eaed14722e6cd62f7e $
 
 SUBDIR = \
 	hid \

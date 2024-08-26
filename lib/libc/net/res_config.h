@@ -1,4 +1,3 @@
-/* $FreeBSD: 51b609b48eafd5d3ec3bcbf7fe390c946188733f $ */
 
 #define	DEBUG	1	/* enable debugging code (needed for dig) */
 #define	RESOLVSORT	/* allow sorting of addresses in gethostbyname */

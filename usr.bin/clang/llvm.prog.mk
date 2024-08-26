@@ -1,4 +1,3 @@
-# $FreeBSD: 56698c4138d391925d7bab486c88692b36ca54a9 $
 
 .include "${SRCTOP}/lib/clang/llvm.pre.mk"
 
@@ -9,10 +8,12 @@ CFLAGS+=	-I${OBJTOP}/lib/clang/libllvm
 # Special case for the bootstrap-tools phase.
 .if (defined(TOOLS_PREFIX) || ${MACHINE} == "host") && \
     (${PROG_CXX} == "clang-tblgen" || ${PROG_CXX} == "lldb-tblgen" || \
-     ${PROG_CXX} == "llvm-tblgen")
+     ${PROG_CXX} == "llvm-min-tblgen" || ${PROG_CXX} == "llvm-tblgen")
 LIBDEPS+=	llvmminimal
 .else
 LIBDEPS+=	llvm
+LIBADD+=	z
+LIBADD+=	zstd
 .endif
 
 .for lib in ${LIBDEPS}
@@ -24,7 +25,7 @@ PACKAGE=	clang
 
 .if ${.MAKE.OS} == "FreeBSD" || !defined(BOOTSTRAPPING)
 LIBADD+=	execinfo
-LIBADD+=	ncursesw
+LIBADD+=	tinfow
 .endif
 LIBADD+=	pthread
 

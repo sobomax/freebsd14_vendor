@@ -1,6 +1,6 @@
 #!/usr/local/bin/perl -w
 
-# SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+# SPDX-License-Identifier: BSD-2-Clause
 #
 # Copyright 2009 Edwin Groothuis <edwin@FreeBSD.org>
 #
@@ -25,7 +25,6 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: 827df3bc8820eaaa6d5e8946986f5f7eaf90fc74 $
 #
 
 use strict;

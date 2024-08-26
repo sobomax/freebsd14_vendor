@@ -22,8 +22,6 @@
  * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
- *
- * $FreeBSD: 0c919da739e986c649a7d714457b91b4e233a845 $
  */
 
 /*
@@ -41,11 +39,12 @@
 
 #include <sys/param.h>
 #include <sys/event.h>
+#include <sys/mdioctl.h>
 #include <sys/module.h>
 #include <sys/resource.h>
 #include <sys/socket.h>
 #include <sys/stat.h>
-#include <sys/mdioctl.h>
+#include <sys/un.h>
 
 #include <aio.h>
 #include <err.h>
@@ -54,6 +53,7 @@
 #include <libutil.h>
 #include <limits.h>
 #include <semaphore.h>
+#include <signal.h>
 #include <stdint.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -974,11 +974,12 @@ ATF_TC_CLEANUP(md_waitcomplete, tc)
 #define ZVOL_NAME		"aio_testvol"
 
 static int
-aio_zvol_setup(void)
+aio_zvol_setup(const char *unique)
 {
 	FILE *pidfile;
 	int fd;
 	pid_t pid;
+	char vdev_name[160];
 	char pool_name[80];
 	char cmd[160];
 	char zvol_name[160];
@@ -987,40 +988,44 @@ aio_zvol_setup(void)
 	ATF_REQUIRE_KERNEL_MODULE("aio");
 	ATF_REQUIRE_KERNEL_MODULE("zfs");
 
-	fd = open(ZVOL_VDEV_PATHNAME, O_RDWR | O_CREAT, 0600);
+	pid = getpid();
+	snprintf(vdev_name, sizeof(vdev_name), "%s", ZVOL_VDEV_PATHNAME);
+	snprintf(pool_name, sizeof(pool_name), "%s_%s.%d", POOL_NAME, unique,
+	    pid);
+	snprintf(zvol_name, sizeof(zvol_name), "%s/%s_%s", pool_name, ZVOL_NAME,
+	    unique);
+
+	fd = open(vdev_name, O_RDWR | O_CREAT, 0600);
 	ATF_REQUIRE_MSG(fd != -1, "open failed: %s", strerror(errno));
 	ATF_REQUIRE_EQ_MSG(0,
 	    ftruncate(fd, POOL_SIZE), "ftruncate failed: %s", strerror(errno));
 	close(fd);
 
-	pid = getpid();
 	pidfile = fopen("pidfile", "w");
 	ATF_REQUIRE_MSG(NULL != pidfile, "fopen: %s", strerror(errno));
 	fprintf(pidfile, "%d", pid);
 	fclose(pidfile);
 
-	snprintf(pool_name, sizeof(pool_name), POOL_NAME ".%d", pid);
-	snprintf(zvol_name, sizeof(zvol_name), "%s/" ZVOL_NAME, pool_name);
-	snprintf(cmd, sizeof(cmd), "zpool create %s $PWD/" ZVOL_VDEV_PATHNAME,
-	    pool_name);
+	snprintf(cmd, sizeof(cmd), "zpool create %s $PWD/%s", pool_name,
+	    vdev_name);
 	ATF_REQUIRE_EQ_MSG(0, system(cmd),
 	    "zpool create failed: %s", strerror(errno));
 	snprintf(cmd, sizeof(cmd),
-	    "zfs create -o volblocksize=8192 -o volmode=dev -V "
-		ZVOL_SIZE " %s", zvol_name);
+	    "zfs create -o volblocksize=8192 -o volmode=dev -V %s %s",
+	    ZVOL_SIZE, zvol_name);
 	ATF_REQUIRE_EQ_MSG(0, system(cmd),
 	    "zfs create failed: %s", strerror(errno));
 
 	snprintf(devname, sizeof(devname), "/dev/zvol/%s", zvol_name);
 	do {
 		fd = open(devname, O_RDWR);
-	} while (fd == -1 && errno == EINTR) ;
+	} while (fd == -1 && errno == EINTR);
 	ATF_REQUIRE_MSG(fd != -1, "open failed: %s", strerror(errno));
 	return (fd);
 }
 
 static void
-aio_zvol_cleanup(void)
+aio_zvol_cleanup(const char *unique)
 {
 	FILE *pidfile;
 	pid_t testpid;
@@ -1035,7 +1040,8 @@ aio_zvol_cleanup(void)
 	ATF_REQUIRE_EQ(1, fscanf(pidfile, "%d", &testpid));
 	fclose(pidfile);
 
-	snprintf(cmd, sizeof(cmd), "zpool destroy " POOL_NAME ".%d", testpid);
+	snprintf(cmd, sizeof(cmd), "zpool destroy %s_%s.%d", POOL_NAME, unique,
+	    testpid);
 	system(cmd);
 }
 
@@ -1264,6 +1270,79 @@ ATF_TC_BODY(aio_socket_blocking_short_write_vectored, tc)
 }
 
 /*
+ * Verify that AIO requests fail when applied to a listening socket.
+ */
+ATF_TC_WITHOUT_HEAD(aio_socket_listen_fail);
+ATF_TC_BODY(aio_socket_listen_fail, tc)
+{
+	struct aiocb iocb;
+	struct sockaddr_un sun;
+	char buf[16];
+	int s;
+
+	s = socket(AF_LOCAL, SOCK_STREAM, 0);
+	ATF_REQUIRE(s != -1);
+
+	memset(&sun, 0, sizeof(sun));
+	snprintf(sun.sun_path, sizeof(sun.sun_path), "%s", "listen.XXXXXX");
+	mktemp(sun.sun_path);
+	sun.sun_family = AF_LOCAL;
+	sun.sun_len = SUN_LEN(&sun);
+
+	ATF_REQUIRE(bind(s, (struct sockaddr *)&sun, SUN_LEN(&sun)) == 0);
+	ATF_REQUIRE(listen(s, 5) == 0);
+
+	memset(buf, 0, sizeof(buf));
+	memset(&iocb, 0, sizeof(iocb));
+	iocb.aio_fildes = s;
+	iocb.aio_buf = buf;
+	iocb.aio_nbytes = sizeof(buf);
+
+	ATF_REQUIRE_ERRNO(EINVAL, aio_read(&iocb) == -1);
+	ATF_REQUIRE_ERRNO(EINVAL, aio_write(&iocb) == -1);
+
+	ATF_REQUIRE(unlink(sun.sun_path) == 0);
+	close(s);
+}
+
+/*
+ * Verify that listen(2) fails if a socket has pending AIO requests.
+ */
+ATF_TC_WITHOUT_HEAD(aio_socket_listen_pending);
+ATF_TC_BODY(aio_socket_listen_pending, tc)
+{
+	struct aiocb iocb;
+	struct sockaddr_un sun;
+	char buf[16];
+	int s;
+
+	s = socket(AF_LOCAL, SOCK_STREAM, 0);
+	ATF_REQUIRE(s != -1);
+
+	memset(&sun, 0, sizeof(sun));
+	snprintf(sun.sun_path, sizeof(sun.sun_path), "%s", "listen.XXXXXX");
+	mktemp(sun.sun_path);
+	sun.sun_family = AF_LOCAL;
+	sun.sun_len = SUN_LEN(&sun);
+
+	ATF_REQUIRE(bind(s, (struct sockaddr *)&sun, SUN_LEN(&sun)) == 0);
+
+	memset(buf, 0, sizeof(buf));
+	memset(&iocb, 0, sizeof(iocb));
+	iocb.aio_fildes = s;
+	iocb.aio_buf = buf;
+	iocb.aio_nbytes = sizeof(buf);
+	ATF_REQUIRE(aio_read(&iocb) == 0);
+
+	ATF_REQUIRE_ERRNO(EINVAL, listen(s, 5) == -1);
+
+	ATF_REQUIRE(aio_cancel(s, &iocb) != -1);
+
+	ATF_REQUIRE(unlink(sun.sun_path) == 0);
+	close(s);
+}
+
+/*
  * This test verifies that cancelling a partially completed socket write
  * returns a short write rather than ECANCELED.
  */
@@ -1329,6 +1408,72 @@ ATF_TC_BODY(aio_socket_short_write_cancel, tc)
 
 	close(s[1]);
 	close(s[0]);
+}
+
+/*
+ * Test handling of aio_read() and aio_write() on shut-down sockets.
+ */
+ATF_TC_WITHOUT_HEAD(aio_socket_shutdown);
+ATF_TC_BODY(aio_socket_shutdown, tc)
+{
+	struct aiocb iocb;
+	sigset_t set;
+	char *buffer;
+	ssize_t len;
+	size_t bsz;
+	int error, s[2];
+
+	ATF_REQUIRE_KERNEL_MODULE("aio");
+
+	ATF_REQUIRE(socketpair(PF_UNIX, SOCK_STREAM, 0, s) != -1);
+
+	bsz = 1024;
+	buffer = malloc(bsz);
+	memset(buffer, 0, bsz);
+
+	/* Put some data in s[0]'s recv buffer. */
+	ATF_REQUIRE(send(s[1], buffer, bsz, 0) == (ssize_t)bsz);
+
+	/* No more reading from s[0]. */
+	ATF_REQUIRE(shutdown(s[0], SHUT_RD) != -1);
+
+	ATF_REQUIRE(buffer != NULL);
+
+	memset(&iocb, 0, sizeof(iocb));
+	iocb.aio_fildes = s[0];
+	iocb.aio_buf = buffer;
+	iocb.aio_nbytes = bsz;
+	ATF_REQUIRE(aio_read(&iocb) == 0);
+
+	/* Expect to see zero bytes, analogous to recv(2). */
+	while ((error = aio_error(&iocb)) == EINPROGRESS)
+		usleep(25000);
+	ATF_REQUIRE_MSG(error == 0, "aio_error() returned %d", error);
+	len = aio_return(&iocb);
+	ATF_REQUIRE_MSG(len == 0, "read job returned %zd bytes", len);
+
+	/* No more writing to s[1]. */
+	ATF_REQUIRE(shutdown(s[1], SHUT_WR) != -1);
+
+	/* Block SIGPIPE so that we can detect the error in-band. */
+	sigemptyset(&set);
+	sigaddset(&set, SIGPIPE);
+	ATF_REQUIRE(sigprocmask(SIG_BLOCK, &set, NULL) == 0);
+
+	memset(&iocb, 0, sizeof(iocb));
+	iocb.aio_fildes = s[1];
+	iocb.aio_buf = buffer;
+	iocb.aio_nbytes = bsz;
+	ATF_REQUIRE(aio_write(&iocb) == 0);
+
+	/* Expect an error, analogous to send(2). */
+	while ((error = aio_error(&iocb)) == EINPROGRESS)
+		usleep(25000);
+	ATF_REQUIRE_MSG(error == EPIPE, "aio_error() returned %d", error);
+
+	ATF_REQUIRE(close(s[0]) != -1);
+	ATF_REQUIRE(close(s[1]) != -1);
+	free(buffer);
 }
 
 /* 
@@ -1765,6 +1910,12 @@ ATF_TC_BODY(vectored_file_poll, tc)
 	aio_file_test(poll, NULL, true);
 }
 
+ATF_TC_WITHOUT_HEAD(vectored_thread);
+ATF_TC_BODY(vectored_thread, tc)
+{
+	aio_file_test(poll_signaled, setup_thread(), true);
+}
+
 ATF_TC_WITH_CLEANUP(vectored_md_poll);
 ATF_TC_HEAD(vectored_md_poll, tc)
 {
@@ -1814,7 +1965,7 @@ ATF_TC_BODY(vectored_unaligned, tc)
 	 * Use a zvol with volmode=dev, so it will allow .d_write with
 	 * unaligned uio.  geom devices use physio, which doesn't allow that.
 	 */
-	fd = aio_zvol_setup();
+	fd = aio_zvol_setup(atf_tc_get_ident(tc));
 	aio_context_init(&ac, fd, fd, FILE_LEN);
 
 	/* Break the buffer into 3 parts:
@@ -1863,16 +2014,17 @@ ATF_TC_BODY(vectored_unaligned, tc)
 }
 ATF_TC_CLEANUP(vectored_unaligned, tc)
 {
-	aio_zvol_cleanup();
+	aio_zvol_cleanup(atf_tc_get_ident(tc));
 }
 
 static void
-aio_zvol_test(completion comp, struct sigevent *sev, bool vectored)
+aio_zvol_test(completion comp, struct sigevent *sev, bool vectored,
+    const char *unique)
 {
 	struct aio_context ac;
 	int fd;
 
-	fd = aio_zvol_setup();
+	fd = aio_zvol_setup(unique);
 	aio_context_init(&ac, fd, fd, MD_LEN);
 	if (vectored) {
 		aio_writev_test(&ac, comp, sev);
@@ -1898,11 +2050,11 @@ ATF_TC_BODY(vectored_zvol_poll, tc)
 {
 	if (atf_tc_get_config_var_as_bool_wd(tc, "ci", false))
 		atf_tc_skip("https://bugs.freebsd.org/258766");
-	aio_zvol_test(poll, NULL, true);
+	aio_zvol_test(poll, NULL, true, atf_tc_get_ident(tc));
 }
 ATF_TC_CLEANUP(vectored_zvol_poll, tc)
 {
-	aio_zvol_cleanup();
+	aio_zvol_cleanup(atf_tc_get_ident(tc));
 }
 
 ATF_TP_ADD_TCS(tp)
@@ -1954,7 +2106,10 @@ ATF_TP_ADD_TCS(tp)
 	ATF_TP_ADD_TC(tp, aio_socket_two_reads);
 	ATF_TP_ADD_TC(tp, aio_socket_blocking_short_write);
 	ATF_TP_ADD_TC(tp, aio_socket_blocking_short_write_vectored);
+	ATF_TP_ADD_TC(tp, aio_socket_listen_fail);
+	ATF_TP_ADD_TC(tp, aio_socket_listen_pending);
 	ATF_TP_ADD_TC(tp, aio_socket_short_write_cancel);
+	ATF_TP_ADD_TC(tp, aio_socket_shutdown);
 	ATF_TP_ADD_TC(tp, aio_writev_dos_iov_len);
 	ATF_TP_ADD_TC(tp, aio_writev_dos_iovcnt);
 	ATF_TP_ADD_TC(tp, aio_writev_efault);
@@ -1967,6 +2122,7 @@ ATF_TP_ADD_TCS(tp)
 	ATF_TP_ADD_TC(tp, vectored_zvol_poll);
 	ATF_TP_ADD_TC(tp, vectored_unaligned);
 	ATF_TP_ADD_TC(tp, vectored_socket_poll);
+	ATF_TP_ADD_TC(tp, vectored_thread);
 
 	return (atf_no_error());
 }

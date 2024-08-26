@@ -30,7 +30,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 0ada44f256b042fc5f6c7286013890dc5a7e8cdc $
+ * $FreeBSD: 83806c420425c6f7cd57c9a90417bdad5c60fd9f $
  *
  */
 
@@ -496,4 +496,19 @@ ntp_random( void )
 		fptr = f; rptr = r;
 	}
 	return(i);
+}
+
+/*
+ * ntp_uurandom()
+ *
+ * Generate a Uniform-distributed Unity based random number. Replaces a
+ * few locations where the transformation was made in an ad-hoc style
+ * (and in one instance, wrong...)
+ *
+ * returns a number in [0.0 .. 1.0], both ends inclusive
+ */
+double
+ntp_uurandom( void )
+{
+	return (double)ntp_random() / 0x7FFFFFFFu;
 }

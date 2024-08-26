@@ -30,14 +30,15 @@
 .\" SUCH DAMAGE.
 .\"
 .\"     @(#)getenv.3	8.2 (Berkeley) 12/11/93
-.\" $FreeBSD: e662b86d214bfa70ec2e480c716724e79ffc597f $
 .\"
-.Dd June 20, 2007
+.Dd March 14, 2023
 .Dt GETENV 3
 .Os
 .Sh NAME
+.Nm clearenv ,
 .Nm getenv ,
 .Nm putenv ,
+.Nm secure_getenv ,
 .Nm setenv ,
 .Nm unsetenv
 .Nd environment variable functions
@@ -45,8 +46,12 @@
 .Lb libc
 .Sh SYNOPSIS
 .In stdlib.h
+.Ft int
+.Fn clearenv "void"
 .Ft char *
 .Fn getenv "const char *name"
+.Ft char *
+.Fn secure_getenv "const char *name"
 .Ft int
 .Fn setenv "const char *name" "const char *value" "int overwrite"
 .Ft int
@@ -59,6 +64,14 @@ host
 .Em environment list .
 .Pp
 The
+.Fn clearenv
+function clears all environment variables.
+New variables can be added using
+.Fn setenv
+and
+.Fn putenv .
+.Pp
+The
 .Fn getenv
 function obtains the current value of the environment variable,
 .Fa name .
@@ -66,6 +79,17 @@ The application should not modify the string pointed
 to by the
 .Fn getenv
 function.
+.Pp
+The
+.Fn secure_getenv
+returns
+.Va NULL
+when the environment cannot be trusted, otherwise it acts like
+.Fn getenv .
+The environment currently is not trusted when
+.Xr issetugid 3
+returns a non-zero value, but other conditions may be added
+in the future.
 .Pp
 The
 .Fn setenv
@@ -128,7 +152,14 @@ is not in the current environment,
 .Dv NULL
 is returned.
 .Pp
-.Rv -std setenv putenv unsetenv
+The
+.Fn secure_getenv
+function returns
+.Dv NULL
+if the process is in "secure execution," otherwise it will call
+.Fn getenv .
+.Pp
+.Rv -std clearenv setenv putenv unsetenv
 .Sh ERRORS
 .Bl -tag -width Er
 .It Bq Er EINVAL
@@ -187,6 +218,9 @@ and
 .Fn unsetenv
 functions conforms to
 .St -p1003.1-2001 .
+The
+.Fn secure_getenv
+function is expected to be glibc-compatible.
 .Sh HISTORY
 The functions
 .Fn setenv
@@ -211,6 +245,13 @@ This was changed to use
 as the memory location of the ``name=value'' pair to follow the
 .Tn POSIX
 specification.
+.Pp
+The
+.Fn clearenv
+and
+.Fn secure_getenv
+functions were added in
+.Fx 14 .
 .Sh BUGS
 Successive calls to
 .Fn setenv

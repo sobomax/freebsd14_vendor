@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2008 Attilio Rao <attilio@FreeBSD.org>
  * All rights reserved.
@@ -32,11 +32,10 @@
 #include "opt_hwpmc_hooks.h"
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: e90c55947676e5ba279f15b7abfef3487b2f327d $");
-
 #include <sys/param.h>
 #include <sys/kdb.h>
 #include <sys/ktr.h>
+#include <sys/limits.h>
 #include <sys/lock.h>
 #include <sys/lock_profile.h>
 #include <sys/lockmgr.h>
@@ -60,6 +59,12 @@ __FBSDID("$FreeBSD: e90c55947676e5ba279f15b7abfef3487b2f327d $");
 #include <sys/pmckern.h>
 PMC_SOFT_DECLARE( , , lock, failed);
 #endif
+
+/*
+ * Hack. There should be prio_t or similar so that this is not necessary.
+ */
+_Static_assert((PRILASTFLAG * 2) - 1 <= USHRT_MAX,
+    "prio flags wont fit in u_short pri in struct lock");
 
 CTASSERT(LK_UNLOCKED == (LK_UNLOCKED &
     ~(LK_ALL_WAITERS | LK_EXCLUSIVE_SPINNERS)));
@@ -280,8 +285,10 @@ sleeplk(struct lock *lk, u_int flags, struct lock_object *ilk,
 
 	if (flags & LK_INTERLOCK)
 		class->lc_unlock(ilk);
-	if (queue == SQ_EXCLUSIVE_QUEUE && (flags & LK_SLEEPFAIL) != 0)
-		lk->lk_exslpfail++;
+	if (queue == SQ_EXCLUSIVE_QUEUE && (flags & LK_SLEEPFAIL) != 0) {
+		if (lk->lk_exslpfail < USHRT_MAX)
+			lk->lk_exslpfail++;
+	}
 	GIANT_SAVE();
 	sleepq_add(&lk->lock_object, NULL, wmesg, SLEEPQ_LK | (catch ?
 	    SLEEPQ_INTERRUPTIBLE : 0), queue);
@@ -345,7 +352,7 @@ retry_sleepq:
 		realexslp = sleepq_sleepcnt(&lk->lock_object,
 		    SQ_EXCLUSIVE_QUEUE);
 		if ((x & LK_EXCLUSIVE_WAITERS) != 0 && realexslp != 0) {
-			if (lk->lk_exslpfail < realexslp) {
+			if (lk->lk_exslpfail != USHRT_MAX && lk->lk_exslpfail < realexslp) {
 				lk->lk_exslpfail = 0;
 				queue = SQ_EXCLUSIVE_QUEUE;
 				v |= (x & LK_SHARED_WAITERS);
@@ -362,7 +369,6 @@ retry_sleepq:
 				    SLEEPQ_LK, 0, SQ_EXCLUSIVE_QUEUE);
 				queue = SQ_SHARED_QUEUE;
 			}
-				
 		} else {
 			/*
 			 * Exclusive waiters sleeping with LK_SLEEPFAIL on
@@ -595,7 +601,7 @@ lockmgr_slock_hard(struct lock *lk, u_int flags, struct lock_object *ilk,
 #endif
 	struct lock_delay_arg lda;
 
-	if (KERNEL_PANICKED())
+	if (SCHEDULER_STOPPED())
 		goto out;
 
 	tid = (uintptr_t)curthread;
@@ -781,7 +787,7 @@ lockmgr_xlock_hard(struct lock *lk, u_int flags, struct lock_object *ilk,
 #endif
 	struct lock_delay_arg lda;
 
-	if (KERNEL_PANICKED())
+	if (SCHEDULER_STOPPED())
 		goto out;
 
 	tid = (uintptr_t)curthread;
@@ -977,7 +983,7 @@ lockmgr_upgrade(struct lock *lk, u_int flags, struct lock_object *ilk,
 	int error = 0;
 	int op;
 
-	if (KERNEL_PANICKED())
+	if (SCHEDULER_STOPPED())
 		goto out;
 
 	tid = (uintptr_t)curthread;
@@ -1038,7 +1044,7 @@ lockmgr_lock_flags(struct lock *lk, u_int flags, struct lock_object *ilk,
 	u_int op;
 	bool locked;
 
-	if (KERNEL_PANICKED())
+	if (SCHEDULER_STOPPED())
 		return (0);
 
 	op = flags & LK_TYPE_MASK;
@@ -1101,7 +1107,7 @@ lockmgr_sunlock_hard(struct lock *lk, uintptr_t x, u_int flags, struct lock_obje
 {
 	int wakeup_swapper = 0;
 
-	if (KERNEL_PANICKED())
+	if (SCHEDULER_STOPPED())
 		goto out;
 
 	wakeup_swapper = wakeupshlk(lk, file, line);
@@ -1120,7 +1126,7 @@ lockmgr_xunlock_hard(struct lock *lk, uintptr_t x, u_int flags, struct lock_obje
 	u_int realexslp;
 	int queue;
 
-	if (KERNEL_PANICKED())
+	if (SCHEDULER_STOPPED())
 		goto out;
 
 	tid = (uintptr_t)curthread;
@@ -1173,7 +1179,7 @@ lockmgr_xunlock_hard(struct lock *lk, uintptr_t x, u_int flags, struct lock_obje
 	MPASS((x & LK_EXCLUSIVE_SPINNERS) == 0);
 	realexslp = sleepq_sleepcnt(&lk->lock_object, SQ_EXCLUSIVE_QUEUE);
 	if ((x & LK_EXCLUSIVE_WAITERS) != 0 && realexslp != 0) {
-		if (lk->lk_exslpfail < realexslp) {
+		if (lk->lk_exslpfail != USHRT_MAX && lk->lk_exslpfail < realexslp) {
 			lk->lk_exslpfail = 0;
 			queue = SQ_EXCLUSIVE_QUEUE;
 			v |= (x & LK_SHARED_WAITERS);
@@ -1312,7 +1318,7 @@ __lockmgr_args(struct lock *lk, u_int flags, struct lock_object *ilk,
 	int contested = 0;
 #endif
 
-	if (KERNEL_PANICKED())
+	if (SCHEDULER_STOPPED())
 		return (0);
 
 	error = 0;
@@ -1721,7 +1727,7 @@ _lockmgr_assert(const struct lock *lk, int what, const char *file, int line)
 {
 	int slocked = 0;
 
-	if (KERNEL_PANICKED())
+	if (SCHEDULER_STOPPED())
 		return;
 	switch (what) {
 	case KA_SLOCKED:

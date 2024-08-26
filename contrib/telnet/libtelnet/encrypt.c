@@ -27,10 +27,6 @@
  * SUCH DAMAGE.
  */
 
-#include <sys/cdefs.h>
-
-__FBSDID("$FreeBSD: 398c7321510cb14d3533eb294e5c232110d147c3 $");
-
 #ifndef lint
 #if 0
 static const char sccsid[] = "@(#)encrypt.c	8.2 (Berkeley) 5/30/95";

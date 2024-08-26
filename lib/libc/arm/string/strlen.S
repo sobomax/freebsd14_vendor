@@ -25,8 +25,6 @@
  */
 
 #include <machine/asm.h>
-__FBSDID("$FreeBSD: 240fa7d9e85fe52a635bcd37953937daf332f939 $");
-
 .syntax	unified
 
 ENTRY(strlen)
@@ -47,36 +45,20 @@ ENTRY(strlen)
 .Loop:
 	ldr	r2, [r0]
 	add	r0, r0, #4
-#ifndef __ARMEB__
 	ands	r3, r2, #0x000000ff
-#else
-	ands	r3, r2, #0xff000000
-#endif
 	it	ne
 	addne	r1, r1, #1
 .Ldo_3:
 	itt	ne
-#ifndef __ARMEB__
 	andsne    r3, r2, #0x0000ff00
-#else
-  	andsne    r3, r2, #0x00ff0000
-#endif  
 	addne     r1, r1, #1
 .Ldo_2:
 	itt	ne
-#ifndef __ARMEB__
 	andsne    r3, r2, #0x00ff0000
-#else
-	andsne    r3, r2, #0x0000ff00
-#endif  
 	addne	r1, r1, #1
 .Ldo_1:
 	ittt	ne
-#ifndef __ARMEB__
 	andsne	r3, r2, #0xff000000
-#else
-	andsne	r3, r2, #0x000000ff
-#endif  
 	addne	r1, r1, #1
 	bne	.Loop				
 .Lexit:

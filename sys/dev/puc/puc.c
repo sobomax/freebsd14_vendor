@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2006 Marcel Moolenaar
  * All rights reserved.
@@ -27,8 +27,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: dd6e9b688705dd20650d08c32fca9fdaaa691659 $");
-
 #include <sys/param.h>
 #include <sys/systm.h>
 #include <sys/kernel.h>
@@ -36,6 +34,7 @@ __FBSDID("$FreeBSD: dd6e9b688705dd20650d08c32fca9fdaaa691659 $");
 #include <sys/conf.h>
 #include <sys/malloc.h>
 #include <sys/mutex.h>
+#include <sys/sbuf.h>
 #include <sys/sysctl.h>
 
 #include <machine/bus.h>
@@ -60,7 +59,7 @@ struct puc_port {
 	int		p_type;
 	int		p_rclk;
 
-	int		p_hasintr:1;
+	bool		p_hasintr:1;
 
 	serdev_intr_t	*p_ihsrc[PUC_ISRCCNT];
 	void		*p_iharg;
@@ -68,13 +67,12 @@ struct puc_port {
 	int		p_ipend;
 };
 
-devclass_t puc_devclass;
 const char puc_driver_name[] = "puc";
 
 static MALLOC_DEFINE(M_PUC, "PUC", "PUC driver");
 
 SYSCTL_NODE(_hw, OID_AUTO, puc, CTLFLAG_RD | CTLFLAG_MPSAFE, 0,
-    "puc(9) driver configuration");
+    "puc(4) driver configuration");
 
 struct puc_bar *
 puc_get_bar(struct puc_softc *sc, int rid)
@@ -748,23 +746,21 @@ puc_bus_print_child(device_t dev, device_t child)
 }
 
 int
-puc_bus_child_location_str(device_t dev, device_t child, char *buf,
-    size_t buflen)
+puc_bus_child_location(device_t dev, device_t child, struct sbuf *sb)
 {
 	struct puc_port *port;
 
 	port = device_get_ivars(child);
-	snprintf(buf, buflen, "port=%d", port->p_nr);
+	sbuf_printf(sb, "port=%d", port->p_nr);
 	return (0);
 }
 
 int
-puc_bus_child_pnpinfo_str(device_t dev, device_t child, char *buf,
-    size_t buflen)
+puc_bus_child_pnpinfo(device_t dev, device_t child, struct sbuf *sb)
 {
 	struct puc_port *port;
 
 	port = device_get_ivars(child);
-	snprintf(buf, buflen, "type=%d", port->p_type);
+	sbuf_printf(sb, "type=%d", port->p_type);
 	return (0);
 }

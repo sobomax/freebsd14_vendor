@@ -1,4 +1,3 @@
-/* $FreeBSD: f788c05bb5eb84a70705891dc2d6c34fac5bad65 $ */
 
 /* Read standard system paths first. */
 #include <paths.h>

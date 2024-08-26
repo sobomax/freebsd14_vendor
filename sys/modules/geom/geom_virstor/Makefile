@@ -1,4 +1,3 @@
-# $FreeBSD: ea2b7debe82c5cc8eced80414c92f49f8d708e30 $
 
 .PATH: ${SRCTOP}/sys/geom/virstor
 

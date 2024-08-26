@@ -23,9 +23,6 @@
  * SUCH DAMAGE.
  */
 
-#include <sys/cdefs.h>
-__FBSDID("$FreeBSD: ee25743f10b01dcfefdf214e6699cf5931ee4b70 $");
-
 #include <atf-c.h>
 #define _SEARCH_PRIVATE
 #include <search.h>

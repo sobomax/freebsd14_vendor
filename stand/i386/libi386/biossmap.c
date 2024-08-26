@@ -24,9 +24,6 @@
  * SUCH DAMAGE.
  */
 
-#include <sys/cdefs.h>
-__FBSDID("$FreeBSD: e95ea64517d05672f8b76f3c2eb94f9d79f4e6be $");
-
 /*
  * Obtain memory configuration information from the BIOS
  */

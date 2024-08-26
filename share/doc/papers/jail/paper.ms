@@ -1,6 +1,4 @@
 .\"
-.\" $FreeBSD: 60be9f2748bd6a92450a9434a00896d5a7fcbf57 $
-.\"
 .if n .ftr C R
 .ig TL
 .ds CH "

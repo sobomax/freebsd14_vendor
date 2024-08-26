@@ -1,4 +1,3 @@
-# $FreeBSD: e8d2d7b46f3f009bba08758dd5d11f7c9edabd11 $
 
 PACKAGE=runtime
 PROG=		mdmfs

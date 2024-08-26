@@ -1,4 +1,3 @@
-/* $FreeBSD: 0faf60451c71e30353ae6e6010ad5891937251d1 $ */
 /* Do not modify. This file is auto-generated from ghashp8-ppc.pl. */
 .machine	"any"
 

@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2001 Michael Smith
  * Copyright (c) 2004 Paul Saab
@@ -25,8 +25,6 @@
  * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
- *
- *	$FreeBSD: d87f32610b20c871995ec2129b9aa335052f1190 $
  */
 
 /*
@@ -279,7 +277,7 @@ TUNABLE_INT("hw.ciss.force_interrupt", &ciss_force_interrupt);
  * stick with matching against subvendor/subdevice, and thus have to
  * be updated for every new CISS adapter that appears.
  */
-#define CISS_BOARD_UNKNWON	0
+#define CISS_BOARD_UNKNOWN	0
 #define CISS_BOARD_SA5		1
 #define CISS_BOARD_SA5B		2
 #define CISS_BOARD_NOMSI	(1<<4)
@@ -367,8 +365,7 @@ static struct
     { 0, 0, 0, NULL }
 };
 
-static devclass_t	ciss_devclass;
-DRIVER_MODULE(ciss, pci, ciss_pci_driver, ciss_devclass, 0, 0);
+DRIVER_MODULE(ciss, pci, ciss_pci_driver, 0, 0);
 MODULE_PNP_INFO("U16:vendor;U16:device;", pci, ciss, ciss_vendor_data,
     nitems(ciss_vendor_data) - 1);
 MODULE_DEPEND(ciss, cam, 1, 1, 1);
@@ -1489,12 +1486,11 @@ ciss_init_physical(struct ciss_softc *sc)
     struct ciss_lun_report	*cll;
     int				error = 0, i;
     int				nphys;
-    int				bus, target;
+    int				bus;
 
     debug_called(1);
 
     bus = 0;
-    target = 0;
 
     cll = ciss_report_luns(sc, CISS_OPCODE_REPORT_PHYSICAL_LUNS,
 			   sc->ciss_cfg->max_physical_supported);
@@ -2077,11 +2073,9 @@ ciss_free(struct ciss_softc *sc)
 static int
 ciss_start(struct ciss_request *cr)
 {
-    struct ciss_command	*cc;	/* XXX debugging only */
     int			error;
 
-    cc = cr->cr_cc;
-    debug(2, "post command %d tag %d ", cr->cr_tag, cc->header.host_tag);
+    debug(2, "post command %d tag %d ", cr->cr_tag, cr->cr_cc->header.host_tag);
 
     /*
      * Map the request's data.
@@ -2535,11 +2529,8 @@ ciss_preen_command(struct ciss_request *cr)
 static void
 ciss_release_request(struct ciss_request *cr)
 {
-    struct ciss_softc	*sc;
 
     debug_called(2);
-
-    sc = cr->cr_sc;
 
     /* release the request to the free queue */
     ciss_requeue_free(cr);
@@ -3065,14 +3056,11 @@ ciss_cam_action(struct cam_sim *sim, union ccb *ccb)
     case XPT_GET_TRAN_SETTINGS:
     {
 	struct ccb_trans_settings	*cts = &ccb->cts;
-	int				bus, target;
 	struct ccb_trans_settings_spi *spi = &cts->xport_specific.spi;
 	struct ccb_trans_settings_scsi *scsi = &cts->proto_specific.scsi;
 
-	bus = cam_sim_bus(sim);
-	target = cts->ccb_h.target_id;
-
-	debug(1, "XPT_GET_TRAN_SETTINGS %d:%d", bus, target);
+	debug(1, "XPT_GET_TRAN_SETTINGS %d:%d", cam_sim_bus(sim),
+	    ctl->ccb_h.target_id);
 	/* disconnect always OK */
 	cts->protocol = PROTO_SCSI;
 	cts->protocol_version = SCSI_REV_2;
@@ -3667,14 +3655,12 @@ ciss_notify_event(struct ciss_softc *sc)
 static void
 ciss_notify_complete(struct ciss_request *cr)
 {
-    struct ciss_command	*cc;
     struct ciss_notify	*cn;
     struct ciss_softc	*sc;
     int			scsi_status;
     int			command_status;
     debug_called(1);
 
-    cc = cr->cr_cc;
     cn = (struct ciss_notify *)cr->cr_data;
     sc = cr->cr_sc;
 

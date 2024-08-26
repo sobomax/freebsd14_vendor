@@ -3,9 +3,6 @@
  * Public domain.
  */
 
-#include <sys/cdefs.h>
-__FBSDID("$FreeBSD: c0ce81f6dfa9b31712e1c19c06108de062deccd0 $");
-
 #include <float.h>
 
 static const int map[] = {

@@ -1,4 +1,3 @@
-/*	$FreeBSD: fa0cdbab0ab31dc8d8a7947900618af31953914d $	*/
 
 /*
  * Copyright (C) 2012 by Darren Reed.
@@ -39,7 +38,6 @@ static const char rcsid[] = "@(#)$Id$";
 #include <sys/sockopt.h>
 #include <sys/socket.h>
 #include <sys/selinfo.h>
-#include <netinet/tcp_var.h>
 #include <net/if.h>
 #include <net/if_var.h>
 #include <net/netisr.h>
@@ -53,6 +51,7 @@ static const char rcsid[] = "@(#)$Id$";
 #include <netinet/ip.h>
 #include <netinet/ip_var.h>
 #include <netinet/tcp.h>
+#include <netinet/tcp_var.h>
 #include <net/vnet.h>
 #include <netinet/udp.h>
 #include <netinet/tcpip.h>
@@ -924,8 +923,7 @@ bad:
 
 
 int
-ipf_verifysrc(fin)
-	fr_info_t *fin;
+ipf_verifysrc(fr_info_t *fin)
 {
 	struct nhop_object *nh;
 
@@ -938,7 +936,7 @@ ipf_verifysrc(fin)
 
 
 /*
-* return the first IP Address associated with an interface
+ * return the first IP Address associated with an interface
  */
 int
 ipf_ifpaddr(ipf_main_softc_t *softc, int v, int atype, void *ifptr,
@@ -1010,8 +1008,7 @@ ipf_ifpaddr(ipf_main_softc_t *softc, int v, int atype, void *ifptr,
 
 
 u_32_t
-ipf_newisn(fin)
-	fr_info_t *fin;
+ipf_newisn(fr_info_t *fin)
 {
 	u_32_t newiss;
 	newiss = arc4random();
@@ -1313,31 +1310,31 @@ int ipf_pfil_unhook(void) {
 }
 
 int ipf_pfil_hook(void) {
-	struct pfil_hook_args pha;
-	struct pfil_link_args pla;
 	int error, error6;
 
-	pha.pa_version = PFIL_VERSION;
-	pha.pa_flags = PFIL_IN | PFIL_OUT;
-	pha.pa_modname = "ipfilter";
-	pha.pa_rulname = "default-ip4";
-	pha.pa_func = ipf_check_wrapper;
-	pha.pa_ruleset = NULL;
-	pha.pa_type = PFIL_TYPE_IP4;
+	struct pfil_hook_args pha = {
+		.pa_version = PFIL_VERSION,
+		.pa_flags = PFIL_IN | PFIL_OUT,
+		.pa_modname = "ipfilter",
+		.pa_rulname = "default-ip4",
+		.pa_mbuf_chk = ipf_check_wrapper,
+		.pa_type = PFIL_TYPE_IP4,
+	};
 	V_ipf_inet_hook = pfil_add_hook(&pha);
 
 #ifdef USE_INET6
 	pha.pa_rulname = "default-ip6";
-	pha.pa_func = ipf_check_wrapper6;
+	pha.pa_mbuf_chk = ipf_check_wrapper6;
 	pha.pa_type = PFIL_TYPE_IP6;
 	V_ipf_inet6_hook = pfil_add_hook(&pha);
 #endif
 
-	pla.pa_version = PFIL_VERSION;
-	pla.pa_flags = PFIL_IN | PFIL_OUT |
-	    PFIL_HEADPTR | PFIL_HOOKPTR;
-	pla.pa_head = V_inet_pfil_head;
-	pla.pa_hook = V_ipf_inet_hook;
+	struct pfil_link_args pla = {
+		.pa_version = PFIL_VERSION,
+		.pa_flags = PFIL_IN | PFIL_OUT | PFIL_HEADPTR | PFIL_HOOKPTR,
+		.pa_head = V_inet_pfil_head,
+		.pa_hook = V_ipf_inet_hook,
+	};
 	error = pfil_link(&pla);
 
 	error6 = 0;

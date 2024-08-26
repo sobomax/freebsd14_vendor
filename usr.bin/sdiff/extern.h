@@ -1,5 +1,4 @@
 /*	$OpenBSD: extern.h,v 1.5 2009/06/07 13:29:50 ray Exp $ */
-/*	$FreeBSD: 2f240912ddc1219b6c31298fb33fa6bee9f4761b $	*/
 
 /*
  * Written by Raymond Lai <ray@cyth.net>.

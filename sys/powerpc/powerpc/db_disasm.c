@@ -2,8 +2,6 @@
 /*	$OpenBSD: db_disasm.c,v 1.2 1996/12/28 06:21:48 rahnds Exp $	*/
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: d26ba25c0af0d0ebab0e876499668f7d39619e32 $");
-
 #include <sys/param.h>
 #include <sys/proc.h>
 #include <sys/systm.h>

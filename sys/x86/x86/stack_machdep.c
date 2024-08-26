@@ -26,8 +26,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 0e4bf1bf29306fe568680ab8fdc1f47f9ea13e44 $");
-
 #include "opt_stack.h"
 
 #include <sys/param.h>
@@ -45,7 +43,7 @@ __FBSDID("$FreeBSD: 0e4bf1bf29306fe568680ab8fdc1f47f9ea13e44 $");
 #include <vm/vm_param.h>
 #include <vm/pmap.h>
 
-#include <x86/stack.h>
+#include <machine/stack.h>
 
 #ifdef __i386__
 #define	PCB_FP(pcb)	((pcb)->pcb_ebp)
@@ -70,7 +68,7 @@ static struct mtx intr_lock;
 MTX_SYSINIT(intr_lock, &intr_lock, "stack intr", MTX_DEF);
 #endif
 
-static void __nosanitizeaddress
+static void __nosanitizeaddress __nosanitizememory
 stack_capture(struct thread *td, struct stack *st, register_t fp)
 {
 	x86_frame_t frame;

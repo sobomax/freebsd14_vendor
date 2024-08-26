@@ -1,8 +1,6 @@
 /* This file is in the public domain. */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 374ab3c68cbbc1ad781610af19b4084eb763505e $");
-
 #include <opencrypto/xform_auth.h>
 
 #include <sodium/crypto_onetimeauth_poly1305.h>
@@ -59,7 +57,7 @@ xform_Poly1305_Final(uint8_t *digest, void *ctx)
 		panic("%s: Invariant violated: %d", __func__, rc);
 }
 
-struct auth_hash auth_hash_poly1305 = {
+const struct auth_hash auth_hash_poly1305 = {
 	.type = CRYPTO_POLY1305,
 	.name = "Poly-1305",
 	.keysize = POLY1305_KEY_LEN,

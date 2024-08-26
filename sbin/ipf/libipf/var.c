@@ -1,4 +1,3 @@
-/*	$FreeBSD: d3a03b6e46d716f39f6bb2f0f76198b097977a98 $	*/
 
 /*
  * Copyright (C) 2012 by Darren Reed.
@@ -24,8 +23,7 @@ static variable_t *find_var(char *);
 static char *expand_string(char *, int);
 
 
-static variable_t *find_var(name)
-	char *name;
+static variable_t *find_var(char *name)
 {
 	variable_t *v;
 

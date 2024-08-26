@@ -27,8 +27,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 1dfe0e015bdd56129b8236fece16c3cffef82337 $");
-
 #include "bxe.h"
 #include "bxe_stats.h"
 

@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2007-2008 Sam Leffler, Errno Consulting
  * All rights reserved.
@@ -27,7 +27,6 @@
 
 #include <sys/cdefs.h>
 #ifdef __FreeBSD__
-__FBSDID("$FreeBSD: b91350e39aee2ce395263f19622fb48c3e84e904 $");
 #endif
 
 /*
@@ -54,6 +53,7 @@ __FBSDID("$FreeBSD: b91350e39aee2ce395263f19622fb48c3e84e904 $");
 #include <net/if_llc.h>
 #include <net/if_dl.h>
 #include <net/if_var.h>
+#include <net/if_private.h>
 #include <net/ethernet.h>
 
 #include <net/bpf.h>
@@ -767,7 +767,7 @@ sta_input(struct ieee80211_node *ni, struct mbuf *m,
 		 * crypto cipher modules used to do delayed update
 		 * of replay sequence numbers.
 		 */
-		if (is_hw_decrypted || wh->i_fc[1] & IEEE80211_FC1_PROTECTED) {
+		if (is_hw_decrypted || IEEE80211_IS_PROTECTED(wh)) {
 			if ((vap->iv_flags & IEEE80211_F_PRIVACY) == 0) {
 				/*
 				 * Discard encrypted frames when privacy is off.
@@ -939,7 +939,7 @@ sta_input(struct ieee80211_node *ni, struct mbuf *m,
 		 * Again, having encrypted flag set check would be good, but
 		 * then we have to also handle crypto_decap() like above.
 		 */
-		if (wh->i_fc[1] & IEEE80211_FC1_PROTECTED) {
+		if (IEEE80211_IS_PROTECTED(wh)) {
 			if (subtype != IEEE80211_FC0_SUBTYPE_AUTH) {
 				/*
 				 * Only shared key auth frames with a challenge
@@ -1524,7 +1524,7 @@ sta_recv_mgmt(struct ieee80211_node *ni, struct mbuf *m0, int subtype,
 				do_ht = 1;
 			}
 			if (scan.vhtcap != NULL && scan.vhtopmode != NULL &&
-			    (vap->iv_flags_vht & IEEE80211_FVHT_VHT)) {
+			    (vap->iv_vht_flags & IEEE80211_FVHT_VHT)) {
 				/* XXX state changes? */
 				ieee80211_vht_updateparams(ni,
 				    scan.vhtcap, scan.vhtopmode);
@@ -1870,7 +1870,7 @@ sta_recv_mgmt(struct ieee80211_node *ni, struct mbuf *m0, int subtype,
 			ieee80211_ht_updateparams(ni, htcap, htinfo);
 
 			if ((vhtcap != NULL) && (vhtopmode != NULL) &
-			    (vap->iv_flags_vht & IEEE80211_FVHT_VHT)) {
+			    (vap->iv_vht_flags & IEEE80211_FVHT_VHT)) {
 				/*
 				 * Log if we get a VHT assoc/reassoc response.
 				 * We aren't ready for 2GHz VHT support.

@@ -1,4 +1,3 @@
-# $FreeBSD: d086f652fea59ebb3e5506d3f856bd48f3e487fe $
 
 alias begin={ end=}
 begin

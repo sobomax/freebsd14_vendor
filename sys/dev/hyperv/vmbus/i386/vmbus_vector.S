@@ -22,8 +22,6 @@
  * THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- *
- * $FreeBSD: 4bb51be2623d5374f51c2efb92b5a494411a9d37 $
  */
 
 #include "assym.inc"
@@ -36,7 +34,7 @@
  * This is the Hyper-V vmbus channel direct callback interrupt.
  * Only used when it is running on Hyper-V.
  *
- * Note that this file is not compiled directly, it is included into
+ * Note that this file is not assembled directly, it is included into
  * i386/exception.s.
  */
 	.text
@@ -47,10 +45,8 @@ IDTVEC(vmbus_isr)
 	SET_KERNEL_SREGS
 	cld
 	KENTER
-	FAKE_MCOUNT(TF_EIP(%esp))
 	pushl	%esp
 	mov	$vmbus_handle_intr, %eax
 	call	*%eax
 	add	$4, %esp
-	MEXITCOUNT
 	jmp	doreti

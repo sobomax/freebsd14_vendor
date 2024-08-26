@@ -27,8 +27,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: ac0dcae1fd2955be9cb731463fa239fddb1cfaf1 $");
-
 #include "bnxt.h"
 
 int bnxt_init_sysctl_ctx(struct bnxt_softc *softc);

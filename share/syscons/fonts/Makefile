@@ -1,4 +1,3 @@
-# $FreeBSD: b60631e3805bb877e3a80070f13c049a1b660ca4 $
 
 PACKAGE=	syscons-data
 

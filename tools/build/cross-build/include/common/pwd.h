@@ -32,8 +32,6 @@
  * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
- *
- * $FreeBSD: 03814b62c254ada92323b74131267b96937febec $
  */
 #pragma once
 
@@ -48,8 +46,6 @@
 int pwcache_userdb(int (*a_setpassent)(int), void (*a_endpwent)(void),
     struct passwd *(*a_getpwnam)(const char *),
     struct passwd *(*a_getpwuid)(uid_t));
-
-int uid_from_user(const char *name, uid_t *uid);
 
 int uid_from_user(const char *name, uid_t *uid);
 const char *user_from_uid(uid_t uid, int noname);

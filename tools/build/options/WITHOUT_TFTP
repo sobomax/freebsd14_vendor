@@ -1,4 +1,3 @@
-.\" $FreeBSD: a64128ec4b2e6920efb4637817ad912efc5cead8 $
 Do not build or install
 .Xr tftp 1
 and

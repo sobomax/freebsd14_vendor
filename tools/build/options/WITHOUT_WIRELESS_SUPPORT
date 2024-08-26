@@ -1,3 +1,2 @@
-.\" $FreeBSD: 1d07092e10d75984787097565016de7f29838af4 $
 Build libraries, programs, and kernel modules without
 802.11 wireless support.

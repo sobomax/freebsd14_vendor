@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 1997 Michael Smith
  * Copyright (c) 1998 Jonathan Lemon
@@ -28,8 +28,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: d502431b1e287a26f3a2e612b2e9eb2444284b31 $");
-
 /*
  * Subset of the i386 bios support code.  We cannot make bios16 nor bios32
  * calls, so we can leave that out.  However, searching for bios rom

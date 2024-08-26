@@ -1,4 +1,3 @@
-# $FreeBSD: ef6644c3deb7098132b829328d54cc11937ae2cd $
 
 .PATH: ${SRCTOP}/sys/compat/linux ${SRCTOP}/sys/${MACHINE}/linux
 .if ${MACHINE_CPUARCH} == "amd64"
@@ -29,14 +28,14 @@ SRCS=	linux_dummy_machdep.c \
 	linux_time.c \
 	linux_vdso.c \
 	linux_timer.c \
-	opt_compat.h \
+	linux_xattr.c \
+	opt_ktrace.h \
 	opt_inet6.h \
 	opt_posix.h \
-	opt_usb.h \
 	bus_if.h \
 	device_if.h \
 	vnode_if.h \
-	linux_support.s
+	linux_support.S
 .if ${MACHINE_CPUARCH} == "amd64"
 SRCS+=	linux_dummy_x86.c
 .endif
@@ -97,9 +96,9 @@ linux_vdso.so: linux_vdso.so.o
 	    linux_vdso.so.o ${.TARGET}
 	${STRIPBIN} -N _binary_linux_vdso_so_o_size ${.TARGET}
 
-linux_support.o: assym.inc linux_assym.h
+linux_support.o: linux_support.S assym.inc linux_assym.h
 	${CC} -c -x assembler-with-cpp -DLOCORE ${CFLAGS} \
-	    ${.IMPSRC} -o ${.TARGET}
+	    ${.ALLSRC:M*.S:u} -o ${.TARGET}
 
 linux_genassym.o: offset.inc
 	${CC} -c ${CFLAGS:N-flto:N-fno-common} -fcommon ${.IMPSRC}

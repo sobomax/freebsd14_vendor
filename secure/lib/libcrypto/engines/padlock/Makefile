@@ -1,4 +1,3 @@
-# $FreeBSD: 0dbe5bd2a3904353430a3c96d735794f9a90ab5a $
 
 SHLIB_NAME?=	padlock.so
 
@@ -9,6 +8,8 @@ SRCS+=	e_padlock-x86_64.S
 SRCS+=	e_padlock-x86.S
 .endif
 
-.include <bsd.lib.mk>
+LDFLAGS.bfd+=	-Wl,-znoexecstack
 
 .PATH:	${SRCTOP}/sys/crypto/openssl/${MACHINE_CPUARCH}
+
+.include <bsd.lib.mk>

@@ -1,4 +1,3 @@
-# $FreeBSD: 5036ef04c677f1a7b6182804c0ac7db06060fc91 $
 
 .PATH: ${SRCTOP}/sys/fs/cd9660
 

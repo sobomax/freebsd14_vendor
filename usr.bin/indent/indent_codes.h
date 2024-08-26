@@ -35,7 +35,6 @@
  * SUCH DAMAGE.
  *
  *	@(#)indent_codes.h	8.1 (Berkeley) 6/6/93
- * $FreeBSD: 0d043279c4e135b9d298e04b161e790c7e703958 $
  */
 
 #define newline		1

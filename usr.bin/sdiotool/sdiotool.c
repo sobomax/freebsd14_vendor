@@ -36,13 +36,9 @@
  * WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION
  * OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN
  * CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
- *
- * $FreeBSD: 4d7b6ca910941d4d8f69ff8f76ca1db1fa46238b $
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 4d7b6ca910941d4d8f69ff8f76ca1db1fa46238b $");
-
 #include <sys/ioctl.h>
 #include <sys/stdint.h>
 #include <sys/types.h>

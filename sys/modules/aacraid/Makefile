@@ -1,4 +1,3 @@
-# $FreeBSD: 8bbe1d7db708c9d88193f60e7bfbd57a3f075a77 $
 
 .PATH: ${SRCTOP}/sys/dev/aacraid
 

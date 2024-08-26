@@ -46,8 +46,6 @@ static const char sccsid[] = "from: @(#)quota.c	8.1 (Berkeley) 6/6/93";
  * Disk quota reporting program.
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 71e63208884f0223401a1b25390f0f9d78daa071 $");
-
 #include <sys/param.h>
 #include <sys/types.h>
 #include <sys/file.h>
@@ -86,7 +84,7 @@ struct quotause {
 
 static char *timeprt(int64_t seconds);
 static struct quotause *getprivs(long id, int quotatype);
-static void usage(void);
+static void usage(void) __dead2;
 static int showuid(u_long uid);
 static int showgid(u_long gid);
 static int showusrname(char *name);
@@ -215,7 +213,7 @@ showuid(u_long uid)
 }
 
 /*
- * Print out quotas for a specifed user name.
+ * Print out quotas for a specified user name.
  */
 static int
 showusrname(char *name)
@@ -246,7 +244,7 @@ showgid(u_long gid)
 }
 
 /*
- * Print out quotas for a specifed group name.
+ * Print out quotas for a specified group name.
  */
 static int
 showgrpname(char *name)

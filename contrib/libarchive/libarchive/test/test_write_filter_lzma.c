@@ -25,7 +25,6 @@
  */
 
 #include "test.h"
-__FBSDID("$FreeBSD: d055333a44c3abb06c06f63d0b6783225132729c $");
 
 /*
  * A basic exercise of lzma reading and writing.

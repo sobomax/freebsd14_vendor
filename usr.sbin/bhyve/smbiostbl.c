@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2014 Tycho Nightingale <tycho.nightingale@pluribusnetworks.com>
  * All rights reserved.
@@ -27,8 +27,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: cafb0343519f89abd59590d3d9a86f258f19f62c $");
-
 #include <sys/param.h>
 
 #include <assert.h>
@@ -52,9 +50,9 @@ __FBSDID("$FreeBSD: cafb0343519f89abd59590d3d9a86f258f19f62c $");
 
 #define SMBIOS_BASE		0xF1000
 
-#define	FIRMWARE_VERSION	"13.0"
+#define	FIRMWARE_VERSION	"14.0"
 /* The SMBIOS specification defines the date format to be mm/dd/yyyy */
-#define	FIRMWARE_RELEASE_DATE	"11/10/2020"
+#define	FIRMWARE_RELEASE_DATE	"10/17/2021"
 
 /* BHYVE_ACPI_BASE - SMBIOS_BASE) */
 #define	SMBIOS_MAX_LENGTH	(0xF2400 - 0xF1000)

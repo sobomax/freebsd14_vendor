@@ -24,7 +24,6 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 #include "test.h"
-__FBSDID("$FreeBSD: 7c15a823060638f16923d60b69a0e3a067f8f0ef $");
 
 DEFINE_TEST(test_option_b64encode)
 {

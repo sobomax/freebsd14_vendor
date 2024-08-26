@@ -1,4 +1,3 @@
-# $FreeBSD: 558d9007353f29200895449bc9bde3f84ae20df5 $
 
 { stderr=$(${SH} /var/empty/nosuchscript 2>&1 >&3); } 3>&1
 r=$?

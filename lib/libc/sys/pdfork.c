@@ -1,6 +1,5 @@
 /*
  * Copyright (c) 2021 The FreeBSD Foundation.
- * All rights reserved.
  *
  * Portions of this software were developed by Konstantin Belousov
  * under sponsorship from the FreeBSD Foundation.
@@ -30,11 +29,8 @@
  * EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 003262d1237d5b155202e6f09be639a01812ea4b $");
-
 #include <sys/types.h>
-#include <unistd.h>
+#include <sys/procdesc.h>
 #include "libc_private.h"
 
 #pragma weak pdfork

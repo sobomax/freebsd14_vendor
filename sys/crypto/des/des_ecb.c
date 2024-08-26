@@ -49,8 +49,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 5034b6c5ea9101ee9fb3470e013190f2a9e1427f $");
-
 #include <sys/param.h>
 #include <sys/systm.h>
 #include <crypto/des/des_locl.h>

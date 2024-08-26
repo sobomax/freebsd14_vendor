@@ -29,7 +29,6 @@
  * SUCH DAMAGE.
  *
  *	@(#)radix.c	8.5 (Berkeley) 5/19/95
- * $FreeBSD: 14e81ebbd414ae8123a3f7d23aa2c78309f3c5e5 $
  */
 
 /*

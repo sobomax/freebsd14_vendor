@@ -1,7 +1,6 @@
 #
 # @(#)Makefile	2.1 88/08/11 4.0 RPCSRC
 #
-# $FreeBSD: e630e5e67615d94463a5e5390b407b361cefdb54 $
 #
 PACKAGE=examples
 FILESDIR=${SHAREDIR}/examples/sunrpc/msg

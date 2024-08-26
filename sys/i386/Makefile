@@ -1,4 +1,3 @@
-# $FreeBSD: fe6ac2bf41d9770983ce67ab35aa6a70f570ee4b $
 #	@(#)Makefile	8.1 (Berkeley) 6/11/93
 
 # Makefile for i386 links, tags file

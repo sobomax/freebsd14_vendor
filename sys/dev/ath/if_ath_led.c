@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2002-2009 Sam Leffler, Errno Consulting
  * All rights reserved.
@@ -30,8 +30,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 8b4ac821f2be13e1570186bcfb2927f4fdbb5e7b $");
-
 /*
  * Driver for the Atheros Wireless LAN controller.
  *
@@ -78,6 +76,7 @@ __FBSDID("$FreeBSD: 8b4ac821f2be13e1570186bcfb2927f4fdbb5e7b $");
 #include <net/if_arp.h>
 #include <net/ethernet.h>
 #include <net/if_llc.h>
+#include <net/if_var.h>
 
 #include <net80211/ieee80211_var.h>
 #include <net80211/ieee80211_regdomain.h>

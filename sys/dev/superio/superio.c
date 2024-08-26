@@ -23,13 +23,9 @@
  * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
- *
- * $FreeBSD: b102159c2810279a874d5cacf76b53d8f0a32fa2 $
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: b102159c2810279a874d5cacf76b53d8f0a32fa2 $");
-
 #include <sys/param.h>
 #include <sys/systm.h>
 #include <sys/bus.h>
@@ -41,6 +37,7 @@ __FBSDID("$FreeBSD: b102159c2810279a874d5cacf76b53d8f0a32fa2 $");
 #include <sys/module.h>
 #include <sys/proc.h>
 #include <sys/rman.h>
+#include <sys/sbuf.h>
 #include <sys/time.h>
 
 #include <machine/bus.h>
@@ -92,6 +89,7 @@ struct siosc {
 	superio_vendor_t		vendor;
 	uint16_t			devid;
 	uint8_t				revid;
+	int				extid;
 	uint8_t				current_ldn;
 	uint8_t				ldn_reg;
 	uint8_t				enable_reg;
@@ -269,6 +267,12 @@ const struct sio_device ite_devices[] = {
 	{ .type = SUPERIO_DEV_NONE },
 };
 
+const struct sio_device w83627_devices[] = {
+	{ .ldn = 8, .type = SUPERIO_DEV_WDT },
+	{ .ldn = 9, .type = SUPERIO_DEV_GPIO },
+	{ .type = SUPERIO_DEV_NONE },
+};
+
 const struct sio_device nvt_devices[] = {
 	{ .ldn = 8, .type = SUPERIO_DEV_WDT },
 	{ .type = SUPERIO_DEV_NONE },
@@ -281,7 +285,26 @@ const struct sio_device nct5104_devices[] = {
 	{ .type = SUPERIO_DEV_NONE },
 };
 
+const struct sio_device nct5585_devices[] = {
+	{ .ldn = 9, .type = SUPERIO_DEV_GPIO },
+	{ .type = SUPERIO_DEV_NONE },
+};
+
+const struct sio_device nct611x_devices[] = {
+	{ .ldn = 0x7, .type = SUPERIO_DEV_GPIO },
+	{ .ldn = 0x8, .type = SUPERIO_DEV_WDT },
+	{ .type = SUPERIO_DEV_NONE },
+};
+
+const struct sio_device nct67xx_devices[] = {
+	{ .ldn = 0x8, .type = SUPERIO_DEV_WDT },
+	{ .ldn = 0x9, .type = SUPERIO_DEV_GPIO },
+	{ .ldn = 0xb, .type = SUPERIO_DEV_HWM },
+	{ .type = SUPERIO_DEV_NONE },
+};
+
 const struct sio_device fintek_devices[] = {
+	{ .ldn = 6, .type = SUPERIO_DEV_GPIO },
 	{ .ldn = 7, .type = SUPERIO_DEV_WDT },
 	{ .type = SUPERIO_DEV_NONE },
 };
@@ -290,9 +313,14 @@ static const struct {
 	superio_vendor_t	vendor;
 	uint16_t		devid;
 	uint16_t		mask;
+	int			extid; /* Extra ID: used to handle conflicting devid. */
 	const char		*descr;
 	const struct sio_device	*devices;
 } superio_table[] = {
+	{
+		.vendor = SUPERIO_VENDOR_ITE, .devid = 0x8613,
+		.devices = ite_devices,
+	},
 	{
 		.vendor = SUPERIO_VENDOR_ITE, .devid = 0x8712,
 		.devices = ite_devices,
@@ -373,7 +401,7 @@ static const struct {
 	{
 		.vendor = SUPERIO_VENDOR_NUVOTON, .devid = 0xa000, .mask = 0xff,
 		.descr = "Winbond 83627DHG",
-		.devices = nvt_devices,
+		.devices = w83627_devices,
 	},
 	{
 		.vendor = SUPERIO_VENDOR_NUVOTON, .devid = 0xa200, .mask = 0xff,
@@ -411,9 +439,19 @@ static const struct {
 		.devices = nct5104_devices,
 	},
 	{
-		.vendor = SUPERIO_VENDOR_NUVOTON, .devid = 0xc500, .mask = 0xff,
-		.descr = "Nuvoton NCT6779",
-		.devices = nvt_devices,
+		.vendor  = SUPERIO_VENDOR_NUVOTON, .devid = 0xc500, .mask = 0xff,
+		.descr   = "Nuvoton NCT6779D",
+		.devices = nct67xx_devices,
+	},
+	{
+		.vendor  = SUPERIO_VENDOR_NUVOTON, .devid = 0xd42a, .extid = 1,
+		.descr   = "Nuvoton NCT6796D-E",
+		.devices = nct67xx_devices,
+	},
+	{
+		.vendor  = SUPERIO_VENDOR_NUVOTON, .devid = 0xd42a, .extid = 2,
+		.descr   = "Nuvoton NCT5585D",
+		.devices = nct5585_devices,
 	},
 	{
 		.vendor = SUPERIO_VENDOR_NUVOTON, .devid = 0xc800, .mask = 0xff,
@@ -431,6 +469,11 @@ static const struct {
 		.devices = nvt_devices,
 	},
 	{
+		.vendor = SUPERIO_VENDOR_NUVOTON, .devid = 0xd200, .mask = 0xff,
+		.descr = "Nuvoton NCT6112D/NCT6114D/NCT6116D",
+		.devices = nct611x_devices,
+	},
+	{
 		.vendor = SUPERIO_VENDOR_NUVOTON, .devid = 0xd300, .mask = 0xff,
 		.descr = "Nuvoton NCT6795",
 		.devices = nvt_devices,
@@ -438,6 +481,11 @@ static const struct {
 	{
 		.vendor = SUPERIO_VENDOR_FINTEK, .devid = 0x1210, .mask = 0xff,
 		.descr = "Fintek F81803",
+		.devices = fintek_devices,
+	},
+	{
+		.vendor = SUPERIO_VENDOR_FINTEK, .devid = 0x0704,
+		.descr = "Fintek F81865",
 		.devices = fintek_devices,
 	},
 	{ 0, 0 }
@@ -472,6 +520,7 @@ superio_detect(device_t dev, bool claim, struct siosc *sc)
 	int error;
 	int rid;
 	int i, m;
+	int prefer;
 
 	error = bus_get_resource(dev, SYS_RES_IOPORT, 0, &port, &count);
 	if (error != 0)
@@ -495,6 +544,11 @@ superio_detect(device_t dev, bool claim, struct siosc *sc)
 			device_printf(dev, "failed to allocate I/O resource\n");
 		return (ENXIO);
 	}
+
+	prefer = 0;
+	resource_int_value(device_get_name(dev), device_get_unit(dev), "prefer", &prefer);
+	if (bootverbose && prefer > 0)
+		device_printf(dev, "prefer extid %d\n", prefer);
 
 	for (m = 0; methods_table[m] != NULL; m++) {
 		methods_table[m]->enter(res, port);
@@ -522,6 +576,8 @@ superio_detect(device_t dev, bool claim, struct siosc *sc)
 				continue;
 			if ((superio_table[i].devid & ~mask) != (devid & ~mask))
 				continue;
+			if (prefer > 0 && prefer != superio_table[i].extid)
+				continue;
 			break;
 		}
 
@@ -547,12 +603,14 @@ superio_detect(device_t dev, bool claim, struct siosc *sc)
 	sc->io_port = port;
 	sc->devid = devid;
 	sc->revid = revid;
+	sc->extid = superio_table[i].extid;
 
 	KASSERT(sc->vendor == SUPERIO_VENDOR_ITE ||
-	    sc->vendor == SUPERIO_VENDOR_NUVOTON,
-	    ("Only ITE and Nuvoton SuperIO-s are supported"));
+	    sc->vendor == SUPERIO_VENDOR_NUVOTON ||
+	    sc->vendor == SUPERIO_VENDOR_FINTEK,
+	    ("Only ITE, Nuvoton and Fintek SuperIO-s are supported"));
 	sc->ldn_reg = 0x07;
-	sc->enable_reg = 0x30;
+	sc->enable_reg = 0x30;	/* FIXME enable_reg not used by nctgpio(4). */
 	sc->current_ldn = 0xff;	/* no device should have this */
 
 	if (superio_table[i].descr != NULL) {
@@ -802,24 +860,22 @@ superio_child_detached(device_t dev, device_t child)
 }
 
 static int
-superio_child_location_str(device_t parent, device_t child, char *buf,
-    size_t buflen)
+superio_child_location(device_t parent, device_t child, struct sbuf *sb)
 {
 	uint8_t ldn;
 
 	ldn = superio_get_ldn(child);
-	snprintf(buf, buflen, "ldn=0x%02x", ldn);
+	sbuf_printf(sb, "ldn=0x%02x", ldn);
 	return (0);
 }
 
 static int
-superio_child_pnp_str(device_t parent, device_t child, char *buf,
-    size_t buflen)
+superio_child_pnp(device_t parent, device_t child, struct sbuf *sb)
 {
 	superio_dev_type_t type;
 
 	type = superio_get_type(child);
-	snprintf(buf, buflen, "type=%s", devtype_to_str(type));
+	sbuf_printf(sb, "type=%s", devtype_to_str(type));
 	return (0);
 }
 
@@ -867,30 +923,53 @@ superio_revid(device_t dev)
 	return (sc->revid);
 }
 
-uint8_t
-superio_read(device_t dev, uint8_t reg)
+int
+superio_extid(device_t dev)
 {
 	device_t sio_dev = device_get_parent(dev);
 	struct siosc *sc = device_get_softc(sio_dev);
-	struct superio_devinfo *dinfo = device_get_ivars(dev);
-	uint8_t v;
+
+	return (sc->extid);
+}
+
+uint8_t
+superio_ldn_read(device_t dev, uint8_t ldn, uint8_t reg)
+{
+	device_t      sio_dev = device_get_parent(dev);
+	struct siosc *sc      = device_get_softc(sio_dev);
+	uint8_t       v;
 
 	sio_conf_enter(sc);
-	v = sio_ldn_read(sc, dinfo->ldn, reg);
+	v = sio_ldn_read(sc, ldn, reg);
 	sio_conf_exit(sc);
 	return (v);
+}
+
+uint8_t
+superio_read(device_t dev, uint8_t reg)
+{
+	struct superio_devinfo *dinfo = device_get_ivars(dev);
+
+	return (superio_ldn_read(dev, dinfo->ldn, reg));
+}
+
+void
+superio_ldn_write(device_t dev, uint8_t ldn, uint8_t reg, uint8_t val)
+{
+	device_t      sio_dev = device_get_parent(dev);
+	struct siosc *sc      = device_get_softc(sio_dev);
+
+	sio_conf_enter(sc);
+	sio_ldn_write(sc, ldn, reg, val);
+	sio_conf_exit(sc);
 }
 
 void
 superio_write(device_t dev, uint8_t reg, uint8_t val)
 {
-	device_t sio_dev = device_get_parent(dev);
-	struct siosc *sc = device_get_softc(sio_dev);
 	struct superio_devinfo *dinfo = device_get_ivars(dev);
 
-	sio_conf_enter(sc);
-	sio_ldn_write(sc, dinfo->ldn, reg, val);
-	sio_conf_exit(sc);
+	return (superio_ldn_write(dev, dinfo->ldn, reg, val));
 }
 
 bool
@@ -905,7 +984,7 @@ superio_dev_enabled(device_t dev, uint8_t mask)
 	if (sc->vendor == SUPERIO_VENDOR_ITE && dinfo->ldn == 7)
 		return (true);
 
-	v = superio_read(dev, sc->enable_reg);
+	v = superio_read(dev, sc->enable_reg); /* FIXME enable_reg not used by nctgpio(4). */
 	return ((v & mask) != 0);
 }
 
@@ -993,8 +1072,6 @@ superio_ioctl(struct cdev *dev, u_long cmd, caddr_t data, int flags,
 	}
 }
 
-static devclass_t superio_devclass;
-
 static device_method_t superio_methods[] = {
 	DEVMETHOD(device_identify,	superio_identify),
 	DEVMETHOD(device_probe,		superio_probe),
@@ -1006,8 +1083,8 @@ static device_method_t superio_methods[] = {
 
 	DEVMETHOD(bus_add_child,	superio_add_child),
 	DEVMETHOD(bus_child_detached,	superio_child_detached),
-	DEVMETHOD(bus_child_location_str, superio_child_location_str),
-	DEVMETHOD(bus_child_pnpinfo_str, superio_child_pnp_str),
+	DEVMETHOD(bus_child_location,	superio_child_location),
+	DEVMETHOD(bus_child_pnpinfo,	superio_child_pnp),
 	DEVMETHOD(bus_print_child,	superio_print_child),
 	DEVMETHOD(bus_read_ivar,	superio_read_ivar),
 	DEVMETHOD(bus_write_ivar,	superio_write_ivar),
@@ -1031,5 +1108,5 @@ static driver_t superio_driver = {
 	sizeof(struct siosc)
 };
 
-DRIVER_MODULE(superio, isa, superio_driver, superio_devclass, 0, 0);
+DRIVER_MODULE(superio, isa, superio_driver, 0, 0);
 MODULE_VERSION(superio, 1);

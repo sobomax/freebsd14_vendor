@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: d4694bb7c09c138fda16071ddb3d0ff625d28c6a $
+ * $FreeBSD: 7ff77e9b1b7499a102e7347ef2afd1a23b3b6716 $
  */
 
 #ifndef _SPL_TIMER_H_
@@ -33,6 +33,4 @@
 #define	usleep_range(wakeup, wakeupepsilon)				   \
 	pause_sbt("usleep_range", ustosbt(wakeup), \
 	ustosbt(wakeupepsilon - wakeup), 0)
-
-#define	schedule() pause("schedule", 1)
 #endif

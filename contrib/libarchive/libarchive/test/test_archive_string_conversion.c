@@ -23,7 +23,6 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 #include "test.h"
-__FBSDID("$FreeBSD: 7faf58bfa1175437951949af6499452a57fd9f9b $");
 
 #include <locale.h>
 
@@ -42,8 +41,7 @@ if [ ! -f ${if} ]; then
   exit 0
 fi
 of=test_archive_string_conversion.txt.Z
-echo "\$FreeBSD\$" > ${of}.uu
-awk -F ';'  '$0 ~/^[0-9A-F]+/ {printf "%s;%s\n", $2, $3}' ${if} | compress | uuencode ${of} >> ${of}.uu
+awk -F ';'  '$0 ~/^[0-9A-F]+/ {printf "%s;%s\n", $2, $3}' ${if} | compress | uuencode ${of} > ${of}.uu
 exit 1
 */
 

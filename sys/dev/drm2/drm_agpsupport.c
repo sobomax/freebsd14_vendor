@@ -32,8 +32,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 131a9ad9cc91ed17ddde56019763aebe0c4be00f $");
-
 #include <dev/drm2/drmP.h>
 
 #if __OS_HAS_AGP

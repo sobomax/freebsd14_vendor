@@ -29,7 +29,6 @@
  * SUCH DAMAGE.
  *
  *	@(#)time.h	8.5 (Berkeley) 5/4/95
- * $FreeBSD: 20375b9a82aff81ec1319cd9115c431fe3ed632c $
  */
 
 #ifndef _SYS_TIME_H_
@@ -578,7 +577,8 @@ void	getboottimebin(struct bintime *boottimebin);
 /* Other functions */
 int	itimerdecr(struct itimerval *itp, int usec);
 int	itimerfix(struct timeval *tv);
-int	ppsratecheck(struct timeval *, int *, int);
+int	eventratecheck(struct timeval *, int *, int);
+#define	ppsratecheck(t, c, m) eventratecheck(t, c, m)
 int	ratecheck(struct timeval *, const struct timeval *);
 void	timevaladd(struct timeval *t1, const struct timeval *t2);
 void	timevalsub(struct timeval *t1, const struct timeval *t2);

@@ -23,7 +23,6 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 #include "test.h"
-__FBSDID("$FreeBSD: 6f8a5e91aa1a330184afad25f440ade76d2db529 $");
 
 /*
  * Regression test:  We used to get a bogus error message when we

@@ -28,8 +28,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: d83da4df0ec58390f07fd365c1e2feba21ac4237 $");
-
 #include <sys/types.h>
 
 #include <stdlib.h>
@@ -470,7 +468,7 @@ reloc_non_plt(Obj_Entry *obj, Obj_Entry *obj_rtld, int flags,
 			 * modules. If we run out of space, we generate an
 			 * error.
 			 */
-			if (!defobj->tls_done) {
+			if (!defobj->tls_static) {
 				if (!allocate_tls_offset(
 				    __DECONST(Obj_Entry *, defobj))) {
 					_rtld_error(
@@ -523,7 +521,7 @@ allocate_initial_tls(Obj_Entry *objs)
 	* use.
 	*/
 	tls_static_space = tls_last_offset + tls_last_size +
-	    RTLD_STATIC_TLS_EXTRA;
+	    ld_static_tls_extra;
 
 	_tcb_set(allocate_tls(objs, NULL, TLS_TCB_SIZE, TLS_TCB_ALIGN));
 }

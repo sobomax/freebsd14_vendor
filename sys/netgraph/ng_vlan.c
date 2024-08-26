@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2003 IPNET Internet Communication Company
  * Copyright (c) 2011 - 2012 Rozhuk Ivan <rozhuk.im@gmail.com>
@@ -27,8 +27,6 @@
  * SUCH DAMAGE.
  *
  * Author: Ruslan Ermilov <ru@FreeBSD.org>
- *
- * $FreeBSD: ce70d4ec1e464f033bc579929f0a3be41a7d7ac5 $
  */
 
 #include <sys/param.h>

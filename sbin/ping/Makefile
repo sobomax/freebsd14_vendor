@@ -1,5 +1,4 @@
 #	@(#)Makefile	8.1 (Berkeley) 6/5/93
-# $FreeBSD: 23bac6d62d90cdf6d054b6baa0df8143b8999707 $
 
 .include <src.opts.mk>
 
@@ -21,6 +20,7 @@ CFLAGS+= -DINET6 -DKAME_SCOPEID
 SRCS+=	ping6.c
 LIBADD+= md
 LINKS=	${BINDIR}/ping ${BINDIR}/ping6
+MLINKS=	ping.8 ping6.8
 .endif
 
 .if ${MK_DYNAMICROOT} == "no"
@@ -33,6 +33,8 @@ CFLAGS+=-DWITH_CASPER
 
 CFLAGS+=-DIPSEC
 LIBADD+=	ipsec
+
+CFLAGS+=	-Wno-error=unused-but-set-variable
 
 HAS_TESTS=
 SUBDIR.${MK_TESTS}+= tests

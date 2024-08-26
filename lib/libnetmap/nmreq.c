@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (C) 2018 Universita` di Pisa
  * All rights reserved.
@@ -25,8 +25,6 @@
  * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
- *
- * $FreeBSD: 31ddea91f6a53e9dc62aa5e443ee5b90ef1177ad $
  */
 
 #include <sys/types.h>
@@ -617,10 +615,10 @@ nmreq_find_option(struct nmreq_header *h, uint32_t t)
 void
 nmreq_remove_option(struct nmreq_header *h, struct nmreq_option *o)
 {
-        struct nmreq_option **nmo;
+	struct nmreq_option **nmo;
 
 	for (nmo = (struct nmreq_option **)&h->nr_options; *nmo != NULL;
-			nmo = (struct nmreq_option **)&(*nmo)->nro_next) {
+	    nmo = (struct nmreq_option **)&(*nmo)->nro_next) {
 		if (*nmo == o) {
 			*((uint64_t *)(*nmo)) = o->nro_next;
 			o->nro_next = (uint64_t)(uintptr_t)NULL;
@@ -658,6 +656,8 @@ nmreq_option_name(uint32_t nro_reqtype)
 		return "csb";
 	case NETMAP_REQ_OPT_SYNC_KLOOP_MODE:
 		return "sync-kloop-mode";
+	case NETMAP_REQ_OPT_OFFSETS:
+		return "offsets";
 	default:
 		return "unknown";
 	}

@@ -34,8 +34,6 @@
  */
 
 #include <machine/asm.h>
-__FBSDID("$FreeBSD: 8f7a3b544facd40501c1fbe63b6c9eafcff7d64b $")
-
 ENTRY(fmodl)
 	fldt	24(%rsp)
 	fldt	8(%rsp)

@@ -1,5 +1,4 @@
 # $Id: Makefile,v 1.5 2003/09/08 02:28:35 max Exp $
-# $FreeBSD: 5868ffe90747147781b03cdd7ac0f7a52e8fb1a7 $
 
 .include <src.opts.mk>
 
@@ -8,7 +7,6 @@ SUBDIR= \
 	btpand \
 	hccontrol \
 	hcsecd \
-	hcseriald \
 	l2control \
 	l2ping \
 	rfcomm_pppd \

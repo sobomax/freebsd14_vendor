@@ -1,5 +1,4 @@
 #	@(#)Makefile	8.4 (Berkeley) 6/22/95
-# $FreeBSD: c44441a6de1a481f3db628eaf08713cdc17d878e $
 
 PACKAGE=	nfs
 

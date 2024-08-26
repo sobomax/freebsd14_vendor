@@ -1,6 +1,5 @@
 #!/bin/sh
 #
-# $FreeBSD: 3c8f0e71e29948e50b53dbd89c0e99d82750d43f $
 #
 
 # PROVIDE: hcsecd

@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2003 Matthew N. Dodd <winter@jurai.net>
  * All rights reserved.
@@ -27,8 +27,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 653399e1ca58c4ca78462a4ee6aa6bc4cebe88d2 $");
-
 #include <sys/param.h>
 #include <sys/systm.h>
 #include <sys/kernel.h>
@@ -73,8 +71,6 @@ struct smapi_softc {
 
 extern u_long smapi32_offset;
 extern u_short smapi32_segment;
-
-devclass_t smapi_devclass;
 
 static d_ioctl_t smapi_ioctl;
 
@@ -278,30 +274,6 @@ smapi_detach (device_t dev)
 	return (0);
 }
 
-static int
-smapi_modevent (module_t mod, int what, void *arg)
-{
-	device_t *	devs;
-	int		count;
-	int		i;
-
-	switch (what) {
-	case MOD_LOAD:
-		break;
-	case MOD_UNLOAD:
-		devclass_get_devices(smapi_devclass, &devs, &count);
-		for (i = 0; i < count; i++) {
-			device_delete_child(device_get_parent(devs[i]), devs[i]);
-		}
-		free(devs, M_TEMP);
-		break;
-	default:
-		break;
-	}
-
-	return (0);
-}
-
 static device_method_t smapi_methods[] = {
 	/* Device interface */
 	DEVMETHOD(device_identify,      smapi_identify),
@@ -317,5 +289,30 @@ static driver_t smapi_driver = {
 	sizeof(struct smapi_softc),
 };
 
-DRIVER_MODULE(smapi, nexus, smapi_driver, smapi_devclass, smapi_modevent, 0);
+static int
+smapi_modevent (module_t mod, int what, void *arg)
+{
+	device_t *	devs;
+	int		count;
+	int		i;
+
+	switch (what) {
+	case MOD_LOAD:
+		break;
+	case MOD_UNLOAD:
+		devclass_get_devices(devclass_find(smapi_driver.name), &devs,
+		    &count);
+		for (i = 0; i < count; i++) {
+			device_delete_child(device_get_parent(devs[i]), devs[i]);
+		}
+		free(devs, M_TEMP);
+		break;
+	default:
+		break;
+	}
+
+	return (0);
+}
+
+DRIVER_MODULE(smapi, nexus, smapi_driver, smapi_modevent, NULL);
 MODULE_VERSION(smapi, 1);

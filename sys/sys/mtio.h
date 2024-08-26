@@ -29,7 +29,6 @@
  * SUCH DAMAGE.
  *
  *	@(#)mtio.h	8.1 (Berkeley) 6/2/93
- * $FreeBSD: 843b329092248eadce6ec261b25214b698021d8b $
  */
 
 #ifndef	_SYS_MTIO_H_

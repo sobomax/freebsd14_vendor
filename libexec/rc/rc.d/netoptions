@@ -1,6 +1,5 @@
 #!/bin/sh
 #
-# $FreeBSD: 0dd927515015dea707e62835c1e89c62a216d249 $
 #
 
 # PROVIDE: netoptions

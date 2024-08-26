@@ -29,7 +29,6 @@
  * SUCH DAMAGE.
  *
  *	from: @(#)gettytab.h	8.2 (Berkeley) 3/30/94
- * $FreeBSD: 2d3972e3bc105645b762a31466639b3c764c067e $
  */
 
 /*

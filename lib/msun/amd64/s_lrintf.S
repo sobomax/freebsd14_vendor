@@ -27,7 +27,6 @@
 #include <machine/asm.h>
 
 #ifndef fn
-__FBSDID("$FreeBSD: 0c25a7f4c01e7cc35a5cd3ed4f9dee98791c740e $")
 #define	fn	lrintf
 #endif
 

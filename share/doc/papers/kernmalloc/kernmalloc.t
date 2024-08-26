@@ -26,7 +26,6 @@
 .\" SUCH DAMAGE.
 .\"
 .\"	@(#)kernmalloc.t	5.1 (Berkeley) 4/16/91
-.\" $FreeBSD: e84c4a5521c3c8bd2777832e930ebe1563c8de03 $
 .\"
 .\" reference a system routine name
 .de RN

@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  *  Copyright (c) 2000-2004
  *          Diomidis D. Spinellis, Athens, Greece
@@ -31,8 +31,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 0fd841cd5720c94309ea4074ea1dcf5bfa4ac729 $");
-
 #include <sys/param.h>
 #include <sys/systm.h>
 #include <sys/kernel.h>		/* SYSINIT stuff */
@@ -127,8 +125,6 @@ static device_method_t pbio_methods[] = {
 	{ 0, 0 }
 };
 
-static	devclass_t	pbio_devclass;
-
 static char driver_name[] = "pbio";
 
 static driver_t pbio_driver = {
@@ -137,7 +133,7 @@ static driver_t pbio_driver = {
 	sizeof(struct pbio_softc),
 };
 
-DRIVER_MODULE(pbio, isa, pbio_driver, pbio_devclass, 0, 0);
+DRIVER_MODULE(pbio, isa, pbio_driver, 0, 0);
 
 static __inline uint8_t
 pbinb(struct pbio_softc *scp, int off)

@@ -1,4 +1,3 @@
-# $FreeBSD: 7cdeaa592d2a3b0cda1acb0fdbb3b17dab6e7c7e $
 
 MK_WERROR=	no
 NO_WTHREAD_SAFETY= true

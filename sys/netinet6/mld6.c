@@ -66,8 +66,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 1c984db70e93587cea1202e3c7d73448fc6250c5 $");
-
 #include "opt_inet.h"
 #include "opt_inet6.h"
 
@@ -75,7 +73,6 @@ __FBSDID("$FreeBSD: 1c984db70e93587cea1202e3c7d73448fc6250c5 $");
 #include <sys/systm.h>
 #include <sys/mbuf.h>
 #include <sys/socket.h>
-#include <sys/protosw.h>
 #include <sys/sysctl.h>
 #include <sys/kernel.h>
 #include <sys/callout.h>
@@ -85,6 +82,7 @@ __FBSDID("$FreeBSD: 1c984db70e93587cea1202e3c7d73448fc6250c5 $");
 
 #include <net/if.h>
 #include <net/if_var.h>
+#include <net/if_private.h>
 #include <net/route.h>
 #include <net/vnet.h>
 
@@ -104,7 +102,7 @@ __FBSDID("$FreeBSD: 1c984db70e93587cea1202e3c7d73448fc6250c5 $");
 #define KTR_MLD KTR_INET6
 #endif
 
-static void	mli_delete_locked(const struct ifnet *);
+static void	mli_delete_locked(struct ifnet *);
 static void	mld_dispatch_packet(struct mbuf *);
 static void	mld_dispatch_queue(struct mbufq *, int);
 static void	mld_final_leave(struct in6_multi *, struct mld_ifsoftc *);
@@ -354,13 +352,13 @@ out_locked:
  * Expose struct mld_ifsoftc to userland, keyed by ifindex.
  * For use by ifmcstat(8).
  *
- * SMPng: NOTE: Does an unlocked ifindex space read.
  * VIMAGE: Assume curvnet set by caller. The node handler itself
  * is not directly virtualized.
  */
 static int
 sysctl_mld_ifinfo(SYSCTL_HANDLER_ARGS)
 {
+	struct epoch_tracker	 et;
 	int			*name;
 	int			 error;
 	u_int			 namelen;
@@ -383,14 +381,9 @@ sysctl_mld_ifinfo(SYSCTL_HANDLER_ARGS)
 	IN6_MULTI_LOCK();
 	IN6_MULTI_LIST_LOCK();
 	MLD_LOCK();
-
-	if (name[0] <= 0 || name[0] > V_if_index) {
-		error = ENOENT;
-		goto out_locked;
-	}
+	NET_EPOCH_ENTER(et);
 
 	error = ENOENT;
-
 	ifp = ifnet_byindex(name[0]);
 	if (ifp == NULL)
 		goto out_locked;
@@ -413,6 +406,7 @@ sysctl_mld_ifinfo(SYSCTL_HANDLER_ARGS)
 	}
 
 out_locked:
+	NET_EPOCH_EXIT(et);
 	MLD_UNLOCK();
 	IN6_MULTI_LIST_UNLOCK();
 	IN6_MULTI_UNLOCK();
@@ -574,7 +568,7 @@ mld_domifdetach(struct ifnet *ifp)
 }
 
 static void
-mli_delete_locked(const struct ifnet *ifp)
+mli_delete_locked(struct ifnet *ifp)
 {
 	struct mld_ifsoftc *mli, *tmli;
 
@@ -674,7 +668,7 @@ mld_v1_input_query(struct ifnet *ifp, const struct ip6_hdr *ip6,
 	KASSERT(mli != NULL, ("%s: no mld_ifsoftc for ifp %p", __func__, ifp));
 	mld_set_version(mli, MLD_VERSION_1);
 
-	timer = (ntohs(mld->mld_maxdelay) * PR_FASTHZ) / MLD_TIMER_SCALE;
+	timer = (ntohs(mld->mld_maxdelay) * MLD_FASTHZ) / MLD_TIMER_SCALE;
 	if (timer == 0)
 		timer = 1;
 
@@ -825,7 +819,7 @@ mld_v2_input_query(struct ifnet *ifp, const struct ip6_hdr *ip6,
 		maxdelay = (MLD_MRC_MANT(maxdelay) | 0x1000) <<
 			   (MLD_MRC_EXP(maxdelay) + 3);
 	}
-	timer = (maxdelay * PR_FASTHZ) / MLD_TIMER_SCALE;
+	timer = (maxdelay * MLD_FASTHZ) / MLD_TIMER_SCALE;
 	if (timer == 0)
 		timer = 1;
 
@@ -1298,14 +1292,17 @@ mld_input(struct mbuf **mp, int off, int icmp6len)
  * Fast timeout handler (global).
  * VIMAGE: Timeout handlers are expected to service all vimages.
  */
-void
-mld_fasttimo(void)
+static struct callout mldfast_callout;
+static void
+mld_fasttimo(void *arg __unused)
 {
+	struct epoch_tracker et;
 	struct in6_multi_head inmh;
 	VNET_ITERATOR_DECL(vnet_iter);
 
 	SLIST_INIT(&inmh);
 
+	NET_EPOCH_ENTER(et);
 	VNET_LIST_RLOCK_NOSLEEP();
 	VNET_FOREACH(vnet_iter) {
 		CURVNET_SET(vnet_iter);
@@ -1313,7 +1310,10 @@ mld_fasttimo(void)
 		CURVNET_RESTORE();
 	}
 	VNET_LIST_RUNLOCK_NOSLEEP();
+	NET_EPOCH_EXIT(et);
 	in6m_release_list_deferred(&inmh);
+
+	callout_reset(&mldfast_callout, hz / MLD_FASTHZ, mld_fasttimo, NULL);
 }
 
 /*
@@ -1324,7 +1324,6 @@ mld_fasttimo(void)
 static void
 mld_fasttimo_vnet(struct in6_multi_head *inmh)
 {
-	struct epoch_tracker     et;
 	struct mbufq		 scq;	/* State-change packets */
 	struct mbufq		 qrq;	/* Query response packets */
 	struct ifnet		*ifp;
@@ -1384,12 +1383,11 @@ mld_fasttimo_vnet(struct in6_multi_head *inmh)
 
 		if (mli->mli_version == MLD_VERSION_2) {
 			uri_fasthz = MLD_RANDOM_DELAY(mli->mli_uri *
-			    PR_FASTHZ);
+			    MLD_FASTHZ);
 			mbufq_init(&qrq, MLD_MAX_G_GS_PACKETS);
 			mbufq_init(&scq, MLD_MAX_STATE_CHANGE_PACKETS);
 		}
 
-		NET_EPOCH_ENTER(et);
 		IF_ADDR_WLOCK(ifp);
 		CK_STAILQ_FOREACH(ifma, &ifp->if_multiaddrs, ifma_link) {
 			inm = in6m_ifmultiaddr_get_inm(ifma);
@@ -1428,7 +1426,6 @@ mld_fasttimo_vnet(struct in6_multi_head *inmh)
 			mld_dispatch_queue(&scq, 0);
 			break;
 		}
-		NET_EPOCH_EXIT(et);
 	}
 
 out_locked:
@@ -1544,7 +1541,7 @@ mld_v2_process_group_timers(struct in6_multi_head *inmh,
 		 * immediate transmission.
 		 */
 		if (query_response_timer_expired) {
-			int retval;
+			int retval __unused;
 
 			retval = mld_v2_enqueue_group_record(qrq, inm, 0, 1,
 			    (inm->in6m_state == MLD_SG_QUERY_PENDING_MEMBER),
@@ -1620,7 +1617,7 @@ mld_set_version(struct mld_ifsoftc *mli, const int version)
 		 * Section 9.12.
 		 */
 		old_version_timer = (mli->mli_rv * mli->mli_qi) + mli->mli_qri;
-		old_version_timer *= PR_SLOWHZ;
+		old_version_timer *= MLD_SLOWHZ;
 		mli->mli_v1_timer = old_version_timer;
 	}
 
@@ -1711,8 +1708,9 @@ mld_v2_cancel_link_timers(struct mld_ifsoftc *mli)
  * Global slowtimo handler.
  * VIMAGE: Timeout handlers are expected to service all vimages.
  */
-void
-mld_slowtimo(void)
+static struct callout mldslow_callout;
+static void
+mld_slowtimo(void *arg __unused)
 {
 	VNET_ITERATOR_DECL(vnet_iter);
 
@@ -1723,6 +1721,8 @@ mld_slowtimo(void)
 		CURVNET_RESTORE();
 	}
 	VNET_LIST_RUNLOCK_NOSLEEP();
+
+	callout_reset(&mldslow_callout, hz / MLD_SLOWHZ, mld_slowtimo, NULL);
 }
 
 /*
@@ -1857,7 +1857,7 @@ mld_v1_transmit_report(struct in6_multi *in6m, const int type)
  *
  * If delay is non-zero, and the state change is an initial multicast
  * join, the state change report will be delayed by 'delay' ticks
- * in units of PR_FASTHZ if MLDv1 is active on the link; otherwise
+ * in units of MLD_FASTHZ if MLDv1 is active on the link; otherwise
  * the initial MLDv2 state change report will be delayed by whichever
  * is sooner, a pending state-change timer or delay itself.
  *
@@ -1939,7 +1939,7 @@ out_locked:
  *  initial state of the membership.
  *
  * If the delay argument is non-zero, then we must delay sending the
- * initial state change for delay ticks (in units of PR_FASTHZ).
+ * initial state change for delay ticks (in units of MLD_FASTHZ).
  */
 static int
 mld_initial_join(struct in6_multi *inm, struct mld_ifsoftc *mli,
@@ -2007,7 +2007,7 @@ mld_initial_join(struct in6_multi *inm, struct mld_ifsoftc *mli,
 			 * and delay sending the initial MLDv1 report
 			 * by not transitioning to the IDLE state.
 			 */
-			odelay = MLD_RANDOM_DELAY(MLD_V1_MAX_RI * PR_FASTHZ);
+			odelay = MLD_RANDOM_DELAY(MLD_V1_MAX_RI * MLD_FASTHZ);
 			if (delay) {
 				inm->in6m_timer = max(delay, odelay);
 				V_current_state_timers_running6 = 1;
@@ -2162,12 +2162,9 @@ static void
 mld_final_leave(struct in6_multi *inm, struct mld_ifsoftc *mli)
 {
 	struct epoch_tracker     et;
-	int syncstates;
 #ifdef KTR
 	char ip6tbuf[INET6_ADDRSTRLEN];
 #endif
-
-	syncstates = 1;
 
 	CTR4(KTR_MLD, "%s: final leave %s on ifp %p(%s)",
 	    __func__, ip6_sprintf(ip6tbuf, &inm->in6m_addr),
@@ -2218,7 +2215,7 @@ mld_final_leave(struct in6_multi *inm, struct mld_ifsoftc *mli)
 				inm->in6m_state = MLD_NOT_MEMBER;
 				inm->in6m_sctimer = 0;
 			} else {
-				int retval;
+				int retval __diagused;
 
 				in6m_acquire_locked(inm);
 
@@ -2232,7 +2229,6 @@ mld_final_leave(struct in6_multi *inm, struct mld_ifsoftc *mli)
 				inm->in6m_state = MLD_LEAVING_MEMBER;
 				inm->in6m_sctimer = 1;
 				V_state_change_timers_running6 = 1;
-				syncstates = 0;
 			}
 			break;
 		}
@@ -2244,15 +2240,13 @@ mld_final_leave(struct in6_multi *inm, struct mld_ifsoftc *mli)
 		break;
 	}
 
-	if (syncstates) {
-		in6m_commit(inm);
-		CTR3(KTR_MLD, "%s: T1 -> T0 for %s/%s", __func__,
-		    ip6_sprintf(ip6tbuf, &inm->in6m_addr),
-		    if_name(inm->in6m_ifp));
-		inm->in6m_st[1].iss_fmode = MCAST_UNDEFINED;
-		CTR3(KTR_MLD, "%s: T1 now MCAST_UNDEFINED for %p/%s",
-		    __func__, &inm->in6m_addr, if_name(inm->in6m_ifp));
-	}
+	in6m_commit(inm);
+	CTR3(KTR_MLD, "%s: T1 -> T0 for %s/%s", __func__,
+	    ip6_sprintf(ip6tbuf, &inm->in6m_addr),
+	    if_name(inm->in6m_ifp));
+	inm->in6m_st[1].iss_fmode = MCAST_UNDEFINED;
+	CTR3(KTR_MLD, "%s: T1 now MCAST_UNDEFINED for %p/%s",
+	    __func__, &inm->in6m_addr, if_name(inm->in6m_ifp));
 }
 
 /*
@@ -2431,7 +2425,7 @@ mld_v2_enqueue_group_record(struct mbufq *mq, struct in6_multi *inm,
 	m0 = mbufq_last(mq);
 	if (!is_group_query &&
 	    m0 != NULL &&
-	    (m0->m_pkthdr.PH_vt.vt_nrecs + 1 <= MLD_V2_REPORT_MAXRECS) &&
+	    (m0->m_pkthdr.vt_nrecs + 1 <= MLD_V2_REPORT_MAXRECS) &&
 	    (m0->m_pkthdr.len + minrec0len) <
 	     (ifp->if_mtu - MLD_MTUSPACE)) {
 		m0srcs = (ifp->if_mtu - m0->m_pkthdr.len -
@@ -2552,10 +2546,10 @@ mld_v2_enqueue_group_record(struct mbufq *mq, struct in6_multi *inm,
 	 */
 	if (m != m0) {
 		CTR1(KTR_MLD, "%s: enqueueing first packet", __func__);
-		m->m_pkthdr.PH_vt.vt_nrecs = 1;
+		m->m_pkthdr.vt_nrecs = 1;
 		mbufq_enqueue(mq, m);
 	} else
-		m->m_pkthdr.PH_vt.vt_nrecs++;
+		m->m_pkthdr.vt_nrecs++;
 
 	/*
 	 * No further work needed if no source list in packet(s).
@@ -2589,7 +2583,7 @@ mld_v2_enqueue_group_record(struct mbufq *mq, struct in6_multi *inm,
 			CTR1(KTR_MLD, "%s: m_append() failed.", __func__);
 			return (-ENOMEM);
 		}
-		m->m_pkthdr.PH_vt.vt_nrecs = 1;
+		m->m_pkthdr.vt_nrecs = 1;
 		nbytes += sizeof(struct mldv2_record);
 
 		m0srcs = (ifp->if_mtu - MLD_MTUSPACE -
@@ -2678,10 +2672,10 @@ mld_v2_enqueue_filter_change(struct mbufq *mq, struct in6_multi *inm)
 	struct ip6_msource	*ims, *nims;
 	struct mbuf		*m, *m0, *md;
 	int			 m0srcs, nbytes, npbytes, off, rsrcs, schanged;
-	int			 nallow, nblock;
 	uint8_t			 mode, now, then;
 	rectype_t		 crt, drt, nrt;
 #ifdef KTR
+	int			 nallow, nblock;
 	char			 ip6tbuf[INET6_ADDRSTRLEN];
 #endif
 
@@ -2701,8 +2695,10 @@ mld_v2_enqueue_filter_change(struct mbufq *mq, struct in6_multi *inm)
 	nbytes = 0;	/* # of bytes appended to group's state-change queue */
 	rsrcs = 0;	/* # sources encoded in current record */
 	schanged = 0;	/* # nodes encoded in overall filter change */
+#ifdef KTR
 	nallow = 0;	/* # of source entries in ALLOW_NEW */
 	nblock = 0;	/* # of source entries in BLOCK_OLD */
+#endif
 	nims = NULL;	/* next tree node pointer */
 
 	/*
@@ -2716,7 +2712,7 @@ mld_v2_enqueue_filter_change(struct mbufq *mq, struct in6_multi *inm)
 		do {
 			m0 = mbufq_last(mq);
 			if (m0 != NULL &&
-			    (m0->m_pkthdr.PH_vt.vt_nrecs + 1 <=
+			    (m0->m_pkthdr.vt_nrecs + 1 <=
 			     MLD_V2_REPORT_MAXRECS) &&
 			    (m0->m_pkthdr.len + MINRECLEN) <
 			     (ifp->if_mtu - MLD_MTUSPACE)) {
@@ -2735,7 +2731,7 @@ mld_v2_enqueue_filter_change(struct mbufq *mq, struct in6_multi *inm)
 					    "%s: m_get*() failed", __func__);
 					return (-ENOMEM);
 				}
-				m->m_pkthdr.PH_vt.vt_nrecs = 0;
+				m->m_pkthdr.vt_nrecs = 0;
 				mld_save_context(m, ifp);
 				m0srcs = (ifp->if_mtu - MLD_MTUSPACE -
 				    sizeof(struct mldv2_record)) /
@@ -2823,8 +2819,10 @@ mld_v2_enqueue_filter_change(struct mbufq *mq, struct in6_multi *inm)
 					    "%s: m_append() failed", __func__);
 					return (-ENOMEM);
 				}
+#ifdef KTR
 				nallow += !!(crt == REC_ALLOW);
 				nblock += !!(crt == REC_BLOCK);
+#endif
 				if (++rsrcs == m0srcs)
 					break;
 			}
@@ -2856,7 +2854,7 @@ mld_v2_enqueue_filter_change(struct mbufq *mq, struct in6_multi *inm)
 			 * Count the new group record, and enqueue this
 			 * packet if it wasn't already queued.
 			 */
-			m->m_pkthdr.PH_vt.vt_nrecs++;
+			m->m_pkthdr.vt_nrecs++;
 			if (m != m0)
 				mbufq_enqueue(mq, m);
 			nbytes += npbytes;
@@ -2918,8 +2916,8 @@ mld_v2_merge_state_changes(struct in6_multi *inm, struct mbufq *scq)
 		if (mt != NULL) {
 			recslen = m_length(m, NULL);
 
-			if ((mt->m_pkthdr.PH_vt.vt_nrecs +
-			    m->m_pkthdr.PH_vt.vt_nrecs <=
+			if ((mt->m_pkthdr.vt_nrecs +
+			    m->m_pkthdr.vt_nrecs <=
 			    MLD_V2_REPORT_MAXRECS) &&
 			    (mt->m_pkthdr.len + recslen <=
 			    (inm->in6m_ifp->if_mtu - MLD_MTUSPACE)))
@@ -2963,8 +2961,8 @@ mld_v2_merge_state_changes(struct in6_multi *inm, struct mbufq *scq)
 			mtl = m_last(mt);
 			m0->m_flags &= ~M_PKTHDR;
 			mt->m_pkthdr.len += recslen;
-			mt->m_pkthdr.PH_vt.vt_nrecs +=
-			    m0->m_pkthdr.PH_vt.vt_nrecs;
+			mt->m_pkthdr.vt_nrecs +=
+			    m0->m_pkthdr.vt_nrecs;
 
 			mtl->m_next = m0;
 		}
@@ -2982,7 +2980,7 @@ mld_v2_dispatch_general_query(struct mld_ifsoftc *mli)
 	struct ifmultiaddr	*ifma;
 	struct ifnet		*ifp;
 	struct in6_multi	*inm;
-	int			 retval;
+	int			 retval __unused;
 
 	NET_EPOCH_ASSERT();
 	IN6_MULTI_LIST_LOCK_ASSERT();
@@ -2997,7 +2995,7 @@ mld_v2_dispatch_general_query(struct mld_ifsoftc *mli)
 	 * many packets, we should finish sending them before starting of
 	 * queuing the new reply.
 	 */
-	if (mbufq_len(&mli->mli_gq) != 0)
+	if (!mbufq_empty(&mli->mli_gq))
 		goto send;
 
 	ifp = mli->mli_ifp;
@@ -3216,8 +3214,8 @@ mld_v2_encap_report(struct ifnet *ifp, struct mbuf *m)
 	mld->mld_code = 0;
 	mld->mld_cksum = 0;
 	mld->mld_v2_reserved = 0;
-	mld->mld_v2_numrecs = htons(m->m_pkthdr.PH_vt.vt_nrecs);
-	m->m_pkthdr.PH_vt.vt_nrecs = 0;
+	mld->mld_v2_numrecs = htons(m->m_pkthdr.vt_nrecs);
+	m->m_pkthdr.vt_nrecs = 0;
 
 	mh->m_next = m;
 	mld->mld_cksum = in6_cksum(mh, IPPROTO_ICMPV6,
@@ -3268,6 +3266,11 @@ mld_init(void *unused __unused)
 	mld_po.ip6po_hbh = &mld_ra.hbh;
 	mld_po.ip6po_prefer_tempaddr = IP6PO_TEMPADDR_NOTPREFER;
 	mld_po.ip6po_flags = IP6PO_DONTFRAG;
+
+	callout_init(&mldslow_callout, 1);
+	callout_reset(&mldslow_callout, hz / MLD_SLOWHZ, mld_slowtimo, NULL);
+	callout_init(&mldfast_callout, 1);
+	callout_reset(&mldfast_callout, hz / MLD_FASTHZ, mld_fasttimo, NULL);
 }
 SYSINIT(mld_init, SI_SUB_PROTO_MC, SI_ORDER_MIDDLE, mld_init, NULL);
 
@@ -3276,6 +3279,8 @@ mld_uninit(void *unused __unused)
 {
 
 	CTR1(KTR_MLD, "%s: tearing down", __func__);
+	callout_drain(&mldslow_callout);
+	callout_drain(&mldfast_callout);
 	MLD_LOCK_DESTROY();
 }
 SYSUNINIT(mld_uninit, SI_SUB_PROTO_MC, SI_ORDER_MIDDLE, mld_uninit, NULL);

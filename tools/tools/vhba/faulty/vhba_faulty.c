@@ -23,7 +23,6 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  */
-/* $FreeBSD: 49cbb4b1065ed7e68d21467e8548576966125b60 $ */
 /*
  * "Faulty" Device. Victimize random commands with a Selection Timeout.
  */

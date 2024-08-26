@@ -26,7 +26,6 @@
 .\" SUCH DAMAGE.
 .\"
 .\"     @(#)assert.3	8.1 (Berkeley) 6/9/93
-.\" $FreeBSD: cc23f96360f0d92429945fb7c9501c77a3653210 $
 .\"
 .Dd April 20, 2021
 .Dt ASSERT 3
@@ -123,19 +122,15 @@ If none is provided, it only points at the constraint.
 .Xr abort2 2 ,
 .Xr abort 3
 .Sh STANDARDS
-.Rs
 The
 .Fn assert
 macro conforms to
 .St -isoC-99 .
-.Re
 .Pp
-.Rs
 The
 .Fn static_assert
 macro conforms to
 .St -isoC-2011 .
-.Re
 .Sh HISTORY
 An
 .Nm

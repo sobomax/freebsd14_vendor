@@ -5,7 +5,7 @@
  *	The Regents of the University of California.  All rights reserved.
  *
  * Copyright (c) 2011 The FreeBSD Foundation
- * All rights reserved.
+ *
  * Portions of this software were developed by David Chisnall
  * under sponsorship from the FreeBSD Foundation.
  *
@@ -33,15 +33,6 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  */
-
-#include <sys/cdefs.h>
-#if 0
-#if defined(LIBC_SCCS) && !defined(lint)
-static char sccsid[] = "@(#)strtouq.c	8.1 (Berkeley) 6/4/93";
-#endif /* LIBC_SCCS and not lint */
-__FBSDID("FreeBSD: src/lib/libc/stdlib/strtoull.c,v 1.18 2002/09/06 11:23:59 tjr Exp ");
-#endif
-__FBSDID("$FreeBSD: 6a04d213ff9b5c0c571c8a9f2c5b0f06184d6118 $");
 
 #include <errno.h>
 #include <limits.h>
@@ -80,10 +71,20 @@ wcstoull_l(const wchar_t * __restrict nptr, wchar_t ** __restrict endptr,
 			c = *s++;
 	}
 	if ((base == 0 || base == 16) &&
-	    c == L'0' && (*s == L'x' || *s == L'X')) {
+	    c == L'0' && (*s == L'x' || *s == L'X') &&
+	    ((s[1] >= L'0' && s[1] <= L'9') ||
+	    (s[1] >= L'A' && s[1] <= L'F') ||
+	    (s[1] >= L'a' && s[1] <= L'f'))) {
 		c = s[1];
 		s += 2;
 		base = 16;
+	}
+	if ((base == 0 || base == 2) &&
+	    c == L'0' && (*s == L'b' || *s == L'B') &&
+	    (s[1] >= L'0' && s[1] <= L'1')) {
+		c = s[1];
+		s += 2;
+		base = 2;
 	}
 	if (base == 0)
 		base = c == L'0' ? 8 : 10;

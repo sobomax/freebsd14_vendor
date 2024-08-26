@@ -1,4 +1,3 @@
-/* $FreeBSD: 0e321f28c03ea1f14dc3e7819d63421db00678e2 $ */
 /* Do not modify. This file is auto-generated from x25519-ppc64.pl. */
 .abiversion	2
 .text

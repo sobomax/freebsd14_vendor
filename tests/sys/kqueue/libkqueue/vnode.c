@@ -12,8 +12,6 @@
  * WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
  * ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
- *
- * $FreeBSD: 8f4311e90745da0889d4e3f68001a3defc2db6de $
  */
 
 #include "common.h"
@@ -60,6 +58,64 @@ test_kevent_vnode_note_delete(void)
         err(1, "unlink");
 
     kevent_cmp(&kev, kevent_get(kqfd));
+
+    success();
+}
+
+static void
+test_kevent_vnode_note_delete_fifo(void)
+{
+    const char *test_id = "kevent(EVFILT_VNODE, NOTE_DELETE, FIFO)";
+    const char *fifo_path = "./kqueue-fifo.tmp";
+    struct kevent kev;
+    int fd;
+    pid_t pid;
+
+    test_begin(test_id);
+
+    if (mkfifo(fifo_path, 0600) != 0)
+        err(1, "mkfifo");
+
+    pid = fork();
+    if (pid == -1)
+        err(1, "fork");
+
+    if (pid == 0) {
+        char buf[4];
+
+        fd = open(fifo_path, O_RDONLY);
+        if (fd == -1)
+            _exit(1);
+
+        while (read(fd, buf, sizeof(buf)) != 0) {
+        }
+
+        _exit(0);
+    }
+
+    sleep(1);
+    if (waitpid(pid, NULL, WNOHANG) == pid) {
+        unlink(fifo_path);
+        err(1, "open");
+    }
+
+    fd = open(fifo_path, O_WRONLY);
+    if (fd < 0) {
+        unlink(fifo_path);
+        err(1, "open");
+    }
+
+    EV_SET(&kev, fd, EVFILT_VNODE, EV_ADD | EV_ONESHOT, NOTE_DELETE, 0, NULL);
+    if (kevent(kqfd, &kev, 1, NULL, 0, NULL) < 0) {
+        unlink(fifo_path);
+        err(1, "%s", test_id);
+    }
+
+    if (unlink(fifo_path) < 0)
+        err(1, "unlink");
+
+    kevent_cmp(&kev, kevent_get(kqfd));
+    close(fd);
 
     success();
 }
@@ -261,5 +317,6 @@ test_evfilt_vnode(void)
     test_kevent_vnode_note_attrib();
     test_kevent_vnode_note_rename();
     test_kevent_vnode_note_delete();
+    test_kevent_vnode_note_delete_fifo();
     close(kqfd);
 }

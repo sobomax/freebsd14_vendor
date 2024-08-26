@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (C) 2013-2014 Vincenzo Maffione
  * All rights reserved.
@@ -27,7 +27,6 @@
  */
 
 /*
- * $FreeBSD: 3ce73f0e065ca604da9509f0d3ffc9875dbe389c $
  */
 
 

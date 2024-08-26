@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2015-2017 Landon Fuller <landonf@landonf.org>
  * Copyright (c) 2017 The FreeBSD Foundation
@@ -34,8 +34,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 14abc49f147a5c1d458b7800ed50cc2faccab32f $");
-
 #include <sys/param.h>
 #include <sys/bus.h>
 #include <sys/kernel.h>

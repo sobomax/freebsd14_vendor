@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2010 Andreas Tobler
  * All rights reserved.
@@ -27,8 +27,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: b354e975f4d41e66f94d656684e7702c3016e9b2 $");
-
 #include <sys/param.h>
 #include <sys/bus.h>
 #include <sys/systm.h>
@@ -130,9 +128,7 @@ static driver_t fcu_driver = {
 	sizeof(struct fcu_softc)
 };
 
-static devclass_t fcu_devclass;
-
-DRIVER_MODULE(fcu, iicbus, fcu_driver, fcu_devclass, 0, 0);
+DRIVER_MODULE(fcu, iicbus, fcu_driver, 0, 0);
 static MALLOC_DEFINE(M_FCU, "fcu", "FCU Sensor Information");
 
 static int

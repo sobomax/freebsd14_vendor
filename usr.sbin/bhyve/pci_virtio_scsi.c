@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2016 Jakub Klama <jceel@FreeBSD.org>.
  * Copyright (c) 2018 Marcelo Araujo <araujo@FreeBSD.org>.
@@ -29,8 +29,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 7da825ad4050bfc32c1cbb0cba3d8e5f454067df $");
-
 #include <sys/param.h>
 #include <sys/linker_set.h>
 #include <sys/types.h>
@@ -405,7 +403,8 @@ pci_vtscsi_tmf_handle(struct pci_vtscsi_softc *sc,
 	io->io_hdr.nexus.initid = sc->vss_iid;
 	io->io_hdr.nexus.targ_lun = pci_vtscsi_get_lun(tmf->lun);
 	io->taskio.tag_type = CTL_TAG_SIMPLE;
-	io->taskio.tag_num = (uint32_t)tmf->id;
+	io->taskio.tag_num = tmf->id;
+	io->io_hdr.flags |= CTL_FLAG_USER_TAG;
 
 	switch (tmf->subtype) {
 	case VIRTIO_SCSI_T_TMF_ABORT_TASK:
@@ -519,7 +518,8 @@ pci_vtscsi_request_handle(struct pci_vtscsi_queue *q, struct iovec *iov_in,
 	}
 
 	io->scsiio.sense_len = sc->vss_config.sense_size;
-	io->scsiio.tag_num = (uint32_t)cmd_rd->id;
+	io->scsiio.tag_num = cmd_rd->id;
+	io->io_hdr.flags |= CTL_FLAG_USER_TAG;
 	switch (cmd_rd->task_attr) {
 	case VIRTIO_SCSI_S_ORDERED:
 		io->scsiio.tag_type = CTL_TAG_ORDERED;
@@ -706,6 +706,15 @@ pci_vtscsi_init(struct pci_devinst *pi, nvlist_t *nvl)
 	value = get_config_value_node(nvl, "iid");
 	if (value != NULL)
 		sc->vss_iid = strtoul(value, NULL, 10);
+
+	value = get_config_value_node(nvl, "bootindex");
+	if (value != NULL) {
+		if (pci_emul_add_boot_device(pi, atoi(value))) {
+			EPRINTLN("Invalid bootindex %d", atoi(value));
+			free(sc);
+			return (-1);
+		}
+	}
 
 	devname = get_config_value_node(nvl, "dev");
 	if (devname == NULL)

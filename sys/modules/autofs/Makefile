@@ -1,4 +1,3 @@
-# $FreeBSD: e6e93536677cd0fa1fce42fb5dc2115093aa0fa8 $
 
 .PATH: ${SRCTOP}/sys/fs/autofs
 

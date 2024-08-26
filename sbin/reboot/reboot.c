@@ -41,12 +41,12 @@ static char sccsid[] = "@(#)reboot.c	8.1 (Berkeley) 6/5/93";
 #endif /* not lint */
 #endif
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 4dcade7611c221ecbc1e0a61fc34cc2f711d8a00 $");
-
-#include <sys/reboot.h>
-#include <sys/time.h>
 #include <sys/types.h>
+#include <sys/boottrace.h>
+#include <sys/reboot.h>
 #include <sys/sysctl.h>
+#include <sys/time.h>
+
 #include <signal.h>
 #include <err.h>
 #include <errno.h>
@@ -59,8 +59,8 @@ __FBSDID("$FreeBSD: 4dcade7611c221ecbc1e0a61fc34cc2f711d8a00 $");
 #include <unistd.h>
 #include <utmpx.h>
 
-static void usage(void);
-static u_int get_pageins(void);
+static void usage(void) __dead2;
+static uint64_t get_pageins(void);
 
 static int dohalt;
 
@@ -70,7 +70,7 @@ main(int argc, char *argv[])
 	struct utmpx utx;
 	const struct passwd *pw;
 	int ch, howto, i, fd, lflag, nflag, qflag, sverrno, Nflag;
-	u_int pageins;
+	uint64_t pageins;
 	const char *user, *kernel = NULL;
 
 	if (strstr(getprogname(), "halt") != NULL) {
@@ -210,10 +210,12 @@ main(int argc, char *argv[])
 	}
 
 	/* Just stop init -- if we fail, we'll restart it. */
+	BOOTTRACE("SIGTSTP to init(8)...");
 	if (kill(1, SIGTSTP) == -1)
 		err(1, "SIGTSTP init");
 
 	/* Send a SIGTERM first, a chance to save the buffers. */
+	BOOTTRACE("SIGTERM to all other processes...");
 	if (kill(-1, SIGTERM) == -1 && errno != ESRCH)
 		err(1, "SIGTERM processes");
 
@@ -235,6 +237,7 @@ main(int argc, char *argv[])
 	}
 
 	for (i = 1;; ++i) {
+		BOOTTRACE("SIGKILL to all other processes(%d)...", i);
 		if (kill(-1, SIGKILL) == -1) {
 			if (errno == ESRCH)
 				break;
@@ -252,6 +255,7 @@ main(int argc, char *argv[])
 	/* FALLTHROUGH */
 
 restart:
+	BOOTTRACE("SIGHUP to init(8)...");
 	sverrno = errno;
 	errx(1, "%s%s", kill(1, SIGHUP) == -1 ? "(can't restart init): " : "",
 	    strerror(sverrno));
@@ -268,17 +272,17 @@ usage(void)
 	exit(1);
 }
 
-static u_int
+static uint64_t
 get_pageins(void)
 {
-	u_int pageins;
+	uint64_t pageins;
 	size_t len;
 
 	len = sizeof(pageins);
 	if (sysctlbyname("vm.stats.vm.v_swappgsin", &pageins, &len, NULL, 0)
 	    != 0) {
-		warnx("v_swappgsin");
+		warn("v_swappgsin");
 		return (0);
 	}
-	return pageins;
+	return (pageins);
 }

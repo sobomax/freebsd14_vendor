@@ -1,4 +1,3 @@
-# $FreeBSD: e59ca185b5102f8f432c8ecf975390dde03d7534 $
 
 .PATH:	${SRCTOP}/sys/xdr
 KMOD=	xdr

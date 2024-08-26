@@ -17,7 +17,6 @@
  * information: Portions Copyright [yyyy] [name of copyright owner]
  *
  * CDDL HEADER END
- * $FreeBSD: c6ebb22b3d385621d20321a06d0a7892cf1a5fa5 $
  */
 
 /*

@@ -34,7 +34,6 @@
  * SUCH DAMAGE.
  *
  *	from: vector.s, 386BSD 0.1 unknown origin
- * $FreeBSD: 4de39283f92fa4d5ed1a35bd5fd92b8bb888f8dc $
  */
 
 /*
@@ -81,7 +80,7 @@ as_lapic_eoi:
  */
 	.macro	ISR_VEC	index, vec_name
 	INTR_HANDLER	\vec_name
-	FAKE_MCOUNT(TF_RIP(%rsp))
+	KMSAN_ENTER
 	cmpl	$0,x2apic_mode
 	je	1f
 	movl	$(MSR_APIC_ISR0 + \index),%ecx
@@ -98,7 +97,7 @@ as_lapic_eoi:
 	movl	%eax, %edi	/* pass the IRQ */
 	call	lapic_handle_intr
 3:
-	MEXITCOUNT
+	KMSAN_LEAVE
 	jmp	doreti
 	.endm
 
@@ -127,28 +126,28 @@ IDTVEC(spuriousint)
  * Local APIC periodic timer handler.
  */
 	INTR_HANDLER	timerint
-	FAKE_MCOUNT(TF_RIP(%rsp))
+	KMSAN_ENTER
 	movq	%rsp, %rdi
 	call	lapic_handle_timer
-	MEXITCOUNT
+	KMSAN_LEAVE
 	jmp	doreti
 
 /*
  * Local APIC CMCI handler.
  */
 	INTR_HANDLER cmcint
-	FAKE_MCOUNT(TF_RIP(%rsp))
+	KMSAN_ENTER
 	call	lapic_handle_cmc
-	MEXITCOUNT
+	KMSAN_LEAVE
 	jmp	doreti
 
 /*
  * Local APIC error interrupt handler.
  */
 	INTR_HANDLER errorint
-	FAKE_MCOUNT(TF_RIP(%rsp))
+	KMSAN_ENTER
 	call	lapic_handle_error
-	MEXITCOUNT
+	KMSAN_LEAVE
 	jmp	doreti
 
 #ifdef XENHVM
@@ -157,10 +156,10 @@ IDTVEC(spuriousint)
  * Only used when the hypervisor supports direct vector callbacks.
  */
 	INTR_HANDLER xen_intr_upcall
-	FAKE_MCOUNT(TF_RIP(%rsp))
+	KMSAN_ENTER
 	movq	%rsp, %rdi
-	call	xen_intr_handle_upcall
-	MEXITCOUNT
+	call	xen_arch_intr_handle_upcall
+	KMSAN_LEAVE
 	jmp	doreti
 #endif
 
@@ -175,8 +174,10 @@ IDTVEC(spuriousint)
  * IPI handler for cache and TLB shootdown
  */
 	INTR_HANDLER invlop
+	KMSAN_ENTER
 	call	invlop_handler
 	call	as_lapic_eoi
+	KMSAN_LEAVE
 	jmp	ld_regs
 
 /*
@@ -184,9 +185,9 @@ IDTVEC(spuriousint)
  */
 	INTR_HANDLER ipi_intr_bitmap_handler
 	call	as_lapic_eoi
-	FAKE_MCOUNT(TF_RIP(%rsp))
+	KMSAN_ENTER
 	call	ipi_bitmap_handler
-	MEXITCOUNT
+	KMSAN_LEAVE
 	jmp	doreti
 
 /*
@@ -194,15 +195,19 @@ IDTVEC(spuriousint)
  */
 	INTR_HANDLER cpustop
 	call	as_lapic_eoi
+	KMSAN_ENTER
 	call	cpustop_handler
+	KMSAN_LEAVE
 	jmp	doreti
 
 /*
  * Executed by a CPU when it receives an IPI_SUSPEND from another CPU.
  */
 	INTR_HANDLER cpususpend
+	KMSAN_ENTER
 	call	cpususpend_handler
 	call	as_lapic_eoi
+	KMSAN_LEAVE
 	jmp	doreti
 
 /*
@@ -210,9 +215,9 @@ IDTVEC(spuriousint)
  */
 	INTR_HANDLER ipi_swi
 	call	as_lapic_eoi
-	FAKE_MCOUNT(TF_RIP(%rsp))
+	KMSAN_ENTER
 	call	ipi_swi_handler
-	MEXITCOUNT
+	KMSAN_LEAVE
 	jmp	doreti
 
 /*
@@ -226,8 +231,10 @@ IDTVEC(spuriousint)
 	movq	ipi_rendezvous_counts(,%rax,8), %rax
 	incq	(%rax)
 #endif
+	KMSAN_ENTER
 	call	smp_rendezvous_action
 	call	as_lapic_eoi
+	KMSAN_LEAVE
 	jmp	doreti
 
 /*

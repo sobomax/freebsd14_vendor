@@ -28,8 +28,6 @@
  * POSSIBILITY OF SUCH DAMAGES.
  *
  * Authors: Alan Somers         (Spectra Logic Corporation)
- *
- * $FreeBSD: 42d326f19e3fb21d41a42f4cd94a44bb0a7a0a68 $
  */
 
 /**
@@ -47,8 +45,6 @@
 #include <string>
 
 #include "guid.h"
-
-__FBSDID("$FreeBSD: 42d326f19e3fb21d41a42f4cd94a44bb0a7a0a68 $");
 /*============================ Namespace Control =============================*/
 using std::string;
 namespace DevdCtl

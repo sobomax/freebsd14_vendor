@@ -30,7 +30,6 @@
 # SUCH DAMAGE.
 #
 #	@(#)suspend	8.2 (Berkeley) 5/4/95
-# $FreeBSD: aaa2f7370cde1d5f64469d093717d7cc9a992981 $
 
 suspend() {
 	local -

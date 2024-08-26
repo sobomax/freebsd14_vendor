@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 1999-2001, 2008 Robert N. M. Watson
  * All rights reserved.
@@ -30,9 +30,6 @@
  * These calls are intended only to be called within the library.
  */
 
-#include <sys/cdefs.h>
-__FBSDID("$FreeBSD: bb09d119f9882a9b33071c3d121fa7bc2ba6c91e $");
-
 #include <sys/types.h>
 #include "namespace.h"
 #include <sys/acl.h>
@@ -62,8 +59,6 @@ _acl_differs(const acl_t a, const acl_t b)
 	struct acl_entry *entrya, *entryb;
 
 	assert(_acl_brand(a) == _acl_brand(b));
-	assert(_acl_brand(a) != ACL_BRAND_UNKNOWN);
-	assert(_acl_brand(b) != ACL_BRAND_UNKNOWN);
 
 	if (a->ats_acl.acl_cnt != b->ats_acl.acl_cnt)
 		return (1);

@@ -1,4 +1,3 @@
-# $FreeBSD: 9f18bc1c6353c6d566df81a99e3a8f1667c8d448 $
 
 PROG_CXX=	clang-tblgen
 MAN=
@@ -25,4 +24,8 @@ SRCS+=		RISCVVEmitter.cpp
 SRCS+=		SveEmitter.cpp
 SRCS+=		TableGen.cpp
 
-.include "../llvm.prog.mk"
+.include "${SRCTOP}/lib/clang/clang.pre.mk"
+
+CFLAGS.RISCVVEmitter.cpp+=	-I${CLANG_SRCS}/include
+
+.include "../clang.prog.mk"

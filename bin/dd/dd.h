@@ -33,7 +33,6 @@
  * SUCH DAMAGE.
  *
  *	@(#)dd.h	8.3 (Berkeley) 4/2/94
- * $FreeBSD: ea606f288f3f5ebc01c679807e5930473d17802c $
  */
 
 /* Input/output stream state. */

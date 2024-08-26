@@ -11,9 +11,6 @@
  * From: @(#)s_floor.c 5.1 93/09/24
  */
 
-#include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 6cec3e781cd2638f81e1134220fedf2b4964e8da $");
-
 /*
  * floorl(x)
  * Return x rounded toward -inf to integral value

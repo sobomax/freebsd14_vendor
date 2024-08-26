@@ -1,7 +1,6 @@
-# $FreeBSD: c59a5600923ed6e7a44f706a4a10dbbcaa1c9bf6 $
-# $Id: dirdeps-options.mk,v 1.17 2020/08/07 01:57:38 sjg Exp $
+# $Id: dirdeps-options.mk,v 1.21 2022/09/06 22:18:45 sjg Exp $
 #
-#	@(#) Copyright (c) 2018-2020, Simon J. Gerraty
+#	@(#) Copyright (c) 2018-2022, Simon J. Gerraty
 #
 #	This file is provided in the hope that it will
 #	be of use.  There is absolutely NO WARRANTY.
@@ -43,6 +42,13 @@
 # so we qualify MK_FOO with .${TARGET_SPEC} and each component
 # TARGET_SPEC_VAR (in reverse order) before using MK_FOO.
 #
+# Because Makefile.depend.options are processed at both level 0 (when
+# computing DIRDEPS to build) and higher (when updating
+# Makefile.depend* after successful build), it is important that 
+# all references to TARGET_SPEC_VARs should use the syntax
+# ${DEP_${TARGET_SPEC_VAR}:U${TARGET_SPEC_VAR}} to ensure correct
+# behavior.
+#
 
 # This should have been set by Makefile.depend.options
 # before including us
@@ -55,13 +61,17 @@ DIRDEPS_OPTIONS ?=
 # :U below avoids potential errors when we :=
 # some options can depend on TARGET_SPEC!
 DIRDEPS_OPTIONS_QUALIFIER_LIST ?= \
+	${DEP_RELDIR} \
 	${DEP_TARGET_SPEC:U${TARGET_SPEC}} \
 	${TARGET_SPEC_VARSr:U${TARGET_SPEC_VARS}:@v@${DEP_$v:U${$v}}@}
 # note that we need to include $o in the variable _o$o
 # to ensure correct evaluation.
 .for o in ${DIRDEPS_OPTIONS}
-.undef _o$o _v$o
-.for x in ${DIRDEPS_OPTIONS_QUALIFIER_LIST}
+.undef _o$o
+.undef _v$o
+.for x in ${DIRDEPS_OPTIONS_QUALIFIER_LIST:S,^,${DEP_RELDIR}.,} \
+	${DIRDEPS_OPTIONS_QUALIFIER_LIST}
+#.info MK_$o.$x=${MK_$o.$x:Uundefined}
 .if defined(MK_$o.$x)
 _o$o ?= MK_$o.$x
 _v$o ?= ${MK_$o.$x}

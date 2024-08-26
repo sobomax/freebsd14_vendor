@@ -25,7 +25,7 @@
  */
 
 #include <machine/asm.h>
-__FBSDID("$FreeBSD: a85b6b242a41467abd11b97386a9fb21715013aa $");
+#include <sys/elf_common.h>
 
 ENTRY(cerror)
 	.hidden	cerror
@@ -39,3 +39,5 @@ ENTRY(cerror)
 	add	sp, sp, #16
 	ret
 END(cerror)
+
+GNU_PROPERTY_AARCH64_FEATURE_1_NOTE(GNU_PROPERTY_AARCH64_FEATURE_1_VAL)

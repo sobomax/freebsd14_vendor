@@ -34,7 +34,6 @@
  * SUCH DAMAGE.
  *
  *	@(#)pwd.h	8.2 (Berkeley) 1/21/94
- * $FreeBSD: 1548400b7eb8ea26812cbd4fdbffb014d1d28e53 $
  */
 
 #ifndef _PWD_H_

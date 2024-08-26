@@ -1,5 +1,4 @@
 #
-# $FreeBSD: 88f9e47ccced7fa7226b1b063ba8558150376e27 $
 #
 # Regression test for geom_uzip.
 #

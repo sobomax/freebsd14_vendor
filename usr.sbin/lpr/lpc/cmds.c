@@ -43,8 +43,6 @@ static char sccsid[] = "@(#)cmds.c	8.2 (Berkeley) 4/28/95";
 #endif
 
 #include "lp.cdefs.h"		/* A cross-platform version of <sys/cdefs.h> */
-__FBSDID("$FreeBSD: 0fb2e676f6a775fbc6ffa12ca9a751686fd4bf37 $");
-
 /*
  * lpc -- line printer control program -- commands:
  */
@@ -94,7 +92,7 @@ static void	 wrapup_clean(int _laststatus);
  */
 enum	qsel_val {			/* how a given ptr was selected */
 	QSEL_UNKNOWN = -1,		/* ... not selected yet */
-	QSEL_BYNAME = 0,		/* ... user specifed it by name */
+	QSEL_BYNAME = 0,		/* ... user specified it by name */
 	QSEL_ALL = 1			/* ... user wants "all" printers */
 					/*     (with more to come)    */
 };
@@ -644,8 +642,6 @@ clean_gi(int argc, char *argv[])
 			generic_initerr = 1;
 		}
 	}
-
-	return;
 }
 
 void
@@ -656,8 +652,6 @@ tclean_gi(int argc, char *argv[])
 	/* (...and the fact that 'clean' is priv and 'tclean' is not) */
 	clean_gi(argc, argv);
 	cln_testonly = 1;
-
-	return;
 }
 
 void

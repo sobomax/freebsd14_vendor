@@ -1,4 +1,3 @@
-$ $FreeBSD: 56bd038aca48e9366b79a3e4891a1291fdcac25b $
 $
 $ Message catalog for be_BY.UTF-8 locale
 $

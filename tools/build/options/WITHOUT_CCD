@@ -1,4 +1,3 @@
-.\" $FreeBSD: c6c47e61c1e67aca0a170b47e62b9f525ad764c5 $
 Do not build
 .Xr geom_ccd 4
 and related utilities.

@@ -1,4 +1,3 @@
-# $FreeBSD: e0ed581f85eff6a28a8dfdcbcb46261514a2e171 $
 
 # This may fail when parsing or when defining the function, or the definition
 # may silently do nothing. In no event may the function be executed.

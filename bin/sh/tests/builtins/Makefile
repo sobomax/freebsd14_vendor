@@ -1,4 +1,3 @@
-# $FreeBSD: 7f8615d5cc1be99587dcd4c3d1f41474e44ff70e $
 
 PACKAGE=	tests
 
@@ -142,6 +141,8 @@ ${PACKAGE}FILES+=		read6.0
 ${PACKAGE}FILES+=		read7.0
 ${PACKAGE}FILES+=		read8.0
 ${PACKAGE}FILES+=		read9.0
+${PACKAGE}FILES+=		read10.0
+${PACKAGE}FILES+=		read11.0
 ${PACKAGE}FILES+=		return1.0
 ${PACKAGE}FILES+=		return2.1
 ${PACKAGE}FILES+=		return3.1

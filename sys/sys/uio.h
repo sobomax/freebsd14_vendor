@@ -29,7 +29,6 @@
  * SUCH DAMAGE.
  *
  *	@(#)uio.h	8.5 (Berkeley) 2/22/94
- * $FreeBSD: ae07a074d46ab3ccd4e7f414e20434da61c8d9f8 $
  */
 
 #ifndef _SYS_UIO_H_
@@ -79,6 +78,8 @@ struct vm_object;
 struct vm_page;
 struct bus_dma_segment;
 
+struct uio *allocuio(u_int iovcnt);
+void	freeuio(struct uio *uio);
 struct uio *cloneuio(struct uio *uiop);
 int	copyiniov(const struct iovec *iovp, u_int iovcnt, struct iovec **iov,
 	    int error);

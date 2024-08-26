@@ -1,3 +1,2 @@
-# $FreeBSD: 6b1d366b2e7ad73686cc2b4ea30d53bfff3050e7 $
 
 ! echo echo bad | ENV= $SH -ic 'fi' 2>/dev/null

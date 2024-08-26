@@ -25,8 +25,6 @@
  * THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- *
- * $FreeBSD: f1bec0efeee8dd1209b267bf40a345e0092947ff $
  */
 
 #ifndef _LINUXKPI_LINUX_LOCKDEP_H_
@@ -52,6 +50,9 @@ struct pin_cookie {
 #define	lockdep_unregister_key(key) do { } while(0)
 
 #ifdef INVARIANTS
+#define	lockdep_assert(cond) do { WARN_ON(!cond); } while (0)
+#define	lockdep_assert_once(cond) do { WARN_ON_ONCE(!cond); } while (0)
+
 #define	lockdep_assert_not_held(m) do {					\
 	struct lock_object *__lock = (struct lock_object *)(m);		\
 	LOCK_CLASS(__lock)->lc_assert(__lock, LA_UNLOCKED);		\
@@ -81,6 +82,9 @@ lockdep_is_held(void *__m)
 #define	lockdep_is_held_type(_m, _t) lockdep_is_held(_m)
 
 #else
+#define	lockdep_assert(cond) do { } while (0)
+#define	lockdep_assert_once(cond) do { } while (0)
+
 #define	lockdep_assert_not_held(m) do { (void)(m); } while (0)
 #define	lockdep_assert_held(m) do { (void)(m); } while (0)
 #define	lockdep_assert_none_held_once() do { } while (0)
@@ -102,12 +106,12 @@ lockdep_is_held(void *__m)
 #define	mutex_acquire(...) do { } while (0)
 #define	mutex_release(...) do { } while (0)
 
-#define	lockdep_pin_lock(l) ({ struct pin_cookie __pc = { }; __pc; })
-#define	lockdep_repin_lock(l,c) do { (void)(l); (void)(c); } while (0)
-#define	lockdep_unpin_lock(l,c) do { (void)(l); (void)(c); } while (0)
-
 #define	lock_map_acquire(_map) do { } while (0)
 #define	lock_map_acquire_read(_map) do { } while (0)
 #define	lock_map_release(_map) do { } while (0)
+
+#define	lockdep_pin_lock(l) ({ struct pin_cookie __pc = { }; __pc; })
+#define	lockdep_repin_lock(l,c) do { (void)(l); (void)(c); } while (0)
+#define	lockdep_unpin_lock(l,c) do { (void)(l); (void)(c); } while (0)
 
 #endif /* _LINUXKPI_LINUX_LOCKDEP_H_ */

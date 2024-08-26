@@ -1,4 +1,3 @@
-# $FreeBSD: 4b8ff3db1397cb14bfa3977db61f685b50e2a944 $
 
 .PATH: ${SRCTOP}/sys/dev/pst
 

@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2022 Alexander V. Chernikov <melifaro@FreeBSD.org>
  *
@@ -26,7 +26,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 6573394eb88188cda80290fdbcd961fee397a2c5 $");
 #include <sys/param.h>
 #include <sys/malloc.h>
 #include <sys/lock.h>
@@ -45,13 +44,13 @@ __FBSDID("$FreeBSD: 6573394eb88188cda80290fdbcd961fee397a2c5 $");
 #define	DEBUG_MOD_NAME	nl_writer
 #define	DEBUG_MAX_LEVEL	LOG_DEBUG3
 #include <netlink/netlink_debug.h>
-_DECLARE_DEBUG(LOG_DEBUG);
+_DECLARE_DEBUG(LOG_INFO);
 
 /*
  * The goal of this file is to provide convenient message writing KPI on top of
  * different storage methods (mbufs, uio, temporary memory chunks).
  *
- * The main KPI guarantee is the the (last) message always resides in the contiguous
+ * The main KPI guarantee is that the (last) message always resides in the contiguous
  *  memory buffer, so one is able to update the header after writing the entire message.
  *
  * This guarantee comes with a side effect of potentially reallocating underlying
@@ -67,7 +66,7 @@ _DECLARE_DEBUG(LOG_DEBUG);
  *
  * There are 3 types of storage:
  * * NS_WRITER_TYPE_MBUF (mbuf-based, most efficient, used when a single message
- *    fits in MCLBYTES)
+ *    fits in NLMBUFSIZE)
  * * NS_WRITER_TYPE_BUF (fallback, malloc-based, used when a single message needs
  *    to be larger than one supported by NS_WRITER_TYPE_MBUF)
  * * NS_WRITER_TYPE_LBUF (malloc-based, similar to NS_WRITER_TYPE_BUF, used for
@@ -76,6 +75,103 @@ _DECLARE_DEBUG(LOG_DEBUG);
  * Internally, KPI switches between different types of storage when memory requirements
  *  change. It happens transparently to the caller.
  */
+
+/*
+ * Uma zone for the mbuf-based Netlink storage
+ */
+static uma_zone_t	nlmsg_zone;
+
+static void
+nl_free_mbuf_storage(struct mbuf *m)
+{
+	uma_zfree(nlmsg_zone, m->m_ext.ext_buf);
+}
+
+static int
+nl_setup_mbuf_storage(void *mem, int size, void *arg, int how __unused)
+{
+	struct mbuf *m = (struct mbuf *)arg;
+
+	if (m != NULL)
+		m_extadd(m, mem, size, nl_free_mbuf_storage, NULL, NULL, 0, EXT_MOD_TYPE);
+
+	return (0);
+}
+
+static struct mbuf *
+nl_get_mbuf_flags(int size, int malloc_flags, int mbuf_flags)
+{
+	struct mbuf *m, *m_storage;
+
+	if (size <= MHLEN)
+		return (m_get2(size, malloc_flags, MT_DATA, mbuf_flags));
+
+	if (__predict_false(size > NLMBUFSIZE))
+		return (NULL);
+
+	m = m_gethdr(malloc_flags, MT_DATA);
+	if (m == NULL)
+		return (NULL);
+
+	m_storage = uma_zalloc_arg(nlmsg_zone, m, malloc_flags);
+	if (m_storage == NULL) {
+		m_free_raw(m);
+		return (NULL);
+	}
+
+	return (m);
+}
+
+static struct mbuf *
+nl_get_mbuf(int size, int malloc_flags)
+{
+	return (nl_get_mbuf_flags(size, malloc_flags, M_PKTHDR));
+}
+
+/*
+ * Gets a chain of Netlink mbufs.
+ * This is strip-down version of m_getm2()
+ */
+static struct mbuf *
+nl_get_mbuf_chain(int len, int malloc_flags)
+{
+	struct mbuf *m_chain = NULL, *m_tail = NULL;
+	int mbuf_flags = M_PKTHDR;
+
+	while (len > 0) {
+		int sz = len > NLMBUFSIZE ? NLMBUFSIZE: len;
+		struct mbuf *m = nl_get_mbuf_flags(sz, malloc_flags, mbuf_flags);
+
+		if (m == NULL) {
+			m_freem(m_chain);
+			return (NULL);
+		}
+
+		/* Book keeping. */
+		len -= M_SIZE(m);
+		if (m_tail != NULL)
+			m_tail->m_next = m;
+		else
+			m_chain = m;
+		m_tail = m;
+		mbuf_flags &= ~M_PKTHDR;	/* Only valid on the first mbuf. */
+	}
+
+	return (m_chain);
+}
+
+void
+nl_init_msg_zone(void)
+{
+	nlmsg_zone = uma_zcreate("netlink", NLMBUFSIZE, nl_setup_mbuf_storage,
+	    NULL, NULL, NULL, UMA_ALIGN_PTR, 0);
+}
+
+void
+nl_destroy_msg_zone(void)
+{
+	uma_zdestroy(nlmsg_zone);
+}
 
 
 typedef bool nlwriter_op_init(struct nl_writer *nw, int size, bool waitok);
@@ -114,13 +210,13 @@ nlmsg_get_ns_buf(struct nl_writer *nw, int size, bool waitok)
 static bool
 nlmsg_write_socket_buf(struct nl_writer *nw, void *buf, int datalen, int cnt)
 {
-	NL_LOG(LOG_DEBUG2, "IN: ptr: %p len: %d arg: %p", buf, datalen, nw);
+	NL_LOG(LOG_DEBUG2, "IN: ptr: %p len: %d arg: %p", buf, datalen, nw->arg.ptr);
 	if (__predict_false(datalen == 0)) {
 		free(buf, M_NETLINK);
 		return (true);
 	}
 
-	struct mbuf *m = m_getm2(NULL, datalen, nw->malloc_flag, MT_DATA, M_PKTHDR);
+	struct mbuf *m = nl_get_mbuf_chain(datalen, nw->malloc_flag);
 	if (__predict_false(m == NULL)) {
 		/* XXX: should we set sorcverr? */
 		free(buf, M_NETLINK);
@@ -130,19 +226,20 @@ nlmsg_write_socket_buf(struct nl_writer *nw, void *buf, int datalen, int cnt)
 	free(buf, M_NETLINK);
 
 	int io_flags = (nw->ignore_limit) ? NL_IOF_IGNORE_LIMIT : 0;
-        return (nl_send_one(m, (struct nlpcb *)(nw->arg_ptr), cnt, io_flags));
+	return (nl_send_one(m, (struct nlpcb *)(nw->arg.ptr), cnt, io_flags));
 }
 
 static bool
 nlmsg_write_group_buf(struct nl_writer *nw, void *buf, int datalen, int cnt)
 {
-	NL_LOG(LOG_DEBUG2, "IN: ptr: %p len: %d arg: %p", buf, datalen, nw->arg_ptr);
+	NL_LOG(LOG_DEBUG2, "IN: ptr: %p len: %d proto: %d id: %d", buf, datalen,
+	    nw->arg.group.proto, nw->arg.group.id);
 	if (__predict_false(datalen == 0)) {
 		free(buf, M_NETLINK);
 		return (true);
 	}
 
-	struct mbuf *m = m_getm2(NULL, datalen, nw->malloc_flag, MT_DATA, M_PKTHDR);
+	struct mbuf *m = nl_get_mbuf_chain(datalen, nw->malloc_flag);
 	if (__predict_false(m == NULL)) {
 		free(buf, M_NETLINK);
 		return (false);
@@ -153,15 +250,15 @@ nlmsg_write_group_buf(struct nl_writer *nw, void *buf, int datalen, int cnt)
 	if (!success)
 		return (false);
 
-        nl_send_group(m, cnt, nw->arg_uint >> 16, nw->arg_uint & 0xFFFF);
+	nl_send_group(m, cnt, nw->arg.group.proto, nw->arg.group.id);
 	return (true);
 }
 
 static bool
 nlmsg_write_chain_buf(struct nl_writer *nw, void *buf, int datalen, int cnt)
 {
-	struct mbuf **m0 = (struct mbuf **)(nw->arg_ptr);
-	NL_LOG(LOG_DEBUG2, "IN: ptr: %p len: %d arg: %p", buf, datalen, nw->arg_ptr);
+	struct mbuf **m0 = (struct mbuf **)(nw->arg.ptr);
+	NL_LOG(LOG_DEBUG2, "IN: ptr: %p len: %d arg: %p", buf, datalen, nw->arg.ptr);
 
 	if (__predict_false(datalen == 0)) {
 		free(buf, M_NETLINK);
@@ -169,9 +266,8 @@ nlmsg_write_chain_buf(struct nl_writer *nw, void *buf, int datalen, int cnt)
 	}
 
 	if (*m0 == NULL) {
-		struct mbuf *m;
+		struct mbuf *m = nl_get_mbuf_chain(datalen, nw->malloc_flag);
 
-		m = m_getm2(NULL, datalen, nw->malloc_flag, MT_DATA, M_PKTHDR);
 		if (__predict_false(m == NULL)) {
 			free(buf, M_NETLINK);
 			return (false);
@@ -182,7 +278,7 @@ nlmsg_write_chain_buf(struct nl_writer *nw, void *buf, int datalen, int cnt)
 		free(buf, M_NETLINK);
 		return (false);
 	}
-        return (true);
+	return (true);
 }
 
 
@@ -193,22 +289,21 @@ nlmsg_write_chain_buf(struct nl_writer *nw, void *buf, int datalen, int cnt)
  * This is the most efficient mechanism as it avoids double-copying.
  *
  * Allocates a single mbuf suitable to store up to @size bytes of data.
- * If size < MHLEN (around 160 bytes), allocates mbuf with pkghdr
- * If size <= MCLBYTES (2k), allocate a single mbuf cluster
- * Otherwise, return NULL.
+ * If size < MHLEN (around 160 bytes), allocates mbuf with pkghdr.
+ * If the size <= NLMBUFSIZE (2k), allocate mbuf+storage out of nlmsg_zone.
+ * Returns NULL on greater size or the allocation failure.
  */
 static bool
 nlmsg_get_ns_mbuf(struct nl_writer *nw, int size, bool waitok)
 {
-	struct mbuf *m;
-
 	int mflag = waitok ? M_WAITOK : M_NOWAIT;
-        m = m_get2(size, mflag, MT_DATA, M_PKTHDR);
-        if (__predict_false(m == NULL))
-                return (false);
-        nw->alloc_len = M_TRAILINGSPACE(m);
-        nw->offset = 0;
-        nw->hdr = NULL;
+	struct mbuf *m = nl_get_mbuf(size, mflag);
+
+	if (__predict_false(m == NULL))
+		return (false);
+	nw->alloc_len = M_TRAILINGSPACE(m);
+	nw->offset = 0;
+	nw->hdr = NULL;
 	nw->_storage = (void *)m;
 	nw->data = mtod(m, void *);
 	nw->writer_type = NS_WRITER_TYPE_MBUF;
@@ -216,16 +311,16 @@ nlmsg_get_ns_mbuf(struct nl_writer *nw, int size, bool waitok)
 	nw->num_messages = 0;
 	nw->enomem = false;
 	memset(nw->data, 0, size);
-        NL_LOG(LOG_DEBUG2, "alloc mbuf %p req_len %d alloc_len %d data_ptr %p",
-            m, size, nw->alloc_len, nw->data);
-        return (true);
+	NL_LOG(LOG_DEBUG2, "alloc mbuf %p req_len %d alloc_len %d data_ptr %p",
+	    m, size, nw->alloc_len, nw->data);
+	return (true);
 }
 
 static bool
 nlmsg_write_socket_mbuf(struct nl_writer *nw, void *buf, int datalen, int cnt)
 {
 	struct mbuf *m = (struct mbuf *)buf;
-	NL_LOG(LOG_DEBUG2, "IN: ptr: %p len: %d arg: %p", buf, datalen, nw->arg_ptr);
+	NL_LOG(LOG_DEBUG2, "IN: ptr: %p len: %d arg: %p", buf, datalen, nw->arg.ptr);
 
 	if (__predict_false(datalen == 0)) {
 		m_freem(m);
@@ -235,14 +330,15 @@ nlmsg_write_socket_mbuf(struct nl_writer *nw, void *buf, int datalen, int cnt)
 	m->m_pkthdr.len = datalen;
 	m->m_len = datalen;
 	int io_flags = (nw->ignore_limit) ? NL_IOF_IGNORE_LIMIT : 0;
-        return (nl_send_one(m, (struct nlpcb *)(nw->arg_ptr), cnt, io_flags));
+	return (nl_send_one(m, (struct nlpcb *)(nw->arg.ptr), cnt, io_flags));
 }
 
 static bool
 nlmsg_write_group_mbuf(struct nl_writer *nw, void *buf, int datalen, int cnt)
 {
 	struct mbuf *m = (struct mbuf *)buf;
-	NL_LOG(LOG_DEBUG2, "IN: ptr: %p len: %d arg: %p", buf, datalen, nw->arg_ptr);
+	NL_LOG(LOG_DEBUG2, "IN: ptr: %p len: %d proto: %d id: %d", buf, datalen,
+	    nw->arg.group.proto, nw->arg.group.id);
 
 	if (__predict_false(datalen == 0)) {
 		m_freem(m);
@@ -251,7 +347,7 @@ nlmsg_write_group_mbuf(struct nl_writer *nw, void *buf, int datalen, int cnt)
 
 	m->m_pkthdr.len = datalen;
 	m->m_len = datalen;
-        nl_send_group(m, cnt, nw->arg_uint >> 16, nw->arg_uint & 0xFFFF);
+	nl_send_group(m, cnt, nw->arg.group.proto, nw->arg.group.id);
 	return (true);
 }
 
@@ -259,9 +355,9 @@ static bool
 nlmsg_write_chain_mbuf(struct nl_writer *nw, void *buf, int datalen, int cnt)
 {
 	struct mbuf *m_new = (struct mbuf *)buf;
-	struct mbuf **m0 = (struct mbuf **)(nw->arg_ptr);
+	struct mbuf **m0 = (struct mbuf **)(nw->arg.ptr);
 
-	NL_LOG(LOG_DEBUG2, "IN: ptr: %p len: %d arg: %p", buf, datalen, nw->arg_ptr);
+	NL_LOG(LOG_DEBUG2, "IN: ptr: %p len: %d arg: %p", buf, datalen, nw->arg.ptr);
 
 	if (__predict_false(datalen == 0)) {
 		m_freem(m_new);
@@ -281,7 +377,7 @@ nlmsg_write_chain_mbuf(struct nl_writer *nw, void *buf, int datalen, int cnt)
 		(*m0)->m_pkthdr.len += datalen;
 	}
 
-        return (true);
+	return (true);
 }
 
 /*
@@ -317,13 +413,12 @@ nlmsg_get_ns_lbuf(struct nl_writer *nw, int size, bool waitok)
 	return (true);
 }
 
-
 static bool
 nlmsg_write_socket_lbuf(struct nl_writer *nw, void *buf, int datalen, int cnt)
 {
 	struct linear_buffer *lb = (struct linear_buffer *)buf;
 	char *data = (char *)(lb + 1);
-	struct nlpcb *nlp = (struct nlpcb *)(nw->arg_ptr);
+	struct nlpcb *nlp = (struct nlpcb *)(nw->arg.ptr);
 
 	if (__predict_false(datalen == 0)) {
 		free(buf, M_NETLINK);
@@ -341,7 +436,7 @@ nlmsg_write_socket_lbuf(struct nl_writer *nw, void *buf, int datalen, int cnt)
 	}
 
 	int io_flags = (nw->ignore_limit) ? NL_IOF_IGNORE_LIMIT : 0;
-        return (nl_send_one(m, nlp, cnt, io_flags));
+	return (nl_send_one(m, nlp, cnt, io_flags));
 }
 
 /* Shouldn't be called (maybe except Linux code originating message) */
@@ -356,7 +451,7 @@ nlmsg_write_group_lbuf(struct nl_writer *nw, void *buf, int datalen, int cnt)
 		return (true);
 	}
 
-	struct mbuf *m = m_getm2(NULL, datalen, nw->malloc_flag, MT_DATA, M_PKTHDR);
+	struct mbuf *m = nl_get_mbuf_chain(datalen, nw->malloc_flag);
 	if (__predict_false(m == NULL)) {
 		free(buf, M_NETLINK);
 		return (false);
@@ -364,11 +459,11 @@ nlmsg_write_group_lbuf(struct nl_writer *nw, void *buf, int datalen, int cnt)
 	m_append(m, datalen, data);
 	free(buf, M_NETLINK);
 
-        nl_send_group(m, cnt, nw->arg_uint >> 16, nw->arg_uint & 0xFFFF);
+	nl_send_group(m, cnt, nw->arg.group.proto, nw->arg.group.id);
 	return (true);
 }
 
-struct nlwriter_ops nlmsg_writers[] = {
+static const struct nlwriter_ops nlmsg_writers[] = {
 	/* NS_WRITER_TYPE_MBUF */
 	{
 		.init = nlmsg_get_ns_mbuf,
@@ -394,7 +489,7 @@ struct nlwriter_ops nlmsg_writers[] = {
 static void
 nlmsg_set_callback(struct nl_writer *nw)
 {
-	struct nlwriter_ops *pops = &nlmsg_writers[nw->writer_type];
+	const struct nlwriter_ops *pops = &nlmsg_writers[nw->writer_type];
 
 	switch (nw->writer_target) {
 	case NS_WRITER_TARGET_SOCKET:
@@ -425,7 +520,7 @@ nlmsg_get_buf(struct nl_writer *nw, int size, bool waitok, bool is_linux)
 	int type;
 
 	if (!is_linux) {
-		if (__predict_true(size <= MCLBYTES))
+		if (__predict_true(size <= NLMBUFSIZE))
 			type = NS_WRITER_TYPE_MBUF;
 		else
 			type = NS_WRITER_TYPE_BUF;
@@ -435,67 +530,68 @@ nlmsg_get_buf(struct nl_writer *nw, int size, bool waitok, bool is_linux)
 }
 
 bool
-nlmsg_get_unicast_writer(struct nl_writer *nw, int size, struct nlpcb *nlp)
+_nlmsg_get_unicast_writer(struct nl_writer *nw, int size, struct nlpcb *nlp)
 {
-        if (!nlmsg_get_buf(nw, size, false, nlp->nl_linux))
-                return (false);
-        nw->arg_ptr = (void *)nlp;
+	if (!nlmsg_get_buf(nw, size, false, nlp->nl_linux))
+		return (false);
+	nw->arg.ptr = (void *)nlp;
 	nw->writer_target = NS_WRITER_TARGET_SOCKET;
 	nlmsg_set_callback(nw);
-        return (true);
+	return (true);
 }
 
 bool
-nlmsg_get_group_writer(struct nl_writer *nw, int size, int protocol, int group_id)
+_nlmsg_get_group_writer(struct nl_writer *nw, int size, int protocol, int group_id)
 {
-        if (!nlmsg_get_buf(nw, size, false, false))
-                return (false);
-        nw->arg_uint = (uint64_t)protocol << 16 | (uint64_t)group_id;
+	if (!nlmsg_get_buf(nw, size, false, false))
+		return (false);
+	nw->arg.group.proto = protocol;
+	nw->arg.group.id = group_id;
 	nw->writer_target = NS_WRITER_TARGET_GROUP;
 	nlmsg_set_callback(nw);
-        return (true);
+	return (true);
 }
 
 bool
-nlmsg_get_chain_writer(struct nl_writer *nw, int size, struct mbuf **pm)
+_nlmsg_get_chain_writer(struct nl_writer *nw, int size, struct mbuf **pm)
 {
-        if (!nlmsg_get_buf(nw, size, false, false))
-                return (false);
+	if (!nlmsg_get_buf(nw, size, false, false))
+		return (false);
 	*pm = NULL;
-        nw->arg_ptr = (void *)pm;
+	nw->arg.ptr = (void *)pm;
 	nw->writer_target = NS_WRITER_TARGET_CHAIN;
 	nlmsg_set_callback(nw);
 	NL_LOG(LOG_DEBUG3, "setup cb %p (need %p)", nw->cb, &nlmsg_write_chain_mbuf);
-        return (true);
+	return (true);
 }
 
 void
-nlmsg_ignore_limit(struct nl_writer *nw)
+_nlmsg_ignore_limit(struct nl_writer *nw)
 {
 	nw->ignore_limit = true;
 }
 
 bool
-nlmsg_flush(struct nl_writer *nw)
+_nlmsg_flush(struct nl_writer *nw)
 {
 
-        if (__predict_false(nw->hdr != NULL)) {
-                /* Last message has not been completed, skip it. */
-                int completed_len = (char *)nw->hdr - nw->data;
+	if (__predict_false(nw->hdr != NULL)) {
+		/* Last message has not been completed, skip it. */
+		int completed_len = (char *)nw->hdr - nw->data;
 		/* Send completed messages */
 		nw->offset -= nw->offset - completed_len;
 		nw->hdr = NULL;
-        }
+	}
 
 	NL_LOG(LOG_DEBUG2, "OUT");
-        bool result = nw->cb(nw, nw->_storage, nw->offset, nw->num_messages);
-        nw->_storage = NULL;
+	bool result = nw->cb(nw, nw->_storage, nw->offset, nw->num_messages);
+	nw->_storage = NULL;
 
-        if (!result) {
-                NL_LOG(LOG_DEBUG, "nw %p offset %d: flush with %p() failed", nw, nw->offset, nw->cb);
-        }
+	if (!result) {
+		NL_LOG(LOG_DEBUG, "nw %p offset %d: flush with %p() failed", nw, nw->offset, nw->cb);
+	}
 
-        return (result);
+	return (result);
 }
 
 /*
@@ -504,10 +600,10 @@ nlmsg_flush(struct nl_writer *nw)
  * Return true on success.
  */
 bool
-nlmsg_refill_buffer(struct nl_writer *nw, int required_len)
+_nlmsg_refill_buffer(struct nl_writer *nw, int required_len)
 {
-        struct nl_writer ns_new = {};
-        int completed_len, new_len;
+	struct nl_writer ns_new = {};
+	int completed_len, new_len;
 
 	if (nw->enomem)
 		return (false);
@@ -515,14 +611,14 @@ nlmsg_refill_buffer(struct nl_writer *nw, int required_len)
 	NL_LOG(LOG_DEBUG3, "no space at offset %d/%d (want %d), trying to reclaim",
 	    nw->offset, nw->alloc_len, required_len);
 
-        /* Calculated new buffer size and allocate it s*/
+	/* Calculated new buffer size and allocate it s*/
 	completed_len = (nw->hdr != NULL) ? (char *)nw->hdr - nw->data : nw->offset;
-	if (completed_len > 0 && required_len < MCLBYTES) {
+	if (completed_len > 0 && required_len < NLMBUFSIZE) {
 		/* We already ran out of space, use the largest effective size */
-		new_len = max(nw->alloc_len, MCLBYTES);
+		new_len = max(nw->alloc_len, NLMBUFSIZE);
 	} else {
-		if (nw->alloc_len < MCLBYTES)
-			new_len = MCLBYTES;
+		if (nw->alloc_len < NLMBUFSIZE)
+			new_len = NLMBUFSIZE;
 		else
 			new_len = nw->alloc_len * 2;
 		while (new_len < required_len)
@@ -530,10 +626,10 @@ nlmsg_refill_buffer(struct nl_writer *nw, int required_len)
 	}
 	bool waitok = (nw->malloc_flag == M_WAITOK);
 	bool is_linux = (nw->writer_type == NS_WRITER_TYPE_LBUF);
-        if (!nlmsg_get_buf(&ns_new, new_len, waitok, is_linux)) {
+	if (!nlmsg_get_buf(&ns_new, new_len, waitok, is_linux)) {
 		nw->enomem = true;
 		NL_LOG(LOG_DEBUG, "getting new buf failed, setting ENOMEM");
-                return (false);
+		return (false);
 	}
 	if (nw->ignore_limit)
 		nlmsg_ignore_limit(&ns_new);
@@ -541,28 +637,28 @@ nlmsg_refill_buffer(struct nl_writer *nw, int required_len)
 	/* Update callback data */
 	ns_new.writer_target = nw->writer_target;
 	nlmsg_set_callback(&ns_new);
-	ns_new.arg_uint = nw->arg_uint;
+	ns_new.arg = nw->arg;
 
-        /* Copy last (unfinished) header to the new storage */
-        int last_len = nw->offset - completed_len;
+	/* Copy last (unfinished) header to the new storage */
+	int last_len = nw->offset - completed_len;
 	if (last_len > 0) {
 		memcpy(ns_new.data, nw->hdr, last_len);
 		ns_new.hdr = (struct nlmsghdr *)ns_new.data;
 		ns_new.offset = last_len;
 	}
 
-        NL_LOG(LOG_DEBUG2, "completed: %d bytes, copied: %d bytes", completed_len, last_len);
+	NL_LOG(LOG_DEBUG2, "completed: %d bytes, copied: %d bytes", completed_len, last_len);
 
-        /* Flush completed headers & switch to the new nw */
+	/* Flush completed headers & switch to the new nw */
 	nlmsg_flush(nw);
 	memcpy(nw, &ns_new, sizeof(struct nl_writer));
-        NL_LOG(LOG_DEBUG2, "switched buffer: used %d/%d bytes", nw->offset, nw->alloc_len);
+	NL_LOG(LOG_DEBUG2, "switched buffer: used %d/%d bytes", nw->offset, nw->alloc_len);
 
-        return (true);
+	return (true);
 }
 
 bool
-nlmsg_add(struct nl_writer *nw, uint32_t portid, uint32_t seq, uint16_t type,
+_nlmsg_add(struct nl_writer *nw, uint32_t portid, uint32_t seq, uint16_t type,
     uint16_t flags, uint32_t len)
 {
 	struct nlmsghdr *hdr;
@@ -570,27 +666,27 @@ nlmsg_add(struct nl_writer *nw, uint32_t portid, uint32_t seq, uint16_t type,
 	MPASS(nw->hdr == NULL);
 
 	int required_len = NETLINK_ALIGN(len + sizeof(struct nlmsghdr));
-        if (__predict_false(nw->offset + required_len > nw->alloc_len)) {
+	if (__predict_false(nw->offset + required_len > nw->alloc_len)) {
 		if (!nlmsg_refill_buffer(nw, required_len))
 			return (false);
-        }
+	}
 
-        hdr = (struct nlmsghdr *)(&nw->data[nw->offset]);
+	hdr = (struct nlmsghdr *)(&nw->data[nw->offset]);
 
-        hdr->nlmsg_len = len;
-        hdr->nlmsg_type = type;
-        hdr->nlmsg_flags = flags;
-        hdr->nlmsg_seq = seq;
-        hdr->nlmsg_pid = portid;
+	hdr->nlmsg_len = len;
+	hdr->nlmsg_type = type;
+	hdr->nlmsg_flags = flags;
+	hdr->nlmsg_seq = seq;
+	hdr->nlmsg_pid = portid;
 
-        nw->hdr = hdr;
-        nw->offset += sizeof(struct nlmsghdr);
+	nw->hdr = hdr;
+	nw->offset += sizeof(struct nlmsghdr);
 
-        return (true);
+	return (true);
 }
 
 bool
-nlmsg_end(struct nl_writer *nw)
+_nlmsg_end(struct nl_writer *nw)
 {
 	MPASS(nw->hdr != NULL);
 
@@ -600,22 +696,22 @@ nlmsg_end(struct nl_writer *nw)
 		return (false);
 	}
 
-        nw->hdr->nlmsg_len = (uint32_t)(nw->data + nw->offset - (char *)nw->hdr);
+	nw->hdr->nlmsg_len = (uint32_t)(nw->data + nw->offset - (char *)nw->hdr);
 	NL_LOG(LOG_DEBUG2, "wrote msg len: %u type: %d: flags: 0x%X seq: %u pid: %u",
 	    nw->hdr->nlmsg_len, nw->hdr->nlmsg_type, nw->hdr->nlmsg_flags,
 	    nw->hdr->nlmsg_seq, nw->hdr->nlmsg_pid);
-        nw->hdr = NULL;
+	nw->hdr = NULL;
 	nw->num_messages++;
 	return (true);
 }
 
 void
-nlmsg_abort(struct nl_writer *nw)
+_nlmsg_abort(struct nl_writer *nw)
 {
-        if (nw->hdr != NULL) {
-                nw->offset = (uint32_t)((char *)nw->hdr - nw->data);
-                nw->hdr = NULL;
-        }
+	if (nw->hdr != NULL) {
+		nw->offset = (uint32_t)((char *)nw->hdr - nw->data);
+		nw->hdr = NULL;
+	}
 }
 
 void
@@ -644,10 +740,6 @@ nlmsg_ack(struct nlpcb *nlp, int error, struct nlmsghdr *hdr,
 	if ((npt->err_msg || npt->err_off) && nlp->nl_flags & NLF_EXT_ACK)
 		nl_flags |= NLM_F_ACK_TLVS;
 
-	/*
-	 * TODO: handle cookies
-	 */
-
 	NL_LOG(LOG_DEBUG3, "acknowledging message type %d seq %d",
 	    hdr->nlmsg_type, hdr->nlmsg_seq);
 
@@ -663,6 +755,8 @@ nlmsg_ack(struct nlpcb *nlp, int error, struct nlmsghdr *hdr,
 		nlattr_add_string(nw, NLMSGERR_ATTR_MSG, npt->err_msg);
 	if (npt->err_off != 0 && nlp->nl_flags & NLF_EXT_ACK)
 		nlattr_add_u32(nw, NLMSGERR_ATTR_OFFS, npt->err_off);
+	if (npt->cookie != NULL)
+		nlattr_add_raw(nw, npt->cookie);
 
 	if (nlmsg_end(nw))
 		return;
@@ -673,7 +767,7 @@ enomem:
 }
 
 bool
-nlmsg_end_dump(struct nl_writer *nw, int error, struct nlmsghdr *hdr)
+_nlmsg_end_dump(struct nl_writer *nw, int error, struct nlmsghdr *hdr)
 {
 	if (!nlmsg_add(nw, hdr->nlmsg_pid, hdr->nlmsg_seq, NLMSG_DONE, 0, sizeof(int))) {
 		NL_LOG(LOG_DEBUG, "Error finalizing table dump");
@@ -689,3 +783,5 @@ nlmsg_end_dump(struct nl_writer *nw, int error, struct nlmsghdr *hdr)
 
 	return (true);
 }
+
+#include <netlink/ktest_netlink_message_writer.h>

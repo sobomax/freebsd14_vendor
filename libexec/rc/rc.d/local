@@ -1,6 +1,5 @@
 #!/bin/sh
 #
-# $FreeBSD: ba17a674ae9d485d3e419f55fcd56fea3aa0329a $
 #
 
 # PROVIDE: local
@@ -18,9 +17,9 @@ stop_cmd="local_stop"
 local_start()
 {
 	if [ -f /etc/rc.local ]; then
-		echo -n 'Starting local daemons:'
+		startmsg -n 'Starting local daemons:'
 		. /etc/rc.local
-		echo '.'
+		startmsg '.'
 	fi
 }
 

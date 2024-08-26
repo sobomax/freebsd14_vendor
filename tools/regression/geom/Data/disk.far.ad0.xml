@@ -1,7 +1,6 @@
 <?xml version="1.0"?>
 <DISKIMAGE>
   <comment>
-    $FreeBSD: 0a8d3ca9379b25600546155c07a143dcd38a6669 $
     A Windows laptop.
   </comment>
   <sectorsize>512</sectorsize>

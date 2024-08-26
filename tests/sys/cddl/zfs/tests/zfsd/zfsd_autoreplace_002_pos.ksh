@@ -20,8 +20,6 @@
 # CDDL HEADER END
 #
 
-# $FreeBSD: 64be3c05503e561bc60d2e00bcc1f8c3e1485c0e $
-
 #
 # Copyright 2013 Spectra Logic.  All rights reserved.
 # Use is subject to license terms.
@@ -83,6 +81,7 @@ for keyword in "${MY_KEYWORDS[@]}" ; do
 	log_must $ZPOOL set autoreplace=on $TESTPOOL
 
 	log_must destroy_gnop $REMOVAL_DISK
+	log_must wait_for_pool_removal 20
 	log_must create_gnop $NEW_DISK $PHYSPATH
 	verify_assertion
 	destroy_pool "$TESTPOOL"

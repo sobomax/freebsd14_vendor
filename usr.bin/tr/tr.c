@@ -29,9 +29,6 @@
  * SUCH DAMAGE.
  */
 
-#include <sys/cdefs.h>
-
-__FBSDID("$FreeBSD: 2d1baad2ac093b329749d672ae38a468160a59a1 $");
 
 #ifndef lint
 static const char copyright[] =
@@ -67,7 +64,7 @@ static STR s1 = { STRING1, NORMAL, 0, OOBCH, 0, { 0, OOBCH }, NULL, NULL };
 static STR s2 = { STRING2, NORMAL, 0, OOBCH, 0, { 0, OOBCH }, NULL, NULL };
 
 static struct cset *setup(char *, STR *, int, int);
-static void usage(void);
+static void usage(void) __dead2;
 
 int
 main(int argc, char **argv)

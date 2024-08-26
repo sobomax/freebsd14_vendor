@@ -1,6 +1,4 @@
 
-# $FreeBSD: d22d5a2fd7b709725c0b36bbb31d37c27b782e87 $
-
 .PATH:  ${SRCTOP}/sys/dev/e1000
 KMOD    = if_em
 SRCS    = device_if.h bus_if.h pci_if.h opt_ddb.h opt_inet.h \

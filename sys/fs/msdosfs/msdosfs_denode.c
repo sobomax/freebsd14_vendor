@@ -1,4 +1,3 @@
-/* $FreeBSD: 37d23f2ce60b443c2162b8b7e18d5b45ac11113a $ */
 /*	$NetBSD: msdosfs_denode.c,v 1.28 1998/02/10 14:10:00 mrg Exp $	*/
 
 /*-
@@ -110,7 +109,7 @@ deget(struct msdosfsmount *pmp, u_long dirclust, u_long diroffset,
 #ifdef MSDOSFS_DEBUG
 	printf("deget(pmp %p, dirclust %lu, diroffset %lx, flags %#x, "
 	    "depp %p)\n",
-	    pmp, dirclust, diroffset, flags, depp);
+	    pmp, dirclust, diroffset, lkflags, depp);
 #endif
 	MPASS((lkflags & LK_TYPE_MASK) == LK_EXCLUSIVE);
 
@@ -134,10 +133,13 @@ deget(struct msdosfsmount *pmp, u_long dirclust, u_long diroffset,
 	 * entry that represented the file happens to be reused while the
 	 * deleted file is still open.
 	 */
-	inode = (uint64_t)pmp->pm_bpcluster * dirclust + diroffset;
+	inode = DETOI(pmp, dirclust, diroffset);
 
 	error = vfs_hash_get(mntp, inode, lkflags, curthread, &nvp,
 	    de_vncmpf, &inode);
+#ifdef MSDOSFS_DEBUG
+	printf("vfs_hash_get(inode %lu) error %d\n", inode, error);
+#endif
 	if (error)
 		return (error);
 	if (nvp != NULL) {
@@ -180,6 +182,7 @@ badoff:
 	ldep->de_dirclust = dirclust;
 	ldep->de_diroffset = diroffset;
 	ldep->de_inode = inode;
+	cluster_init_vn(&ldep->de_clusterw);
 	lockmgr(nvp->v_vnlock, LK_EXCLUSIVE | LK_NOWITNESS, NULL);
 	VN_LOCK_AREC(nvp);	/* for doscheckpath */
 	fc_purge(ldep, 0);	/* init the FAT cache for this denode */
@@ -191,6 +194,9 @@ badoff:
 	}
 	error = vfs_hash_insert(nvp, inode, lkflags, curthread, &xvp,
 	    de_vncmpf, &inode);
+#ifdef MSDOSFS_DEBUG
+	printf("vfs_hash_insert(inode %lu) error %d\n", inode, error);
+#endif
 	if (error) {
 		*depp = NULL;
 		return (error);
@@ -298,6 +304,7 @@ badoff:
 		}
 	} else
 		nvp->v_type = VREG;
+	vn_set_state(nvp, VSTATE_CONSTRUCTED);
 	ldep->de_modrev = init_va_filerev();
 	*depp = ldep;
 	return (0);
@@ -588,8 +595,11 @@ reinsert(struct denode *dep)
 		return;
 #endif
 	vp = DETOV(dep);
-	dep->de_inode = (uint64_t)dep->de_pmp->pm_bpcluster * dep->de_dirclust +
-	    dep->de_diroffset;
+	dep->de_inode = DETOI(dep->de_pmp, dep->de_dirclust, dep->de_diroffset);
+#ifdef MSDOSFS_DEBUG
+	printf("vfs_hash_rehash(inode %lu, refcnt %lu, vp %p)\n",
+	    dep->de_inode, dep->de_refcnt, vp);
+#endif
 	vfs_hash_rehash(vp, dep->de_inode);
 }
 
@@ -607,6 +617,10 @@ msdosfs_reclaim(struct vop_reclaim_args *ap)
 	/*
 	 * Remove the denode from its hash chain.
 	 */
+#ifdef MSDOSFS_DEBUG
+	printf("vfs_hash_remove(inode %lu, refcnt %lu, vp %p)\n",
+	    dep->de_inode, dep->de_refcnt, vp);
+#endif
 	vfs_hash_remove(vp);
 	/*
 	 * Purge old data structures associated with the denode.

@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2007 Lukas Ertl
  * Copyright (c) 2007, 2009 Ulf Lilleengen
@@ -28,8 +28,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 42caa112e8fcbaf90c464878e4cebcea4f0fd26d $");
-
 #include <sys/param.h>
 #include <sys/bio.h>
 #include <sys/conf.h>
@@ -551,11 +549,10 @@ gv_stripe(struct g_geom *gp, struct gctl_req *req)
 	struct gv_plex *p;
 	struct gv_softc *sc;
 	char *drive, buf[30], *vol;
-	int *drives, *flags, dcount, pcount;
+	int *drives, *flags, dcount;
 
 	sc = gp->softc;
 	dcount = 0;
-	pcount = 0;
 	vol = gctl_get_param(req, "name", NULL);
 	if (vol == NULL) {
 		gctl_error(req, "volume name not given");	

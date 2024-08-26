@@ -1,9 +1,8 @@
-# $FreeBSD: e4f1b62121d90b61c64c28aab2eec8d6609b4c78 $
 
 DIALOG=		${SRCTOP}/contrib/dialog
 
 LIB=		dialog
-SHLIB_MAJOR=	9
+SHLIB_MAJOR=	10
 SRCS=		argv.c arrows.c buildlist.c buttons.c calendar.c checklist.c \
 		columns.c dlg_keys.c editbox.c fselect.c formbox.c guage.c \
 		help.c inputbox.c inputstr.c menubox.c mixedform.c \
@@ -13,9 +12,9 @@ SRCS=		argv.c arrows.c buildlist.c buttons.c calendar.c checklist.c \
 INCS=		dialog.h dlg_colors.h dlg_config.h dlg_keys.h
 MAN=		dialog.3
 
-LIBADD=		ncursesw m
+LIBADD=		tinfow ncursesw m
 
-CFLAGS+= 	-I${.CURDIR} -I${DIALOG} -D_XOPEN_SOURCE_EXTENDED -DGCC_UNUSED=__unused
+CFLAGS+= 	-I${.CURDIR} -I${DIALOG} -D_XOPEN_SOURCE_EXTENDED
 .PATH:		${DIALOG}
 WARNS?=		1
 

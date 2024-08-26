@@ -3,9 +3,7 @@
 .\" Copyright 2021 Rubicon Communications, LLC (Netgate)
 .\" SPDX-License-Identifier: BSD-3-Clause
 .\"
-.\" $FreeBSD: db88aa4ca7251eef07967cc577e9cbe014d7d7ce $
-.\"
-.Dd May 10, 2021
+.Dd January 9, 2023
 .Dt IGC 4
 .Os
 .Sh NAME
@@ -76,7 +74,6 @@ Only
 .Cm full-duplex
 mode is supported at this speed.
 .El
-.Pp
 .Sh HARDWARE
 The
 .Nm
@@ -121,10 +118,6 @@ maximum delay in which a transmit interrupt is generated.
 .It Va hw.igc.sbp
 Show bad packets when in promiscuous mode.
 Default is false.
-.It Va hw.igc.rx_process_limit
-Maximum number of received packets to process at a time.
-Default is 100.
-A value of -1 means unlimited.
 .It Va hw.igc.eee_setting
 Disable or enable Energy Efficient Ethernet.
 Default 1 (disabled).
@@ -154,7 +147,7 @@ address.
 The
 .Nm
 device driver first appeared in
-.Fx 14.0 .
+.Fx 13.1 .
 .Sh AUTHORS
 .An -nosplit
 The

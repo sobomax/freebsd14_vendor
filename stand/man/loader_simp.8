@@ -22,8 +22,6 @@
 .\" OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 .\" SUCH DAMAGE.
 .\"
-.\" $FreeBSD: ee1f5f1c3cb91b270323970a927797f67f58f559 $
-.\"
 .Dd September 29, 2021
 .Dt LOADER_SIMP 8
 .Os
@@ -360,7 +358,7 @@ Defines the speed of the serial console (i386 and amd64 only).
 If the previous boot stage indicated that a serial console is in use
 then this variable is initialized to the current speed of the console
 serial port.
-Otherwise it is set to 9600 unless this was overridden using the
+Otherwise it is set to 115200 unless this was overridden using the
 .Va BOOT_COMCONSOLE_SPEED
 variable when
 .Nm
@@ -604,7 +602,8 @@ Throttles the output of the
 I/O progress indicator displayed while loading the kernel and modules.
 This is useful on slow serial consoles where the time spent waiting for
 these characters to be written can add up to many seconds.
-The default is 1 (full speed); a value of 2 spins half as fast, and so on.
+The default is 16; a value of 32 spins half as fast,
+while a value of 8 spins twice as fast.
 .It Va vm.kmem_size
 Sets the size of kernel memory (bytes).
 This overrides the value determined when the kernel was compiled.

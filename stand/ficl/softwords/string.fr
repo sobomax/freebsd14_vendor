@@ -11,7 +11,6 @@
 \   s" woof woof woof " str --> cat
 \   str --> type  cr
 \
-\ $FreeBSD: dabb3900892feb06b2887bd97901a5fb0859e7af $
 
 also oop definitions
 

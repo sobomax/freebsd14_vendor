@@ -21,8 +21,6 @@
 /* Driver for VMware vmxnet3 virtual ethernet devices. */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 85f831e44755cf648ae99902af1957c1725efce2 $");
-
 #include "opt_rss.h"
 
 #include <sys/param.h>
@@ -79,7 +77,7 @@ __FBSDID("$FreeBSD: 85f831e44755cf648ae99902af1957c1725efce2 $");
 #define VMXNET3_VMWARE_VENDOR_ID	0x15AD
 #define VMXNET3_VMWARE_DEVICE_ID	0x07B0
 
-static pci_vendor_info_t vmxnet3_vendor_info_array[] =
+static const pci_vendor_info_t vmxnet3_vendor_info_array[] =
 {
 	PVID(VMXNET3_VMWARE_VENDOR_ID, VMXNET3_VMWARE_DEVICE_ID, "VMware VMXNET3 Ethernet Adapter"),
 	/* required last entry */
@@ -182,6 +180,7 @@ static void	vmxnet3_enable_intr(struct vmxnet3_softc *, int);
 static void	vmxnet3_disable_intr(struct vmxnet3_softc *, int);
 static void	vmxnet3_intr_enable_all(if_ctx_t);
 static void	vmxnet3_intr_disable_all(if_ctx_t);
+static bool	vmxnet3_if_needs_restart(if_ctx_t, enum iflib_restart_event);
 
 typedef enum {
 	VMXNET3_BARRIER_RD,
@@ -207,8 +206,7 @@ static driver_t vmxnet3_driver = {
 	"vmx", vmxnet3_methods, sizeof(struct vmxnet3_softc)
 };
 
-static devclass_t vmxnet3_devclass;
-DRIVER_MODULE(vmx, pci, vmxnet3_driver, vmxnet3_devclass, 0, 0);
+DRIVER_MODULE(vmx, pci, vmxnet3_driver, 0, 0);
 IFLIB_PNP_INFO(pci, vmx, vmxnet3_vendor_info_array);
 MODULE_VERSION(vmx, 2);
 
@@ -249,6 +247,8 @@ static device_method_t vmxnet3_iflib_methods[] = {
 	DEVMETHOD(ifdi_shutdown, vmxnet3_shutdown),
 	DEVMETHOD(ifdi_suspend, vmxnet3_suspend),
 	DEVMETHOD(ifdi_resume, vmxnet3_resume),
+
+	DEVMETHOD(ifdi_needs_restart, vmxnet3_if_needs_restart),
 
 	DEVMETHOD_END
 };
@@ -540,12 +540,10 @@ vmxnet3_free_irqs(struct vmxnet3_softc *sc)
 static int
 vmxnet3_attach_post(if_ctx_t ctx)
 {
-	device_t dev;
 	if_softc_ctx_t scctx;
 	struct vmxnet3_softc *sc;
 	int error;
 
-	dev = iflib_get_dev(ctx);
 	scctx = iflib_get_softc_ctx(ctx);
 	sc = iflib_get_softc(ctx);
 
@@ -1047,7 +1045,6 @@ static void
 vmxnet3_init_shared_data(struct vmxnet3_softc *sc)
 {
 	struct vmxnet3_driver_shared *ds;
-	if_shared_ctx_t sctx;
 	if_softc_ctx_t scctx;
 	struct vmxnet3_txqueue *txq;
 	struct vmxnet3_txq_shared *txs;
@@ -1056,7 +1053,6 @@ vmxnet3_init_shared_data(struct vmxnet3_softc *sc)
 	int i;
 
 	ds = sc->vmx_ds;
-	sctx = sc->vmx_sctx;
 	scctx = sc->vmx_scctx;
 
 	/*
@@ -1157,7 +1153,6 @@ vmxnet3_reinit_rss_shared_data(struct vmxnet3_softc *sc)
 	    0x96, 0xa6, 0x9f, 0x8f, 0x9e, 0x8c, 0x90, 0xc9,
 	};
 
-	struct vmxnet3_driver_shared *ds;
 	if_softc_ctx_t scctx;
 	struct vmxnet3_rss_shared *rss;
 #ifdef RSS
@@ -1165,7 +1160,6 @@ vmxnet3_reinit_rss_shared_data(struct vmxnet3_softc *sc)
 #endif
 	int i;
 
-	ds = sc->vmx_ds;
 	scctx = sc->vmx_scctx;
 	rss = sc->vmx_rss;
 
@@ -1203,7 +1197,7 @@ vmxnet3_reinit_rss_shared_data(struct vmxnet3_softc *sc)
 static void
 vmxnet3_reinit_shared_data(struct vmxnet3_softc *sc)
 {
-	struct ifnet *ifp;
+	if_t ifp;
 	struct vmxnet3_driver_shared *ds;
 	if_softc_ctx_t scctx;
 
@@ -1211,16 +1205,16 @@ vmxnet3_reinit_shared_data(struct vmxnet3_softc *sc)
 	ds = sc->vmx_ds;
 	scctx = sc->vmx_scctx;
 
-	ds->mtu = ifp->if_mtu;
+	ds->mtu = if_getmtu(ifp);
 	ds->ntxqueue = scctx->isc_ntxqsets;
 	ds->nrxqueue = scctx->isc_nrxqsets;
 
 	ds->upt_features = 0;
-	if (ifp->if_capenable & (IFCAP_RXCSUM | IFCAP_RXCSUM_IPV6))
+	if (if_getcapenable(ifp) & (IFCAP_RXCSUM | IFCAP_RXCSUM_IPV6))
 		ds->upt_features |= UPT1_F_CSUM;
-	if (ifp->if_capenable & IFCAP_VLAN_HWTAGGING)
+	if (if_getcapenable(ifp) & IFCAP_VLAN_HWTAGGING)
 		ds->upt_features |= UPT1_F_VLAN;
-	if (ifp->if_capenable & IFCAP_LRO)
+	if (if_getcapenable(ifp) & IFCAP_LRO)
 		ds->upt_features |= UPT1_F_LRO;
 
 	if (sc->vmx_flags & VMXNET3_FLAG_RSS) {
@@ -1730,13 +1724,9 @@ static void
 vmxnet3_isc_rxd_flush(void *vsc, uint16_t rxqid, uint8_t flid, qidx_t pidx)
 {
 	struct vmxnet3_softc *sc;
-	struct vmxnet3_rxqueue *rxq;
-	struct vmxnet3_rxring *rxr;
 	bus_size_t r;
 
 	sc = vsc;
-	rxq = &sc->vmx_rxq[rxqid];
-	rxr = &rxq->vxrxq_cmd_ring[flid];
 
 	if (flid == 0)
 		r = VMXNET3_BAR0_RXH1(rxqid);
@@ -1934,13 +1924,13 @@ vmxnet3_enable_device(struct vmxnet3_softc *sc)
 static void
 vmxnet3_reinit_rxfilters(struct vmxnet3_softc *sc)
 {
-	struct ifnet *ifp;
+	if_t ifp;
 
 	ifp = sc->vmx_ifp;
 
 	vmxnet3_set_rxfilter(sc, if_getflags(ifp));
 
-	if (ifp->if_capenable & IFCAP_VLAN_HWFILTER)
+	if (if_getcapenable(ifp) & IFCAP_VLAN_HWFILTER)
 		bcopy(sc->vmx_vlan_filter, sc->vmx_ds->vlan_filter,
 		    sizeof(sc->vmx_ds->vlan_filter));
 	else
@@ -1957,7 +1947,7 @@ vmxnet3_init(if_ctx_t ctx)
 	sc = iflib_get_softc(ctx);
 
 	/* Use the current MAC address. */
-	bcopy(IF_LLADDR(sc->vmx_ifp), sc->vmx_lladdr, ETHER_ADDR_LEN);
+	bcopy(if_getlladdr(sc->vmx_ifp), sc->vmx_lladdr, ETHER_ADDR_LEN);
 	vmxnet3_set_lladdr(sc);
 
 	vmxnet3_reinit_shared_data(sc);
@@ -2126,7 +2116,7 @@ vmxnet3_hash_maddr(void *arg, struct sockaddr_dl *sdl, u_int count)
 static void
 vmxnet3_set_rxfilter(struct vmxnet3_softc *sc, int flags)
 {
-	struct ifnet *ifp;
+	if_t ifp;
 	struct vmxnet3_driver_shared *ds;
 	u_int mode;
 
@@ -2516,6 +2506,17 @@ vmxnet3_intr_disable_all(if_ctx_t ctx)
 		sc->vmx_ds->ictrl |= VMXNET3_ICTRL_DISABLE_ALL;
 	for (i = 0; i < VMXNET3_MAX_INTRS; i++)
 		vmxnet3_disable_intr(sc, i);
+}
+
+static bool
+vmxnet3_if_needs_restart(if_ctx_t ctx __unused, enum iflib_restart_event event)
+{
+	switch (event) {
+	case IFLIB_RESTART_VLAN_CONFIG:
+		return (true);
+	default:
+		return (false);
+	}
 }
 
 /*

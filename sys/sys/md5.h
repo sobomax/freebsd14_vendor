@@ -1,5 +1,4 @@
 /* MD5.H - header file for MD5C.C
- * $FreeBSD: f5ddd9c48cd1e1380a609db49d7e9876164a5b83 $
  */
 
 /*-

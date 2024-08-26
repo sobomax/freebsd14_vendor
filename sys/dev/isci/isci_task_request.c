@@ -31,8 +31,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 2cec90fa44211ca9d41af01d1cf9221d7edc7b27 $");
-
 #include <dev/isci/isci.h>
 
 #include <dev/isci/scil/scif_controller.h>

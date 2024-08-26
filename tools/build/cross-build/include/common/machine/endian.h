@@ -32,8 +32,6 @@
  * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
- *
- * $FreeBSD: d70b60ca39f75e944de5321cea9d0bee429cd27d $
  */
 #if __has_include_next(<machine/endian.h>)
 #include_next <machine/endian.h>

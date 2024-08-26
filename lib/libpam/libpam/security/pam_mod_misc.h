@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright 1998 Juniper Networks, Inc.
  * All rights reserved.
@@ -24,8 +24,6 @@
  * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
- *
- *	$FreeBSD: 08c9c1ab8f56656e1dfe1279e30b2a1062026a1c $
  */
 
 #ifndef PAM_MOD_MISC_H
@@ -37,6 +35,7 @@
  * Common option names
  */
 #define	PAM_OPT_NULLOK		"nullok"
+#define	PAM_OPT_EMPTYOK		"emptyok"
 #define PAM_OPT_AUTH_AS_SELF	"auth_as_self"
 #define PAM_OPT_ECHO_PASS	"echo_pass"
 #define PAM_OPT_DEBUG		"debug"

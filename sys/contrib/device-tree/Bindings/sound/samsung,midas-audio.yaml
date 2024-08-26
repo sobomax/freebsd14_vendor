@@ -19,18 +19,20 @@ properties:
 
   cpu:
     type: object
+    additionalProperties: false
     properties:
       sound-dai:
-        $ref: /schemas/types.yaml#/definitions/phandle
+        maxItems: 1
         description: phandle to the I2S controller
     required:
       - sound-dai
 
   codec:
     type: object
+    additionalProperties: false
     properties:
       sound-dai:
-        $ref: /schemas/types.yaml#/definitions/phandle
+        maxItems: 1
         description: phandle to the WM1811 CODEC
     required:
       - sound-dai
@@ -51,9 +53,11 @@ properties:
     description: Supply for the micbias on the Sub microphone
 
   fm-sel-gpios:
+    maxItems: 1
     description: GPIO pin for FM selection
 
   lineout-sel-gpios:
+    maxItems: 1
     description: GPIO pin for line out selection
 
 required:

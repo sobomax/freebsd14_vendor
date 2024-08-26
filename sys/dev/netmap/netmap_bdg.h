@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (C) 2013-2018 Universita` di Pisa
  * All rights reserved.
@@ -24,8 +24,6 @@
  * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
- *
- * $FreeBSD: 42640128fcbd9159c0031a5ab7a682c165e27ed2 $
  */
 #ifndef _NET_NETMAP_BDG_H_
 #define _NET_NETMAP_BDG_H_
@@ -59,7 +57,7 @@ typedef int (*bdg_config_fn_t)(struct nm_ifreq *);
 typedef void (*bdg_dtor_fn_t)(const struct netmap_vp_adapter *);
 typedef void *(*bdg_update_private_data_fn_t)(void *private_data, void *callback_data, int *error);
 typedef int (*bdg_vp_create_fn_t)(struct nmreq_header *hdr,
-		struct ifnet *ifp, struct netmap_mem_d *nmd,
+		if_t ifp, struct netmap_mem_d *nmd,
 		struct netmap_vp_adapter **ret);
 typedef int (*bdg_bwrap_attach_fn_t)(const char *nr_name, struct netmap_adapter *hwna);
 struct netmap_bdg_ops {
@@ -178,8 +176,10 @@ int netmap_bdg_free(struct nm_bridge *b);
 void netmap_bdg_detach_common(struct nm_bridge *b, int hw, int sw);
 int netmap_vp_bdg_ctl(struct nmreq_header *hdr, struct netmap_adapter *na);
 int netmap_bwrap_reg(struct netmap_adapter *, int onoff);
+int netmap_bdg_detach_locked(struct nmreq_header *hdr, void *auth_token);
 int netmap_vp_reg(struct netmap_adapter *na, int onoff);
 int netmap_vp_rxsync(struct netmap_kring *kring, int flags);
+int netmap_bwrap_intr_notify(struct netmap_kring *kring, int flags);
 int netmap_bwrap_notify(struct netmap_kring *kring, int flags);
 int netmap_bwrap_attach_common(struct netmap_adapter *na,
 		struct netmap_adapter *hwna);

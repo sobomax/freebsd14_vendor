@@ -42,13 +42,11 @@ static char sccsid[] = "@(#)tty.c	8.1 (Berkeley) 6/6/93";
 #endif /* not lint */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 02fc2fec1e28bb2822b4d6bd4d0c124488c79066 $");
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
 
-static void usage(void);
+static void usage(void) __dead2;
 
 int
 main(int argc, char *argv[])

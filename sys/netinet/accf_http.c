@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2000 Paycounter, Inc.
  * Author: Alfred Perlstein <alfred@paycounter.com>, <alfred@FreeBSD.org>
@@ -28,8 +28,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 85761c2502b36be1735c261e7e0c15e349ce0683 $");
-
 #define ACCEPT_FILTER_MOD
 
 #include <sys/param.h>

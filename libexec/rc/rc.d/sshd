@@ -1,6 +1,5 @@
 #!/bin/sh
 #
-# $FreeBSD: 282f69f8e4ca7ef15b2b9ca5fcdd1f3d9e9930ce $
 #
 
 # PROVIDE: sshd

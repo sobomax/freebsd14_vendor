@@ -31,7 +31,6 @@
   POSSIBILITY OF SUCH DAMAGE.
 
 ******************************************************************************/
-/*$FreeBSD: 4e4e07070830ae8581ee58355c7feabccfe4863f $*/
 
 #ifndef _E1000_MANAGE_H_
 #define _E1000_MANAGE_H_

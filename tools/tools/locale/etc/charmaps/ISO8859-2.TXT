@@ -1,5 +1,4 @@
 #
-# $FreeBSD: 130a16a6aef6066be55b1af8153252e4390affc8 $
 #
 #	Name:             ISO 8859-2:1999 to Unicode
 #	Unicode version:  3.0

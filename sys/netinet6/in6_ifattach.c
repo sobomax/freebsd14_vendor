@@ -32,8 +32,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 629509f61ac1db0e5e6695d2e8f4026ed119cab1 $");
-
 #include <sys/param.h>
 #include <sys/systm.h>
 #include <sys/malloc.h>
@@ -50,6 +48,7 @@ __FBSDID("$FreeBSD: 629509f61ac1db0e5e6695d2e8f4026ed119cab1 $");
 #include <net/if.h>
 #include <net/if_var.h>
 #include <net/if_dl.h>
+#include <net/if_private.h>
 #include <net/if_types.h>
 #include <net/route.h>
 #include <net/vnet.h>

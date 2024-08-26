@@ -33,7 +33,6 @@
  * SUCH DAMAGE.
  *
  *	from: @(#)frame.h	5.2 (Berkeley) 1/18/91
- * $FreeBSD: 2ea09dfdc35f1ecf27cf811168df7fd19a75d9e1 $
  */
 
 #ifndef _MACHINE_FRAME_H_

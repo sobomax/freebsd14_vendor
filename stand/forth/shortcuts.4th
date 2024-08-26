@@ -22,7 +22,6 @@
 \ OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 \ SUCH DAMAGE.
 \ 
-\ $FreeBSD: 33a1cf678988cd85e5141350942083e1984830c3 $
 
 \ FICL words intended to be used as shortcuts for carrying out common tasks or
 \ producing common results. Generally, words defined here are simply groupings

@@ -30,8 +30,6 @@
  * SUCH DAMAGE.
  *
  * Avago Technologies (LSI) MPT-Fusion Host Adapter FreeBSD userland interface
- *
- * $FreeBSD: 934e8c0a14a86c91f56711fd25b5802a971d8237 $
  */
 /*-
  * Copyright (c) 2011-2015 LSI Corp.
@@ -60,8 +58,6 @@
  * SUCH DAMAGE.
  *
  * Avago Technologies (LSI) MPT-Fusion Host Adapter FreeBSD
- *
- * $FreeBSD: 934e8c0a14a86c91f56711fd25b5802a971d8237 $
  */
 
 #ifndef _MPS_IOCTL_H_

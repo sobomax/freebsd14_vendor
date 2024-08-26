@@ -1,3 +1,2 @@
-# $FreeBSD: 59bf625149dd3f028341f31d722cd4d09f41f5e5 $
 
 FILESPACKAGE=	syscons

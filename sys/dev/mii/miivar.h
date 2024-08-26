@@ -1,7 +1,7 @@
 /*	$NetBSD: miivar.h,v 1.8 1999/04/23 04:24:32 thorpej Exp $	*/
 
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-NetBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 1998, 1999 The NetBSD Foundation, Inc.
  * All rights reserved.
@@ -30,8 +30,6 @@
  * CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
- *
- * $FreeBSD: 0f928dce6efc97bc47c643ce2e0e3168e602f03d $
  */
 
 #ifndef _DEV_MII_MIIVAR_H_
@@ -125,6 +123,7 @@ struct mii_softc {
 	u_int mii_anegticks;		/* ticks before retrying aneg */
 	u_int mii_media_active;		/* last active media */
 	u_int mii_media_status;		/* last active status */
+	u_int mii_maxspeed;		/* Max speed supported by this PHY */
 };
 typedef struct mii_softc mii_softc_t;
 
@@ -262,11 +261,9 @@ enum miibus_device_ivars {
 
 MIIBUS_ACCESSOR(flags,		FLAGS,		u_int)
 
-extern devclass_t	miibus_devclass;
 DECLARE_CLASS(miibus_driver);
 
 #ifdef FDT
-extern devclass_t	miibus_fdt_devclass;
 DECLARE_CLASS(miibus_fdt_driver);
 #endif
 

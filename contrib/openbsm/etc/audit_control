@@ -1,6 +1,3 @@
-#
-# $FreeBSD: d71b9a8174526044a64aada47bf46d6ab39369d9 $
-#
 dir:/var/audit
 dist:off
 flags:lo,aa

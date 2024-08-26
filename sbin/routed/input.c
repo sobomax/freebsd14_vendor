@@ -27,14 +27,9 @@
  * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
- *
- * $FreeBSD: ef1c025e8f8164b1531b44c60f2b0fd572f9ed96 $
  */
 
 #include "defs.h"
-
-__RCSID("$FreeBSD: ef1c025e8f8164b1531b44c60f2b0fd572f9ed96 $");
-
 static void input(struct sockaddr_in *, struct interface *, struct interface *,
 		  struct rip *, int);
 static void input_route(naddr, naddr, struct rt_spare *, struct netinfo *);

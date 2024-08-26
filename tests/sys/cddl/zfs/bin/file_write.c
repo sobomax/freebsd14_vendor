@@ -17,7 +17,6 @@
  * information: Portions Copyright [yyyy] [name of copyright owner]
  *
  * CDDL HEADER END
- * $FreeBSD: b1ef836879e6225132808ed0202910d0c03c7ccf $
  */
 
 /*
@@ -38,7 +37,7 @@ static unsigned char bigbuffer[BIGBUFFERSIZE];
  * See header file for defaults.
  */
 
-static void usage(void);
+static void usage(void) __dead2;
 static char *execname;
 
 int

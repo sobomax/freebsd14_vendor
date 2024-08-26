@@ -1,4 +1,3 @@
-# $FreeBSD: aca711070fc5522cf517b1b0a5b415f8aff48bef $
 
 .PATH: ${SRCTOP}/sys/powerpc/powernv
 

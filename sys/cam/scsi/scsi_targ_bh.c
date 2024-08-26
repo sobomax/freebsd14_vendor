@@ -1,7 +1,7 @@
 /*-
  * Implementation of the Target Mode 'Black Hole device' for CAM.
  *
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 1999 Justin T. Gibbs.
  * All rights reserved.
@@ -29,8 +29,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 84aa16aa05f4d8d3b972c02d73532c57826a2852 $");
-
 #include <sys/param.h>
 #include <sys/queue.h>
 #include <sys/systm.h>
@@ -103,8 +101,8 @@ struct targbh_cmd_desc {
 	void*	  data;		/* The data. Can be from backing_store or not */
 	void*	  backing_store;/* Backing store allocated for this descriptor*/
 	u_int	  max_size;	/* Size of backing_store */
-	u_int32_t timeout;	
-	u_int8_t  status;	/* Status to return to initiator */
+	uint32_t timeout;	
+	uint8_t  status;	/* Status to return to initiator */
 };
 
 static struct scsi_inquiry_data no_lun_inq_data =
@@ -129,7 +127,7 @@ static struct scsi_sense_data_fixed no_lun_sense_data =
 static const int request_sense_size = offsetof(struct scsi_sense_data_fixed, fru);
 
 static periph_init_t	targbhinit;
-static void		targbhasync(void *callback_arg, u_int32_t code,
+static void		targbhasync(void *callback_arg, uint32_t code,
 				    struct cam_path *path, void *arg);
 static cam_status	targbhenlun(struct cam_periph *periph);
 static cam_status	targbhdislun(struct cam_periph *periph);
@@ -139,8 +137,8 @@ static periph_start_t	targbhstart;
 static void		targbhdone(struct cam_periph *periph,
 				   union ccb *done_ccb);
 #ifdef NOTYET
-static  int		targbherror(union ccb *ccb, u_int32_t cam_flags,
-				    u_int32_t sense_flags);
+static  int		targbherror(union ccb *ccb, uint32_t cam_flags,
+				    uint32_t sense_flags);
 #endif
 static struct targbh_cmd_desc*	targbhallocdescr(void);
 static void		targbhfreedescr(struct targbh_cmd_desc *buf);
@@ -172,7 +170,7 @@ targbhinit(void)
 }
 
 static void
-targbhasync(void *callback_arg, u_int32_t code,
+targbhasync(void *callback_arg, uint32_t code,
 	    struct cam_path *path, void *arg)
 {
 	struct cam_path *new_path;
@@ -241,6 +239,7 @@ targbhenlun(struct cam_periph *periph)
 	if ((softc->flags & TARGBH_FLAG_LUN_ENABLED) != 0)
 		return (CAM_REQ_CMP);
 
+	memset(&immed_ccb, 0, sizeof(immed_ccb));
 	xpt_setup_ccb(&immed_ccb.ccb_h, periph->path, CAM_PRIORITY_NORMAL);
 	immed_ccb.ccb_h.func_code = XPT_EN_LUN;
 
@@ -267,7 +266,7 @@ targbhenlun(struct cam_periph *periph)
 		struct ccb_accept_tio *atio;
 
 		atio = (struct ccb_accept_tio*)malloc(sizeof(*atio), M_SCSIBH,
-						      M_NOWAIT);
+						      M_ZERO | M_NOWAIT);
 		if (atio == NULL) {
 			status = CAM_RESRC_UNAVAIL;
 			break;
@@ -309,7 +308,7 @@ targbhenlun(struct cam_periph *periph)
 		struct ccb_immediate_notify *inot;
 
 		inot = (struct ccb_immediate_notify*)malloc(sizeof(*inot),
-			    M_SCSIBH, M_NOWAIT);
+			    M_SCSIBH, M_ZERO | M_NOWAIT);
 
 		if (inot == NULL) {
 			status = CAM_RESRC_UNAVAIL;
@@ -349,6 +348,8 @@ targbhdislun(struct cam_periph *periph)
 	softc = (struct targbh_softc *)periph->softc;
 	if ((softc->flags & TARGBH_FLAG_LUN_ENABLED) == 0)
 		return CAM_REQ_CMP;
+
+	memset(&ccb, 0, sizeof(ccb));
 
 	/* XXX Block for Continue I/O completion */
 
@@ -534,7 +535,7 @@ targbhdone(struct cam_periph *periph, union ccb *done_ccb)
 	{
 		struct ccb_accept_tio *atio;
 		struct targbh_cmd_desc *descr;
-		u_int8_t *cdb;
+		uint8_t *cdb;
 		int priority;
 
 		atio = &done_ccb->atio;
@@ -728,7 +729,7 @@ targbhdone(struct cam_periph *periph, union ccb *done_ccb)
 
 #ifdef NOTYET
 static int
-targbherror(union ccb *ccb, u_int32_t cam_flags, u_int32_t sense_flags)
+targbherror(union ccb *ccb, uint32_t cam_flags, uint32_t sense_flags)
 {
 	return 0;
 }

@@ -1,4 +1,3 @@
-# $FreeBSD: 3dff604583c9b60fd7f33364f3f6a60242b1f985 $
 
 set -e
 T=$(mktemp -d "${TMPDIR:-/tmp}/sh-test.XXXXXX")

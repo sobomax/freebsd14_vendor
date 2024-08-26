@@ -14,9 +14,6 @@
  * Routine for doing backslash elimination.
  */
 
-#include <sys/cdefs.h>
-__FBSDID("$FreeBSD: c75081beca562f36419eb96f278e385abbe2577a $");
-
 #include <stand.h>
 #include <string.h>
 #include "bootstrap.h"

@@ -1,4 +1,4 @@
-# $NetBSD: var-scope-cmdline.mk,v 1.1 2022/01/23 16:25:54 rillig Exp $
+# $NetBSD: var-scope-cmdline.mk,v 1.3 2023/06/01 20:56:35 rillig Exp $
 #
 # Tests for variables specified on the command line.
 #
@@ -61,9 +61,14 @@
 # Most cmdline variables are set at the very beginning, when parsing the
 # command line arguments.  Using the special target '.MAKEFLAGS', it is
 # possible to set cmdline variables at any later time.
+#
+# See also:
+#	varcmd.mk
+#	varname-makeflags.mk
 
 # A normal global variable, without any cmdline variable nearby.
 VAR=	global
+# expect+1: global
 .info ${VAR}
 
 # The global variable is "overridden" by simply deleting it and then
@@ -73,6 +78,7 @@ VAR=	global
 #
 # See varmod-loop.mk for a non-obvious way to undefine a cmdline variable.
 .MAKEFLAGS: VAR=makeflags
+# expect+1: makeflags
 .info ${VAR}
 
 # If Var_SetWithFlags should ever forget to delete the global variable,

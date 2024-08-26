@@ -22,8 +22,6 @@
  * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
- *
- * $FreeBSD: 226f34ad301a4697411a17fcc654fc3c146118a1 $
  */
 
 #include <sys/types.h>
@@ -485,7 +483,7 @@ main(int argc, char *argv[])
 	int fd1, fd2, i, j, p;
 	struct utsname uts;
 
-	printf("version, juggle.c %s\n", "$FreeBSD: 226f34ad301a4697411a17fcc654fc3c146118a1 $");
+	printf("version, juggle.c %s\n", "$FreeBSD: c3c1e21c3b15862f6262cc41d2bd55213f9794c7 $");
 
 	if (uname(&uts) < 0)
 		err(-1, "utsname");

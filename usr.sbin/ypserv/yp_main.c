@@ -33,8 +33,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 452bee79d2cab25cf063d73446b8b814ab00fa68 $");
-
 /*
  * ypserv startup function.
  * We need out own main() since we have to do some additional work

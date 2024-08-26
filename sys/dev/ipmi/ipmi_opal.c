@@ -23,8 +23,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 97f5e367b88e7b9b86be63d52aa0ac76a35a2bdd $");
-
 #include <sys/param.h>
 #include <sys/kernel.h>
 #include <sys/systm.h>
@@ -327,4 +325,4 @@ static driver_t opal_ipmi_driver = {
 	sizeof(struct opal_ipmi_softc)
 };
 
-DRIVER_MODULE(opal_ipmi, opal, opal_ipmi_driver, ipmi_devclass, NULL, NULL);
+DRIVER_MODULE(opal_ipmi, opal, opal_ipmi_driver, NULL, NULL);

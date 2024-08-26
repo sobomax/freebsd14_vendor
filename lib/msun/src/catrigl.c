@@ -39,9 +39,6 @@
  * a few comments on the right of declarations remain.
  */
 
-#include <sys/cdefs.h>
-__FBSDID("$FreeBSD: e66f87a24a4be51858652d9a0638cb0b58a27c0a $");
-
 #include <complex.h>
 #include <float.h>
 

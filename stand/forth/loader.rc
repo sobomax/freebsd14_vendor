@@ -1,5 +1,4 @@
 \ Loader.rc
-\ $FreeBSD: c15b0f5ce23ba91d8a3c68cd6ad1985052edccd4 $
 \
 \ You should not edit this file! Put any overrides in loader.rc.local
 \ instead as this file can be replaced during system updates.

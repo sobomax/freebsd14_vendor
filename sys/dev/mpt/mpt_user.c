@@ -33,8 +33,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 10d5bac15d49deb76a0c077ef8ea187f7622eba8 $");
-
 #include <sys/param.h>
 #ifdef __amd64__
 #include <sys/abi_compat.h>

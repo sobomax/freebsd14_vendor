@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2005-2008, Sam Leffler <sam@errno.com>
  * All rights reserved.
@@ -27,8 +27,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: aafb2a2ba26585eaef48295c1b95e42dc94b3dcf $");
-
 #include <sys/param.h>
 #include <sys/kernel.h>
 #include <sys/malloc.h>

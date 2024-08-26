@@ -10,9 +10,6 @@
  * ====================================================
  */
 
-#include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 52dd21cb2f9c762653e645f31a3d89f2bababa7d $");
-
 /* IEEE functions
  *	nextafter(x,y)
  *	return the next machine floating-point number of x in the

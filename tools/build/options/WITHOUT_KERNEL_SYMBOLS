@@ -1,3 +1,2 @@
-.\" $FreeBSD: c56359d9fa6b8afe25ba6077b0742bcaff47d479 $
 Do not install standalone kernel debug symbol files.
 This option has no effect at build time.

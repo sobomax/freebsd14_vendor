@@ -1,4 +1,3 @@
-# $FreeBSD: 8d106615822f1a6ebd822f9360c226976f240e9f $
 
 .include <bsd.init.mk>
 # Grab all the options for a kernel build. For backwards compat, we need to
@@ -38,12 +37,10 @@ DTBO=${DTSO:T:R:S/$/.dtbo/}
 .export DTC ECHO
 
 .dts.dtb:	${OP_META}
-	@${ECHO} Generating ${.TARGET} from ${.IMPSRC}
-	@${SYSDIR}/tools/fdt/make_dtb.sh ${SYSDIR} ${.IMPSRC} ${.OBJDIR}
+	${SYSDIR}/tools/fdt/make_dtb.sh ${SYSDIR} ${.IMPSRC} ${.OBJDIR}
 
 .dtso.dtbo:	${OP_META}
-	@${ECHO} Generating ${.TARGET} from ${.IMPSRC}
-	@${SYSDIR}/tools/fdt/make_dtbo.sh ${SYSDIR} ${.IMPSRC} ${.OBJDIR}
+	${SYSDIR}/tools/fdt/make_dtbo.sh ${SYSDIR} ${.IMPSRC} ${.OBJDIR}
 
 # Add dependencies on the source file so that out-of-tree things can be included
 # without any .PATH additions.

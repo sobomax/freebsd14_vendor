@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2019 Emmanuel Vadot <manu@FreeBSD.org>
  *
@@ -25,13 +25,9 @@
  * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
- *
- * $FreeBSD: 0ef53486804dc30163300b336117682190ef4fb3 $
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 0ef53486804dc30163300b336117682190ef4fb3 $");
-
 #include "opt_platform.h"
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -59,6 +55,14 @@ ofw_graph_get_port_by_idx(phandle_t node, uint32_t idx)
 	child = ofw_bus_find_child(node, portnode);
 	if (child != 0)
 		return (child);
+
+	/* Now check for 'port' without explicit index. */
+	if (idx == 0) {
+		snprintf(portnode, sizeof(portnode), "port");
+		child = ofw_bus_find_child(node, portnode);
+		if (child != 0)
+			return (child);
+	}
 
 	/* Next try to look under ports */
 	ports = ofw_bus_find_child(node, "ports");

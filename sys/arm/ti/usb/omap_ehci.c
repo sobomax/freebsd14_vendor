@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2011
  *	Ben Gray <ben.r.gray@gmail.com>.
@@ -27,8 +27,6 @@
  * SUCH DAMAGE.
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 8b1bb700bf43daafdaa7b93567a40161d7850d1a $");
-
 #include <sys/param.h>
 #include <sys/systm.h>
 #include <sys/conf.h>
@@ -463,6 +461,4 @@ static driver_t ehci_driver = {
 	sizeof(struct omap_ehci_softc),
 };
 
-static devclass_t ehci_devclass;
-
-DRIVER_MODULE(omap_ehci, omap_uhh, ehci_driver, ehci_devclass, 0, 0);
+DRIVER_MODULE(omap_ehci, omap_uhh, ehci_driver, 0, 0);

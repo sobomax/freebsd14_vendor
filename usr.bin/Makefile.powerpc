@@ -1,3 +1,2 @@
-# $FreeBSD: fee2fb07681183e238b1e12d522e6b225713924b $
 
 SUBDIR+=	smbutil

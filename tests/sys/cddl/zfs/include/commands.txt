@@ -19,8 +19,6 @@
 # CDDL HEADER END
 #
 
-# $FreeBSD: 774a29710e68464e6e91eeac8a81298e9670796f $
-
 #!/usr/local/bin/ksh93 -p
 #
 # Copyright 2009 Sun Microsystems, Inc.  All rights reserved.

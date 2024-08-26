@@ -1,7 +1,3 @@
-/*
- * $FreeBSD: 822789972ebf9116779859876993cad187e0c597 $
- */
-
 FBSD_1.0 {
 	_mcleanup;
 	monstartup;

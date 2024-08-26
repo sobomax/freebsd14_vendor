@@ -23,7 +23,6 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  * 
- * $FreeBSD: 1c401d7c0f61ed20dc97eb7263a66d3a407a07a1 $
  */
 /dts-v1/;
 /include/ "zynq-7000.dtsi"

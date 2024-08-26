@@ -39,11 +39,10 @@ static const char copyright[] =
 #if 0
 static char sccsid[] = "@(#)tee.c	8.1 (Berkeley) 6/6/93";
 #endif
-static const char rcsid[] =
-  "$FreeBSD: b55aa84d2f63a2971a7d092262bfa2932c45645b $";
 #endif /* not lint */
 
 #include <sys/capsicum.h>
+#include <sys/queue.h>
 #include <sys/stat.h>
 #include <sys/types.h>
 
@@ -57,20 +56,20 @@ static const char rcsid[] =
 #include <string.h>
 #include <unistd.h>
 
-typedef struct _list {
-	struct _list *next;
+struct entry {
 	int fd;
 	const char *name;
-} LIST;
-static LIST *head;
+	STAILQ_ENTRY(entry) entries;
+};
+static STAILQ_HEAD(, entry) head = STAILQ_HEAD_INITIALIZER(head);
 
 static void add(int, const char *);
-static void usage(void);
+static void usage(void) __dead2;
 
 int
 main(int argc, char *argv[])
 {
-	LIST *p;
+	struct entry *p;
 	int n, fd, rval, wval;
 	char *bp;
 	int append, ch, exitval;
@@ -112,7 +111,7 @@ main(int argc, char *argv[])
 	if (caph_enter() < 0)
 		err(EXIT_FAILURE, "unable to enter capability mode");
 	while ((rval = read(STDIN_FILENO, buf, BSIZE)) > 0)
-		for (p = head; p; p = p->next) {
+		STAILQ_FOREACH(p, &head, entries) {
 			n = rval;
 			bp = buf;
 			do {
@@ -139,7 +138,7 @@ usage(void)
 static void
 add(int fd, const char *name)
 {
-	LIST *p;
+	struct entry *p;
 	cap_rights_t rights;
 
 	if (fd == STDOUT_FILENO) {
@@ -151,10 +150,9 @@ add(int fd, const char *name)
 			err(EXIT_FAILURE, "unable to limit rights");
 	}
 
-	if ((p = malloc(sizeof(LIST))) == NULL)
+	if ((p = malloc(sizeof(struct entry))) == NULL)
 		err(1, "malloc");
 	p->fd = fd;
 	p->name = name;
-	p->next = head;
-	head = p;
+	STAILQ_INSERT_HEAD(&head, p, entries);
 }

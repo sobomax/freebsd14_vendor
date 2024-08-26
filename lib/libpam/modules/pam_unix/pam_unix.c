@@ -37,8 +37,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: aa1952eb9c82b8cccf6ec9db94cffd6897c597a4 $");
-
 #include <sys/param.h>
 #include <sys/socket.h>
 #include <sys/time.h>
@@ -87,13 +85,14 @@ static char password_hash[] =		PASSWORD_HASH;
  * authentication management
  */
 PAM_EXTERN int
-pam_sm_authenticate(pam_handle_t *pamh, int flags __unused,
+pam_sm_authenticate(pam_handle_t *pamh, int flags,
     int argc __unused, const char *argv[] __unused)
 {
 	login_cap_t *lc;
 	struct passwd *pwd;
 	int retval;
 	const char *pass, *user, *realpw, *prompt;
+	const char *emptypasswd = "";
 
 	if (openpam_get_option(pamh, PAM_OPT_AUTH_AS_SELF)) {
 		user = getlogin();
@@ -116,6 +115,15 @@ pam_sm_authenticate(pam_handle_t *pamh, int flags __unused,
 			PAM_LOG("Password is empty, using fake password");
 			realpw = "*";
 		}
+		/*
+		 * Check whether the saved password hash matches the one
+		 * generated from an empty password - as opposed to empty
+		 * saved password hash, which is handled above.
+		 */
+		if (!(flags & PAM_DISALLOW_NULL_AUTHTOK) &&
+		    openpam_get_option(pamh, PAM_OPT_EMPTYOK) &&
+		    strcmp(crypt(emptypasswd, realpw), realpw) == 0)
+			return (PAM_SUCCESS);
 		lc = login_getpwclass(pwd);
 	} else {
 		PAM_LOG("Doing dummy authentication");

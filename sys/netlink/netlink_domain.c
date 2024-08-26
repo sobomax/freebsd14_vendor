@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2021 Ng Peng Nam Sean
  * Copyright (c) 2022 Alexander V. Chernikov <melifaro@FreeBSD.org>
@@ -36,7 +36,9 @@
 #include <sys/lock.h>
 #include <sys/rmlock.h>
 #include <sys/domain.h>
+#include <sys/jail.h>
 #include <sys/mbuf.h>
+#include <sys/osd.h>
 #include <sys/protosw.h>
 #include <sys/proc.h>
 #include <sys/ck.h>
@@ -53,7 +55,7 @@
 #define	DEBUG_MOD_NAME	nl_domain
 #define	DEBUG_MAX_LEVEL	LOG_DEBUG3
 #include <netlink/netlink_debug.h>
-_DECLARE_DEBUG(LOG_DEBUG);
+_DECLARE_DEBUG(LOG_INFO);
 
 _Static_assert((NLP_MAX_GROUPS % 64) == 0,
     "NLP_MAX_GROUPS has to be multiple of 64");
@@ -76,17 +78,43 @@ SYSCTL_ULONG(_net_netlink, OID_AUTO, recvspace, CTLFLAG_RW, &nl_recvspace, 0,
     "Default netlink socket receive space");
 
 extern u_long sb_max_adj;
-extern u_long nl_maxsockbuf;
+static u_long nl_maxsockbuf = 512 * 1024 * 1024; /* 512M, XXX: init based on physmem */
 static int sysctl_handle_nl_maxsockbuf(SYSCTL_HANDLER_ARGS);
 SYSCTL_OID(_net_netlink, OID_AUTO, nl_maxsockbuf,
     CTLTYPE_ULONG | CTLFLAG_RW | CTLFLAG_MPSAFE, &nl_maxsockbuf, 0,
     sysctl_handle_nl_maxsockbuf, "LU",
     "Maximum Netlink socket buffer size");
 
-uint32_t
-nlp_get_pid(const struct nlpcb *nlp)
+
+static unsigned int osd_slot_id = 0;
+
+void
+nl_osd_register(void)
 {
-	return (nlp->nl_process_id);
+	osd_slot_id = osd_register(OSD_THREAD, NULL, NULL);
+}
+
+void
+nl_osd_unregister(void)
+{
+	osd_deregister(OSD_THREAD, osd_slot_id);
+}
+
+struct nlpcb *
+_nl_get_thread_nlp(struct thread *td)
+{
+	return (osd_get(OSD_THREAD, &td->td_osd, osd_slot_id));
+}
+
+void
+nl_set_thread_nlp(struct thread *td, struct nlpcb *nlp)
+{
+	NLP_LOG(LOG_DEBUG2, nlp, "Set thread %p nlp to %p (slot %u)", td, nlp, osd_slot_id);
+	if (osd_set(OSD_THREAD, &td->td_osd, osd_slot_id, nlp) == 0)
+		return;
+	/* Failed, need to realloc */
+	void **rsv = osd_reserve(osd_slot_id);
+	osd_set_reserved(OSD_THREAD, &td->td_osd, osd_slot_id, rsv, nlp);
 }
 
 /*
@@ -110,6 +138,10 @@ nl_add_group_locked(struct nlpcb *nlp, unsigned int group_id)
 {
 	MPASS(group_id <= NLP_MAX_GROUPS);
 	--group_id;
+
+	/* TODO: add family handler callback */
+	if (!nlp_unconstrained_vnet(nlp))
+		return;
 
 	nlp->nl_groups[group_id / 64] |= (uint64_t)1 << (group_id % 64);
 }
@@ -143,6 +175,15 @@ nl_get_groups_compat(struct nlpcb *nlp)
 	}
 
 	return (groups_mask);
+}
+
+static void
+nl_send_one_group(struct mbuf *m, struct nlpcb *nlp, int num_messages,
+    int io_flags)
+{
+	if (__predict_false(nlp->nl_flags & NLF_MSG_INFO))
+		nl_add_msg_info(m);
+	nl_send_one(m, nlp, num_messages, io_flags);
 }
 
 /*
@@ -181,7 +222,8 @@ nl_send_group(struct mbuf *m, int num_messages, int proto, int group_id)
 				struct mbuf *m_copy;
 				m_copy = m_copym(m, 0, M_COPYALL, M_NOWAIT);
 				if (m_copy != NULL)
-					nl_send_one(m_copy, nlp_last, num_messages, io_flags);
+					nl_send_one_group(m_copy, nlp_last,
+					    num_messages, io_flags);
 				else {
 					NLP_LOCK(nlp_last);
 					if (nlp_last->nl_socket != NULL)
@@ -193,7 +235,7 @@ nl_send_group(struct mbuf *m, int num_messages, int proto, int group_id)
 		}
 	}
 	if (nlp_last != NULL)
-		nl_send_one(m, nlp_last, num_messages, io_flags);
+		nl_send_one_group(m, nlp_last, num_messages, io_flags);
 	else
 		m_freem(m);
 
@@ -204,12 +246,6 @@ bool
 nl_has_listeners(int netlink_family, uint32_t groups_mask)
 {
 	return (V_nl_ctl != NULL);
-}
-
-bool
-nlp_has_priv(struct nlpcb *nlp, int priv)
-{
-	return (priv_check_cred(nlp->nl_cred, priv) == 0);
 }
 
 static uint32_t
@@ -302,6 +338,8 @@ nl_pru_attach(struct socket *so, int proto, struct thread *td)
 	nlp->nl_process_id = curproc->p_pid;
 	nlp->nl_linux = is_linux;
 	nlp->nl_active = true;
+	nlp->nl_unconstrained_vnet = !jailed_without_vnet(so->so_cred);
+	nlp->nl_need_thread_setup = true;
 	NLP_LOCK_INIT(nlp);
 	refcount_init(&nlp->nl_refcount, 1);
 	nl_init_io(nlp);
@@ -389,7 +427,7 @@ nl_autobind_port(struct nlpcb *nlp, uint32_t candidate_id)
 	uint32_t port_id = candidate_id;
 	NLCTL_TRACKER;
 	bool exist;
-	int error;
+	int error = EADDRINUSE;
 
 	for (int i = 0; i < 10; i++) {
 		NL_LOG(LOG_DEBUG3, "socket %p, trying to assign port %d", nlp->nl_socket, port_id);
@@ -595,6 +633,8 @@ nl_getoptflag(int sopt_name)
 		return (NLF_EXT_ACK);
 	case NETLINK_GET_STRICT_CHK:
 		return (NLF_STRICT);
+	case NETLINK_MSG_INFO:
+		return (NLF_MSG_INFO);
 	}
 
 	return (0);
@@ -617,7 +657,9 @@ nl_ctloutput(struct socket *so, struct sockopt *sopt)
 		switch (sopt->sopt_name) {
 		case NETLINK_ADD_MEMBERSHIP:
 		case NETLINK_DROP_MEMBERSHIP:
-			sooptcopyin(sopt, &optval, sizeof(optval), sizeof(optval));
+			error = sooptcopyin(sopt, &optval, sizeof(optval), sizeof(optval));
+			if (error != 0)
+				break;
 			if (optval <= 0 || optval >= NLP_MAX_GROUPS) {
 				error = ERANGE;
 				break;
@@ -634,9 +676,17 @@ nl_ctloutput(struct socket *so, struct sockopt *sopt)
 		case NETLINK_CAP_ACK:
 		case NETLINK_EXT_ACK:
 		case NETLINK_GET_STRICT_CHK:
-			sooptcopyin(sopt, &optval, sizeof(optval), sizeof(optval));
+		case NETLINK_MSG_INFO:
+			error = sooptcopyin(sopt, &optval, sizeof(optval), sizeof(optval));
+			if (error != 0)
+				break;
 
 			flag = nl_getoptflag(sopt->sopt_name);
+
+			if ((flag == NLF_MSG_INFO) && nlp->nl_linux) {
+				error = EINVAL;
+				break;
+			}
 
 			NLCTL_WLOCK(ctl);
 			if (optval != 0)
@@ -660,6 +710,7 @@ nl_ctloutput(struct socket *so, struct sockopt *sopt)
 		case NETLINK_CAP_ACK:
 		case NETLINK_EXT_ACK:
 		case NETLINK_GET_STRICT_CHK:
+		case NETLINK_MSG_INFO:
 			NLCTL_RLOCK(ctl);
 			optval = (nlp->nl_flags & nl_getoptflag(sopt->sopt_name)) != 0;
 			NLCTL_RUNLOCK(ctl);
@@ -692,7 +743,6 @@ sysctl_handle_nl_maxsockbuf(SYSCTL_HANDLER_ARGS)
 	return (0);
 }
 
-#if 0
 static int
 nl_setsbopt(struct socket *so, struct sockopt *sopt)
 {
@@ -719,55 +769,40 @@ nl_setsbopt(struct socket *so, struct sockopt *sopt)
 
 	return (result ? 0 : ENOBUFS);
 }
-#endif
 
-struct pr_usrreqs nl_usrreqs = {
-	.pru_abort =		nl_pru_abort,
-	.pru_attach =		nl_pru_attach,
-	.pru_bind =		nl_pru_bind,
-	.pru_connect =		nl_pru_connect,
-	.pru_detach =		nl_pru_detach,
-	.pru_disconnect =	nl_pru_disconnect,
-	.pru_peeraddr =		nl_pru_peeraddr,
-	.pru_rcvd =		nl_pru_rcvd,
-	.pru_send =		nl_pru_send,
-	//.pru_soreceive =	soreceive_dgram,
-	//.pru_sosend =		sosend_dgram,
-	.pru_shutdown =		nl_pru_shutdown,
-	.pru_sockaddr =		nl_pru_sockaddr,
-	//.pru_sosetlabel =	in_pcbsosetlabel,
-	.pru_close =		nl_pru_close,
+#define	NETLINK_PROTOSW						\
+	.pr_flags = PR_ATOMIC | PR_ADDR | PR_WANTRCVD,		\
+	.pr_ctloutput = nl_ctloutput,				\
+	.pr_setsbopt = nl_setsbopt,				\
+	.pr_abort = nl_pru_abort,				\
+	.pr_attach = nl_pru_attach,				\
+	.pr_bind = nl_pru_bind,					\
+	.pr_connect = nl_pru_connect,				\
+	.pr_detach = nl_pru_detach,				\
+	.pr_disconnect = nl_pru_disconnect,			\
+	.pr_peeraddr = nl_pru_peeraddr,				\
+	.pr_send = nl_pru_send,					\
+	.pr_rcvd = nl_pru_rcvd,					\
+	.pr_shutdown = nl_pru_shutdown,				\
+	.pr_sockaddr = nl_pru_sockaddr,				\
+	.pr_close = nl_pru_close
+
+static struct protosw netlink_raw_sw = {
+	.pr_type = SOCK_RAW,
+	NETLINK_PROTOSW
 };
 
-static struct domain netlinkdomain;
-
-static struct protosw netlinksw[] = {
-{
-	.pr_type = SOCK_RAW,
-	.pr_domain = &netlinkdomain,
-	.pr_protocol = 0, // IPPROTO_UDP
-	.pr_flags = PR_ATOMIC | PR_ADDR | PR_WANTRCVD,
-	.pr_ctloutput = nl_ctloutput,
-	.pr_usrreqs = &nl_usrreqs,
-},
-{
+static struct protosw netlink_dgram_sw = {
 	.pr_type = SOCK_DGRAM,
-	.pr_domain = &netlinkdomain,
-	.pr_protocol = 0, // IPPROTO_UDP
-	.pr_flags = PR_ATOMIC | PR_ADDR | PR_WANTRCVD,
-	.pr_ctloutput = nl_ctloutput,
-	.pr_usrreqs = &nl_usrreqs,
-}
+	NETLINK_PROTOSW
 };
 
 static struct domain netlinkdomain = {
-	.dom_family = AF_NETLINK,
+	.dom_family = PF_NETLINK,
 	.dom_name = "netlink",
-#ifdef	DOMF_UNLOADABLE
 	.dom_flags = DOMF_UNLOADABLE,
-#endif
-	.dom_protosw =		&netlinksw[0],
-	.dom_protoswNPROTOSW =	(&netlinksw[0] + 2),
+	.dom_nprotosw =		2,
+	.dom_protosw =		{ &netlink_raw_sw, &netlink_dgram_sw },
 };
 
 DOMAIN_SET(netlink);

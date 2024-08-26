@@ -1,4 +1,3 @@
-$FreeBSD: f115b9967ed157f1f66321aae19b60e906c6b184 $
 
 SysV IPC Message Queue Regression Utility.
 

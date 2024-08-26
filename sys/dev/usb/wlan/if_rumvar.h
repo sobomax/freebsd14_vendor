@@ -1,4 +1,3 @@
-/*	$FreeBSD: e19a7088cfbee82d10400125197115a97bab2d54 $	*/
 
 /*-
  * Copyright (c) 2005, 2006 Damien Bergamini <damien.bergamini@free.fr>

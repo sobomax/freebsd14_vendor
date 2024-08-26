@@ -1,4 +1,3 @@
-$ $FreeBSD: 2687c177fd57891524e1b15c0eed76df81e224b9 $
 $
 $ Message catalog for es_ES.ISO8859-1 locale
 $

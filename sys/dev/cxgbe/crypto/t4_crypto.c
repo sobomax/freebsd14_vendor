@@ -30,8 +30,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 3d667ac5a4056d56af0c0e03e60424d064befa56 $");
-
 #include <sys/types.h>
 #include <sys/bus.h>
 #include <sys/lock.h>
@@ -140,7 +138,7 @@ __FBSDID("$FreeBSD: 3d667ac5a4056d56af0c0e03e60424d064befa56 $");
 static MALLOC_DEFINE(M_CCR, "ccr", "Chelsio T6 crypto");
 
 struct ccr_session_hmac {
-	struct auth_hash *auth_hash;
+	const struct auth_hash *auth_hash;
 	int hash_len;
 	unsigned int partial_digest_len;
 	unsigned int auth_mode;
@@ -175,43 +173,6 @@ struct ccr_port {
 
 	counter_u64_t stats_queued;
 	counter_u64_t stats_completed;
-};
-
-struct ccr_session {
-#ifdef INVARIANTS
-	int pending;
-#endif
-	enum { HASH, HMAC, CIPHER, ETA, GCM, CCM } mode;
-	struct ccr_port *port;
-	union {
-		struct ccr_session_hmac hmac;
-		struct ccr_session_gmac gmac;
-		struct ccr_session_ccm_mac ccm_mac;
-	};
-	struct ccr_session_cipher cipher;
-	struct mtx lock;
-
-	/*
-	 * A fallback software session is used for certain GCM/CCM
-	 * requests that the hardware can't handle such as requests
-	 * with only AAD and no payload.
-	 */
-	crypto_session_t sw_session;
-
-	/*
-	 * Pre-allocate S/G lists used when preparing a work request.
-	 * 'sg_input' contains an sglist describing the entire input
-	 * buffer for a 'struct cryptop'.  'sg_output' contains an
-	 * sglist describing the entire output buffer.  'sg_ulptx' is
-	 * used to describe the data the engine should DMA as input
-	 * via ULPTX_SGL.  'sg_dsgl' is used to describe the
-	 * destination that cipher text and a tag should be written
-	 * to.
-	 */
-	struct sglist *sg_input;
-	struct sglist *sg_output;
-	struct sglist *sg_ulptx;
-	struct sglist *sg_dsgl;
 };
 
 struct ccr_softc {
@@ -251,6 +212,44 @@ struct ccr_softc {
 	counter_u64_t stats_sw_fallback;
 
 	struct sysctl_ctx_list ctx;
+};
+
+struct ccr_session {
+#ifdef INVARIANTS
+	int pending;
+#endif
+	enum { HASH, HMAC, CIPHER, ETA, GCM, CCM } mode;
+	struct ccr_softc *sc;
+	struct ccr_port *port;
+	union {
+		struct ccr_session_hmac hmac;
+		struct ccr_session_gmac gmac;
+		struct ccr_session_ccm_mac ccm_mac;
+	};
+	struct ccr_session_cipher cipher;
+	struct mtx lock;
+
+	/*
+	 * A fallback software session is used for certain GCM/CCM
+	 * requests that the hardware can't handle such as requests
+	 * with only AAD and no payload.
+	 */
+	crypto_session_t sw_session;
+
+	/*
+	 * Pre-allocate S/G lists used when preparing a work request.
+	 * 'sg_input' contains an sglist describing the entire input
+	 * buffer for a 'struct cryptop'.  'sg_output' contains an
+	 * sglist describing the entire output buffer.  'sg_ulptx' is
+	 * used to describe the data the engine should DMA as input
+	 * via ULPTX_SGL.  'sg_dsgl' is used to describe the
+	 * destination that cipher text and a tag should be written
+	 * to.
+	 */
+	struct sglist *sg_input;
+	struct sglist *sg_output;
+	struct sglist *sg_ulptx;
+	struct sglist *sg_dsgl;
 };
 
 /*
@@ -295,7 +294,7 @@ ccr_populate_sglist(struct sglist *sg, struct crypto_buffer *cb)
 		break;
 	case CRYPTO_BUF_VMPAGE:
 		error = sglist_append_vmpages(sg, cb->cb_vm_page,
-		    cb->cb_vm_page_len, cb->cb_vm_page_offset);
+		    cb->cb_vm_page_offset, cb->cb_vm_page_len);
 		break;
 	default:
 		error = EINVAL;
@@ -479,7 +478,7 @@ ccr_hash(struct ccr_softc *sc, struct ccr_session *s, struct cryptop *crp)
 {
 	struct chcr_wr *crwr;
 	struct wrqe *wr;
-	struct auth_hash *axf;
+	const struct auth_hash *axf;
 	char *dst;
 	u_int hash_size_in_response, kctx_flits, kctx_len, transhdr_len, wr_len;
 	u_int hmac_ctrl, imm_len, iopad_size;
@@ -816,7 +815,7 @@ ccr_eta(struct ccr_softc *sc, struct ccr_session *s, struct cryptop *crp)
 	char iv[CHCR_MAX_CRYPTO_IV_LEN];
 	struct chcr_wr *crwr;
 	struct wrqe *wr;
-	struct auth_hash *axf;
+	const struct auth_hash *axf;
 	char *dst;
 	u_int kctx_len, key_half, op_type, transhdr_len, wr_len;
 	u_int hash_size_in_response, imm_len, iopad_size, iv_len;
@@ -1784,9 +1783,15 @@ ccr_soft(struct ccr_session *s, struct cryptop *crp)
 		return;
 	}
 
+	/*
+	 * XXX: This only really needs CRYPTO_ASYNC_ORDERED if the
+	 * original request was dispatched that way.  There is no way
+	 * to know that though since crypto_dispatch_async() discards
+	 * the flag for async backends (such as ccr(4)).
+	 */
 	new->crp_opaque = crp;
 	new->crp_callback = ccr_soft_done;
-	error = crypto_dispatch(new);
+	error = crypto_dispatch_async(new, CRYPTO_ASYNC_ORDERED);
 	if (error != 0) {
 		crp->crp_etype = error;
 		crypto_done(crp);
@@ -1958,7 +1963,6 @@ ccr_attach(device_t dev)
 		return (ENXIO);
 	}
 	sc->cid = cid;
-	sc->adapter->ccr_softc = sc;
 
 	/*
 	 * The FID must be the first RXQ for port 0 regardless of
@@ -2037,7 +2041,6 @@ ccr_detach(device_t dev)
 	}
 	sglist_free(sc->sg_iv_aad);
 	free(sc->iv_aad_buf, M_CCR);
-	sc->adapter->ccr_softc = NULL;
 	return (0);
 }
 
@@ -2045,7 +2048,7 @@ static void
 ccr_init_hash_digest(struct ccr_session *s)
 {
 	union authctx auth_ctx;
-	struct auth_hash *axf;
+	const struct auth_hash *axf;
 
 	axf = s->hmac.auth_hash;
 	axf->Init(&auth_ctx);
@@ -2314,7 +2317,7 @@ ccr_newsession(device_t dev, crypto_session_t cses,
 {
 	struct ccr_softc *sc;
 	struct ccr_session *s;
-	struct auth_hash *auth_hash;
+	const struct auth_hash *auth_hash;
 	unsigned int auth_mode, cipher_mode, mk_size;
 	unsigned int partial_digest_len;
 	int error;
@@ -2419,6 +2422,7 @@ ccr_newsession(device_t dev, crypto_session_t cses,
 	}
 
 	sc = device_get_softc(dev);
+	s->sc = sc;
 
 	mtx_lock(&sc->lock);
 	if (sc->detaching) {
@@ -2646,7 +2650,7 @@ static int
 do_cpl6_fw_pld(struct sge_iq *iq, const struct rss_header *rss,
     struct mbuf *m)
 {
-	struct ccr_softc *sc = iq->adapter->ccr_softc;
+	struct ccr_softc *sc;
 	struct ccr_session *s;
 	const struct cpl_fw6_pld *cpl;
 	struct cryptop *crp;
@@ -2666,6 +2670,7 @@ do_cpl6_fw_pld(struct sge_iq *iq, const struct rss_header *rss,
 	else
 		error = 0;
 
+	sc = s->sc;
 #ifdef INVARIANTS
 	mtx_lock(&s->lock);
 	s->pending--;
@@ -2741,9 +2746,7 @@ static driver_t ccr_driver = {
 	sizeof(struct ccr_softc)
 };
 
-static devclass_t ccr_devclass;
-
-DRIVER_MODULE(ccr, t6nex, ccr_driver, ccr_devclass, ccr_modevent, NULL);
+DRIVER_MODULE(ccr, t6nex, ccr_driver, ccr_modevent, NULL);
 MODULE_VERSION(ccr, 1);
 MODULE_DEPEND(ccr, crypto, 1, 1, 1);
 MODULE_DEPEND(ccr, t6nex, 1, 1, 1);

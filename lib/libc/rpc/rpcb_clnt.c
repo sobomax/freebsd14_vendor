@@ -36,9 +36,6 @@
 #if defined(LIBC_SCCS) && !defined(lint)
 static char sccsid[] = "@(#)rpcb_clnt.c 1.30 89/06/21 Copyr 1988 Sun Micro";
 #endif
-#include <sys/cdefs.h>
-__FBSDID("$FreeBSD: b44fd1c5e77bfa9f3f81d62e4e8879863d37c5a5 $");
-
 /*
  * rpcb_clnt.c
  * interface to rpcbind rpc service.

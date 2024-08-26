@@ -23,9 +23,6 @@
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include <sys/cdefs.h>
-__FBSDID("$FreeBSD: ff1458ed2edff247f07d702b62a8c46d19522982 $");
-
 #include <stand.h>
 #include <sys/param.h>
 #include <fdt_platform.h>

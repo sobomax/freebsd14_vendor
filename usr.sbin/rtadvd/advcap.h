@@ -1,8 +1,7 @@
-/*	$FreeBSD: 3414e209cecdded81b8640e8886abf12eeb1519f $	*/
 /*	$KAME: advcap.h,v 1.5 2003/06/09 05:40:54 t-momose Exp $	*/
 
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (C) 1994,1995 by Andrey A. Chernov, Moscow, Russia.
  * All rights reserved.

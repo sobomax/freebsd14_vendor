@@ -13,9 +13,6 @@
  * ====================================================
  */
 
-#include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 4bd6a8f9b9c66828c207544a431fd605bf56e5b8 $");
-
 #include "math.h"
 #include "math_private.h"
 
@@ -24,7 +21,7 @@ static const float one = 1.0, huge = 1e30;
 static const float zero = 0.0;
 
 float
-__ieee754_atanhf(float x)
+atanhf(float x)
 {
 	float t;
 	int32_t hx,ix;

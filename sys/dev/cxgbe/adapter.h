@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2011 Chelsio Communications, Inc.
  * All rights reserved.
@@ -25,8 +25,6 @@
  * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
- *
- * $FreeBSD: 7de1913840a11ac4a0fd262edfacd9d144225a03 $
  *
  */
 
@@ -109,11 +107,7 @@ enum {
 	CTRL_EQ_QSIZE = 1024,
 	TX_EQ_QSIZE = 1024,
 
-#if MJUMPAGESIZE != MCLBYTES
 	SW_ZONE_SIZES = 4,	/* cluster, jumbop, jumbo9k, jumbo16k */
-#else
-	SW_ZONE_SIZES = 3,	/* cluster, jumbo9k, jumbo16k */
-#endif
 	CL_METADATA_SIZE = CACHE_LINE_SIZE,
 
 	SGE_MAX_WR_NDESC = SGE_MAX_WR_LEN / EQ_ESIZE, /* max WR size in desc */
@@ -176,7 +170,7 @@ enum {
 	FIXED_IFMEDIA	= (1 << 4),	/* ifmedia list doesn't change. */
 
 	/* VI flags */
-	DOOMED		= (1 << 0),
+	VI_DETACHING	= (1 << 0),
 	VI_INIT_DONE	= (1 << 1),
 	/* 1 << 2 is unused, was VI_SYSCTL_CTX */
 	TX_USES_VM_WR	= (1 << 3),
@@ -190,8 +184,9 @@ enum {
 	DF_VERBOSE_SLOWINTR	= (1 << 4),	/* Chatty slow intr handler */
 };
 
-#define IS_DOOMED(vi)	((vi)->flags & DOOMED)
-#define SET_DOOMED(vi)	do {(vi)->flags |= DOOMED;} while (0)
+#define IS_DETACHING(vi)	((vi)->flags & VI_DETACHING)
+#define SET_DETACHING(vi)	do {(vi)->flags |= VI_DETACHING;} while (0)
+#define CLR_DETACHING(vi)	do {(vi)->flags &= ~VI_DETACHING;} while (0)
 #define IS_BUSY(sc)	((sc)->flags & CXGBE_BUSY)
 #define SET_BUSY(sc)	do {(sc)->flags |= CXGBE_BUSY;} while (0)
 #define CLR_BUSY(sc)	do {(sc)->flags &= ~CXGBE_BUSY;} while (0)
@@ -201,7 +196,7 @@ struct vi_info {
 	struct port_info *pi;
 	struct adapter *adapter;
 
-	struct ifnet *ifp;
+	if_t ifp;
 	struct pfil_head *pfil;
 
 	unsigned long flags;
@@ -607,7 +602,7 @@ struct txpkts {
 struct sge_txq {
 	struct sge_eq eq;	/* MUST be first */
 
-	struct ifnet *ifp;	/* the interface this txq belongs to */
+	if_t ifp;		/* the interface this txq belongs to */
 	struct mp_ring *r;	/* tx software ring */
 	struct tx_sdesc *sdesc;	/* KVA of software descriptor ring */
 	struct sglist *gl;
@@ -658,7 +653,7 @@ struct sge_rxq {
 	struct sge_iq iq;	/* MUST be first */
 	struct sge_fl fl;	/* MUST follow iq */
 
-	struct ifnet *ifp;	/* the interface this rxq belongs to */
+	if_t ifp;		/* the interface this rxq belongs to */
 	struct lro_ctrl lro;	/* LRO state */
 
 	/* stats for common events first */
@@ -691,8 +686,14 @@ struct sge_ofld_rxq {
 	uint64_t rx_iscsi_padding_errors;
 	uint64_t rx_iscsi_header_digest_errors;
 	uint64_t rx_iscsi_data_digest_errors;
+	uint64_t rx_aio_ddp_jobs;
+	uint64_t rx_aio_ddp_octets;
 	u_long	rx_toe_tls_records;
 	u_long	rx_toe_tls_octets;
+	u_long	rx_toe_ddp_octets;
+	counter_u64_t ddp_buffer_alloc;
+	counter_u64_t ddp_buffer_reuse;
+	counter_u64_t ddp_buffer_free;
 } __aligned(CACHE_LINE_SIZE);
 
 static inline struct sge_ofld_rxq *
@@ -757,6 +758,8 @@ struct sge_ofld_txq {
 	counter_u64_t tx_iscsi_pdus;
 	counter_u64_t tx_iscsi_octets;
 	counter_u64_t tx_iscsi_iso_wrs;
+	counter_u64_t tx_aio_jobs;
+	counter_u64_t tx_aio_octets;
 	counter_u64_t tx_toe_tls_records;
 	counter_u64_t tx_toe_tls_octets;
 } __aligned(CACHE_LINE_SIZE);
@@ -944,7 +947,6 @@ struct adapter {
 	void *iwarp_softc;	/* (struct c4iw_dev *) */
 	struct iw_tunables iwt;
 	void *iscsi_ulp_softc;	/* (struct cxgbei_data *) */
-	void *ccr_softc;	/* (struct ccr_softc *) */
 	struct l2t_data *l2t;	/* L2 table */
 	struct smt_data *smt;	/* Source MAC Table */
 	struct tid_info tids;
@@ -961,7 +963,7 @@ struct adapter {
 
 	char ifp_lockname[16];
 	struct mtx ifp_lock;
-	struct ifnet *ifp;	/* tracer ifp */
+	if_t ifp;		/* tracer ifp */
 	struct ifmedia media;
 	int traceq;		/* iq used by all tracers, -1 if none */
 	int tracer_valid;	/* bitmap of valid tracers */
@@ -1121,6 +1123,64 @@ hw_off_limits(struct adapter *sc)
 	int off_limits = atomic_load_int(&sc->error_flags) & HW_OFF_LIMITS;
 
 	return (__predict_false(off_limits != 0));
+}
+
+static inline int
+mbuf_nsegs(struct mbuf *m)
+{
+	M_ASSERTPKTHDR(m);
+	KASSERT(m->m_pkthdr.inner_l5hlen > 0,
+	    ("%s: mbuf %p missing information on # of segments.", __func__, m));
+
+	return (m->m_pkthdr.inner_l5hlen);
+}
+
+static inline void
+set_mbuf_nsegs(struct mbuf *m, uint8_t nsegs)
+{
+	M_ASSERTPKTHDR(m);
+	m->m_pkthdr.inner_l5hlen = nsegs;
+}
+
+/* Internal mbuf flags stored in PH_loc.eight[1]. */
+#define	MC_NOMAP		0x01
+#define	MC_RAW_WR		0x02
+#define	MC_TLS			0x04
+
+static inline int
+mbuf_cflags(struct mbuf *m)
+{
+	M_ASSERTPKTHDR(m);
+	return (m->m_pkthdr.PH_loc.eight[4]);
+}
+
+static inline void
+set_mbuf_cflags(struct mbuf *m, uint8_t flags)
+{
+	M_ASSERTPKTHDR(m);
+	m->m_pkthdr.PH_loc.eight[4] = flags;
+}
+
+static inline int
+mbuf_len16(struct mbuf *m)
+{
+	int n;
+
+	M_ASSERTPKTHDR(m);
+	n = m->m_pkthdr.PH_loc.eight[0];
+	if (!(mbuf_cflags(m) & MC_TLS))
+		MPASS(n > 0 && n <= SGE_MAX_WR_LEN / 16);
+
+	return (n);
+}
+
+static inline void
+set_mbuf_len16(struct mbuf *m, uint8_t len16)
+{
+	M_ASSERTPKTHDR(m);
+	if (!(mbuf_cflags(m) & MC_TLS))
+		MPASS(len16 > 0 && len16 <= SGE_MAX_WR_LEN / 16);
+	m->m_pkthdr.PH_loc.eight[0] = len16;
 }
 
 static inline uint32_t
@@ -1288,6 +1348,8 @@ extern int t4_tmr_idx;
 extern int t4_pktc_idx;
 extern unsigned int t4_qsize_rxq;
 extern unsigned int t4_qsize_txq;
+extern int t4_ddp_rcvbuf_len;
+extern unsigned int t4_ddp_rcvbuf_cache;
 extern device_method_t cxgbe_methods[];
 
 int t4_os_find_pci_capability(struct adapter *, int);
@@ -1304,9 +1366,10 @@ int t4_map_bar_2(struct adapter *);
 int t4_setup_intr_handlers(struct adapter *);
 void t4_sysctls(struct adapter *);
 int begin_synchronized_op(struct adapter *, struct vi_info *, int, char *);
-void doom_vi(struct adapter *, struct vi_info *);
 void end_synchronized_op(struct adapter *, int);
-int update_mac_settings(struct ifnet *, int);
+void begin_vi_detach(struct adapter *, struct vi_info *);
+void end_vi_detach(struct adapter *, struct vi_info *);
+int update_mac_settings(if_t, int);
 int adapter_init(struct adapter *);
 int vi_init(struct vi_info *);
 void vi_sysctls(struct vi_info *);
@@ -1315,20 +1378,19 @@ int alloc_atid(struct adapter *, void *);
 void *lookup_atid(struct adapter *, int);
 void free_atid(struct adapter *, int);
 void release_tid(struct adapter *, int, struct sge_wrq *);
-int cxgbe_media_change(struct ifnet *);
-void cxgbe_media_status(struct ifnet *, struct ifmediareq *);
+int cxgbe_media_change(if_t);
+void cxgbe_media_status(if_t, struct ifmediareq *);
 void t4_os_cim_err(struct adapter *);
 
 #ifdef KERN_TLS
 /* t6_kern_tls.c */
-int t6_tls_tag_alloc(struct ifnet *, union if_snd_tag_alloc_params *,
+int t6_tls_tag_alloc(if_t, union if_snd_tag_alloc_params *,
     struct m_snd_tag **);
-void t6_tls_tag_free(struct m_snd_tag *);
 void t6_ktls_modload(void);
 void t6_ktls_modunload(void);
-int t6_ktls_try(struct ifnet *, struct socket *, struct ktls_session *);
-int t6_ktls_parse_pkt(struct mbuf *, int *, int *);
-int t6_ktls_write_wr(struct sge_txq *, void *, struct mbuf *, u_int, u_int);
+int t6_ktls_try(if_t, struct socket *, struct ktls_session *);
+int t6_ktls_parse_pkt(struct mbuf *);
+int t6_ktls_write_wr(struct sge_txq *, void *, struct mbuf *, u_int);
 #endif
 
 /* t4_keyctx.c */
@@ -1343,7 +1405,8 @@ struct tls_keyctx;
 void t4_aes_getdeckey(void *, const void *, unsigned int);
 void t4_copy_partial_hash(int, union authctx *, void *);
 void t4_init_gmac_hash(const char *, int, char *);
-void t4_init_hmac_digest(struct auth_hash *, u_int, const char *, int, char *);
+void t4_init_hmac_digest(const struct auth_hash *, u_int, const char *, int,
+    char *);
 #ifdef KERN_TLS
 u_int t4_tls_key_info_size(const struct ktls_session *);
 int t4_tls_proto_ver(const struct ktls_session *);
@@ -1398,7 +1461,7 @@ void t4_vi_intr(void *);
 void t4_intr_err(void *);
 void t4_intr_evt(void *);
 void t4_wrq_tx_locked(struct adapter *, struct sge_wrq *, struct wrqe *);
-void t4_update_fl_bufsize(struct ifnet *);
+void t4_update_fl_bufsize(if_t);
 struct mbuf *alloc_wr_mbuf(int, int);
 int parse_pkt(struct mbuf **, bool);
 void *start_wrq_wr(struct sge_wrq *, int, struct wrq_cookie *);
@@ -1409,7 +1472,6 @@ void t4_register_fw_msg_handler(int, fw_msg_handler_t);
 void t4_register_cpl_handler(int, cpl_handler_t);
 void t4_register_shared_cpl_handler(int, cpl_handler_t, int);
 #ifdef RATELIMIT
-int ethofld_transmit(struct ifnet *, struct mbuf *);
 void send_etid_flush_wr(struct cxgbe_rate_tag *);
 #endif
 
@@ -1437,13 +1499,10 @@ int sysctl_tc_params(SYSCTL_HANDLER_ARGS);
 void t4_init_etid_table(struct adapter *);
 void t4_free_etid_table(struct adapter *);
 struct cxgbe_rate_tag *lookup_etid(struct adapter *, int);
-int cxgbe_rate_tag_alloc(struct ifnet *, union if_snd_tag_alloc_params *,
+int cxgbe_rate_tag_alloc(if_t, union if_snd_tag_alloc_params *,
     struct m_snd_tag **);
-int cxgbe_rate_tag_modify(struct m_snd_tag *, union if_snd_tag_modify_params *);
-int cxgbe_rate_tag_query(struct m_snd_tag *, union if_snd_tag_query_params *);
-void cxgbe_rate_tag_free(struct m_snd_tag *);
 void cxgbe_rate_tag_free_locked(struct cxgbe_rate_tag *);
-void cxgbe_ratelimit_query(struct ifnet *, struct if_ratelimit_query_results *);
+void cxgbe_ratelimit_query(if_t, struct if_ratelimit_query_results *);
 #endif
 
 /* t4_filter.c */

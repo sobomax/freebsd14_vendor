@@ -1,2 +1,1 @@
-.\" $FreeBSD: c717a4e943f8df86a3a8d6472853deab87fdfc7c $
 Do not build or install HyperV utilities.

@@ -1,3 +1,2 @@
-.\" $FreeBSD: 8b9d064d2889c19a0c4e627f88a89dc4cff73628 $
 Do not build
 .Xr cpp 1 .

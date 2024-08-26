@@ -30,11 +30,6 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef lint
-static const char rcsid[] =
-  "$FreeBSD: c8a3a8a525e3464e8891b39a36e76a3b92c34aab $";
-#endif /* not lint */
-
 #include <sys/param.h>
 #include <ctype.h>
 #include <err.h>

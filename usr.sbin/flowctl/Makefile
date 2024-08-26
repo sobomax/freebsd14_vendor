@@ -1,5 +1,4 @@
 #
-# $FreeBSD: 8bd63893cc6ab6ee5ec718d6c1348c2da134492a $
 #
 
 .include <src.opts.mk>
@@ -16,5 +15,7 @@ CFLAGS+= -DINET6
 .if ${MK_INET_SUPPORT} != "no"
 CFLAGS+= -DINET
 .endif
+
+CFLAGS+= -Wno-error=unused-but-set-variable
 
 .include <bsd.prog.mk>

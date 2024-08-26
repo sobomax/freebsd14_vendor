@@ -24,7 +24,6 @@
 */
 
 /*
- * $FreeBSD: 48d08e1c176346e8eda9c7f1e5490c65b5e77164 $
  */
 
 #ifndef	__IF_BWN_PHY_PPR_H__

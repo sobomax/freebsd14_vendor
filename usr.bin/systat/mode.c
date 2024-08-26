@@ -56,9 +56,6 @@
  * mode in the command line.
  */
 
-#include <sys/cdefs.h>
-
-__FBSDID("$FreeBSD: a3fdf46c3b5d4aaa13becdbcb3e7b8c14b1798c4 $");
 
 #include <sys/types.h>
 

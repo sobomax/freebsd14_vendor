@@ -24,11 +24,8 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * 	Id: probe_keyboard.c,v 1.13 1997/06/09 05:10:55 bde Exp
+ * From: probe_keyboard.c,v 1.13 1997/06/09 05:10:55 bde Exp
  */
-
-#include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 7e798a1b850444b23986e836a45963f68532b21a $");
 
 #include <stand.h>
 #include <sys/param.h>
@@ -1048,7 +1045,7 @@ vidc_init(int arg)
 	return (0);	/* XXX reinit? */
 }
 
-void
+static void
 vidc_biosputchar(int c)
 {
 

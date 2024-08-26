@@ -28,8 +28,6 @@
 #include "opt_kern_tls.h"
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 11f5598c31a57877891803379a617c49555be968 $");
-
 #include <sys/types.h>
 #include <sys/ktls.h>
 #include <sys/malloc.h>
@@ -349,7 +347,7 @@ t4_copy_partial_hash(int alg, union authctx *auth_ctx, void *dst)
 }
 
 void
-t4_init_hmac_digest(struct auth_hash *axf, u_int partial_digest_len,
+t4_init_hmac_digest(const struct auth_hash *axf, u_int partial_digest_len,
     const char *key, int klen, char *dst)
 {
 	union authctx auth_ctx;
@@ -532,7 +530,7 @@ void
 t4_tls_key_ctx(const struct ktls_session *tls, int direction,
     struct tls_keyctx *kctx)
 {
-	struct auth_hash *axf;
+	const struct auth_hash *axf;
 	u_int mac_key_size;
 	char *hash;
 

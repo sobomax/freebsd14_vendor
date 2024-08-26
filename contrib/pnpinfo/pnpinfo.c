@@ -24,9 +24,6 @@
  * SUCH DAMAGE.
  */
 
-#include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 90c273d493647d542ba47f3aec0204afd758a248 $");
-
 #include <sys/time.h>
 
 #include <err.h>
@@ -110,7 +107,7 @@ DELAY (int i)
  * Intel May 94."
  */
 void
-send_Initiation_LFSR()
+send_Initiation_LFSR(void)
 {
     int cur, i;
 
@@ -189,8 +186,7 @@ get_resource_info(u_char *buffer, int len)
 }
 
 void
-report_dma_info (x)
-	int x;
+report_dma_info(int x)
 {
     char *s1=NULL, *s2=NULL, *s3=NULL, *s4=NULL, *s5=NULL;
 
@@ -556,7 +552,7 @@ dump_resdata(u_char *data, int csn)
  *
  */
 int
-isolation_protocol()
+isolation_protocol(void)
 {
     int csn;
     u_char data[9];

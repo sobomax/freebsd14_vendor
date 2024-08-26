@@ -13,7 +13,7 @@
 #
 #	$Id: makeinfo.sh,v 8.15 2013-11-22 20:51:17 ca Exp $
 #
-# $FreeBSD: 1c907ccd68fac09f1fdfa093cbe9b4e38f536ab4 $
+# $FreeBSD: 4ab306665e24aa16987cde5373b42d2d35245995 $
 #
 
 usewhoami=0
@@ -57,4 +57,4 @@ fi
 echo '#####' built by $user@$host
 echo '#####' in `pwd` | sed 's/\/tmp_mnt//'
 echo '#####' using $1 as configuration include directory | sed 's/\/tmp_mnt//'
-echo "define(\`__HOST__', $host)dnl"
+echo "define(\`__HOST__', \`$host')dnl"

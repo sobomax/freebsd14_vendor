@@ -1,4 +1,3 @@
-# $FreeBSD: 56dfb33901c0b218d0b02d1a24ac9e13640547dd $
 
 TESTSDIR=	${TESTSBASE}/usr.bin/bmake/basic
 

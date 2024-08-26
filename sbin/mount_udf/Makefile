@@ -1,4 +1,3 @@
-# $FreeBSD: 903ec7690ea4313b20447d9b40ef37161baf4110 $
 
 PACKAGE=runtime
 PROG=	mount_udf

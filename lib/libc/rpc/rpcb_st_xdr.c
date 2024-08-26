@@ -39,9 +39,6 @@
  * routines used with the rpcbind stats facility.
  */
 
-#include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 5b0462715aecfc7ca720e956401f4ad786e57465 $");
-
 #include "namespace.h"
 #include <rpc/rpc.h>
 #include <rpc/rpc_com.h>

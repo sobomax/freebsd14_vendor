@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2010 Riccardo Panicucci, Luigi Rizzo, Universita` di Pisa
  * All rights reserved
@@ -28,8 +28,6 @@
 
 /*
  * The API to write a packet scheduling algorithm for dummynet.
- *
- * $FreeBSD: 5c506c1d30aceb82b0bae78978c8407884bd374e $
  */
 
 #ifndef _DN_SCHED_H
@@ -170,7 +168,10 @@ int ipdn_bound_var(int *v, int dflt, int lo, int hi, const char *msg);
 static __inline struct mbuf*
 dn_dequeue(struct dn_queue *q)
 {
-	struct mbuf *m = q->mq.head;
+	struct mbuf *m;
+
+next:
+	m = q->mq.head;
 	if (m == NULL)
 		return NULL;
 #ifdef NEW_AQM
@@ -190,6 +191,11 @@ dn_dequeue(struct dn_queue *q)
 	}
 	if (q->ni.length == 0) /* queue is now idle */
 		q->q_time = V_dn_cfg.curr_time;
+	if (m->m_pkthdr.rcvif != NULL &&
+	    __predict_false(m_rcvif_restore(m) == NULL)) {
+		m_freem(m);
+		goto next;
+	}
 	return m;
 }
 

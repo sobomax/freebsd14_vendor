@@ -29,8 +29,6 @@
  * File : ecore_rdma.c
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 7ade470b04d3cb3a559ad7899287f6689087647c $");
-
 #include "bcm_osal.h"
 #include "ecore.h"
 #include "ecore_status.h"

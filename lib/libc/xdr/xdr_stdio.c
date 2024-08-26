@@ -37,9 +37,6 @@
 static char *sccsid2 = "@(#)xdr_stdio.c 1.16 87/08/11 Copyr 1984 Sun Micro";
 static char *sccsid = "@(#)xdr_stdio.c	2.1 88/07/29 4.0 RPCSRC";
 #endif
-#include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 0d179f9802f9be48c185efaec058a56f952dfcee $");
-
 /*
  * xdr_stdio.c, XDR implementation on standard i/o file.
  *

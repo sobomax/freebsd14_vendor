@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2016 Michael Zhilin <mizhka@gmail.com>
  * All rights reserved.
@@ -30,8 +30,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 8666e13dc3a3588016f80895bc3bf66f1868e4b4 $");
-
 /*
  * Slicer is required to split firmware images into pieces.
  * The first supported FW is TRX-based used by Asus routers

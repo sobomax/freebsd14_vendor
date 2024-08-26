@@ -1,2 +1,1 @@
-.\" $FreeBSD: 78814749cc785d2cdc0dfa1016c8ead4447f3f22 $
 Build nvme related tools and kernel modules.

@@ -1,4 +1,3 @@
-/* $FreeBSD: dd6acb7ee37c996a2a45dc3c91e06b2cc6d0e6da $ */
 /*	$NetBSD: msdosfs_lookup.c,v 1.37 1997/11/17 15:36:54 ws Exp $	*/
 
 /*-
@@ -57,10 +56,8 @@
 #include <stdio.h>
 #include <string.h>
 
-#include "ffs/buf.h"
 #include <fs/msdosfs/bpb.h>
-#include "msdos/direntry.h"
-#include <fs/msdosfs/denode.h>
+#include "msdos/denode.h"
 #include <fs/msdosfs/fat.h>
 #include <fs/msdosfs/msdosfsmount.h>
 
@@ -82,7 +79,7 @@ createde(struct denode *dep, struct denode *ddep, struct denode **depp,
 	u_long dirclust, diroffset;
 	struct direntry *ndep;
 	struct msdosfsmount *pmp = ddep->de_pmp;
-	struct buf *bp;
+	struct m_buf *bp;
 	daddr_t bn;
 	int blsize;
 
@@ -101,7 +98,7 @@ createde(struct denode *dep, struct denode *ddep, struct denode **depp,
 		diroffset = ddep->de_fndoffset + sizeof(struct direntry)
 		    - ddep->de_FileSize;
 		dirclust = de_clcount(pmp, diroffset);
-		error = extendfile(ddep, dirclust, 0, 0, DE_CLEAR);
+		error = m_extendfile(ddep, dirclust, 0, 0, DE_CLEAR);
 		if (error) {
 			(void)detrunc(ddep, ddep->de_FileSize, 0, NULL);
 			return error;
@@ -125,8 +122,8 @@ createde(struct denode *dep, struct denode *ddep, struct denode **depp,
 	diroffset = ddep->de_fndoffset;
 	if (dirclust != MSDOSFSROOT)
 		diroffset &= pmp->pm_crbomask;
-	if ((error = bread(pmp->pm_devvp, bn, blsize, NOCRED, &bp)) != 0) {
-		brelse(bp);
+	if ((error = bread((void *)pmp->pm_devvp, bn, blsize, NOCRED,
+	    &bp)) != 0) {
 		return error;
 	}
 	ndep = bptoep(pmp, bp, ddep->de_fndoffset);
@@ -155,10 +152,9 @@ createde(struct denode *dep, struct denode *ddep, struct denode **depp,
 				if (error)
 					return error;
 
-				error = bread(pmp->pm_devvp, bn, blsize,
+				error = bread((void *)pmp->pm_devvp, bn, blsize,
 					      NOCRED, &bp);
 				if (error) {
-					brelse(bp);
 					return error;
 				}
 				ndep = bptoep(pmp, bp, ddep->de_fndoffset);
@@ -200,8 +196,8 @@ createde(struct denode *dep, struct denode *ddep, struct denode **depp,
  * directory entry within the block.
  */
 int
-readep(struct msdosfsmount *pmp, u_long dirclust, u_long diroffset,
-    struct buf **bpp, struct direntry **epp)
+m_readep(struct msdosfsmount *pmp, u_long dirclust, u_long diroffset,
+    struct m_buf **bpp, struct direntry **epp)
 {
 	int error;
 	daddr_t bn;
@@ -212,8 +208,8 @@ readep(struct msdosfsmount *pmp, u_long dirclust, u_long diroffset,
 	    && de_blk(pmp, diroffset + blsize) > pmp->pm_rootdirsize)
 		blsize = de_bn2off(pmp, pmp->pm_rootdirsize) & pmp->pm_crbomask;
 	bn = detobn(pmp, dirclust, diroffset);
-	if ((error = bread(pmp->pm_devvp, bn, blsize, NOCRED, bpp)) != 0) {
-		brelse(*bpp);
+	if ((error = bread((void *)pmp->pm_devvp, bn, blsize, NOCRED,
+	    bpp)) != 0) {
 		*bpp = NULL;
 		return (error);
 	}
@@ -228,10 +224,10 @@ readep(struct msdosfsmount *pmp, u_long dirclust, u_long diroffset,
  * entry within the block.
  */
 int
-readde(struct denode *dep, struct buf **bpp, struct direntry **epp)
+m_readde(struct denode *dep, struct m_buf **bpp, struct direntry **epp)
 {
 
-	return (readep(dep->de_pmp, dep->de_dirclust, dep->de_diroffset,
+	return (m_readep(dep->de_pmp, dep->de_dirclust, dep->de_diroffset,
 	    bpp, epp));
 }
 
@@ -247,7 +243,7 @@ uniqdosname(struct denode *dep, struct componentname *cnp, u_char *cp)
 	int blsize;
 	u_long cn;
 	daddr_t bn;
-	struct buf *bp;
+	struct m_buf *bp;
 	int error;
 
 	if (pmp->pm_flags & MSDOSFSMNT_SHORTNAME)
@@ -271,9 +267,9 @@ uniqdosname(struct denode *dep, struct componentname *cnp, u_char *cp)
 					return 0;
 				return error;
 			}
-			error = bread(pmp->pm_devvp, bn, blsize, NOCRED, &bp);
+			error = bread((void *)pmp->pm_devvp, bn, blsize,
+			    NOCRED, &bp);
 			if (error) {
-				brelse(bp);
 				return error;
 			}
 			for (dentp = (struct direntry *)bp->b_data;

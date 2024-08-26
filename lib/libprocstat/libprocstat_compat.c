@@ -22,13 +22,9 @@
  * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
- *
- * $FreeBSD: 580f2c89794f40d54f94d9ff597885384bd353a3 $
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 580f2c89794f40d54f94d9ff597885384bd353a3 $");
-
 #include <sys/param.h>
 #include <sys/user.h>
 #include <sys/socket.h>

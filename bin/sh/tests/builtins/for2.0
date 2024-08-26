@@ -1,4 +1,3 @@
-# $FreeBSD: 48c22ce71119decda183473cfd93708fd58798c4 $
 
 r=x
 f() { return 42; }

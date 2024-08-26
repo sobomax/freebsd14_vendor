@@ -10,10 +10,6 @@
  * ====================================================
  */
 
-#ifndef lint
-static char rcsid[] = "$FreeBSD: ab13191b90047f1d37ae27b5196d95aad6a8b2e0 $";
-#endif
-
 /*
  * modf(double x, double *iptr)
  * return fraction part of x, and return x's integral part in *iptr.

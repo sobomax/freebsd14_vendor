@@ -28,7 +28,6 @@
  *  ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  *  POSSIBILITY OF SUCH DAMAGE.
  */
-/*$FreeBSD: 75b9c508cc6386d1097001c2578c3adaa09d558d $*/
 
 #include "iavf_status.h"
 #include "iavf_type.h"

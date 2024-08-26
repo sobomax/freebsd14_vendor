@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2014 The FreeBSD Foundation
  *
@@ -30,8 +30,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 33b3a366cb8d38e7b037793b067509a0ec5b25e6 $");
-
 #include <sys/types.h>
 #include <sys/event.h>
 #include <sys/mount.h>
@@ -328,7 +326,7 @@ main_autounmountd(int argc, char **argv)
 	if (kq < 0)
 		log_err(1, "kqueue");
 
-	EV_SET(&event, 0, EVFILT_FS, EV_ADD | EV_CLEAR, 0, 0, NULL);
+	EV_SET(&event, 0, EVFILT_FS, EV_ADD | EV_CLEAR, VQ_MOUNT | VQ_UNMOUNT, 0, NULL);
 	error = kevent(kq, &event, 1, NULL, 0, NULL);
 	if (error < 0)
 		log_err(1, "kevent");

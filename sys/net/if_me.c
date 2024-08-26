@@ -25,8 +25,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: bcc89aa130f77ffe689ae272a096439cbee13fc7 $");
-
 #include <sys/param.h>
 #include <sys/systm.h>
 #include <sys/jail.h>
@@ -47,6 +45,7 @@ __FBSDID("$FreeBSD: bcc89aa130f77ffe689ae272a096439cbee13fc7 $");
 #include <net/ethernet.h>
 #include <net/if.h>
 #include <net/if_var.h>
+#include <net/if_private.h>
 #include <net/if_clone.h>
 #include <net/if_types.h>
 #include <net/netisr.h>
@@ -403,6 +402,7 @@ me_srcaddr(void *arg __unused, const struct sockaddr *sa,
 static int
 me_set_tunnel(struct me_softc *sc, in_addr_t src, in_addr_t dst)
 {
+	struct epoch_tracker et;
 	struct me_softc *tmp;
 
 	sx_assert(&me_ioctl_sx, SA_XLOCKED);
@@ -429,7 +429,9 @@ me_set_tunnel(struct me_softc *sc, in_addr_t src, in_addr_t dst)
 	CK_LIST_INSERT_HEAD(&ME_HASH(src, dst), sc, chain);
 	CK_LIST_INSERT_HEAD(&ME_SRCHASH(src), sc, srchash);
 
+	NET_EPOCH_ENTER(et);
 	me_set_running(sc);
+	NET_EPOCH_EXIT(et);
 	if_link_state_change(ME2IFP(sc), LINK_STATE_UP);
 	return (0);
 }

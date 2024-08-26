@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2018, Matthew Macy
  *
@@ -27,8 +27,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 2e1117e326e6b3c57c731fdce3fc6edd99aec0b0 $");
-
 #include <sys/param.h>
 #include <sys/cpuset.h>
 #include <sys/event.h>

@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2010 The FreeBSD Foundation
  *
@@ -26,13 +26,9 @@
  * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
- *
- * $FreeBSD: 2bb4bb9aff1b302beacb4975b6984899eb1beb83 $
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 2bb4bb9aff1b302beacb4975b6984899eb1beb83 $");
-
 #include <sys/types.h>
 #include <sys/rctl.h>
 #include <sys/sysctl.h>

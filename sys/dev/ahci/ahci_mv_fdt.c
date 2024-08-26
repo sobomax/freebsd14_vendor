@@ -26,8 +26,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: b88ff2713587fa1441ff8d941e900c9fcc913229 $");
-
 #include <sys/stdint.h>
 #include <sys/stddef.h>
 #include <sys/param.h>
@@ -140,7 +138,7 @@ static device_method_t ahci_methods[] = {
 	DEVMETHOD(bus_setup_intr,   		ahci_setup_intr),
 	DEVMETHOD(bus_teardown_intr,		ahci_teardown_intr),
 	DEVMETHOD(bus_print_child,		ahci_print_child),
-	DEVMETHOD(bus_child_location_str, 	ahci_child_location_str),
+	DEVMETHOD(bus_child_location,	 	ahci_child_location),
 	DEVMETHOD(bus_get_dma_tag,  		ahci_get_dma_tag),
 	DEVMETHOD_END
 };
@@ -151,5 +149,5 @@ static driver_t ahci_driver = {
 	sizeof(struct ahci_controller)
 };
 
-DRIVER_MODULE(ahci_mv, simplebus, ahci_driver, ahci_devclass, NULL, NULL);
-DRIVER_MODULE(ahci_mv, ofwbus, ahci_driver, ahci_devclass, NULL, NULL);
+DRIVER_MODULE(ahci_mv, simplebus, ahci_driver, NULL, NULL);
+DRIVER_MODULE(ahci_mv, ofwbus, ahci_driver, NULL, NULL);

@@ -28,8 +28,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: e3a05bf66149d4dce2ac1af9f31d21d99d2b445b $");
-
 #include <sys/types.h>
 #include <sys/capsicum.h>
 #include <sys/procdesc.h>

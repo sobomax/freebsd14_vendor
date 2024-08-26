@@ -1,4 +1,3 @@
-/* $FreeBSD: 3975b0552478369037ab3e069eadc4f609c12151 $ */
 /* Do not modify. This file is auto-generated from sha512-ppc.pl. */
 .machine	"any"
 .abiversion	2

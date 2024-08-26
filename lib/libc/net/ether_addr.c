@@ -39,9 +39,6 @@
  * Columbia University, New York City
  */
 
-#include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 98e5398096ffa13ae9fda1c90f26e6df384d4a0c $");
-
 #include <sys/param.h>
 #include <sys/socket.h>
 

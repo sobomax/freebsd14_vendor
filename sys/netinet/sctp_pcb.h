@@ -32,9 +32,6 @@
  * THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 687ccf6a1c50ae0dedeeb35e73368906c7730b84 $");
-
 #ifndef _NETINET_SCTP_PCB_H_
 #define _NETINET_SCTP_PCB_H_
 
@@ -409,6 +406,7 @@ struct sctp_inpcb {
 	uint8_t reconfig_supported;
 	uint8_t nrsack_supported;
 	uint8_t pktdrop_supported;
+	uint8_t rcv_edmid;
 	struct sctp_nonpad_sndrcvinfo def_send;
 	/*-
 	 * These three are here for the sosend_dgram
@@ -610,8 +608,6 @@ sctp_set_primary_addr(struct sctp_tcb *, struct sockaddr *,
 
 bool
      sctp_is_vtag_good(uint32_t, uint16_t lport, uint16_t rport, struct timeval *);
-
-/* void sctp_drain(void); */
 
 int sctp_destination_is_reachable(struct sctp_tcb *, struct sockaddr *);
 

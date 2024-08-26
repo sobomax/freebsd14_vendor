@@ -31,7 +31,6 @@
  * SUCH DAMAGE.
  *
  *	@(#)malloc.h	8.5 (Berkeley) 5/3/95
- * $FreeBSD: 3d88460a751e0632c7584810597abeec2467ccf3 $
  */
 
 #ifndef _SYS_MALLOC_H_
@@ -233,7 +232,7 @@ void	*malloc(size_t size, struct malloc_type *type, int flags) __malloc_like
 		_malloc_item = malloc(_size, type, (flags) &~ M_ZERO);	\
 		if (((flags) & M_WAITOK) != 0 ||			\
 		    __predict_true(_malloc_item != NULL))		\
-			bzero(_malloc_item, _size);			\
+			memset(_malloc_item, 0, _size);			\
 	} else {							\
 		_malloc_item = malloc(_size, type, flags);		\
 	}								\

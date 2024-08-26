@@ -1,6 +1,5 @@
-/* $FreeBSD: 28ae5cd378793c9c6dad4cb4abdb3e8acf6866ae $ */
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2008 Hans Petter Selasky. All rights reserved.
  * Copyright (c) 1998 The NetBSD Foundation, Inc. All rights reserved.
@@ -1295,7 +1294,6 @@ static uint8_t
 uhci_check_transfer(struct usb_xfer *xfer)
 {
 	uint32_t status;
-	uint32_t token;
 	uhci_td_t *td;
 
 	DPRINTFN(16, "xfer=%p checking transfer\n", xfer);
@@ -1332,7 +1330,6 @@ uhci_check_transfer(struct usb_xfer *xfer)
 		while (1) {
 			usb_pc_cpu_invalidate(td->page_cache);
 			status = le32toh(td->td_status);
-			token = le32toh(td->td_token);
 
 			/*
 			 * if there is an active TD the transfer isn't done

@@ -1,4 +1,3 @@
-#$FreeBSD: d1c03813f792f2d8d846b2047aedec9730f062af $
 #	@(#)Makefile	8.1 (Berkeley) 6/2/93
 
 MAN=

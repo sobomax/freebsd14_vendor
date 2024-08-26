@@ -26,7 +26,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 7bbffdff8e62ae2b9b25a09e7eabf1722bf68fab $");
 #include <sys/param.h>
 #include <sys/systm.h>
 #include <sys/module.h>
@@ -167,11 +166,9 @@ struct opalpci_softc {
 	struct resource *r_reg;
 };
 
-static devclass_t	opalpci_devclass;
 DEFINE_CLASS_1(pcib, opalpci_driver, opalpci_methods,
-    sizeof(struct opalpci_softc), ofw_pci_driver);
-EARLY_DRIVER_MODULE(opalpci, ofwbus, opalpci_driver, opalpci_devclass, 0, 0,
-    BUS_PASS_BUS);
+    sizeof(struct opalpci_softc), ofw_pcib_driver);
+EARLY_DRIVER_MODULE(opalpci, ofwbus, opalpci_driver, 0, 0, BUS_PASS_BUS);
 
 static int
 opalpci_probe(device_t dev)
@@ -464,7 +461,7 @@ opalpci_attach(device_t dev)
 	/*
 	 * General OFW PCI attach
 	 */
-	err = ofw_pci_init(dev);
+	err = ofw_pcib_init(dev);
 	if (err != 0)
 		return (err);
 
@@ -496,7 +493,7 @@ opalpci_attach(device_t dev)
 		   rp->pci + rp->size - 1);
 	}
 
-	return (ofw_pci_attach(dev));
+	return (ofw_pcib_attach(dev));
 }
 
 static uint32_t

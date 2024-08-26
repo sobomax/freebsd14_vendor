@@ -1,4 +1,3 @@
-# $FreeBSD: 93f50789c88c2aea2ea037b552b06daaa22961ca $
 
 ATF_TESTS_C+=	proc_test
 

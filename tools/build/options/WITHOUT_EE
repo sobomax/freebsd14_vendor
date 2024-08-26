@@ -1,4 +1,3 @@
-.\" $FreeBSD: 4295cd6ddbc26e991005a6afa0507185829c1df5 $
 Do not build and install
 .Xr edit 1 ,
 .Xr ee 1 ,

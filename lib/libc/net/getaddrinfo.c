@@ -53,9 +53,6 @@
  * - FreeBSD supported $GAI.  The code does not.
  */
 
-#include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 14729087b82a2be1c7c095f45b93bcd44f7de1d1 $");
-
 #include "namespace.h"
 #include <sys/param.h>
 #include <sys/socket.h>

@@ -25,8 +25,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: bbe8b399be8a1f29bc59c75471b0f97ec9ca77bf $");
-
 #include <sys/param.h>
 #include <sys/systm.h>
 #include <sys/bus.h>
@@ -381,10 +379,8 @@ as3722_gpio_pin_getflags(device_t dev, uint32_t pin, uint32_t *out_flags)
 static int
 as3722_gpio_get_mode(struct as3722_softc *sc, uint32_t pin, uint32_t gpio_flags)
 {
-	uint8_t ctrl;
 	int flags;
 
-	ctrl = sc->gpio_pins[pin]->pin_ctrl_reg;
 	flags =  sc->gpio_pins[pin]->pin_cfg_flags;
 
 	/* Tristate mode. */

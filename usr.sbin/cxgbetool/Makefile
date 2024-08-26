@@ -1,4 +1,3 @@
-# $FreeBSD: ed0f90d1ef331e5361885b4fbb7486e8ab29f788 $
 
 PACKAGE=	cxgbe-tools
 PROG=	cxgbetool

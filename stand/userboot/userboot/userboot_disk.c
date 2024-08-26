@@ -24,9 +24,6 @@
  * SUCH DAMAGE.
  */
 
-#include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 7af31a158ed2e7e45b7cd43d8f6f878faae8ec78 $");
-
 /*
  * Userboot disk image handling.
  */

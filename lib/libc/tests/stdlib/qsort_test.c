@@ -28,9 +28,6 @@
  * Test for qsort() routine.
  */
 
-#include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 14e02925dfa5ca889dcb89f9dde4792586982962 $");
-
 #include <assert.h>
 #include <stdio.h>
 #include <stdlib.h>

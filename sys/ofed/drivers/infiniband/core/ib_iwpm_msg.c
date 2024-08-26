@@ -34,8 +34,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: b204696bafc9680734c9be0eb9775204bd1bdcb7 $");
-
 #include "iwpm_util.h"
 
 static int iwpm_user_pid = IWPM_PID_UNDEFINED;

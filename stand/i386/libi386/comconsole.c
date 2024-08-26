@@ -23,9 +23,6 @@
  * SUCH DAMAGE.
  */
 
-#include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 6d48e876fa3729a46cf7c197fb6e9040373cebdb $");
-
 #include <stand.h>
 #include <bootstrap.h>
 #include <machine/cpufunc.h>
@@ -42,7 +39,7 @@ __FBSDID("$FreeBSD: 6d48e876fa3729a46cf7c197fb6e9040373cebdb $");
 #define COMPORT		0x3f8
 #endif
 #ifndef	COMSPEED
-#define COMSPEED	9600
+#define COMSPEED	115200
 #endif
 
 static void	comc_probe(struct console *cp);

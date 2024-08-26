@@ -1,4 +1,3 @@
-# $FreeBSD: a53ba1f23049208ca1d2956c9b2ee94a35d4a9b2 $
 
 # capability sources
 .PATH: ${SRCTOP}/sys/kern ${LIBC_SRCTOP}/capability

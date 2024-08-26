@@ -1,4 +1,3 @@
-# $FreeBSD: 09280a48a3b55370fd2eac578d1789d88fe6a4a4 $
 # Author: Shteryana Shopova <syrinx@FreeBSD.org>
 
 .include <src.opts.mk>

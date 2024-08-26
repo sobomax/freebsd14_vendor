@@ -2,7 +2,7 @@
  * Debug routines for LSI '909 FC  adapters.
  * FreeBSD Version.
  *
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD AND BSD-3-Clause
+ * SPDX-License-Identifier: BSD-2-Clause AND BSD-3-Clause
  *
  * Copyright (c)  2000, 2001 by Greg Ansley
  *
@@ -66,8 +66,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 5ed6493898b23c1adf1691ffe7e47fadfc222b3d $");
-
 #include <dev/mpt/mpt.h>
 
 #include <dev/mpt/mpilib/mpi_ioc.h>

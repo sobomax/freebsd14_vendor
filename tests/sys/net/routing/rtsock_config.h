@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2019 Alexander V. Chernikov
  *
@@ -23,8 +23,6 @@
  * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
- *
- * $FreeBSD: d9eccb6a19f63295f1bb7b8b94155ec2294b1000 $
  */
 
 #ifndef _NET_ROUTING_RTSOCK_CONFIG_H_
@@ -129,13 +127,11 @@ config_setup(const atf_tc_t *tc, struct rtsock_config_options *co)
 	ATF_CHECK_ERRNO(0, true);
 
 	if (co->num_interfaces > 0) {
-		if (kldload("if_epair") == -1) {
-			/* Any errno other than EEXIST is fatal. */
-			ATF_REQUIRE_ERRNO(EEXIST, true);
-			/* Clear errno for the following tests. */
-			errno = 0;
-		}
+		/* Try loading if_epair and if that fails skip the test. */
+		kldload("if_epair");
 		ATF_REQUIRE_KERNEL_MODULE("if_epair");
+		/* Clear errno for the following tests. */
+		errno = 0;
 
 		c->ifnames = calloc(co->num_interfaces, sizeof(char *));
 		for (int i = 0; i < co->num_interfaces; i++)
@@ -161,8 +157,6 @@ config_generic_cleanup(const atf_tc_t *tc)
 	char cmd[512];
 	int ret;
 
-	/* XXX: sleep 100ms to avoid epair qflush panic */
-	usleep(1000 * 100);
 	snprintf(cmd, sizeof(cmd), "%s/generic_cleanup.sh", srcdir);
 	ret = system(cmd);
 	if (ret != 0)

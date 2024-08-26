@@ -1,4 +1,3 @@
-# $FreeBSD: a4831523c3fc76c981836a6f1630b0559383857c $
 # $Whistle: Makefile,v 1.3 1999/01/16 00:10:11 archie Exp $
 
 .include <src.opts.mk>

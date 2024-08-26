@@ -1,4 +1,3 @@
-# $FreeBSD: 31de4e804127f4b69654611c729a722c6d79c020 $
 
 .PATH:	${SRCTOP}/sys/dev/backlight
 KMOD=	backlight

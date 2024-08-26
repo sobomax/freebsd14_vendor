@@ -22,8 +22,6 @@
  * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
- *
- * $FreeBSD: c7d5ce2bc268756583880b48c18990fbcb80859e $
  */
 
 #ifndef _X86_BUS_DMA_H_
@@ -190,5 +188,17 @@ _bus_dmamap_complete(bus_dma_tag_t dmat, bus_dmamap_t map,
 	tc = (struct bus_dma_tag_common *)dmat;
 	return (tc->impl->map_complete(dmat, map, segs, nsegs, error));
 }
+
+#ifdef KMSAN
+static inline void
+_bus_dmamap_load_kmsan(bus_dma_tag_t dmat, bus_dmamap_t map,
+    struct memdesc *mem)
+{
+	struct bus_dma_tag_common *tc;
+
+	tc = (struct bus_dma_tag_common *)dmat;
+	return (tc->impl->load_kmsan(map, mem));
+}
+#endif
 
 #endif /* !_X86_BUS_DMA_H_ */

@@ -1,4 +1,3 @@
-/*	$FreeBSD: 1589a20a6fed780485da144b8e696239b6b8886b $	*/
 
 /*
  * Copyright (C) 2012 by Darren Reed.
@@ -9,7 +8,6 @@
  *
  * Simple RCMD transparent proxy for in-kernel use.  For use with the NAT
  * code.
- * $FreeBSD: 1589a20a6fed780485da144b8e696239b6b8886b $
  */
 
 #define	IPF_RCMD_PROXY

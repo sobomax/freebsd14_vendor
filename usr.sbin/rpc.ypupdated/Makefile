@@ -1,4 +1,3 @@
-# $FreeBSD: 1f34a28914d7425efbb28614a8920baf49a50564 $
 
 .PATH: ${SRCTOP}/usr.sbin/ypserv ${SRCTOP}/libexec/ypxfr
 

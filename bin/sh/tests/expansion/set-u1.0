@@ -1,4 +1,3 @@
-# $FreeBSD: 763eb7dcfc8f71e061f1460e5aa500cf1865ff7f $
 
 ${SH} -uc 'unset foo; echo $foo' 2>/dev/null && exit 1
 ${SH} -uc 'foo=; echo $foo' >/dev/null || exit 1

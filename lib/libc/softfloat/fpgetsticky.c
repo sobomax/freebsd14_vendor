@@ -1,7 +1,7 @@
 /* $NetBSD: fpgetsticky.c,v 1.3 2008/04/28 20:23:00 martin Exp $ */
 
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-NetBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 1997 The NetBSD Foundation, Inc.
  * All rights reserved.
@@ -30,9 +30,6 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-
-#include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 8ac7b90e96475465761e58d2d73866e50dddfef9 $");
 
 #include "namespace.h"
 

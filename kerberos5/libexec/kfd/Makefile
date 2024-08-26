@@ -1,4 +1,3 @@
-# $FreeBSD: 8561a770a42c88220f5e1684f7667ea975ba3191 $
 
 PACKAGE=	kerberos
 

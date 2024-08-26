@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2019 Isilon Systems, LLC.
  *
@@ -23,8 +23,6 @@
  * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
- *
- * $FreeBSD: 00a4e0c25c75827925188dc1b64c9e3bb79f6cca $
  */
 
 #pragma once
@@ -69,8 +67,10 @@ struct debugnet_pcb {
 	void			(*dp_drv_input)(struct ifnet *, struct mbuf *);
 
 	/* RX handler for bidirectional protocols. */
-	void			(*dp_rx_handler)(struct debugnet_pcb *,
-				    struct mbuf **);
+	int			(*dp_rx_handler)(struct mbuf *);
+
+	/* Cleanup signal for bidirectional protocols. */
+	void			(*dp_finish_handler)(void);
 
 	enum dnet_pcb_st	dp_state;
 	uint16_t		dp_client_port;

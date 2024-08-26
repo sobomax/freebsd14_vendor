@@ -1,4 +1,3 @@
-# $FreeBSD: 0a08b27174749cc1f5439bd5b905bd42219f0da0 $
 # Options specific to AMD64 platform kernels
 
 AUTO_EOI_1		opt_auto_eoi.h
@@ -8,7 +7,6 @@ COUNT_XINVLTLB_HITS	opt_smp.h
 COUNT_IPIS		opt_smp.h
 MAXMEM
 MPTABLE_FORCE_HTT
-MP_WATCHDOG
 NKPT			opt_pmap.h
 PV_STATS		opt_pmap.h
 
@@ -21,16 +19,8 @@ COMPAT_FREEBSD32	opt_global.h
 COMPAT_LINUX32		opt_dontuse.h
 LINPROCFS		opt_dontuse.h
 LINSYSFS		opt_dontuse.h
-NDISAPI			opt_dontuse.h
 
 TIMER_FREQ			opt_clock.h
-
-# options for serial support
-COM_ESP			opt_sio.h
-COM_MULTIPORT		opt_sio.h
-CONSPEED		opt_sio.h
-GDBSPEED		opt_sio.h
-COM_NO_ACPI		opt_sio.h
 
 VGA_ALT_SEQACCESS	opt_vga.h
 VGA_DEBUG		opt_vga.h
@@ -69,3 +59,9 @@ ISCI_LOGGING	opt_isci.h
 
 # EFI Runtime services support
 EFIRT			opt_efirt.h
+
+# Don't create a "legacy" PCI bridge if none is found.
+NO_LEGACY_PCIB		opt_cpu.h
+
+# Compatibility with Linux MP table bugs.
+MPTABLE_LINUX_BUG_COMPAT

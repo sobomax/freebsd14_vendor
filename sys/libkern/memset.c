@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (C) 1992-2007 The FreeBSD Project. All rights reserved.
  *
@@ -25,8 +25,6 @@
  * SUCH DAMAGE.
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 431011a34500394f6fd249c67db50c49286eee4a $");
-
 #define	LIBKERN_INLINE
 
 #include <sys/types.h>

@@ -3,8 +3,8 @@
 /* (use YYMAJOR/YYMINOR for ifdefs dependent on parser version) */
 
 #define YYBYACC 1
-#define YYMAJOR 1
-#define YYMINOR 9
+#define YYMAJOR 2
+#define YYMINOR 0
 #define YYCHECK "yyyymmdd"
 
 #define YYEMPTY        (-1)
@@ -555,14 +555,14 @@ static int yygrowstack(YYSTACKDATA *data)
 
     i = (int) (data->s_mark - data->s_base);
     newss = (YYINT *)realloc(data->s_base, newsize * sizeof(*newss));
-    if (newss == 0)
+    if (newss == NULL)
         return YYENOMEM;
 
     data->s_base = newss;
     data->s_mark = newss + i;
 
     newvs = (YYSTYPE *)realloc(data->l_base, newsize * sizeof(*newvs));
-    if (newvs == 0)
+    if (newvs == NULL)
         return YYENOMEM;
 
     data->l_base = newvs;
@@ -570,7 +570,7 @@ static int yygrowstack(YYSTACKDATA *data)
 
 #if defined(YYLTYPE) || defined(YYLTYPE_IS_DECLARED)
     newps = (YYLTYPE *)realloc(data->p_base, newsize * sizeof(*newps));
-    if (newps == 0)
+    if (newps == NULL)
         return YYENOMEM;
 
     data->p_base = newps;
@@ -664,7 +664,7 @@ YYPARSE_DECL()
 #if YYDEBUG
     const char *yys;
 
-    if ((yys = getenv("YYDEBUG")) != 0)
+    if ((yys = getenv("YYDEBUG")) != NULL)
     {
         yyn = *yys;
         if (yyn >= '0' && yyn <= '9')
@@ -682,7 +682,7 @@ YYPARSE_DECL()
     yyps->save = 0;
 #endif /* YYBTYACC */
     yym = 0;
-    yyn = 0;
+    /* yyn is set below */
     yynerrs = 0;
     yyerrflag = 0;
     yychar = YYEMPTY;
@@ -1193,64 +1193,79 @@ yyreduce:
 case 3:
 #line 35 "calc2.y"
 	{  yyerrok ; }
+#line 1197 "calc2.tab.c"
 break;
 case 4:
 #line 39 "calc2.y"
 	{  printf("%d\n",yystack.l_mark[0]);}
+#line 1202 "calc2.tab.c"
 break;
 case 5:
 #line 41 "calc2.y"
 	{  regs[yystack.l_mark[-2]] = yystack.l_mark[0]; }
+#line 1207 "calc2.tab.c"
 break;
 case 6:
 #line 45 "calc2.y"
 	{  yyval = yystack.l_mark[-1]; }
+#line 1212 "calc2.tab.c"
 break;
 case 7:
 #line 47 "calc2.y"
 	{  yyval = yystack.l_mark[-2] + yystack.l_mark[0]; }
+#line 1217 "calc2.tab.c"
 break;
 case 8:
 #line 49 "calc2.y"
 	{  yyval = yystack.l_mark[-2] - yystack.l_mark[0]; }
+#line 1222 "calc2.tab.c"
 break;
 case 9:
 #line 51 "calc2.y"
 	{  yyval = yystack.l_mark[-2] * yystack.l_mark[0]; }
+#line 1227 "calc2.tab.c"
 break;
 case 10:
 #line 53 "calc2.y"
 	{  yyval = yystack.l_mark[-2] / yystack.l_mark[0]; }
+#line 1232 "calc2.tab.c"
 break;
 case 11:
 #line 55 "calc2.y"
 	{  yyval = yystack.l_mark[-2] % yystack.l_mark[0]; }
+#line 1237 "calc2.tab.c"
 break;
 case 12:
 #line 57 "calc2.y"
 	{  yyval = yystack.l_mark[-2] & yystack.l_mark[0]; }
+#line 1242 "calc2.tab.c"
 break;
 case 13:
 #line 59 "calc2.y"
 	{  yyval = yystack.l_mark[-2] | yystack.l_mark[0]; }
+#line 1247 "calc2.tab.c"
 break;
 case 14:
 #line 61 "calc2.y"
 	{  yyval = - yystack.l_mark[0]; }
+#line 1252 "calc2.tab.c"
 break;
 case 15:
 #line 63 "calc2.y"
 	{  yyval = regs[yystack.l_mark[0]]; }
+#line 1257 "calc2.tab.c"
 break;
 case 17:
 #line 68 "calc2.y"
 	{  yyval = yystack.l_mark[0]; (*base) = (yystack.l_mark[0]==0) ? 8 : 10; }
+#line 1262 "calc2.tab.c"
 break;
 case 18:
 #line 70 "calc2.y"
 	{  yyval = (*base) * yystack.l_mark[-1] + yystack.l_mark[0]; }
+#line 1267 "calc2.tab.c"
 break;
-#line 1254 "calc2.tab.c"
+#line 1269 "calc2.tab.c"
     default:
         break;
     }

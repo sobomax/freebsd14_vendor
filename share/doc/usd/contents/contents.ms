@@ -26,7 +26,6 @@
 .\" SUCH DAMAGE.
 .\"
 .\"	@(#)00.contents	8.2 (Berkeley) 4/20/94
-.\" $FreeBSD: 03fde207c0f2082cebb8af33883142f924235730 $
 .\"
 .de ND
 .KE

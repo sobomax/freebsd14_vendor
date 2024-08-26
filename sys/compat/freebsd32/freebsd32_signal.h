@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2006 David Xu <davidxu@freebsd.org>
  * All rights reserved.
@@ -24,16 +24,14 @@
  * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
- *
- * $FreeBSD: cc7aeb858fb15455d8f561dd51cc93907b098620 $
  */
 
 #ifndef _COMPAT_FREEBSD32_SIGNAL_H_
 #define _COMPAT_FREEBSD32_SIGNAL_H_
 
 struct sigaltstack32 {
-	u_int32_t	ss_sp;		/* signal stack base */
-	u_int32_t	ss_size;	/* signal stack length */
+	uint32_t	ss_sp;		/* signal stack base */
+	uint32_t	ss_size;	/* signal stack length */
 	int		ss_flags;	/* SS_DISABLE and/or SS_ONSTACK */
 };
 

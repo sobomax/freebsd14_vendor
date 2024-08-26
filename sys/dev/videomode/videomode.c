@@ -1,4 +1,3 @@
-/*	$FreeBSD: aa576d21b623b678c9aa9e187d0b6d73ec7705ff $	*/
 
 /*
  * THIS FILE AUTOMATICALLY GENERATED.  DO NOT EDIT.
@@ -8,8 +7,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: aa576d21b623b678c9aa9e187d0b6d73ec7705ff $");
-
 #include <sys/types.h>
 #include <sys/param.h>
 #include <sys/module.h>

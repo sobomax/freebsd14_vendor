@@ -30,7 +30,6 @@
  * SUCH DAMAGE.
  *
  *	@(#)lang.l	8.1 (Berkeley) 6/6/93
- * $FreeBSD: 308c38393916366cf6c3521bca34a4c6cf3dd9e0 $
  */
 
 #include <assert.h>
@@ -62,7 +61,6 @@ struct kt {
 	const char *kt_name;
 	int kt_val;
 } key_words[] = {
-	{ "config",	CONFIG },
 	{ "cpu",	CPU },
 	{ "nocpu",	NOCPU },
 	{ "device",	DEVICE },
@@ -79,7 +77,6 @@ struct kt {
 	{ "nomakeoption", NOMAKEOPTION },
 	{ "nomakeoptions", NOMAKEOPTION },
 	{ "maxusers",	MAXUSERS },
-	{ "profile",	PROFILE },
 	{ "option",	OPTIONS },
 	{ "options",	OPTIONS },
 	{ "nooption",	NOOPTION },
@@ -299,6 +296,8 @@ include(const char *fname, int ateof)
 		return (-1);
 	}
 	cfgfile_add(fnamebuf == NULL ? fname : fnamebuf);
+	free(fnamebuf);
+
 	in = malloc(sizeof(*in));
 	assert(in != NULL);
 	in->in_prev = inclp;

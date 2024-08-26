@@ -28,14 +28,11 @@
  */
 
 #include <sys/cdefs.h>
-__RCSID("$FreeBSD: 83315090d73091d3d64a6757873b6cd275609084 $");
-
 #include <sys/param.h>
 #include <sys/errno.h>
 #include <sys/types.h>
 #include <sys/sysctl.h>
 #include <err.h>
-#include <libutil.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>

@@ -26,8 +26,6 @@
  * THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- *
- * $FreeBSD: 54b558d0bea2f65c833e41475f312587eefef471 $
  */
 #ifndef	_LINUXKPI_LINUX_KERNEL_H_
 #define	_LINUXKPI_LINUX_KERNEL_H_
@@ -44,7 +42,9 @@
 #include <sys/time.h>
 
 #include <linux/bitops.h>
+#include <linux/build_bug.h>
 #include <linux/compiler.h>
+#include <linux/container_of.h>
 #include <linux/stringify.h>
 #include <linux/errno.h>
 #include <linux/sched.h>
@@ -52,13 +52,14 @@
 #include <linux/typecheck.h>
 #include <linux/jiffies.h>
 #include <linux/log2.h>
+#include <linux/kconfig.h>
 
 #include <asm/byteorder.h>
 #include <asm/cpufeature.h>
 #include <asm/processor.h>
 #include <asm/uaccess.h>
 
-#include <machine/stdarg.h>
+#include <linux/stdarg.h>
 
 #define KERN_CONT       ""
 #define	KERN_EMERG	"<0>"
@@ -91,28 +92,6 @@
 #define	U32_C(x) x ## U
 #define	S64_C(x) x ## LL
 #define	U64_C(x) x ## ULL
-
-/*
- * BUILD_BUG_ON() can happen inside functions where _Static_assert() does not
- * seem to work.  Use old-schoold-ish CTASSERT from before commit
- * a3085588a88fa58eb5b1eaae471999e1995a29cf but also make sure we do not
- * end up with an unused typedef or variable. The compiler should optimise
- * it away entirely.
- */
-#define	_O_CTASSERT(x)		_O__CTASSERT(x, __LINE__)
-#define	_O__CTASSERT(x, y)	_O___CTASSERT(x, y)
-#define	_O___CTASSERT(x, y)	while (0) { \
-    typedef char __assert_line_ ## y[(x) ? 1 : -1]; \
-    __assert_line_ ## y _x; \
-    _x[0] = '\0'; \
-}
-
-#define	BUILD_BUG()			do { CTASSERT(0); } while (0)
-#define	BUILD_BUG_ON(x)			do { _O_CTASSERT(!(x)) } while (0)
-#define	BUILD_BUG_ON_MSG(x, msg)	BUILD_BUG_ON(x)
-#define	BUILD_BUG_ON_NOT_POWER_OF_2(x)	BUILD_BUG_ON(!powerof2(x))
-#define	BUILD_BUG_ON_INVALID(expr)	while (0) { (void)(expr); }
-#define	BUILD_BUG_ON_ZERO(x)	((int)sizeof(struct { int:-((x) != 0); }))
 
 #define	BUG()			panic("BUG at %s:%d", __FILE__, __LINE__)
 #define	BUG_ON(cond)		do {				\
@@ -295,12 +274,6 @@ extern int linuxkpi_debug;
 	unlikely(__ret_warn_on);		\
 })
 #endif
-
-#define container_of(ptr, type, member)				\
-({								\
-	const __typeof(((type *)0)->member) *__p = (ptr);	\
-	(type *)((uintptr_t)__p - offsetof(type, member));	\
-})
 
 #define	ARRAY_SIZE(x)	(sizeof(x) / sizeof((x)[0]))
 
@@ -574,8 +547,6 @@ kstrtou8_from_user(const char __user *s, size_t count, unsigned int base,
 #define offsetofend(t, m)	\
         (offsetof(t, m) + sizeof((((t *)0)->m)))
 
-#define	typeof_member(s, e)	typeof(((s *)0)->e)
-
 #define clamp_t(type, _x, min, max)	min_t(type, max_t(type, _x, min), max)
 #define clamp(x, lo, hi)		min( max(x,lo), hi)
 #define	clamp_val(val, lo, hi) clamp_t(typeof(val), val, lo, hi)
@@ -622,12 +593,6 @@ mult_frac(uintmax_t x, uintmax_t multiplier, uintmax_t divisor)
 	uintmax_t r = (x % divisor);
 
 	return ((q * multiplier) + ((r * multiplier) / divisor));
-}
-
-static inline int64_t
-abs64(int64_t x)
-{
-	return (x < 0 ? -x : x);
 }
 
 typedef struct linux_ratelimit {
@@ -759,47 +724,5 @@ mac_pton(const char *macin, uint8_t *macout)
 
 #define	DECLARE_FLEX_ARRAY(_t, _n)					\
     struct { struct { } __dummy_ ## _n; _t _n[0]; }
-
-/*
- * Checking if an option is defined would be easy if we could do CPP inside CPP.
- * The defined case whether -Dxxx or -Dxxx=1 are easy to deal with.  In either
- * case the defined value is "1". A more general -Dxxx=<c> case will require
- * more effort to deal with all possible "true" values. Hope we do not have
- * to do this as well.
- * The real problem is the undefined case.  To avoid this problem we do the
- * concat/varargs trick: "yyy" ## xxx can make two arguments if xxx is "1"
- * by having a #define for yyy_1 which is "ignore,".
- * Otherwise we will just get "yyy".
- * Need to be careful about variable substitutions in macros though.
- * This way we make a (true, false) problem a (don't care, true, false) or a
- * (don't care true, false).  Then we can use a variadic macro to only select
- * the always well known and defined argument #2.  And that seems to be
- * exactly what we need.  Use 1 for true and 0 for false to also allow
- * #if IS_*() checks pre-compiler checks which do not like #if true.
- */
-#define ___XAB_1		dontcare,
-#define ___IS_XAB(_ignore, _x, ...)	(_x)
-#define	__IS_XAB(_x)		___IS_XAB(_x 1, 0)
-#define	_IS_XAB(_x)		__IS_XAB(__CONCAT(___XAB_, _x))
-
-/* This is if CONFIG_ccc=y. */
-#define	IS_BUILTIN(_x)		_IS_XAB(_x)
-/* This is if CONFIG_ccc=m. */
-#define	IS_MODULE(_x)		_IS_XAB(_x ## _MODULE)
-/* This is if CONFIG_ccc is compiled in(=y) or a module(=m). */
-#define	IS_ENABLED(_x)		(IS_BUILTIN(_x) || IS_MODULE(_x))
-/*
- * This is weird case.  If the CONFIG_ccc is builtin (=y) this returns true;
- * or if the CONFIG_ccc is a module (=m) and the caller is built as a module
- * (-DMODULE defined) this returns true, but if the callers is not a module
- * (-DMODULE not defined, which means caller is BUILTIN) then it returns
- * false.  In other words, a module can reach the kernel, a module can reach
- * a module, but the kernel cannot reach a module, and code never compiled
- * cannot be reached either.
- * XXX -- I'd hope the module-to-module case would be handled by a proper
- * module dependency definition (MODULE_DEPEND() in FreeBSD).
- */
-#define	IS_REACHABLE(_x)	(IS_BUILTIN(_x) || \
-				    (IS_MODULE(_x) && IS_BUILTIN(MODULE)))
 
 #endif	/* _LINUXKPI_LINUX_KERNEL_H_ */

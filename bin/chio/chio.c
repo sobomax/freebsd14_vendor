@@ -43,8 +43,6 @@ static const char copyright[] =
 #endif
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 3264db8bb18dada9c4e4d5a71b315d87a6b4b34b $");
-
 #include <sys/param.h>
 #include <sys/chio.h> 
 #include <err.h>
@@ -60,7 +58,7 @@ __FBSDID("$FreeBSD: 3264db8bb18dada9c4e4d5a71b315d87a6b4b34b $");
 #include "defs.h"
 #include "pathnames.h"
 
-static	void usage(void);
+static	void usage(void) __dead2;
 static	void cleanup(void);
 static	u_int16_t parse_element_type(char *);
 static	u_int16_t parse_element_unit(char *);
@@ -427,7 +425,7 @@ do_position(const char *cname, int argc, char **argv)
 
 /* ARGSUSED */
 static int
-do_params(const char *cname, int argc, char **argv)
+do_params(const char *cname, int argc, char **argv __unused)
 {
 	struct changer_params data;
 	int picker;
@@ -470,7 +468,7 @@ do_params(const char *cname, int argc, char **argv)
 
 /* ARGSUSED */
 static int
-do_getpicker(const char *cname, int argc, char **argv)
+do_getpicker(const char *cname, int argc, char **argv __unused)
 {
 	int picker;
 

@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2020 Jessica Clarke <jrtc27@FreeBSD.org>
  *
@@ -33,8 +33,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 081ea37bb8ef30e0801f66af4915460091e873e8 $");
-
 #include <sys/param.h>
 #include <sys/systm.h>
 #include <sys/bus.h>
@@ -181,7 +179,5 @@ static device_method_t goldfish_rtc_methods[] = {
 
 DEFINE_CLASS_0(goldfish_rtc, goldfish_rtc_driver, goldfish_rtc_methods,
     sizeof(struct goldfish_rtc_softc));
-static devclass_t goldfish_rtc_devclass;
 
-DRIVER_MODULE(goldfish_rtc, simplebus, goldfish_rtc_driver,
-    goldfish_rtc_devclass, NULL, NULL);
+DRIVER_MODULE(goldfish_rtc, simplebus, goldfish_rtc_driver, NULL, NULL);

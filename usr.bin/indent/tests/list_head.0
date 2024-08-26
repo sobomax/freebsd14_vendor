@@ -1,4 +1,3 @@
-/* $FreeBSD: 3a186ca33e07bd6d6410e110ea046d8d57052548 $ */
 /* See r309380 */
 static int
 do_execve(td, args, mac_p)

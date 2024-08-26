@@ -23,7 +23,6 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 #include "test.h"
-__FBSDID("$FreeBSD: b3260fa7563be05626a3b4c0693a0f0e1656fe45 $");
 
 /*
  * Issue 332:  Some epub files (which are really Zip archives) have

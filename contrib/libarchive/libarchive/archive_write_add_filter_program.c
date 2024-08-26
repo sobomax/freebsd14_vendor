@@ -25,7 +25,6 @@
  */
 
 #include "archive_platform.h"
-__FBSDID("$FreeBSD: c096e7227ba4355123ae47096bf6a688daf2a199 $");
 
 #ifdef HAVE_SYS_WAIT_H
 #  include <sys/wait.h>

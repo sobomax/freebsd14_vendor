@@ -29,8 +29,6 @@
  * The views and conclusions contained in the software and documentation are
  * those of the authors and should not be interpreted as representing official
  * policies, either expressed or implied, of the FreeBSD Project.
- *
- * $FreeBSD: af639ee1512ab40b9abdd69607c4f1ba0ee73cea $
  */
 
 #ifndef _SFXGE_VERSION_H

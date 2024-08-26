@@ -1,2 +1,1 @@
-.\" $FreeBSD: 927765bfdc691359a408f37732f8db83bf8aa7ab $
 Do not build and install gcc and g++ as part of the normal build process.

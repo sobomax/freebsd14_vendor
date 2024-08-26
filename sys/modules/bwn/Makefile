@@ -1,4 +1,3 @@
-# $FreeBSD: 4d52cb589ef1b5045eb6f678945d94e48491155d $
 
 .PATH: ${SRCTOP}/sys/dev/bwn
 

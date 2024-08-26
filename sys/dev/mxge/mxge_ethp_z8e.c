@@ -2,7 +2,6 @@
  * from: FreeBSD: src/sys/tools/fw_stub.awk,v 1.6 2007/03/02 11:42:53 flz
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: fd859ee9d71c58257494ed9925674b96d0f551e6 $");
 #include <sys/param.h>
 #include <sys/errno.h>
 #include <sys/kernel.h>

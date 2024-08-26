@@ -1,4 +1,3 @@
-# $FreeBSD: 5d5885673dd99170984454298e291aefe8980f92 $
 
 KMOD=	x86bios
 SRCS=	opt_x86bios.h

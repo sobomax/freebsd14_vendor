@@ -27,7 +27,6 @@
 # SUCH DAMAGE.
 #
 #	@(#)vnode_if.src	8.12 (Berkeley) 5/14/95
-# $FreeBSD: d5e8a100447a6e4e16f59521cbedcd7bb5c29f0e $
 #
 
 #
@@ -193,7 +192,6 @@ vop_stat {
 	OUT struct stat *sb;
 	IN struct ucred *active_cred;
 	IN struct ucred *file_cred;
-	IN struct thread *td;
 };
 
 
@@ -393,7 +391,7 @@ vop_readdir {
 	IN struct ucred *cred;
 	INOUT int *eofflag;
 	OUT int *ncookies;
-	INOUT u_long **cookies;
+	INOUT uint64_t **cookies;
 };
 
 
@@ -473,6 +471,13 @@ vop_getwritemount {
 	OUT struct mount **mpp;
 };
 
+%% getwritevnode vp	= = =
+
+vop_getlowvnode {
+	IN struct vnode *vp;
+	OUT struct vnode **vplp;
+	IN int flags;
+};
 
 %% print	vp	- - -
 
@@ -804,6 +809,18 @@ vop_vput_pair {
 	IN struct vnode *dvp;
 	INOUT struct vnode **vpp;
 	IN bool unlock_vp;
+};
+
+
+%% deallocate	vp	L L L
+
+vop_deallocate {
+	IN struct vnode *vp;
+	INOUT off_t *offset;
+	INOUT off_t *len;
+	IN int flags;
+	IN int ioflag;
+	IN struct ucred *cred;
 };
 
 

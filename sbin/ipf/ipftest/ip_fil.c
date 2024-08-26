@@ -1,4 +1,3 @@
-/*	$FreeBSD: f5955ddffdfe02661c3883fb0d8b39546c36e0b1 $	*/
 
 /*
  * Copyright (C) 2012 by Darren Reed.
@@ -558,7 +557,7 @@ ipf_newisn(fin)
 
 /* ------------------------------------------------------------------------ */
 /* Function:    ipf_nextipid                                                */
-/* Returns:     int - 0 == success, -1 == error (packet should be droppped) */
+/* Returns:     int - 0 == success, -1 == error (packet should be dropped)  */
 /* Parameters:  fin(I) - pointer to packet information                      */
 /*                                                                          */
 /* Returns the next IPv4 ID to use for this packet.                         */

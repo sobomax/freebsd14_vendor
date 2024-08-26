@@ -1,6 +1,5 @@
 #pt.iso.acc.kbd
 #by: pm@dee.uc.pt
-# $FreeBSD: 8b6ee3bc12a05c674c0bd653912151ee99ce524b $
 #                                                         alt
 # scan                       cntrl          alt    alt   cntrl lock
 # code  base   shift  cntrl  shift  alt    shift  cntrl  shift state

@@ -1,4 +1,3 @@
-# $FreeBSD: dfd926586c90b88414139e149acb53a6a5979c31 $
 
 TESTSRC=	${SRCTOP}/contrib/netbsd-tests/lib/libpthread/dlopen/dso
 WARNS?=		3

@@ -1,4 +1,3 @@
-/* $FreeBSD: db8666ea99db9a649d2e7dbfcfcf223e6852e8cd $ */
 
 CTL - CAM Target Layer Description
 

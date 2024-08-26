@@ -1,4 +1,3 @@
-# $FreeBSD: 49cb4483a0f0e9bcb058369548a73ba501bf8a96 $
 
 include "../../conf/NOTES"
 include NOTES

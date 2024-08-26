@@ -1,6 +1,5 @@
 #!/bin/sh
 #
-# $FreeBSD: 4e08a04d2a256cc528fc8281f9cc58ed0be4358c $
 #
 # Check that the running userland and kernel versions are in sync.
 

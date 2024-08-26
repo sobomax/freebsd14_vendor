@@ -1,4 +1,3 @@
-.\" $FreeBSD: 2bb7542699e9fa6821758747b1781fc407b85d74 $
 Build some programs without
 .Xr libblacklist 3
 support, like

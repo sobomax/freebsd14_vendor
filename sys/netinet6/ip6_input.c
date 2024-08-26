@@ -63,13 +63,12 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 2423b61e0b36d764ec15f747d0957314397bd159 $");
-
 #include "opt_inet.h"
 #include "opt_inet6.h"
 #include "opt_ipsec.h"
 #include "opt_route.h"
 #include "opt_rss.h"
+#include "opt_sctp.h"
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -89,10 +88,12 @@ __FBSDID("$FreeBSD: 2423b61e0b36d764ec15f747d0957314397bd159 $");
 #include <sys/rmlock.h>
 #include <sys/syslog.h>
 #include <sys/sysctl.h>
+#include <sys/eventhandler.h>
 
 #include <net/if.h>
 #include <net/if_var.h>
 #include <net/if_types.h>
+#include <net/if_private.h>
 #include <net/if_dl.h>
 #include <net/route.h>
 #include <net/netisr.h>
@@ -112,6 +113,7 @@ __FBSDID("$FreeBSD: 2423b61e0b36d764ec15f747d0957314397bd159 $");
 #include <netinet/ip6.h>
 #include <netinet6/in6_var.h>
 #include <netinet6/ip6_var.h>
+#include <netinet/ip_encap.h>
 #include <netinet/in_pcb.h>
 #include <netinet/icmp6.h>
 #include <netinet6/scope6_var.h>
@@ -119,14 +121,18 @@ __FBSDID("$FreeBSD: 2423b61e0b36d764ec15f747d0957314397bd159 $");
 #include <netinet6/mld6_var.h>
 #include <netinet6/nd6.h>
 #include <netinet6/in6_rss.h>
+#ifdef SCTP
+#include <netinet/sctp_pcb.h>
+#include <netinet6/sctp6_var.h>
+#endif
 
 #include <netipsec/ipsec_support.h>
 
-#include <netinet6/ip6protosw.h>
+ip6proto_input_t	*ip6_protox[IPPROTO_MAX] = {
+			    [0 ... IPPROTO_MAX - 1] = rip6_input };
+ip6proto_ctlinput_t	*ip6_ctlprotox[IPPROTO_MAX] = {
+			    [0 ... IPPROTO_MAX - 1] = rip6_ctlinput };
 
-extern struct domain inet6domain;
-
-u_char ip6_protox[IPPROTO_MAX];
 VNET_DEFINE(struct in6_ifaddrhead, in6_ifaddrhead);
 VNET_DEFINE(struct in6_ifaddrlisthead *, in6_ifaddrhashtbl);
 VNET_DEFINE(u_long, in6_ifaddrhmask);
@@ -163,6 +169,12 @@ SYSCTL_PROC(_net_inet6_ip6, IPV6CTL_INTRQMAXLEN, intr_queue_maxlen,
     0, 0, sysctl_netinet6_intr_queue_maxlen, "I",
     "Maximum size of the IPv6 input queue");
 
+VNET_DEFINE_STATIC(bool, ip6_sav) = true;
+#define	V_ip6_sav	VNET(ip6_sav)
+SYSCTL_BOOL(_net_inet6_ip6, OID_AUTO, source_address_validation,
+    CTLFLAG_VNET | CTLFLAG_RW, &VNET_NAME(ip6_sav), true,
+    "Drop incoming packets with source address that is a local address");
+
 #ifdef RSS
 static struct netisr_handler ip6_direct_nh = {
 	.nh_name = "ip6_direct",
@@ -194,6 +206,7 @@ SYSCTL_PROC(_net_inet6_ip6, IPV6CTL_INTRDQMAXLEN, intr_direct_queue_maxlen,
 #endif
 
 VNET_DEFINE(pfil_head_t, inet6_pfil_head);
+VNET_DEFINE(pfil_head_t, inet6_local_pfil_head);
 
 VNET_PCPUSTAT_DEFINE(struct ip6stat, ip6stat);
 VNET_PCPUSTAT_SYSINIT(ip6stat);
@@ -210,12 +223,10 @@ static int ip6_hopopts_input(u_int32_t *, u_int32_t *, struct mbuf **, int *);
  * IP6 initialization: fill in IP6 protocol switch table.
  * All protocols not implemented in kernel go to raw IP6 protocol handler.
  */
-void
-ip6_init(void)
+static void
+ip6_vnet_init(void *arg __unused)
 {
 	struct pfil_head_args args;
-	struct protosw *pr;
-	int i;
 
 	TUNABLE_INT_FETCH("net.inet6.ip6.auto_linklocal",
 	    &V_ip6_auto_linklocal);
@@ -232,6 +243,10 @@ ip6_init(void)
 	args.pa_type = PFIL_TYPE_IP6;
 	args.pa_headname = PFIL_INET6_NAME;
 	V_inet6_pfil_head = pfil_head_register(&args);
+
+	args.pa_flags = PFIL_OUT;
+	args.pa_headname = PFIL_INET6_LOCAL_NAME;
+	V_inet6_local_pfil_head = pfil_head_register(&args);
 
 	if (hhook_head_register(HHOOK_TYPE_IPSEC_IN, AF_INET6,
 	    &V_ipsec_hhh_in[HHOOK_IPSEC_INET6],
@@ -253,97 +268,74 @@ ip6_init(void)
 
 	/* Skip global initialization stuff for non-default instances. */
 #ifdef VIMAGE
-	if (!IS_DEFAULT_VNET(curvnet)) {
-		netisr_register_vnet(&ip6_nh);
+	netisr_register_vnet(&ip6_nh);
 #ifdef RSS
-		netisr_register_vnet(&ip6_direct_nh);
+	netisr_register_vnet(&ip6_direct_nh);
 #endif
-		return;
-	}
 #endif
+}
+VNET_SYSINIT(ip6_vnet_init, SI_SUB_PROTO_DOMAIN, SI_ORDER_FOURTH,
+    ip6_vnet_init, NULL);
 
-	pr = pffindproto(PF_INET6, IPPROTO_RAW, SOCK_RAW);
-	if (pr == NULL)
-		panic("ip6_init");
+static void
+ip6_init(void *arg __unused)
+{
 
-	/* Initialize the entire ip6_protox[] array to IPPROTO_RAW. */
-	for (i = 0; i < IPPROTO_MAX; i++)
-		ip6_protox[i] = pr - inet6sw;
 	/*
-	 * Cycle through IP protocols and put them into the appropriate place
-	 * in ip6_protox[].
+	 * Register statically those protocols that are unlikely to ever go
+	 * dynamic.
 	 */
-	for (pr = inet6domain.dom_protosw;
-	    pr < inet6domain.dom_protoswNPROTOSW; pr++)
-		if (pr->pr_domain->dom_family == PF_INET6 &&
-		    pr->pr_protocol && pr->pr_protocol != IPPROTO_RAW) {
-			/* Be careful to only index valid IP protocols. */
-			if (pr->pr_protocol < IPPROTO_MAX)
-				ip6_protox[pr->pr_protocol] = pr - inet6sw;
-		}
+	IP6PROTO_REGISTER(IPPROTO_ICMPV6, icmp6_input, rip6_ctlinput);
+	IP6PROTO_REGISTER(IPPROTO_DSTOPTS, dest6_input, NULL);
+	IP6PROTO_REGISTER(IPPROTO_ROUTING, route6_input, NULL);
+	IP6PROTO_REGISTER(IPPROTO_FRAGMENT, frag6_input, NULL);
+	IP6PROTO_REGISTER(IPPROTO_IPV4, encap6_input, NULL);
+	IP6PROTO_REGISTER(IPPROTO_IPV6, encap6_input, NULL);
+	IP6PROTO_REGISTER(IPPROTO_ETHERIP, encap6_input, NULL);
+	IP6PROTO_REGISTER(IPPROTO_GRE, encap6_input, NULL);
+	IP6PROTO_REGISTER(IPPROTO_PIM, encap6_input, NULL);
+#ifdef SCTP	/* XXX: has a loadable & static version */
+	IP6PROTO_REGISTER(IPPROTO_SCTP, sctp6_input, sctp6_ctlinput);
+#endif
+
+	EVENTHANDLER_REGISTER(vm_lowmem, frag6_drain, NULL, LOWMEM_PRI_DEFAULT);
+	EVENTHANDLER_REGISTER(mbuf_lowmem, frag6_drain, NULL,
+	    LOWMEM_PRI_DEFAULT);
 
 	netisr_register(&ip6_nh);
 #ifdef RSS
 	netisr_register(&ip6_direct_nh);
 #endif
 }
+SYSINIT(ip6_init, SI_SUB_PROTO_DOMAIN, SI_ORDER_THIRD, ip6_init, NULL);
 
-/*
- * The protocol to be inserted into ip6_protox[] must be already registered
- * in inet6sw[], either statically or through pf_proto_register().
- */
 int
-ip6proto_register(short ip6proto)
+ip6proto_register(uint8_t proto, ip6proto_input_t input,
+    ip6proto_ctlinput_t ctl)
 {
-	struct protosw *pr;
 
-	/* Sanity checks. */
-	if (ip6proto <= 0 || ip6proto >= IPPROTO_MAX)
-		return (EPROTONOSUPPORT);
+	MPASS(proto > 0);
 
-	/*
-	 * The protocol slot must not be occupied by another protocol
-	 * already.  An index pointing to IPPROTO_RAW is unused.
-	 */
-	pr = pffindproto(PF_INET6, IPPROTO_RAW, SOCK_RAW);
-	if (pr == NULL)
-		return (EPFNOSUPPORT);
-	if (ip6_protox[ip6proto] != pr - inet6sw)	/* IPPROTO_RAW */
+	if (ip6_protox[proto] == rip6_input) {
+		ip6_protox[proto] = input;
+		ip6_ctlprotox[proto] = ctl;
+		return (0);
+	} else
 		return (EEXIST);
-
-	/*
-	 * Find the protocol position in inet6sw[] and set the index.
-	 */
-	for (pr = inet6domain.dom_protosw;
-	    pr < inet6domain.dom_protoswNPROTOSW; pr++) {
-		if (pr->pr_domain->dom_family == PF_INET6 &&
-		    pr->pr_protocol && pr->pr_protocol == ip6proto) {
-			ip6_protox[pr->pr_protocol] = pr - inet6sw;
-			return (0);
-		}
-	}
-	return (EPROTONOSUPPORT);
 }
 
 int
-ip6proto_unregister(short ip6proto)
+ip6proto_unregister(uint8_t proto)
 {
-	struct protosw *pr;
 
-	/* Sanity checks. */
-	if (ip6proto <= 0 || ip6proto >= IPPROTO_MAX)
-		return (EPROTONOSUPPORT);
+	MPASS(proto > 0);
 
-	/* Check if the protocol was indeed registered. */
-	pr = pffindproto(PF_INET6, IPPROTO_RAW, SOCK_RAW);
-	if (pr == NULL)
-		return (EPFNOSUPPORT);
-	if (ip6_protox[ip6proto] == pr - inet6sw)	/* IPPROTO_RAW */
+	if (ip6_protox[proto] != rip6_input) {
+		ip6_protox[proto] = rip6_input;
+		ip6_ctlprotox[proto] = rip6_ctlinput;
+		return (0);
+	} else
 		return (ENOENT);
-
-	/* Reset the protocol slot to IPPROTO_RAW. */
-	ip6_protox[ip6proto] = pr - inet6sw;
-	return (0);
 }
 
 #ifdef VIMAGE
@@ -521,7 +513,7 @@ ip6_direct_input(struct mbuf *m)
 		}
 #endif /* IPSEC */
 
-		nxt = (*inet6sw[ip6_protox[nxt]].pr_input)(&m, &off, nxt);
+		nxt = ip6_protox[nxt](&m, &off, nxt);
 	}
 	return;
 bad:
@@ -666,12 +658,6 @@ ip6_input(struct mbuf *m)
 		in6_ifstat_inc(rcvif, ifs6_in_addrerr);
 		goto bad;
 	}
-#ifdef ALTQ
-	if (altq_input != NULL && (*altq_input)(m, AF_INET6) == 0) {
-		/* packet is dropped by traffic conditioner */
-		return;
-	}
-#endif
 	/*
 	 * The following check is not documented in specs.  A malicious
 	 * party may be able to use IPv4 mapped addr to confuse tcp/udp stack
@@ -748,7 +734,7 @@ ip6_input(struct mbuf *m)
 		goto passin;
 
 	odst = ip6->ip6_dst;
-	if (pfil_run_hooks(V_inet6_pfil_head, &m, m->m_pkthdr.rcvif, PFIL_IN,
+	if (pfil_mbuf_in(V_inet6_pfil_head, &m, m->m_pkthdr.rcvif,
 	    NULL) != PFIL_PASS)
 		return;
 	ip6 = mtod(m, struct ip6_hdr *);
@@ -813,6 +799,12 @@ passin:
 			    "ip6_input: packet to an unready address %s->%s\n",
 			    ip6_sprintf(ip6bufs, &ip6->ip6_src),
 			    ip6_sprintf(ip6bufd, &ip6->ip6_dst)));
+			goto bad;
+		}
+		if (V_ip6_sav && !(m->m_flags & M_LOOP) &&
+		    __predict_false(in6_localip_fib(&ip6->ip6_src,
+			    rcvif->if_fib))) {
+			IP6STAT_INC(ip6s_badscope); /* XXX */
 			goto bad;
 		}
 		/* Count the packet in the ip address stats */
@@ -896,6 +888,20 @@ passin:
 	}
 
 	/*
+	 * We are going to ship the packet to the local protocol stack. Call the
+	 * filter again for this 'output' action, allowing redirect-like rules
+	 * to adjust the source address.
+	 */
+	if (PFIL_HOOKED_OUT(V_inet6_local_pfil_head)) {
+		if (pfil_mbuf_out(V_inet6_local_pfil_head, &m, V_loif, NULL) !=
+		    PFIL_PASS)
+			return;
+		if (m == NULL)			/* consumed by filter */
+			return;
+		ip6 = mtod(m, struct ip6_hdr *);
+	}
+
+	/*
 	 * Tell launch routine the next header
 	 */
 	IP6STAT_INC(ip6s_delivered);
@@ -925,7 +931,7 @@ passin:
 		}
 #endif /* IPSEC */
 
-		nxt = (*inet6sw[ip6_protox[nxt]].pr_input)(&m, &off, nxt);
+		nxt = ip6_protox[nxt](&m, &off, nxt);
 	}
 	return;
 bad:
@@ -1200,8 +1206,8 @@ ip6_savecontrol_v4(struct inpcb *inp, struct mbuf *m, struct mbuf **mp,
 			} else {
 				microtime(&t.tv);
 			}
-			*mp = sbcreatecontrol((caddr_t) &t.tv, sizeof(t.tv),
-			    SCM_TIMESTAMP, SOL_SOCKET);
+			*mp = sbcreatecontrol(&t.tv, sizeof(t.tv),
+			    SCM_TIMESTAMP, SOL_SOCKET, M_NOWAIT);
 			if (*mp != NULL) {
 				mp = &(*mp)->m_next;
 				stamped = true;
@@ -1218,8 +1224,8 @@ ip6_savecontrol_v4(struct inpcb *inp, struct mbuf *m, struct mbuf **mp,
 			} else {
 				bintime(&t.bt);
 			}
-			*mp = sbcreatecontrol((caddr_t)&t.bt, sizeof(t.bt),
-			    SCM_BINTIME, SOL_SOCKET);
+			*mp = sbcreatecontrol(&t.bt, sizeof(t.bt), SCM_BINTIME,
+			    SOL_SOCKET, M_NOWAIT);
 			if (*mp != NULL) {
 				mp = &(*mp)->m_next;
 				stamped = true;
@@ -1236,8 +1242,8 @@ ip6_savecontrol_v4(struct inpcb *inp, struct mbuf *m, struct mbuf **mp,
 			} else {
 				nanotime(&t.ts);
 			}
-			*mp = sbcreatecontrol((caddr_t)&t.ts, sizeof(t.ts),
-			    SCM_REALTIME, SOL_SOCKET);
+			*mp = sbcreatecontrol(&t.ts, sizeof(t.ts),
+			    SCM_REALTIME, SOL_SOCKET, M_NOWAIT);
 			if (*mp != NULL) {
 				mp = &(*mp)->m_next;
 				stamped = true;
@@ -1250,8 +1256,8 @@ ip6_savecontrol_v4(struct inpcb *inp, struct mbuf *m, struct mbuf **mp,
 				mbuf_tstmp2timespec(m, &t.ts);
 			else
 				nanouptime(&t.ts);
-			*mp = sbcreatecontrol((caddr_t)&t.ts, sizeof(t.ts),
-			    SCM_MONOTONIC, SOL_SOCKET);
+			*mp = sbcreatecontrol(&t.ts, sizeof(t.ts),
+			    SCM_MONOTONIC, SOL_SOCKET, M_NOWAIT);
 			if (*mp != NULL) {
 				mp = &(*mp)->m_next;
 				stamped = true;
@@ -1269,8 +1275,8 @@ ip6_savecontrol_v4(struct inpcb *inp, struct mbuf *m, struct mbuf **mp,
 			sti.st_info_flags = ST_INFO_HW;
 			if ((m->m_flags & M_TSTMP_HPREC) != 0)
 				sti.st_info_flags |= ST_INFO_HW_HPREC;
-			*mp = sbcreatecontrol((caddr_t)&sti, sizeof(sti),
-			    SCM_TIME_INFO, SOL_SOCKET);
+			*mp = sbcreatecontrol(&sti, sizeof(sti), SCM_TIME_INFO,
+			    SOL_SOCKET, M_NOWAIT);
 			if (*mp != NULL)
 				mp = &(*mp)->m_next;
 		}
@@ -1302,9 +1308,9 @@ ip6_savecontrol_v4(struct inpcb *inp, struct mbuf *m, struct mbuf **mp,
 		pi6.ipi6_ifindex =
 		    (m && m->m_pkthdr.rcvif) ? m->m_pkthdr.rcvif->if_index : 0;
 
-		*mp = sbcreatecontrol((caddr_t) &pi6,
-		    sizeof(struct in6_pktinfo),
-		    IS2292(inp, IPV6_2292PKTINFO, IPV6_PKTINFO), IPPROTO_IPV6);
+		*mp = sbcreatecontrol(&pi6, sizeof(struct in6_pktinfo),
+		    IS2292(inp, IPV6_2292PKTINFO, IPV6_PKTINFO), IPPROTO_IPV6,
+		    M_NOWAIT);
 		if (*mp)
 			mp = &(*mp)->m_next;
 	}
@@ -1325,9 +1331,9 @@ ip6_savecontrol_v4(struct inpcb *inp, struct mbuf *m, struct mbuf **mp,
 		} else {
 			hlim = ip6->ip6_hlim & 0xff;
 		}
-		*mp = sbcreatecontrol((caddr_t) &hlim, sizeof(int),
+		*mp = sbcreatecontrol(&hlim, sizeof(int),
 		    IS2292(inp, IPV6_2292HOPLIMIT, IPV6_HOPLIMIT),
-		    IPPROTO_IPV6);
+		    IPPROTO_IPV6, M_NOWAIT);
 		if (*mp)
 			mp = &(*mp)->m_next;
 	}
@@ -1352,8 +1358,8 @@ ip6_savecontrol_v4(struct inpcb *inp, struct mbuf *m, struct mbuf **mp,
 			flowinfo >>= 20;
 			tclass = flowinfo & 0xff;
 		}
-		*mp = sbcreatecontrol((caddr_t) &tclass, sizeof(int),
-		    IPV6_TCLASS, IPPROTO_IPV6);
+		*mp = sbcreatecontrol(&tclass, sizeof(int), IPV6_TCLASS,
+		    IPPROTO_IPV6, M_NOWAIT);
 		if (*mp)
 			mp = &(*mp)->m_next;
 	}
@@ -1397,7 +1403,7 @@ ip6_savecontrol(struct inpcb *inp, struct mbuf *m, struct mbuf **mp)
 		 */
 		if (ip6->ip6_nxt == IPPROTO_HOPOPTS) {
 			struct ip6_hbh *hbh;
-			int hbhlen;
+			u_int hbhlen;
 
 			hbh = (struct ip6_hbh *)(ip6 + 1);
 			hbhlen = (hbh->ip6h_len + 1) << 3;
@@ -1409,9 +1415,9 @@ ip6_savecontrol(struct inpcb *inp, struct mbuf *m, struct mbuf **mp)
 			 * RFC2292.
 			 * Note: this constraint is removed in RFC3542
 			 */
-			*mp = sbcreatecontrol((caddr_t)hbh, hbhlen,
+			*mp = sbcreatecontrol(hbh, hbhlen,
 			    IS2292(inp, IPV6_2292HOPOPTS, IPV6_HOPOPTS),
-			    IPPROTO_IPV6);
+			    IPPROTO_IPV6, M_NOWAIT);
 			if (*mp)
 				mp = &(*mp)->m_next;
 		}
@@ -1429,7 +1435,7 @@ ip6_savecontrol(struct inpcb *inp, struct mbuf *m, struct mbuf **mp)
 		 */
 		while (1) {	/* is explicit loop prevention necessary? */
 			struct ip6_ext *ip6e = NULL;
-			int elen;
+			u_int elen;
 
 			/*
 			 * if it is not an extension header, don't try to
@@ -1460,10 +1466,9 @@ ip6_savecontrol(struct inpcb *inp, struct mbuf *m, struct mbuf **mp)
 				if (!(inp->inp_flags & IN6P_DSTOPTS))
 					break;
 
-				*mp = sbcreatecontrol((caddr_t)ip6e, elen,
-				    IS2292(inp,
-					IPV6_2292DSTOPTS, IPV6_DSTOPTS),
-				    IPPROTO_IPV6);
+				*mp = sbcreatecontrol(ip6e, elen,
+				    IS2292(inp, IPV6_2292DSTOPTS, IPV6_DSTOPTS),
+				    IPPROTO_IPV6, M_NOWAIT);
 				if (*mp)
 					mp = &(*mp)->m_next;
 				break;
@@ -1471,9 +1476,9 @@ ip6_savecontrol(struct inpcb *inp, struct mbuf *m, struct mbuf **mp)
 				if (!(inp->inp_flags & IN6P_RTHDR))
 					break;
 
-				*mp = sbcreatecontrol((caddr_t)ip6e, elen,
+				*mp = sbcreatecontrol(ip6e, elen,
 				    IS2292(inp, IPV6_2292RTHDR, IPV6_RTHDR),
-				    IPPROTO_IPV6);
+				    IPPROTO_IPV6, M_NOWAIT);
 				if (*mp)
 					mp = &(*mp)->m_next;
 				break;
@@ -1510,12 +1515,12 @@ ip6_savecontrol(struct inpcb *inp, struct mbuf *m, struct mbuf **mp)
 		 * XXX should handle the failure of one or the
 		 * other - don't populate both?
 		 */
-		*mp = sbcreatecontrol((caddr_t) &flowid,
-		    sizeof(uint32_t), IPV6_FLOWID, IPPROTO_IPV6);
+		*mp = sbcreatecontrol(&flowid, sizeof(uint32_t), IPV6_FLOWID,
+		    IPPROTO_IPV6, M_NOWAIT);
 		if (*mp)
 			mp = &(*mp)->m_next;
-		*mp = sbcreatecontrol((caddr_t) &flow_type,
-		    sizeof(uint32_t), IPV6_FLOWTYPE, IPPROTO_IPV6);
+		*mp = sbcreatecontrol(&flow_type, sizeof(uint32_t),
+		    IPV6_FLOWTYPE, IPPROTO_IPV6, M_NOWAIT);
 		if (*mp)
 			mp = &(*mp)->m_next;
 	}
@@ -1529,8 +1534,8 @@ ip6_savecontrol(struct inpcb *inp, struct mbuf *m, struct mbuf **mp)
 		flow_type = M_HASHTYPE_GET(m);
 
 		if (rss_hash2bucket(flowid, flow_type, &rss_bucketid) == 0) {
-			*mp = sbcreatecontrol((caddr_t) &rss_bucketid,
-			   sizeof(uint32_t), IPV6_RSSBUCKETID, IPPROTO_IPV6);
+			*mp = sbcreatecontrol(&rss_bucketid, sizeof(uint32_t),
+			    IPV6_RSSBUCKETID, IPPROTO_IPV6, M_NOWAIT);
 			if (*mp)
 				mp = &(*mp)->m_next;
 		}
@@ -1567,8 +1572,8 @@ ip6_notify_pmtu(struct inpcb *inp, struct sockaddr_in6 *dst, u_int32_t mtu)
 	if (sa6_recoverscope(&mtuctl.ip6m_addr))
 		return;
 
-	if ((m_mtu = sbcreatecontrol((caddr_t)&mtuctl, sizeof(mtuctl),
-	    IPV6_PATHMTU, IPPROTO_IPV6)) == NULL)
+	if ((m_mtu = sbcreatecontrol(&mtuctl, sizeof(mtuctl), IPV6_PATHMTU,
+	    IPPROTO_IPV6, M_NOWAIT)) == NULL)
 		return;
 
 	so =  inp->inp_socket;
@@ -1720,16 +1725,3 @@ ip6_lasthdr(const struct mbuf *m, int off, int proto, int *nxtp)
 		proto = *nxtp;
 	}
 }
-
-/*
- * System control for IP6
- */
-
-u_char	inet6ctlerrmap[PRC_NCMDS] = {
-	0,		0,		0,		0,
-	0,		EMSGSIZE,	EHOSTDOWN,	EHOSTUNREACH,
-	EHOSTUNREACH,	EHOSTUNREACH,	ECONNREFUSED,	ECONNREFUSED,
-	EMSGSIZE,	EHOSTUNREACH,	0,		0,
-	0,		0,		EHOSTUNREACH,	0,
-	ENOPROTOOPT,	ECONNREFUSED
-};

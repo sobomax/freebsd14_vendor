@@ -1,4 +1,3 @@
-# $FreeBSD: 666ee7652de50aa62775ab9a88e38f278da0f622 $
 
 set -- -x arg
 opt=not

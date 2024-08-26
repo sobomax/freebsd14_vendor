@@ -31,8 +31,6 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 4f342a9b95e21786aada3e587e9c011c40343155 $");
-
 #include <sys/types.h>
 #include <sys/param.h>
 #include <err.h>

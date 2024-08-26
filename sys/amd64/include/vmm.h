@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2011 NetApp, Inc.
  * All rights reserved.
@@ -24,8 +24,6 @@
  * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
- *
- * $FreeBSD: cb883bb0e143e3abd0410f79db7d8e8cc0508cd9 $
  */
 
 #ifndef _VMM_H_
@@ -35,6 +33,7 @@
 #include <sys/sdt.h>
 #include <x86/segments.h>
 
+struct vcpu;
 struct vm_snapshot_meta;
 
 #ifdef _KERNEL
@@ -99,6 +98,10 @@ enum vm_reg_name {
 	VM_REG_GUEST_DR3,
 	VM_REG_GUEST_DR6,
 	VM_REG_GUEST_ENTRY_INST_LENGTH,
+	VM_REG_GUEST_FS_BASE,
+	VM_REG_GUEST_GS_BASE,
+	VM_REG_GUEST_KGS_BASE,
+	VM_REG_GUEST_TPR,
 	VM_REG_LAST
 };
 
@@ -143,7 +146,6 @@ enum x2apic_state {
 #ifdef _KERNEL
 CTASSERT(VM_MAX_NAMELEN >= VM_MIN_NAMELEN);
 
-struct vcpu;
 struct vm;
 struct vm_exception;
 struct seg_desc;
@@ -184,7 +186,6 @@ typedef struct vmspace * (*vmi_vmspace_alloc)(vm_offset_t min, vm_offset_t max);
 typedef void	(*vmi_vmspace_free)(struct vmspace *vmspace);
 typedef struct vlapic * (*vmi_vlapic_init)(void *vcpui);
 typedef void	(*vmi_vlapic_cleanup)(struct vlapic *vlapic);
-typedef int	(*vmi_snapshot_t)(void *vmi, struct vm_snapshot_meta *meta);
 typedef int	(*vmi_snapshot_vcpu_t)(void *vcpui, struct vm_snapshot_meta *meta);
 typedef int	(*vmi_restore_tsc_t)(void *vcpui, uint64_t now);
 
@@ -210,7 +211,6 @@ struct vmm_ops {
 	vmi_vlapic_cleanup	vlapic_cleanup;
 
 	/* checkpoint operations */
-	vmi_snapshot_t		snapshot;
 	vmi_snapshot_vcpu_t	vcpu_snapshot;
 	vmi_restore_tsc_t	restore_tsc;
 };
@@ -264,8 +264,6 @@ void *vm_gpa_hold(struct vcpu *vcpu, vm_paddr_t gpa, size_t len,
     int prot, void **cookie);
 void *vm_gpa_hold_global(struct vm *vm, vm_paddr_t gpa, size_t len,
     int prot, void **cookie);
-void *vm_gpa_hold_global(struct vm *vm, vm_paddr_t gpa, size_t len,
-    int prot, void **cookie);
 void vm_gpa_release(void *cookie);
 bool vm_mem_allocated(struct vcpu *vcpu, vm_paddr_t gpa);
 
@@ -275,7 +273,7 @@ int vm_get_seg_desc(struct vcpu *vcpu, int reg,
 		    struct seg_desc *ret_desc);
 int vm_set_seg_desc(struct vcpu *vcpu, int reg,
 		    struct seg_desc *desc);
-int vm_run(struct vcpu *vcpu, struct vm_exit *vme_user);
+int vm_run(struct vcpu *vcpu);
 int vm_suspend(struct vm *vm, enum vm_suspend_how how);
 int vm_inject_nmi(struct vcpu *vcpu);
 int vm_nmi_pending(struct vcpu *vcpu);
@@ -299,6 +297,7 @@ int vm_suspend_cpu(struct vm *vm, struct vcpu *vcpu);
 int vm_resume_cpu(struct vm *vm, struct vcpu *vcpu);
 int vm_restart_instruction(struct vcpu *vcpu);
 struct vm_exit *vm_exitinfo(struct vcpu *vcpu);
+cpuset_t *vm_exitinfo_cpuset(struct vcpu *vcpu);
 void vm_exit_suspended(struct vcpu *vcpu, uint64_t rip);
 void vm_exit_debug(struct vcpu *vcpu, uint64_t rip);
 void vm_exit_rendezvous(struct vcpu *vcpu, uint64_t rip);
@@ -389,13 +388,10 @@ vcpu_is_running(struct vcpu *vcpu, int *hostcpu)
 static int __inline
 vcpu_should_yield(struct vcpu *vcpu)
 {
+	struct thread *td;
 
-	if (curthread->td_flags & (TDF_ASTPENDING | TDF_NEEDRESCHED))
-		return (1);
-	else if (curthread->td_owepreempt)
-		return (1);
-	else
-		return (0);
+	td = curthread;
+	return (td->td_ast != 0 || td->td_owepreempt != 0);
 }
 #endif
 
@@ -502,6 +498,8 @@ enum vm_cap_type {
 	VM_CAP_RDPID,
 	VM_CAP_RDTSCP,
 	VM_CAP_IPI_EXIT,
+	VM_CAP_MASK_HWINTR,
+	VM_CAP_RFLAGS_TF,
 	VM_CAP_MAX
 };
 
@@ -650,6 +648,7 @@ enum vm_exitcode {
 	VM_EXITCODE_VMINSN,
 	VM_EXITCODE_BPT,
 	VM_EXITCODE_IPI,
+	VM_EXITCODE_DB,
 	VM_EXITCODE_MAX
 };
 
@@ -740,6 +739,12 @@ struct vm_exit {
 			int		inst_length;
 		} bpt;
 		struct {
+			int		trace_trap;
+			int		pushf_intercept;
+			int		tf_shadow_val;
+			struct		vm_guest_paging paging;
+		} dbg;
+		struct {
 			uint32_t	code;		/* ecx value */
 			uint64_t	wval;
 		} msr;
@@ -758,16 +763,19 @@ struct vm_exit {
 			enum vm_suspend_how how;
 		} suspended;
 		struct {
+			/*
+			 * The destination vCPU mask is saved in vcpu->cpuset
+			 * and is copied out to userspace separately to avoid
+			 * ABI concerns.
+			 */
 			uint32_t mode;
 			uint8_t vector;
-			cpuset_t dmask;
 		} ipi;
 		struct vm_task_switch task_switch;
 	} u;
 };
 
 /* APIs to inject faults into the guest */
-#ifdef _KERNEL
 void vm_inject_fault(struct vcpu *vcpu, int vector, int errcode_valid,
     int errcode);
 
@@ -796,35 +804,5 @@ vm_inject_ss(struct vcpu *vcpu, int errcode)
 }
 
 void vm_inject_pf(struct vcpu *vcpu, int error_code, uint64_t cr2);
-#else
-void vm_inject_fault(void *vm, int vcpuid, int vector, int errcode_valid,
-    int errcode);
-
-static __inline void
-vm_inject_ud(void *vm, int vcpuid)
-{
-	vm_inject_fault(vm, vcpuid, IDT_UD, 0, 0);
-}
-
-static __inline void
-vm_inject_gp(void *vm, int vcpuid)
-{
-	vm_inject_fault(vm, vcpuid, IDT_GP, 1, 0);
-}
-
-static __inline void
-vm_inject_ac(void *vm, int vcpuid, int errcode)
-{
-	vm_inject_fault(vm, vcpuid, IDT_AC, 1, errcode);
-}
-
-static __inline void
-vm_inject_ss(void *vm, int vcpuid, int errcode)
-{
-	vm_inject_fault(vm, vcpuid, IDT_SS, 1, errcode);
-}
-
-void vm_inject_pf(void *vm, int vcpuid, int error_code, uint64_t cr2);
-#endif
 
 #endif	/* _VMM_H_ */

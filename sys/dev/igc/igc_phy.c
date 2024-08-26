@@ -5,8 +5,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: d2ae7effbb41679add8db19f4639a7ed947664ec $");
-
 #include "igc_api.h"
 
 static s32 igc_wait_autoneg(struct igc_hw *hw);
@@ -588,7 +586,7 @@ s32 igc_setup_copper_link_generic(struct igc_hw *hw)
  *  disable auto-negotiation, configure duplex, configure speed, configure
  *  the collision distance, write configuration to CTRL register.  The
  *  caller must write to the PHY_CONTROL register for these settings to
- *  take affect.
+ *  take effect.
  **/
 void igc_phy_force_speed_duplex_setup(struct igc_hw *hw, u16 *phy_ctrl)
 {

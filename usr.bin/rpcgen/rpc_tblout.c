@@ -35,8 +35,6 @@ static char sccsid[] = "@(#)rpc_tblout.c 1.4 89/02/22 (C) 1988 SMI";
 #endif
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 618d1f998bbed82e739885f011d788310e754ced $");
-
 /*
  * rpc_tblout.c, Dispatch table outputter for the RPC protocol compiler
  * Copyright (C) 1989, Sun Microsystems, Inc.

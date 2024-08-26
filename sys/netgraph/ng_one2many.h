@@ -36,8 +36,6 @@
  * OF SUCH DAMAGE.
  *
  * Author: Archie Cobbs <archie@freebsd.org>
- *
- * $FreeBSD: a9cc24dfcb5e58071355e6ebe67c2d424601727c $
  */
 
 #ifndef _NETGRAPH_NG_ONE2MANY_H_

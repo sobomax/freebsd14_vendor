@@ -1,4 +1,3 @@
-# $FreeBSD: 283476e485c27c1b086d07d8a4951702b6b9e185 $
 # $NetBSD: Makefile.inc,v 1.2 2008/10/25 22:35:36 apb Exp $
 
 CODE=	KAZAKH

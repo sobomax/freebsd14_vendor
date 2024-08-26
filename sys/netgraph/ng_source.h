@@ -35,8 +35,6 @@
  * DAMAGE.
  *
  * Author: Dave Chapeskie
- *
- * $FreeBSD: ec2dc202424c3a7da5797a0eac98ed6739015d69 $
  */
 
 #ifndef _NETGRAPH_NG_SOURCE_H_

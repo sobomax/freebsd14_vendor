@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2012 The FreeBSD Foundation
  *
@@ -34,8 +34,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 700925b4ddcc249e19bf5d31f85795ea7116592d $");
-
 #include <sys/param.h>
 #include <sys/bio.h>
 #include <sys/capsicum.h>
@@ -1650,8 +1648,8 @@ icl_soft_conn_task_done(struct icl_conn *ic, void *prv)
 }
 
 int
-icl_soft_conn_transfer_setup(struct icl_conn *ic, union ctl_io *io,
-    uint32_t *transfer_tag, void **prvp)
+icl_soft_conn_transfer_setup(struct icl_conn *ic, struct icl_pdu *ip,
+    union ctl_io *io, uint32_t *transfer_tag, void **prvp)
 {
 
 	return (0);

@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2021 Semihalf
  *
@@ -26,8 +26,6 @@
 
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 9bb781ff75a619a7c0fcb7d34413fe4cae747713 $");
-
 #include <sys/param.h>
 #include <sys/bus.h>
 #include <sys/kernel.h>
@@ -128,10 +126,7 @@ static device_method_t sdhci_xenon_acpi_methods[] = {
 DEFINE_CLASS_1(sdhci_xenon, sdhci_xenon_acpi_driver, sdhci_xenon_acpi_methods,
 	sizeof(struct sdhci_xenon_softc), sdhci_xenon_driver);
 
-static devclass_t sdhci_xenon_acpi_devclass;
-
-DRIVER_MODULE(sdhci_xenon, acpi, sdhci_xenon_acpi_driver,
-	sdhci_xenon_acpi_devclass, NULL, NULL);
+DRIVER_MODULE(sdhci_xenon, acpi, sdhci_xenon_acpi_driver, NULL, NULL);
 
 #ifndef MMCCAM
 MMC_DECLARE_BRIDGE(sdhci_xenon_acpi);

@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2022 Alexander V. Chernikov <melifaro@FreeBSD.org>
  *
@@ -41,12 +41,12 @@ struct linear_buffer {
 	char		*base;	/* Base allocated memory pointer */
 	uint32_t	offset;	/* Currently used offset */
 	uint32_t	size;	/* Total buffer size */
-};
+} __aligned(_Alignof(__max_align_t));
 
 static inline void *
 lb_alloc(struct linear_buffer *lb, int len)
 {
-	len = roundup2(len, sizeof(uint64_t));
+	len = roundup2(len, _Alignof(__max_align_t));
 	if (lb->offset + len > lb->size)
 		return (NULL);
 	void *data = (void *)(lb->base + lb->offset);
@@ -71,6 +71,7 @@ struct nl_pstate {
 	uint32_t		err_off;	/* error offset from hdr start */
         int			error;		/* last operation error */
 	char			*err_msg;	/* Description of last error */
+	struct nlattr		*cookie;	/* NLA to return to the userspace */
 	bool			strict;		/* Strict parsing required */
 };
 
@@ -109,6 +110,7 @@ struct nlattr_parser {
 };
 
 typedef bool strict_parser_f(void *hdr, struct nl_pstate *npt);
+typedef bool post_parser_f(void *parsed_attrs, struct nl_pstate *npt);
 
 struct nlhdr_parser {
 	int				nl_hdr_off; /* aligned netlink header size */
@@ -117,27 +119,26 @@ struct nlhdr_parser {
 	int				np_size;
 	const struct nlfield_parser	*fp; /* array of header field parsers */
 	const struct nlattr_parser	*np; /* array of attribute parsers */
-	strict_parser_f			*sp; /* Parser function */
+	strict_parser_f			*sp; /* Pre-parse strict validation function */
+	post_parser_f			*post_parse;
 };
 
-#define	NL_DECLARE_PARSER(_name, _t, _fp, _np)		\
-static const struct nlhdr_parser _name = {		\
-	.nl_hdr_off = sizeof(_t),			\
-	.fp = &((_fp)[0]),				\
-	.np = &((_np)[0]),				\
-	.fp_size = NL_ARRAY_LEN(_fp),			\
-	.np_size = NL_ARRAY_LEN(_np),			\
+#define	NL_DECLARE_PARSER_EXT(_name, _t, _sp, _fp, _np, _pp)	\
+static const struct nlhdr_parser _name = {			\
+	.nl_hdr_off = sizeof(_t),				\
+	.fp = &((_fp)[0]),					\
+	.np = &((_np)[0]),					\
+	.fp_size = NL_ARRAY_LEN(_fp),				\
+	.np_size = NL_ARRAY_LEN(_np),				\
+	.sp = _sp,						\
+	.post_parse = _pp,					\
 }
 
-#define	NL_DECLARE_STRICT_PARSER(_name, _t, _sp, _fp, _np)\
-static const struct nlhdr_parser _name = {		\
-	.nl_hdr_off = sizeof(_t),			\
-	.fp = &((_fp)[0]),				\
-	.np = &((_np)[0]),				\
-	.fp_size = NL_ARRAY_LEN(_fp),			\
-	.np_size = NL_ARRAY_LEN(_np),			\
-	.sp = _sp,					\
-}
+#define	NL_DECLARE_PARSER(_name, _t, _fp, _np)			\
+	NL_DECLARE_PARSER_EXT(_name, _t, NULL, _fp, _np, NULL)
+
+#define	NL_DECLARE_STRICT_PARSER(_name, _t, _sp, _fp, _np)	\
+	NL_DECLARE_PARSER_EXT(_name, _t, _sp, _fp, _np, NULL)
 
 #define	NL_DECLARE_ARR_PARSER(_name, _t, _o, _fp, _np)	\
 static const struct nlhdr_parser _name = {		\
@@ -168,11 +169,17 @@ int nlattr_get_flag(struct nlattr *nla, struct nl_pstate *npt,
     const void *arg, void *target);
 int nlattr_get_ip(struct nlattr *nla, struct nl_pstate *npt,
     const void *arg, void *target);
+int nlattr_get_uint8(struct nlattr *nla, struct nl_pstate *npt,
+    const void *arg, void *target);
 int nlattr_get_uint16(struct nlattr *nla, struct nl_pstate *npt,
     const void *arg, void *target);
 int nlattr_get_uint32(struct nlattr *nla, struct nl_pstate *npt,
     const void *arg, void *target);
 int nlattr_get_uint64(struct nlattr *nla, struct nl_pstate *npt,
+    const void *arg, void *target);
+int nlattr_get_in_addr(struct nlattr *nla, struct nl_pstate *npt,
+    const void *arg, void *target);
+int nlattr_get_in6_addr(struct nlattr *nla, struct nl_pstate *npt,
     const void *arg, void *target);
 int nlattr_get_ifp(struct nlattr *nla, struct nl_pstate *npt,
     const void *arg, void *target);
@@ -197,6 +204,9 @@ bool nlmsg_report_err_msg(struct nl_pstate *npt, const char *fmt, ...);
 }
 
 bool nlmsg_report_err_offset(struct nl_pstate *npt, uint32_t off);
+
+void nlmsg_report_cookie(struct nl_pstate *npt, struct nlattr *nla);
+void nlmsg_report_cookie_u32(struct nl_pstate *npt, uint32_t val);
 
 /*
  * Have it inline so compiler can optimize field accesses into
@@ -241,6 +251,11 @@ nl_parse_header(void *hdr, int len, const struct nlhdr_parser *parser,
 	struct nlattr *nla_head = (struct nlattr *)((char *)hdr + parser->nl_hdr_off);
 	error = nl_parse_attrs_raw(nla_head, len - parser->nl_hdr_off, parser->np,
 	    parser->np_size, npt, target);
+
+	if (parser->post_parse != NULL && error == 0) {
+		if (!parser->post_parse(target, npt))
+			return (EINVAL);
+	}
 
 	return (error);
 }

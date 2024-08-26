@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2009-2013
  * 	Swinburne University of Technology, Melbourne, Australia
@@ -49,8 +49,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 6287583f1f588c439f997d0574c7d833bdeb829f $");
-
 #include <sys/param.h>
 #include <sys/hhook.h>
 #include <sys/kernel.h>
@@ -67,6 +65,10 @@ __FBSDID("$FreeBSD: 6287583f1f588c439f997d0574c7d833bdeb829f $");
 
 #include <net/vnet.h>
 
+#include <net/route.h>
+#include <net/route/nhop.h>
+
+#include <netinet/in_pcb.h>
 #include <netinet/tcp.h>
 #include <netinet/tcp_seq.h>
 #include <netinet/tcp_timer.h>
@@ -197,10 +199,6 @@ static const int probexp[641] = {
    32531,32533,32535,32537,32538,32540,32542,32544,32545,32547};
 
 static uma_zone_t qdiffsample_zone;
-
-static MALLOC_DEFINE(M_CDG, "cdg data",
-  "Per connection data required for the CDG congestion control algorithm");
-
 static int ertt_id;
 
 VNET_DEFINE_STATIC(uint32_t, cdg_alpha_inc);
@@ -222,10 +220,11 @@ VNET_DEFINE_STATIC(uint32_t, cdg_hold_backoff);
 static int cdg_mod_init(void);
 static int cdg_mod_destroy(void);
 static void cdg_conn_init(struct cc_var *ccv);
-static int cdg_cb_init(struct cc_var *ccv);
+static int cdg_cb_init(struct cc_var *ccv, void *ptr);
 static void cdg_cb_destroy(struct cc_var *ccv);
 static void cdg_cong_signal(struct cc_var *ccv, uint32_t signal_type);
 static void cdg_ack_received(struct cc_var *ccv, uint16_t ack_type);
+static size_t cdg_data_sz(void);
 
 struct cc_algo cdg_cc_algo = {
 	.name = "cdg",
@@ -235,7 +234,10 @@ struct cc_algo cdg_cc_algo = {
 	.cb_init = cdg_cb_init,
 	.conn_init = cdg_conn_init,
 	.cong_signal = cdg_cong_signal,
-	.mod_destroy = cdg_mod_destroy
+	.mod_destroy = cdg_mod_destroy,
+	.cc_data_sz = cdg_data_sz,
+	.post_recovery = newreno_cc_post_recovery,
+	.after_idle = newreno_cc_after_idle,
 };
 
 /* Vnet created and being initialised. */
@@ -271,10 +273,6 @@ cdg_mod_init(void)
 		CURVNET_RESTORE();
 	}
 	VNET_LIST_RUNLOCK();
-
-	cdg_cc_algo.post_recovery = newreno_cc_algo.post_recovery;
-	cdg_cc_algo.after_idle = newreno_cc_algo.after_idle;
-
 	return (0);
 }
 
@@ -286,15 +284,25 @@ cdg_mod_destroy(void)
 	return (0);
 }
 
+static size_t
+cdg_data_sz(void)
+{
+	return (sizeof(struct cdg));
+}
+
 static int
-cdg_cb_init(struct cc_var *ccv)
+cdg_cb_init(struct cc_var *ccv, void *ptr)
 {
 	struct cdg *cdg_data;
 
-	cdg_data = malloc(sizeof(struct cdg), M_CDG, M_NOWAIT);
-	if (cdg_data == NULL)
-		return (ENOMEM);
-
+	INP_WLOCK_ASSERT(tptoinpcb(ccv->ccvc.tcp));
+	if (ptr == NULL) {
+		cdg_data = malloc(sizeof(struct cdg), M_CC_MEM, M_NOWAIT);
+		if (cdg_data == NULL)
+			return (ENOMEM);
+	} else {
+		cdg_data = ptr;
+	}
 	cdg_data->shadow_w = 0;
 	cdg_data->max_qtrend = 0;
 	cdg_data->min_qtrend = 0;
@@ -350,7 +358,7 @@ cdg_cb_destroy(struct cc_var *ccv)
 		qds = qds_n;
 	}
 
-	free(ccv->cc_data, M_CDG);
+	free(ccv->cc_data, M_CC_MEM);
 }
 
 static int
@@ -484,7 +492,7 @@ cdg_cong_signal(struct cc_var *ccv, uint32_t signal_type)
 		ENTER_RECOVERY(CCV(ccv, t_flags));
 		break;
 	default:
-		newreno_cc_algo.cong_signal(ccv, signal_type);
+		newreno_cc_cong_signal(ccv, signal_type);
 		break;
 	}
 }
@@ -572,7 +580,7 @@ cdg_ack_received(struct cc_var *ccv, uint16_t ack_type)
 	int congestion, new_measurement, slowstart;
 
 	cdg_data = ccv->cc_data;
-	e_t = (struct ertt *)khelp_get_osd(CCV(ccv, osd), ertt_id);
+	e_t = (struct ertt *)khelp_get_osd(&CCV(ccv, t_osd), ertt_id);
 	new_measurement = e_t->flags & ERTT_NEW_MEASUREMENT;
 	congestion = 0;
 	cdg_data->maxrtt_in_rtt = imax(e_t->rtt, cdg_data->maxrtt_in_rtt);
@@ -714,5 +722,5 @@ SYSCTL_UINT(_net_inet_tcp_cc_cdg, OID_AUTO, loss_compete_hold_backoff,
     "the window backoff for loss based CC compatibility");
 
 DECLARE_CC_MODULE(cdg, &cdg_cc_algo);
-MODULE_VERSION(cdg, 1);
+MODULE_VERSION(cdg, 2);
 MODULE_DEPEND(cdg, ertt, 1, 1, 1);

@@ -1,4 +1,3 @@
-# $FreeBSD: bdd91b47bf677573b3f23183d94df567b8141a35 $
 
 PACKAGE=	runtime
 

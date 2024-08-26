@@ -1,4 +1,3 @@
-# $FreeBSD: 7179f1bff1a46b3b1ada2184804ff2229d48809b $
 #
 # Doing a make install builds /usr/share/examples
 
@@ -12,7 +11,6 @@ LDIRS=	BSD_daemon \
 	IPv6 \
 	bootforth \
 	csh \
-	diskless \
 	drivers \
 	etc \
 	find_interface \
@@ -74,13 +72,6 @@ SE_BOOTFORTH= \
 
 SE_DIRS+=	csh
 SE_CSH=	dot.cshrc
-
-SE_DIRS+=	diskless
-SE_DISKLESS= \
-	ME \
-	README.BOOTP \
-	README.TEMPLATING \
-	clone_root
 
 SE_DIRS+=	drivers
 SE_DRIVERS= \
@@ -215,6 +206,7 @@ SE_PERFMON= \
 
 .if ${MK_PF} != "no"
 SE_DIRS+=	pf
+.if ${MK_STAGING} == "no"
 SE_PF= \
 	ackpri \
 	faq-example1 \
@@ -226,6 +218,7 @@ SE_PF= \
 	queue3 \
 	queue4 \
 	spamd
+.endif
 .endif
 
 SE_DIRS+=	ppi

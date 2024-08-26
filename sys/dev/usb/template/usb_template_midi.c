@@ -1,6 +1,5 @@
-/* $FreeBSD: 81471391d7a8d7520f69698bd2a94efe12520261 $ */
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2015 Hans Petter Selasky
  * Copyright (c) 2018 The FreeBSD Foundation

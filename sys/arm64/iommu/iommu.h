@@ -28,8 +28,6 @@
  * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
- *
- * $FreeBSD: 2071173070df485f134857b5e201be8c003dff34 $
  */
 
 #ifndef	_ARM64_IOMMU_IOMMU_H_
@@ -40,5 +38,6 @@
 
 int iommu_unregister(struct iommu_unit *unit);
 int iommu_register(struct iommu_unit *unit);
+struct iommu_ctx * iommu_get_ctx_ofw(device_t dev, int channel);
 
 #endif /* _ARM64_IOMMU_IOMMU_H_ */

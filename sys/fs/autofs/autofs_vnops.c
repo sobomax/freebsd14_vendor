@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2014 The FreeBSD Foundation
  *
@@ -30,8 +30,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 13daa950d75b32c919b7424a302a4749e6a37ab7 $");
-
 #include <sys/param.h>
 #include <sys/systm.h>
 #include <sys/kernel.h>
@@ -250,7 +248,7 @@ autofs_lookup(struct vop_lookup_args *ap)
 	}
 
 	if (autofs_cached(anp, cnp->cn_nameptr, cnp->cn_namelen) == false &&
-	    autofs_ignore_thread(cnp->cn_thread) == false) {
+	    autofs_ignore_thread(curthread) == false) {
 		error = autofs_trigger_vn(dvp,
 		    cnp->cn_nameptr, cnp->cn_namelen, &newvp);
 		if (error != 0)
@@ -683,12 +681,7 @@ autofs_node_vn(struct autofs_node *anp, struct mount *mp, int flags,
 		return (error);
 	}
 
-	error = vn_lock(vp, LK_EXCLUSIVE | LK_RETRY);
-	if (error != 0) {
-		sx_xunlock(&anp->an_vnode_lock);
-		vdrop(vp);
-		return (error);
-	}
+	vn_lock(vp, LK_EXCLUSIVE | LK_RETRY);
 
 	vp->v_type = VDIR;
 	if (anp->an_parent == NULL)
@@ -709,6 +702,7 @@ autofs_node_vn(struct autofs_node *anp, struct mount *mp, int flags,
 
 	sx_xunlock(&anp->an_vnode_lock);
 
+	vn_set_state(vp, VSTATE_CONSTRUCTED);
 	*vpp = vp;
 	return (0);
 }

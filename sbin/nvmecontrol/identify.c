@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (C) 2012-2013 Intel Corporation
  * All rights reserved.
@@ -28,8 +28,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 6cd7ad0fdc2d91eac0726f2a0b254cd46a656d89 $");
-
 #include <sys/param.h>
 
 #include <ctype.h>
@@ -84,7 +82,17 @@ print_namespace(struct nvme_namespace_data *nsdata)
 	printf("Thin Provisioning:           %s\n",
 		thin_prov ? "Supported" : "Not Supported");
 	printf("Number of LBA Formats:       %d\n", nsdata->nlbaf+1);
-	printf("Current LBA Format:          LBA Format #%02d\n", flbas_fmt);
+	printf("Current LBA Format:          LBA Format #%02d", flbas_fmt);
+	if (nsdata->lbaf[flbas_fmt] >> NVME_NS_DATA_LBAF_MS_SHIFT & NVME_NS_DATA_LBAF_MS_MASK)
+		printf(" %s metadata\n", nsdata->flbas >> NVME_NS_DATA_FLBAS_EXTENDED_SHIFT &
+		    NVME_NS_DATA_FLBAS_EXTENDED_MASK ? "Extended" : "Separate");
+	else
+		printf("\n");
+	printf("Metadata Capabilities\n");
+	printf("  Extended:                  %s\n",
+		nsdata->mc >> NVME_NS_DATA_MC_EXTENDED_SHIFT & NVME_NS_DATA_MC_EXTENDED_MASK ? "Supported" : "Not Supported");
+	printf("  Separate:                  %s\n",
+		nsdata->mc >> NVME_NS_DATA_MC_POINTER_SHIFT & NVME_NS_DATA_MC_POINTER_MASK ? "Supported" : "Not Supported");
 	printf("Data Protection Caps:        %s%s%s%s%s%s\n",
 	    (nsdata->dpc == 0) ? "Not Supported" : "",
 	    ((nsdata->dpc >> NVME_NS_DATA_DPC_MD_END_SHIFT) &

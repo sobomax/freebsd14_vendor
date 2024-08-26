@@ -25,11 +25,6 @@
  * IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef lint
-static const char rcsid[] =
-  "$FreeBSD: 13a804c826251f62deadec2c4c3ae004c789e93e $";
-#endif /* not lint */
-
 #include <sys/param.h>
 #ifdef MAKEFS
 /* In the makefs case we only want struct disklabel */

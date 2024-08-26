@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2001, 2002 Scott Long <scottl@freebsd.org>
  * All rights reserved.
@@ -24,8 +24,6 @@
  * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
- *
- * $FreeBSD: 2cda9ed753933afc9293af83bdc08e535d48e9b5 $
  */
 
 /* udf_vnops.c */
@@ -289,9 +287,6 @@ udf_getattr(struct vop_getattr_args *a)
 	struct udf_node *node;
 	struct vattr *vap;
 	struct file_entry *fentry;
-	struct timespec ts;
-
-	ts.tv_sec = 0;
 
 	vp = a->a_vp;
 	vap = a->a_vap;
@@ -607,7 +602,7 @@ udf_cmpname(char *cs0string, char *cmpname, int cs0len, int cmplen, struct udf_m
 
 struct udf_uiodir {
 	struct dirent *dirent;
-	u_long *cookies;
+	uint64_t *cookies;
 	int ncookies;
 	int acookies;
 	int eofflag;
@@ -787,7 +782,7 @@ udf_readdir(struct vop_readdir_args *a)
 	struct fileid_desc *fid;
 	struct udf_uiodir uiodir;
 	struct udf_dirstream *ds;
-	u_long *cookies = NULL;
+	uint64_t *cookies = NULL;
 	int ncookies;
 	int error = 0;
 
@@ -804,8 +799,7 @@ udf_readdir(struct vop_readdir_args *a)
 		 * it left off.
 		 */
 		ncookies = uio->uio_resid / 8;
-		cookies = malloc(sizeof(u_long) * ncookies,
-		    M_TEMP, M_WAITOK);
+		cookies = malloc(sizeof(*cookies) * ncookies, M_TEMP, M_WAITOK);
 		if (cookies == NULL)
 			return (ENOMEM);
 		uiodir.ncookies = ncookies;

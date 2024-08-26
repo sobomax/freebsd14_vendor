@@ -1,4 +1,3 @@
-/* $FreeBSD: 78f3b287574c3ff96eb1c6dfd50bddcd345dae7c $ */
 void
 t(void)
 {

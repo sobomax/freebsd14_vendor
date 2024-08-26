@@ -1,5 +1,5 @@
-/* 
- * $FreeBSD: 60fd02cbe872b240864d10625ffa5fed46a646e3 $
+/*-
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2011, 2012, 2013, 2015, Juniper Networks, Inc.
  * All rights reserved.

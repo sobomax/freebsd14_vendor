@@ -1,6 +1,6 @@
 #!/usr/bin/awk -f
 #
-# SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+# SPDX-License-Identifier: BSD-2-Clause
 #
 # Copyright (c) 2008-2009 Ariff Abdullah <ariff@FreeBSD.org>
 # All rights reserved.
@@ -26,7 +26,6 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: 9939e562ff327d1101f0852fd0832bdacf8a9a43 $
 #
 
 function floor(x, r)

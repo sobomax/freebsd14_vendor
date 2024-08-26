@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2006 Stephane E. Potvin <sepotvin@videotron.ca>
  * Copyright (c) 2006 Ariff Abdullah <ariff@FreeBSD.org>
@@ -46,8 +46,6 @@
 #include <dev/sound/pci/hda/hda_reg.h>
 
 #include "mixer_if.h"
-
-SND_DECLARE_FILE("$FreeBSD: e0cfca10e01482ef45004ccf252f60388c7f078d $");
 
 #define hdaa_lock(devinfo)	snd_mtxlock((devinfo)->lock)
 #define hdaa_unlock(devinfo)	snd_mtxunlock((devinfo)->lock)
@@ -5428,7 +5426,6 @@ hdaa_pcmchannel_setup(struct hdaa_chan *ch)
 		if (HDA_PARAM_SUPP_STREAM_FORMATS_AC3(fmtcap)) {
 			ch->fmtlist[i++] = SND_FORMAT(AFMT_AC3, 2, 0);
 			if (channels >= 8) {
-				ch->fmtlist[i++] = SND_FORMAT(AFMT_AC3, 8, 0);
 				ch->fmtlist[i++] = SND_FORMAT(AFMT_AC3, 8, 1);
 			}
 		}
@@ -6462,8 +6459,13 @@ hdaa_sysctl_reconfig(SYSCTL_HANDLER_ARGS)
 	HDA_BOOTHVERBOSE(
 		device_printf(dev, "Reconfiguration...\n");
 	);
-	if ((error = device_delete_children(dev)) != 0)
+
+	bus_topo_lock();
+
+	if ((error = device_delete_children(dev)) != 0) {
+		bus_topo_unlock();
 		return (error);
+	}
 	hdaa_lock(devinfo);
 	hdaa_unconfigure(dev);
 	hdaa_configure(dev);
@@ -6472,6 +6474,9 @@ hdaa_sysctl_reconfig(SYSCTL_HANDLER_ARGS)
 	HDA_BOOTHVERBOSE(
 		device_printf(dev, "Reconfiguration done\n");
 	);
+
+	bus_topo_unlock();
+
 	return (0);
 }
 
@@ -6571,14 +6576,12 @@ static int
 hdaa_probe(device_t dev)
 {
 	const char *pdesc;
-	char buf[128];
 
 	if (hda_get_node_type(dev) != HDA_PARAM_FCT_GRP_TYPE_NODE_TYPE_AUDIO)
 		return (ENXIO);
 	pdesc = device_get_desc(device_get_parent(dev));
-	snprintf(buf, sizeof(buf), "%.*s Audio Function Group",
+	device_set_descf(dev, "%.*s Audio Function Group",
 	    (int)(strlen(pdesc) - 10), pdesc);
-	device_set_desc_copy(dev, buf);
 	return (BUS_PROBE_DEFAULT);
 }
 
@@ -6668,7 +6671,7 @@ hdaa_attach(device_t dev)
 	    devinfo, 0, hdaa_sysctl_gpo_config, "A", "GPO configuration");
 	SYSCTL_ADD_PROC(device_get_sysctl_ctx(dev),
 	    SYSCTL_CHILDREN(device_get_sysctl_tree(dev)), OID_AUTO,
-	    "reconfig", CTLTYPE_INT | CTLFLAG_RW | CTLFLAG_NEEDGIANT,
+	    "reconfig", CTLTYPE_INT | CTLFLAG_RW,
 	    dev, 0, hdaa_sysctl_reconfig, "I", "Reprocess configuration");
 	SYSCTL_ADD_INT(device_get_sysctl_ctx(dev),
 	    SYSCTL_CHILDREN(device_get_sysctl_tree(dev)), OID_AUTO,
@@ -6737,23 +6740,21 @@ hdaa_print_child(device_t dev, device_t child)
 }
 
 static int
-hdaa_child_location_str(device_t dev, device_t child, char *buf,
-    size_t buflen)
+hdaa_child_location(device_t dev, device_t child, struct sbuf *sb)
 {
 	struct hdaa_devinfo *devinfo = device_get_softc(dev);
 	struct hdaa_pcm_devinfo *pdevinfo =
 	    (struct hdaa_pcm_devinfo *)device_get_ivars(child);
 	struct hdaa_audio_as *as;
-	int first = 1, i, len = 0;
+	int first = 1, i;
 
-	len += snprintf(buf + len, buflen - len, "nid=");
+	sbuf_printf(sb, "nid=");
 	if (pdevinfo->playas >= 0) {
 		as = &devinfo->as[pdevinfo->playas];
 		for (i = 0; i < 16; i++) {
 			if (as->pins[i] <= 0)
 				continue;
-			len += snprintf(buf + len, buflen - len,
-			    "%s%d", first ? "" : ",", as->pins[i]);
+			sbuf_printf(sb, "%s%d", first ? "" : ",", as->pins[i]);
 			first = 0;
 		}
 	}
@@ -6762,8 +6763,7 @@ hdaa_child_location_str(device_t dev, device_t child, char *buf,
 		for (i = 0; i < 16; i++) {
 			if (as->pins[i] <= 0)
 				continue;
-			len += snprintf(buf + len, buflen - len,
-			    "%s%d", first ? "" : ",", as->pins[i]);
+			sbuf_printf(sb, "%s%d", first ? "" : ",", as->pins[i]);
 			first = 0;
 		}
 	}
@@ -6829,7 +6829,7 @@ static device_method_t hdaa_methods[] = {
 	DEVMETHOD(device_resume,	hdaa_resume),
 	/* Bus interface */
 	DEVMETHOD(bus_print_child,	hdaa_print_child),
-	DEVMETHOD(bus_child_location_str, hdaa_child_location_str),
+	DEVMETHOD(bus_child_location,	hdaa_child_location),
 	DEVMETHOD(hdac_stream_intr,	hdaa_stream_intr),
 	DEVMETHOD(hdac_unsol_intr,	hdaa_unsol_intr),
 	DEVMETHOD(hdac_pindump,		hdaa_pindump),
@@ -6842,9 +6842,7 @@ static driver_t hdaa_driver = {
 	sizeof(struct hdaa_devinfo),
 };
 
-static devclass_t hdaa_devclass;
-
-DRIVER_MODULE(snd_hda, hdacc, hdaa_driver, hdaa_devclass, NULL, NULL);
+DRIVER_MODULE(snd_hda, hdacc, hdaa_driver, NULL, NULL);
 
 static void
 hdaa_chan_formula(struct hdaa_devinfo *devinfo, int asid,
@@ -6938,7 +6936,6 @@ hdaa_pcm_probe(device_t dev)
 	struct hdaa_devinfo *devinfo = pdevinfo->devinfo;
 	const char *pdesc;
 	char chans1[8], chans2[8];
-	char buf[128];
 	int loc1, loc2, t1, t2;
 
 	if (pdevinfo->playas >= 0)
@@ -6983,7 +6980,7 @@ hdaa_pcm_probe(device_t dev)
 	if (pdevinfo->digital)
 		t1 = -2;
 	pdesc = device_get_desc(device_get_parent(dev));
-	snprintf(buf, sizeof(buf), "%.*s (%s%s%s%s%s%s%s%s%s)",
+	device_set_descf(dev, "%.*s (%s%s%s%s%s%s%s%s%s)",
 	    (int)(strlen(pdesc) - 21), pdesc,
 	    loc1 >= 0 ? HDA_LOCS[loc1] : "", loc1 >= 0 ? " " : "",
 	    (pdevinfo->digital == 0x7)?"HDMI/DP":
@@ -6993,7 +6990,6 @@ hdaa_pcm_probe(device_t dev)
 	    chans1[0] ? " " : "", chans1,
 	    chans2[0] ? "/" : "", chans2,
 	    t1 >= 0 ? " " : "", t1 >= 0 ? HDA_DEVS[t1] : "");
-	device_set_desc_copy(dev, buf);
 	return (BUS_PROBE_SPECIFIC);
 }
 
@@ -7113,9 +7109,8 @@ hdaa_pcm_attach(device_t dev)
 		hdaa_unlock(devinfo);
 	}
 
-	snprintf(status, SND_STATUSLEN, "on %s %s",
-	    device_get_nameunit(device_get_parent(dev)),
-	    PCM_KLDSTRING(snd_hda));
+	snprintf(status, SND_STATUSLEN, "on %s",
+	    device_get_nameunit(device_get_parent(dev)));
 	pcm_setstatus(dev, status);
 
 	return (0);
@@ -7151,6 +7146,6 @@ static driver_t hdaa_pcm_driver = {
 	PCM_SOFTC_SIZE,
 };
 
-DRIVER_MODULE(snd_hda_pcm, hdaa, hdaa_pcm_driver, pcm_devclass, NULL, NULL);
+DRIVER_MODULE(snd_hda_pcm, hdaa, hdaa_pcm_driver, NULL, NULL);
 MODULE_DEPEND(snd_hda, sound, SOUND_MINVER, SOUND_PREFVER, SOUND_MAXVER);
 MODULE_VERSION(snd_hda, 1);

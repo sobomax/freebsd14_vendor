@@ -37,8 +37,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: a8f5eb63396ad64a44544ed4f7b1bbacd4545e83 $");
-
 #include <sys/param.h>
 #include <sys/systm.h>
 #include <sys/fnv_hash.h>
@@ -80,7 +78,7 @@ SX_SYSINIT(vfsconf, &vfsconf_sx, "vfsconf");
 static int	vfs_typenumhash = 1;
 SYSCTL_INT(_vfs, OID_AUTO, typenumhash, CTLFLAG_RDTUN, &vfs_typenumhash, 0,
     "Set vfc_typenum using a hash calculation on vfc_name, so that it does not"
-    "change when file systems are loaded in a different order.");
+    " change when file systems are loaded in a different order.");
 
 /*
  * A Zen vnode attribute structure.
@@ -151,8 +149,10 @@ vfs_byname_kld(const char *fstype, struct thread *td, int *error)
 	loaded = (*error == 0);
 	if (*error == EEXIST)
 		*error = 0;
-	if (*error)
+	if (*error) {
+		*error = ENODEV;
 		return (NULL);
+	}
 
 	/* Look up again to see if the VFS was loaded. */
 	vfsp = vfs_byname(fstype);
@@ -212,12 +212,14 @@ vfs_cachedroot_sigdefer(struct mount *mp, int flags, struct vnode **vpp)
 }
 
 static int
-vfs_quotactl_sigdefer(struct mount *mp, int cmd, uid_t uid, void *arg)
+vfs_quotactl_sigdefer(struct mount *mp, int cmd, uid_t uid, void *arg,
+    bool *mp_busy)
 {
 	int prev_stops, rc;
 
 	prev_stops = sigdeferstop(SIGDEFERSTOP_SILENT);
-	rc = (*mp->mnt_vfc->vfc_vfsops_sd->vfs_quotactl)(mp, cmd, uid, arg);
+	rc = (*mp->mnt_vfc->vfc_vfsops_sd->vfs_quotactl)(mp, cmd, uid, arg,
+	    mp_busy);
 	sigallowstop(prev_stops);
 	return (rc);
 }
@@ -523,7 +525,7 @@ vfs_register(struct vfsconf *vfc)
 	 * number.
 	 */
 	sysctl_wlock();
-	SLIST_FOREACH(oidp, SYSCTL_CHILDREN(&sysctl___vfs), oid_link) {
+	RB_FOREACH(oidp, sysctl_oid_list, SYSCTL_CHILDREN(&sysctl___vfs)) {
 		if (strcmp(oidp->oid_name, vfc->vfc_name) == 0) {
 			sysctl_unregister_oid(oidp);
 			oidp->oid_number = vfc->vfc_typenum;

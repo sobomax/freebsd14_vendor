@@ -1,7 +1,8 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2009 David Schultz <das@FreeBSD.org>
+ * Copyright (c) 2021 Dell EMC
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -25,9 +26,6 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  */
-
-#include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 8d8414266c7877a7b518744f4a8166572d58a7c1 $");
 
 #include "namespace.h"
 #include <sys/param.h>
@@ -138,10 +136,30 @@ getdelim(char ** __restrict linep, size_t * __restrict linecapp, int delim,
 	while ((endp = memchr(fp->_p, delim, fp->_r)) == NULL) {
 		if (sappend(linep, &linelen, linecapp, fp->_p, fp->_r))
 			goto error;
+		errno = 0;
 		if (__srefill(fp)) {
-			if (!__sfeof(fp))
-				goto error;
-			goto done;	/* hit EOF */
+			if (__sfeof(fp))
+				goto done;
+			if (errno == EAGAIN) {
+				/*
+				 * We need to undo a partial read that has
+				 * been placed into linep or we would otherwise
+				 * lose it on the next read.
+				 */
+				while (linelen > 0) {
+					if (__ungetc((*linep)[--linelen],
+					    fp) == EOF)
+						goto error;
+				}
+				/*
+				 * This is not strictly needed but it is
+				 * possible a consumer has worked around an
+				 * older EAGAIN bug by buffering a partial
+				 * return.
+				 */
+				(*linep)[0] = '\0';
+			}
+			goto error;
 		}
 	}
 	endp++;	/* snarf the delimiter, too */

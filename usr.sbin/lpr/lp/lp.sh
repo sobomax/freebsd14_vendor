@@ -38,7 +38,6 @@
 #
 # Posix 1003.2 compliant print spooler interface.
 #
-# $FreeBSD: af6b9d16880b5e9425bec6ea9e1109f7446f1666 $
 #
 
 ncopies=""

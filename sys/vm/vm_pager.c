@@ -66,8 +66,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: cff8f5f9bdc3694d9c831b035d2349f5c4a7bdca $");
-
 #include "opt_param.h"
 
 #include <sys/param.h>
@@ -129,7 +127,7 @@ dead_pager_putpages(vm_object_t object, vm_page_t *m, int count,
 		rtvals[i] = VM_PAGER_AGAIN;
 }
 
-static int
+static boolean_t
 dead_pager_haspage(vm_object_t object, vm_pindex_t pindex, int *prev, int *next)
 {
 
@@ -166,7 +164,6 @@ static const struct pagerops deadpagerops = {
 };
 
 const struct pagerops *pagertab[16] __read_mostly = {
-	[OBJT_DEFAULT] =	&defaultpagerops,
 	[OBJT_SWAP] =		&swappagerops,
 	[OBJT_VNODE] =		&vnodepagerops,
 	[OBJT_DEVICE] =		&devicepagerops,
@@ -190,7 +187,7 @@ vm_pager_init(void)
 	 */
 	for (i = 0; i < OBJT_FIRST_DYN; i++) {
 		pgops = &pagertab[i];
-		if ((*pgops)->pgo_init != NULL)
+		if (*pgops != NULL && (*pgops)->pgo_init != NULL)
 			(*(*pgops)->pgo_init)();
 	}
 }
@@ -217,6 +214,15 @@ pbuf_zsecond_create(const char *name, int max)
 
 	zone = uma_zsecond_create(name, pbuf_ctor, pbuf_dtor, NULL, NULL,
 	    pbuf_zone);
+
+#ifdef KMSAN
+	/*
+	 * Shrink the size of the pbuf pools if KMSAN is enabled, otherwise the
+	 * shadows of the large KVA allocations eat up too much memory.
+	 */
+	max /= 3;
+#endif
+
 	/*
 	 * uma_prealloc() rounds up to items per slab. If we would prealloc
 	 * immediately on every pbuf_zsecond_create(), we may accumulate too
@@ -398,7 +404,7 @@ vm_pager_alloc_dyn_type(struct pagerops *ops, int base_type)
 
 	mtx_lock(&pagertab_lock);
 	MPASS(base_type == -1 ||
-	    (base_type >= OBJT_DEFAULT && base_type < nitems(pagertab)));
+	    (base_type >= OBJT_SWAP && base_type < nitems(pagertab)));
 	for (res = OBJT_FIRST_DYN; res < nitems(pagertab); res++) {
 		if (pagertab[res] == NULL)
 			break;
@@ -466,7 +472,7 @@ pbuf_ctor(void *mem, int size, void *arg, int flags)
 	bp->b_ioflags = 0;
 	bp->b_iodone = NULL;
 	bp->b_error = 0;
-	BUF_LOCK(bp, LK_EXCLUSIVE, NULL);
+	BUF_LOCK(bp, LK_EXCLUSIVE | LK_NOWAIT, NULL);
 
 	return (0);
 }
@@ -495,6 +501,8 @@ pbuf_init(void *mem, int size, int flags)
 {
 	struct buf *bp = mem;
 
+	TSENTER();
+
 	bp->b_kvabase = (void *)kva_alloc(ptoa(PBUF_PAGES));
 	if (bp->b_kvabase == NULL)
 		return (ENOMEM);
@@ -503,6 +511,8 @@ pbuf_init(void *mem, int size, int flags)
 	LIST_INIT(&bp->b_dep);
 	bp->b_rcred = bp->b_wcred = NOCRED;
 	bp->b_xflags = 0;
+
+	TSEXIT();
 
 	return (0);
 }

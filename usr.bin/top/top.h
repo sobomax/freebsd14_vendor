@@ -1,7 +1,5 @@
 /*-
  * Top - a top users display for Berkeley Unix
- *
- * $FreeBSD: 2f31d5812ee41fb432fbf11d35e61d6ed63f4d63 $
  */
 
 #ifndef TOP_H

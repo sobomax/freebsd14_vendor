@@ -29,8 +29,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 88f4f82b4bce38f2d8fa31ef340690ded3de2a58 $");
-
 #include <sys/param.h>
 #include <sys/systm.h>
 #include <sys/malloc.h>
@@ -47,15 +45,14 @@ __FBSDID("$FreeBSD: 88f4f82b4bce38f2d8fa31ef340690ded3de2a58 $");
 #include <machine/bus.h>
 #include <sys/rman.h>
 #include <machine/resource.h>
-#include <machine/intr_machdep.h>
 #include <machine/vmparam.h>
 
 #include <xen/xen-os.h>
 #include <xen/hypervisor.h>
 #include <xen/xen_intr.h>
 #include <xen/gnttab.h>
-#include <xen/interface/grant_table.h>
-#include <xen/interface/io/protocols.h>
+#include <contrib/xen/grant_table.h>
+#include <contrib/xen/io/protocols.h>
 #include <xen/xenbus/xenbusvar.h>
 
 #include <machine/_inttypes.h>
@@ -1437,7 +1434,7 @@ xbd_probe(device_t dev)
 	if (strcmp(xenbus_get_type(dev), "vbd") != 0)
 		return (ENXIO);
 
-	if (xen_hvm_domain() && xen_disable_pv_disks != 0)
+	if (xen_pv_disks_disabled())
 		return (ENXIO);
 
 	if (xen_hvm_domain()) {
@@ -1645,6 +1642,5 @@ static driver_t xbd_driver = {
 	xbd_methods, 
 	sizeof(struct xbd_softc),                      
 }; 
-devclass_t xbd_devclass; 
 
-DRIVER_MODULE(xbd, xenbusb_front, xbd_driver, xbd_devclass, 0, 0); 
+DRIVER_MODULE(xbd, xenbusb_front, xbd_driver, 0, 0); 

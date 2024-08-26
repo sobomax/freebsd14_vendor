@@ -35,8 +35,6 @@ static const char copyright[] =
 #endif /* not lint */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 82ab6d195038ae2374edc9cb4e8ca55002417fa8 $");
-
 /*
  * CREDITS
  *

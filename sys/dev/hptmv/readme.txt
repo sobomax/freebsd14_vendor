@@ -1,6 +1,5 @@
 RocketRAID 18xx Driver for FreeBSD
 Copyright (C) 2007-2008 HighPoint Technologies, Inc. All rights reserved.
-$FreeBSD: 177f9f94e168b7724bb33c391ad1877536823b39 $
 
 #############################################################################
 Revision History:

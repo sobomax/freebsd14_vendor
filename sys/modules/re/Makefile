@@ -1,4 +1,3 @@
-# $FreeBSD: ae51e71d0bdc9da0923430976d053269eb552596 $
 
 .PATH: ${SRCTOP}/sys/dev/re
 

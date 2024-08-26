@@ -1,4 +1,3 @@
-# $FreeBSD: 2e4379155d4a057c9f647c4fb5c87795e4b063b5 $
 
 unalias -a
 alias alias0=command

@@ -1,4 +1,3 @@
-# $FreeBSD: 2a637976288347d10f1252e46b5e3a68eb98d497 $
 PROG=	ministat
 
 LIBADD=	m

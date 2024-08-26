@@ -1,4 +1,3 @@
-# $FreeBSD: 7f14c080a26071c9c75923404ed61b4c3a630b28 $
 
 .PATH: ${SRCTOP}/sys/dev/random
 
@@ -7,5 +6,10 @@ SRCS=	ivy.c
 SRCS+=	bus_if.h device_if.h
 
 CFLAGS+= -I${SRCTOP}/sys
+
+# ld.bfd doesn't support ifuncs invoked non-PIC
+.if ${MACHINE_CPUARCH} == "i386"
+CFLAGS.gcc= -fPIC
+.endif
 
 .include <bsd.kmod.mk>

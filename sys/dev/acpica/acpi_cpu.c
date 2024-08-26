@@ -26,8 +26,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 3c160e1c5cddfc1da4d1df6ecc3cb35c31632196 $");
-
 #include "opt_acpi.h"
 #include <sys/param.h>
 #include <sys/bus.h>
@@ -224,8 +222,7 @@ static driver_t acpi_cpu_driver = {
     sizeof(struct acpi_cpu_softc),
 };
 
-static devclass_t acpi_cpu_devclass;
-DRIVER_MODULE(cpu, acpi, acpi_cpu_driver, acpi_cpu_devclass, 0, 0);
+DRIVER_MODULE(cpu, acpi, acpi_cpu_driver, 0, 0);
 MODULE_DEPEND(cpu, acpi, 1, 1, 1);
 
 static int
@@ -303,7 +300,7 @@ acpi_cpu_probe(device_t dev)
 	    device_quiet_children(dev);
     }
 
-    return (0);
+    return (BUS_PROBE_DEFAULT);
 }
 
 static int
@@ -417,7 +414,8 @@ acpi_cpu_attach(device_t dev)
 	    sc->cpu_features |= ACPI_CAP_INTR_CPPC;
 #endif
 
-    if (devclass_get_drivers(acpi_cpu_devclass, &drivers, &drv_count) == 0) {
+    if (devclass_get_drivers(device_get_devclass(dev), &drivers,
+	&drv_count) == 0) {
 	for (i = 0; i < drv_count; i++) {
 	    if (ACPI_GET_FEATURES(drivers[i], &features) == 0)
 		sc->cpu_features |= features;
@@ -465,7 +463,7 @@ acpi_cpu_postattach(void *unused __unused)
     if (cpu_softc == NULL)
 	return;
 
-    mtx_lock(&Giant);
+    bus_topo_lock();
     CPU_FOREACH(i) {
 	if ((sc = cpu_softc[i]) != NULL)
 		bus_generic_probe(sc->cpu_dev);
@@ -476,7 +474,7 @@ acpi_cpu_postattach(void *unused __unused)
 		attached = 1;
 	}
     }
-    mtx_unlock(&Giant);
+    bus_topo_unlock();
 
     if (attached) {
 #ifdef EARLY_AP_STARTUP
@@ -514,6 +512,9 @@ static void
 enable_idle(struct acpi_cpu_softc *sc)
 {
 
+    if (sc->cpu_cx_count > sc->cpu_non_c3 + 1 &&
+	(cpu_quirks & CPU_QUIRK_NO_BM_CTRL) == 0)
+	    AcpiWriteBitRegister(ACPI_BITREG_BUS_MASTER_RLD, 1);
     sc->cpu_disable_idle = FALSE;
 }
 
@@ -1166,14 +1167,13 @@ acpi_cpu_idle(sbintime_t sbt)
     }
 
     /*
-     * For C3, disable bus master arbitration and enable bus master wake
-     * if BM control is available, otherwise flush the CPU cache.
+     * For C3, disable bus master arbitration if BM control is available.
+     * CPU may have to wake up to handle it. Otherwise flush the CPU cache.
      */
     if (cx_next->type == ACPI_STATE_C3) {
-	if ((cpu_quirks & CPU_QUIRK_NO_BM_CTRL) == 0) {
+	if ((cpu_quirks & CPU_QUIRK_NO_BM_CTRL) == 0)
 	    AcpiWriteBitRegister(ACPI_BITREG_ARB_DISABLE, 1);
-	    AcpiWriteBitRegister(ACPI_BITREG_BUS_MASTER_RLD, 1);
-	} else
+	else
 	    ACPI_FLUSH_CPU_CACHE();
     }
 
@@ -1208,12 +1208,10 @@ acpi_cpu_idle(sbintime_t sbt)
     else
 	end_ticks = cpu_ticks();
 
-    /* Enable bus master arbitration and disable bus master wakeup. */
+    /* Enable bus master arbitration. */
     if (cx_next->type == ACPI_STATE_C3 &&
-      (cpu_quirks & CPU_QUIRK_NO_BM_CTRL) == 0) {
+      (cpu_quirks & CPU_QUIRK_NO_BM_CTRL) == 0)
 	AcpiWriteBitRegister(ACPI_BITREG_ARB_DISABLE, 0);
-	AcpiWriteBitRegister(ACPI_BITREG_BUS_MASTER_RLD, 0);
-    }
     ACPI_ENABLE_IRQS();
 
     if (cx_next->type == ACPI_STATE_C3)

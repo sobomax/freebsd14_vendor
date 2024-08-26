@@ -1,4 +1,3 @@
-# $FreeBSD: 338deb41c5343ff6a261e4043edd2ada47f0c0af $
 
 .include <bsd.own.mk>
 
@@ -58,10 +57,10 @@ PLAIN_TESTS_SH=		bc_tests dc_tests
 
 bc_tests.sh:
 	echo "#!/bin/sh" > ${.TARGET}
-	echo "env LANG=C ${TESTSDIR}/tests/all.sh bc 1 1 0 0 bc" >> ${.TARGET}
+	echo "env LANG=C ${TESTSDIR}/tests/all.sh bc 1 1 0 0 0 bc" >> ${.TARGET}
 
 dc_tests.sh:
 	echo "#!/bin/sh" > ${.TARGET}
-	echo "env LANG=C ${TESTSDIR}/tests/all.sh dc 1 1 0 0 dc" >> ${.TARGET}
+	echo "env LANG=C ${TESTSDIR}/tests/all.sh dc 1 1 0 0 0 dc" >> ${.TARGET}
 
 .include <bsd.test.mk>

@@ -1,10 +1,8 @@
 /*	$NetBSD: umodem.c,v 1.45 2002/09/23 05:51:23 simonb Exp $	*/
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: ec7e3f21662d419aa5ddecd27b6a4c92ff0063dc $");
-
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD AND BSD-2-Clause-NetBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2003 M. Warner Losh <imp@FreeBSD.org>
  *
@@ -305,15 +303,13 @@ static device_method_t umodem_methods[] = {
 	DEVMETHOD_END
 };
 
-static devclass_t umodem_devclass;
-
 static driver_t umodem_driver = {
 	.name = "umodem",
 	.methods = umodem_methods,
 	.size = sizeof(struct umodem_softc),
 };
 
-DRIVER_MODULE(umodem, uhub, umodem_driver, umodem_devclass, NULL, 0);
+DRIVER_MODULE(umodem, uhub, umodem_driver, NULL, NULL);
 MODULE_DEPEND(umodem, ucom, 1, 1, 1);
 MODULE_DEPEND(umodem, usb, 1, 1, 1);
 MODULE_VERSION(umodem, UMODEM_MODVER);

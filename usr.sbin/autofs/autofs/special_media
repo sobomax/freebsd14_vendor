@@ -1,6 +1,5 @@
 #!/bin/sh
 #
-# $FreeBSD: dbd7457b445f753bba83a36695e71f5d55fc1145 $
 #
 
 # Print newline-separated list of devices available for mounting.

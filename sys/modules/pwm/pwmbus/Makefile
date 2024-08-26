@@ -1,4 +1,3 @@
-# $FreeBSD: 1b3c9f3077c3789213dd75a4e2a7b9d0ef8b950d $
 
 .PATH:	${SRCTOP}/sys/dev/pwm
 

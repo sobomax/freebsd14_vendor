@@ -32,8 +32,6 @@
  * SUCH DAMAGE.
  *
  *	@(#)null.h	8.3 (Berkeley) 8/20/94
- *
- * $FreeBSD: 6fdac4b1006e15589d346dfb130bd3e73f794634 $
  */
 
 #ifndef	FS_NULL_H
@@ -45,6 +43,8 @@ struct null_mount {
 	struct mount	*nullm_vfs;
 	struct vnode	*nullm_lowerrootvp;	/* Ref to lower root vnode */
 	uint64_t	nullm_flags;
+	struct mount_upper_node upper_node;
+	struct mount_upper_node notify_node;
 };
 
 #ifdef _KERNEL

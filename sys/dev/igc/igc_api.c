@@ -5,8 +5,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 6aafc9898df8506a4f792fb0e40947a4aef7d29c $");
-
 #include "igc_api.h"
 
 /**

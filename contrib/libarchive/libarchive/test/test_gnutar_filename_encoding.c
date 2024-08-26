@@ -23,8 +23,6 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 #include "test.h"
-__FBSDID("$FreeBSD: 3ec4f61290f8ce62ae03096335fe539e962a5f11 $");
-
 #include <locale.h>
 
 DEFINE_TEST(test_gnutar_filename_encoding_UTF8_CP866)

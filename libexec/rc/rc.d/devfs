@@ -1,6 +1,5 @@
 #!/bin/sh
 #
-# $FreeBSD: 1e7697d53109c197b01c56c4392424ece033593e $
 #
 
 # PROVIDE: devfs

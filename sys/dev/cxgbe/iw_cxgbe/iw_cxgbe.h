@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2009-2013, 2016 Chelsio, Inc. All rights reserved.
  *
@@ -29,8 +29,6 @@
  * ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
- *
- * $FreeBSD: 59ca38a960042725f1a20789ccb49384772fc00f $
  */
 #ifndef __IW_CXGB4_H__
 #define __IW_CXGB4_H__
@@ -55,6 +53,7 @@
 
 #include <rdma/ib_verbs.h>
 #include <rdma/iw_cm.h>
+#include <rdma/uverbs_ioctl.h>
 
 #include "common/common.h"
 #include "common/t4_msg.h"
@@ -474,6 +473,14 @@ struct c4iw_qp_attributes {
 	u8 send_term;
 };
 
+struct c4iw_ib_srq {
+	struct ib_srq ibsrq;
+};
+
+struct c4iw_ib_ah {
+	struct ib_ah ibah;
+};
+
 struct c4iw_qp {
 	struct ib_qp ibqp;
 	struct c4iw_dev *rhp;
@@ -501,23 +508,11 @@ struct c4iw_ucontext {
 	u32 key;
 	spinlock_t mmap_lock;
 	struct list_head mmaps;
-	struct kref kref;
 };
 
 static inline struct c4iw_ucontext *to_c4iw_ucontext(struct ib_ucontext *c)
 {
 	return container_of(c, struct c4iw_ucontext, ibucontext);
-}
-
-void _c4iw_free_ucontext(struct kref *kref);
-
-static inline void c4iw_put_ucontext(struct c4iw_ucontext *ucontext)
-{
-	kref_put(&ucontext->kref, _c4iw_free_ucontext);
-}
-static inline void c4iw_get_ucontext(struct c4iw_ucontext *ucontext)
-{
-	kref_get(&ucontext->kref);
 }
 
 struct c4iw_mm_entry {
@@ -683,14 +678,14 @@ enum c4iw_mmid_state {
 
 #define c4iw_put_ep(ep) { \
 	CTR4(KTR_IW_CXGBE, "put_ep (%s:%u) ep %p, refcnt %d", \
-	     __func__, __LINE__, ep, atomic_read(&(ep)->kref.refcount)); \
-	WARN_ON(atomic_read(&(ep)->kref.refcount) < 1); \
+	     __func__, __LINE__, ep, kref_read(&(ep)->kref)); \
+	WARN_ON(kref_read(&(ep)->kref) < 1); \
         kref_put(&((ep)->kref), _c4iw_free_ep); \
 }
 
 #define c4iw_get_ep(ep) { \
 	CTR4(KTR_IW_CXGBE, "get_ep (%s:%u) ep %p, refcnt %d", \
-	      __func__, __LINE__, ep, atomic_read(&(ep)->kref.refcount)); \
+	      __func__, __LINE__, ep, kref_read(&(ep)->kref)); \
         kref_get(&((ep)->kref));  \
 }
 
@@ -938,7 +933,7 @@ int c4iw_reject_cr(struct iw_cm_id *cm_id, const void *pdata, u8 pdata_len);
 void c4iw_qp_add_ref(struct ib_qp *qp);
 void c4iw_qp_rem_ref(struct ib_qp *qp);
 struct ib_mr *c4iw_alloc_mr(struct ib_pd *pd, enum ib_mr_type mr_type,
-			u32 max_num_sg);
+		u32 max_num_sg, struct ib_udata *udata);
 int c4iw_map_mr_sg(struct ib_mr *ibmr, struct scatterlist *sg,
 		int sg_nents, unsigned int *sg_offset);
 int c4iw_dealloc_mw(struct ib_mw *mw);
@@ -947,16 +942,15 @@ struct ib_mw *c4iw_alloc_mw(struct ib_pd *pd, enum ib_mw_type type,
 struct ib_mr *c4iw_reg_user_mr(struct ib_pd *pd, u64 start, u64 length, u64
 		virt, int acc, struct ib_udata *udata);
 struct ib_mr *c4iw_get_dma_mr(struct ib_pd *pd, int acc);
-int c4iw_dereg_mr(struct ib_mr *ib_mr);
+int c4iw_dereg_mr(struct ib_mr *ib_mr, struct ib_udata *udata);
 void c4iw_invalidate_mr(struct c4iw_dev *rhp, u32 rkey);
-int c4iw_destroy_cq(struct ib_cq *ib_cq);
-struct ib_cq *c4iw_create_cq(struct ib_device *ibdev,
-				const struct ib_cq_init_attr *attr,
-				struct ib_ucontext *ib_context,
-				struct ib_udata *udata);
+void c4iw_destroy_cq(struct ib_cq *ib_cq, struct ib_udata *udata);
+int c4iw_create_cq(struct ib_cq *ibcq,
+		   const struct ib_cq_init_attr *attr,
+		   struct ib_udata *udata);
 int c4iw_resize_cq(struct ib_cq *cq, int cqe, struct ib_udata *udata);
 int c4iw_arm_cq(struct ib_cq *ibcq, enum ib_cq_notify_flags flags);
-int c4iw_destroy_qp(struct ib_qp *ib_qp);
+int c4iw_destroy_qp(struct ib_qp *ib_qp, struct ib_udata *udata);
 struct ib_qp *c4iw_create_qp(struct ib_pd *pd,
 			     struct ib_qp_init_attr *attrs,
 			     struct ib_udata *udata);
@@ -986,4 +980,6 @@ u32 c4iw_get_qpid(struct c4iw_rdev *rdev, struct c4iw_dev_ucontext *uctx);
 void c4iw_put_qpid(struct c4iw_rdev *rdev, u32 qid,
 		struct c4iw_dev_ucontext *uctx);
 void c4iw_ev_dispatch(struct c4iw_dev *dev, struct t4_cqe *err_cqe);
+void t4_dump_stag(struct adapter *sc, const u32 stag);
+void t4_dump_all_stag(struct adapter *sc);
 #endif

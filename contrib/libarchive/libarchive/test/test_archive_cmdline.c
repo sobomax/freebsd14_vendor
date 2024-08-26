@@ -24,7 +24,6 @@
  */
 
 #include "test.h"
-__FBSDID("$FreeBSD: a8236105af0b36da2ab9a4db2da2c48db69a0a37 $");
 
 #define __LIBARCHIVE_TEST
 #include "archive_cmdline_private.h"

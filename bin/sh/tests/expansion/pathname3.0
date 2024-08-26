@@ -1,4 +1,3 @@
-# $FreeBSD: d1672e057ec56ba26d4b48235adb918d8d3537a3 $
 
 v=12345678
 v=$v$v$v$v

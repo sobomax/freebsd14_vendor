@@ -36,8 +36,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 31a9bf29265db6d87c15b06d30d6db6dcd571b10 $");
-
 #include <sys/param.h>
 #include <sys/capsicum.h>
 #include <sys/fcntl.h>
@@ -182,7 +180,6 @@ audit_ctlname_to_sysctlevent(int name[], uint64_t valid_arg)
 	case KERN_HOSTID:
 	case KERN_SECURELVL:
 	case KERN_HOSTNAME:
-	case KERN_VNODE:
 	case KERN_PROC:
 	case KERN_FILE:
 	case KERN_PROF:

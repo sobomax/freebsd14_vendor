@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2015 Alexander Motin <mav@FreeBSD.org>
  * All rights reserved.
@@ -27,8 +27,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: e2ecb9706f564064aa10984aa54be5d0227a870b $");
-
 #include <sys/param.h>
 #include <sys/condvar.h>
 #include <sys/conf.h>
@@ -912,13 +910,16 @@ ctl_ha_msg_shutdown(struct ctl_softc *ctl_softc)
 {
 	struct ha_softc *softc = &ha_softc;
 
+	if (SCHEDULER_STOPPED())
+		return;
+
 	/* Disconnect and shutdown threads. */
 	mtx_lock(&softc->ha_lock);
 	if (softc->ha_shutdown < 2) {
 		softc->ha_shutdown = 1;
 		softc->ha_wakeup = 1;
 		wakeup(&softc->ha_wakeup);
-		while (softc->ha_shutdown < 2 && !SCHEDULER_STOPPED()) {
+		while (softc->ha_shutdown < 2) {
 			msleep(&softc->ha_wakeup, &softc->ha_lock, 0,
 			    "shutdown", hz);
 		}

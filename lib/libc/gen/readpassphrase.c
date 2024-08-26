@@ -21,9 +21,6 @@
  * Materiel Command, USAF, under agreement number F39502-99-1-0512.
  */
 
-#include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 0961fbb35a8be6dbd6b809466d1c77bfe11c1239 $");
-
 #include "namespace.h"
 #include <ctype.h>
 #include <errno.h>

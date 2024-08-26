@@ -34,8 +34,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 7acb5d7f2b5c88f8495ebb9b7a8272d8517accaa $");
-
 #include "yp.h"
 #include "yp_extern.h"
 #include <dirent.h>

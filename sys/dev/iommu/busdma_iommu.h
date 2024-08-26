@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2013 The FreeBSD Foundation
  *
@@ -26,8 +26,6 @@
  * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
- *
- * $FreeBSD: 98e7b94d4ed979fccedb203e5fa850fc121720f9 $
  */
 
 #ifndef __X86_IOMMU_BUSDMA_DMAR_H
@@ -55,6 +53,9 @@ struct bus_dmamap_iommu {
 	bool locked;
 	bool cansleep;
 	int flags;
+#ifdef KMSAN
+	struct memdesc kmsan_mem;
+#endif
 };
 
 #define	IOMMU_DMAMAP_INIT(map)		mtx_init(&(map)->lock, \

@@ -20,8 +20,6 @@
  *
  * I've modified Bob's hash to be useful in the Linux kernel, and
  * any bugs present are surely my fault.  -DaveM
- *
- * $FreeBSD: 1bab37f22b5d911698f3a8d2d6320c62b0f78e32 $
  */
 
 /* NOTE: Arguments are modified. */

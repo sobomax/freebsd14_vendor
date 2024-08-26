@@ -11,11 +11,8 @@
  * ====================================================
  */
 
-#include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 3a28dc4ff1f3e1d7e435cdeab263cd1386c5aaa8 $");
-
 /* 
- * __ieee754_fmod(x,y)
+ * fmod(x,y)
  * Return x mod y in exact arithmetic
  * Method: shift and subtract
  */
@@ -28,7 +25,7 @@ __FBSDID("$FreeBSD: 3a28dc4ff1f3e1d7e435cdeab263cd1386c5aaa8 $");
 static const double one = 1.0, Zero[] = {0.0, -0.0,};
 
 double
-__ieee754_fmod(double x, double y)
+fmod(double x, double y)
 {
 	int32_t n,hx,hy,hz,ix,iy,sx,i;
 	u_int32_t lx,ly,lz;

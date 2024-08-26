@@ -61,8 +61,6 @@
 #ifndef lint
 __RCSID("$NetBSD: crunchide.c,v 1.8 1997/11/01 06:51:45 lukem Exp $");
 #endif
-__FBSDID("$FreeBSD: bd663e1d57bde44ac1fdd348c54838eca841c321 $");
-
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <sys/errno.h>
@@ -76,7 +74,7 @@ __FBSDID("$FreeBSD: bd663e1d57bde44ac1fdd348c54838eca841c321 $");
 
 static const char *pname = "crunchide";
 
-static void usage(void);
+static void usage(void) __dead2;
 
 static void add_to_keep_list(char *symbol);
 static void add_file_to_keep_list(char *filename);

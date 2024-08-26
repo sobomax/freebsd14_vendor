@@ -1,16 +1,11 @@
-# $FreeBSD: 556997404f99b69bc640e5dc3665d704dd5e6350 $
 
 .PATH: ${SRCTOP}/lib/libc/iconv
 
-SHLIB_MAJOR= 4
+SHLIB_MAJOR= 5
 CFLAGS+= -I${SRCTOP}/lib/libc/iconv
 
 CFLAGS+=	-Dbool=_Bool
 
-.if !defined(COMPAT_32BIT)
-SHLIBDIR= /usr/lib/i18n
-.else
-SHLIBDIR= /usr/lib32/i18n
-.endif
+SHLIBDIR= /usr/lib${COMPAT_libcompat:U}/i18n
 LIBDIR=	 ${SHLIBDIR}
 MK_PROFILE=	no

@@ -1,3 +1,2 @@
-.\" $FreeBSD: 75142882d5b34ae1bf5c57ef261de6101edc8d75 $
 Do not build
 .Xr cxgbetool 8

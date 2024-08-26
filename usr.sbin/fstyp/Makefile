@@ -1,4 +1,3 @@
-# $FreeBSD: 161cd0cf37648a9c4ec69916e9b9886de4bb1d6d $
 
 .include <src.opts.mk>
 
@@ -35,6 +34,7 @@ CFLAGS.zfs.c+= -I${SRCTOP}/sys/contrib/openzfs/module/icp/include
 CFLAGS.zfs.c+= -include ${SRCTOP}/sys/contrib/openzfs/include/os/freebsd/spl/sys/ccompile.h
 CFLAGS.zfs.c+= -DHAVE_ISSETUGID
 CFLAGS.zfs.c+= -include ${SRCTOP}/sys/modules/zfs/zfs_config.h
+CFLAGS.zfs.c+= -Wno-cast-qual
 .endif
 
 .for src in ${SRCS}

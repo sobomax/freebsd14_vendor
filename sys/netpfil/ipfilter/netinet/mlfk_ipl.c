@@ -1,9 +1,6 @@
-/*	$FreeBSD: aa55ef2d8aecab70adc912d8f78eb91f9b1f094c $	*/
 
 /*
  * Copyright (C) 2012 by Darren Reed.
- *
- * $FreeBSD: aa55ef2d8aecab70adc912d8f78eb91f9b1f094c $
  * See the IPFILTER.LICENCE file for details on licencing.
  */
 
@@ -137,7 +134,7 @@ SYSCTL_IPF(_net_inet_ipf, OID_AUTO, fr_running, CTLFLAG_RD,
 	   &VNET_NAME(ipfmain.ipf_running), 0, "IPF is running");
 SYSCTL_IPF(_net_inet_ipf, OID_AUTO, fr_chksrc, CTLFLAG_RW, &VNET_NAME(ipfmain.ipf_chksrc), 0, "");
 SYSCTL_IPF(_net_inet_ipf, OID_AUTO, fr_minttl, CTLFLAG_RW, &VNET_NAME(ipfmain.ipf_minttl), 0, "");
-SYSCTL_IPF(_net_inet_ipf, OID_AUTO, large_nat, CTLFLAG_RD, &VNET_NAME(ipfmain.ipf_large_nat), 0, "large_nat");
+SYSCTL_IPF(_net_inet_ipf, OID_AUTO, large_nat, CTLFLAG_RDTUN | CTLFLAG_NOFETCH, &VNET_NAME(ipfmain.ipf_large_nat), 0, "large_nat");
 
 #define CDEV_MAJOR 79
 #include <sys/poll.h>
@@ -542,14 +539,14 @@ ipfclose(dev_t dev, int flags)
  * called during packet processing and cause an inconsistancy to appear in
  * the filter lists.
  */
+#ifdef __FreeBSD__
+static int ipfread(struct cdev *dev, struct uio *uio, int ioflag)
+#else
 static int ipfread(dev, uio, ioflag)
 	int ioflag;
-#ifdef __FreeBSD__
-	struct cdev *dev;
-#else
 	dev_t dev;
-#endif
 	struct uio *uio;
+#endif
 {
 	int error;
 	int	unit = GET_MINOR(dev);
@@ -585,14 +582,14 @@ static int ipfread(dev, uio, ioflag)
  * called during packet processing and cause an inconsistancy to appear in
  * the filter lists.
  */
+#ifdef __FreeBSD__
+static int ipfwrite(struct cdev *dev, struct uio *uio, int ioflag)
+#else
 static int ipfwrite(dev, uio, ioflag)
 	int ioflag;
-#ifdef __FreeBSD__
-	struct cdev *dev;
-#else
 	dev_t dev;
-#endif
 	struct uio *uio;
+#endif
 {
 	int error;
 

@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2014 Dmitry Chagin <dchagin@FreeBSD.org>
  *
@@ -26,8 +26,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: d4aab88ab09d8e6402eb113dd95ade3c8b5e5f44 $");
-
 #include <sys/param.h>
 #include <sys/systm.h>
 #include <sys/kernel.h>
@@ -79,6 +77,7 @@ static struct fileops eventfdops = {
 	.fo_chown = invfo_chown,
 	.fo_sendfile = invfo_sendfile,
 	.fo_fill_kinfo = eventfd_fill_kinfo,
+	.fo_cmp = file_kcmp_generic,
 	.fo_flags = DFLAG_PASSABLE
 };
 
@@ -325,8 +324,7 @@ eventfd_ioctl(struct file *fp, u_long cmd, void *data,
 }
 
 static int
-eventfd_stat(struct file *fp, struct stat *st, struct ucred *active_cred,
-    struct thread *td)
+eventfd_stat(struct file *fp, struct stat *st, struct ucred *active_cred)
 {
 	bzero((void *)st, sizeof *st);
 	st->st_mode = S_IFIFO;

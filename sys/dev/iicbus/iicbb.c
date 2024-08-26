@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 1998, 2001 Nicolas Souchu
  * All rights reserved.
@@ -27,8 +27,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: caa544ef403cbadb8dc0ef51439ce586bf6e40a2 $");
-
 /*
  * Generic I2C bit-banging code
  *
@@ -54,6 +52,7 @@ __FBSDID("$FreeBSD: caa544ef403cbadb8dc0ef51439ce586bf6e40a2 $");
 #include <sys/bus.h>
 #include <sys/sysctl.h>
 #include <sys/uio.h>
+#include <machine/cpu.h>
 
 #ifdef FDT
 #include <dev/ofw/ofw_bus.h>
@@ -131,8 +130,6 @@ driver_t iicbb_driver = {
 	iicbb_methods,
 	sizeof(struct iicbb_softc),
 };
-
-devclass_t iicbb_devclass;
 
 static int
 iicbb_probe(device_t dev)
@@ -258,11 +255,12 @@ iicbb_waitforscl(device_t dev)
 	do {
 		if (I2C_GETSCL(dev))
 			return (0);
+		cpu_spinwait();
 		now = sbinuptime();
 	} while (now < fast_timeout);
 	do {
 		I2C_DEBUG(printf("."));
-		pause_sbt("iicbb-scl-low", SBT_1MS, C_PREL(8), 0);
+		pause_sbt("iicbb-scl-low", SBT_1MS, 0, C_PREL(2));
 		if (I2C_GETSCL(dev))
 			return (0);
 		now = sbinuptime();
@@ -595,7 +593,7 @@ iicbb_set_speed(struct iicbb_softc *sc, u_char speed)
 	sc->udelay = MAX(period, 1);
 }
 
-DRIVER_MODULE(iicbus, iicbb, iicbus_driver, iicbus_devclass, 0, 0);
+DRIVER_MODULE(iicbus, iicbb, iicbus_driver, 0, 0);
 
 MODULE_DEPEND(iicbb, iicbus, IICBUS_MINVER, IICBUS_PREFVER, IICBUS_MAXVER);
 MODULE_VERSION(iicbb, IICBB_MODVER);

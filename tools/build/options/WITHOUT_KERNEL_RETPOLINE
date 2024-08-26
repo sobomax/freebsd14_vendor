@@ -1,3 +1,2 @@
-.\" $FreeBSD: 83dd6edfbeacca1845866d6b17b5e39ad17744b6 $
 Disable the "retpoline" mitigation for CVE-2017-5715 in the kernel
 build.

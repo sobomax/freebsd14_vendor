@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2015-2019 Yandex LLC
  * Copyright (c) 2015-2019 Andrey V. Elsukov <ae@FreeBSD.org>
@@ -27,8 +27,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: fecc8ff334d2ddd3425fb047ab4bc5f9566eaab1 $");
-
 #include "opt_ipstealth.h"
 
 #include <sys/param.h>
@@ -46,6 +44,7 @@ __FBSDID("$FreeBSD: fecc8ff334d2ddd3425fb047ab4bc5f9566eaab1 $");
 
 #include <net/if.h>
 #include <net/if_var.h>
+#include <net/if_private.h>
 #include <net/if_pflog.h>
 #include <net/pfil.h>
 #include <net/netisr.h>

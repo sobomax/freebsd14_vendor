@@ -1,4 +1,3 @@
-# $FreeBSD: 90aec1d2f2576c76fcdd462d0ff92655f3dc5bb2 $
 
 # Posix 1003.2 mandated rules
 #

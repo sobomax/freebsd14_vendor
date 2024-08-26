@@ -1,4 +1,3 @@
-# $FreeBSD: 0e5e1b18254815c605f69501449abbff6c8e0d2f $
 
 .PATH:	${SRCTOP}/sys/dev/amdsmn
 

@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2019 Gleb Smirnoff <glebius@FreeBSD.org>
  *
@@ -26,8 +26,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: e360c73cb27977d128c7ebaa4718f87a413c3c07 $");
-
 #include <sys/param.h>
 #include <sys/ioctl.h>
 #include <net/if.h>
@@ -132,8 +130,8 @@ retry:
 	}
 
 #define	FMTHD	"%16s %8s\n"
-#define	FMTHK	"%29s %16s %16s\n"
-	printf(FMTHD, "Intercept point", "Type");
+#define	FMTHK	"%29s %16s:%s\n"
+	printf("%16s %8s %3s %16s\n", "Intercept point", "Type", "Dir", "Hook");
 	for (i = 0, h = 0; i < plh.pio_nheads; i++) {
 		printf(FMTHD, plh.pio_heads[i].pio_name,
 		    typenames[plh.pio_heads[i].pio_type]);
@@ -153,8 +151,8 @@ listhooks(int argc __unused, char *argv[] __unused)
 	u_int nhooks, i;
 
 	plh.pio_nhooks = 0;
-	if (ioctl(dev, PFILIOC_LISTHEADS, &plh) != 0)
-		err(1, "ioctl(PFILIOC_LISTHEADS)");
+	if (ioctl(dev, PFILIOC_LISTHOOKS, &plh) != 0)
+		err(1, "ioctl(PFILIOC_LISTHOOKS)");
 retry:
 	plh.pio_hooks = calloc(plh.pio_nhooks, sizeof(struct pfilioc_hook));
 	if (plh.pio_hooks == NULL)
@@ -170,9 +168,9 @@ retry:
 		goto retry;
 	}
 
-	printf("Available hooks:\n");
+	printf("%16s %16s %8s\n", "Hook", "", "Type");
 	for (i = 0; i < plh.pio_nhooks; i++) {
-		printf("\t%s:%s %s\n", plh.pio_hooks[i].pio_module,
+		printf("%16s:%-16s %8s\n", plh.pio_hooks[i].pio_module,
 		    plh.pio_hooks[i].pio_ruleset,
 		    typenames[plh.pio_hooks[i].pio_type]);
 	}

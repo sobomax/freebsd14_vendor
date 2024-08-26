@@ -23,7 +23,6 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 #include "test.h"
-__FBSDID("$FreeBSD: 5750db3628e382bd108b55ec5357ced8d8ea27e3 $");
 
 /*
  * Background:  Original tar file format did not use its linkflag to

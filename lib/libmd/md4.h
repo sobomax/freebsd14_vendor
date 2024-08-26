@@ -1,5 +1,4 @@
 /* MD4.H - header file for MD4C.C
- * $FreeBSD: c05c690f80e19f78cb8c4e8504feeeca7bb0eb98 $
  */
 
 /*-

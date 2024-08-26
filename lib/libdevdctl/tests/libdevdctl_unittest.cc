@@ -28,8 +28,6 @@
  * POSSIBILITY OF SUCH DAMAGES.
  *
  * Authors: Alan Somers         (Spectra Logic Corporation)
- *
- * $FreeBSD: 4f69cb6522beb7dd857ecb72ef63599480ebbe82 $
  */
 
 #include <gtest/gtest.h>

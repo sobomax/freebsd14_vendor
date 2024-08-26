@@ -34,8 +34,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 9648acebea4fb355fc70ecc0057fe0c6befc5e62 $");
-
 #include <sys/param.h>
 #include <sys/shm.h>
 
@@ -392,8 +390,8 @@ static int drm_addmap_core(struct drm_device * dev, resource_size_t offset,
 			free(map, DRM_MEM_MAPS);
 			return -EINVAL;
 		}
-		map->handle = (void *)(dev->sg->vaddr + offset);
-		map->offset += dev->sg->vaddr;
+		map->handle = (char *)dev->sg->vaddr + offset;
+		map->offset += (uintptr_t)dev->sg->vaddr;
 		break;
 	case _DRM_CONSISTENT:
 		/* dma_addr_t is 64bit on i386 with CONFIG_HIGHMEM64G,

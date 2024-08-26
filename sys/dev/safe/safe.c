@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2003 Sam Leffler, Errno Consulting
  * Copyright (c) 2003 Global Technology Associates, Inc.
@@ -28,8 +28,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 7fc5c9c809298b914084eb77e7211735801f2359 $");
-
 /*
  * SafeNet SafeXcel-1141 hardware crypto accelerator
  */
@@ -108,14 +106,14 @@ static device_method_t safe_methods[] = {
 
 	DEVMETHOD_END
 };
+
 static driver_t safe_driver = {
 	"safe",
 	safe_methods,
 	sizeof (struct safe_softc)
 };
-static devclass_t safe_devclass;
 
-DRIVER_MODULE(safe, pci, safe_driver, safe_devclass, 0, 0);
+DRIVER_MODULE(safe, pci, safe_driver, 0, 0);
 MODULE_DEPEND(safe, crypto, 1, 1, 1);
 #ifdef SAFE_RNDTEST
 MODULE_DEPEND(safe, rndtest, 1, 1, 1);
@@ -385,8 +383,6 @@ safe_attach(device_t dev)
 #if 0
 		printf(" key");
 		sc->sc_flags |= SAFE_FLAGS_KEY;
-		crypto_kregister(sc->sc_cid, CRK_MOD_EXP, 0);
-		crypto_kregister(sc->sc_cid, CRK_MOD_EXP_CRT, 0);
 #endif
 	}
 	if (sc->sc_devinfo & SAFE_DEVINFO_DES) {
@@ -584,7 +580,7 @@ safe_intr(void *arg)
 	}
 
 	if (sc->sc_needwakeup) {		/* XXX check high watermark */
-		int wakeup = sc->sc_needwakeup & (CRYPTO_SYMQ|CRYPTO_ASYMQ);
+		int wakeup = sc->sc_needwakeup & CRYPTO_SYMQ;
 		DPRINTF(("%s: wakeup crypto %x\n", __func__,
 			sc->sc_needwakeup));
 		sc->sc_needwakeup &= ~wakeup;
@@ -1781,7 +1777,7 @@ safe_dmamap_aligned(const struct safe_operand *op)
  * of an operation.  The hardware requires that each ``particle''
  * but the last in an operation result have the same size.  We
  * fix that size at SAFE_MAX_DSIZE bytes.  This routine returns
- * 0 if some segment is not a multiple of of this size, 1 if all
+ * 0 if some segment is not a multiple of this size, 1 if all
  * segments are exactly this size, or 2 if segments are at worst
  * a multiple of this size.
  */

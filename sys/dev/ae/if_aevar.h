@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2008 Stanislav Sedov <stas@FreeBSD.org>.
  * All rights reserved.
@@ -23,8 +23,6 @@
  * THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- *
- * $FreeBSD: b6010e30ec8486b62c3b96741b9ce3a12c7c4e8e $
  */
 
 #ifndef IF_AEVAR_H
@@ -102,7 +100,7 @@ typedef struct ae_stats {
 
 /* Software state structure. */
 typedef struct ae_softc	{
-	struct ifnet		*ifp;
+	if_t			ifp;
 	device_t		dev;
 	device_t		miibus;
 	struct resource		*mem[1];

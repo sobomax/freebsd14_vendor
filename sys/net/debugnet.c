@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2019 Isilon Systems, LLC.
  * Copyright (c) 2005-2014 Sandvine Incorporated. All rights reserved.
@@ -29,8 +29,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: b41d93eca7fe78a841e0234034859633edeb0db4 $");
-
 #include "opt_ddb.h"
 #include "opt_inet.h"
 
@@ -56,6 +54,7 @@ __FBSDID("$FreeBSD: b41d93eca7fe78a841e0234034859633edeb0db4 $");
 #include <net/if_dl.h>
 #include <net/if_types.h>
 #include <net/if_var.h>
+#include <net/if_private.h>
 #include <net/vnet.h>
 #include <net/route.h>
 #include <net/route/nhop.h>
@@ -112,6 +111,22 @@ debugnet_get_gw_mac(const struct debugnet_pcb *pcb)
 	MPASS(g_debugnet_pcb_inuse && pcb == &g_dnet_pcb &&
 	    pcb->dp_state >= DN_STATE_HAVE_GW_MAC);
 	return (pcb->dp_gw_mac.octet);
+}
+
+const in_addr_t *
+debugnet_get_server_addr(const struct debugnet_pcb *pcb)
+{
+	MPASS(g_debugnet_pcb_inuse && pcb == &g_dnet_pcb &&
+	    pcb->dp_state >= DN_STATE_GOT_HERALD_PORT);
+	return (&pcb->dp_server);
+}
+
+const uint16_t
+debugnet_get_server_port(const struct debugnet_pcb *pcb)
+{
+	MPASS(g_debugnet_pcb_inuse && pcb == &g_dnet_pcb &&
+	    pcb->dp_state >= DN_STATE_GOT_HERALD_PORT);
+	return (pcb->dp_server_port);
 }
 
 /*
@@ -364,6 +379,8 @@ debugnet_handle_rx_msg(struct debugnet_pcb *pcb, struct mbuf **mb)
 {
 	const struct debugnet_msg_hdr *dnh;
 	struct mbuf *m;
+	uint32_t hdr_type;
+	uint32_t seqno;
 	int error;
 
 	m = *mb;
@@ -382,10 +399,24 @@ debugnet_handle_rx_msg(struct debugnet_pcb *pcb, struct mbuf **mb)
 			return;
 		}
 	}
-	dnh = mtod(m, const void *);
 
+	dnh = mtod(m, const void *);
 	if (ntohl(dnh->mh_len) + sizeof(*dnh) > m->m_pkthdr.len) {
 		DNETDEBUG("Dropping short packet.\n");
+		return;
+	}
+
+	hdr_type = ntohl(dnh->mh_type);
+	if (hdr_type != DEBUGNET_DATA) {
+		if (hdr_type == DEBUGNET_FINISHED) {
+			printf("Remote shut down the connection on us!\n");
+			pcb->dp_state = DN_STATE_REMOTE_CLOSED;
+			if (pcb->dp_finish_handler != NULL) {
+				pcb->dp_finish_handler();
+			}
+		} else {
+			DNETDEBUG("Got unexpected debugnet message %u\n", hdr_type);
+		}
 		return;
 	}
 
@@ -394,21 +425,20 @@ debugnet_handle_rx_msg(struct debugnet_pcb *pcb, struct mbuf **mb)
 	 * non-transient (like driver objecting to rx -> tx from the same
 	 * thread), not much else we can do.
 	 */
-	error = debugnet_ack_output(pcb, dnh->mh_seqno);
-	if (error != 0)
+	seqno = dnh->mh_seqno; /* net endian */
+	m_adj(m, sizeof(*dnh));
+	dnh = NULL;
+	error = pcb->dp_rx_handler(m);
+	if (error != 0) {
+		DNETDEBUG("RX handler was not able to accept message, error %d. "
+		    "Skipping ack.\n", error);
 		return;
-
-	if (ntohl(dnh->mh_type) == DEBUGNET_FINISHED) {
-		printf("Remote shut down the connection on us!\n");
-		pcb->dp_state = DN_STATE_REMOTE_CLOSED;
-
-		/*
-		 * Continue through to the user handler so they are signalled
-		 * not to wait for further rx.
-		 */
 	}
 
-	pcb->dp_rx_handler(pcb, mb);
+	error = debugnet_ack_output(pcb, seqno);
+	if (error != 0) {
+		DNETDEBUG("Couldn't ACK rx packet %u; %d\n", ntohl(seqno), error);
+	}
 }
 
 static void
@@ -536,7 +566,7 @@ debugnet_input_one(struct ifnet *ifp, struct mbuf *m)
 	}
 	if (m->m_len < ETHER_HDR_LEN) {
 		DNETDEBUG_IF(ifp,
-	    "discard frame without leading eth header (len %u pktlen %u)\n",
+	    "discard frame without leading eth header (len %d pktlen %d)\n",
 		    m->m_len, m->m_pkthdr.len);
 		goto done;
 	}

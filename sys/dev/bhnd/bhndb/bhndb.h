@@ -26,7 +26,6 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF
  * THE POSSIBILITY OF SUCH DAMAGES.
  * 
- * $FreeBSD: 59b237e077564bac928fc27bc5ecc62b9b0e57f4 $
  */
 
 #ifndef _BHND_BHNDB_H_
@@ -43,7 +42,6 @@
 
 #include "bhndb_bus_if.h"
 
-extern devclass_t bhndb_devclass;
 DECLARE_CLASS(bhnd_bhndb_driver);
 
 int	bhndb_attach_bridge(device_t parent, device_t *bhndb, int unit);

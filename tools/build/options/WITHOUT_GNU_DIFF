@@ -1,3 +1,2 @@
-.\" $FreeBSD: a929b9686da94639684942c1bafaff1cae0db532 $
 Do not build GNU
 .Xr diff3 1 .

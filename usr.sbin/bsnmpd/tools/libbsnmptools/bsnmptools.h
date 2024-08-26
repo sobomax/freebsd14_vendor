@@ -27,8 +27,6 @@
  * SUCH DAMAGE.
  *
  * Helper functions common for all tools.
- *
- * $FreeBSD: 9c0e3d031b04a2e8bbafb2d767ca8237791501e7 $
  */
 
 #ifndef	_BSNMP_TOOLS_H_

@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2011 Nathan Whitehorn
  * All rights reserved.
@@ -24,8 +24,6 @@
  * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
- *
- * $FreeBSD: 5c0405922d2163544f2a4701d3b128f9f18651b9 $
  */
 
 #ifndef _PARTEDIT_PARTEDIT_H
@@ -34,6 +32,8 @@
 #include <sys/queue.h>
 #include <inttypes.h>
 #include <fstab.h>
+
+#include "opt_osname.h"
 
 struct gprovider;
 struct gmesh;

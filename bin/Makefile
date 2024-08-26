@@ -1,5 +1,4 @@
 #	From: @(#)Makefile	8.1 (Berkeley) 5/31/93
-# $FreeBSD: 83bf79dcb9f9f4e69985398c64c76e5aa4f94cc2 $
 
 .include <src.opts.mk>
 
@@ -8,6 +7,7 @@ SUBDIR= cat \
 	chio \
 	chmod \
 	cp \
+	cpuset \
 	date \
 	dd \
 	df \

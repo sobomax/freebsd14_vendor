@@ -1,4 +1,3 @@
-# $FreeBSD: 4ee0e2d5223b6bc6bcf6ec2370b20a213c0fbf87 $
 
 .PATH: ${.CURDIR}/../../dev/sdio
 

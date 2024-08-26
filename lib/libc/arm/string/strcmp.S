@@ -29,9 +29,6 @@
  */
 
 #include <machine/asm.h>
-
-__FBSDID("$FreeBSD: 1cdce8bcbab9dbfed69002efd14b42910de4fe8b $");
-
 ENTRY(strcmp)
 1:
 	ldrb	r2, [r0], #1

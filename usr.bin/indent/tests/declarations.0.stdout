@@ -1,4 +1,3 @@
-/* $FreeBSD: a164ec2753c8dff53f296003a0bd14e6c00be4e6 $ */
 /* See r303570 */
 
 typedef void (*voidptr) (int *);

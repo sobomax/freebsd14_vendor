@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2006 Stephane E. Potvin <sepotvin@videotron.ca>
  * Copyright (c) 2006 Ariff Abdullah <ariff@FreeBSD.org>
@@ -43,8 +43,6 @@
 #include <dev/sound/pci/hda/hda_reg.h>
 #include <dev/sound/pci/hda/hdac.h>
 
-SND_DECLARE_FILE("$FreeBSD: 046dfdc208e63d06d8c5264e903afebef50891af $");
-
 struct hdacc_fg {
 	device_t	dev;
 	nid_t		nid;
@@ -81,6 +79,7 @@ static const struct {
 	{ HDA_CODEC_ALC221, 0,		"Realtek ALC221" },
 	{ HDA_CODEC_ALC222, 0,		"Realtek ALC222" },
 	{ HDA_CODEC_ALC225, 0,		"Realtek ALC225" },
+	{ HDA_CODEC_ALC230, 0,		"Realtek ALC230" },
 	{ HDA_CODEC_ALC231, 0,		"Realtek ALC231" },
 	{ HDA_CODEC_ALC233, 0,		"Realtek ALC233" },
 	{ HDA_CODEC_ALC234, 0,		"Realtek ALC234" },
@@ -474,8 +473,7 @@ hdacc_probe(device_t dev)
 			    hdacc_codecs[i].name, hda_get_device_id(dev));
 	} else
 		snprintf(buf, sizeof(buf), "Generic (0x%04x)", id);
-	strlcat(buf, " HDA CODEC", sizeof(buf));
-	device_set_desc_copy(dev, buf);
+	device_set_descf(dev, "%s HDA CODEC", buf);
 	return (BUS_PROBE_DEFAULT);
 }
 
@@ -541,27 +539,27 @@ hdacc_detach(device_t dev)
 	struct hdacc_softc *codec = device_get_softc(dev);
 	int error;
 
-	error = device_delete_children(dev);
+	if ((error = device_delete_children(dev)) != 0)
+		return (error);
 	free(codec->fgs, M_HDACC);
-	return (error);
-}
-
-static int
-hdacc_child_location_str(device_t dev, device_t child, char *buf, size_t buflen)
-{
-	struct hdacc_fg *fg = device_get_ivars(child);
-
-	snprintf(buf, buflen, "nid=%d", fg->nid);
 	return (0);
 }
 
 static int
-hdacc_child_pnpinfo_str_method(device_t dev, device_t child, char *buf,
-    size_t buflen)
+hdacc_child_location(device_t dev, device_t child, struct sbuf *sb)
 {
 	struct hdacc_fg *fg = device_get_ivars(child);
 
-	snprintf(buf, buflen, "type=0x%02x subsystem=0x%08x",
+	sbuf_printf(sb, "nid=%d", fg->nid);
+	return (0);
+}
+
+static int
+hdacc_child_pnpinfo_method(device_t dev, device_t child, struct sbuf *sb)
+{
+	struct hdacc_fg *fg = device_get_ivars(child);
+
+	sbuf_printf(sb, "type=0x%02x subsystem=0x%08x",
 	    fg->type, fg->subsystem_id);
 	return (0);
 }
@@ -771,8 +769,8 @@ static device_method_t hdacc_methods[] = {
 	DEVMETHOD(device_suspend,	hdacc_suspend),
 	DEVMETHOD(device_resume,	hdacc_resume),
 	/* Bus interface */
-	DEVMETHOD(bus_child_location_str, hdacc_child_location_str),
-	DEVMETHOD(bus_child_pnpinfo_str, hdacc_child_pnpinfo_str_method),
+	DEVMETHOD(bus_child_location,	hdacc_child_location),
+	DEVMETHOD(bus_child_pnpinfo,	hdacc_child_pnpinfo_method),
 	DEVMETHOD(bus_print_child,	hdacc_print_child),
 	DEVMETHOD(bus_probe_nomatch,	hdacc_probe_nomatch),
 	DEVMETHOD(bus_read_ivar,	hdacc_read_ivar),
@@ -798,6 +796,4 @@ static driver_t hdacc_driver = {
 	sizeof(struct hdacc_softc),
 };
 
-static devclass_t hdacc_devclass;
-
-DRIVER_MODULE(snd_hda, hdac, hdacc_driver, hdacc_devclass, NULL, NULL);
+DRIVER_MODULE(snd_hda, hdac, hdacc_driver, NULL, NULL);

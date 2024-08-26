@@ -31,9 +31,6 @@
  * Block storage I/O routines for U-Boot
  */
 
-#include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 63a7a68e8c1b5ae08079da09b3cb15dfa260f04b $");
-
 #include <sys/param.h>
 #include <sys/disk.h>
 #include <machine/stdarg.h>

@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2017 Rick Macklem
  *
@@ -27,8 +27,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 55bbde6875531967f415244d7d223bcaae61de66 $");
-
 #include <err.h>
 #include <getopt.h>
 #include <stdio.h>
@@ -43,7 +41,7 @@ __FBSDID("$FreeBSD: 55bbde6875531967f415244d7d223bcaae61de66 $");
 #include <fs/nfs/nfskpiport.h>
 #include <fs/nfs/nfs.h>
 
-static void usage(void);
+static void usage(void) __dead2;
 
 static struct option longopts[] = {
 	{ "force",	no_argument,	NULL,	'f'	},

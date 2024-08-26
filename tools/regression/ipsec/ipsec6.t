@@ -1,5 +1,4 @@
 #!/bin/sh
-# $FreeBSD: a13edd3611858355431367ad775a947e53d30e18 $
 #
 # IPv6 IPsec test based on ipsec.t, in this same directory, which tests
 # IPsec by setting up a set of tunnels and then sending ICMPv6 packets,   

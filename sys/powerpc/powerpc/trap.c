@@ -32,8 +32,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: be13d1008c7e96d6e1e42b1fb7659135e00c5d4b $");
-
 #include <sys/param.h>
 #include <sys/kdb.h>
 #include <sys/proc.h>
@@ -254,7 +252,7 @@ trap(struct trapframe *frame)
 		td->td_pticks = 0;
 		td->td_frame = frame;
 		addr = frame->srr0;
-		if (td->td_cowgen != p->p_cowgen)
+		if (td->td_cowgen != atomic_load_int(&p->p_cowgen))
 			thread_cow_update(td);
 
 		/* User Mode Traps */
@@ -665,6 +663,7 @@ cpu_fetch_syscall_args(struct thread *td)
 	sa = &td->td_sa;
 
 	sa->code = frame->fixreg[0];
+	sa->original_code = sa->code;
 	params = (caddr_t)(frame->fixreg + FIRSTARG);
 	n = NARGREG;
 
@@ -695,7 +694,7 @@ cpu_fetch_syscall_args(struct thread *td)
 	}
 
 	if (sa->code >= p->p_sysent->sv_size)
-		sa->callp = &p->p_sysent->sv_table[0];
+		sa->callp = &nosys_sysent;
 	else
 		sa->callp = &p->p_sysent->sv_table[sa->code];
 

@@ -1,4 +1,3 @@
-# $FreeBSD: c2f567f5c4b397e882c754712d4ccd9aa81137a4 $
 
 KMOD=	sfxge
 

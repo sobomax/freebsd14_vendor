@@ -29,7 +29,6 @@
  * SUCH DAMAGE.
  *
  *	@(#)unistd.h	8.2 (Berkeley) 1/7/94
- * $FreeBSD: 007abbdfbba56dd07ab0332f5ca0a6d25f83fca7 $
  */
 
 #ifndef _SYS_UNISTD_H_
@@ -156,6 +155,7 @@
 #define	_PC_INF_PRESENT		62
 #define	_PC_MAC_PRESENT		63
 #define	_PC_ACL_NFS4		64
+#define	_PC_DEALLOC_PRESENT	65
 #endif
 
 /* From OpenSolaris, used by SEEK_DATA/SEEK_HOLE. */
@@ -196,6 +196,13 @@
     RFTHREAD | RFSIGSHARE | RFLINUXTHPN | RFSTOPPED | RFHIGHPID | RFTSIGZMB | \
     RFPROCDESC | RFSPAWN | RFPPWAIT)
 #define	RFKERNELONLY	(RFSTOPPED | RFHIGHPID | RFPROCDESC)
+
+/* kcmp() options. */
+#define	KCMP_FILE	100
+#define	KCMP_FILEOBJ	101
+#define	KCMP_FILES	102
+#define	KCMP_SIGHAND	103
+#define	KCMP_VM		104
 
 #define	SWAPOFF_FORCE	0x00000001
 

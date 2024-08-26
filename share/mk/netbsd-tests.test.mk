@@ -1,4 +1,3 @@
-# $FreeBSD: c1c9f91a4a6df28c726e81fcc1b43c86db126b19 $
 
 .if !target(__netbsd_tests.test.mk__)
 __netbsd_tests.test.mk__:
@@ -6,7 +5,7 @@ __netbsd_tests.test.mk__:
 TESTSRC?=	${SRCTOP}/contrib/netbsd-tests/${RELDIR:H}
 
 .if !exists(${TESTSRC}/)
-.error "Please define TESTSRC to the absolute path of the test sources, e.g. $${SRCTOP}/contrib/netbsd-tests/lib/libc/stdio"
+.error Please define TESTSRC to the absolute path of the test sources, e.g. $${SRCTOP}/contrib/netbsd-tests/lib/libc/stdio
 .endif
 
 .PATH: ${TESTSRC}

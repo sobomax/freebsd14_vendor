@@ -32,7 +32,6 @@
  * SUCH DAMAGE.
  *
  *	@(#)options.h	8.2 (Berkeley) 5/4/95
- * $FreeBSD: 500d4ad5a903df16cf4e0799cc68b35cf76a3d39 $
  */
 
 struct shparam {
@@ -68,9 +67,10 @@ struct shparam {
 #define	hflag optval[18]
 #define	nologflag optval[19]
 #define	pipefailflag optval[20]
+#define	verifyflag optval[21]
 
 #define NSHORTOPTS	19
-#define NOPTS		21
+#define NOPTS		22
 
 extern char optval[NOPTS];
 extern const char optletter[NSHORTOPTS];
@@ -99,6 +99,7 @@ static const unsigned char optname[] =
 	"\010trackall"
 	"\005nolog"
 	"\010pipefail"
+	"\006verify"
 ;
 #endif
 

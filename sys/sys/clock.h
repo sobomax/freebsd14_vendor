@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 1996 The NetBSD Foundation, Inc.
  * All rights reserved.
@@ -42,8 +42,6 @@
  * timezone instead of UTC and so on.
  *
  * All that code should go here for service.
- *
- * $FreeBSD: 790efdfee19f3a6de4990dfb4288b277ce9ec7a4 $
  */
 
 #ifndef _SYS_CLOCK_H_

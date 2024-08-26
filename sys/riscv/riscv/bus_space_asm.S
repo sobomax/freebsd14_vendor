@@ -33,9 +33,6 @@
  */
 
 #include <machine/asm.h>
-
-__FBSDID("$FreeBSD: 6b65b7c4e78591dd48d679ce3ed34a9405063ea6 $");
-
 ENTRY(generic_bs_r_1)
 	add	a3, a1, a2
 	lbu	a0, 0(a3)

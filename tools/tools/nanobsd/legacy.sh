@@ -25,7 +25,6 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: 0a966c8c127e7e4b300ea4bf95cd99d09ba7c8fa $
 #
 
 # Media geometry, only relevant if bios doesn't understand LBA.

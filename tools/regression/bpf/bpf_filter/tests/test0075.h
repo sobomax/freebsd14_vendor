@@ -1,7 +1,5 @@
 /*-
  * Test 0075:	Check boundary conditions (BPF_LD+BPF_MEM)
- *
- * $FreeBSD: c20614b7fec976eebc8641af8a77069f1a345b02 $
  */
 
 /* BPF program */

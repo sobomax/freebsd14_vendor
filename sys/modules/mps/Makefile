@@ -1,4 +1,3 @@
-# $FreeBSD: 85f450c1defc9cadb8b2251bce3c15ec418740e5 $
 
 .PATH: ${SRCTOP}/sys/dev/mps
 

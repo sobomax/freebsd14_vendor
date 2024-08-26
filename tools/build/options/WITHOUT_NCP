@@ -1,3 +1,2 @@
-.\" $FreeBSD: 82c89130461264a2da09c194295ef666e83dd096 $
 Do not build programs, libraries, and kernel modules
 related to NetWare Core protocol.

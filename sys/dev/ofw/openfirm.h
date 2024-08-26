@@ -1,7 +1,7 @@
 /*	$NetBSD: openfirm.h,v 1.1 1998/05/15 10:16:00 tsubai Exp $	*/
 
 /*-
- * SPDX-License-Identifier: (BSD-4-Clause AND BSD-2-Clause-FreeBSD)
+ * SPDX-License-Identifier: (BSD-4-Clause AND BSD-2-Clause)
  *
  * Copyright (C) 1995, 1996 Wolfgang Solfrank.
  * Copyright (C) 1995, 1996 TooLs GmbH.
@@ -55,8 +55,6 @@
  * WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR
  * OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- *
- * $FreeBSD: 53c8cdf88df8d275706c73d671a820ddee8e4813 $
  */
 
 #ifndef _DEV_OPENFIRM_H_

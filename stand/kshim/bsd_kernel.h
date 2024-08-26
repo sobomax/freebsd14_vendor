@@ -1,4 +1,3 @@
-/* $FreeBSD: 18ac71e1d7ff12bbab8348af3c321236fc9972a0 $ */
 /*-
  * Copyright (c) 2011 Hans Petter Selasky. All rights reserved.
  *
@@ -32,7 +31,7 @@
 #endif
 
 #undef __FreeBSD_version
-#define	__FreeBSD_version 1300000
+#define	__FreeBSD_version 1400000
 
 #include <sys/cdefs.h>
 #include <sys/queue.h>

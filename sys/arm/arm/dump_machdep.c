@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2002 Marcel Moolenaar
  * All rights reserved.
@@ -27,8 +27,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: ead54ca7b2252fda59a288bcaabb52302e26ef1e $");
-
 #include "opt_watchdog.h"
 
 #include <sys/param.h>
@@ -63,9 +61,6 @@ dumpsys_wbinv_all(void)
 	 * part of stopping.
 	 */
 	dcache_wbinv_poc_all();
-#ifdef __XSCALE__
-	xscale_cache_clean_minidata();
-#endif
 }
 
 void

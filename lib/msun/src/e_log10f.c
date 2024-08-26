@@ -9,9 +9,6 @@
  * ====================================================
  */
 
-#include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 9856df2e7b6a58052b4bd28636f542d897b72c13 $");
-
 /*
  * Float version of e_log10.c.  See the latter for most comments.
  */
@@ -31,7 +28,7 @@ static const float zero   =  0.0;
 static volatile float vzero = 0.0;
 
 float
-__ieee754_log10f(float x)
+log10f(float x)
 {
 	float f,hfsq,hi,lo,r,y;
 	int32_t i,k,hx;

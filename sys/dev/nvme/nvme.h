@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (C) 2012-2013 Intel Corporation
  * All rights reserved.
@@ -24,8 +24,6 @@
  * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
- *
- * $FreeBSD: 2e0fb27c1d9927c3c0e078c12e760d2dfb944732 $
  */
 
 #ifndef __NVME_H__
@@ -59,8 +57,11 @@
  */
 #define NVME_GLOBAL_NAMESPACE_TAG	((uint32_t)0xFFFFFFFF)
 
-/* Cap transfers by the maximum addressable by page-sized PRP (4KB -> 2MB). */
-#define NVME_MAX_XFER_SIZE		MIN(maxphys, (PAGE_SIZE/8*PAGE_SIZE))
+/* Host memory buffer sizes are always in 4096 byte chunks */
+#define	NVME_HMB_UNITS			4096
+
+/* Many items are expressed in terms of power of two times MPS */
+#define NVME_MPS_SHIFT			12
 
 /* Register field definitions */
 #define NVME_CAP_LO_REG_MQES_SHIFT			(0)
@@ -90,6 +91,8 @@
 #define NVME_CAP_HI_REG_CSS_NVM_MASK			(0x1)
 #define NVME_CAP_HI_REG_BPS_SHIFT			(13)
 #define NVME_CAP_HI_REG_BPS_MASK			(0x1)
+#define NVME_CAP_HI_REG_CPS_SHIFT			(14)
+#define NVME_CAP_HI_REG_CPS_MASK			(0x3)
 #define NVME_CAP_HI_REG_MPSMIN_SHIFT			(16)
 #define NVME_CAP_HI_REG_MPSMIN_MASK			(0xF)
 #define NVME_CAP_HI_REG_MPSMAX_SHIFT			(20)
@@ -98,6 +101,12 @@
 #define NVME_CAP_HI_REG_PMRS_MASK			(0x1)
 #define NVME_CAP_HI_REG_CMBS_SHIFT			(25)
 #define NVME_CAP_HI_REG_CMBS_MASK			(0x1)
+#define NVME_CAP_HI_REG_NSSS_SHIFT			(26)
+#define NVME_CAP_HI_REG_NSSS_MASK			(0x1)
+#define NVME_CAP_HI_REG_CRWMS_SHIFT			(27)
+#define NVME_CAP_HI_REG_CRWMS_MASK			(0x1)
+#define NVME_CAP_HI_REG_CRIMS_SHIFT			(28)
+#define NVME_CAP_HI_REG_CRIMS_MASK			(0x1)
 #define NVME_CAP_HI_DSTRD(x) \
 	(((x) >> NVME_CAP_HI_REG_DSTRD_SHIFT) & NVME_CAP_HI_REG_DSTRD_MASK)
 #define NVME_CAP_HI_NSSRS(x) \
@@ -108,6 +117,8 @@
 	(((x) >> NVME_CAP_HI_REG_CSS_NVM_SHIFT) & NVME_CAP_HI_REG_CSS_NVM_MASK)
 #define NVME_CAP_HI_BPS(x) \
 	(((x) >> NVME_CAP_HI_REG_BPS_SHIFT) & NVME_CAP_HI_REG_BPS_MASK)
+#define NVME_CAP_HI_CPS(x) \
+	(((x) >> NVME_CAP_HI_REG_CPS_SHIFT) & NVME_CAP_HI_REG_CPS_MASK)
 #define NVME_CAP_HI_MPSMIN(x) \
 	(((x) >> NVME_CAP_HI_REG_MPSMIN_SHIFT) & NVME_CAP_HI_REG_MPSMIN_MASK)
 #define NVME_CAP_HI_MPSMAX(x) \
@@ -116,6 +127,12 @@
 	(((x) >> NVME_CAP_HI_REG_PMRS_SHIFT) & NVME_CAP_HI_REG_PMRS_MASK)
 #define NVME_CAP_HI_CMBS(x) \
 	(((x) >> NVME_CAP_HI_REG_CMBS_SHIFT) & NVME_CAP_HI_REG_CMBS_MASK)
+#define NVME_CAP_HI_NSSS(x) \
+	(((x) >> NVME_CAP_HI_REG_NSSS_SHIFT) & NVME_CAP_HI_REG_NSSS_MASK)
+#define NVME_CAP_HI_CRWMS(x) \
+	(((x) >> NVME_CAP_HI_REG_CRWMS_SHIFT) & NVME_CAP_HI_REG_CRWMS_MASK)
+#define NVME_CAP_HI_CRIMS(x) \
+	(((x) >> NVME_CAP_HI_REG_CRIMS_SHIFT) & NVME_CAP_HI_REG_CRIMS_MASK)
 
 #define NVME_CC_REG_EN_SHIFT				(0)
 #define NVME_CC_REG_EN_MASK				(0x1)
@@ -131,6 +148,8 @@
 #define NVME_CC_REG_IOSQES_MASK				(0xF)
 #define NVME_CC_REG_IOCQES_SHIFT			(20)
 #define NVME_CC_REG_IOCQES_MASK				(0xF)
+#define NVME_CC_REG_CRIME_SHIFT				(24)
+#define NVME_CC_REG_CRIME_MASK				(0x1)
 
 #define NVME_CSTS_REG_RDY_SHIFT				(0)
 #define NVME_CSTS_REG_RDY_MASK				(0x1)
@@ -142,6 +161,8 @@
 #define NVME_CSTS_REG_NVSRO_MASK			(0x1)
 #define NVME_CSTS_REG_PP_SHIFT				(5)
 #define NVME_CSTS_REG_PP_MASK				(0x1)
+#define NVME_CSTS_REG_ST_SHIFT				(6)
+#define NVME_CSTS_REG_ST_MASK				(0x1)
 
 #define NVME_CSTS_GET_SHST(csts)			(((csts) >> NVME_CSTS_REG_SHST_SHIFT) & NVME_CSTS_REG_SHST_MASK)
 
@@ -615,7 +636,11 @@ struct nvme_registers {
 	uint64_t	bpmbl;	/* Boot Partition Memory Buffer Location */
 	uint64_t	cmbmsc;	/* Controller Memory Buffer Memory Space Control */
 	uint32_t	cmbsts;	/* Controller Memory Buffer Status */
-	uint8_t		reserved3[3492]; /* 5Ch - DFFh */
+	uint32_t	cmbebs;	/* Controller Memory Buffer Elasticity Buffer Size */
+	uint32_t	cmbswtp;/* Controller Memory Buffer Sustained Write Throughput */
+	uint32_t	nssd;	/* NVM Subsystem Shutdown */
+	uint32_t	crto;	/* Controller Ready Timeouts */
+	uint8_t		reserved3[3476]; /* 6Ch - DFFh */
 	uint32_t	pmrcap;	/* Persistent Memory Capabilities */
 	uint32_t	pmrctl;	/* Persistent Memory Region Control */
 	uint32_t	pmrsts;	/* Persistent Memory Region Status */
@@ -815,7 +840,7 @@ enum nvme_path_related_status_code {
 	NVME_SC_ASYMMETRIC_ACCESS_TRANSITION	= 0x03,
 	NVME_SC_CONTROLLER_PATHING_ERROR	= 0x60,
 	NVME_SC_HOST_PATHING_ERROR		= 0x70,
-	NVME_SC_COMMAND_ABOTHED_BY_HOST		= 0x71,
+	NVME_SC_COMMAND_ABORTED_BY_HOST		= 0x71,
 };
 
 /* admin opcodes */
@@ -848,8 +873,14 @@ enum nvme_admin_opcode {
 	NVME_OPC_VIRTUALIZATION_MANAGEMENT	= 0x1c,
 	NVME_OPC_NVME_MI_SEND			= 0x1d,
 	NVME_OPC_NVME_MI_RECEIVE		= 0x1e,
-	/* 0x1f-0x7b - reserved */
+	/* 0x1f - reserved */
+	NVME_OPC_CAPACITY_MANAGEMENT		= 0x20,
+	/* 0x21-0x23 - reserved */
+	NVME_OPC_LOCKDOWN			= 0x24,
+	/* 0x25-0x7b - reserved */
 	NVME_OPC_DOORBELL_BUFFER_CONFIG		= 0x7c,
+	/* 0x7d-0x7e - reserved */
+	NVME_OPC_FABRICS_COMMANDS		= 0x7f,
 
 	NVME_OPC_FORMAT_NVM			= 0x80,
 	NVME_OPC_SECURITY_SEND			= 0x81,
@@ -879,6 +910,8 @@ enum nvme_nvm_opcode {
 	NVME_OPC_RESERVATION_ACQUIRE		= 0x11,
 	/* 0x12-0x14 - reserved */
 	NVME_OPC_RESERVATION_RELEASE		= 0x15,
+	/* 0x16-0x18 - reserved */
+	NVME_OPC_COPY				= 0x19,
 };
 
 enum nvme_feature {
@@ -1422,7 +1455,8 @@ _Static_assert(sizeof(struct nvme_health_information_page) == 512, "bad size for
 struct nvme_firmware_page {
 	uint8_t			afi;
 	uint8_t			reserved[7];
-	uint64_t		revision[7]; /* revisions for 7 slots */
+	/* revisions for 7 slots */
+	uint8_t			revision[7][NVME_FIRMWARE_REVISION_LENGTH];
 	uint8_t			reserved2[448];
 } __packed __aligned(4);
 
@@ -1965,17 +1999,6 @@ void	nvme_health_information_page_swapbytes(
 }
 
 static inline
-void	nvme_firmware_page_swapbytes(struct nvme_firmware_page *s __unused)
-{
-#if _BYTE_ORDER != _LITTLE_ENDIAN
-	int i;
-
-	for (i = 0; i < 7; i++)
-		s->revision[i] = le64toh(s->revision[i]);
-#endif
-}
-
-static inline
 void	nvme_ns_list_swapbytes(struct nvme_ns_list *s __unused)
 {
 #if _BYTE_ORDER != _LITTLE_ENDIAN
@@ -2049,7 +2072,7 @@ void	nvme_resv_status_swapbytes(struct nvme_resv_status *s __unused,
     size_t size __unused)
 {
 #if _BYTE_ORDER != _LITTLE_ENDIAN
-	u_int i, n;
+	size_t i, n;
 
 	s->gen = le32toh(s->gen);
 	n = (s->regctl[1] << 8) | s->regctl[0];
@@ -2067,7 +2090,7 @@ void	nvme_resv_status_ext_swapbytes(struct nvme_resv_status_ext *s __unused,
     size_t size __unused)
 {
 #if _BYTE_ORDER != _LITTLE_ENDIAN
-	u_int i, n;
+	size_t i, n;
 
 	s->gen = le32toh(s->gen);
 	n = (s->regctl[1] << 8) | s->regctl[0];

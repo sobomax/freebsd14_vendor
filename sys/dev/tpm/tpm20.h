@@ -29,8 +29,6 @@
 #define	_TPM20_H_
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: fd1ab55a65e34004f8fe10aab7bc7cf4f9c4737c $");
-
 #include <sys/endian.h>
 #include <sys/param.h>
 #include <sys/kernel.h>
@@ -100,6 +98,8 @@ __FBSDID("$FreeBSD: fd1ab55a65e34004f8fe10aab7bc7cf4f9c4737c $");
 #define	TPM2_START_METHOD_TIS		6
 #define	TPM2_START_METHOD_CRB		7
 #define	TPM2_START_METHOD_CRB_ACPI	8
+
+MALLOC_DECLARE(M_TPM20);
 
 struct tpm_sc {
 	device_t	dev;

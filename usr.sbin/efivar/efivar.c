@@ -24,8 +24,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 5bdf0c11a488ff8aa13a1fdf5bcef5916f6b7c17 $");
-
 #include <ctype.h>
 #include <efivar.h>
 #include <efivar-dp.h>

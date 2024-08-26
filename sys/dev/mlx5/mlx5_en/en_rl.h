@@ -21,8 +21,6 @@
  * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
- *
- * $FreeBSD: 1aceef34929dfd62d40ca41335ff720d1c1984f0 $
  */
 
 #ifndef __MLX5_EN_RL_H__
@@ -169,8 +167,5 @@ void mlx5e_rl_cleanup(struct mlx5e_priv *priv);
 void mlx5e_rl_refresh_sq_inline(struct mlx5e_rl_priv_data *rl);
 
 if_snd_tag_alloc_t mlx5e_rl_snd_tag_alloc;
-if_snd_tag_modify_t mlx5e_rl_snd_tag_modify;
-if_snd_tag_query_t mlx5e_rl_snd_tag_query;
-if_snd_tag_free_t mlx5e_rl_snd_tag_free;
 
 #endif		/* __MLX5_EN_RL_H__ */

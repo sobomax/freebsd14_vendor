@@ -29,7 +29,6 @@
  * SUCH DAMAGE.
  *
  *	from: @(#)exec.h	8.1 (Berkeley) 6/11/93
- * $FreeBSD: d1af92afd2815daf95eb1efaf401ce25af208338 $
  */
 
 #ifndef	_IMGACT_AOUT_H_

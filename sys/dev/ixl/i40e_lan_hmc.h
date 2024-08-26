@@ -30,7 +30,6 @@
   POSSIBILITY OF SUCH DAMAGE.
 
 ******************************************************************************/
-/*$FreeBSD: a495f346cfbb98aa710a2841f2e0f4407b9ceea9 $*/
 
 #ifndef _I40E_LAN_HMC_H_
 #define _I40E_LAN_HMC_H_

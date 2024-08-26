@@ -1,4 +1,3 @@
-# $FreeBSD: cc7b5a406638d118e68cd084a984804589680caa $
 
 PACKAGE=lib${LIB}
 

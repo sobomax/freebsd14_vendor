@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2011 Nathan Whitehorn
  * All rights reserved.
@@ -27,7 +27,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 97ece878aa7b6dbdf24b7b80cd77ba325d5d949f $");
 #include <sys/param.h>
 #include <sys/systm.h>
 #include <sys/module.h>
@@ -99,10 +98,9 @@ struct rtaspci_softc {
 	int			sc_extended_config;
 };
 
-static devclass_t	rtaspci_devclass;
 DEFINE_CLASS_1(pcib, rtaspci_driver, rtaspci_methods,
-    sizeof(struct rtaspci_softc), ofw_pci_driver);
-DRIVER_MODULE(rtaspci, ofwbus, rtaspci_driver, rtaspci_devclass, 0, 0);
+    sizeof(struct rtaspci_softc), ofw_pcib_driver);
+DRIVER_MODULE(rtaspci, ofwbus, rtaspci_driver, 0, 0);
 
 static int
 rtaspci_probe(device_t dev)
@@ -143,7 +141,7 @@ rtaspci_attach(device_t dev)
 	OF_getencprop(ofw_bus_get_node(dev), "ibm,pci-config-space-type",
 	    &sc->sc_extended_config, sizeof(sc->sc_extended_config));
 
-	return (ofw_pci_attach(dev));
+	return (ofw_pcib_attach(dev));
 }
 
 static uint32_t

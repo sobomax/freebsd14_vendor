@@ -1,6 +1,5 @@
 #!/bin/sh
 #
-# $FreeBSD: fbfae2ad9bfe02b514df1724722b425454a87159 $
 #
 
 # PROVIDE: swaplate

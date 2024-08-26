@@ -1,4 +1,3 @@
-.\" $FreeBSD: 99685733fdec028a8ca8ac27671e555e2b455ea5 $
 Build
 .Xr efivar 3
 and

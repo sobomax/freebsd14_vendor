@@ -5,8 +5,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: ad32d2ab495972f0f26dc477d0313014646c211c $");
-
 #include <sys/param.h>
 #include <sys/bus.h>
 #include <sys/errno.h>
@@ -745,7 +743,7 @@ pvscsi_setup_msg_ring(struct pvscsi_softc *sc)
 static void
 pvscsi_adapter_reset(struct pvscsi_softc *sc)
 {
-	uint32_t val;
+	uint32_t val __unused;
 
 	device_printf(sc->dev, "Adapter Reset\n");
 
@@ -1412,7 +1410,7 @@ finish_ccb:
 		cpi->hba_misc = PIM_NOBUSRESET | PIM_UNMAPPED;
 		cpi->hba_eng_cnt = 0;
 		/* cpi->vuhba_flags = 0; */
-		cpi->max_target = sc->max_targets;
+		cpi->max_target = sc->max_targets - 1;
 		cpi->max_lun = 0;
 		cpi->async_flags = 0;
 		cpi->hpath_id = 0;
@@ -1548,16 +1546,16 @@ pvscsi_free_all(struct pvscsi_softc *sc)
 {
 
 	if (sc->sim) {
-		int32_t status;
+		int error;
 
 		if (sc->bus_path) {
 			xpt_free_path(sc->bus_path);
 		}
 
-		status = xpt_bus_deregister(cam_sim_path(sc->sim));
-		if (status != CAM_REQ_CMP) {
+		error = xpt_bus_deregister(cam_sim_path(sc->sim));
+		if (error != 0) {
 			device_printf(sc->dev,
-			    "Error deregistering bus, status=%d\n", status);
+			    "Error deregistering bus, error %d\n", error);
 		}
 
 		cam_sim_free(sc->sim, TRUE);
@@ -1684,6 +1682,7 @@ pvscsi_attach(device_t dev)
 	    PVSCSI_MAX_REQ_QUEUE_DEPTH);
 
 	device_printf(sc->dev, "Use Msg: %d\n", sc->use_msg);
+	device_printf(sc->dev, "Max targets: %d\n", sc->max_targets);
 	device_printf(sc->dev, "REQ num pages: %d\n", sc->req_ring_num_pages);
 	device_printf(sc->dev, "CMP num pages: %d\n", sc->cmp_ring_num_pages);
 	device_printf(sc->dev, "MSG num pages: %d\n", sc->msg_ring_num_pages);
@@ -1794,8 +1793,7 @@ static driver_t pvscsi_driver = {
 	"pvscsi", pvscsi_methods, sizeof(struct pvscsi_softc)
 };
 
-static devclass_t pvscsi_devclass;
-DRIVER_MODULE(pvscsi, pci, pvscsi_driver, pvscsi_devclass, 0, 0);
+DRIVER_MODULE(pvscsi, pci, pvscsi_driver, 0, 0);
 
 MODULE_DEPEND(pvscsi, pci, 1, 1, 1);
 MODULE_DEPEND(pvscsi, cam, 1, 1, 1);

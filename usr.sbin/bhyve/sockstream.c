@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2015 Nahanni Systems, Inc.
  * All rights reserved.
@@ -24,13 +24,9 @@
  * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
- *
- * $FreeBSD: b592bce9aa5ade4e5e106e6c07aa32c07afa8524 $
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: b592bce9aa5ade4e5e106e6c07aa32c07afa8524 $");
-
 #include <sys/types.h>
 #include <unistd.h>
 

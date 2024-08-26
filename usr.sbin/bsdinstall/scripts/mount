@@ -24,7 +24,9 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: 244f11fa215d72e0d63d3525e673943e7751c02e $
+
+BSDCFG_SHARE="/usr/share/bsdconfig"
+. $BSDCFG_SHARE/common.subr || exit 1
 
 TMP_FSTAB=${TMPDIR:-"/tmp"}/bsdinstall-tmp-fstab
 
@@ -44,7 +46,7 @@ for i in $FILESYSTEMS; do
 	mkdir -p $i 2>/dev/null
 	MNTERROR=`mount -F $TMP_FSTAB $i 2>&1`
 	if [ $? -ne 0 ]; then
-		dialog --backtitle "FreeBSD Installer" --title "Error" \
+		bsddialog --backtitle "$OSNAME Installer" --title "Error" \
 		    --msgbox "Error mounting partition $i:\n$MNTERROR" 0 0
 		exit 1
 	fi

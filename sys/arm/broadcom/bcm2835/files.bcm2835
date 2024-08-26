@@ -1,3 +1,2 @@
-# $FreeBSD: 729379066d4cbd2b6ced047ff7f91e1259ea8f32 $
 
 arm/broadcom/bcm2835/bcm2835_systimer.c		standard

@@ -1,4 +1,3 @@
-# $FreeBSD: 1d1fbf375a0ee1a5ad5c170e087daf5e5c560c9d $
 
 .PATH:		${SRCTOP}/contrib/hyperv/tools/scripts
 

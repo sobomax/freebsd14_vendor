@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2006-2009 Ariff Abdullah <ariff@FreeBSD.org>
  * Copyright (c) 2001 Cameron Grant <cg@FreeBSD.org>
@@ -35,8 +35,6 @@
 
 #include <dev/sound/pcm/sound.h>
 #include <dev/sound/pcm/vchan.h>
-
-SND_DECLARE_FILE("$FreeBSD: a2e25e3520559de4cd39c0a1f211c3bb6f486cc1 $");
 
 /*
  * [ac3 , dts , linear , 0, linear, 0]

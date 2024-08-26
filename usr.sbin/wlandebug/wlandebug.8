@@ -22,8 +22,6 @@
 .\" OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 .\" SUCH DAMAGE.
 .\"
-.\" $FreeBSD: 0640eff01b20daf1d9be0079663bcce119fda09d $
-.\"
 .Dd August 17, 2015
 .Dt WLANDEBUG 8
 .Os
@@ -153,10 +151,12 @@ The following might be used to debug basic station mode operation:
 it enables debug messages while scanning, authenticating to
 an access point, and associating to an access point.
 .Sh SEE ALSO
-.Xr athdebug 8 ,
-.Xr athstats 8 ,
-.Xr ifconfig 8 ,
-.Xr wlanstats 8
+.Xr ifconfig 8
+.Pp
+The
+.Pa /usr/src/tools
+directory contains some utilities that might be relevant to debug wireless
+issues.
 .Sh NOTES
 Different wireless drivers support different debugging messages.
 Drivers such as

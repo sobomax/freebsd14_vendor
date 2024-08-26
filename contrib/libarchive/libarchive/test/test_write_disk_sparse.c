@@ -23,7 +23,6 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 #include "test.h"
-__FBSDID("$FreeBSD: 1566cd7a845eb465a71440e0138118176a88081a $");
 
 /*
  * Write a file using archive_write_data call, read the file

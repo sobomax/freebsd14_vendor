@@ -1,4 +1,3 @@
-# $FreeBSD: 6a4941d11dfd7601ef85f969c9f4e1458331c483 $
 
 .PATH: ${SRCTOP}/sys/dev/ae
 

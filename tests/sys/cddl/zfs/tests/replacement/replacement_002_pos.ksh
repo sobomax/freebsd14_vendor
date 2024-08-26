@@ -20,8 +20,6 @@
 # CDDL HEADER END
 #
 
-# $FreeBSD: 3f2dfaecc26f4352a365bbeee502abe5286eb6c0 $
-
 #
 # Copyright 2008 Sun Microsystems, Inc.  All rights reserved.
 # Copyright 2014 Spectra Logic Corporation.

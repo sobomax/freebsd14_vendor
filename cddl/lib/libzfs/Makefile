@@ -1,11 +1,9 @@
-# $FreeBSD: babded59199dd4fb0b4866f5b971dc8c7f66ba1f $
 
 .PATH: ${SRCTOP}/sys/contrib/openzfs/module/icp
 .PATH: ${SRCTOP}/sys/contrib/openzfs/module/zcommon
 .PATH: ${SRCTOP}/sys/contrib/openzfs/lib/libzfs
 .PATH: ${SRCTOP}/sys/contrib/openzfs/lib/libzfs/os/freebsd
 .PATH: ${SRCTOP}/sys/contrib/openzfs/lib/libshare
-.PATH: ${SRCTOP}/sys/contrib/openzfs/lib/libshare/os/freebsd
 .PATH: ${SRCTOP}/sys/contrib/openzfs/include
 .PATH: ${SRCTOP}/sys/contrib/openzfs/module/zstd
 .PATH: ${SRCTOP}/sys/contrib/openzfs/module/zstd/lib
@@ -21,6 +19,7 @@ LIBADD= \
 	md \
 	nvpair \
 	pthread \
+	rt \
 	umem \
 	util \
 	uutil \
@@ -46,18 +45,16 @@ USER_C = \
 # FreeBSD
 USER_C += \
         libzfs_compat.c \
-        libzfs_ioctl_compat.c \
         libzfs_zmount.c
 
 # libshare
 USER_C += \
 	libshare.c \
 	nfs.c \
-	smb.c
-
+	os/freebsd/nfs.c \
+	os/freebsd/smb.c
 
 KERNEL_C = \
-        algs/sha2/sha2.c \
         cityhash.c \
         zfeature_common.c \
         zfs_comutil.c \
@@ -102,9 +99,10 @@ CFLAGS+= -I${SRCTOP}/cddl/compat/opensolaris/include
 CFLAGS+= -I${SRCTOP}/sys/contrib/openzfs/module/icp/include
 CFLAGS+= -include ${SRCTOP}/sys/contrib/openzfs/include/os/freebsd/spl/sys/ccompile.h
 CFLAGS+= -DHAVE_ISSETUGID
+CFLAGS+= -DHAVE_EXECVPE
 CFLAGS+= -include ${SRCTOP}/sys/modules/zfs/zfs_config.h
 CFLAGS+= -DSYSCONFDIR=\"/etc\"
 CFLAGS+= -DPKGDATADIR=\"/usr/share/zfs\"
-
+CFLAGS+= -DZFSEXECDIR=\"${LIBEXECDIR}/zfs\"
 
 .include <bsd.lib.mk>

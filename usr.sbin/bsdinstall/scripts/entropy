@@ -24,7 +24,6 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: d3938f12cb33e8e5cf2fe07c6380f1afe6f5e9b8 $
 
 umask 077
 for i in /entropy /boot/entropy; do

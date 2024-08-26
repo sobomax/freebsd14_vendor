@@ -1,4 +1,3 @@
-# $FreeBSD: 6a39e342bafc20e0710a85d3f4beac991b73b97b $
 
 .PATH: ${SRCTOP}/sys/contrib/openzfs/module/avl
 

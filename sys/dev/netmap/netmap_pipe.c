@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (C) 2014-2018 Giuseppe Lettieri
  * All rights reserved.
@@ -26,7 +26,6 @@
  * SUCH DAMAGE.
  */
 
-/* $FreeBSD: 09261ca4c273e3e3d30a008995e7dc3edac459b1 $ */
 
 #if defined(__FreeBSD__)
 #include <sys/cdefs.h> /* prerequisite */
@@ -211,8 +210,12 @@ netmap_pipe_txsync(struct netmap_kring *txkring, int flags)
 			m--, k = nm_next(k, lim), nk = (complete ? k : nk)) {
 		struct netmap_slot *rs = &rxring->slot[k];
 		struct netmap_slot *ts = &txring->slot[k];
+		uint64_t off = nm_get_offset(rxkring, rs);
 
 		*rs = *ts;
+		if (nm_get_offset(rxkring, rs) < off) {
+			nm_write_offset(rxkring, rs, off);
+		}
 		if (ts->flags & NS_BUF_CHANGED) {
 			ts->flags &= ~NS_BUF_CHANGED;
 		}
@@ -263,9 +266,9 @@ netmap_pipe_rxsync(struct netmap_kring *rxkring, int flags)
 		struct netmap_slot *rs = &rxring->slot[k];
 		struct netmap_slot *ts = &txring->slot[k];
 
+		/* copy the slot. This also propagates any offset */
+		*ts = *rs;
 		if (rs->flags & NS_BUF_CHANGED) {
-			/* copy the slot and report the buffer change */
-			*ts = *rs;
 			rs->flags &= ~NS_BUF_CHANGED;
 		}
 	}
@@ -414,7 +417,6 @@ netmap_pipe_reg_both(struct netmap_adapter *na, struct netmap_adapter *ona)
 		for (i = 0; i < nma_get_nrings(na, t); i++) {
 			struct netmap_kring *kring = NMR(na, t)[i];
 			if (nm_kring_pending_on(kring)) {
-				struct netmap_kring *sring, *dring;
 
 				kring->nr_mode = NKR_NETMAP_ON;
 				if ((kring->nr_kflags & NKR_FAKERING) &&
@@ -426,27 +428,25 @@ netmap_pipe_reg_both(struct netmap_adapter *na, struct netmap_adapter *ona)
 					continue;
 				}
 
-				/* copy the buffers from the non-fake ring */
-				if (kring->nr_kflags & NKR_FAKERING) {
-					sring = kring->pipe;
-					dring = kring;
-				} else {
-					sring = kring;
-					dring = kring->pipe;
-				}
-				memcpy(dring->ring->slot,
-				       sring->ring->slot,
+				/* copy the buffers from the non-fake ring
+				 * (this also propagates any initial offset)
+				 */
+				memcpy(kring->pipe->ring->slot,
+				       kring->ring->slot,
 				       sizeof(struct netmap_slot) *
-						sring->nkr_num_slots);
+						kring->nkr_num_slots);
+				/* copy the offset-related fields */
+				*(uint64_t *)(uintptr_t)&kring->pipe->ring->offset_mask =
+					kring->ring->offset_mask;
+				*(uint64_t *)(uintptr_t)&kring->pipe->ring->buf_align =
+					kring->ring->buf_align;
 				/* mark both rings as fake and needed,
 				 * so that buffers will not be
 				 * deleted by the standard machinery
 				 * (we will delete them by ourselves in
 				 * netmap_pipe_krings_delete)
 				 */
-				sring->nr_kflags |=
-					(NKR_FAKERING | NKR_NEEDRING);
-				dring->nr_kflags |=
+				kring->nr_kflags |=
 					(NKR_FAKERING | NKR_NEEDRING);
 				kring->nr_mode = NKR_NETMAP_ON;
 			}
@@ -656,11 +656,11 @@ netmap_get_pipe_na(struct nmreq_header *hdr, struct netmap_adapter **na,
 	struct nmreq_register *req = (struct nmreq_register *)(uintptr_t)hdr->nr_body;
 	struct netmap_adapter *pna; /* parent adapter */
 	struct netmap_pipe_adapter *mna, *sna, *reqna;
-	struct ifnet *ifp = NULL;
+	if_t ifp = NULL;
 	const char *pipe_id = NULL;
 	int role = 0;
 	int error, retries = 0;
-	char *cbra;
+	char *cbra, pipe_char;
 
 	/* Try to parse the pipe syntax 'xx{yy' or 'xx}yy'. */
 	cbra = strrchr(hdr->nr_name, '{');
@@ -675,6 +675,7 @@ netmap_get_pipe_na(struct nmreq_header *hdr, struct netmap_adapter **na,
 			return 0;
 		}
 	}
+	pipe_char = *cbra;
 	pipe_id = cbra + 1;
 	if (*pipe_id == '\0' || cbra == hdr->nr_name) {
 		/* Bracket is the last character, so pipe name is missing;
@@ -690,15 +691,13 @@ netmap_get_pipe_na(struct nmreq_header *hdr, struct netmap_adapter **na,
 
 	/* first, try to find the parent adapter */
 	for (;;) {
-		char nr_name_orig[NETMAP_REQ_IFNAMSIZ];
 		int create_error;
 
 		/* Temporarily remove the pipe suffix. */
-		strlcpy(nr_name_orig, hdr->nr_name, sizeof(nr_name_orig));
 		*cbra = '\0';
 		error = netmap_get_na(hdr, &pna, &ifp, nmd, create);
 		/* Restore the pipe suffix. */
-		strlcpy(hdr->nr_name, nr_name_orig, sizeof(hdr->nr_name));
+		*cbra = pipe_char;
 		if (!error)
 			break;
 		if (error != ENXIO || retries++) {
@@ -711,7 +710,7 @@ netmap_get_pipe_na(struct nmreq_header *hdr, struct netmap_adapter **na,
 		NMG_UNLOCK();
 		create_error = netmap_vi_create(hdr, 1 /* autodelete */);
 		NMG_LOCK();
-		strlcpy(hdr->nr_name, nr_name_orig, sizeof(hdr->nr_name));
+		*cbra = pipe_char;
 		if (create_error && create_error != EEXIST) {
 			if (create_error != EOPNOTSUPP) {
 				nm_prerr("failed to create a persistent vale port: %d",
@@ -771,7 +770,7 @@ netmap_get_pipe_na(struct nmreq_header *hdr, struct netmap_adapter **na,
 	mna->up.nm_krings_create = netmap_pipe_krings_create;
 	mna->up.nm_krings_delete = netmap_pipe_krings_delete;
 	mna->up.nm_mem = netmap_mem_get(pna->nm_mem);
-	mna->up.na_flags |= NAF_MEM_OWNER;
+	mna->up.na_flags |= NAF_MEM_OWNER | NAF_OFFSETS;
 	mna->up.na_lut = pna->na_lut;
 
 	mna->up.num_tx_rings = req->nr_tx_rings;

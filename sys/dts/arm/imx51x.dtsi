@@ -26,8 +26,6 @@
  * SUCH DAMAGE.
  *
  * Freescale i.MX515 Device Tree Source.
- *
- * $FreeBSD: f759afbc4a01798046429947fd2569d603ec1cff $
  */
 
 / {

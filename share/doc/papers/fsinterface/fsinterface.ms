@@ -26,7 +26,6 @@
 .\" SUCH DAMAGE.
 .\"
 .\"	@(#)fsinterface.ms	1.4 (Berkeley) 4/16/91
-.\" $FreeBSD: a37bcaa7de9842126c2e8bbef2d38fad32663044 $
 .\"
 .nr UX 0
 .de UX

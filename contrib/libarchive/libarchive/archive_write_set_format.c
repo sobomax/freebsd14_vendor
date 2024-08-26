@@ -24,7 +24,6 @@
  */
 
 #include "archive_platform.h"
-__FBSDID("$FreeBSD: 5395915e65698964f3bc2402c4ed2abbbe013e33 $");
 
 #ifdef HAVE_SYS_TYPES_H
 #include <sys/types.h>

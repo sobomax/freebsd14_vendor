@@ -22,13 +22,12 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-#	$FreeBSD: 01345e175a6b0f9ab797dd3ce655ce6730c35bcd $
 
 LIB=		tacplus
 SRCS=		taclib.c
 INCS=		taclib.h
 CFLAGS+=	-Wall
-LIBADD=		md
+LIBADD=		md pam
 SHLIB_MAJOR=	5
 MAN=		libtacplus.3 tacplus.conf.5
 

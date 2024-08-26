@@ -23,7 +23,6 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 #include "test.h"
-__FBSDID("$FreeBSD: 83f20bb971156d47005a09e7d9af97f06919870d $");
 
 /*
  * Tar archives with with just a GNU label (or ending with one) should

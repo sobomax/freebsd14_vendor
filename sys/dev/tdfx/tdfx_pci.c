@@ -32,8 +32,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 92640c54e66523f1ccb6165467b1058c4a4c51be $");
-
 /* 3dfx driver for FreeBSD 4.x - Finished 11 May 2000, 12:25AM ET
  *
  * Copyright (C) 2000-2001, by Coleman Kane <cokane@FreeBSD.org>, 
@@ -254,7 +252,7 @@ tdfx_attach(device_t dev) {
 static int
 tdfx_detach(device_t dev) {
 	struct tdfx_softc* tdfx_info;
-	int retval;
+	int retval __unused;
 	tdfx_info = device_get_softc(dev);
 
 	/* Delete allocated resource, of course */
@@ -513,20 +511,16 @@ tdfx_query_fetch(u_int cmd, struct tdfx_pio_data *piod)
 	switch(piod->port) {
 		case PCI_VENDOR_ID_FREEBSD:
 			if(piod->size != 2) return -EINVAL;
-			copyout(&tdfx_info->vendor, piod->value, piod->size);
-			return 0;
+			return -copyout(&tdfx_info->vendor, piod->value, piod->size);
 		case PCI_DEVICE_ID_FREEBSD:
 			if(piod->size != 2) return -EINVAL;
-			copyout(&tdfx_info->type, piod->value, piod->size);
-			return 0;
+			return -copyout(&tdfx_info->type, piod->value, piod->size);
 		case PCI_BASE_ADDRESS_0_FREEBSD:
 			if(piod->size != 4) return -EINVAL;
-			copyout(&tdfx_info->addr0, piod->value, piod->size);
-			return 0;
+			return -copyout(&tdfx_info->addr0, piod->value, piod->size);
 		case PCI_BASE_ADDRESS_1_FREEBSD:
 			if(piod->size != 4) return -EINVAL;
-			copyout(&tdfx_info->addr1, piod->value, piod->size);
-			return 0;
+			return -copyout(&tdfx_info->addr1, piod->value, piod->size);
 		case PCI_PRIBUS_FREEBSD:
 			if(piod->size != 1) return -EINVAL;
 			break;
@@ -554,22 +548,18 @@ tdfx_query_fetch(u_int cmd, struct tdfx_pio_data *piod)
 		case 1:
 			ret_byte = pci_read_config(tdfx_info[piod->device].dev, 
 					piod->port, 1);
-			copyout(&ret_byte, piod->value, 1);
-			break;
+			return -copyout(&ret_byte, piod->value, 1);
 		case 2:
 			ret_word = pci_read_config(tdfx_info[piod->device].dev, 
 					piod->port, 2);
-			copyout(&ret_word, piod->value, 2);
-			break;
+			return -copyout(&ret_word, piod->value, 2);
 		case 4:
 			ret_dword = pci_read_config(tdfx_info[piod->device].dev, 
 					piod->port, 4);
-			copyout(&ret_dword, piod->value, 4);
-			break;
+			return -copyout(&ret_dword, piod->value, 4);
 		default:
 			return -EINVAL;
 	}
-	return 0;
 }
 
 static int
@@ -580,6 +570,7 @@ tdfx_query_update(u_int cmd, struct tdfx_pio_data *piod)
 	u_int8_t  ret_byte;
 	u_int16_t ret_word;
 	u_int32_t ret_dword;
+	int error;
 
 	/* Port vals, mask */
 	u_int32_t retval, preval, mask;
@@ -629,17 +620,23 @@ tdfx_query_update(u_int cmd, struct tdfx_pio_data *piod)
 	 * at once to the ports */
 	switch (piod->size) {
 		case 1:
-			copyin(piod->value, &ret_byte, 1);
+			error = copyin(piod->value, &ret_byte, 1);
+			if (error != 0)
+				return -error;
 			preval = ret_byte << (8 * (piod->port & 0x3));
 			mask = 0xff << (8 * (piod->port & 0x3));
 			break;
 		case 2:
-			copyin(piod->value, &ret_word, 2);
+			error = copyin(piod->value, &ret_word, 2);
+			if (error != 0)
+				return -error;
 			preval = ret_word << (8 * (piod->port & 0x3));
 			mask = 0xffff << (8 * (piod->port & 0x3));
 			break;
 		case 4:
-			copyin(piod->value, &ret_dword, 4);
+			error = copyin(piod->value, &ret_dword, 4);
+			if (error != 0)
+				return -error;
 			preval = ret_dword;
 			mask = ~0;
 			break;
@@ -680,8 +677,7 @@ tdfx_do_pio_rd(struct tdfx_pio_data *piod)
 	/* Write the data to the intended port */
 	workport = piod->port;
 	ret_byte = inb(workport);
-	copyout(&ret_byte, piod->value, sizeof(u_int8_t));
-	return 0;
+	return copyout(&ret_byte, piod->value, sizeof(u_int8_t));
 }
 
 static int
@@ -705,10 +701,12 @@ tdfx_do_pio_wt(struct tdfx_pio_data *piod)
 	}
 
 	/* Write the data to the intended port */
-	copyin(piod->value, &ret_byte, sizeof(u_int8_t));
-	workport = piod->port;
-	outb(workport, ret_byte);
-	return 0;
+	int error = -copyin(piod->value, &ret_byte, sizeof(u_int8_t));
+	if (error == 0) {
+		workport = piod->port;
+		outb(workport, ret_byte);
+	}
+	return error;
 }
 
 static int
@@ -800,6 +798,26 @@ tdfx_ioctl(struct cdev *dev, u_long cmd, caddr_t data, int flag, struct thread *
 	return 0;
 }
 
+static int
+tdfx_mod_event(module_t mod, int what, void *arg)
+{
+	int error;
+
+	switch (what) {
+	case MOD_LOAD:
+		tdfx_devclass = devclass_create("tdfx");
+		error = 0;
+		break;
+	case MOD_UNLOAD:
+		error = 0;
+		break;
+	default:
+		error = EOPNOTSUPP;
+		break;
+	}
+	return (error);
+}
+
 /* This is the device driver struct. This is sent to the driver subsystem to
  * register the method structure and the info strcut space for this particular
  * instance of the driver.
@@ -811,6 +829,6 @@ static driver_t tdfx_driver = {
 };
 
 /* Tell Mr. Kernel about us! */
-DRIVER_MODULE(tdfx, pci, tdfx_driver, tdfx_devclass, 0, 0);
+DRIVER_MODULE(tdfx, pci, tdfx_driver, tdfx_mod_event, NULL);
 MODULE_DEPEND(tdfx, mem, 1, 1, 1);
 MODULE_VERSION(tdfx, 1);

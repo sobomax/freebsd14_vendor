@@ -12,13 +12,10 @@
  *
  */
 
-#include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 43f5175603ecc2ef606aab05bbaaf95feeea5a13 $");
-
-/* __ieee754_lgamma(x)
+/* lgamma(x)
  * Return the logarithm of the Gamma function of x.
  *
- * Method: call __ieee754_lgamma_r
+ * Method: call lgamma_r
  */
 
 #include <float.h>
@@ -29,9 +26,9 @@ __FBSDID("$FreeBSD: 43f5175603ecc2ef606aab05bbaaf95feeea5a13 $");
 extern int signgam;
 
 double
-__ieee754_lgamma(double x)
+lgamma(double x)
 {
-	return __ieee754_lgamma_r(x,&signgam);
+	return lgamma_r(x,&signgam);
 }
 
 #if (LDBL_MANT_DIG == 53)

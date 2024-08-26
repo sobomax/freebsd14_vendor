@@ -32,8 +32,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 81059a281fba845cfc91ae69f72d30f10eaef1ea $");
-
 #include <dev/aic7xxx/aic7xxx_osm.h>
 #include <dev/aic7xxx/aic7xxx_inline.h>
 
@@ -46,8 +44,6 @@ __FBSDID("$FreeBSD: 81059a281fba845cfc91ae69f72d30f10eaef1ea $");
 #include <dev/aic7xxx/aic_osm_lib.c>
 
 #define ccb_scb_ptr spriv_ptr0
-
-devclass_t ahc_devclass;
 
 #if 0
 static void	ahc_dump_targcmd(struct target_cmd *cmd);
@@ -215,6 +211,7 @@ ahc_attach(struct ahc_softc *ahc)
 		goto fail;
 	}
 		
+	memset(&csa, 0, sizeof(csa));
 	xpt_setup_ccb(&csa.ccb_h, path, /*priority*/5);
 	csa.ccb_h.func_code = XPT_SASYNC_CB;
 	csa.event_enable = AC_LOST_DEVICE;
@@ -305,6 +302,25 @@ ahc_platform_intr(void *arg)
 	ahc_unlock(ahc);
 }
 
+static void
+ahc_sync_ccb(struct ahc_softc *ahc, struct scb *scb, union ccb *ccb, bool post)
+{
+	bus_dmasync_op_t op;
+	uint32_t rdmask;
+
+	if (ccb->ccb_h.func_code == XPT_CONT_TARGET_IO)
+		rdmask = CAM_DIR_OUT;
+	else
+		rdmask = CAM_DIR_IN;
+
+	if ((ccb->ccb_h.flags & CAM_DIR_MASK) == rdmask)
+		op = post ? BUS_DMASYNC_POSTREAD : BUS_DMASYNC_PREREAD;
+	else
+		op = post ? BUS_DMASYNC_POSTWRITE : BUS_DMASYNC_PREWRITE;
+
+	bus_dmamap_sync(ahc->buffer_dmat, scb->dmamap, op);
+}
+
 /*
  * We have an scb which has been processed by the
  * adaptor, now we look to see how the operation
@@ -336,13 +352,7 @@ ahc_done(struct ahc_softc *ahc, struct scb *scb)
 	callout_stop(&scb->io_timer);
 
 	if ((ccb->ccb_h.flags & CAM_DIR_MASK) != CAM_DIR_NONE) {
-		bus_dmasync_op_t op;
-
-		if ((ccb->ccb_h.flags & CAM_DIR_MASK) == CAM_DIR_IN)
-			op = BUS_DMASYNC_POSTREAD;
-		else
-			op = BUS_DMASYNC_POSTWRITE;
-		bus_dmamap_sync(ahc->buffer_dmat, scb->dmamap, op);
+		ahc_sync_ccb(ahc, scb, ccb, true);
 		bus_dmamap_unload(ahc->buffer_dmat, scb->dmamap);
 	}
 
@@ -946,7 +956,6 @@ ahc_execute_scb(void *arg, bus_dma_segment_t *dm_segs, int nsegments,
 	if (nsegments != 0) {
 		struct	  ahc_dma_seg *sg;
 		bus_dma_segment_t *end_seg;
-		bus_dmasync_op_t op;
 
 		end_seg = dm_segs + nsegments;
 
@@ -971,12 +980,7 @@ ahc_execute_scb(void *arg, bus_dma_segment_t *dm_segs, int nsegments,
 		 */
 		scb->hscb->sgptr = aic_htole32(scb->sg_list_phys|SG_FULL_RESID);
 
-		if ((ccb->ccb_h.flags & CAM_DIR_MASK) == CAM_DIR_IN)
-			op = BUS_DMASYNC_PREREAD;
-		else
-			op = BUS_DMASYNC_PREWRITE;
-
-		bus_dmamap_sync(ahc->buffer_dmat, scb->dmamap, op);
+		ahc_sync_ccb(ahc, scb, ccb, false);
 
 		if (ccb->ccb_h.func_code == XPT_CONT_TARGET_IO) {
 			struct target_data *tdata;

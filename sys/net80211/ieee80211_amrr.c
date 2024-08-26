@@ -19,8 +19,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: f89437d3e85748af626bff7f5d1363c26c0d00c0 $");
-
 /*-
  * Naive implementation of the Adaptive Multi Rate Retry algorithm:
  *
@@ -134,8 +132,9 @@ amrr_init(struct ieee80211vap *vap)
 static void
 amrr_deinit(struct ieee80211vap *vap)
 {
-	IEEE80211_FREE(vap->iv_rs, M_80211_RATECTL);
 	KASSERT(nrefs > 0, ("imbalanced attach/detach"));
+	IEEE80211_FREE(vap->iv_rs, M_80211_RATECTL);
+	vap->iv_rs = NULL;	/* guard */
 	nrefs--;		/* XXX locking */
 }
 

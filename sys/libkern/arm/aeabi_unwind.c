@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (C) 2013 Andrew Turner
  * All rights reserved.
@@ -28,8 +28,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 1b9bf0639d9ae213b24391f68610dcb93a2e9ebf $");
-
 #include <sys/types.h>
 #ifdef _KERNEL
 #include <sys/systm.h>

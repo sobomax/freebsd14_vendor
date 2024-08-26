@@ -25,8 +25,6 @@
 .\" This document is derived in part from the enet man page (enet.4)
 .\" distributed with 4.3BSD Unix.
 .\"
-.\" $FreeBSD: da1f5ec1592b9e256db8bff2b342ed0f43380582 $
-.\"
 .Dd March 6, 2022
 .Dt NETMAP 4
 .Os
@@ -655,7 +653,7 @@ In the example below, "netmap:foo" is any valid netmap port name.
 (default) all hardware ring pairs
 .It NR_REG_SW            "netmap:foo^"
 the ``host rings'', connecting to the host stack.
-.It NR_REG_NIC_SW        "netmap:foo+"
+.It NR_REG_NIC_SW        "netmap:foo*"
 all hardware rings and the host rings
 .It NR_REG_ONE_NIC       "netmap:foo-i"
 only the i-th hardware ring pair, where the number is in
@@ -1114,8 +1112,8 @@ clients attached to the same switch can now communicate
 with the network card or the host.
 .Sh SEE ALSO
 .Xr vale 4 ,
-.Xr valectl 8 ,
 .Xr bridge 8 ,
+.Xr valectl 8 ,
 .Xr lb 8 ,
 .Xr nmreplay 8 ,
 .Xr pkt-gen 8

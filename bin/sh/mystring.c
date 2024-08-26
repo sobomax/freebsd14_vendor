@@ -38,8 +38,6 @@ static char sccsid[] = "@(#)mystring.c	8.2 (Berkeley) 5/4/95";
 #endif
 #endif /* not lint */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 716f003459616ed322419b3122bf2c1dc08f7328 $");
-
 /*
  * String functions.
  *

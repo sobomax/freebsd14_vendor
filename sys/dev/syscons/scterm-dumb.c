@@ -25,8 +25,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 3011b0de8f52922d8612f5dc1c3c2178068ff7b2 $");
-
 #include "opt_syscons.h"
 
 #include <sys/param.h>
@@ -35,7 +33,7 @@ __FBSDID("$FreeBSD: 3011b0de8f52922d8612f5dc1c3c2178068ff7b2 $");
 #include <sys/module.h>
 #include <sys/consio.h>
 
-#if defined(__arm__) || defined(__mips__) || defined(__powerpc__)
+#if defined(__arm__) || defined(__powerpc__)
 #include <machine/sc_machdep.h>
 #else
 #include <machine/pc/display.h>

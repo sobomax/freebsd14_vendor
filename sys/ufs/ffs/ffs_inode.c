@@ -32,8 +32,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: d9d4f3c4a1551b5bb15d5259ba8babb7258f5cbc $");
-
 #include "opt_ufs.h"
 #include "opt_quota.h"
 
@@ -240,7 +238,9 @@ ffs_truncate(struct vnode *vp,
 	struct inode *ip;
 	ufs2_daddr_t bn, lbn, lastblock, lastiblock[UFS_NIADDR];
 	ufs2_daddr_t indir_lbn[UFS_NIADDR], oldblks[UFS_NDADDR + UFS_NIADDR];
+#ifdef INVARIANTS
 	ufs2_daddr_t newblks[UFS_NDADDR + UFS_NIADDR];
+#endif
 	ufs2_daddr_t count, blocksreleased = 0, blkno;
 	struct bufobj *bo __diagused;
 	struct fs *fs;
@@ -250,7 +250,7 @@ ffs_truncate(struct vnode *vp,
 	int needextclean, extblocks;
 	int offset, size, level, nblocks;
 	int i, error, allerror, indiroff, waitforupdate;
-	u_long key;
+	uint64_t key;
 	off_t osize;
 
 	ip = VTOI(vp);
@@ -339,7 +339,7 @@ ffs_truncate(struct vnode *vp,
 		if (length != 0)
 			panic("ffs_truncate: partial truncate of symlink");
 #endif
-		bzero(DIP(ip, i_shortlink), (u_int)ip->i_size);
+		bzero(DIP(ip, i_shortlink), (uint64_t)ip->i_size);
 		ip->i_size = 0;
 		DIP_SET(ip, i_size, 0);
 		UFS_INODE_SET_FLAG(ip, IN_SIZEMOD | IN_CHANGE | IN_UPDATE);
@@ -357,7 +357,7 @@ ffs_truncate(struct vnode *vp,
 		panic("ffs_truncate: read-only filesystem");
 	if (IS_SNAPSHOT(ip))
 		ffs_snapremove(vp);
-	vp->v_lasta = vp->v_clen = vp->v_cstart = vp->v_lastw = 0;
+	cluster_init_vn(&ip->i_clusterw);
 	osize = ip->i_size;
 	/*
 	 * Lengthen the size of the file. We must ensure that the
@@ -501,7 +501,7 @@ ffs_truncate(struct vnode *vp,
 		size = blksize(fs, ip, lbn);
 		if (vp->v_type != VDIR && offset != 0)
 			bzero((char *)bp->b_data + offset,
-			    (u_int)(size - offset));
+			    (uint64_t)(size - offset));
 		/* Kirk's code has reallocbuf(bp, size, 1) here */
 		allocbuf(bp, size);
 		if (bp->b_bufsize == fs->fs_bsize)
@@ -548,11 +548,15 @@ ffs_truncate(struct vnode *vp,
 	 * when we are done.
 	 */
 	for (i = 0; i < UFS_NDADDR; i++) {
+#ifdef INVARIANTS
 		newblks[i] = DIP(ip, i_db[i]);
+#endif
 		DIP_SET(ip, i_db[i], oldblks[i]);
 	}
 	for (i = 0; i < UFS_NIADDR; i++) {
+#ifdef INVARIANTS
 		newblks[UFS_NDADDR + i] = DIP(ip, i_ib[i]);
+#endif
 		DIP_SET(ip, i_ib[i], oldblks[UFS_NDADDR + i]);
 	}
 	ip->i_size = osize;
@@ -704,7 +708,7 @@ ffs_indirtrunc(struct inode *ip,
 	struct ufsmount *ump;
 	struct vnode *vp;
 	caddr_t copy = NULL;
-	u_long key;
+	uint64_t key;
 	int i, nblocks, error = 0, allerror = 0;
 	ufs2_daddr_t nb, nlbn, last;
 	ufs2_daddr_t blkcount, factor, blocksreleased = 0;
@@ -747,7 +751,7 @@ ffs_indirtrunc(struct inode *ip,
 		bap2 = (ufs2_daddr_t *)bp->b_data;
 	if (lastbn != -1) {
 		copy = malloc(fs->fs_bsize, M_TEMP, M_WAITOK);
-		bcopy((caddr_t)bp->b_data, copy, (u_int)fs->fs_bsize);
+		bcopy((caddr_t)bp->b_data, copy, (uint64_t)fs->fs_bsize);
 		for (i = last + 1; i < NINDIR(fs); i++)
 			if (I_IS_UFS1(ip))
 				bap1[i] = 0;

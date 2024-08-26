@@ -14,7 +14,6 @@
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  *
  * $OpenBSD: if_rsureg.h,v 1.3 2013/04/15 09:23:01 mglocker Exp $
- * $FreeBSD: 246b06b7e298128e7503dc09c46ac864d9a0eda7 $
  */
 
 /* USB Requests. */

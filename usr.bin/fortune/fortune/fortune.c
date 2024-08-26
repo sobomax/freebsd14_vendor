@@ -42,8 +42,6 @@ static const char sccsid[] = "@(#)fortune.c   8.1 (Berkeley) 5/31/93";
 #endif /* not lint */
 #endif
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 2b8d390035c9bfe33a90c3abe992f53a96e9fb69 $");
-
 #include <sys/stat.h>
 #include <sys/endian.h>
 
@@ -1381,7 +1379,7 @@ usage(void)
 
 /*
  * getpath
- * 	Set up file search patch from environment var FORTUNE_PATH;
+ * 	Set up file search path from environment var FORTUNE_PATH;
  *	if not set, use the compiled in FORTDIR.
  */
 

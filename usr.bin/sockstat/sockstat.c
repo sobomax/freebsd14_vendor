@@ -1,7 +1,7 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
- * Copyright (c) 2002 Dag-Erling Coïdan Smørgrav
+ * Copyright (c) 2002 Dag-Erling Smørgrav
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -29,8 +29,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 440204afaee735145eac1a0021c7c8628ddac8e4 $");
-
 #include <sys/param.h>
 #include <sys/file.h>
 #include <sys/socket.h>
@@ -38,9 +36,10 @@ __FBSDID("$FreeBSD: 440204afaee735145eac1a0021c7c8628ddac8e4 $");
 #include <sys/sysctl.h>
 #include <sys/jail.h>
 #include <sys/user.h>
+#include <sys/queue.h>
+#include <sys/tree.h>
 
 #include <sys/un.h>
-#define	_WANT_UNPCB
 #include <sys/unpcb.h>
 
 #include <net/route.h>
@@ -55,6 +54,7 @@ __FBSDID("$FreeBSD: 440204afaee735145eac1a0021c7c8628ddac8e4 $");
 #include <netinet/tcp_var.h>
 #include <arpa/inet.h>
 
+#include <capsicum_helpers.h>
 #include <ctype.h>
 #include <err.h>
 #include <errno.h>
@@ -67,6 +67,12 @@ __FBSDID("$FreeBSD: 440204afaee735145eac1a0021c7c8628ddac8e4 $");
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
+
+#include <libcasper.h>
+#include <casper/cap_net.h>
+#include <casper/cap_netdb.h>
+#include <casper/cap_pwd.h>
+#include <casper/cap_sysctl.h>
 
 #define	sstosin(ss)	((struct sockaddr_in *)(ss))
 #define	sstosin6(ss)	((struct sockaddr_in6 *)(ss))
@@ -106,13 +112,25 @@ static int	*ports;
 #define	CHK_PORT(p) (ports[p / INT_BIT] & (1 << (p % INT_BIT)))
 
 struct addr {
-	struct sockaddr_storage address;
+	union {
+		struct sockaddr_storage address;
+		struct {	/* unix(4) faddr */
+			kvaddr_t conn;
+			kvaddr_t firstref;
+			kvaddr_t nextref;
+		};
+	};
 	unsigned int encaps_port;
 	int state;
 	struct addr *next;
 };
 
 struct sock {
+	union {
+		RB_ENTRY(sock) socket_tree;	/* tree of pcbs with socket */
+		SLIST_ENTRY(sock) socket_list;	/* list of pcbs w/o socket */
+	};
+	RB_ENTRY(sock) pcb_tree;
 	kvaddr_t socket;
 	kvaddr_t pcb;
 	uint64_t inp_gencnt;
@@ -126,14 +144,49 @@ struct sock {
 	char cc[TCP_CA_NAME_MAX];
 	struct addr *laddr;
 	struct addr *faddr;
-	struct sock *next;
 };
 
-#define	HASHSIZE 1009
-static struct sock *sockhash[HASHSIZE];
+static RB_HEAD(socks_t, sock) socks = RB_INITIALIZER(&socks);
+static int64_t
+socket_compare(const struct sock *a, const struct sock *b)
+{
+	return ((int64_t)(a->socket/2 - b->socket/2));
+}
+RB_GENERATE_STATIC(socks_t, sock, socket_tree, socket_compare);
 
-static struct xfile *xfiles;
-static int nxfiles;
+static RB_HEAD(pcbs_t, sock) pcbs = RB_INITIALIZER(&pcbs);
+static int64_t
+pcb_compare(const struct sock *a, const struct sock *b)
+{
+        return ((int64_t)(a->pcb/2 - b->pcb/2));
+}
+RB_GENERATE_STATIC(pcbs_t, sock, pcb_tree, pcb_compare);
+
+static SLIST_HEAD(, sock) nosocks = SLIST_HEAD_INITIALIZER(&nosocks);
+
+struct file {
+	RB_ENTRY(file)	file_tree;
+	kvaddr_t	xf_data;
+	pid_t	xf_pid;
+	uid_t	xf_uid;
+	int	xf_fd;
+};
+
+static RB_HEAD(files_t, file) ftree = RB_INITIALIZER(&ftree);
+static int64_t
+file_compare(const struct file *a, const struct file *b)
+{
+	return ((int64_t)(a->xf_data/2 - b->xf_data/2));
+}
+RB_GENERATE_STATIC(files_t, file, file_tree, file_compare);
+
+static struct file *files;
+static int nfiles;
+
+static cap_channel_t *capnet;
+static cap_channel_t *capnetdb;
+static cap_channel_t *capsysctl;
+static cap_channel_t *cappwd;
 
 static int
 xprintf(const char *fmt, ...)
@@ -149,6 +202,28 @@ xprintf(const char *fmt, ...)
 	return (len);
 }
 
+static bool
+_check_ksize(size_t received_size, size_t expected_size, const char *struct_name)
+{
+	if (received_size != expected_size) {
+		warnx("%s size mismatch: expected %zd, received %zd",
+		    struct_name, expected_size, received_size);
+		return false;
+	}
+	return true;
+}
+#define check_ksize(_sz, _struct)	(_check_ksize(_sz, sizeof(_struct), #_struct))
+
+static void
+_enforce_ksize(size_t received_size, size_t expected_size, const char *struct_name)
+{
+	if (received_size != expected_size) {
+		errx(1, "fatal: struct %s size mismatch: expected %zd, received %zd",
+		    struct_name, expected_size, received_size);
+	}
+}
+#define enforce_ksize(_sz, _struct)	(_enforce_ksize(_sz, sizeof(_struct), #_struct))
+
 static int
 get_proto_type(const char *proto)
 {
@@ -156,9 +231,12 @@ get_proto_type(const char *proto)
 
 	if (strlen(proto) == 0)
 		return (0);
-	pent = getprotobyname(proto);
+	if (capnetdb != NULL)
+		pent = cap_getprotobyname(capnetdb, proto);
+	else
+		pent = getprotobyname(proto);
 	if (pent == NULL) {
-		warn("getprotobyname");
+		warn("cap_getprotobyname");
 		return (-1);
 	}
 	return (pent->p_proto);
@@ -314,7 +392,7 @@ gather_sctp(void)
 	const char *varname;
 	size_t len, offset;
 	char *buf;
-	int hash, vflag;
+	int vflag;
 	int no_stcb, local_all_loopback, foreign_all_loopback;
 
 	vflag = 0;
@@ -324,17 +402,17 @@ gather_sctp(void)
 		vflag |= INP_IPV6;
 
 	varname = "net.inet.sctp.assoclist";
-	if (sysctlbyname(varname, 0, &len, 0, 0) < 0) {
+	if (cap_sysctlbyname(capsysctl, varname, 0, &len, 0, 0) < 0) {
 		if (errno != ENOENT)
-			err(1, "sysctlbyname()");
+			err(1, "cap_sysctlbyname()");
 		return;
 	}
 	if ((buf = (char *)malloc(len)) == NULL) {
 		err(1, "malloc()");
 		return;
 	}
-	if (sysctlbyname(varname, buf, &len, 0, 0) < 0) {
-		err(1, "sysctlbyname()");
+	if (cap_sysctlbyname(capsysctl, varname, buf, &len, 0, 0) < 0) {
+		err(1, "cap_sysctlbyname()");
 		free(buf);
 		return;
 	}
@@ -433,10 +511,7 @@ gather_sctp(void)
 				    (!opt_L || !local_all_loopback) &&
 				    ((xinpcb->flags & SCTP_PCB_FLAGS_UDPTYPE) ||
 				     (xstcb->last == 1))) {
-					hash = (int)((uintptr_t)sock->socket %
-					    HASHSIZE);
-					sock->next = sockhash[hash];
-					sockhash[hash] = sock;
+					RB_INSERT(socks_t, &socks, sock);
 				} else {
 					free_socket(sock);
 				}
@@ -561,10 +636,7 @@ gather_sctp(void)
 				    (!opt_L ||
 				     !(local_all_loopback ||
 				     foreign_all_loopback))) {
-					hash = (int)((uintptr_t)sock->socket %
-					    HASHSIZE);
-					sock->next = sockhash[hash];
-					sockhash[hash] = sock;
+					RB_INSERT(socks_t, &socks, sock);
 				} else {
 					free_socket(sock);
 				}
@@ -588,7 +660,7 @@ gather_inet(int proto)
 	const char *varname, *protoname;
 	size_t len, bufsize;
 	void *buf;
-	int hash, retry, vflag;
+	int retry, vflag;
 
 	vflag = 0;
 	if (opt_4)
@@ -621,20 +693,20 @@ gather_inet(int proto)
 			if ((buf = realloc(buf, bufsize)) == NULL)
 				err(1, "realloc()");
 			len = bufsize;
-			if (sysctlbyname(varname, buf, &len, NULL, 0) == 0)
+			if (cap_sysctlbyname(capsysctl, varname, buf, &len,
+			    NULL, 0) == 0)
 				break;
 			if (errno == ENOENT)
 				goto out;
 			if (errno != ENOMEM || len != bufsize)
-				err(1, "sysctlbyname()");
+				err(1, "cap_sysctlbyname()");
 			bufsize *= 2;
 		}
 		xig = (struct xinpgen *)buf;
 		exig = (struct xinpgen *)(void *)
 		    ((char *)buf + len - sizeof *exig);
-		if (xig->xig_len != sizeof *xig ||
-		    exig->xig_len != sizeof *exig)
-			errx(1, "struct xinpgen size mismatch");
+		enforce_ksize(xig->xig_len, struct xinpgen);
+		enforce_ksize(exig->xig_len, struct xinpgen);
 	} while (xig->xig_gen != exig->xig_gen && retry--);
 
 	if (xig->xig_gen != exig->xig_gen && opt_v)
@@ -648,19 +720,15 @@ gather_inet(int proto)
 		case IPPROTO_TCP:
 			xtp = (struct xtcpcb *)xig;
 			xip = &xtp->xt_inp;
-			if (xtp->xt_len != sizeof(*xtp)) {
-				warnx("struct xtcpcb size mismatch");
+			if (!check_ksize(xtp->xt_len, struct xtcpcb))
 				goto out;
-			}
 			protoname = xtp->t_flags & TF_TOE ? "toe" : "tcp";
 			break;
 		case IPPROTO_UDP:
 		case IPPROTO_DIVERT:
 			xip = (struct xinpcb *)xig;
-			if (xip->xi_len != sizeof(*xip)) {
-				warnx("struct xinpcb size mismatch");
+			if (!check_ksize(xip->xi_len, struct xinpcb))
 				goto out;
-			}
 			break;
 		default:
 			errx(1, "protocol %d not supported", proto);
@@ -728,9 +796,10 @@ gather_inet(int proto)
 			memcpy(sock->cc, xtp->xt_cc, TCP_CA_NAME_MAX);
 		}
 		sock->protoname = protoname;
-		hash = (int)((uintptr_t)sock->socket % HASHSIZE);
-		sock->next = sockhash[hash];
-		sockhash[hash] = sock;
+		if (sock->socket != 0)
+			RB_INSERT(socks_t, &socks, sock);
+		else
+			SLIST_INSERT_HEAD(&nosocks, sock, socket_list);
 	}
 out:
 	free(buf);
@@ -746,7 +815,7 @@ gather_unix(int proto)
 	const char *varname, *protoname;
 	size_t len, bufsize;
 	void *buf;
-	int hash, retry;
+	int retry;
 
 	switch (proto) {
 	case SOCK_STREAM:
@@ -772,20 +841,19 @@ gather_unix(int proto)
 			if ((buf = realloc(buf, bufsize)) == NULL)
 				err(1, "realloc()");
 			len = bufsize;
-			if (sysctlbyname(varname, buf, &len, NULL, 0) == 0)
+			if (cap_sysctlbyname(capsysctl, varname, buf, &len,
+			    NULL, 0) == 0)
 				break;
 			if (errno != ENOMEM || len != bufsize)
-				err(1, "sysctlbyname()");
+				err(1, "cap_sysctlbyname()");
 			bufsize *= 2;
 		}
 		xug = (struct xunpgen *)buf;
 		exug = (struct xunpgen *)(void *)
 		    ((char *)buf + len - sizeof(*exug));
-		if (xug->xug_len != sizeof(*xug) ||
-		    exug->xug_len != sizeof(*exug)) {
-			warnx("struct xinpgen size mismatch");
+		if (!check_ksize(xug->xug_len, struct xunpgen) ||
+		    !check_ksize(exug->xug_len, struct xunpgen))
 			goto out;
-		}
 	} while (xug->xug_gen != exug->xug_gen && retry--);
 
 	if (xug->xug_gen != exug->xug_gen && opt_v)
@@ -796,10 +864,8 @@ gather_unix(int proto)
 		if (xug >= exug)
 			break;
 		xup = (struct xunpcb *)xug;
-		if (xup->xu_len != sizeof(*xup)) {
-			warnx("struct xunpcb size mismatch");
+		if (!check_ksize(xup->xu_len, struct xunpcb))
 			goto out;
-		}
 		if ((xup->unp_conn == 0 && !opt_l) ||
 		    (xup->unp_conn != 0 && !opt_c))
 			continue;
@@ -817,15 +883,15 @@ gather_unix(int proto)
 		if (xup->xu_addr.sun_family == AF_UNIX)
 			laddr->address =
 			    *(struct sockaddr_storage *)(void *)&xup->xu_addr;
-		else if (xup->unp_conn != 0)
-			*(kvaddr_t*)&(faddr->address) = xup->unp_conn;
+		faddr->conn = xup->unp_conn;
+		faddr->firstref = xup->xu_firstref;
+		faddr->nextref = xup->xu_nextref;
 		laddr->next = NULL;
 		faddr->next = NULL;
 		sock->laddr = laddr;
 		sock->faddr = faddr;
-		hash = (int)((uintptr_t)sock->socket % HASHSIZE);
-		sock->next = sockhash[hash];
-		sockhash[hash] = sock;
+		RB_INSERT(socks_t, &socks, sock);
+		RB_INSERT(pcbs_t, &pcbs, sock);
 	}
 out:
 	free(buf);
@@ -834,21 +900,36 @@ out:
 static void
 getfiles(void)
 {
+	struct xfile *xfiles;
 	size_t len, olen;
 
 	olen = len = sizeof(*xfiles);
 	if ((xfiles = malloc(len)) == NULL)
 		err(1, "malloc()");
-	while (sysctlbyname("kern.file", xfiles, &len, 0, 0) == -1) {
+	while (cap_sysctlbyname(capsysctl, "kern.file", xfiles, &len, 0, 0)
+	    == -1) {
 		if (errno != ENOMEM || len != olen)
-			err(1, "sysctlbyname()");
+			err(1, "cap_sysctlbyname()");
 		olen = len *= 2;
 		if ((xfiles = realloc(xfiles, len)) == NULL)
 			err(1, "realloc()");
 	}
-	if (len > 0 && xfiles->xf_size != sizeof(*xfiles))
-		errx(1, "struct xfile size mismatch");
-	nxfiles = len / sizeof(*xfiles);
+	if (len > 0)
+		enforce_ksize(xfiles->xf_size, struct xfile);
+	nfiles = len / sizeof(*xfiles);
+
+	if ((files = malloc(nfiles * sizeof(struct file))) == NULL)
+		err(1, "malloc()");
+
+	for (int i = 0; i < nfiles; i++) {
+		files[i].xf_data = xfiles[i].xf_data;
+		files[i].xf_pid = xfiles[i].xf_pid;
+		files[i].xf_uid = xfiles[i].xf_uid;
+		files[i].xf_fd = xfiles[i].xf_fd;
+		RB_INSERT(files_t, &ftree, &files[i]);
+	}
+
+	free(xfiles);
 }
 
 static int
@@ -875,10 +956,10 @@ printaddr(struct sockaddr_storage *ss)
 		return (xprintf("%.*s", sun->sun_len - off, sun->sun_path));
 	}
 	if (addrstr[0] == '\0') {
-		error = getnameinfo(sstosa(ss), ss->ss_len, addrstr,
-		    sizeof(addrstr), NULL, 0, NI_NUMERICHOST);
+		error = cap_getnameinfo(capnet, sstosa(ss), ss->ss_len,
+		    addrstr, sizeof(addrstr), NULL, 0, NI_NUMERICHOST);
 		if (error)
-			errx(1, "getnameinfo()");
+			errx(1, "cap_getnameinfo()");
 	}
 	if (port == 0)
 		return xprintf("%s:*", addrstr);
@@ -898,10 +979,11 @@ getprocname(pid_t pid)
 	mib[2] = KERN_PROC_PID;
 	mib[3] = (int)pid;
 	len = sizeof(proc);
-	if (sysctl(mib, nitems(mib), &proc, &len, NULL, 0) == -1) {
+	if (cap_sysctl(capsysctl, mib, nitems(mib), &proc, &len, NULL, 0)
+	    == -1) {
 		/* Do not warn if the process exits before we get its name. */
 		if (errno != ESRCH)
-			warn("sysctl()");
+			warn("cap_sysctl()");
 		return ("??");
 	}
 	return (proc.ki_comm);
@@ -919,10 +1001,11 @@ getprocjid(pid_t pid)
 	mib[2] = KERN_PROC_PID;
 	mib[3] = (int)pid;
 	len = sizeof(proc);
-	if (sysctl(mib, nitems(mib), &proc, &len, NULL, 0) == -1) {
+	if (cap_sysctl(capsysctl, mib, nitems(mib), &proc, &len, NULL, 0)
+	    == -1) {
 		/* Do not warn if the process exits before we get its jid. */
 		if (errno != ESRCH)
-			warn("sysctl()");
+			warn("cap_sysctl()");
 		return (-1);
 	}
 	return (proc.ki_jid);
@@ -1019,12 +1102,10 @@ sctp_path_state(int state)
 static void
 displaysock(struct sock *s, int pos)
 {
-	kvaddr_t p;
-	int hash, first, offset;
+	int first, offset;
 	struct addr *laddr, *faddr;
-	struct sock *s_tmp;
 
-	while (pos < 29)
+	while (pos < 30)
 		pos += xprintf(" ");
 	pos += xprintf("%s", s->protoname);
 	if (s->vflag & INP_IPV4)
@@ -1037,7 +1118,7 @@ displaysock(struct sock *s, int pos)
 	faddr = s->faddr;
 	first = 1;
 	while (laddr != NULL || faddr != NULL) {
-		offset = 36;
+		offset = 37;
 		while (pos < offset)
 			pos += xprintf(" ");
 		switch (s->family) {
@@ -1059,33 +1140,57 @@ displaysock(struct sock *s, int pos)
 			if ((laddr == NULL) || (faddr == NULL))
 				errx(1, "laddr = %p or faddr = %p is NULL",
 				    (void *)laddr, (void *)faddr);
-			/* server */
-			if (laddr->address.ss_len > 0) {
-				pos += printaddr(&laddr->address);
-				break;
-			}
-			/* client */
-			p = *(kvaddr_t*)&(faddr->address);
-			if (p == 0) {
+			if (laddr->address.ss_len == 0 && faddr->conn == 0) {
 				pos += xprintf("(not connected)");
 				offset += opt_w ? 92 : 44;
 				break;
 			}
-			pos += xprintf("-> ");
-			for (hash = 0; hash < HASHSIZE; ++hash) {
-				for (s_tmp = sockhash[hash];
-				    s_tmp != NULL;
-				    s_tmp = s_tmp->next)
-					if (s_tmp->pcb == p)
-						break;
-				if (s_tmp != NULL)
-					break;
+			/* Local bind(2) address, if any. */
+			if (laddr->address.ss_len > 0)
+				pos += printaddr(&laddr->address);
+			/* Remote peer we connect(2) to, if any. */
+			if (faddr->conn != 0) {
+				struct sock *p;
+
+				pos += xprintf("%s-> ",
+				    laddr->address.ss_len > 0 ? " " : "");
+				p = RB_FIND(pcbs_t, &pcbs,
+				    &(struct sock){ .pcb = faddr->conn });
+				if (__predict_false(p == NULL)) {
+					/* XXGL: can this happen at all? */
+					pos += xprintf("??");
+				}  else if (p->laddr->address.ss_len == 0) {
+					struct file *f;
+
+					f = RB_FIND(files_t, &ftree,
+					    &(struct file){ .xf_data =
+					    p->socket });
+					pos += xprintf("[%lu %d]",
+					    (u_long)f->xf_pid, f->xf_fd);
+				} else
+					pos += printaddr(&p->laddr->address);
 			}
-			if (s_tmp == NULL || s_tmp->laddr == NULL ||
-			    s_tmp->laddr->address.ss_len == 0)
-				pos += xprintf("??");
-			else
-				pos += printaddr(&s_tmp->laddr->address);
+			/* Remote peer(s) connect(2)ed to us, if any. */
+			if (faddr->firstref != 0) {
+				struct sock *p;
+				struct file *f;
+				kvaddr_t ref = faddr->firstref;
+				bool fref = true;
+
+				pos += xprintf(" <- ");
+
+				while ((p = RB_FIND(pcbs_t, &pcbs,
+				    &(struct sock){ .pcb = ref })) != 0) {
+					f = RB_FIND(files_t, &ftree,
+					    &(struct file){ .xf_data =
+					    p->socket });
+					pos += xprintf("%s[%lu %d]",
+					    fref ? "" : ",",
+					    (u_long)f->xf_pid, f->xf_fd);
+					ref = p->faddr->nextref;
+					fref = false;
+				}
+			}
 			offset += opt_w ? 92 : 44;
 			break;
 		default:
@@ -1188,12 +1293,12 @@ static void
 display(void)
 {
 	struct passwd *pwd;
-	struct xfile *xf;
+	struct file *xf;
 	struct sock *s;
-	int hash, n, pos;
+	int n, pos;
 
 	if (opt_q != 1) {
-		printf("%-8s %-10s %-5s %-2s %-6s %-*s %-*s",
+		printf("%-8s %-10s %-5s %-3s %-6s %-*s %-*s",
 		    "USER", "COMMAND", "PID", "FD", "PROTO",
 		    opt_w ? 45 : 21, "LOCAL ADDRESS",
 		    opt_w ? 45 : 21, "FOREIGN ADDRESS");
@@ -1212,21 +1317,19 @@ display(void)
 			printf(" %-.*s", TCP_CA_NAME_MAX, "CC");
 		printf("\n");
 	}
-	setpassent(1);
-	for (xf = xfiles, n = 0; n < nxfiles; ++n, ++xf) {
+	cap_setpassent(cappwd, 1);
+	for (xf = files, n = 0; n < nfiles; ++n, ++xf) {
 		if (xf->xf_data == 0)
 			continue;
 		if (opt_j >= 0 && opt_j != getprocjid(xf->xf_pid))
 			continue;
-		hash = (int)((uintptr_t)xf->xf_data % HASHSIZE);
-		for (s = sockhash[hash]; s != NULL; s = s->next) {
-			if (s->socket != xf->xf_data)
-				continue;
-			if (!check_ports(s))
-				continue;
+		s = RB_FIND(socks_t, &socks,
+		    &(struct sock){ .socket = xf->xf_data});
+		if (s != NULL && check_ports(s)) {
 			s->shown = 1;
 			pos = 0;
-			if (opt_n || (pwd = getpwuid(xf->xf_uid)) == NULL)
+			if (opt_n ||
+			    (pwd = cap_getpwuid(cappwd, xf->xf_uid)) == NULL)
 				pos += xprintf("%lu ", (u_long)xf->xf_uid);
 			else
 				pos += xprintf("%s ", pwd->pw_name);
@@ -1235,26 +1338,30 @@ display(void)
 			pos += xprintf("%.10s", getprocname(xf->xf_pid));
 			while (pos < 20)
 				pos += xprintf(" ");
-			pos += xprintf("%lu ", (u_long)xf->xf_pid);
+			pos += xprintf("%5lu ", (u_long)xf->xf_pid);
 			while (pos < 26)
 				pos += xprintf(" ");
-			pos += xprintf("%d ", xf->xf_fd);
+			pos += xprintf("%-3d ", xf->xf_fd);
 			displaysock(s, pos);
 		}
 	}
 	if (opt_j >= 0)
 		return;
-	for (hash = 0; hash < HASHSIZE; hash++) {
-		for (s = sockhash[hash]; s != NULL; s = s->next) {
-			if (s->shown)
-				continue;
-			if (!check_ports(s))
-				continue;
-			pos = 0;
-			pos += xprintf("%-8s %-10s %-5s %-2s ",
-			    "?", "?", "?", "?");
-			displaysock(s, pos);
-		}
+	SLIST_FOREACH(s, &nosocks, socket_list) {
+		if (!check_ports(s))
+			continue;
+		pos = xprintf("%-8s %-10s %-5s %-2s ",
+		    "?", "?", "?", "?");
+		displaysock(s, pos);
+	}
+	RB_FOREACH(s, socks_t, &socks) {
+		if (s->shown)
+			continue;
+		if (!check_ports(s))
+			continue;
+		pos = xprintf("%-8s %-10s %-5s %-2s ",
+		    "?", "?", "?", "?");
+		displaysock(s, pos);
 	}
 }
 
@@ -1269,9 +1376,9 @@ set_default_protos(void)
 
 	for (pindex = 0; pindex < default_numprotos; pindex++) {
 		pname = default_protos[pindex];
-		prot = getprotobyname(pname);
+		prot = cap_getprotobyname(capnetdb, pname);
 		if (prot == NULL)
-			err(1, "getprotobyname: %s", pname);
+			err(1, "cap_getprotobyname: %s", pname);
 		protos[pindex] = prot->p_proto;
 	}
 	numprotos = pindex;
@@ -1286,6 +1393,10 @@ jail_getvnet(int jid)
 {
 	struct iovec jiov[6];
 	int vnet;
+	size_t len = sizeof(vnet);
+
+	if (sysctlbyname("kern.features.vimage", &vnet, &len, NULL, 0) != 0)
+		return (0);
 
 	vnet = -1;
 	jiov[0].iov_base = __DECONST(char *, "jid");
@@ -1321,6 +1432,10 @@ usage(void)
 int
 main(int argc, char *argv[])
 {
+	cap_channel_t *capcas;
+	cap_net_limit_t *limit;
+	const char *pwdcmds[] = { "setpassent", "getpwuid" };
+	const char *pwdfields[] = { "pw_name" };
 	int protos_defined = -1;
 	int o, i;
 
@@ -1345,7 +1460,7 @@ main(int argc, char *argv[])
 		case 'j':
 			opt_j = jail_getid(optarg);
 			if (opt_j < 0)
-				errx(1, "%s", jail_errmsg);
+				errx(1, "jail_getid: %s", jail_errmsg);
 			break;
 		case 'L':
 			opt_L = 1;
@@ -1396,7 +1511,7 @@ main(int argc, char *argv[])
 	if (opt_j > 0) {
 		switch (jail_getvnet(opt_j)) {
 		case -1:
-			errx(2, "%s", jail_errmsg);
+			errx(2, "jail_getvnet: %s", jail_errmsg);
 		case JAIL_SYS_NEW:
 			if (jail_attach(opt_j) < 0)
 				err(3, "jail_attach()");
@@ -1407,6 +1522,34 @@ main(int argc, char *argv[])
 			break;
 		}
 	}
+
+	capcas = cap_init();
+	if (capcas == NULL)
+		err(1, "Unable to contact Casper");
+	if (caph_enter_casper() < 0)
+		err(1, "Unable to enter capability mode");
+	capnet = cap_service_open(capcas, "system.net");
+	if (capnet == NULL)
+		err(1, "Unable to open system.net service");
+	capnetdb = cap_service_open(capcas, "system.netdb");
+	if (capnetdb == NULL)
+		err(1, "Unable to open system.netdb service");
+	capsysctl = cap_service_open(capcas, "system.sysctl");
+	if (capsysctl == NULL)
+		err(1, "Unable to open system.sysctl service");
+	cappwd = cap_service_open(capcas, "system.pwd");
+	if (cappwd == NULL)
+		err(1, "Unable to open system.pwd service");
+	cap_close(capcas);
+	limit = cap_net_limit_init(capnet, CAPNET_ADDR2NAME);
+	if (limit == NULL)
+		err(1, "Unable to init cap_net limits");
+	if (cap_net_limit(limit) < 0)
+		err(1, "Unable to apply limits");
+	if (cap_pwd_limit_cmds(cappwd, pwdcmds, nitems(pwdcmds)) < 0)
+		err(1, "Unable to apply pwd commands limits");
+	if (cap_pwd_limit_fields(cappwd, pwdfields, nitems(pwdfields)) < 0)
+		err(1, "Unable to apply pwd commands limits");
 
 	if ((!opt_4 && !opt_6) && protos_defined != -1)
 		opt_4 = opt_6 = 1;

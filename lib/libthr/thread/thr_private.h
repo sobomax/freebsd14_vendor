@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (C) 2005 Daniel M. Eischen <deischen@freebsd.org>
  * Copyright (c) 2005 David Xu <davidxu@freebsd.org>
@@ -27,8 +27,6 @@
  * THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- *
- * $FreeBSD: 0e88c671181753a61c40e48b908c5860c4a04860 $
  */
 
 #ifndef _THR_PRIVATE_H
@@ -39,7 +37,6 @@
  */
 #include <sys/types.h>
 #include <sys/time.h>
-#include <sys/cdefs.h>
 #include <sys/queue.h>
 #include <sys/param.h>
 #include <sys/cpuset.h>
@@ -263,7 +260,6 @@ struct pthread_atfork {
 };
 
 struct pthread_attr {
-#define pthread_attr_start_copy	sched_policy
 	int	sched_policy;
 	int	sched_inherit;
 	int	prio;
@@ -273,7 +269,6 @@ struct pthread_attr {
 	void	*stackaddr_attr;
 	size_t	stacksize_attr;
 	size_t	guardsize_attr;
-#define pthread_attr_end_copy	cpuset
 	cpuset_t	*cpuset;
 	size_t	cpusetsize;
 };
@@ -779,6 +774,8 @@ extern int		_suspend_all_waiters __hidden;
 extern int		_suspend_all_cycle __hidden;
 extern struct pthread	*_single_thread __hidden;
 
+extern bool		_thr_after_fork __hidden;
+
 /*
  * Function prototype definitions.
  */
@@ -1073,6 +1070,7 @@ int _thr_cond_wait(pthread_cond_t *, pthread_mutex_t *);
 int _thr_detach(pthread_t);
 int _thr_equal(pthread_t, pthread_t);
 void _Tthr_exit(void *);
+int _thr_getname_np(pthread_t, char *, size_t);
 int _thr_key_create(pthread_key_t *, void (*)(void *));
 int _thr_key_delete(pthread_key_t);
 int _thr_setspecific(pthread_key_t, const void *);
@@ -1104,6 +1102,7 @@ int __Tthr_mutex_lock(pthread_mutex_t *);
 int __Tthr_mutex_trylock(pthread_mutex_t *);
 bool __thr_get_main_stack_base(char **base);
 bool __thr_get_main_stack_lim(size_t *lim);
+int _Tthr_sigqueue(pthread_t pthread, int sig, const union sigval value);
 
 __END_DECLS
 __NULLABILITY_PRAGMA_POP

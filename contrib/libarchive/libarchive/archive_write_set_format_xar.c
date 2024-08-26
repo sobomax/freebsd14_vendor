@@ -24,7 +24,6 @@
  */
 
 #include "archive_platform.h"
-__FBSDID("$FreeBSD: d885f5c256d37f56e92d448023a0d07fb78804e3 $");
 
 #ifdef HAVE_ERRNO_H
 #include <errno.h>
@@ -212,8 +211,8 @@ struct file {
 	struct heap_data	 data;
         struct archive_string    script;
 
-	signed int		 virtual:1;
-	signed int		 dir:1;
+	unsigned int		 virtual:1;
+	unsigned int		 dir:1;
 };
 
 struct hardlink {
@@ -906,15 +905,11 @@ xmlwrite_time(struct archive_write *a, xmlTextWriterPtr writer,
 {
 	char timestr[100];
 	struct tm tm;
-#if defined(HAVE__GMTIME64_S)
-	__time64_t tmptime;
-#endif
 
-#if defined(HAVE_GMTIME_R)
+#if defined(HAVE_GMTIME_S)
+	gmtime_s(&tm, &t);
+#elif defined(HAVE_GMTIME_R)
 	gmtime_r(&t, &tm);
-#elif defined(HAVE__GMTIME64_S)
-	tmptime = t;
-	_gmtime64_s(&tm, &tmptime);
 #else
 	memcpy(&tm, gmtime(&t), sizeof(tm));
 #endif

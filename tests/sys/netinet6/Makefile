@@ -1,4 +1,3 @@
-# $FreeBSD: 41900b57ce0249432cf8d20a523fb51096222c5c $
 
 PACKAGE=	tests
 
@@ -16,7 +15,8 @@ ATF_TESTS_SH=			\
 				output6 \
 				lpm6 \
 				fibs6 \
-				ndp
+				ndp \
+				proxy_ndp
 TEST_METADATA.output6+=	required_programs="python"
 
 ${PACKAGE}FILES+=		exthdr.py

@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2020 Microsoft Corp.
  * All rights reserved.
@@ -24,8 +24,6 @@
  * THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- *
- * $FreeBSD: 8774259683458125fe3df555c68306fb8d279d74 $
  */
 
 #ifndef _HVSOCK_H
@@ -96,7 +94,6 @@ struct hvs_pcb {
 	((struct socket *)((hvspcb)->so))
 
 void	hvs_addr_init(struct sockaddr_hvs *, const struct hyperv_guid *);
-void	hvs_trans_init(void);
 void	hvs_trans_close(struct socket *);
 void	hvs_trans_detach(struct socket *);
 void	hvs_trans_abort(struct socket *);

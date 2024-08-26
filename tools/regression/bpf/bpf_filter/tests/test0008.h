@@ -1,7 +1,5 @@
 /*-
  * Test 0008:	BPF_LDX+BPF_W+BPF_LEN & BPF_MISC+BPF_TXA
- *
- * $FreeBSD: 80e1eb0f812bd10d1864988731a0ff7f07a6440b $
  */
 
 /* BPF program */

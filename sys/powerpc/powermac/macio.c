@@ -25,8 +25,6 @@
  * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
- *
- * $FreeBSD: 35ee90fb75b5ef9e2d6c7cedfe4a6e5f85c3eda0 $
  */
 
 /*
@@ -54,6 +52,7 @@
 #include <dev/ofw/openfirm.h>
 
 #include <powerpc/powermac/maciovar.h>
+#include <powerpc/powermac/platform_powermac.h>
 
 #include <dev/pci/pcivar.h>
 #include <dev/pci/pcireg.h>
@@ -70,6 +69,9 @@ struct macio_softc {
 	/* FCR registers */
 	int          sc_memrid;
 	struct resource	*sc_memr;
+
+	/* GPIO offsets */
+	int          sc_timebase;
 };
 
 static MALLOC_DEFINE(M_MACIO, "macio", "macio device information");
@@ -89,6 +91,9 @@ static int  macio_release_resource(device_t, device_t, int, int,
 				   struct resource *);
 static struct resource_list *macio_get_resource_list (device_t, device_t);
 static ofw_bus_get_devinfo_t macio_get_devinfo;
+#if !defined(__powerpc64__) && defined(SMP)
+static void macio_freeze_timebase(device_t, bool);
+#endif
 
 /*
  * Bus interface definition
@@ -114,7 +119,7 @@ static device_method_t macio_methods[] = {
         DEVMETHOD(bus_deactivate_resource, macio_deactivate_resource),
         DEVMETHOD(bus_get_resource_list, macio_get_resource_list),	
 
-	DEVMETHOD(bus_child_pnpinfo_str, ofw_bus_gen_child_pnpinfo_str),
+	DEVMETHOD(bus_child_pnpinfo,	ofw_bus_gen_child_pnpinfo),
 
 	/* ofw_bus interface */
 	DEVMETHOD(ofw_bus_get_devinfo,	macio_get_devinfo),
@@ -132,10 +137,7 @@ static driver_t macio_pci_driver = {
 	sizeof(struct macio_softc)
 };
 
-devclass_t macio_devclass;
-
-EARLY_DRIVER_MODULE(macio, pci, macio_pci_driver, macio_devclass, 0, 0,
-    BUS_PASS_BUS);
+EARLY_DRIVER_MODULE(macio, pci, macio_pci_driver, 0, 0, BUS_PASS_BUS);
 
 /*
  * PCI ID search table
@@ -430,6 +432,26 @@ macio_attach(device_t dev)
 		}
 	}
 
+#if !defined(__powerpc64__) && defined(SMP)
+	/*
+	 * Detect an SMP G4 machine.
+	 *
+	 * On SMP G4, timebase freeze is via a GPIO on macio.
+	 *
+	 * When we are on an SMP G4, we need to install a handler to
+	 * perform timebase freeze/unfreeze on behalf of the platform.
+	 */
+	if ((child = OF_finddevice("/cpus/PowerPC,G4@0")) != -1 &&
+	    OF_peer(child) != -1) {
+		if (OF_getprop(child, "timebase-enable", &sc->sc_timebase,
+		    sizeof(sc->sc_timebase)) <= 0)
+			sc->sc_timebase = KEYLARGO_GPIO_BASE + 0x09;
+		powermac_register_timebase(dev, macio_freeze_timebase);
+                device_printf(dev, "GPIO timebase control at 0x%x\n",
+		    sc->sc_timebase);
+	}
+#endif
+
 	return (bus_generic_attach(dev));
 }
 
@@ -603,7 +625,7 @@ macio_activate_resource(device_t bus, device_t child, int type, int rid,
                 return (bus_activate_resource(bus, type, rid, res));
 
 	if ((type == SYS_RES_MEMORY) || (type == SYS_RES_IOPORT)) {
-		p = pmap_mapdev((vm_offset_t)rman_get_start(res) + sc->sc_base,
+		p = pmap_mapdev((vm_paddr_t)rman_get_start(res) + sc->sc_base,
 				(vm_size_t)rman_get_size(res));
 		if (p == NULL)
 			return (ENOMEM);
@@ -626,7 +648,7 @@ macio_deactivate_resource(device_t bus, device_t child, int type, int rid,
 		u_int32_t psize;
 
 		psize = rman_get_size(res);
-		pmap_unmapdev((vm_offset_t)rman_get_virtual(res), psize);
+		pmap_unmapdev(rman_get_virtual(res), psize);
 	}
 
 	return (rman_deactivate_resource(res));
@@ -693,3 +715,18 @@ macio_enable_wireless(device_t dev, bool enable)
 
 	return (0);
 }
+
+#if !defined(__powerpc64__) && defined(SMP)
+static void
+macio_freeze_timebase(device_t dev, bool freeze)
+{
+	struct macio_softc *sc = device_get_softc(dev);
+
+	if (freeze) {
+		bus_write_1(sc->sc_memr, sc->sc_timebase, 4);
+	} else {
+		bus_write_1(sc->sc_memr, sc->sc_timebase, 0);
+	}
+	bus_read_1(sc->sc_memr, sc->sc_timebase);
+}
+#endif

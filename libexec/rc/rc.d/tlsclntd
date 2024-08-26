@@ -1,6 +1,5 @@
 #!/bin/sh
 #
-# $FreeBSD: 4566ceb67abdc9550740752e8c7d422250c3095c $
 #
 
 # PROVIDE: tlsclntd

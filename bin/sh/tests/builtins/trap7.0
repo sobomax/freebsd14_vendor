@@ -1,3 +1,2 @@
-# $FreeBSD: 35529b80f4bf1eeb802d5dfd1a63454b2ea92d68 $
 
 [ "$(trap 'echo trapped' EXIT)" = trapped ]

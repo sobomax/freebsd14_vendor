@@ -1,4 +1,3 @@
-# $FreeBSD: 140135d43e66a44c704e6d7ff1f34a104c519eb4 $
 
 KMOD=	fdc
 

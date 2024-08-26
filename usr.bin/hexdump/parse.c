@@ -35,8 +35,6 @@ static char sccsid[] = "@(#)parse.c	8.1 (Berkeley) 6/6/93";
 #endif
 #endif /* not lint */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: f59f0d9b6356ea322a71ecce8a5853df0764d0b1 $");
-
 #include <sys/types.h>
 
 #include <err.h>
@@ -302,6 +300,9 @@ isint:				cs[2] = '\0';
 					break;
 				case 2:
 					pr->bcnt = 2;
+					break;
+				case 8:
+					pr->bcnt = 8;
 					break;
 				default:
 					p1[1] = '\0';

@@ -1,14 +1,11 @@
-# $FreeBSD: 6b264c5ab8717b2ee9f9c0c7bdd4792e5c7206ca $
 arm/mv/armada38x/armada38x.c	standard
 arm/mv/armadaxp/armadaxp.c	standard
 
 arm/mv/gpio.c			optional	gpio
 arm/mv/mv_common.c		standard
-arm/mv/mv_localbus.c		standard
 arm/mv/mv_armv7_machdep.c	standard
 arm/mv/mv_pci_ctrl.c		optional	pci | fdt
 arm/mv/mv_pci.c			optional	pci
-arm/mv/mv_ts.c			standard
 arm/mv/timer.c			standard
 
 arm/mv/mpic.c			standard
@@ -25,7 +22,7 @@ arm/mv/rtc.c			standard
 arm/mv/armadaxp/armadaxp_mp.c	optional	smp
 arm/mv/armadaxp/mptramp.S	optional	smp
 dev/cesa/cesa.c			optional	cesa
-dev/iicbus/twsi/mv_twsi.c	optional	twsi
+dev/iicbus/controller/twsi/mv_twsi.c	optional	twsi
 dev/mge/if_mge.c		optional	mge
 dev/neta/if_mvneta_fdt.c	optional	neta fdt
 dev/neta/if_mvneta.c		optional	neta mdio mii
@@ -36,3 +33,7 @@ dev/usb/controller/ehci_mv.c	optional	ehci
 dev/usb/controller/generic_xhci.c	optional	xhci
 dev/usb/controller/generic_xhci_fdt.c	optional	xhci
 dev/ahci/ahci_mv_fdt.c		optional	ahci
+
+arm/mv/clk/armada38x_coreclk.c	standard
+arm/mv/clk/armada38x_gen.c	standard
+arm/mv/clk/armada38x_gateclk.c	standard

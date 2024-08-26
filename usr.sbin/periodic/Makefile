@@ -1,4 +1,3 @@
-# $FreeBSD: 62a1cff105a25eaad9cf18898474258b858cc609 $
 
 PACKAGE=	periodic
 

@@ -1,7 +1,6 @@
 # Makefile.arm -- with config changes.
 # Copyright 1990 W. Jolitz
 #	from: @(#)Makefile.i386	7.1 5/10/91
-# $FreeBSD: 31dc542e8e6ce06fb0d31290be071901a765b94b $
 #
 # Makefile for FreeBSD
 #
@@ -30,12 +29,12 @@ S=	../../..
 .endif
 .include "$S/conf/kern.pre.mk"
 
-INCLUDES+= -I$S/contrib/libfdt -I$S/contrib/device-tree/include
+INCLUDES+= -I$S/contrib/libfdt -I$S/contrib/device-tree/include -I$$/dts/include
 
 LINUX_DTS_VERSION!=	awk '/freebsd,dts-version/ { sub(/;$$/,"", $$NF); print $$NF }' $S/dts/freebsd-compatible.dts
 CFLAGS += -DLINUX_DTS_VERSION=\"${LINUX_DTS_VERSION}\"
 
-.if !defined(DEBUG) && !defined(PROFLEVEL)
+.if !defined(DEBUG)
 STRIP_FLAGS = -S
 .endif
 

@@ -37,8 +37,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 6fd89be0f8c883309b35f51204309efb2a08f8c6 $");
-
 #include <sys/param.h>
 #include <sys/systm.h>
 #include <sys/namei.h>
@@ -109,6 +107,12 @@ cd9660_cmount(struct mntarg *ma, void *data, uint64_t flags)
 
 	ma = mount_argsu(ma, "from", args.fspec, MAXPATHLEN);
 	ma = mount_arg(ma, "export", &args.export, sizeof(args.export));
+	if (args.flags & ISOFSMNT_UID)
+		ma = mount_argf(ma, "uid", "%d", args.uid);
+	if (args.flags & ISOFSMNT_GID)
+		ma = mount_argf(ma, "gid", "%d", args.gid);
+	ma = mount_argf(ma, "mask", "%d", args.fmask);
+	ma = mount_argf(ma, "dirmask", "%d", args.dmask);
 	ma = mount_argsu(ma, "cs_disk", args.cs_disk, 64);
 	ma = mount_argsu(ma, "cs_local", args.cs_local, 64);
 	ma = mount_argf(ma, "ssector", "%u", args.ssector);
@@ -159,10 +163,10 @@ cd9660_mount(struct mount *mp)
 	 * Not an update, or updating the name: look up the name
 	 * and verify that it refers to a sensible block device.
 	 */
-	NDINIT(&ndp, LOOKUP, FOLLOW | LOCKLEAF, UIO_SYSSPACE, fspec, td);
+	NDINIT(&ndp, LOOKUP, FOLLOW | LOCKLEAF, UIO_SYSSPACE, fspec);
 	if ((error = namei(&ndp)))
 		return (error);
-	NDFREE(&ndp, NDF_ONLY_PNBUF);
+	NDFREE_PNBUF(&ndp);
 	devvp = ndp.ni_vp;
 
 	if (!vn_isdisk_error(devvp, &error)) {
@@ -202,9 +206,7 @@ cd9660_mount(struct mount *mp)
  * Common code for mount and mountroot
  */
 static int
-iso_mountfs(devvp, mp)
-	struct vnode *devvp;
-	struct mount *mp;
+iso_mountfs(struct vnode *devvp, struct mount *mp)
 {
 	struct iso_mnt *isomp = NULL;
 	struct buf *bp = NULL;
@@ -225,6 +227,7 @@ iso_mountfs(devvp, mp)
 	struct g_consumer *cp;
 	struct bufobj *bo;
 	char *cs_local, *cs_disk;
+	int v;
 
 	dev = devvp->v_rdev;
 	dev_ref(dev);
@@ -338,6 +341,13 @@ iso_mountfs(devvp, mp)
 		goto out;
 	}
 
+	if (logical_block_size < cp->provider->sectorsize) {
+		printf("cd9660: Unsupported logical block size %u\n",
+		    logical_block_size);
+		error = EINVAL;
+		goto out;
+	}
+
 	rootp = (struct iso_directory_record *)
 		(high_sierra?
 		 pri_sierra->root_directory_record:
@@ -387,12 +397,28 @@ iso_mountfs(devvp, mp)
 	isomp->im_mountp = mp;
 	isomp->im_dev = dev;
 	isomp->im_devvp = devvp;
+	isomp->im_fmask = isomp->im_dmask = ACCESSPERMS;
 
 	vfs_flagopt(mp->mnt_optnew, "norrip", &isomp->im_flags, ISOFSMNT_NORRIP);
 	vfs_flagopt(mp->mnt_optnew, "gens", &isomp->im_flags, ISOFSMNT_GENS);
 	vfs_flagopt(mp->mnt_optnew, "extatt", &isomp->im_flags, ISOFSMNT_EXTATT);
 	vfs_flagopt(mp->mnt_optnew, "nojoliet", &isomp->im_flags, ISOFSMNT_NOJOLIET);
 	vfs_flagopt(mp->mnt_optnew, "kiconv", &isomp->im_flags, ISOFSMNT_KICONV);
+
+	if (vfs_scanopt(mp->mnt_optnew, "uid", "%d", &v) == 1) {
+		isomp->im_flags |= ISOFSMNT_UID;
+		isomp->im_uid = v;
+	}
+	if (vfs_scanopt(mp->mnt_optnew, "gid", "%d", &v) == 1) {
+		isomp->im_flags |= ISOFSMNT_GID;
+		isomp->im_gid = v;
+	}
+	if (vfs_scanopt(mp->mnt_optnew, "mask", "%d", &v) == 1) {
+		isomp->im_fmask &= v;
+	}
+	if (vfs_scanopt(mp->mnt_optnew, "dirmask", "%d", &v) == 1) {
+		isomp->im_dmask &= v;
+	}
 
 	/* Check the Rock Ridge Extension support */
 	if (!(isomp->im_flags & ISOFSMNT_NORRIP)) {
@@ -500,9 +526,7 @@ out:
  * unmount system call
  */
 static int
-cd9660_unmount(mp, mntflags)
-	struct mount *mp;
-	int mntflags;
+cd9660_unmount(struct mount *mp, int mntflags)
 {
 	struct iso_mnt *isomp;
 	int error, flags = 0;
@@ -534,10 +558,7 @@ cd9660_unmount(mp, mntflags)
  * Return root of a filesystem
  */
 static int
-cd9660_root(mp, flags, vpp)
-	struct mount *mp;
-	int flags;
-	struct vnode **vpp;
+cd9660_root(struct mount *mp, int flags, struct vnode **vpp)
 {
 	struct iso_mnt *imp = VFSTOISOFS(mp);
 	struct iso_directory_record *dp =
@@ -556,9 +577,7 @@ cd9660_root(mp, flags, vpp)
  * Get filesystem statistics.
  */
 static int
-cd9660_statfs(mp, sbp)
-	struct mount *mp;
-	struct statfs *sbp;
+cd9660_statfs(struct mount *mp, struct statfs *sbp)
 {
 	struct iso_mnt *isomp;
 
@@ -586,11 +605,7 @@ cd9660_statfs(mp, sbp)
 
 /* ARGSUSED */
 static int
-cd9660_fhtovp(mp, fhp, flags, vpp)
-	struct mount *mp;
-	struct fid *fhp;
-	int flags;
-	struct vnode **vpp;
+cd9660_fhtovp(struct mount *mp, struct fid *fhp, int flags, struct vnode **vpp)
 {
 	struct ifid ifh;
 	struct iso_node *ip;
@@ -625,11 +640,7 @@ cd9660_fhtovp(mp, fhp, flags, vpp)
  * needed for anything other than nfsd, and who exports a mounted DVD over NFS?
  */
 static int
-cd9660_vget(mp, ino, flags, vpp)
-	struct mount *mp;
-	ino_t ino;
-	int flags;
-	struct vnode **vpp;
+cd9660_vget(struct mount *mp, ino_t ino, int flags, struct vnode **vpp)
 {
 
 	/*
@@ -649,9 +660,7 @@ cd9660_vget(mp, ino, flags, vpp)
 
 /* Use special comparator for full 64-bit ino comparison. */
 static int
-cd9660_vfs_hash_cmp(vp, pino)
-	struct vnode *vp;
-	void *pino;
+cd9660_vfs_hash_cmp(struct vnode *vp, void *pino)
 {
 	struct iso_node *ip;
 	cd_ino_t ino;
@@ -662,13 +671,8 @@ cd9660_vfs_hash_cmp(vp, pino)
 }
 
 int
-cd9660_vget_internal(mp, ino, flags, vpp, relocated, isodir)
-	struct mount *mp;
-	cd_ino_t ino;
-	int flags;
-	struct vnode **vpp;
-	int relocated;
-	struct iso_directory_record *isodir;
+cd9660_vget_internal(struct mount *mp, cd_ino_t ino, int flags,
+    struct vnode **vpp, int relocated, struct iso_directory_record *isodir)
 {
 	struct iso_mnt *imp;
 	struct iso_node *ip;
@@ -843,6 +847,7 @@ cd9660_vget_internal(mp, ino, flags, vpp, relocated, isodir)
 	 * XXX need generation number?
 	 */
 
+	vn_set_state(vp, VSTATE_CONSTRUCTED);
 	*vpp = vp;
 	return (0);
 }

@@ -53,8 +53,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 53038eb0d6ca10def676818423eeaf0a7fd847c2 $");
-
 #include <dev/isci/scil/sci_util.h>
 
 void scic_word_copy_with_swap(

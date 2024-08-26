@@ -1,4 +1,3 @@
-# $FreeBSD: dc3748e2627e06893853680d9c0f7e57e53a3be5 $
 
 SCRIPTS= man.sh
 LINKS=	${BINDIR}/man ${BINDIR}/manpath

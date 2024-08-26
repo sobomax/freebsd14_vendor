@@ -28,8 +28,6 @@
  * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
- *
- * $FreeBSD: 69e801191db4508a9da5190a32eb57c56a793d42 $
  */
 #include <sys/cdefs.h>
 #include <sys/param.h>
@@ -107,7 +105,7 @@ getpagesize(void)
 	return (page_size);
 }
 
-extern int __sys___sysctl(const int *name, u_int namelen, void *oldp,
+int __sys___sysctl(const int *name, u_int namelen, void *oldp,
     size_t *oldlenp, const void *newp, size_t newlen);
 
 int

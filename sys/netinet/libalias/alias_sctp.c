@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2008
  *	Swinburne University of Technology, Melbourne, Australia.
@@ -70,7 +70,6 @@
  * - Dynamic control of hash-table size
  */
 
-/* $FreeBSD: 41d1d5337a850e61576c3a99e5c6938b54314cb1 $ */
 
 #ifdef _KERNEL
 #include <machine/stdarg.h>
@@ -1507,15 +1506,9 @@ RmGlobalIPAddresses(struct sctp_nat_msg *sm, struct sctp_nat_assoc *assoc, int d
 	struct sctp_asconf_addrv4_param *asconf_ipv4_param;
 	struct sctp_paramhdr *param;
 	struct sctp_GlobalAddress *G_Addr, *G_Addr_tmp;
-	struct in_addr g_addr;
 	int bytes_left;
 	int param_size;
 	int param_count;
-
-	if (direction == SN_TO_GLOBAL)
-		g_addr = sm->ip_hdr->ip_dst;
-	else
-		g_addr = sm->ip_hdr->ip_src;
 
 	bytes_left = sm->chunk_length;
 	param_count = 1;
@@ -1958,7 +1951,7 @@ UP_process(struct libalias *la, int direction, struct sctp_nat_assoc *assoc, str
 				RmGlobalIPAddresses(sm, assoc, direction);
 				break;
 			}
-		/* fall through to default */
+		/* FALLTHROUGH */
 	default:
 		sctp_ResetTimeOut(la,assoc, SN_U_T(la));
 		return (SN_NAT_PKT);  /* forward packet */

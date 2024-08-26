@@ -38,8 +38,6 @@
  * can do whatever you want with this stuff. If we meet some day, and you think
  * this stuff is worth it, you can buy me a beer in return.   Poul-Henning Kamp
  * ----------------------------------------------------------------------------
- *
- * $FreeBSD: 662aa6e44611d667e730249c8aa242a59ce7843d $
  */
 
 /*

@@ -35,7 +35,6 @@
  * SUCH DAMAGE.
  *
  *	@(#)ffs_inode.c	8.5 (Berkeley) 12/30/93
- * $FreeBSD: 090caf783a3b77f3f44a2f0e22695c499fa99d3c $
  */
 
 #include <sys/param.h>
@@ -233,7 +232,9 @@ ext2_ind_truncate(struct vnode *vp, off_t length, int flags, struct ucred *cred,
 	struct inode *oip;
 	e4fs_daddr_t bn, lbn, lastiblock[EXT2_NIADDR], indir_lbn[EXT2_NIADDR];
 	uint32_t oldblks[EXT2_NDADDR + EXT2_NIADDR];
+#ifdef INVARIANTS
 	uint32_t newblks[EXT2_NDADDR + EXT2_NIADDR];
+#endif
 	struct m_ext2fs *fs;
 	struct buf *bp;
 	int offset, size, level;
@@ -349,11 +350,15 @@ ext2_ind_truncate(struct vnode *vp, off_t length, int flags, struct ucred *cred,
 	 * when we are done.
 	 */
 	for (i = 0; i < EXT2_NDADDR; i++) {
+#ifdef INVARIANTS
 		newblks[i] = oip->i_db[i];
+#endif
 		oip->i_db[i] = oldblks[i];
 	}
 	for (i = 0; i < EXT2_NIADDR; i++) {
+#ifdef INVARIANTS
 		newblks[EXT2_NDADDR + i] = oip->i_ib[i];
+#endif
 		oip->i_ib[i] = oldblks[EXT2_NDADDR + i];
 	}
 	oip->i_size = osize;
@@ -581,6 +586,7 @@ ext2_truncate(struct vnode *vp, off_t length, int flags, struct ucred *cred,
 		error = ext2_ext_truncate(vp, length, flags, cred, td);
 	else
 		error = ext2_ind_truncate(vp, length, flags, cred, td);
+	cluster_init_vn(&ip->i_clusterw);
 
 	return (error);
 }
@@ -604,8 +610,7 @@ ext2_inactive(struct vop_inactive_args *ap)
 	if (ip->i_nlink <= 0) {
 		ext2_extattr_free(ip);
 		error = ext2_truncate(vp, (off_t)0, 0, NOCRED, td);
-		if (!(ip->i_flag & IN_E4EXTENTS))
-			ip->i_rdev = 0;
+		ip->i_rdev = 0;
 		mode = ip->i_mode;
 		ip->i_mode = 0;
 		ip->i_flag |= IN_CHANGE | IN_UPDATE;

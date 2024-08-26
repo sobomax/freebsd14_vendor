@@ -1,6 +1,7 @@
-# $FreeBSD: fe9883f97a738215b4d6a2829ebfcb37d7969817 $
 
 .include <src.opts.mk>
+
+PACKAGE=	elftoolchain
 
 ELFTCDIR=	${SRCTOP}/contrib/elftoolchain
 ADDR2LINEDIR=	${ELFTCDIR}/addr2line

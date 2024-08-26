@@ -1,4 +1,3 @@
-/* $FreeBSD: ba25869389bbca1a81cd378825994a9db65fbd54 $ */
 /* Do not modify. This file is auto-generated from ppc-mont.pl. */
 .machine	"any"
 .abiversion	2

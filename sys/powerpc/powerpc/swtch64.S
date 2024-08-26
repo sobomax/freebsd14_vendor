@@ -1,4 +1,3 @@
-/* $FreeBSD: fe59a166f3cb42796ee4543497c90df5336ee944 $ */
 /* $NetBSD: locore.S,v 1.24 2000/05/31 05:09:17 thorpej Exp $ */
 
 /*-
@@ -130,6 +129,8 @@ ENTRY(cpu_switch)
 	mr	%r17,%r6		/* and the PCB */
 	
 	stdu	%r1,-48(%r1)
+
+	/* Keep this next section in sync with cpu_save_thread_regs()! */
 
 	lwz	%r18, PCB_FLAGS(%r17)
 	andi.	%r7, %r18, PCB_CFSCR

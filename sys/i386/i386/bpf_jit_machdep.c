@@ -32,8 +32,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: a2d691d1a5b7b50b20f8339a60ca5cd3d2565dd8 $");
-
 #ifdef _KERNEL
 #include "opt_bpf.h"
 #include <sys/param.h>

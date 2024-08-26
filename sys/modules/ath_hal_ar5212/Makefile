@@ -26,7 +26,6 @@
 # ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF
 # THE POSSIBILITY OF SUCH DAMAGES.
 #
-# $FreeBSD: c9cc1ae5f067329d4b724f6dee66717e299d5f85 $
 #
 
 .PATH:	${SRCTOP}/sys/dev/ath
@@ -58,3 +57,5 @@ CFLAGS+=  -I. -I${SRCTOP}/sys/dev/ath -I${SRCTOP}/sys/dev/ath/ath_hal
 CFLAGS+=  -I. -I${SRCTOP}/sys/contrib/dev/ath/ath_hal/
 
 .include <bsd.kmod.mk>
+
+CWARNFLAGS+=	${NO_WUNUSED_BUT_SET_VARIABLE}

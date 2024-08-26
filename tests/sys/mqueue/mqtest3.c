@@ -1,4 +1,3 @@
-/* $FreeBSD: 3e20c4d458d156214e8186c7ae4b601a0fd3b702 $ */
 
 #include <sys/types.h>
 #include <sys/select.h>

@@ -1,6 +1,3 @@
-#
-# $FreeBSD: cb63592804d3b8a467c2d56914cfccff5d422f9c $
-#
 # This Makefile provides an easy way to generate the configuration
 # file and database maps for the sendmail(8) daemon.
 #
@@ -101,7 +98,7 @@ SENDMAIL_CF_DIR?=	/usr/src/contrib/sendmail/cf
 #
 # The sendmail startup script
 #
-SENDMAIL_START_SCRIPT?=	/etc/rc.sendmail
+SENDMAIL_START_SCRIPT?=	/etc/rc.d/sendmail
 
 #
 # Some useful programs we need.

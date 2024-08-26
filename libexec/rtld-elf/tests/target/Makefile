@@ -1,9 +1,8 @@
-# $FreeBSD: 22e86fa2121263df65db5eb8cc14e18f4d2e8ace $
 
 .include <bsd.own.mk>
 
 PROG=		target
-BINDIR=		${TESTSBASE}/libexec/rtld-elf
+BINDIR=		${TESTSDIR}
 
 WARNS?=		3
 CFLAGS+=	-I${.CURDIR}/../libpythagoras

@@ -5,7 +5,6 @@
 # such as options or devices that are not specified in any NOTES files
 # or MI devices specified in MD NOTES files.
 #
-# $FreeBSD: 8e233870b261c47e626f9a2c4be0be1eeaf2e185 $
 
 from __future__ import print_function
 

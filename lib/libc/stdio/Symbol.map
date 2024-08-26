@@ -1,7 +1,3 @@
-/*
- * $FreeBSD: 4926b6f357296c59aa29ea7e29c6e50d38656a88 $
- */
-
 FBSD_1.0 {
 	flockfile;
 	ftrylockfile;

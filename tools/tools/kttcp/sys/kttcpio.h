@@ -1,4 +1,3 @@
-/*	$FreeBSD: 1375f6ef6c9db5e3ed6d692f7809de78d2c506de $	*/
 /*	$NetBSD$	*/
 
 /*

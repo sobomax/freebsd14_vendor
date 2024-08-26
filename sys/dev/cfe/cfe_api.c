@@ -49,8 +49,6 @@
     ********************************************************************* */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 4bfc8ce83009e83d11a648a7c0d6977e23b66bae $");
-
 #include <dev/cfe/cfe_api.h>
 #include <dev/cfe/cfe_api_int.h>
 

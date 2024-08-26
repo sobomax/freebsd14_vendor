@@ -24,8 +24,6 @@
 .\" any improvements or extensions that they make and grant Carnegie Mellon
 .\" the rights to redistribute these changes.
 .\"
-.\" $FreeBSD: 8ef78cc8b156b4bd2632c46d5b0b99c436585262 $
-.\"
 .Dd November 10, 2022
 .Dt DDB 4
 .Os
@@ -60,7 +58,7 @@ representation, define:
 To enable the
 .Xr gdb 4
 backend, so that remote debugging with
-.Xr kgdb 1
+.Xr kgdb 1 Pq Pa ports/devel/gdb
 is possible, include:
 .Bd -ragged -offset indent
 .Cd options GDB
@@ -69,7 +67,7 @@ is possible, include:
 The
 .Nm
 kernel debugger is an interactive debugger with a syntax inspired by
-.Xr gdb 1 .
+.Xr gdb 1 Pq Pa ports/devel/gdb .
 If linked into the running kernel,
 it can be invoked locally with the
 .Ql debug
@@ -1008,7 +1006,6 @@ If the
 modifier is specified, the register contents of the thread's previous
 trapframe are displayed instead.
 Usually, this corresponds to the saved state from userspace.
-.Pp
 .\"
 .Pp
 .It Ic show Cm rman Ar addr
@@ -1223,7 +1220,6 @@ Shows information about lock acquisition coming from the
 .Xr witness 4
 subsystem.
 .El
-.Pp
 .Ss OFFLINE DEBUGGING COMMANDS
 .Bl -tag -width indent -compact
 .It Ic dump
@@ -1233,7 +1229,7 @@ Initiate a kernel core dump to the device(s) configured by
 .It Ic gdb
 Switches to remote GDB mode.
 In remote GDB mode, another machine is required that runs
-.Xr gdb 1
+.Xr gdb 1 Pq Pa ports/devel/gdb
 using the remote debug feature, with a connection to the serial
 console port on the target machine.
 .Pp
@@ -1308,7 +1304,7 @@ facilities, allowing scripted debugging output to be captured and
 committed to disk as part of a textdump for later analysis.
 The contents of the capture buffer may also be inspected in a kernel core dump
 using
-.Xr kgdb 1 .
+.Xr kgdb 1 Pq Pa ports/devel/gdb .
 .Pp
 .It Ic run
 .It Ic script
@@ -1511,10 +1507,6 @@ The kernel debugger was entered as a result of an assertion failure in the
 .Xr mac_test 4
 module of the
 TrustedBSD MAC Framework.
-.It Va kdb.enter.ndis
-The kernel debugger was entered as a result of an
-.Xr ndis 4
-breakpoint event.
 .It Va kdb.enter.netgraph
 The kernel debugger was entered as a result of a
 .Xr netgraph 4
@@ -1614,6 +1606,19 @@ The debugger can be entered by setting
 .Xr sysctl 8
 .Va debug.kdb.enter
 to 1.
+.Pp
+Output can be interrupted, paused, and resumed with the control
+characters CTRL-C, CTRL-S, and CTRL-Q.
+Because these control characters are received as in-band data from the
+console, there is an input buffer, and once that buffer fills
+.Nm
+must either stop responding to control characters or drop additional
+input while continuing to search for control characters.
+This behavior is controlled by the tunable
+.Xr sysctl 8
+.Va debug.ddb.prioritize_control_input ,
+which defaults to 1.
+The input buffer size is 512 bytes.
 .Sh FILES
 Header files mentioned in this manual page can be found below
 .Pa /usr/include
@@ -1632,13 +1637,13 @@ directory.
 .Pa sys/vnode.h
 .El
 .Sh SEE ALSO
-.Xr gdb 1 ,
-.Xr kgdb 1 ,
+.Xr gdb 1 Pq Pa ports/devel/gdb ,
+.Xr kgdb 1 Pq Pa ports/devel/gdb ,
 .Xr acpi 4 ,
 .Xr CAM 4 ,
 .Xr gdb 4 ,
+.Xr mac_ddb 4 ,
 .Xr mac_test 4 ,
-.Xr ndis 4 ,
 .Xr netgraph 4 ,
 .Xr textdump 4 ,
 .Xr witness 4 ,

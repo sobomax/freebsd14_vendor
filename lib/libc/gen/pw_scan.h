@@ -29,7 +29,6 @@
  * SUCH DAMAGE.
  *
  *	@(#)pw_scan.h	8.1 (Berkeley) 4/1/94
- * $FreeBSD: b56703677ac0c9ab353798def70bee1293e8f683 $
  */
 
 #define _PWSCAN_MASTER 0x01

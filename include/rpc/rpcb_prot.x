@@ -1,6 +1,4 @@
 %/*-
-% * $FreeBSD: a34bcc12502a8c037c14564496f6f19f8247a2d9 $
-% *
 % * Copyright (c) 2009, Sun Microsystems, Inc.
 % * All rights reserved.
 % *

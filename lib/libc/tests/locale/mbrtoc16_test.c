@@ -30,9 +30,6 @@
  * Test program for mbrtoc16() as specified by ISO/IEC 9899:2011.
  */
 
-#include <sys/cdefs.h>
-__FBSDID("$FreeBSD: a6289e1004cae33ef0a16b950c614e0d1c8c5794 $");
-
 #include <errno.h>
 #include <limits.h>
 #include <locale.h>

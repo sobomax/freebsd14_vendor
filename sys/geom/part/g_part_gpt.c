@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2002, 2005-2007, 2011 Marcel Moolenaar
  * All rights reserved.
@@ -27,8 +27,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 702474e23cd072584661461e6b871ff9810d843a $");
-
 #include <sys/param.h>
 #include <sys/bio.h>
 #include <sys/diskmbr.h>
@@ -105,7 +103,8 @@ struct g_part_gpt_entry {
 
 static void g_gpt_printf_utf16(struct sbuf *, uint16_t *, size_t);
 static void g_gpt_utf8_to_utf16(const uint8_t *, uint16_t *, size_t);
-static void g_gpt_set_defaults(struct g_part_table *, struct g_provider *);
+static void g_gpt_set_defaults(struct g_part_table *, struct g_provider *,
+    struct g_part_parms *);
 
 static int g_part_gpt_add(struct g_part_table *, struct g_part_entry *,
     struct g_part_parms *);
@@ -719,7 +718,7 @@ g_part_gpt_create(struct g_part_table *basetable, struct g_part_parms *gpp)
 	table->hdr->hdr_entries = basetable->gpt_entries;
 	table->hdr->hdr_entsz = sizeof(struct gpt_ent);
 
-	g_gpt_set_defaults(basetable, pp);
+	g_gpt_set_defaults(basetable, pp, gpp);
 	return (0);
 }
 
@@ -744,6 +743,15 @@ g_part_gpt_destroy(struct g_part_table *basetable, struct g_part_parms *gpp)
 	    table->lba[GPT_ELT_SECHDR] == pp->mediasize / pp->sectorsize - 1)
 		basetable->gpt_smtail |= 1;
 	return (0);
+}
+
+static void
+g_part_gpt_efimedia(struct g_part_gpt_entry *entry, struct sbuf *sb)
+{
+	sbuf_printf(sb, "HD(%d,GPT,", entry->base.gpe_index);
+	sbuf_printf_uuid(sb, &entry->ent.ent_uuid);
+	sbuf_printf(sb, ",%#jx,%#jx)", (intmax_t)entry->base.gpe_start,
+	    (intmax_t)(entry->base.gpe_end - entry->base.gpe_start + 1));
 }
 
 static void
@@ -780,10 +788,7 @@ g_part_gpt_dumpconf(struct g_part_table *table, struct g_part_entry *baseentry,
 		sbuf_printf_uuid(sb, &entry->ent.ent_uuid);
 		sbuf_cat(sb, "</rawuuid>\n");
 		sbuf_printf(sb, "%s<efimedia>", indent);
-		sbuf_printf(sb, "HD(%d,GPT,", entry->base.gpe_index);
-		sbuf_printf_uuid(sb, &entry->ent.ent_uuid);
-		sbuf_printf(sb, ",%#jx,%#jx)", (intmax_t)entry->base.gpe_start,
-		    (intmax_t)(entry->base.gpe_end - entry->base.gpe_start + 1));
+		g_part_gpt_efimedia(entry, sb);
 		sbuf_cat(sb, "</efimedia>\n");
 	} else {
 		/* confxml: scheme information */
@@ -1079,7 +1084,7 @@ g_part_gpt_recover(struct g_part_table *basetable)
 	table = (struct g_part_gpt_table *)basetable;
 	pp = LIST_FIRST(&basetable->gpt_gp->consumer)->provider;
 	gpt_create_pmbr(table, pp);
-	g_gpt_set_defaults(basetable, pp);
+	g_gpt_set_defaults(basetable, pp, NULL);
 	basetable->gpt_corrupt = 0;
 	return (0);
 }
@@ -1296,7 +1301,8 @@ g_part_gpt_write(struct g_part_table *basetable, struct g_consumer *cp)
 }
 
 static void
-g_gpt_set_defaults(struct g_part_table *basetable, struct g_provider *pp)
+g_gpt_set_defaults(struct g_part_table *basetable, struct g_provider *pp,
+	struct g_part_parms *gpp)
 {
 	struct g_part_entry *baseentry;
 	struct g_part_gpt_entry *entry;
@@ -1330,14 +1336,29 @@ g_gpt_set_defaults(struct g_part_table *basetable, struct g_provider *pp)
 		if (entry->ent.ent_lba_end > max)
 			max = entry->ent.ent_lba_end;
 	}
-	spb = 4096 / pp->sectorsize;
-	if (spb > 1) {
-		lba = start + ((start % spb) ? spb - start % spb : 0);
-		if (lba <= min)
-			start = lba;
-		lba = end - (end + 1) % spb;
-		if (max <= lba)
-			end = lba;
+	/*
+	 * Don't force alignment of any kind whatsoever on resize, restore or
+	 * recover. resize doesn't go through this path, recover has a NULL gpp
+	 * and restore has flags == restore (maybe with an appended 'C' to
+	 * commit the operation). For these operations, we have to trust the
+	 * user knows what they are doing.
+	 *
+	 * Otherwise it some flavor of creation of a new partition, so we align
+	 * to a 4k offset on the drive, to make 512e/4kn drives more performant
+	 * by default.
+	 */
+	if (gpp == NULL ||
+	    (gpp->gpp_parms & G_PART_PARM_FLAGS) == 0 ||
+	    strstr(gpp->gpp_flags, "restore") == NULL) {
+		spb = 4096 / pp->sectorsize;
+		if (spb > 1) {
+			lba = start + ((start % spb) ? spb - start % spb : 0);
+			if (lba <= min)
+				start = lba;
+			lba = end - (end + 1) % spb;
+			if (max <= lba)
+				end = lba;
+		}
 	}
 	table->hdr->hdr_lba_start = start;
 	table->hdr->hdr_lba_end = end;

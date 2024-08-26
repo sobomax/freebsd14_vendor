@@ -28,8 +28,6 @@
  */
 
 #include <machine/asm.h>
-__FBSDID("$FreeBSD: 0163ea1be2cd9ca9a7a807aae5f8598d1b4a61a1 $");
-
 #ifndef FN_NAME
 #define FN_NAME				__memcpy
 WEAK_REFERENCE(__memcpy, memcpy);

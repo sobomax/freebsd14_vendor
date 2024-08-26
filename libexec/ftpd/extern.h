@@ -29,7 +29,6 @@
  * SUCH DAMAGE.
  *
  *	@(#)extern.h	8.2 (Berkeley) 4/4/94
- * $FreeBSD: aa48ea67e320273dfa82db428ac6b10972b10b6f $
  */
 
 #include <sys/types.h>

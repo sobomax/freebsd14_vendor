@@ -1,6 +1,3 @@
-#	$FreeBSD: fa3890d8393b9dc00be89f201ea7c5689f0e5b26 $
-#
-
 MSDOS=		${SRCTOP}/sys/fs/msdosfs
 MSDOS_NEWFS=	${SRCTOP}/sbin/newfs_msdos
 

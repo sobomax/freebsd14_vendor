@@ -1,4 +1,3 @@
-/* $FreeBSD: 471e7df4d6737b4bfd4ac253408fbe5ce6df0d4b $ */
 /** @file
   GUID is for MTC variable.
 

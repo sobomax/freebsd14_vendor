@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2000 Doug Rabson
  * Copyright (c) 2000 Ruslan Ermilov
@@ -40,8 +40,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 0fcc10058181ccfbf06c2533bcddaf29f92578b3 $");
-
 #if 0
 #define	KTR_AGP_I810	KTR_DEV
 #else
@@ -1189,7 +1187,7 @@ agp_i810_install_gatt(device_t dev)
 		sc->dcache_size = 0;
 
 	/* According to the specs the gatt on the i810 must be 64k. */
-	sc->gatt->ag_virtual = (void *)kmem_alloc_contig(64 * 1024, M_NOWAIT |
+	sc->gatt->ag_virtual = kmem_alloc_contig(64 * 1024, M_NOWAIT |
 	    M_ZERO, 0, ~0, PAGE_SIZE, 0, VM_MEMATTR_WRITE_COMBINING);
 	if (sc->gatt->ag_virtual == NULL) {
 		if (bootverbose)
@@ -1329,7 +1327,7 @@ agp_i810_deinstall_gatt(device_t dev)
 
 	sc = device_get_softc(dev);
 	bus_write_4(sc->sc_res[0], AGP_I810_PGTBL_CTL, 0);
-	kmem_free((vm_offset_t)sc->gatt->ag_virtual, 64 * 1024);
+	kmem_free(sc->gatt->ag_virtual, 64 * 1024);
 }
 
 static void
@@ -1924,9 +1922,7 @@ static driver_t agp_i810_driver = {
 	sizeof(struct agp_i810_softc),
 };
 
-static devclass_t agp_devclass;
-
-DRIVER_MODULE(agp_i810, vgapci, agp_i810_driver, agp_devclass, 0, 0);
+DRIVER_MODULE(agp_i810, vgapci, agp_i810_driver, 0, 0);
 MODULE_DEPEND(agp_i810, agp, 1, 1, 1);
 MODULE_DEPEND(agp_i810, pci, 1, 1, 1);
 
@@ -2202,7 +2198,9 @@ int
 agp_intel_gtt_map_memory(device_t dev, vm_page_t *pages, u_int num_entries,
     struct sglist **sg_list)
 {
+#if 0
 	struct agp_i810_softc *sc;
+#endif
 	struct sglist *sg;
 	int i;
 #if 0
@@ -2212,7 +2210,9 @@ agp_intel_gtt_map_memory(device_t dev, vm_page_t *pages, u_int num_entries,
 
 	if (*sg_list != NULL)
 		return (0);
+#if 0
 	sc = device_get_softc(dev);
+#endif
 	sg = sglist_alloc(num_entries, M_WAITOK /* XXXKIB */);
 	for (i = 0; i < num_entries; i++) {
 		sg->sg_segs[i].ss_paddr = VM_PAGE_TO_PHYS(pages[i]);

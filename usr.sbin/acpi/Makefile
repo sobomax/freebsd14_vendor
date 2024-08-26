@@ -1,6 +1,5 @@
 # Makefile for acpi tools
 # $Id: Makefile,v 1.1 2000/07/14 18:16:22 iwasaki Exp $
-# $FreeBSD: 8190bc7c3037fe6b4b99a2886b1239703d4e8724 $
 
 SUBDIR= acpiconf acpidb acpidump iasl
 

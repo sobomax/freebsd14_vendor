@@ -1,4 +1,3 @@
-# $FreeBSD: 14959ef82d4faea5a4c18e506e9e8d45e1a49baf $
 
 .PATH: ${SRCTOP}/sys/dev/nvdimm
 

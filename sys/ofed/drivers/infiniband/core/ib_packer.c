@@ -34,8 +34,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: d046c8c0f5576d02d94652e1b13383242bec22f3 $");
-
 #include <linux/string.h>
 
 #include <rdma/ib_pack.h>

@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2009-2013 The FreeBSD Foundation
  * Copyright (c) 2013-2015 Mariusz Zaborski <oshogbo@FreeBSD.org>
@@ -31,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 31ab62abeb670208654e7178f0ae1f04fcc7f6bf $");
+__FBSDID("$FreeBSD: 57343f953e94c80da0c161a8ad196d78ae7ff835 $");
 
 #include <sys/param.h>
 #include <sys/endian.h>
@@ -1277,10 +1277,16 @@ nvlist_recv(int sock, int flags)
 	struct nvlist_header nvlhdr;
 	nvlist_t *nvl, *ret;
 	unsigned char *buf;
-	size_t nfds, size, i;
-	int *fds;
+	size_t nfds, size, i, offset;
+	int *fds, soflags, sotype;
+	socklen_t solen;
 
-	if (buf_recv(sock, &nvlhdr, sizeof(nvlhdr)) == -1)
+	solen = sizeof(sotype);
+	if (getsockopt(sock, SOL_SOCKET, SO_TYPE, &sotype, &solen) != 0)
+		return (NULL);
+
+	soflags = sotype == SOCK_DGRAM ? MSG_PEEK : 0;
+	if (buf_recv(sock, &nvlhdr, sizeof(nvlhdr), soflags) == -1)
 		return (NULL);
 
 	if (!nvlist_check_header(&nvlhdr))
@@ -1293,12 +1299,17 @@ nvlist_recv(int sock, int flags)
 	if (buf == NULL)
 		return (NULL);
 
-	memcpy(buf, &nvlhdr, sizeof(nvlhdr));
-
 	ret = NULL;
 	fds = NULL;
 
-	if (buf_recv(sock, buf + sizeof(nvlhdr), size - sizeof(nvlhdr)) == -1)
+	if (sotype == SOCK_DGRAM)
+		offset = 0;
+	else {
+		memcpy(buf, &nvlhdr, sizeof(nvlhdr));
+		offset = sizeof(nvlhdr);
+	}
+
+	if (buf_recv(sock, buf + offset, size - offset, 0) == -1)
 		goto out;
 
 	if (nfds > 0) {

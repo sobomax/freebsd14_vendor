@@ -1,4 +1,3 @@
-dnl $FreeBSD: 9e7b57661ff28b41f8421f862b11cfc7b1b24ce5 $
 dnl $OpenBSD: src/regress/usr.bin/m4/gnueval.m4,v 1.1 2012/04/12 16:58:15 espie Exp $
 dnl exponentiation is right associative
 eval(`4**2**3')

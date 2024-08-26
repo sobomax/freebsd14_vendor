@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2017,	Jeffrey Roberson <jeff@freebsd.org>
  * All rights reserved.
@@ -28,8 +28,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 748770c83449b25fcc6a3f66cdbf2b84b49722b4 $");
-
 #include "opt_vm.h"
 
 #include <sys/param.h>

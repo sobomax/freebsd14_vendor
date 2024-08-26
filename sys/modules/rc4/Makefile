@@ -1,4 +1,3 @@
-# $FreeBSD: 23cf6480d56b0af68abdf062e1900a81bae47578 $
 
 .PATH: ${SRCTOP}/sys/crypto/rc4
 

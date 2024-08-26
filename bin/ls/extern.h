@@ -29,7 +29,6 @@
  * SUCH DAMAGE.
  *
  *	from: @(#)extern.h	8.1 (Berkeley) 5/31/93
- * $FreeBSD: 0e577a8854744ce5235021e7e5614dc2c5a03e89 $
  */
 
 #include <stdbool.h>

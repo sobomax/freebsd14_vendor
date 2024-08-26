@@ -1,8 +1,4 @@
 /*
- * $FreeBSD: 9150f835ae0c901584fc99591a854ae993a00f45 $
- */
-
-/*
  * It'd be nice to automatically generate the syscall symbols, but we
  * don't know to what version they will eventually belong to, so for now
  * it has to be manual.
@@ -34,6 +30,7 @@ FBSD_1.0 {
 	__setugid;
 	__syscall;
 	__sysctl;
+	_exit;
 	_umtx_op;
 	abort2;
 	accept;
@@ -287,6 +284,7 @@ FBSD_1.0 {
 	utrace;
 	uuidgen;
 	vadvise;
+	vfork;
 	wait4;
 	write;
 	writev;
@@ -411,14 +409,23 @@ FBSD_1.6 {
 	fhreadlink;
 	getfhat;
 	funlinkat;
-	memfd_create;
 	shm_create_largepage;
 	shm_rename;
 };
 
 FBSD_1.7 {
-	 _Fork;
+	_Fork;
+	fspacectl;
+	kqueuex;
+	membarrier;
 	swapoff;
+	timerfd_create;
+	timerfd_gettime;
+	timerfd_settime;
+};
+
+FBSD_1.8 {
+	 kcmp;
 };
 
 FBSDprivate_1.0 {
@@ -494,10 +501,12 @@ FBSDprivate_1.0 {
 	__sys_aio_error;
 	__sys_aio_fsync;
 	__sys_aio_read;
+	__sys_aio_readv;
 	__sys_aio_return;
 	__sys_aio_suspend;
 	__sys_aio_waitcomplete;
 	__sys_aio_write;
+	__sys_aio_writev;
 	_audit;
 	__sys_audit;
 	_auditctl;

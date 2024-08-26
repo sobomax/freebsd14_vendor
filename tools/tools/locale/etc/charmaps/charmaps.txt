@@ -1,4 +1,3 @@
-$FreeBSD: d8f8bb8190b346fc6c35b7024ff627db3c391823 $
 
 Sources:
 

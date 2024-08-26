@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2019 Oleksandr Tymoshenko <gonzo@FreeBSD.org>
  *
@@ -23,13 +23,9 @@
  * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
- *
- * $FreeBSD: a5f0d93263d87d7d7fcd97d0f6458f5ce75eade5 $
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: a5f0d93263d87d7d7fcd97d0f6458f5ce75eade5 $");
-
 #include <sys/param.h>
 #include <sys/systm.h>
 #include <sys/bus.h>
@@ -92,6 +88,7 @@ __FBSDID("$FreeBSD: a5f0d93263d87d7d7fcd97d0f6458f5ce75eade5 $");
 static struct ofw_compat_data compat_data[] = {
 	{ "rockchip,rk3328-spi",		1 },
 	{ "rockchip,rk3399-spi",		1 },
+	{ "rockchip,rk3568-spi",		1 },
 	{ NULL,					0 }
 };
 
@@ -474,9 +471,7 @@ static driver_t rk_spi_driver = {
 	sizeof(struct rk_spi_softc),
 };
 
-static devclass_t rk_spi_devclass;
-
-DRIVER_MODULE(rk_spi, simplebus, rk_spi_driver, rk_spi_devclass, 0, 0);
-DRIVER_MODULE(ofw_spibus, rk_spi, ofw_spibus_driver, ofw_spibus_devclass, 0, 0);
+DRIVER_MODULE(rk_spi, simplebus, rk_spi_driver, 0, 0);
+DRIVER_MODULE(ofw_spibus, rk_spi, ofw_spibus_driver, 0, 0);
 MODULE_DEPEND(rk_spi, ofw_spibus, 1, 1, 1);
 OFWBUS_PNP_INFO(compat_data);

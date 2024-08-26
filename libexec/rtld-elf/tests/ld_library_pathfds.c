@@ -21,8 +21,6 @@
  * THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- *
- * $FreeBSD: bc0627d4c3d59490970fc9a462432e29cf5d6520 $
  */
 
 #include <atf-c.h>
@@ -159,12 +157,12 @@ static void
 setup(struct descriptors *dp, const atf_tc_t *tc)
 {
 
-	dp->testdir = opendir(atf_tc_get_config_var(tc, "srcdir"));
+	dp->testdir = opendir_fd(atf_tc_get_config_var(tc, "srcdir"));
 	ATF_REQUIRE(dp->testdir >= 0);
 	ATF_REQUIRE(
 	    (dp->binary = openat(dp->testdir, TARGET_ELF_NAME, O_RDONLY)) >= 0);
 
-	ATF_REQUIRE((dp->root = opendir("/")) >= 0);
+	ATF_REQUIRE((dp->root = opendir_fd("/")) >= 0);
 	ATF_REQUIRE((dp->etc = opendirat(dp->root, "etc")) >= 0);
 	ATF_REQUIRE((dp->usr = opendirat(dp->root, "usr")) >= 0);
 }

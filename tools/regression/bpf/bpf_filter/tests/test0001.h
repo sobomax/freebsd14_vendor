@@ -1,7 +1,5 @@
 /*-
  * Test 0001:	Catch illegal instruction.
- *
- * $FreeBSD: 5640f9a1cb22568d1a3988c25fc24f9b3068fa84 $
  */
 
 /* BPF program */

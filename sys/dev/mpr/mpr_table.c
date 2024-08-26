@@ -25,8 +25,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 7bc629be7335a9a765f5fdbd36f40bb19c8b53e5 $");
-
 /* Debugging tables for MPT2 */
 
 /* TODO Move headers to mprvar */

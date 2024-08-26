@@ -24,9 +24,6 @@
  * SUCH DAMAGE.
  */
 
-#include <sys/cdefs.h>
-__FBSDID("$FreeBSD: defa3c73baaddbcac230c4ad5a270e3e54b6554f $");
-
 #define _WANT_KERNEL_ERRNO	1
 #include <errno.h>
 

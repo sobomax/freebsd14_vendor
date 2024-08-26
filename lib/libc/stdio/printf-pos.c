@@ -35,9 +35,6 @@
 #if defined(LIBC_SCCS) && !defined(lint)
 static char sccsid[] = "@(#)vfprintf.c	8.1 (Berkeley) 6/4/93";
 #endif /* LIBC_SCCS and not lint */
-#include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 40f91e8af712b1147199801d7eca64dbc9bada78 $");
-
 /*
  * This is the code responsible for handling positional arguments
  * (%m$ and %m$.n$) for vfprintf() and vfwprintf().

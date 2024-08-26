@@ -65,8 +65,6 @@
  *
  * Author:		Brooks Davis <brooks@FreeBSD.org>
  * Derived from:	ng_hole.h
- *
- * $FreeBSD: 69e057bde5501bb63bb8dd8746a10e3fee913ed6 $
  */
 
 #ifndef _NETGRAPH_NG_IP_INPUT_H_

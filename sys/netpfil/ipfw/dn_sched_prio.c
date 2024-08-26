@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2010 Riccardo Panicucci, Universita` di Pisa
  * All rights reserved
@@ -27,7 +27,6 @@
  */
 
 /*
- * $FreeBSD: 703158c0d82918f199b98e4bc5be7f43ed880079 $
  */
 #ifdef _KERNEL
 #include <sys/malloc.h>

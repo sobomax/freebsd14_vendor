@@ -34,8 +34,6 @@
  * SUCH DAMAGE.
  *
  *      @(#)bpfdesc.h	8.1 (Berkeley) 6/10/93
- *
- * $FreeBSD: 52cc5f130eb364dae5175e407c167f2734ea3dc1 $
  */
 
 #ifndef _NET_BPFDESC_H_

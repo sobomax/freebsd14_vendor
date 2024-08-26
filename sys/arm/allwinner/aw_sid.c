@@ -21,8 +21,6 @@
  * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
- *
- * $FreeBSD: 755a8bbaab3d6b1d0de8c10a77db1c07dad0f7df $
  */
 
 /*
@@ -30,8 +28,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 755a8bbaab3d6b1d0de8c10a77db1c07dad0f7df $");
-
 #include <sys/endian.h>
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -404,9 +400,7 @@ static driver_t aw_sid_driver = {
 	sizeof(struct aw_sid_softc),
 };
 
-static devclass_t aw_sid_devclass;
-
-EARLY_DRIVER_MODULE(aw_sid, simplebus, aw_sid_driver, aw_sid_devclass, 0, 0,
+EARLY_DRIVER_MODULE(aw_sid, simplebus, aw_sid_driver, 0, 0,
     BUS_PASS_SUPPORTDEV + BUS_PASS_ORDER_FIRST);
 MODULE_VERSION(aw_sid, 1);
 SIMPLEBUS_PNP_INFO(compat_data);

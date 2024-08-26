@@ -1,4 +1,3 @@
-# $FreeBSD: 9d728b6da824f253f87df1a367ff6a1f3932dcdb $
 
 PACKAGE=	runtime
 
@@ -17,7 +16,7 @@ afterinstallconfig:
 	${SERVICES_MKDB_CMD} ${CAP_MKDB_ENDIAN} -q -o ${DESTDIR}/var/db/services.db \
 		${DESTDIR}/etc/services
 .if defined(NO_ROOT) && defined(METALOG)
-	echo "./var/db/services.db type=file mode=0644 uname=root gname=wheel" | \
+	echo ".${DISTBASE}/var/db/services.db type=file mode=0644 uname=root gname=wheel" | \
 		cat -l >> ${METALOG}
 .endif
 .endif

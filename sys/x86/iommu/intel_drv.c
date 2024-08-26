@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2013-2015 The FreeBSD Foundation
  *
@@ -27,9 +27,6 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  */
-
-#include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 61da86c098fccd0b048dc348441867df666308d4 $");
 
 #include "opt_acpi.h"
 #if defined(__amd64__)
@@ -83,7 +80,6 @@ __FBSDID("$FreeBSD: 61da86c098fccd0b048dc348441867df666308d4 $");
 #define	DMAR_QI_IRQ_RID		1
 #define	DMAR_REG_RID		2
 
-static devclass_t dmar_devclass;
 static device_t *dmar_devs;
 static int dmar_devcnt;
 
@@ -160,6 +156,8 @@ dmar_count_iter(ACPI_DMAR_HEADER *dmarh, void *arg)
 	return (1);
 }
 
+int dmar_rmrr_enable = 1;
+
 static int dmar_enable = 0;
 static void
 dmar_identify(driver_t *driver, device_t parent)
@@ -174,6 +172,8 @@ dmar_identify(driver_t *driver, device_t parent)
 	TUNABLE_INT_FETCH("hw.dmar.enable", &dmar_enable);
 	if (!dmar_enable)
 		return;
+	TUNABLE_INT_FETCH("hw.dmar.rmrr_enable", &dmar_rmrr_enable);
+
 	status = AcpiGetTable(ACPI_SIG_DMAR, 1, (ACPI_TABLE_HEADER **)&dmartbl);
 	if (ACPI_FAILURE(status))
 		return;
@@ -405,6 +405,7 @@ dmar_attach(device_t dev)
 	struct dmar_unit *unit;
 	ACPI_DMAR_HARDWARE_UNIT *dmaru;
 	uint64_t timeout;
+	int disable_pmr;
 	int i, error;
 
 	unit = device_get_softc(dev);
@@ -431,7 +432,7 @@ dmar_attach(device_t dev)
 	dmar_quirks_post_ident(unit);
 
 	timeout = dmar_get_timeout();
-	TUNABLE_UINT64_FETCH("hw.dmar.timeout", &timeout);
+	TUNABLE_UINT64_FETCH("hw.iommu.dmar.timeout", &timeout);
 	dmar_update_timeout(timeout);
 
 	for (i = 0; i < DMAR_INTR_TOTAL; i++)
@@ -528,6 +529,16 @@ dmar_attach(device_t dev)
 		dmar_release_resources(dev, unit);
 		return (error);
 	}
+
+	disable_pmr = 0;
+	TUNABLE_INT_FETCH("hw.dmar.pmr.disable", &disable_pmr);
+	if (disable_pmr) {
+		error = dmar_disable_protected_regions(unit);
+		if (error != 0)
+			device_printf(dev,
+			    "Failed to disable protected regions\n");
+	}
+
 	error = iommu_init_busdma(&unit->iommu);
 	if (error != 0) {
 		dmar_release_resources(dev, unit);
@@ -589,7 +600,7 @@ static driver_t	dmar_driver = {
 	sizeof(struct dmar_unit),
 };
 
-DRIVER_MODULE(dmar, acpi, dmar_driver, dmar_devclass, 0, 0);
+DRIVER_MODULE(dmar, acpi, dmar_driver, 0, 0);
 MODULE_DEPEND(dmar, acpi, 1, 1, 1);
 
 static void
@@ -898,6 +909,9 @@ dmar_rmrr_iter(ACPI_DMAR_HEADER *dmarh, void *arg)
 	char *ptr, *ptrend;
 	int match;
 
+	if (!dmar_rmrr_enable)
+		return (1);
+
 	if (dmarh->Type != ACPI_DMAR_TYPE_RESERVED_MEMORY)
 		return (1);
 
@@ -961,7 +975,7 @@ dmar_path_dev(int segment, int path_len, int busno,
 		dev = pci_find_dbsf(segment, busno, path->Device,
 		    path->Function);
 		if (i != path_len - 1) {
-			busno = pci_cfgregread(busno, path->Device,
+			busno = pci_cfgregread(segment, busno, path->Device,
 			    path->Function, PCIR_SECBUS_1, 1);
 			path++;
 		}
@@ -983,6 +997,9 @@ dmar_inst_rmrr_iter(ACPI_DMAR_HEADER *dmarh, void *arg)
 	uint16_t rid;
 
 	iria = arg;
+
+	if (!dmar_rmrr_enable)
+		return (1);
 
 	if (dmarh->Type != ACPI_DMAR_TYPE_RESERVED_MEMORY)
 		return (1);
@@ -1011,10 +1028,10 @@ dmar_inst_rmrr_iter(ACPI_DMAR_HEADER *dmarh, void *arg)
 			if (bootverbose) {
 				printf("dmar%d no dev found for RMRR "
 				    "[%#jx, %#jx] rid %#x scope path ",
-				     iria->dmar->iommu.unit,
-				     (uintmax_t)resmem->BaseAddress,
-				     (uintmax_t)resmem->EndAddress,
-				     rid);
+				    iria->dmar->iommu.unit,
+				    (uintmax_t)resmem->BaseAddress,
+				    (uintmax_t)resmem->EndAddress,
+				    rid);
 				dmar_print_path(devscope->Bus, dev_path_len,
 				    (const ACPI_DMAR_PCI_PATH *)(devscope + 1));
 				printf("\n");
@@ -1065,6 +1082,10 @@ dmar_instantiate_rmrr_ctxs(struct iommu_unit *unit)
 		KASSERT((dmar->hw_gcmd & DMAR_GCMD_TE) == 0,
 	    ("dmar%d: RMRR not handled but translation is already enabled",
 		    dmar->iommu.unit));
+		error = dmar_disable_protected_regions(dmar);
+		if (error != 0)
+			printf("dmar%d: Failed to disable protected regions\n",
+			    dmar->iommu.unit);
 		error = dmar_enable_translation(dmar);
 		if (bootverbose) {
 			if (error == 0) {

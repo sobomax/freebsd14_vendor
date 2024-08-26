@@ -1,4 +1,3 @@
-# $FreeBSD: 50d94f64f2573e27bb9a142a1fca7fd56676c280 $
 
 PACKAGE=	runtime
 CONFS=	regdomain.xml

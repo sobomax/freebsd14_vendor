@@ -33,7 +33,6 @@
  * SUCH DAMAGE.
  *
  *	@(#)pax.h	8.2 (Berkeley) 4/18/94
- * $FreeBSD: 530f8aa0d33db4a948045746bc28478d16eb0675 $
  */
 
 /*

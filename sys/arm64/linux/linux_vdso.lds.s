@@ -1,8 +1,6 @@
 /*
  * Linker script for 64-bit vDSO.
  * Copied from Linux kernel arch/arm64/kernel/vdso/vdso.lds.S
- *
- * $FreeBSD: 8790e14bbb809ce4ab77b48bd2b8e7c038230c00 $
  */
 
 SECTIONS
@@ -70,7 +68,7 @@ VERSION
 	global:
 		linux_platform;
 		kern_timekeep_base;
-		linux_vdso_sigcode;
+		__user_rt_sigreturn;
 	local: *;
 	};
 }

@@ -21,8 +21,6 @@
 .\" OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 .\" SUCH DAMAGE.
 .\"
-.\" $FreeBSD: a303b6c0314d4989666e91da304a5a1e2980d4b1 $
-.\"
 .OH '''Papers Contents'
 .EH 'Papers Contents'''
 .TL

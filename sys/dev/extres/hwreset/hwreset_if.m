@@ -23,8 +23,9 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: f1816f9ef81f17acb01ec8956edab1766818de8c $
 #
+
+#include "opt_platform.h"
 
 #ifdef FDT
 #include <sys/types.h>

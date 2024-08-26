@@ -35,8 +35,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: bf197406a7672ce1df9eb5b6772254e28d09f3d3 $");
-
 #include <sys/param.h>
 #include <sys/conf.h>
 #include <sys/eventhandler.h>
@@ -1907,8 +1905,9 @@ fw_rcv(struct fw_rcv_buf *rb)
 	struct fw_pkt *fp, *resfp;
 	struct fw_bind *bind;
 	int tcode;
-	int i, len, oldstate;
+	int oldstate;
 #if 0
+	int i, len;
 	{
 		uint32_t *qld;
 		int i;
@@ -2035,9 +2034,11 @@ fw_rcv(struct fw_rcv_buf *rb)
 				fw_xfer_free(rb->xfer);
 			return;
 		}
+#if 0
 		len = 0;
 		for (i = 0; i < rb->nvec; i++)
 			len += rb->vec[i].iov_len;
+#endif
 		rb->xfer = STAILQ_FIRST(&bind->xferlist);
 		if (rb->xfer == NULL) {
 			device_printf(rb->fc->bdev, "%s: "
@@ -2365,6 +2366,7 @@ fw_modevent(module_t mode, int type, void *data)
 
 	switch (type) {
 	case MOD_LOAD:
+		firewire_devclass = devclass_create("firewire");
 		fwdev_ehtag = EVENTHANDLER_REGISTER(dev_clone,
 		    fwdev_clone, 0, 1000);
 		break;
@@ -2381,6 +2383,5 @@ fw_modevent(module_t mode, int type, void *data)
 }
 
 
-DRIVER_MODULE(firewire, fwohci, firewire_driver, firewire_devclass,
-    fw_modevent,0);
+DRIVER_MODULE(firewire, fwohci, firewire_driver, fw_modevent, NULL);
 MODULE_VERSION(firewire, 1);

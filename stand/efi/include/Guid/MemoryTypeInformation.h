@@ -1,4 +1,3 @@
-/* $FreeBSD: 50386b747d3502f19eda6e4210460440c4434e36 $ */
 /** @file
   This file defines:
   * Memory Type Information GUID for HOB and Variable.

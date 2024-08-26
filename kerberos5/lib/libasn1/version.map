@@ -1,7 +1,6 @@
 #
 # Export all symbols but _init and _fini.
 #
-# $FreeBSD: 614c2edaf9902f01c4566b5e84e28fb479664eef $
 #
 HEIMDAL_ASN1_1.0 {
 	global:

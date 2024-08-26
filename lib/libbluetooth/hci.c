@@ -3,7 +3,7 @@
  */
 
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2009 Maksim Yevmenkin <m_evmenkin@yahoo.com>
  * All rights reserved.
@@ -28,8 +28,6 @@
  * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
- *
- * $FreeBSD: 3a524cebc3aeaccec72c60a00037396b51ad9a7e $
  */
 
 #include <sys/types.h>
@@ -762,8 +760,6 @@ static char *
 bt_dev2node(char const *devname, char *nodename, int nnlen)
 {
 	static char const *	 bt_dev_prefix[] = {
-		"btccc",	/* 3Com Bluetooth PC-CARD */
-		"h4",		/* UART/serial Bluetooth devices */
 		"ubt",		/* Bluetooth USB devices */
 		NULL		/* should be last */
 	};

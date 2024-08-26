@@ -31,8 +31,6 @@
 
 #include <sys/cdefs.h>
 __SCCSID("@(#)telldir.c	8.1 (Berkeley) 6/4/93");
-__FBSDID("$FreeBSD: d801345fc24c035483dd1d516e43865dd5a04826 $");
-
 #include "namespace.h"
 #include <sys/param.h>
 #include <sys/queue.h>

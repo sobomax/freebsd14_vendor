@@ -27,8 +27,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 3b5fb46ed5990024b8ac4c27b0a06ec4317ff12b $");
-
 #define BXE_DRIVER_VERSION "1.78.91"
 
 #include "bxe.h"
@@ -219,15 +217,9 @@ static driver_t bxe_driver = {
     sizeof(struct bxe_softc) /* extra data */
 };
 
-/*
- * FreeBSD dev class is needed to manage dev instances and
- * to associate with a bus type
- */
-static devclass_t bxe_devclass;
-
 MODULE_DEPEND(bxe, pci, 1, 1, 1);
 MODULE_DEPEND(bxe, ether, 1, 1, 1);
-DRIVER_MODULE(bxe, pci, bxe_driver, bxe_devclass, 0, 0);
+DRIVER_MODULE(bxe, pci, bxe_driver, 0, 0);
 
 DEBUGNET_DEFINE(bxe);
 
@@ -285,12 +277,12 @@ SYSCTL_INT(_hw_bxe, OID_AUTO, hc_tx_ticks, CTLFLAG_RDTUN,
 
 /* Maximum number of Rx packets to process at a time */
 static int bxe_rx_budget = 0xffffffff;
-SYSCTL_INT(_hw_bxe, OID_AUTO, rx_budget, CTLFLAG_TUN,
+SYSCTL_INT(_hw_bxe, OID_AUTO, rx_budget, CTLFLAG_RDTUN,
            &bxe_rx_budget, 0, "Rx processing budget");
 
 /* Maximum LRO aggregation size */
 static int bxe_max_aggregation_size = 0;
-SYSCTL_INT(_hw_bxe, OID_AUTO, max_aggregation_size, CTLFLAG_TUN,
+SYSCTL_INT(_hw_bxe, OID_AUTO, max_aggregation_size, CTLFLAG_RDTUN,
            &bxe_max_aggregation_size, 0, "max aggregation size");
 
 /* PCI MRRS: -1 (Auto), 0 (128B), 1 (256B), 2 (512B), 3 (1KB) */
@@ -2767,7 +2759,7 @@ bxe_tpa_start(struct bxe_softc            *sc,
     struct bxe_sw_rx_bd tmp_bd;
     struct bxe_sw_rx_bd *rx_buf;
     struct eth_rx_bd *rx_bd;
-    int max_agg_queues;
+    int max_agg_queues __diagused;
     struct bxe_sw_tpa_info *tpa_info = &fp->rx_tpa_info[queue];
     uint16_t index;
 
@@ -4398,7 +4390,7 @@ bxe_nic_unload(struct bxe_softc *sc,
  * the user runs "ifconfig bxe media ..." or "ifconfig bxe mediaopt ...".
  */
 static int
-bxe_ifmedia_update(struct ifnet  *ifp)
+bxe_ifmedia_update(if_t ifp)
 {
     struct bxe_softc *sc = (struct bxe_softc *)if_getsoftc(ifp);
     struct ifmedia *ifm;
@@ -4431,7 +4423,7 @@ bxe_ifmedia_update(struct ifnet  *ifp)
  * Called by the OS to get the current media status (i.e. link, speed, etc.).
  */
 static void
-bxe_ifmedia_status(struct ifnet *ifp, struct ifmediareq *ifmr)
+bxe_ifmedia_status(if_t ifp, struct ifmediareq *ifmr)
 {
     struct bxe_softc *sc = if_getsoftc(ifp);
 
@@ -4447,7 +4439,7 @@ bxe_ifmedia_status(struct ifnet *ifp, struct ifmediareq *ifmr)
     ifmr->ifm_active = IFM_ETHER;
 
     /* Report link down if the driver isn't running. */
-    if ((ifp->if_drv_flags & IFF_DRV_RUNNING) == 0) {
+    if ((if_getdrvflags(ifp) & IFF_DRV_RUNNING) == 0) {
         ifmr->ifm_active |= IFM_NONE;
         BLOGD(sc, DBG_PHY, "in %s : nic still not loaded fully\n", __func__);
         BLOGD(sc, DBG_PHY, "in %s : link_up (1) : %d\n",
@@ -4794,9 +4786,7 @@ bxe_chktso_window(struct bxe_softc  *sc,
     uint32_t num_wnds, wnd_size, wnd_sum;
     int32_t frag_idx, wnd_idx;
     unsigned short lso_mss;
-    int defrag;
 
-    defrag = 0;
     wnd_sum = 0;
     wnd_size = 10;
     num_wnds = nsegs - wnd_size;
@@ -5675,7 +5665,7 @@ bxe_tx_mq_start_locked(struct bxe_softc    *sc,
     }
 
     /* fetch the depth of the driver queue */
-    depth = drbr_inuse_drv(ifp, tx_br);
+    depth = drbr_inuse(ifp, tx_br);
     if (depth > fp->eth_q_stats.tx_max_drbr_queue_depth) {
         fp->eth_q_stats.tx_max_drbr_queue_depth = depth;
     }
@@ -5761,7 +5751,7 @@ bxe_tx_mq_start_deferred(void *arg,
 
 /* Multiqueue (TSS) dispatch routine. */
 static int
-bxe_tx_mq_start(struct ifnet *ifp,
+bxe_tx_mq_start(if_t ifp,
                 struct mbuf  *m)
 {
     struct bxe_softc *sc = if_getsoftc(ifp);
@@ -5794,7 +5784,7 @@ bxe_tx_mq_start(struct ifnet *ifp,
 }
 
 static void
-bxe_mq_flush(struct ifnet *ifp)
+bxe_mq_flush(if_t ifp)
 {
     struct bxe_softc *sc = if_getsoftc(ifp);
     struct bxe_fastpath *fp;
@@ -6084,10 +6074,7 @@ bxe_alloc_mem(struct bxe_softc *sc)
 static void
 bxe_free_rx_bd_chain(struct bxe_fastpath *fp)
 {
-    struct bxe_softc *sc;
     int i;
-
-    sc = fp->sc;
 
     if (fp->rx_mbuf_tag == NULL) {
         return;
@@ -6146,10 +6133,7 @@ bxe_free_tpa_pool(struct bxe_fastpath *fp)
 static void
 bxe_free_sge_chain(struct bxe_fastpath *fp)
 {
-    struct bxe_softc *sc;
     int i;
-
-    sc = fp->sc;
 
     if (fp->rx_sge_mbuf_tag == NULL) {
         return;
@@ -7580,12 +7564,12 @@ bxe_attn_int_deasserted4(struct bxe_softc *sc,
                          uint32_t         attn)
 {
     uint32_t val;
-    boolean_t err_flg = FALSE;
+    bool err_flg = false;
 
     if (attn & AEU_INPUTS_ATTN_BITS_PGLUE_HW_INTERRUPT) {
         val = REG_RD(sc, PGLUE_B_REG_PGLUE_B_INT_STS_CLR);
         BLOGE(sc, "PGLUE hw attention 0x%08x\n", val);
-        err_flg = TRUE;
+        err_flg = true;
         if (val & PGLUE_B_PGLUE_B_INT_STS_REG_ADDRESS_ERROR)
             BLOGE(sc, "PGLUE_B_PGLUE_B_INT_STS_REG_ADDRESS_ERROR\n");
         if (val & PGLUE_B_PGLUE_B_INT_STS_REG_INCORRECT_RCV_BEHAVIOR)
@@ -7609,7 +7593,7 @@ bxe_attn_int_deasserted4(struct bxe_softc *sc,
     if (attn & AEU_INPUTS_ATTN_BITS_ATC_HW_INTERRUPT) {
         val = REG_RD(sc, ATC_REG_ATC_INT_STS_CLR);
         BLOGE(sc, "ATC hw attention 0x%08x\n", val);
-	err_flg = TRUE;
+	err_flg = true;
         if (val & ATC_ATC_INT_STS_REG_ADDRESS_ERROR)
             BLOGE(sc, "ATC_ATC_INT_STS_REG_ADDRESS_ERROR\n");
         if (val & ATC_ATC_INT_STS_REG_ATC_TCPL_TO_NOT_PEND)
@@ -7629,7 +7613,7 @@ bxe_attn_int_deasserted4(struct bxe_softc *sc,
         BLOGE(sc, "FATAL parity attention set4 0x%08x\n",
               (uint32_t)(attn & (AEU_INPUTS_ATTN_BITS_PGLUE_PARITY_ERROR |
                                  AEU_INPUTS_ATTN_BITS_ATC_PARITY_ERROR)));
-	err_flg = TRUE;
+	err_flg = true;
     }
     if (err_flg) {
 	BXE_SET_ERROR_BIT(sc, BXE_ERR_MISC);
@@ -8033,7 +8017,7 @@ bxe_attn_int_deasserted2(struct bxe_softc *sc,
     int reg_offset;
     uint32_t val0, mask0, val1, mask1;
     uint32_t val;
-    boolean_t err_flg = FALSE;
+    bool err_flg = false;
 
     if (attn & AEU_INPUTS_ATTN_BITS_CFC_HW_INTERRUPT) {
         val = REG_RD(sc, CFC_REG_CFC_INT_STS_CLR);
@@ -8041,7 +8025,7 @@ bxe_attn_int_deasserted2(struct bxe_softc *sc,
         /* CFC error attention */
         if (val & 0x2) {
             BLOGE(sc, "FATAL error from CFC\n");
-	    err_flg = TRUE;
+	    err_flg = true;
         }
     }
 
@@ -8051,13 +8035,13 @@ bxe_attn_int_deasserted2(struct bxe_softc *sc,
         /* RQ_USDMDP_FIFO_OVERFLOW */
         if (val & 0x18000) {
             BLOGE(sc, "FATAL error from PXP\n");
-	    err_flg = TRUE;
+	    err_flg = true;
         }
 
         if (!CHIP_IS_E1x(sc)) {
             val = REG_RD(sc, PXP_REG_PXP_INT_STS_CLR_1);
             BLOGE(sc, "PXP hw attention-1 0x%08x\n", val);
-	    err_flg = TRUE;
+	    err_flg = true;
         }
     }
 
@@ -8094,7 +8078,7 @@ bxe_attn_int_deasserted2(struct bxe_softc *sc,
              */
             if (val0 & PXP2_EOP_ERROR_BIT) {
                 BLOGE(sc, "PXP2_WR_PGLUE_EOP_ERROR\n");
-		err_flg = TRUE;
+		err_flg = true;
 
                 /*
                  * if only PXP2_PXP2_INT_STS_0_REG_WR_PGLUE_EOP_ERROR is
@@ -8117,7 +8101,7 @@ bxe_attn_int_deasserted2(struct bxe_softc *sc,
 
         BLOGE(sc, "FATAL HW block attention set2 0x%x\n",
               (uint32_t)(attn & HW_INTERRUT_ASSERT_SET_2));
-	err_flg = TRUE;
+	err_flg = true;
         bxe_panic(sc, ("HW block attention set2\n"));
     }
     if(err_flg) {
@@ -8135,7 +8119,7 @@ bxe_attn_int_deasserted1(struct bxe_softc *sc,
     int port = SC_PORT(sc);
     int reg_offset;
     uint32_t val;
-    boolean_t err_flg = FALSE;
+    bool err_flg = false;
 
     if (attn & AEU_INPUTS_ATTN_BITS_DOORBELLQ_HW_INTERRUPT) {
         val = REG_RD(sc, DORQ_REG_DORQ_INT_STS_CLR);
@@ -8143,7 +8127,7 @@ bxe_attn_int_deasserted1(struct bxe_softc *sc,
         /* DORQ discard attention */
         if (val & 0x2) {
             BLOGE(sc, "FATAL error from DORQ\n");
-	    err_flg = TRUE;
+	    err_flg = true;
         }
     }
 
@@ -8157,7 +8141,7 @@ bxe_attn_int_deasserted1(struct bxe_softc *sc,
 
         BLOGE(sc, "FATAL HW block attention set1 0x%08x\n",
               (uint32_t)(attn & HW_INTERRUT_ASSERT_SET_1));
-        err_flg = TRUE;
+        err_flg = true;
         bxe_panic(sc, ("HW block attention set1\n"));
     }
     if(err_flg) {
@@ -8696,7 +8680,7 @@ bxe_handle_fp_tq(void *context,
 {
     struct bxe_fastpath *fp = (struct bxe_fastpath *)context;
     struct bxe_softc *sc = fp->sc;
-    uint8_t more_tx = FALSE;
+    /* uint8_t more_tx = FALSE; */
     uint8_t more_rx = FALSE;
 
     BLOGD(sc, DBG_INTR, "---> FP TASK QUEUE (%d) <---\n", fp->index);
@@ -8720,7 +8704,7 @@ bxe_handle_fp_tq(void *context,
     /* fp->txdata[cos] */
     if (bxe_has_tx_work(fp)) {
         BXE_FP_TX_LOCK(fp);
-        more_tx = bxe_txeof(sc, fp);
+        /* more_tx = */ bxe_txeof(sc, fp);
         BXE_FP_TX_UNLOCK(fp);
     }
 
@@ -8742,7 +8726,7 @@ static void
 bxe_task_fp(struct bxe_fastpath *fp)
 {
     struct bxe_softc *sc = fp->sc;
-    uint8_t more_tx = FALSE;
+    /* uint8_t more_tx = FALSE; */
     uint8_t more_rx = FALSE;
 
     BLOGD(sc, DBG_INTR, "---> FP TASK ISR (%d) <---\n", fp->index);
@@ -8754,7 +8738,7 @@ bxe_task_fp(struct bxe_fastpath *fp)
     /* fp->txdata[cos] */
     if (bxe_has_tx_work(fp)) {
         BXE_FP_TX_LOCK(fp);
-        more_tx = bxe_txeof(sc, fp);
+        /* more_tx = */ bxe_txeof(sc, fp);
         BXE_FP_TX_UNLOCK(fp);
     }
 
@@ -12363,7 +12347,6 @@ bxe_parity_recover(struct bxe_softc *sc)
 {
     uint8_t global = FALSE;
     uint32_t error_recovered, error_unrecovered;
-    bool is_parity;
 
 
     if ((sc->recovery_state == BXE_RECOVERY_FAILED) &&
@@ -12382,7 +12365,7 @@ bxe_parity_recover(struct bxe_softc *sc)
         switch(sc->recovery_state) {
 
         case BXE_RECOVERY_INIT:
-            is_parity = bxe_chk_parity_attn(sc, &global, FALSE);
+            bxe_chk_parity_attn(sc, &global, FALSE);
 
             if ((CHIP_PORT_MODE(sc) == CHIP_4_PORT_MODE) ||
                 (sc->error_status & BXE_ERR_MCP_ASSERT) ||
@@ -12533,7 +12516,7 @@ bxe_parity_recover(struct bxe_softc *sc)
                          error_unrecovered++;
                          sc->recovery_state = BXE_RECOVERY_FAILED;
                          sc->state = BXE_STATE_ERROR;
-                         BLOGE(sc, "Recovery is NOT successfull, "
+                         BLOGE(sc, "Recovery is NOT successful, "
                             " state=0x%x recovery_state=0x%x error=%x\n",
                             sc->state, sc->recovery_state, sc->error_status);
                          sc->error_status = 0;
@@ -12541,7 +12524,7 @@ bxe_parity_recover(struct bxe_softc *sc)
                          sc->recovery_state =
                              BXE_RECOVERY_DONE;
                          error_recovered++;
-                         BLOGI(sc, "Recovery is successfull from errors %x,"
+                         BLOGI(sc, "Recovery is successful from errors %x,"
                             " state=0x%x"
                             " recovery_state=0x%x \n", sc->error_status,
                             sc->state, sc->recovery_state);
@@ -19114,7 +19097,7 @@ bxe_add_cdev(struct bxe_softc *sc)
     }
 
     sc->ioctl_dev = make_dev(&bxe_cdevsw,
-                            sc->ifp->if_dunit,
+                            if_getdunit(sc->ifp),
                             UID_ROOT,
                             GID_WHEEL,
                             0600,
@@ -19288,7 +19271,6 @@ bxe_eioctl(struct cdev *dev, u_long cmd, caddr_t data, int fflag,
 {
     struct bxe_softc    *sc;
     int                 rval = 0;
-    device_t            pci_dev;
     bxe_grcdump_t       *dump = NULL;
     int grc_dump_size;
     bxe_drvinfo_t   *drv_infop = NULL;
@@ -19302,8 +19284,6 @@ bxe_eioctl(struct cdev *dev, u_long cmd, caddr_t data, int fflag,
 
     if ((sc = (struct bxe_softc *)dev->si_drv1) == NULL)
         return ENXIO;
-
-    pci_dev= sc->dev;
 
     dump = (bxe_grcdump_t *)data;
 
@@ -19439,7 +19419,7 @@ bxe_eioctl(struct cdev *dev, u_long cmd, caddr_t data, int fflag,
 
 #ifdef DEBUGNET
 static void
-bxe_debugnet_init(struct ifnet *ifp, int *nrxr, int *ncl, int *clsize)
+bxe_debugnet_init(if_t ifp, int *nrxr, int *ncl, int *clsize)
 {
 	struct bxe_softc *sc;
 
@@ -19452,12 +19432,12 @@ bxe_debugnet_init(struct ifnet *ifp, int *nrxr, int *ncl, int *clsize)
 }
 
 static void
-bxe_debugnet_event(struct ifnet *ifp __unused, enum debugnet_ev event __unused)
+bxe_debugnet_event(if_t ifp __unused, enum debugnet_ev event __unused)
 {
 }
 
 static int
-bxe_debugnet_transmit(struct ifnet *ifp, struct mbuf *m)
+bxe_debugnet_transmit(if_t ifp, struct mbuf *m)
 {
 	struct bxe_softc *sc;
 	int error;
@@ -19474,7 +19454,7 @@ bxe_debugnet_transmit(struct ifnet *ifp, struct mbuf *m)
 }
 
 static int
-bxe_debugnet_poll(struct ifnet *ifp, int count)
+bxe_debugnet_poll(if_t ifp, int count)
 {
 	struct bxe_softc *sc;
 	int i;

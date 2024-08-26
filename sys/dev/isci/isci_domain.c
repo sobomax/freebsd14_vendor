@@ -31,8 +31,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 1c6597655361d06d16e7c3cc06d5fb4eb3e5d4eb $");
-
 #include <dev/isci/isci.h>
 
 #include <cam/cam_periph.h>

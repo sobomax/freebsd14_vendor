@@ -40,8 +40,6 @@
  *
  * From: Utah Hdr: pathnames.h 3.1 92/07/06
  * Author: Jeff Forys, University of Utah CSS
- *
- * $FreeBSD: 49412a9eb0f4103ba554ecd6a2e385d54c4f4117 $
  */
 
 #define	_PATH_BPF		"/dev/bpf%d"

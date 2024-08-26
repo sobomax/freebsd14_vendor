@@ -33,10 +33,6 @@
 #endif
 
 #include <sys/cdefs.h>
-#if defined(__RCSID) && !defined(__lint)
-__FBSDID("$FreeBSD: a0e0f7174f251b4cf40f638306319d2ae1f409be $");
-#endif	/* !__lint */
-
 #include <sys/param.h>
 
 #if !HAVE_NBTOOL_CONFIG_H
@@ -55,15 +51,16 @@ __FBSDID("$FreeBSD: a0e0f7174f251b4cf40f638306319d2ae1f409be $");
 #include <dirent.h>
 #include <util.h>
 
-#include "ffs/buf.h"
-#include "makefs.h"
-#include "msdos.h"
-
 #include <mkfs_msdos.h>
 #include <fs/msdosfs/bpb.h>
 #include "msdos/direntry.h"
-#include <fs/msdosfs/denode.h>
+#include "msdos/denode.h"
 #include <fs/msdosfs/msdosfsmount.h>
+
+#undef clrbuf
+#include "ffs/buf.h"
+#include "makefs.h"
+#include "msdos.h"
 
 static int msdos_populate_dir(const char *, struct denode *, fsnode *,
     fsnode *, fsinfo_t *);
@@ -146,10 +143,9 @@ void
 msdos_makefs(const char *image, const char *dir, fsnode *root, fsinfo_t *fsopts)
 {
 	struct msdos_options_ex *msdos_opt = fsopts->fs_specific;
-	struct vnode vp, rootvp;
+	struct m_vnode vp, rootvp;
 	struct timeval start;
 	struct msdosfsmount *pmp;
-	uint32_t flags;
 
 	assert(image != NULL);
 	assert(dir != NULL);
@@ -183,8 +179,7 @@ msdos_makefs(const char *image, const char *dir, fsnode *root, fsinfo_t *fsopts)
 	fsopts->fd = open(image, O_RDWR);
 	vp.fs = fsopts;
 
-	flags = 0;
-	if ((pmp = msdosfs_mount(&vp)) == NULL)
+	if ((pmp = m_msdosfs_mount(&vp)) == NULL)
 		err(1, "msdosfs_mount");
 
 	if (msdosfs_root(pmp, &rootvp) != 0)

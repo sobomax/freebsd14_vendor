@@ -1,2 +1,1 @@
-.\" $FreeBSD: 88820cf67e052e03d99ee7c14f7bffbc7a3b9b60 $
 Do not build gcc and g++ as part of the bootstrap process.

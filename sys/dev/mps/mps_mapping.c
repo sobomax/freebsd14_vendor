@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2011-2015 LSI Corp.
  * Copyright (c) 2013-2015 Avago Technologies
@@ -30,8 +30,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 2b0c16a8deb8aecc1cdeebd48564f923b73c5cd6 $");
-
 /* TODO Move headers to mpsvar */
 #include <sys/types.h>
 #include <sys/param.h>

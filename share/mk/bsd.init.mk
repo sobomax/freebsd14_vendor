@@ -1,4 +1,3 @@
-# $FreeBSD: 30eeb0b2a15b2cc76a0ee5fc4e4fbb178cd59459 $
 
 # The include file <bsd.init.mk> includes <bsd.opts.mk>,
 # ../Makefile.inc and <bsd.own.mk>; this is used at the

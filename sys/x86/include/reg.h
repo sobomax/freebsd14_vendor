@@ -33,13 +33,12 @@
  * SUCH DAMAGE.
  *
  *	from: @(#)reg.h	5.5 (Berkeley) 1/18/91
- * $FreeBSD: 3e39ffe3e263ea9f49986f9e736e598f0181f136 $
  */
 
 #ifndef _MACHINE_REG_H_
 #define	_MACHINE_REG_H_
 
-#include <machine/_types.h>
+#include <sys/_types.h>
 
 #ifdef __i386__
 /*

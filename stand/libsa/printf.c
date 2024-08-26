@@ -30,12 +30,7 @@
  * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
- *
- *	@(#)subr_prf.c	8.3 (Berkeley) 1/21/94
  */
-
-#include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 4de547b644ddb5e8f4d428fb9cdd37420e0297d1 $");
 
 /*
  * Standaloneified version of the FreeBSD kernel printf family.

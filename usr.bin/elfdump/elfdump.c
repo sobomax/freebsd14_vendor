@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2003 David O'Brien.  All rights reserved.
  * Copyright (c) 2001 Jake Burkholder
@@ -28,8 +28,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 28b42a55a50810b9c8288a423cd136e91ace40fc $");
-
 #include <sys/types.h>
 
 #include <sys/capsicum.h>
@@ -473,7 +471,7 @@ static void elf_print_got(Elf32_Ehdr *e, void *sh);
 static void elf_print_hash(Elf32_Ehdr *e, void *sh);
 static void elf_print_note(Elf32_Ehdr *e, void *sh);
 
-static void usage(void);
+static void usage(void) __dead2;
 
 /*
  * Helpers for ELF files with shnum or shstrndx values that don't fit in the

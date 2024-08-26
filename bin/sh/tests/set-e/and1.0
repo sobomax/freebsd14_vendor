@@ -1,3 +1,2 @@
-# $FreeBSD: 607b7c3500203394585eea8d014335c613eaaa76 $
 set -e
 true && true

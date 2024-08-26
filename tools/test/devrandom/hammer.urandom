@@ -5,7 +5,6 @@
 # Read and display random numbers.
 # This also reads /dev/zero to make sure there is no brokenness there.
 #
-# $FreeBSD: d0b6aa89da58656ea69e8e5c9ea26e26b8f5ee59 $
 #
 
 open(ZERO, "/dev/zero") || die "Cannot open /dev/zero - $!\n";

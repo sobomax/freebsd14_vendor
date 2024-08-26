@@ -24,9 +24,6 @@
  * SUCH DAMAGE.
  */
 
-#include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 0a205f2bb1d16481d1dc1006308da9f2bf0f9e6b $");
-
 #include <sys/param.h>
 #include <sys/mman.h>
 #include <sys/socket.h>
@@ -380,6 +377,9 @@ ATF_TC_HEAD(fd_positive_file_v4, tc)
 ATF_TC_BODY(fd_positive_file_v4, tc)
 {
 
+	if (atf_tc_get_config_var_as_bool_wd(tc, "qemu", false))
+		atf_tc_skip("Sendfile(4) unimplemented. https://github.com/qemu-bsd-user/qemu-bsd-user/issues/25");
+
 	fd_positive_file_test(AF_INET);
 }
 
@@ -392,6 +392,9 @@ ATF_TC_HEAD(fd_positive_file_v6, tc)
 }
 ATF_TC_BODY(fd_positive_file_v6, tc)
 {
+
+	if (atf_tc_get_config_var_as_bool_wd(tc, "qemu", false))
+		atf_tc_skip("Sendfile(4) unimplemented. https://github.com/qemu-bsd-user/qemu-bsd-user/issues/25");
 
 	fd_positive_file_test(AF_INET6);
 }
@@ -458,6 +461,8 @@ ATF_TC_HEAD(fd_positive_shm_v4, tc)
 }
 ATF_TC_BODY(fd_positive_shm_v4, tc)
 {
+	if (atf_tc_get_config_var_as_bool_wd(tc, "qemu", false))
+		atf_tc_skip("Sendfile(4) unimplemented. https://github.com/qemu-bsd-user/qemu-bsd-user/issues/25");
 
 	fd_positive_shm_test(AF_INET);
 }
@@ -471,6 +476,8 @@ ATF_TC_HEAD(fd_positive_shm_v6, tc)
 }
 ATF_TC_BODY(fd_positive_shm_v6, tc)
 {
+	if (atf_tc_get_config_var_as_bool_wd(tc, "qemu", false))
+		atf_tc_skip("Sendfile(4) unimplemented. https://github.com/qemu-bsd-user/qemu-bsd-user/issues/25");
 
 	fd_positive_shm_test(AF_INET6);
 }
@@ -502,6 +509,8 @@ ATF_TC_HEAD(fd_negative_bad_fd_v4, tc)
 }
 ATF_TC_BODY(fd_negative_bad_fd_v4, tc)
 {
+	if (atf_tc_get_config_var_as_bool_wd(tc, "qemu", false))
+		atf_tc_skip("Sendfile(4) unimplemented. https://github.com/qemu-bsd-user/qemu-bsd-user/issues/25");
 
 	fd_negative_bad_fd_test(AF_INET);
 }
@@ -515,6 +524,8 @@ ATF_TC_HEAD(fd_negative_bad_fd_v6, tc)
 }
 ATF_TC_BODY(fd_negative_bad_fd_v6, tc)
 {
+	if (atf_tc_get_config_var_as_bool_wd(tc, "qemu", false))
+		atf_tc_skip("Sendfile(4) unimplemented. https://github.com/qemu-bsd-user/qemu-bsd-user/issues/25");
 
 	fd_negative_bad_fd_test(AF_INET6);
 }
@@ -618,6 +629,8 @@ ATF_TC_HEAD(flags_v4, tc)
 }
 ATF_TC_BODY(flags_v4, tc)
 {
+	if (atf_tc_get_config_var_as_bool_wd(tc, "qemu", false))
+		atf_tc_skip("Sendfile(4) unimplemented. https://github.com/qemu-bsd-user/qemu-bsd-user/issues/25");
 
 	flags_test(AF_INET);
 }
@@ -630,6 +643,8 @@ ATF_TC_HEAD(flags_v6, tc)
 }
 ATF_TC_BODY(flags_v6, tc)
 {
+	if (atf_tc_get_config_var_as_bool_wd(tc, "qemu", false))
+		atf_tc_skip("Sendfile(4) unimplemented. https://github.com/qemu-bsd-user/qemu-bsd-user/issues/25");
 
 	flags_test(AF_INET6);
 }
@@ -746,6 +761,8 @@ ATF_TC_HEAD(hdtr_positive_v4, tc)
 }
 ATF_TC_BODY(hdtr_positive_v4, tc)
 {
+	if (atf_tc_get_config_var_as_bool_wd(tc, "qemu", false))
+		atf_tc_skip("Sendfile(4) unimplemented. https://github.com/qemu-bsd-user/qemu-bsd-user/issues/25");
 
 	hdtr_positive_test(AF_INET);
 }
@@ -759,6 +776,8 @@ ATF_TC_HEAD(hdtr_positive_v6, tc)
 }
 ATF_TC_BODY(hdtr_positive_v6, tc)
 {
+	if (atf_tc_get_config_var_as_bool_wd(tc, "qemu", false))
+		atf_tc_skip("Sendfile(4) unimplemented. https://github.com/qemu-bsd-user/qemu-bsd-user/issues/25");
 
 	hdtr_positive_test(AF_INET);
 }
@@ -810,6 +829,8 @@ ATF_TC_HEAD(hdtr_negative_bad_pointers_v4, tc)
 }
 ATF_TC_BODY(hdtr_negative_bad_pointers_v4, tc)
 {
+	if (atf_tc_get_config_var_as_bool_wd(tc, "qemu", false))
+		atf_tc_skip("Sendfile(4) unimplemented. https://github.com/qemu-bsd-user/qemu-bsd-user/issues/25");
 
 	hdtr_negative_bad_pointers_test(AF_INET);
 }
@@ -823,6 +844,8 @@ ATF_TC_HEAD(hdtr_negative_bad_pointers_v6, tc)
 }
 ATF_TC_BODY(hdtr_negative_bad_pointers_v6, tc)
 {
+	if (atf_tc_get_config_var_as_bool_wd(tc, "qemu", false))
+		atf_tc_skip("Sendfile(4) unimplemented. https://github.com/qemu-bsd-user/qemu-bsd-user/issues/25");
 
 	hdtr_negative_bad_pointers_test(AF_INET6);
 }
@@ -856,6 +879,8 @@ ATF_TC_HEAD(offset_negative_value_less_than_zero_v4, tc)
 }
 ATF_TC_BODY(offset_negative_value_less_than_zero_v4, tc)
 {
+	if (atf_tc_get_config_var_as_bool_wd(tc, "qemu", false))
+		atf_tc_skip("Sendfile(4) unimplemented. https://github.com/qemu-bsd-user/qemu-bsd-user/issues/25");
 
 	offset_negative_value_less_than_zero_test(AF_INET);
 }
@@ -869,6 +894,8 @@ ATF_TC_HEAD(offset_negative_value_less_than_zero_v6, tc)
 }
 ATF_TC_BODY(offset_negative_value_less_than_zero_v6, tc)
 {
+	if (atf_tc_get_config_var_as_bool_wd(tc, "qemu", false))
+		atf_tc_skip("Sendfile(4) unimplemented. https://github.com/qemu-bsd-user/qemu-bsd-user/issues/25");
 
 	offset_negative_value_less_than_zero_test(AF_INET6);
 }
@@ -909,6 +936,8 @@ ATF_TC_HEAD(sbytes_positive_v4, tc)
 }
 ATF_TC_BODY(sbytes_positive_v4, tc)
 {
+	if (atf_tc_get_config_var_as_bool_wd(tc, "qemu", false))
+		atf_tc_skip("Sendfile(4) unimplemented. https://github.com/qemu-bsd-user/qemu-bsd-user/issues/25");
 
 	sbytes_positive_test(AF_INET);
 }
@@ -922,6 +951,8 @@ ATF_TC_HEAD(sbytes_positive_v6, tc)
 }
 ATF_TC_BODY(sbytes_positive_v6, tc)
 {
+	if (atf_tc_get_config_var_as_bool_wd(tc, "qemu", false))
+		atf_tc_skip("Sendfile(4) unimplemented. https://github.com/qemu-bsd-user/qemu-bsd-user/issues/25");
 
 	sbytes_positive_test(AF_INET6);
 }
@@ -960,6 +991,8 @@ ATF_TC_HEAD(sbytes_negative_v4, tc)
 }
 ATF_TC_BODY(sbytes_negative_v4, tc)
 {
+	if (atf_tc_get_config_var_as_bool_wd(tc, "qemu", false))
+		atf_tc_skip("Sendfile(4) unimplemented. https://github.com/qemu-bsd-user/qemu-bsd-user/issues/25");
 
 	sbytes_negative_test(AF_INET);
 }
@@ -973,6 +1006,8 @@ ATF_TC_HEAD(sbytes_negative_v6, tc)
 }
 ATF_TC_BODY(sbytes_negative_v6, tc)
 {
+	if (atf_tc_get_config_var_as_bool_wd(tc, "qemu", false))
+		atf_tc_skip("Sendfile(4) unimplemented. https://github.com/qemu-bsd-user/qemu-bsd-user/issues/25");
 
 	sbytes_negative_test(AF_INET6);
 }
@@ -1005,6 +1040,8 @@ ATF_TC_HEAD(s_negative_not_connected_socket_v4, tc)
 
 ATF_TC_BODY(s_negative_not_connected_socket_v4, tc)
 {
+	if (atf_tc_get_config_var_as_bool_wd(tc, "qemu", false))
+		atf_tc_skip("Sendfile(4) unimplemented. https://github.com/qemu-bsd-user/qemu-bsd-user/issues/25");
 
 	s_negative_not_connected_socket_test(AF_INET);
 }
@@ -1019,6 +1056,8 @@ ATF_TC_HEAD(s_negative_not_connected_socket_v6, tc)
 
 ATF_TC_BODY(s_negative_not_connected_socket_v6, tc)
 {
+	if (atf_tc_get_config_var_as_bool_wd(tc, "qemu", false))
+		atf_tc_skip("Sendfile(4) unimplemented. https://github.com/qemu-bsd-user/qemu-bsd-user/issues/25");
 
 	s_negative_not_connected_socket_test(AF_INET6);
 }
@@ -1034,6 +1073,9 @@ ATF_TC_HEAD(s_negative_not_descriptor, tc)
 ATF_TC_BODY(s_negative_not_descriptor, tc)
 {
 	int client_sock, error, fd;
+
+	if (atf_tc_get_config_var_as_bool_wd(tc, "qemu", false))
+		atf_tc_skip("Sendfile(4) unimplemented. https://github.com/qemu-bsd-user/qemu-bsd-user/issues/25");
 
 	client_sock = -1;
 
@@ -1057,6 +1099,9 @@ ATF_TC_HEAD(s_negative_not_socket_file_descriptor, tc)
 ATF_TC_BODY(s_negative_not_socket_file_descriptor, tc)
 {
 	int client_sock, error, fd;
+
+	if (atf_tc_get_config_var_as_bool_wd(tc, "qemu", false))
+		atf_tc_skip("Sendfile(4) unimplemented. https://github.com/qemu-bsd-user/qemu-bsd-user/issues/25");
 
 	fd = open(SOURCE_FILE, O_CREAT|O_RDWR, 0600);
 	ATF_REQUIRE_MSG(fd != -1, "open failed: %s", strerror(errno));
@@ -1099,6 +1144,9 @@ ATF_TC_HEAD(s_negative_udp_socket_v4, tc)
 ATF_TC_BODY(s_negative_udp_socket_v4, tc)
 {
 
+	if (atf_tc_get_config_var_as_bool_wd(tc, "qemu", false))
+		atf_tc_skip("Sendfile(4) unimplemented. https://github.com/qemu-bsd-user/qemu-bsd-user/issues/25");
+
 	s_negative_udp_socket_test(AF_INET);
 }
 
@@ -1111,6 +1159,9 @@ ATF_TC_HEAD(s_negative_udp_socket_v6, tc)
 }
 ATF_TC_BODY(s_negative_udp_socket_v6, tc)
 {
+
+	if (atf_tc_get_config_var_as_bool_wd(tc, "qemu", false))
+		atf_tc_skip("Sendfile(4) unimplemented. https://github.com/qemu-bsd-user/qemu-bsd-user/issues/25");
 
 	s_negative_udp_socket_test(AF_INET6);
 }

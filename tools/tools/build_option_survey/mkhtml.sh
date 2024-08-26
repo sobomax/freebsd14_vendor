@@ -1,6 +1,5 @@
 #!/bin/sh
 # This file is in the public domain
-# $FreeBSD: 9ae4683576f6bfa3af63f9ed25253c5f80f261b7 $
 
 set -e
 

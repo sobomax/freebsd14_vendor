@@ -1,4 +1,3 @@
-# $FreeBSD: 42060884f710f49bcd56cc4e331b3df5788d8ce8 $
 
 PACKAGE=	autofs
 

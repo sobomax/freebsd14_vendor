@@ -1,4 +1,3 @@
-.\" $FreeBSD: ce7161243bffb32b89d036541bf8d6e7b7822476 $
 Do not build
 .Xr ppp 8
 and related programs.

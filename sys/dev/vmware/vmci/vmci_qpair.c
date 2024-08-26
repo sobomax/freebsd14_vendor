@@ -15,8 +15,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: f0ef3cd02efa9fee82b352935f6cd4f7c42f4b0f $");
-
 #include "vmci_kernel_api.h"
 #include "vmci_kernel_defs.h"
 #include "vmci_kernel_if.h"
@@ -148,8 +146,6 @@ vmci_qpair_alloc(struct vmci_qpair **qpair, struct vmci_handle *handle,
     uint32_t flags, vmci_privilege_flags priv_flags)
 {
 	struct vmci_qpair *my_qpair;
-	vmci_event_release_cb wakeup_cb;
-	void *client_data;
 	int retval;
 
 	/*
@@ -181,9 +177,6 @@ vmci_qpair_alloc(struct vmci_qpair **qpair, struct vmci_handle *handle,
 	my_qpair->peer = peer;
 	my_qpair->flags = flags;
 	my_qpair->priv_flags = priv_flags;
-
-	client_data = NULL;
-	wakeup_cb = NULL;
 
 	retval = vmci_queue_pair_alloc(handle, &my_qpair->produce_q,
 	    my_qpair->produce_q_size, &my_qpair->consume_q,

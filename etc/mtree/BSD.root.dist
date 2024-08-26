@@ -1,4 +1,3 @@
-# $FreeBSD: 5ee5da8ee149120a9de1f5475dc2ab46dd7dc5f2 $
 #
 # Please see the file src/etc/mtree/README before making changes to this file.
 #
@@ -96,6 +95,8 @@
         ..
         ssl
         ..
+	sysctl.kld.d
+	..
         syslog.d
         ..
         zfs
@@ -104,8 +105,6 @@
         ..
     ..
     lib
-        casper
-        ..
         geom
         ..
         nvmecontrol

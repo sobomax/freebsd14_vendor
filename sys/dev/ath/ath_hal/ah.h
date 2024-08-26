@@ -15,8 +15,6 @@
  * WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
  * ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
- *
- * $FreeBSD: 58353ba90595d12e81e27a8b43894dd4f751df9f $
  */
 
 #ifndef _ATH_AH_H_
@@ -1404,6 +1402,8 @@ struct ath_hal {
 				HAL_QUIET_FLAG flag);
 	void	  __ahdecl(*ah_setChainMasks)(struct ath_hal *,
 				uint32_t, uint32_t);
+	u_int	  __ahdecl(*ah_getNav)(struct ath_hal*);
+	void	  __ahdecl(*ah_setNav)(struct ath_hal*, u_int);
 
 	/* DFS functions */
 	void	  __ahdecl(*ah_enableDfs)(struct ath_hal *ah,

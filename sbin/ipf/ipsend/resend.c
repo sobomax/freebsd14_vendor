@@ -1,4 +1,3 @@
-/*	$FreeBSD: c3f86baaadc3985fa580824b84559a5c500a4a30 $	*/
 
 /*
  * resend.c (C) 1995-1998 Darren Reed

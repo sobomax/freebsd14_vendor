@@ -1,4 +1,3 @@
-# $FreeBSD: 2c68faf3356fd9e33b7df08921f2af3e2a1a5cee $
 
 .include <src.opts.mk>
 
@@ -8,7 +7,9 @@ INCS=		libveriexec.h
 
 WARNS?=		2
 
-SRCS=		veriexec_check.c
+SRCS= \
+	veriexec_check.c \
+	veriexec_get.c
 
 .include <bsd.lib.mk>
 

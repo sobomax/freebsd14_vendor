@@ -30,7 +30,6 @@
  * SUCH DAMAGE.
  *
  *	@(#)expand.h	8.2 (Berkeley) 5/4/95
- * $FreeBSD: a60ea29514d2944f2da26273ff797723042eeaa9 $
  */
 
 struct arglist {

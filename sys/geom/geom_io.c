@@ -40,8 +40,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 38d0803fa6f9a7d567e5708bff1932d9e380d150 $");
-
 #include <sys/param.h>
 #include <sys/systm.h>
 #include <sys/kernel.h>
@@ -53,6 +51,7 @@ __FBSDID("$FreeBSD: 38d0803fa6f9a7d567e5708bff1932d9e380d150 $");
 #include <sys/stack.h>
 #include <sys/sysctl.h>
 #include <sys/vmem.h>
+#include <machine/stack.h>
 #include <machine/stdarg.h>
 
 #include <sys/errno.h>
@@ -68,6 +67,9 @@ __FBSDID("$FreeBSD: 38d0803fa6f9a7d567e5708bff1932d9e380d150 $");
 #include <vm/vm_object.h>
 #include <vm/vm_extern.h>
 #include <vm/vm_map.h>
+
+#define KTR_GEOM_ENABLED \
+    ((KTR_COMPILE & KTR_GEOM) != 0 && (ktr_mask & KTR_GEOM) != 0)
 
 static int	g_io_transient_map_bio(struct bio *bp);
 
@@ -143,7 +145,7 @@ g_new_bio(void)
 
 	bp = uma_zalloc(biozone, M_NOWAIT | M_ZERO);
 #ifdef KTR
-	if ((KTR_COMPILE & KTR_GEOM) && (ktr_mask & KTR_GEOM)) {
+	if (KTR_GEOM_ENABLED) {
 		struct stack st;
 
 		CTR1(KTR_GEOM, "g_new_bio(): %p", bp);
@@ -161,7 +163,7 @@ g_alloc_bio(void)
 
 	bp = uma_zalloc(biozone, M_WAITOK | M_ZERO);
 #ifdef KTR
-	if ((KTR_COMPILE & KTR_GEOM) && (ktr_mask & KTR_GEOM)) {
+	if (KTR_GEOM_ENABLED) {
 		struct stack st;
 
 		CTR1(KTR_GEOM, "g_alloc_bio(): %p", bp);
@@ -176,7 +178,7 @@ void
 g_destroy_bio(struct bio *bp)
 {
 #ifdef KTR
-	if ((KTR_COMPILE & KTR_GEOM) && (ktr_mask & KTR_GEOM)) {
+	if (KTR_GEOM_ENABLED) {
 		struct stack st;
 
 		CTR1(KTR_GEOM, "g_destroy_bio(): %p", bp);
@@ -199,12 +201,12 @@ g_clone_bio(struct bio *bp)
 		/*
 		 *  BIO_ORDERED flag may be used by disk drivers to enforce
 		 *  ordering restrictions, so this flag needs to be cloned.
-		 *  BIO_UNMAPPED and BIO_VLIST should be inherited, to properly
-		 *  indicate which way the buffer is passed.
+		 *  BIO_UNMAPPED, BIO_VLIST, and BIO_SWAP should be inherited,
+		 *  to properly indicate which way the buffer is passed.
 		 *  Other bio flags are not suitable for cloning.
 		 */
 		bp2->bio_flags = bp->bio_flags &
-		    (BIO_ORDERED | BIO_UNMAPPED | BIO_VLIST);
+		    (BIO_ORDERED | BIO_UNMAPPED | BIO_VLIST | BIO_SWAP);
 		bp2->bio_length = bp->bio_length;
 		bp2->bio_offset = bp->bio_offset;
 		bp2->bio_data = bp->bio_data;
@@ -221,7 +223,7 @@ g_clone_bio(struct bio *bp)
 		bp->bio_children++;
 	}
 #ifdef KTR
-	if ((KTR_COMPILE & KTR_GEOM) && (ktr_mask & KTR_GEOM)) {
+	if (KTR_GEOM_ENABLED) {
 		struct stack st;
 
 		CTR2(KTR_GEOM, "g_clone_bio(%p): %p", bp, bp2);
@@ -238,7 +240,7 @@ g_duplicate_bio(struct bio *bp)
 	struct bio *bp2;
 
 	bp2 = uma_zalloc(biozone, M_WAITOK | M_ZERO);
-	bp2->bio_flags = bp->bio_flags & (BIO_UNMAPPED | BIO_VLIST);
+	bp2->bio_flags = bp->bio_flags & (BIO_UNMAPPED | BIO_VLIST | BIO_SWAP);
 	bp2->bio_parent = bp;
 	bp2->bio_cmd = bp->bio_cmd;
 	bp2->bio_length = bp->bio_length;
@@ -250,7 +252,7 @@ g_duplicate_bio(struct bio *bp)
 	bp2->bio_attribute = bp->bio_attribute;
 	bp->bio_children++;
 #ifdef KTR
-	if ((KTR_COMPILE & KTR_GEOM) && (ktr_mask & KTR_GEOM)) {
+	if (KTR_GEOM_ENABLED) {
 		struct stack st;
 
 		CTR2(KTR_GEOM, "g_duplicate_bio(%p): %p", bp, bp2);

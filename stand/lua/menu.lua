@@ -1,5 +1,5 @@
 --
--- SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+-- SPDX-License-Identifier: BSD-2-Clause
 --
 -- Copyright (c) 2015 Pedro Souza <pedrosouza@freebsd.org>
 -- Copyright (c) 2018 Kyle Evans <kevans@FreeBSD.org>
@@ -25,8 +25,6 @@
 -- LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
 -- OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 -- SUCH DAMAGE.
---
--- $FreeBSD: 400dbf3d469be79bc6d479244d974daaa96b53dd $
 --
 
 local cli = require("cli")
@@ -58,6 +56,9 @@ local function bootenvSet(env)
 	loader.setenv("vfs.root.mountfrom", env)
 	loader.setenv("currdev", env .. ":")
 	config.reload()
+	if loader.getenv("kernelname") ~= nil then
+		loader.perform("unload")
+	end
 end
 
 local function multiUserPrompt()
@@ -175,7 +176,7 @@ menu.boot_options = {
 		-- acpi
 		{
 			entry_type = core.MENU_ENTRY,
-			visible = core.isSystem386,
+			visible = core.hasACPI,
 			name = function()
 				return OnOff(color.highlight("A") ..
 				    "CPI       :", core.acpi)

@@ -1,4 +1,3 @@
-# $FreeBSD: 78981d643668317e39dfd68c7e9271ef438ec757 $
 # $NetBSD: EBCDIC-AT-DE%UCS.src,v 1.2 2003/07/12 16:11:07 tshiozak Exp $
 
 TYPE		ROWCOL

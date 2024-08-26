@@ -62,8 +62,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 74d0f4be72ea485c2e6a9149f06719515a316c89 $");
-
 #include <sys/param.h>
 #include <sys/systm.h>
 #include <sys/kernel.h>
@@ -78,6 +76,7 @@ __FBSDID("$FreeBSD: 74d0f4be72ea485c2e6a9149f06719515a316c89 $");
 
 #include <net/if.h>
 #include <net/if_var.h>
+#include <net/if_private.h>
 #include <net/route.h>
 #include <net/route/route_ctl.h>
 #include <net/route/route_var.h>
@@ -92,11 +91,6 @@ __FBSDID("$FreeBSD: 74d0f4be72ea485c2e6a9149f06719515a316c89 $");
 
 #include <netinet/icmp6.h>
 #include <netinet6/nd6.h>
-
-#include <netinet/tcp.h>
-#include <netinet/tcp_seq.h>
-#include <netinet/tcp_timer.h>
-#include <netinet/tcp_var.h>
 
 static int
 rib6_set_nh_pfxflags(u_int fibnum, const struct sockaddr *addr, const struct sockaddr *mask,
@@ -149,7 +143,7 @@ struct rib_head *
 in6_inithead(uint32_t fibnum)
 {
 	struct rib_head *rh;
-	struct rib_subscription *rs;
+	struct rib_subscription *rs __diagused;
 
 	rh = rt_table_init(offsetof(struct sockaddr_in6, sin6_addr) << 3,
 	    AF_INET6, fibnum);

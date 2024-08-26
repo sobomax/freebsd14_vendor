@@ -1,7 +1,7 @@
 /*	$NetBSD: mii.c,v 1.12 1999/08/03 19:41:49 drochner Exp $	*/
 
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-NetBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 1998 The NetBSD Foundation, Inc.
  * All rights reserved.
@@ -33,8 +33,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: aaae2ec4e5d6817aea78f806e932ebfa40d46cba $");
-
 /*
  * MII bus layer, glues MII-capable network interface drivers to sharable
  * PHY drivers.  This exports an interface compatible with BSD/OS 3.0's,
@@ -47,6 +45,7 @@ __FBSDID("$FreeBSD: aaae2ec4e5d6817aea78f806e932ebfa40d46cba $");
 #include <sys/malloc.h>
 #include <sys/module.h>
 #include <sys/bus.h>
+#include <sys/sbuf.h>
 
 #include <net/if.h>
 #include <net/if_var.h>
@@ -60,8 +59,8 @@ MODULE_VERSION(miibus, 1);
 #include "miibus_if.h"
 
 static bus_child_detached_t miibus_child_detached;
-static bus_child_location_str_t miibus_child_location_str;
-static bus_child_pnpinfo_str_t miibus_child_pnpinfo_str;
+static bus_child_location_t miibus_child_location;
+static bus_child_pnpinfo_t miibus_child_pnpinfo;
 static device_detach_t miibus_detach;
 static bus_hinted_child_t miibus_hinted_child;
 static bus_print_child_t miibus_print_child;
@@ -86,8 +85,8 @@ static device_method_t miibus_methods[] = {
 	DEVMETHOD(bus_print_child,	miibus_print_child),
 	DEVMETHOD(bus_read_ivar,	miibus_read_ivar),
 	DEVMETHOD(bus_child_detached,	miibus_child_detached),
-	DEVMETHOD(bus_child_pnpinfo_str, miibus_child_pnpinfo_str),
-	DEVMETHOD(bus_child_location_str, miibus_child_location_str),
+	DEVMETHOD(bus_child_pnpinfo,	miibus_child_pnpinfo),
+	DEVMETHOD(bus_child_location,	miibus_child_location),
 	DEVMETHOD(bus_hinted_child,	miibus_hinted_child),
 
 	/* MII interface */
@@ -100,7 +99,6 @@ static device_method_t miibus_methods[] = {
 	DEVMETHOD_END
 };
 
-devclass_t miibus_devclass;
 DEFINE_CLASS_0(miibus, miibus_driver, miibus_methods, sizeof(struct mii_data));
 
 struct miibus_ivars {
@@ -213,26 +211,24 @@ miibus_read_ivar(device_t dev, device_t child __unused, int which,
 }
 
 static int
-miibus_child_pnpinfo_str(device_t dev __unused, device_t child, char *buf,
-    size_t buflen)
+miibus_child_pnpinfo(device_t dev __unused, device_t child, struct sbuf *sb)
 {
 	struct mii_attach_args *ma;
 
 	ma = device_get_ivars(child);
-	snprintf(buf, buflen, "oui=0x%x model=0x%x rev=0x%x",
+	sbuf_printf(sb, "oui=0x%x model=0x%x rev=0x%x",
 	    MII_OUI(ma->mii_id1, ma->mii_id2),
 	    MII_MODEL(ma->mii_id2), MII_REV(ma->mii_id2));
 	return (0);
 }
 
 static int
-miibus_child_location_str(device_t dev __unused, device_t child, char *buf,
-    size_t buflen)
+miibus_child_location(device_t dev __unused, device_t child, struct sbuf *sb)
 {
 	struct mii_attach_args *ma;
 
 	ma = device_get_ivars(child);
-	snprintf(buf, buflen, "phyno=%d", ma->mii_phyno);
+	sbuf_printf(sb, "phyno=%d", ma->mii_phyno);
 	return (0);
 }
 
@@ -377,6 +373,8 @@ mii_attach(device_t dev, device_t *miibus, if_t ifp,
 	device_t *children, phy;
 	int bmsr, first, i, nchildren, phymax, phymin, rv;
 	uint32_t phymask;
+
+	bus_topo_assert();
 
 	if (phyloc != MII_PHY_ANY && offloc != MII_OFFSET_ANY) {
 		printf("%s: phyloc and offloc specified\n", __func__);

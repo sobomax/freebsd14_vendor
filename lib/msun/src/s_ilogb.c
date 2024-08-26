@@ -10,9 +10,6 @@
  * ====================================================
  */
 
-#include <sys/cdefs.h>
-__FBSDID("$FreeBSD: a930bc9eccc7763a695ffcad31a3ab385298db41 $");
-
 /* ilogb(double x)
  * return the binary exponent of non-zero x
  * ilogb(0) = FP_ILOGB0

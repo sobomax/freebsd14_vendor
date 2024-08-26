@@ -52,9 +52,6 @@
 #include <machine/armreg.h>
 #include <machine/asmacros.h>
 #include <machine/trap.h>
-
-__FBSDID("$FreeBSD: 92e815b068fad24cd8af043065d3014f7a0b46d6 $");
-
 #ifdef KDTRACE_HOOKS
 	.bss
 	.align 4
@@ -175,8 +172,7 @@ _C_LABEL(dtrace_invop_jump_addr):
 	bne	2f;			/* Nope, get out now */		   \
 	bic	r4, r4, #(PSR_I|PSR_F);					   \
 1:	GET_CURTHREAD_PTR(r5);						   \
-	ldr	r1, [r5, #(TD_FLAGS)];					   \
-	and	r1, r1, #(TDF_ASTPENDING|TDF_NEEDRESCHED);		   \
+	ldr	r1, [r5, #(TD_AST)];					   \
 	teq	r1, #0;							   \
 	beq	2f;			/* Nope. Just bail */		   \
 	msr	cpsr_c, r4;		/* Restore interrupts */	   \
@@ -236,10 +232,6 @@ END(exception_exit)
  * on exit (without transitioning back through the abort mode stack).
  */
 ASENTRY_NP(prefetch_abort_entry)
-#ifdef __XSCALE__
-	nop				/* Make absolutely sure any pending */
-	nop				/* imprecise aborts have occurred. */
-#endif
 	sub	lr, lr, #4		/* Adjust the lr. Transition to scv32 */
 	PUSHFRAMEINSVC			/* mode stack, build trapframe there. */
 	adr	lr, exception_exit	/* Return from handler via standard */
@@ -256,10 +248,6 @@ END(prefetch_abort_entry)
  * on exit (without transitioning back through the abort mode stack).
  */
 ASENTRY_NP(data_abort_entry)
-#ifdef __XSCALE__
-	nop				/* Make absolutely sure any pending */
-	nop				/* imprecise aborts have occurred. */
-#endif
 	sub	lr, lr, #8		/* Adjust the lr. Transition to scv32 */
 	PUSHFRAMEINSVC			/* mode stack, build trapframe there. */
 	adr	lr, exception_exit	/* Exception exit routine */

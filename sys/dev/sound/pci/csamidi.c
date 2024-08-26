@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
 
  * Copyright (c) 2015-2018 Tai-hwa Liang <avatar@FreeBSD.org>
  * All rights reserved
@@ -54,8 +54,6 @@
 
 #include "mpufoi_if.h"
 
-SND_DECLARE_FILE("$FreeBSD: a013f8d9f3e67975dc995afab553520f159a8d9c $");
-
 /* pulled from mpu401.c */
 #define	MPU_DATAPORT	0
 #define	MPU_CMDPORT	1
@@ -81,7 +79,6 @@ struct csa_midi_softc {
 };
 
 static struct kobj_class csamidi_mpu_class;
-static devclass_t midicsa_devclass;
 
 static u_int32_t
 csamidi_readio(struct csa_midi_softc *scp, u_long offset)
@@ -282,7 +279,7 @@ static driver_t midicsa_driver = {
 	midicsa_methods,
 	sizeof(struct csa_midi_softc),
 };
-DRIVER_MODULE(snd_csa_midi, csa, midicsa_driver, midicsa_devclass, 0, 0);
+DRIVER_MODULE(snd_csa_midi, csa, midicsa_driver, 0, 0);
 MODULE_DEPEND(snd_csa_midi, snd_csa, 1, 1, 1);
 MODULE_DEPEND(snd_csa_midi, sound, SOUND_MINVER, SOUND_PREFVER, SOUND_MAXVER);
 MODULE_VERSION(snd_csa_midi, 1);

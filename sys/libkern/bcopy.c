@@ -41,8 +41,6 @@ static char *rcsid = "$NetBSD: bcopy.c,v 1.2 1997/04/16 22:09:41 thorpej Exp $";
 #endif
 #endif /* LIBC_SCCS and not lint */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 8e34ad0daa5348652c59af58c87c1d6ca4350abc $");
-
 #include <sys/param.h>
 #ifdef _KERNEL
 #include <sys/systm.h>
@@ -52,7 +50,6 @@ __FBSDID("$FreeBSD: 8e34ad0daa5348652c59af58c87c1d6ca4350abc $");
 
 #undef memcpy
 #undef memmove
-#undef bcopy
 
 /*
  * sizeof(word) MUST BE A POWER OF TWO
@@ -147,10 +144,3 @@ done:
 }
 
 __strong_reference(memcpy, memmove);
-
-void
-(bcopy)(const void *src0, void *dst0, size_t length)
-{
-
-	memcpy(dst0, src0, length);
-}

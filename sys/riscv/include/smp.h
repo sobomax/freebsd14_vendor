@@ -30,8 +30,6 @@
  * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
- *
- * $FreeBSD: a1d588f31567170ac47a6cabc8f02f1dab5e79f2 $
  */
 
 #ifndef	_MACHINE_SMP_H_
@@ -51,7 +49,5 @@
 void ipi_all_but_self(u_int ipi);
 void ipi_cpu(int cpu, u_int ipi);
 void ipi_selected(cpuset_t cpus, u_int ipi);
-
-extern struct pcb stoppcbs[];
 
 #endif /* !_MACHINE_SMP_H_ */

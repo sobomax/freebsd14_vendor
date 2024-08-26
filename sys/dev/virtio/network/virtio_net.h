@@ -26,8 +26,6 @@
  * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
- *
- * $FreeBSD: da5aea4a29e6ca5f5ef300dca80e1e5754e25dae $
  */
 
 #ifndef _VIRTIO_NET_H
@@ -212,7 +210,7 @@ struct virtio_net_ctrl_mac {
  * Control link announce acknowledgement
  *
  * The command VIRTIO_NET_CTRL_ANNOUNCE_ACK is used to indicate that
- * driver has recevied the notification; device would clear the
+ * driver has received the notification; device would clear the
  * VIRTIO_NET_S_ANNOUNCE bit in the status field after it receives
  * this command.
  */
@@ -413,16 +411,22 @@ static inline int
 virtio_net_tx_offload_ctx(struct mbuf *m, int *etype, int *proto, int *start)
 {
 	struct ether_vlan_header *evh;
+#if defined(INET) || defined(INET6)
 	int offset;
+#endif
 
 	evh = mtod(m, struct ether_vlan_header *);
 	if (evh->evl_encap_proto == htons(ETHERTYPE_VLAN)) {
 		/* BMV: We should handle nested VLAN tags too. */
 		*etype = ntohs(evh->evl_proto);
+#if defined(INET) || defined(INET6)
 		offset = sizeof(struct ether_vlan_header);
+#endif
 	} else {
 		*etype = ntohs(evh->evl_encap_proto);
+#if defined(INET) || defined(INET6)
 		offset = sizeof(struct ether_header);
+#endif
 	}
 
 	switch (*etype) {

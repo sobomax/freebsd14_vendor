@@ -1,4 +1,3 @@
-# $FreeBSD: b3569c1080c9ce97082a3100f225b12ffe5029c8 $
 
 .PATH: ${LDRSRC} ${BOOTSRC}/libsa
 
@@ -25,12 +24,6 @@ SRCS+=	load_elf32.c reloc_elf32.c
 .elif ${MACHINE_CPUARCH} == "powerpc"
 SRCS+=	load_elf32.c reloc_elf32.c
 SRCS+=	load_elf64.c reloc_elf64.c
-SRCS+=	metadata.c
-.elif ${MACHINE_ARCH:Mmips64*} != ""
-SRCS+= load_elf64.c reloc_elf64.c
-SRCS+=	metadata.c
-.elif ${MACHINE} == "mips"
-SRCS+=	load_elf32.c reloc_elf32.c
 SRCS+=	metadata.c
 .elif ${MACHINE_CPUARCH} == "riscv"
 SRCS+=	load_elf64.c reloc_elf64.c
@@ -177,8 +170,10 @@ CFLAGS+=	-DELF_VERBOSE
 HELP_FILES+=	${LDRSRC}/help.common
 
 CFLAGS+=	-DHELP_FILENAME=\"${HELP_FILENAME}\"
+.if ${INSTALL_LOADER_HELP_FILE:Uyes} == "yes"
 CLEANFILES+=	${HELP_FILENAME}
 FILES+=		${HELP_FILENAME}
+.endif
 
 ${HELP_FILENAME}: ${HELP_FILES}
 	cat ${HELP_FILES} | awk -f ${LDRSRC}/merge_help.awk > ${.TARGET}

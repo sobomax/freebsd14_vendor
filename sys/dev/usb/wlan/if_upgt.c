@@ -1,5 +1,4 @@
 /*	$OpenBSD: if_upgt.c,v 1.35 2008/04/16 18:32:15 damien Exp $ */
-/*	$FreeBSD: b8ae41418695b2c0f84e76f079fbbd03581862f8 $ */
 
 /*
  * Copyright (c) 2007 Marcus Glocker <mglocker@openbsd.org>
@@ -1153,17 +1152,15 @@ upgt_eeprom_parse_freq3(struct upgt_softc *sc, uint8_t *data, int len)
 	struct upgt_lmac_freq3 *freq3;
 	int i;
 	int elements;
-	int flags;
 	unsigned channel;
 
 	freq3_header = (struct upgt_eeprom_freq3_header *)data;
 	freq3 = (struct upgt_lmac_freq3 *)(freq3_header + 1);
 
-	flags = freq3_header->flags;
 	elements = freq3_header->elements;
 
 	DPRINTF(sc, UPGT_DEBUG_FW, "flags=0x%02x elements=%d\n",
-	    flags, elements);
+	    freq3_header->flags, elements);
 
 	if (elements >= (int)(UPGT_EEPROM_SIZE / sizeof(freq3[0])))
 		return;
@@ -1190,12 +1187,10 @@ upgt_eeprom_parse_freq4(struct upgt_softc *sc, uint8_t *data, int len)
 	int j;
 	int elements;
 	int settings;
-	int flags;
 	unsigned channel;
 
 	freq4_header = (struct upgt_eeprom_freq4_header *)data;
 	freq4_1 = (struct upgt_eeprom_freq4_1 *)(freq4_header + 1);
-	flags = freq4_header->flags;
 	elements = freq4_header->elements;
 	settings = freq4_header->settings;
 
@@ -1203,7 +1198,7 @@ upgt_eeprom_parse_freq4(struct upgt_softc *sc, uint8_t *data, int len)
 	sc->sc_eeprom_freq6_settings = freq4_header->settings;
 
 	DPRINTF(sc, UPGT_DEBUG_FW, "flags=0x%02x elements=%d settings=%d\n",
-	    flags, elements, settings);
+	    freq4_header->flags, elements, settings);
 
 	if (elements >= (int)(UPGT_EEPROM_SIZE / sizeof(freq4_1[0])))
 		return;
@@ -1934,7 +1929,7 @@ upgt_detach(device_t dev)
 {
 	struct upgt_softc *sc = device_get_softc(dev);
 	struct ieee80211com *ic = &sc->sc_ic;
-	unsigned int x;
+	unsigned x;
 
 	/*
 	 * Prevent further allocations from RX/TX/CMD
@@ -2196,7 +2191,7 @@ done:
 	 * will stall.  It's strange, but it works, so we keep reading
 	 * the statistics here.  *shrug*
 	 */
-	if (!(vap->iv_ifp->if_get_counter(vap->iv_ifp, IFCOUNTER_OPACKETS) %
+	if (!(if_getcounter(vap->iv_ifp, IFCOUNTER_OPACKETS) %
 	    UPGT_TX_STAT_INTERVAL))
 		upgt_get_stats(sc);
 
@@ -2210,7 +2205,6 @@ upgt_bulk_rx_callback(struct usb_xfer *xfer, usb_error_t error)
 	struct ieee80211com *ic = &sc->sc_ic;
 	struct ieee80211_frame *wh;
 	struct ieee80211_node *ni;
-	struct epoch_tracker et;
 	struct mbuf *m = NULL;
 	struct upgt_data *data;
 	int8_t nf;
@@ -2248,14 +2242,12 @@ setup:
 			ni = ieee80211_find_rxnode(ic,
 			    (struct ieee80211_frame_min *)wh);
 			nf = -95;	/* XXX */
-			NET_EPOCH_ENTER(et);
 			if (ni != NULL) {
 				(void) ieee80211_input(ni, m, rssi, nf);
 				/* node is no longer needed */
 				ieee80211_free_node(ni);
 			} else
 				(void) ieee80211_input_all(ic, m, rssi, nf);
-			NET_EPOCH_EXIT(et);
 			m = NULL;
 		}
 		UPGT_LOCK(sc);
@@ -2344,9 +2336,7 @@ static driver_t upgt_driver = {
 	.size = sizeof(struct upgt_softc)
 };
 
-static devclass_t upgt_devclass;
-
-DRIVER_MODULE(if_upgt, uhub, upgt_driver, upgt_devclass, NULL, 0);
+DRIVER_MODULE(if_upgt, uhub, upgt_driver, NULL, NULL);
 MODULE_VERSION(if_upgt, 1);
 MODULE_DEPEND(if_upgt, usb, 1, 1, 1);
 MODULE_DEPEND(if_upgt, wlan, 1, 1, 1);

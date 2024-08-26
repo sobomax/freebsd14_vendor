@@ -1,4 +1,3 @@
-/*	$FreeBSD: 111b231ddd4494681b5cc6be61ff12f1c9ee61e3 $	*/
 /*	$KAME: des.h,v 1.8 2001/09/10 04:03:57 itojun Exp $	*/
 
 /* lib/des/des.h */

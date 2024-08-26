@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2003 John Baldwin <jhb@FreeBSD.org>
  *
@@ -26,8 +26,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 8e343a6619f3d24142245fec273bcdf75f907524 $");
-
 #include <sys/param.h>
 #include <sys/systm.h>
 #include <sys/bus.h>
@@ -168,9 +166,6 @@ madt_x2apic_disable_reason(void)
 			return ("inside VMWare without intr redirection");
 	}
 
-	if (vm_guest == VM_GUEST_XEN)
-		return ("due to running under XEN");
-
 	if (vm_guest == VM_GUEST_NO &&
 	    CPUID_TO_FAMILY(cpu_id) == 0x6 &&
 	    CPUID_TO_MODEL(cpu_id) == 0x2a) {
@@ -226,7 +221,7 @@ madt_setup_local(void)
 		else if (bootverbose)
 			printf("x2APIC available but disabled %s\n", reason);
 		user_x2apic = x2apic_mode;
-		TUNABLE_INT_FETCH("hw.x2apic_enable", &user_x2apic);
+		TUNABLE_INT_FETCH("hw.apic.x2apic_mode", &user_x2apic);
 		if (user_x2apic != x2apic_mode) {
 			if (bios_x2apic && !user_x2apic)
 				printf("x2APIC disabled by tunable and "

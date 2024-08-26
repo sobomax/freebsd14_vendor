@@ -1,5 +1,4 @@
 #	@(#)Makefile	8.1 (Berkeley) 6/5/93
-# $FreeBSD: 1e61c79d12b945b188316ea638e68513f96a9327 $
 
 .include <src.opts.mk>
 
@@ -10,7 +9,6 @@ MAN=	\
 	intro.8 \
 	nanobsd.8 \
 	rc.8 \
-	rc.sendmail.8 \
 	rc.subr.8 \
 	rescue.8 \
 	${_uefi.8} \
@@ -35,10 +33,10 @@ MLINKS+=yp.8 NIS.8 \
 	yp.8 YP.8
 .endif
 
-.if ${MACHINE_CPUARCH} == "aarch64" || ${MACHINE_CPUARCH} == "amd64"
+# This makes more sense for aarch 64 and amd64
+# we decide to install all manpages in all architectures
 _uefi.8= uefi.8
 
 MLINKS+=uefi.8 efi.8
-.endif
 
 .include <bsd.prog.mk>

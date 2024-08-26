@@ -22,8 +22,6 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: eccfc1a4dfd4f4cc0b9da9c4e312d34d5f643770 $
- *
  */
 #include <sys/cdefs.h>
 #include <sys/types.h>

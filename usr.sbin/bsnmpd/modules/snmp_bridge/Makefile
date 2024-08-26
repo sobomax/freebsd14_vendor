@@ -1,5 +1,4 @@
 #
-# $FreeBSD: d072c933074f206feb90398b0f00de5bdcf6d6a5 $
 #
 
 MOD=	bridge

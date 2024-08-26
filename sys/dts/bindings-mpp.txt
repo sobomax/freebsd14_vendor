@@ -1,4 +1,3 @@
-$FreeBSD: 5da776e43cfc2c0297610c7baf04bca9bf500073 $
 
 * Multi purpose pin (MPP) configuration.
 

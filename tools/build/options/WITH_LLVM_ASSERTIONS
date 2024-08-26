@@ -1,2 +1,1 @@
-.\" $FreeBSD: 26f20a3827b30dbc112532269512fbebbab1c6d7 $
 Enable debugging assertions in LLVM.

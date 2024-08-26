@@ -36,8 +36,6 @@
  * Xen split devices.
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 7cb5bc33d1e78443946a90a3e311115eaae44e23 $");
-
 #include <sys/param.h>
 #include <sys/bus.h>
 #include <sys/kernel.h>
@@ -189,7 +187,5 @@ static device_method_t xenbusb_front_methods[] = {
 
 DEFINE_CLASS_0(xenbusb_front, xenbusb_front_driver, xenbusb_front_methods,
 	       sizeof(struct xenbusb_softc));
-devclass_t xenbusb_front_devclass; 
 
-DRIVER_MODULE(xenbusb_front, xenstore, xenbusb_front_driver,
-	      xenbusb_front_devclass, 0, 0);
+DRIVER_MODULE(xenbusb_front, xenstore, xenbusb_front_driver, 0, 0);

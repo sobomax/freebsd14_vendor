@@ -1,5 +1,4 @@
 /*	$NetBSD: edidvar.h,v 1.2 2006/05/11 19:05:41 gdamore Exp $	*/
-/*	$FreeBSD: da1211b4c0620937d0058a6dc109da965f0c48ee $	*/
 
 /*-
  * Copyright (c) 2006 Itronix Inc.

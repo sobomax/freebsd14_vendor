@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2002-2006 Rice University
  * Copyright (c) 2007-2011 Alan L. Cox <alc@cs.rice.edu>
@@ -39,8 +39,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: bb1bbe6680a129ba417d06f026d223e10cd3e6ac $");
-
 #include "opt_vm.h"
 
 #include <sys/param.h>
@@ -1194,7 +1192,7 @@ vm_reserv_find_contig(vm_reserv_t rv, int npages, int lo,
  * Searches the partially populated reservation queue for the least recently
  * changed reservation with free pages that satisfy the given request for
  * contiguous physical memory.  If a satisfactory reservation is found, it is
- * broken.  Returns true if a reservation is broken and false otherwise.
+ * broken.  Returns a page if a reservation is broken and NULL otherwise.
  */
 vm_page_t
 vm_reserv_reclaim_contig(int domain, u_long npages, vm_paddr_t low,
@@ -1210,7 +1208,7 @@ vm_reserv_reclaim_contig(int domain, u_long npages, vm_paddr_t low,
 	KASSERT(powerof2(alignment), ("alignment is not a power of 2"));
 	KASSERT(powerof2(boundary), ("boundary is not a power of 2"));
 	if (npages > VM_LEVEL_0_NPAGES - 1)
-		return (false);
+		return (NULL);
 	size = npages << PAGE_SHIFT;
 	/* 
 	 * Ensure that a free range starting at a boundary-multiple

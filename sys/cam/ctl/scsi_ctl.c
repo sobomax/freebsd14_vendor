@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2008, 2009 Silicon Graphics International Corp.
  * Copyright (c) 2014-2015 Alexander Motin <mav@FreeBSD.org>
@@ -39,8 +39,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: d3023f9a6c8c4fe6a6e8d6f05d5f15eaec9d5a40 $");
-
 #include <sys/param.h>
 #include <sys/queue.h>
 #include <sys/systm.h>
@@ -479,6 +477,7 @@ ctlferegister(struct cam_periph *periph, void *arg)
 		    /*getcount_only*/1);
 	}
 
+	memset(&ccb, 0, sizeof(ccb));
 	xpt_setup_ccb(&ccb.ccb_h, periph->path, CAM_PRIORITY_NONE);
 	ccb.ccb_h.func_code = XPT_EN_LUN;
 	ccb.cel.grp6_len = 0;
@@ -613,6 +612,7 @@ ctlfeoninvalidate(struct cam_periph *periph)
 	cam_status status;
 
 	/* Abort all ATIOs and INOTs queued to SIM. */
+	memset(&ccb, 0, sizeof(ccb));
 	xpt_setup_ccb(&ccb.ccb_h, periph->path, CAM_PRIORITY_NONE);
 	ccb.ccb_h.func_code = XPT_ABORT;
 	LIST_FOREACH(hdr, &softc->atio_list, periph_links.le) {
@@ -667,7 +667,7 @@ ctlfecleanup(struct cam_periph *periph)
 static void
 ctlfedata(struct ctlfe_lun_softc *softc, union ctl_io *io,
     ccb_flags *flags, uint8_t **data_ptr, uint32_t *dxfer_len,
-    u_int16_t *sglist_cnt)
+    uint16_t *sglist_cnt)
 {
 	struct ctlfe_softc *bus_softc;
 	struct ctlfe_cmd_info *cmd_info;
@@ -1183,7 +1183,7 @@ ctlfedone(struct cam_periph *periph, union ccb *done_ccb)
 		bcopy(atio_cdb_ptr(atio), io->scsiio.cdb, io->scsiio.cdb_len);
 
 #ifdef CTLFEDEBUG
-		printf("%s: %u:%u:%u: tag %04x CDB %02x\n", __func__,
+		printf("%s: %u:%u:%u: tag %jx CDB %02x\n", __func__,
 		        io->io_hdr.nexus.initid,
 		        io->io_hdr.nexus.targ_port,
 		        io->io_hdr.nexus.targ_lun,
@@ -1852,6 +1852,7 @@ ctlfe_dump_queue(struct ctlfe_lun_softc *softc)
 	struct ccb_getdevstats cgds;
 	int num_items;
 
+	memset(&cgds, 0, sizeof(cgds));
 	xpt_setup_ccb(&cgds.ccb_h, periph->path, CAM_PRIORITY_NORMAL);
 	cgds.ccb_h.func_code = XPT_GDEV_STATS;
 	xpt_action((union ccb *)&cgds);

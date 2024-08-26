@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  *  Copyright (c) 2005 Chris Jones
  *  All rights reserved.
@@ -32,8 +32,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 688673268ef93385c212b95f459d2c61fd948ed4 $");
-
 #include <sys/param.h>
 #include <sys/libkern.h>
 #include <sys/malloc.h>
@@ -226,7 +224,7 @@ int
 gv_rename_vol(struct gv_softc *sc, struct gv_volume *v, char *newname,
     int flags)
 {
-	struct g_provider *pp;
+	struct g_provider *pp __diagused;
 	struct gv_plex *p;
 	char newplex[GV_MAXPLEXNAME], *ptr;
 	int err;

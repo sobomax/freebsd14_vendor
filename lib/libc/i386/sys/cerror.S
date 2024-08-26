@@ -34,8 +34,6 @@
 	.asciz "@(#)cerror.s	5.1 (Berkeley) 4/23/90"
 #endif /* SYSLIBC_SCCS and not lint */
 #include <machine/asm.h>
-__FBSDID("$FreeBSD: 47bd0fade0005e3895481b743a33b4fd217b1c0e $");
-
 #include "SYS.h"
 
 	.globl HIDENAME(cerror)

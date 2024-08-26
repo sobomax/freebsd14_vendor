@@ -29,8 +29,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 189b9868d96cdab9a8de014c59dfa465c7e6de06 $");
-
 #include "efx.h"
 #include "efx_impl.h"
 

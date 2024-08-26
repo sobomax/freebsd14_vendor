@@ -1,4 +1,3 @@
-# $FreeBSD: a627b5cd996f017457d589a535ee9e49af467b04 $
 
 case ! in
 [\!!]) ;;

@@ -1,4 +1,3 @@
-# $FreeBSD: b5777315bbb65e63dfdf832feb97ec9ce679c87c $
 PACKAGE=lib${LIB}
 LIB=	pmcstat
 INTERNALLIB=

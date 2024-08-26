@@ -20,8 +20,6 @@
  * CDDL HEADER END
  *
  * Portions Copyright 2009 Stacey Son sson@FreeBSD.org
- *
- * $FreeBSD: 4140c133b53efbff8c679a84c98c79832d1d2e16 $
  */
 /*
  * Copyright 2004 Sun Microsystems, Inc.  All rights reserved.

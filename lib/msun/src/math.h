@@ -11,13 +11,11 @@
 
 /*
  * from: @(#)fdlibm.h 5.1 93/09/24
- * $FreeBSD: a0edea04dde209b2cb7abe7c384c6e3a1b029adf $
  */
 
 #ifndef _MATH_H_
 #define	_MATH_H_
 
-#include <sys/cdefs.h>
 #include <sys/_types.h>
 #include <machine/_limits.h>
 

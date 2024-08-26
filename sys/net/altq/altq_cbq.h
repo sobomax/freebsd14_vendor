@@ -28,7 +28,6 @@
  * These notices must be retained in any copies of any part of this software.
  *
  * $KAME: altq_cbq.h,v 1.12 2003/10/03 05:05:15 kjc Exp $
- * $FreeBSD: 70c07c11d86dc351152f5c89b0f1e819b54b9b4c $
  */
 
 #ifndef _ALTQ_ALTQ_CBQ_H_

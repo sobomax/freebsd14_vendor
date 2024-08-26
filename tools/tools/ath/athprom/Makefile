@@ -1,4 +1,3 @@
-# $FreeBSD: 82a5d2bb294dde33847814d103ea0df4b3454ec3 $
 
 PROG=	athprom
 

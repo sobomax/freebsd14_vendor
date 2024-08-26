@@ -1,4 +1,3 @@
-# $FreeBSD: fcad5e8c16e955c837a617e092c44b120844ae4d $
 
 .include <src.opts.mk>
 
@@ -15,7 +14,7 @@ LINKS=	${BINDIR}/mandoc ${BINDIR}/whatis \
 	${BINDIR}/mandoc ${BINDIR}/makewhatis \
 	${BINDIR}/mandoc ${BINDIR}/apropos
 .elif defined(BOOTSTRAPPING)
-.error "MK_MAN_UTILS should be set to yes when bootstrapping"
+.error MK_MAN_UTILS should be set to yes when bootstrapping
 .endif
 
 LIBMAN_SRCS=	man.c \

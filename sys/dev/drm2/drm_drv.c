@@ -47,8 +47,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 9529ac3dfa4b7cc383dbed97f5c188892f5392b1 $");
-
 #include <sys/sysent.h>
 
 #include <dev/drm2/drmP.h>

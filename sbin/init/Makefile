@@ -1,5 +1,4 @@
 #	@(#)Makefile	8.1 (Berkeley) 7/19/93
-# $FreeBSD: 3a914dc7acef813c0836e611fc49ae258efd7ac3 $
 
 CONFGROUPS=	CONFTTYS
 PACKAGE=runtime

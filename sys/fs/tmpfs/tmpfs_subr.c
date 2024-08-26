@@ -1,7 +1,7 @@
 /*	$NetBSD: tmpfs_subr.c,v 1.35 2007/07/09 21:10:50 ad Exp $	*/
 
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-NetBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2005 The NetBSD Foundation, Inc.
  * All rights reserved.
@@ -36,8 +36,6 @@
  * Efficient memory file system supporting functions.
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 1c0b4406e460af51f0fbfbbc0eee61f6bb7e9ffc $");
-
 #include <sys/param.h>
 #include <sys/systm.h>
 #include <sys/dirent.h>
@@ -434,7 +432,7 @@ tmpfs_pages_used(struct tmpfs_mount *tmp)
 	return (meta_pages + tmp->tm_pages_used);
 }
 
-static bool
+bool
 tmpfs_pages_check_avail(struct tmpfs_mount *tmp, size_t req_pages)
 {
 	if (tmpfs_mem_avail() < req_pages)
@@ -535,7 +533,7 @@ tmpfs_ref_node(struct tmpfs_node *node)
  * Returns zero on success or an appropriate error code on failure.
  */
 int
-tmpfs_alloc_node(struct mount *mp, struct tmpfs_mount *tmp, enum vtype type,
+tmpfs_alloc_node(struct mount *mp, struct tmpfs_mount *tmp, __enum_uint8(vtype) type,
     uid_t uid, gid_t gid, mode_t mode, struct tmpfs_node *parent,
     const char *target, dev_t rdev, struct tmpfs_node **node)
 {
@@ -547,8 +545,8 @@ tmpfs_alloc_node(struct mount *mp, struct tmpfs_mount *tmp, enum vtype type,
 	 * allocated, this must be the request to do it. */
 	MPASS(IMPLIES(tmp->tm_root == NULL, parent == NULL && type == VDIR));
 
-	MPASS(IFF(type == VLNK, target != NULL));
-	MPASS(IFF(type == VBLK || type == VCHR, rdev != VNOVAL));
+	MPASS((type == VLNK) ^ (target == NULL));
+	MPASS((type == VBLK || type == VCHR) ^ (rdev == VNOVAL));
 
 	if (tmp->tm_nodes_inuse >= tmp->tm_nodes_max)
 		return (ENOSPC);
@@ -587,6 +585,7 @@ tmpfs_alloc_node(struct mount *mp, struct tmpfs_mount *tmp, enum vtype type,
 	nnode->tn_mode = mode;
 	nnode->tn_id = alloc_unr64(&tmp->tm_ino_unr);
 	nnode->tn_refcount = 1;
+	LIST_INIT(&nnode->tn_extattrs);
 
 	/* Type-specific initialization. */
 	switch (nnode->tn_type) {
@@ -702,6 +701,7 @@ bool
 tmpfs_free_node_locked(struct tmpfs_mount *tmp, struct tmpfs_node *node,
     bool detach)
 {
+	struct tmpfs_extattr *ea;
 	vm_object_t uobj;
 	char *symlink;
 	bool last;
@@ -747,6 +747,11 @@ tmpfs_free_node_locked(struct tmpfs_mount *tmp, struct tmpfs_node *node,
 		    (int)node->tn_type, node);
 	}
 #endif
+
+	while ((ea = LIST_FIRST(&node->tn_extattrs)) != NULL) {
+		LIST_REMOVE(ea, ea_extattrs);
+		tmpfs_extattr_free(ea);
+	}
 
 	switch (node->tn_type) {
 	case VREG:
@@ -927,21 +932,6 @@ tmpfs_destroy_vobject(struct vnode *vp, vm_object_t obj)
 }
 
 /*
- * Need to clear v_object for insmntque failure.
- */
-static void
-tmpfs_insmntque_dtr(struct vnode *vp, void *dtr_arg)
-{
-
-	tmpfs_destroy_vobject(vp, vp->v_object);
-	vp->v_object = NULL;
-	vp->v_data = NULL;
-	vp->v_op = &dead_vnodeops;
-	vgone(vp);
-	vput(vp);
-}
-
-/*
  * Allocates a new vnode for the node node or returns a new reference to
  * an existing one if the node had already a vnode referencing it.  The
  * resulting locked vnode is returned in *vpp.
@@ -1069,7 +1059,8 @@ loop:
 		VI_LOCK(vp);
 		KASSERT(vp->v_object == NULL, ("Not NULL v_object in tmpfs"));
 		vp->v_object = object;
-		vn_irflag_set_locked(vp, VIRF_PGREAD);
+		vn_irflag_set_locked(vp, (tm->tm_pgread ? VIRF_PGREAD : 0) |
+		    VIRF_TEXT_REF);
 		VI_UNLOCK(vp);
 		VM_OBJECT_WUNLOCK(object);
 		break;
@@ -1085,9 +1076,19 @@ loop:
 	if (vp->v_type != VFIFO)
 		VN_LOCK_ASHARE(vp);
 
-	error = insmntque1(vp, mp, tmpfs_insmntque_dtr, NULL);
-	if (error != 0)
+	error = insmntque1(vp, mp);
+	if (error != 0) {
+		/* Need to clear v_object for insmntque failure. */
+		tmpfs_destroy_vobject(vp, vp->v_object);
+		vp->v_object = NULL;
+		vp->v_data = NULL;
+		vp->v_op = &dead_vnodeops;
+		vgone(vp);
+		vput(vp);
 		vp = NULL;
+	} else {
+		vn_set_state(vp, VSTATE_CONSTRUCTED);
+	}
 
 unlock:
 	TMPFS_NODE_LOCK(node);
@@ -1108,7 +1109,8 @@ out:
 		*vpp = vp;
 
 #ifdef INVARIANTS
-		MPASS(*vpp != NULL && VOP_ISLOCKED(*vpp));
+		MPASS(*vpp != NULL);
+		ASSERT_VOP_LOCKED(*vpp, __func__);
 		TMPFS_NODE_LOCK(node);
 		MPASS(*vpp == node->tn_vnode);
 		TMPFS_NODE_UNLOCK(node);
@@ -1160,7 +1162,6 @@ tmpfs_alloc_file(struct vnode *dvp, struct vnode **vpp, struct vattr *vap,
 	struct tmpfs_node *parent;
 
 	ASSERT_VOP_ELOCKED(dvp, "tmpfs_alloc_file");
-	MPASS(cnp->cn_flags & HASBUF);
 
 	tmp = VFS_TO_TMPFS(dvp->v_mount);
 	dnode = VP_TO_TMPFS_DIR(dvp);
@@ -1629,7 +1630,7 @@ tmpfs_dir_getdotdotdent(struct tmpfs_mount *tm, struct tmpfs_node *node,
  */
 int
 tmpfs_dir_getdents(struct tmpfs_mount *tm, struct tmpfs_node *node,
-    struct uio *uio, int maxcookies, u_long *cookies, int *ncookies)
+    struct uio *uio, int maxcookies, uint64_t *cookies, int *ncookies)
 {
 	struct tmpfs_dir_cursor dc;
 	struct tmpfs_dirent *de, *nde;
@@ -1866,6 +1867,89 @@ tmpfs_reg_resize(struct vnode *vp, off_t newsize, boolean_t ignerr)
 
 	node->tn_size = newsize;
 	return (0);
+}
+
+/*
+ * Punch hole in the aobj associated with the regular file pointed to by 'vp'.
+ * Requests completely beyond the end-of-file are converted to no-op.
+ *
+ * Returns 0 on success or error code from tmpfs_partial_page_invalidate() on
+ * failure.
+ */
+int
+tmpfs_reg_punch_hole(struct vnode *vp, off_t *offset, off_t *length)
+{
+	struct tmpfs_node *node;
+	vm_object_t object;
+	vm_pindex_t pistart, pi, piend;
+	int startofs, endofs, end;
+	off_t off, len;
+	int error;
+
+	KASSERT(*length <= OFF_MAX - *offset, ("%s: offset + length overflows",
+	    __func__));
+	node = VP_TO_TMPFS_NODE(vp);
+	KASSERT(node->tn_type == VREG, ("%s: node is not regular file",
+	    __func__));
+	object = node->tn_reg.tn_aobj;
+	off = *offset;
+	len = omin(node->tn_size - off, *length);
+	startofs = off & PAGE_MASK;
+	endofs = (off + len) & PAGE_MASK;
+	pistart = OFF_TO_IDX(off);
+	piend = OFF_TO_IDX(off + len);
+	pi = OFF_TO_IDX((vm_ooffset_t)off + PAGE_MASK);
+	error = 0;
+
+	/* Handle the case when offset is on or beyond file size. */
+	if (len <= 0) {
+		*length = 0;
+		return (0);
+	}
+
+	VM_OBJECT_WLOCK(object);
+
+	/*
+	 * If there is a partial page at the beginning of the hole-punching
+	 * request, fill the partial page with zeroes.
+	 */
+	if (startofs != 0) {
+		end = pistart != piend ? PAGE_SIZE : endofs;
+		error = tmpfs_partial_page_invalidate(object, pistart, startofs,
+		    end, FALSE);
+		if (error != 0)
+			goto out;
+		off += end - startofs;
+		len -= end - startofs;
+	}
+
+	/*
+	 * Toss away the full pages in the affected area.
+	 */
+	if (pi < piend) {
+		vm_object_page_remove(object, pi, piend, 0);
+		off += IDX_TO_OFF(piend - pi);
+		len -= IDX_TO_OFF(piend - pi);
+	}
+
+	/*
+	 * If there is a partial page at the end of the hole-punching request,
+	 * fill the partial page with zeroes.
+	 */
+	if (endofs != 0 && pistart != piend) {
+		error = tmpfs_partial_page_invalidate(object, piend, 0, endofs,
+		    FALSE);
+		if (error != 0)
+			goto out;
+		off += endofs;
+		len -= endofs;
+	}
+
+out:
+	VM_OBJECT_WUNLOCK(object);
+	*offset = off;
+	*length = len;
+	return (error);
 }
 
 void

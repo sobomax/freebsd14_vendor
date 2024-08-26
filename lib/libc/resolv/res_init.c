@@ -70,9 +70,6 @@
 static const char sccsid[] = "@(#)res_init.c	8.1 (Berkeley) 6/7/93";
 static const char rcsid[] = "$Id: res_init.c,v 1.26 2008/12/11 09:59:00 marka Exp $";
 #endif /* LIBC_SCCS and not lint */
-#include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 274ffbf999d6e71facb94014e17a158e4922cca0 $");
-
 #include "port_before.h"
 
 #include "namespace.h"
@@ -277,7 +274,7 @@ __res_vinit(res_state statp, int preinit) {
 #endif	/* SOLARIS2 */
 
 	/* Allow user to override the local domain definition */
-	if (issetugid() == 0 && (cp = getenv("LOCALDOMAIN")) != NULL) {
+	if ((cp = secure_getenv("LOCALDOMAIN")) != NULL) {
 		(void)strncpy(statp->defdname, cp, sizeof(statp->defdname) - 1);
 		statp->defdname[sizeof(statp->defdname) - 1] = '\0';
 		haveenv++;

@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2003, 2004 Silicon Graphics International Corp.
  * Copyright (c) 1997-2007 Kenneth D. Merry
@@ -44,8 +44,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 7705073958dfafd5d2cf1a7db4f74b7781e8337c $");
-
 #include <sys/param.h>
 #include <sys/callout.h>
 #include <sys/ioctl.h>
@@ -336,7 +334,7 @@ retry:
 		if (ts.tv_nsec > 0)
 			cmd_latency += ts.tv_nsec / 1000000;
 
-		fprintf(stdout, "LUN %jd tag 0x%04x%s%s%s%s%s%s%s: %s. CDB: %s "
+		fprintf(stdout, "LUN %jd tag 0x%jx%s%s%s%s%s%s%s: %s. CDB: %s "
 			"(%0.0Lf ms)\n",
 			(intmax_t)entry->lun_num, entry->tag_num,
 			(entry->cmd_flags & CTL_OOACMD_FLAG_BLOCKED) ?
@@ -576,10 +574,11 @@ cctl_port(int fd, int argc, char **argv, char *combinedopt)
 	}
 	case CCTL_PORT_MODE_REMOVE:
 		if (targ_port == -1) {
-			warnx("%s: -r require -p", __func__);
+			warnx("%s: -r requires -p", __func__);
 			retval = 1;
 			goto bailout;
 		}
+		/* FALLTHROUGH */
 	case CCTL_PORT_MODE_CREATE: {
 		bzero(&req, sizeof(req));
 		strlcpy(req.driver, driver, sizeof(req.driver));
@@ -4146,10 +4145,16 @@ main(int argc, char **argv)
 			goto bailout;
 		}
 #ifdef	WANT_ISCSI
-		else {
+		switch (command) {
+		case CTLADM_CMD_ISLIST:
+		case CTLADM_CMD_ISLOGOUT:
+		case CTLADM_CMD_ISTERMINATE:
 			if (modfind("cfiscsi") == -1 &&
 			    kldload("cfiscsi") == -1)
 				warn("couldn't load cfiscsi");
+			break;
+		default:
+			break;
 		}
 #endif
 	} else if ((command != CTLADM_CMD_HELP)

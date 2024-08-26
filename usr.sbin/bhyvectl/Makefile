@@ -1,5 +1,4 @@
 #
-# $FreeBSD: c004d603c8db34e6314192d7aa291e1efaeff4c2 $
 #
 
 .include <src.opts.mk>
@@ -11,8 +10,6 @@ PACKAGE=	bhyve
 MAN=	bhyvectl.8
 
 LIBADD=	vmmapi util
-
-WARNS?=	3
 
 CFLAGS+= -I${SRCTOP}/sys/amd64/vmm
 

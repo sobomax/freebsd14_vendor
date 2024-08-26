@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2013  Peter Grehan <grehan@freebsd.org>
  * All rights reserved.
@@ -25,13 +25,9 @@
  * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
- *
- * $FreeBSD: f2e60f865f78649e3cbf0ca0c18f1d4d29fb7895 $
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: f2e60f865f78649e3cbf0ca0c18f1d4d29fb7895 $");
-
 #include <sys/param.h>
 #ifndef WITHOUT_CAPSICUM
 #include <sys/capsicum.h>
@@ -122,6 +118,7 @@ struct blockif_ctxt {
 	TAILQ_HEAD(, blockif_elem) bc_pendq;
 	TAILQ_HEAD(, blockif_elem) bc_busyq;
 	struct blockif_elem	bc_reqs[BLOCKIF_MAXREQ];
+	int			bc_bootindex;
 };
 
 static pthread_once_t blockif_once = PTHREAD_ONCE_INIT;
@@ -233,6 +230,7 @@ blockif_flush_bc(struct blockif_ctxt *bc)
 static void
 blockif_proc(struct blockif_ctxt *bc, struct blockif_elem *be, uint8_t *buf)
 {
+	struct spacectl_range range;
 	struct blockif_req *br;
 	off_t arg[2];
 	ssize_t n;
@@ -340,8 +338,20 @@ blockif_proc(struct blockif_ctxt *bc, struct blockif_elem *be, uint8_t *buf)
 				err = errno;
 			else
 				br->br_resid = 0;
-		} else
-			err = EOPNOTSUPP;
+		} else {
+			range.r_offset = br->br_offset;
+			range.r_len = br->br_resid;
+
+			while (range.r_len > 0) {
+				if (fspacectl(bc->bc_fd, SPACECTL_DEALLOC,
+				    &range, 0, &range) != 0) {
+					err = errno;
+					break;
+				}
+			}
+			if (err == 0)
+				br->br_resid = 0;
+		}
 		break;
 	default:
 		err = EINVAL;
@@ -453,12 +463,22 @@ blockif_legacy_config(nvlist_t *nvl, const char *opts)
 	return (pci_parse_legacy_config(nvl, cp + 1));
 }
 
+int
+blockif_add_boot_device(struct pci_devinst *const pi,
+    struct blockif_ctxt *const bc)
+{
+	if (bc->bc_bootindex < 0)
+		return (0);
+
+	return (pci_emul_add_boot_device(pi, bc->bc_bootindex));
+}
+
 struct blockif_ctxt *
 blockif_open(nvlist_t *nvl, const char *ident)
 {
 	char tname[MAXCOMLEN + 1];
 	char name[MAXPATHLEN];
-	const char *path, *pssval, *ssval;
+	const char *path, *pssval, *ssval, *bootindex_val;
 	char *cp;
 	struct blockif_ctxt *bc;
 	struct stat sbuf;
@@ -467,6 +487,7 @@ blockif_open(nvlist_t *nvl, const char *ident)
 	int extra, fd, i, sectsz;
 	int ro, candelete, geom, ssopt, pssopt;
 	int nodelete;
+	int bootindex;
 
 #ifndef WITHOUT_CAPSICUM
 	cap_rights_t rights;
@@ -480,6 +501,7 @@ blockif_open(nvlist_t *nvl, const char *ident)
 	ssopt = 0;
 	ro = 0;
 	nodelete = 0;
+	bootindex = -1;
 
 	if (get_config_bool_node_default(nvl, "nocache", false))
 		extra |= O_DIRECT;
@@ -510,6 +532,11 @@ blockif_open(nvlist_t *nvl, const char *ident)
 			EPRINTLN("Invalid sector size \"%s\"", ssval);
 			goto err;
 		}
+	}
+
+	bootindex_val = get_config_value_node(nvl, "bootindex");
+	if (bootindex_val != NULL) {
+		bootindex = atoi(bootindex_val);
 	}
 
 	path = get_config_value_node(nvl, "path");
@@ -568,8 +595,11 @@ blockif_open(nvlist_t *nvl, const char *ident)
 			candelete = arg.value.i;
 		if (ioctl(fd, DIOCGPROVIDERNAME, name) == 0)
 			geom = 1;
-	} else
+	} else {
 		psectsz = sbuf.st_blksize;
+		/* Avoid fallback implementation */
+		candelete = fpathconf(fd, _PC_DEALLOC_PRESENT) == 1;
+	}
 
 #ifndef WITHOUT_CAPSICUM
 	if (caph_ioctls_limit(fd, cmds, nitems(cmds)) == -1)
@@ -628,6 +658,7 @@ blockif_open(nvlist_t *nvl, const char *ident)
 	TAILQ_INIT(&bc->bc_freeq);
 	TAILQ_INIT(&bc->bc_pendq);
 	TAILQ_INIT(&bc->bc_busyq);
+	bc->bc_bootindex = bootindex;
 	for (i = 0; i < BLOCKIF_MAXREQ; i++) {
 		bc->bc_reqs[i].be_status = BST_FREE;
 		TAILQ_INSERT_HEAD(&bc->bc_freeq, &bc->bc_reqs[i], be_link);
@@ -993,8 +1024,8 @@ blockif_pause(struct blockif_ctxt *bc)
 		pthread_cond_wait(&bc->bc_work_done_cond, &bc->bc_mtx);
 	pthread_mutex_unlock(&bc->bc_mtx);
 
-	if (blockif_flush_bc(bc))
-		fprintf(stderr, "%s: [WARN] failed to flush backing file.\r\n",
+	if (!bc->bc_rdonly && blockif_flush_bc(bc))
+		EPRINTLN("%s: [WARN] failed to flush backing file.",
 			__func__);
 }
 

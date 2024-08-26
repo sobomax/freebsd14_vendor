@@ -29,7 +29,6 @@
  * SUCH DAMAGE.
  *
  *	$NetBSD: SYS.h,v 1.8 2002/01/14 00:55:56 thorpej Exp $
- * $FreeBSD: 8d019144cdd6d3ecf8a0f37ec9d13d00ee2a0f9f $
  */
 
 #include <sys/syscall.h>

@@ -17,16 +17,10 @@
  *    is allowed if this notation is included.
  * 5. Modifications may be freely made to this file if the above conditions
  *    are met.
- *
- * $FreeBSD: f8b008151c6a9c251be588fd41082916338fd8b8 $
  */
 
 #ifndef _SYS_PIPE_H_
 #define _SYS_PIPE_H_
-
-#ifndef _KERNEL
-#error "no user-serviceable parts inside"
-#endif
 
 /*
  * Pipe buffer size, keep moderate in value, pipes take kva space.
@@ -53,11 +47,13 @@
 
 #define PIPENPAGES	(BIG_PIPE_SIZE / PAGE_SIZE + 1)
 
+#ifdef _KERNEL
 /*
  * See sys_pipe.c for info on what these limits mean. 
  */
 extern long	maxpipekva;
 extern struct	fileops pipeops;
+#endif
 
 /*
  * Pipe buffer information.
@@ -76,8 +72,8 @@ struct pipebuf {
  * Information to support direct transfers between processes for pipes.
  */
 struct pipemapping {
-	vm_size_t	cnt;		/* number of chars in buffer */
-	vm_size_t	pos;		/* current position of transfer */
+	u_int		cnt;		/* number of chars in buffer */
+	u_int		pos;		/* current position of transfer */
 	int		npages;		/* number of pages */
 	vm_page_t	ms[PIPENPAGES];	/* pages in source process */
 };
@@ -147,7 +143,9 @@ struct pipepair {
 #define PIPE_UNLOCK(pipe)	mtx_unlock(PIPE_MTX(pipe))
 #define PIPE_LOCK_ASSERT(pipe, type)  mtx_assert(PIPE_MTX(pipe), (type))
 
+#ifdef _KERNEL
 void	pipe_dtor(struct pipe *dpipe);
 int	pipe_named_ctor(struct pipe **ppipe, struct thread *td);
 void	pipeselwakeup(struct pipe *cpipe);
+#endif
 #endif /* !_SYS_PIPE_H_ */

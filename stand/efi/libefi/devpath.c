@@ -23,9 +23,6 @@
  * SUCH DAMAGE.
  */
 
-#include <sys/cdefs.h>
-__FBSDID("$FreeBSD: c25ae73e463c4e64be83d34756341e6bbcc94676 $");
-
 #include <efi.h>
 #include <efilib.h>
 #include <efichar.h>
@@ -572,6 +569,23 @@ efi_devpath_last_node(EFI_DEVICE_PATH *devpath)
 		return (NULL);
 	while (!IsDevicePathEnd(NextDevicePathNode(devpath)))
 		devpath = NextDevicePathNode(devpath);
+	return (devpath);
+}
+
+/*
+ * Walk device path nodes, return next instance or end node.
+ */
+EFI_DEVICE_PATH *
+efi_devpath_next_instance(EFI_DEVICE_PATH *devpath)
+{
+	while (!IsDevicePathEnd(devpath)) {
+		devpath = NextDevicePathNode(devpath);
+		if (IsDevicePathEndType(devpath) &&
+		    devpath->SubType == END_INSTANCE_DEVICE_PATH_SUBTYPE) {
+			devpath = NextDevicePathNode(devpath);
+			break;
+		}
+	}
 	return (devpath);
 }
 

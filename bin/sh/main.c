@@ -44,8 +44,6 @@ static char sccsid[] = "@(#)main.c	8.6 (Berkeley) 5/28/95";
 #endif
 #endif /* not lint */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: b0a5fac6fd4e06ae803955c0ff0ee4effc80e85f $");
-
 #include <stdio.h>
 #include <signal.h>
 #include <sys/stat.h>
@@ -100,7 +98,13 @@ static char *find_dot_file(char *);
 int
 main(int argc, char *argv[])
 {
-	struct stackmark smark, smark2;
+	/*
+	 * As smark is accessed after a longjmp, it cannot be a local in main().
+	 * The C standard specifies that the values of non-volatile local
+	 * variables are unspecified after a jump if modified between the
+	 * setjmp and longjmp.
+	 */
+	static struct stackmark smark, smark2;
 	volatile int state;
 	char *shinit;
 
@@ -253,12 +257,16 @@ read_profile(const char *name)
 {
 	int fd;
 	const char *expandedname;
+	int oflags = O_RDONLY | O_CLOEXEC;
+
+	if (verifyflag)
+		oflags |= O_VERIFY;
 
 	expandedname = expandstr(name);
 	if (expandedname == NULL)
 		return;
 	INTOFF;
-	if ((fd = open(expandedname, O_RDONLY | O_CLOEXEC)) >= 0)
+	if ((fd = open(expandedname, oflags)) >= 0)
 		setinputfd(fd, 1);
 	INTON;
 	if (fd < 0)
@@ -274,9 +282,9 @@ read_profile(const char *name)
  */
 
 void
-readcmdfile(const char *name)
+readcmdfile(const char *name, int verify)
 {
-	setinputfile(name, 1);
+	setinputfile(name, 1, verify);
 	cmdloop(0);
 	popfile();
 }
@@ -331,7 +339,7 @@ dotcmd(int argc, char **argv)
 	filename = argc > 2 && strcmp(argv[1], "--") == 0 ? argv[2] : argv[1];
 
 	fullname = find_dot_file(filename);
-	setinputfile(fullname, 1);
+	setinputfile(fullname, 1, -1 /* verify */);
 	commandname = fullname;
 	cmdloop(0);
 	popfile();

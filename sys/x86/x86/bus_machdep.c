@@ -24,12 +24,10 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#if defined(KASAN) || defined(KCSAN)
+#include <sys/cdefs.h>
+#ifdef SAN_NEEDS_INTERCEPTORS
 #define	SAN_RUNTIME
 #endif
-
-#include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 3dc203f656947eda644fe6ec84a725bab171b0e0 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -59,5 +57,5 @@ bus_space_unmap(bus_space_tag_t tag, bus_space_handle_t bsh, bus_size_t size)
 {
 
 	if (tag == X86_BUS_SPACE_MEM)
-		pmap_unmapdev(bsh, size);
+		pmap_unmapdev((void *)bsh, size);
 }

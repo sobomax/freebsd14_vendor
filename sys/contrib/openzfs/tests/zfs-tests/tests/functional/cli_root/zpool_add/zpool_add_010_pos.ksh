@@ -7,7 +7,7 @@
 # You may not use this file except in compliance with the License.
 #
 # You can obtain a copy of the license at usr/src/OPENSOLARIS.LICENSE
-# or http://www.opensolaris.org/os/licensing.
+# or https://opensource.org/licenses/CDDL-1.0.
 # See the License for the specific language governing permissions
 # and limitations under the License.
 #
@@ -138,7 +138,7 @@ function zpool_create_forced_add
 		while ((j < ${#add_args[@]})); do
 			log_must zpool create $TESTPOOL1 ${create_args[$i]}
 			log_mustnot zpool add $TESTPOOL1 ${add_args[$j]}
-			log_must zpool add -f $TESTPOOL1 ${add_args[$j]}
+			log_must zpool add --allow-replication-mismatch $TESTPOOL1 ${add_args[$j]}
 			log_must zpool destroy -f $TESTPOOL1
 
 			((j += 1))

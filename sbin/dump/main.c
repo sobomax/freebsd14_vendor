@@ -39,8 +39,6 @@ static const char copyright[] =
 #if 0
 static char sccsid[] = "@(#)main.c	8.6 (Berkeley) 5/1/95";
 #endif
-static const char rcsid[] =
-  "$FreeBSD: bbc54d7ab5d7761f20f6cad11060122b0ae50af4 $";
 #endif /* not lint */
 
 #include <sys/param.h>
@@ -48,6 +46,8 @@ static const char rcsid[] =
 #include <sys/mount.h>
 #include <sys/disklabel.h>
 
+#include <ufs/ufs/extattr.h>
+#include <ufs/ufs/quota.h>
 #include <ufs/ufs/dinode.h>
 #include <ufs/ufs/ufsmount.h>
 #include <ufs/ffs/fs.h>
@@ -455,7 +455,7 @@ main(int argc, char *argv[])
 		msgtail("to %s\n", tape);
 
 	sync();
-	if ((ret = sbget(diskfd, &sblock, STDSB)) != 0) {
+	if ((ret = sbget(diskfd, &sblock, UFS_STDSB, UFS_NOCSUM)) != 0) {
 		switch (ret) {
 		case ENOENT:
 			warn("Cannot find file system superblock");

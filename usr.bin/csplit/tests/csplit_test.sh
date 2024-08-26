@@ -22,7 +22,6 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: a47ecd79f014fc3886839932361640e6621a5251 $
 
 atf_test_case lines_lt_count
 lines_lt_count_head()

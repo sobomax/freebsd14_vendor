@@ -34,8 +34,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: f377c00b0fc446267263a4d1e7314378a55ccfbb $");
-
 #include <dev/drm2/drmP.h>
 
 static struct mtx drm_magic_lock;

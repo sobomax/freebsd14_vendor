@@ -24,9 +24,6 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include <sys/cdefs.h>
-__FBSDID("$FreeBSD: d409285834c3c0d17cab71c5b3a34b409aae2f99 $");
-
 #if defined(LOADER_FDT_SUPPORT)
 #include <sys/param.h>
 #include <fdt_platform.h>

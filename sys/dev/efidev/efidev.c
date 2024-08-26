@@ -24,8 +24,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 303b10c1d0ba6e5aa5b4154d08cd493ecc22b9af $");
-
 #include <sys/param.h>
 #include <sys/systm.h>
 #include <sys/kernel.h>
@@ -53,6 +51,29 @@ efidev_ioctl(struct cdev *dev __unused, u_long cmd, caddr_t addr,
 	int error;
 
 	switch (cmd) {
+	case EFIIOC_GET_TABLE:
+	{
+		struct efi_get_table_ioc *egtioc =
+		    (struct efi_get_table_ioc *)addr;
+		void *buf = NULL;
+
+		error = efi_copy_table(&egtioc->uuid, egtioc->buf ? &buf : NULL,
+		    egtioc->buf_len, &egtioc->table_len);
+
+		if (error != 0 || egtioc->buf == NULL)
+			break;
+
+		if (egtioc->buf_len < egtioc->table_len) {
+			error = EINVAL;
+			free(buf, M_TEMP);
+			break;
+		}
+
+		error = copyout(buf, egtioc->buf, egtioc->buf_len);
+		free(buf, M_TEMP);
+
+		break;
+	}
 	case EFIIOC_GET_TIME:
 	{
 		struct efi_tm *tm = (struct efi_tm *)addr;
@@ -65,6 +86,21 @@ efidev_ioctl(struct cdev *dev __unused, u_long cmd, caddr_t addr,
 		struct efi_tm *tm = (struct efi_tm *)addr;
 
 		error = efi_set_time(tm);
+		break;
+	}
+	case EFIIOC_GET_WAKETIME:
+	{
+		struct efi_waketime_ioc *wt = (struct efi_waketime_ioc *)addr;
+
+		error = efi_get_waketime(&wt->enabled, &wt->pending,
+		    &wt->waketime);
+		break;
+	}
+	case EFIIOC_SET_WAKETIME:
+	{
+		struct efi_waketime_ioc *wt = (struct efi_waketime_ioc *)addr;
+
+		error = efi_set_waketime(wt->enabled, &wt->waketime);
 		break;
 	}
 	case EFIIOC_VAR_GET:

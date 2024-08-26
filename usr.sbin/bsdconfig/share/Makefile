@@ -1,4 +1,3 @@
-# $FreeBSD: a09697a29d0d85be66d7b59dfc186be44b868a89 $
 
 SUBDIR=	media packages
 

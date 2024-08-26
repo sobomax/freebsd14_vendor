@@ -26,8 +26,6 @@
  * THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- *
- * $FreeBSD: b126fbde08574e6edef8650ece844eda069fef67 $
  */
 
 #ifndef _COMPAT_FREEBSD32_FREEBSD32_UTIL_H_
@@ -43,9 +41,9 @@
 #include <vm/pmap.h>
 
 struct freebsd32_ps_strings {
-	u_int32_t ps_argvstr;	/* first of 0 or more argument strings */
+	uint32_t ps_argvstr;	/* first of 0 or more argument strings */
 	int	ps_nargvstr;	/* the number of argument strings */
-	u_int32_t ps_envstr;	/* first of 0 or more environment strings */
+	uint32_t ps_envstr;	/* first of 0 or more environment strings */
 	int	ps_nenvstr;	/* the number of environment strings */
 };
 
@@ -122,6 +120,8 @@ void	freebsd32_rusage_out(const struct rusage *s, struct rusage32 *s32);
 
 struct image_args;
 int freebsd32_exec_copyin_args(struct image_args *args, const char *fname,
-	    enum uio_seg segflg, u_int32_t *argv, u_int32_t *envv);
+	    enum uio_seg segflg, uint32_t *argv, uint32_t *envv);
+
+extern int compat_freebsd_32bit;
 
 #endif /* !_COMPAT_FREEBSD32_FREEBSD32_UTIL_H_ */

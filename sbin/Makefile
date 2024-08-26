@@ -1,5 +1,4 @@
 #	@(#)Makefile	8.5 (Berkeley) 3/31/94
-# $FreeBSD: c9b548a8a3908a6bef2063ecbe45cfd24dee1c65 $
 
 .include <src.opts.mk>
 
@@ -9,6 +8,7 @@ SUBDIR=adjkerntz \
 	comcontrol \
 	conscontrol \
 	ddb \
+	devd \
 	devfs \
 	devmatch \
 	dhclient \
@@ -62,7 +62,6 @@ SUBDIR=adjkerntz \
 	savecore \
 	setkey \
 	shutdown \
-	spppcontrol \
 	swapon \
 	sysctl \
 	tunefs \
@@ -73,14 +72,12 @@ SUBDIR+=	ping
 .endif
 
 SUBDIR.${MK_CCD}+=	ccdconfig
-SUBDIR.${MK_CXX}+=	devd
 SUBDIR.${MK_HAST}+=	hastctl
 SUBDIR.${MK_HAST}+=	hastd
 SUBDIR.${MK_INET6}+=	rtsol
 SUBDIR.${MK_IPFILTER}+=	ipf
 SUBDIR.${MK_IPFW}+=	ipfw
 SUBDIR.${MK_IPFW}+=	natd
-SUBDIR.${MK_ISCSI}+=	iscontrol
 SUBDIR.${MK_NVME}+=	nvmecontrol
 SUBDIR.${MK_OPENSSL}+=	decryptcore
 SUBDIR.${MK_PF}+=	pfctl
@@ -96,5 +93,7 @@ SUBDIR.${MK_TESTS}+=	tests
 .include <bsd.arch.inc.mk>
 
 SUBDIR_PARALLEL=
+
+.include <bsd.prog.mk>
 
 .include <bsd.subdir.mk>

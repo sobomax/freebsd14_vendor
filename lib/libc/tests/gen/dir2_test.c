@@ -31,9 +31,6 @@
  * opendir, readdir, seekdir, telldir, closedir, etc
  */
 
-#include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 3322a5e5086c6ffe581220a64a13488bad036821 $");
-
 #include <dirent.h>
 #include <fcntl.h>
 #include <stdio.h>

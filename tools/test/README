@@ -1,4 +1,3 @@
-$FreeBSD: 2bafa48a9764ff1105b5111f0ce61e17f8ddabf6 $
 
 This directory is for standalone test programs.  For the FreeBSD
 Test Suite, which uses Kyua, please see /usr/src/tests/
@@ -21,5 +20,6 @@ ppsapi		Test 1 Pulse Per Second (1PPS) input for time control.
 pthread_vfork	Check that vfork and pthreads work together.
 ptrace		Verify that ptrace works with syscalls, vfork etc.
 sort		Tests for the sort command, including a full regression.
+stress2		Kernel stress tool.
 testfloat	Programs to test floating-point implementations
 upsdl		Test of mmap functionality.

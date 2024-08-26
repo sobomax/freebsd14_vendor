@@ -1,11 +1,11 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2003 David Schultz <das@FreeBSD.ORG>
  * All rights reserved.
  *
  * Copyright (c) 2011 The FreeBSD Foundation
- * All rights reserved.
+ *
  * Portions of this software were developed by David Chisnall
  * under sponsorship from the FreeBSD Foundation.
  *
@@ -36,9 +36,6 @@
  * package into libc for architectures where a long double
  * is the same as a double, such as the Alpha.
  */
-
-#include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 456d782a2a8ae01c65fd584c1601745ec31f7a0d $");
 
 #include "gdtoaimp.h"
 #undef strtold_l

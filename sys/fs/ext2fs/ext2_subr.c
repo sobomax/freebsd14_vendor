@@ -35,7 +35,6 @@
  * SUCH DAMAGE.
  *
  *	@(#)ffs_subr.c	8.2 (Berkeley) 9/21/93
- * $FreeBSD: 004bd7a452119e9b3777d73e7c59cc1a89773763 $
  */
 
 #include <sys/param.h>

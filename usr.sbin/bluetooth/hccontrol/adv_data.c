@@ -1,7 +1,7 @@
 /*-
  * adv_data.c
  *
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
 
  * Copyright (c) 2020 Marc Veldman <marc@bumblingdork.com>
  * All rights reserved.
@@ -28,7 +28,6 @@
  * SUCH DAMAGE.
  *
  * $Id$
- * $FreeBSD: 8f11d99a397fb5f70ff85ee9e6f48fcd3b311f04 $
  */
 
 #include <sys/types.h>

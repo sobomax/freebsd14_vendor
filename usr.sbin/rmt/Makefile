@@ -1,5 +1,4 @@
 #	@(#)Makefile	8.1 (Berkeley) 6/6/93
-# $FreeBSD: 0cbc67c7088097763b6269beefdfb77c6a73ebd7 $
 
 PROG=	rmt
 MAN=	rmt.8

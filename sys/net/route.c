@@ -29,7 +29,6 @@
  * SUCH DAMAGE.
  *
  *	@(#)route.c	8.3.1.1 (Berkeley) 2/23/95
- * $FreeBSD: 80d08d1bc7f087a91561ed93ae1d924e2335aab2 $
  */
 /************************************************************************
  * Note: In this file a 'fib' is a "forwarding information base"	*
@@ -50,6 +49,7 @@
 #include <sys/syslog.h>
 #include <sys/sysproto.h>
 #include <sys/proc.h>
+#include <sys/devctl.h>
 #include <sys/domain.h>
 #include <sys/eventhandler.h>
 #include <sys/kernel.h>
@@ -58,6 +58,7 @@
 
 #include <net/if.h>
 #include <net/if_var.h>
+#include <net/if_private.h>
 #include <net/if_dl.h>
 #include <net/route.h>
 #include <net/route/route_ctl.h>
@@ -67,6 +68,7 @@
 
 #include <netinet/in.h>
 #include <netinet/ip_mroute.h>
+#include <netinet6/in6_var.h>
 
 VNET_PCPUSTAT_DEFINE(struct rtstat, rtstat);
 
@@ -79,8 +81,6 @@ EVENTHANDLER_LIST_DEFINE(rt_addrmsg);
 
 static int rt_ifdelroute(const struct rtentry *rt, const struct nhop_object *,
     void *arg);
-static int rt_exportinfo(struct rtentry *rt, struct nhop_object *nh,
-    struct rt_addrinfo *info, int flags);
 
 /*
  * route initialization must occur before ip6_init2(), which happenas at
@@ -314,151 +314,6 @@ ifa_ifwithroute(int flags, const struct sockaddr *dst,
 	}
 
 	return (ifa);
-}
-
-/*
- * Copy most of @rt data into @info.
- *
- * If @flags contains NHR_COPY, copies dst,netmask and gw to the
- * pointers specified by @info structure. Assume such pointers
- * are zeroed sockaddr-like structures with sa_len field initialized
- * to reflect size of the provided buffer. if no NHR_COPY is specified,
- * point dst,netmask and gw @info fields to appropriate @rt values.
- *
- * if @flags contains NHR_REF, do refcouting on rt_ifp and rt_ifa.
- *
- * Returns 0 on success.
- */
-static int
-rt_exportinfo(struct rtentry *rt, struct nhop_object *nh,
-    struct rt_addrinfo *info, int flags)
-{
-	struct rt_metrics *rmx;
-	struct sockaddr *src, *dst;
-	int sa_len;
-
-	if (flags & NHR_COPY) {
-		/* Copy destination if dst is non-zero */
-		src = rt_key(rt);
-		dst = info->rti_info[RTAX_DST];
-		sa_len = src->sa_len;
-		if (dst != NULL) {
-			if (src->sa_len > dst->sa_len)
-				return (ENOMEM);
-			memcpy(dst, src, src->sa_len);
-			info->rti_addrs |= RTA_DST;
-		}
-
-		/* Copy mask if set && dst is non-zero */
-		src = rt_mask(rt);
-		dst = info->rti_info[RTAX_NETMASK];
-		if (src != NULL && dst != NULL) {
-			/*
-			 * Radix stores different value in sa_len,
-			 * assume rt_mask() to have the same length
-			 * as rt_key()
-			 */
-			if (sa_len > dst->sa_len)
-				return (ENOMEM);
-			memcpy(dst, src, src->sa_len);
-			info->rti_addrs |= RTA_NETMASK;
-		}
-
-		/* Copy gateway is set && dst is non-zero */
-		src = &nh->gw_sa;
-		dst = info->rti_info[RTAX_GATEWAY];
-		if ((nhop_get_rtflags(nh) & RTF_GATEWAY) &&
-		    src != NULL && dst != NULL) {
-			if (src->sa_len > dst->sa_len)
-				return (ENOMEM);
-			memcpy(dst, src, src->sa_len);
-			info->rti_addrs |= RTA_GATEWAY;
-		}
-	} else {
-		info->rti_info[RTAX_DST] = rt_key(rt);
-		info->rti_addrs |= RTA_DST;
-		if (rt_mask(rt) != NULL) {
-			info->rti_info[RTAX_NETMASK] = rt_mask(rt);
-			info->rti_addrs |= RTA_NETMASK;
-		}
-		if (nhop_get_rtflags(nh) & RTF_GATEWAY) {
-			info->rti_info[RTAX_GATEWAY] = &nh->gw_sa;
-			info->rti_addrs |= RTA_GATEWAY;
-		}
-	}
-
-	rmx = info->rti_rmx;
-	if (rmx != NULL) {
-		info->rti_mflags |= RTV_MTU;
-		rmx->rmx_mtu = nh->nh_mtu;
-	}
-
-	info->rti_flags = rt->rte_flags | nhop_get_rtflags(nh);
-	info->rti_ifp = nh->nh_ifp;
-	info->rti_ifa = nh->nh_ifa;
-	if (flags & NHR_REF) {
-		if_ref(info->rti_ifp);
-		ifa_ref(info->rti_ifa);
-	}
-
-	return (0);
-}
-
-/*
- * Lookups up route entry for @dst in RIB database for fib @fibnum.
- * Exports entry data to @info using rt_exportinfo().
- *
- * If @flags contains NHR_REF, refcouting is performed on rt_ifp and rt_ifa.
- * All references can be released later by calling rib_free_info().
- *
- * Returns 0 on success.
- * Returns ENOENT for lookup failure, ENOMEM for export failure.
- */
-int
-rib_lookup_info(uint32_t fibnum, const struct sockaddr *dst, uint32_t flags,
-    uint32_t flowid, struct rt_addrinfo *info)
-{
-	RIB_RLOCK_TRACKER;
-	struct rib_head *rh;
-	struct radix_node *rn;
-	struct rtentry *rt;
-	struct nhop_object *nh;
-	int error;
-
-	KASSERT((fibnum < rt_numfibs), ("rib_lookup_rte: bad fibnum"));
-	rh = rt_tables_get_rnh(fibnum, dst->sa_family);
-	if (rh == NULL)
-		return (ENOENT);
-
-	RIB_RLOCK(rh);
-	rn = rh->rnh_matchaddr(__DECONST(void *, dst), &rh->head);
-	if (rn != NULL && ((rn->rn_flags & RNF_ROOT) == 0)) {
-		rt = RNTORT(rn);
-		nh = nhop_select(rt->rt_nhop, flowid);
-		/* Ensure route & ifp is UP */
-		if (RT_LINK_IS_UP(nh->nh_ifp)) {
-			flags = (flags & NHR_REF) | NHR_COPY;
-			error = rt_exportinfo(rt, nh, info, flags);
-			RIB_RUNLOCK(rh);
-
-			return (error);
-		}
-	}
-	RIB_RUNLOCK(rh);
-
-	return (ENOENT);
-}
-
-/*
- * Releases all references acquired by rib_lookup_info() when
- * called with NHR_REF flags.
- */
-void
-rib_free_info(struct rt_addrinfo *info)
-{
-
-	ifa_free(info->rti_ifa);
-	if_rele(info->rti_ifp);
 }
 
 /*
@@ -752,6 +607,10 @@ rt_maskedcopy(const struct sockaddr *src, struct sockaddr *dst,
 int
 rt_addrmsg(int cmd, struct ifaddr *ifa, int fibnum)
 {
+#if defined(INET) || defined(INET6)
+	struct sockaddr *sa = ifa->ifa_addr;
+	struct ifnet *ifp = ifa->ifa_ifp;
+#endif
 
 	KASSERT(cmd == RTM_ADD || cmd == RTM_DELETE,
 	    ("unexpected cmd %d", cmd));
@@ -759,6 +618,29 @@ rt_addrmsg(int cmd, struct ifaddr *ifa, int fibnum)
 	    ("%s: fib out of range 0 <=%d<%d", __func__, fibnum, rt_numfibs));
 
 	EVENTHANDLER_DIRECT_INVOKE(rt_addrmsg, ifa, cmd);
+
+#ifdef INET
+	if (sa->sa_family == AF_INET) {
+		char addrstr[INET_ADDRSTRLEN];
+		char strbuf[INET_ADDRSTRLEN + 12];
+
+		inet_ntoa_r(((struct sockaddr_in *)sa)->sin_addr, addrstr);
+		snprintf(strbuf, sizeof(strbuf), "address=%s", addrstr);
+		devctl_notify("IFNET", ifp->if_xname,
+		    (cmd == RTM_ADD) ? "ADDR_ADD" : "ADDR_DEL", strbuf);
+	}
+#endif
+#ifdef INET6
+	if (sa->sa_family == AF_INET6) {
+		char addrstr[INET6_ADDRSTRLEN];
+		char strbuf[INET6_ADDRSTRLEN + 12];
+
+		ip6_sprintf(addrstr, IFA_IN6(ifa));
+		snprintf(strbuf, sizeof(strbuf), "address=%s", addrstr);
+		devctl_notify("IFNET", ifp->if_xname,
+		    (cmd == RTM_ADD) ? "ADDR_ADD" : "ADDR_DEL", strbuf);
+	}
+#endif
 
 	if (V_rt_add_addr_allfibs)
 		fibnum = RT_ALL_FIBS;
@@ -814,34 +696,9 @@ rt_routemsg_info(int cmd, struct rt_addrinfo *info, int fibnum)
 }
 
 void
-rt_ifmsg(struct ifnet *ifp)
-{
-	rt_ifmsg_14(ifp, 0);
-}
-
-void
-rt_ifmsg_14(struct ifnet *ifp, int if_flags_mask)
+rt_ifmsg(struct ifnet *ifp, int if_flags_mask)
 {
 	rtsock_callback_p->ifmsg_f(ifp, if_flags_mask);
 	netlink_callback_p->ifmsg_f(ifp, if_flags_mask);
 }
 
-/* Netlink-related callbacks needed to glue rtsock, netlink and linuxolator */
-static void
-ignore_route_event(uint32_t fibnum, const struct rib_cmd_info *rc)
-{
-}
-
-static void
-ignore_ifmsg_event(struct ifnet *ifp, int if_flags_mask)
-{
-}
-
-static struct rtbridge ignore_cb = {
-	.route_f = ignore_route_event,
-	.ifmsg_f = ignore_ifmsg_event,
-};
-
-void *linux_netlink_p = NULL; /* Callback pointer for Linux translator functions */
-struct rtbridge *rtsock_callback_p = &ignore_cb;
-struct rtbridge *netlink_callback_p = &ignore_cb;

@@ -25,7 +25,6 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: 2a3485cdcd14f0bffa7df6c7afe2cbf8f019c6a9 $
 
 # There are sample scripts for IPsec configuration by manual keying.
 # A security association is uniquely identified by a triple consisting

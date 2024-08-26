@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2013-2015 The FreeBSD Foundation
  *
@@ -26,8 +26,6 @@
  * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
- *
- * $FreeBSD: 9fc6ac4366776f5755c919c23d0f2bf4221be7dc $
  */
 
 #ifndef __X86_IOMMU_INTEL_DMAR_H
@@ -158,7 +156,7 @@ struct dmar_unit {
 
 	/* QI */
 	int qi_enabled;
-	vm_offset_t inv_queue;
+	char *inv_queue;
 	vm_size_t inv_queue_size;
 	uint32_t inv_queue_avail;
 	uint32_t inv_queue_tail;
@@ -252,6 +250,7 @@ int dmar_flush_write_bufs(struct dmar_unit *unit);
 void dmar_flush_pte_to_ram(struct dmar_unit *unit, dmar_pte_t *dst);
 void dmar_flush_ctx_to_ram(struct dmar_unit *unit, dmar_ctx_entry_t *dst);
 void dmar_flush_root_to_ram(struct dmar_unit *unit, dmar_root_entry_t *dst);
+int dmar_disable_protected_regions(struct dmar_unit *unit);
 int dmar_enable_translation(struct dmar_unit *unit);
 int dmar_disable_translation(struct dmar_unit *unit);
 int dmar_load_irt_ptr(struct dmar_unit *unit);
@@ -320,6 +319,7 @@ extern iommu_haddr_t dmar_high;
 extern int haw;
 extern int dmar_tbl_pagecnt;
 extern int dmar_batch_coalesce;
+extern int dmar_rmrr_enable;
 
 static inline uint32_t
 dmar_read4(const struct dmar_unit *unit, int reg)

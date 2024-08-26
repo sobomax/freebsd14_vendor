@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2013 The FreeBSD Foundation
  *
@@ -29,8 +29,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 152c7cac3a7d04a48b32756d98c41491aa4f7198 $");
-
 #include <sys/param.h>
 #include <sys/bus.h>
 #include <sys/kernel.h>
@@ -99,9 +97,14 @@ static const struct sagaw_bits_tag {
 	{.agaw = 48, .cap = DMAR_CAP_SAGAW_4LVL, .awlvl = DMAR_CTX2_AW_4LVL,
 	    .pglvl = 4},
 	{.agaw = 57, .cap = DMAR_CAP_SAGAW_5LVL, .awlvl = DMAR_CTX2_AW_5LVL,
-	    .pglvl = 5},
-	{.agaw = 64, .cap = DMAR_CAP_SAGAW_6LVL, .awlvl = DMAR_CTX2_AW_6LVL,
-	    .pglvl = 6}
+	    .pglvl = 5}
+	/*
+	 * 6-level paging (DMAR_CAP_SAGAW_6LVL) is not supported on any
+	 * current VT-d hardware and its SAGAW field value is listed as
+	 * reserved in the VT-d spec.  If support is added in the future,
+	 * this structure and the logic in dmar_maxaddr2mgaw() will need
+	 * to change to avoid attempted comparison against 1ULL << 64.
+	 */
 };
 
 bool
@@ -486,6 +489,36 @@ dmar_flush_write_bufs(struct dmar_unit *unit)
 	dmar_write4(unit, DMAR_GCMD_REG, unit->hw_gcmd | DMAR_GCMD_WBF);
 	DMAR_WAIT_UNTIL(((dmar_read4(unit, DMAR_GSTS_REG) & DMAR_GSTS_WBFS)
 	    != 0));
+	return (error);
+}
+
+/*
+ * Some BIOSes protect memory region they reside in by using DMAR to
+ * prevent devices from doing any DMA transactions to that part of RAM.
+ * AMI refers to this as "DMA Control Guarantee".
+ * We need to disable this when address translation is enabled.
+ */
+int
+dmar_disable_protected_regions(struct dmar_unit *unit)
+{
+	uint32_t reg;
+	int error;
+
+	DMAR_ASSERT_LOCKED(unit);
+
+	/* Check if we support the feature. */
+	if ((unit->hw_cap & (DMAR_CAP_PLMR | DMAR_CAP_PHMR)) == 0)
+		return (0);
+
+	reg = dmar_read4(unit, DMAR_PMEN_REG);
+	if ((reg & DMAR_PMEN_EPM) == 0)
+		return (0);
+
+	reg &= ~DMAR_PMEN_EPM;
+	dmar_write4(unit, DMAR_PMEN_REG, reg);
+	DMAR_WAIT_UNTIL(((dmar_read4(unit, DMAR_PMEN_REG) & DMAR_PMEN_PRS)
+	    != 0));
+
 	return (error);
 }
 

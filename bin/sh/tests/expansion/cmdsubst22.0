@@ -1,4 +1,3 @@
-# $FreeBSD: 97c6c98dff879d92b52d362dd2552555bb4679c6 $
 
 set -T
 trapped=''

@@ -1,6 +1,5 @@
 #!/bin/sh
 #
-# $FreeBSD: ab27f62f71d0f36b409960fcaa89e181a7a43ae2 $
 #
 
 ACCT=acct

@@ -1,4 +1,3 @@
-.\" $FreeBSD: 8ca789dfdc45d513be4cde13a8ccb1eaca0b08c6 $
 Do not install a
 .Pa /usr/bin/ld symlink
 to

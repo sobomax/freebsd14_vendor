@@ -1,6 +1,5 @@
-# $FreeBSD: 82148867a00f892ee1eaebafa490ddd1fa02967b $
 
-.PATH:	${SRCTOP}/sys/dev/iicbus
+.PATH:	${SRCTOP}/sys/dev/iicbus/adc
 KMOD=	pcf8591
 SRCS=	pcf8591.c
 

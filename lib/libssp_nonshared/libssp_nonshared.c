@@ -4,8 +4,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: ab07badbf9fc7da6e791cea4a9a1310031722011 $");
-
 void __stack_chk_fail(void);
 void __stack_chk_fail_local(void);
 

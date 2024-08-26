@@ -36,8 +36,6 @@
  * OF SUCH DAMAGE.
  *
  * Author: Julian Elischer <julian@freebsd.org>
- *
- * $FreeBSD: 92a17286ccae6e8af6c2736793c6f6144369892a $
  * $Whistle: ng_pppoe.c,v 1.10 1999/11/01 09:24:52 julian Exp $
  */
 
@@ -1484,8 +1482,6 @@ ng_pppoe_rcvdata(hook_p hook, item_p item)
 		struct mbuf 	*m0;
 		const struct pppoe_hdr	*ph;
 		negp		neg = sp->neg;
-	        uint16_t	session;
-		uint16_t	length;
 		uint8_t		code;
 
 		/*
@@ -1500,8 +1496,6 @@ ng_pppoe_rcvdata(hook_p hook, item_p item)
 		}
 		wh = mtod(m, struct pppoe_full_hdr *);
 		ph = &wh->ph;
-		session = ntohs(wh->ph.sid);
-		length = ntohs(wh->ph.length);
 		code = wh->ph.code;
 		/* Use peers mode in session. */
 		neg->pkt->pkt_header.eh.ether_type = wh->eh.ether_type;
@@ -1591,7 +1585,6 @@ ng_pppoe_rcvdata_ether(hook_p hook, item_p item)
 	struct mbuf		*m;
 	hook_p 			sendhook;
 	int			error = 0;
-	uint16_t		session;
 	uint16_t		length;
 	uint8_t			code;
 	struct	mbuf 		*m0;
@@ -1661,7 +1654,6 @@ ng_pppoe_rcvdata_ether(hook_p hook, item_p item)
 		wh = mtod(m, struct pppoe_full_hdr *);
 		length = ntohs(wh->ph.length);
 		ph = &wh->ph;
-		session = ntohs(wh->ph.sid);
 		code = wh->ph.code;
 
 		switch(code) {

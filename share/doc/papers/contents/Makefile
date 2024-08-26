@@ -1,4 +1,3 @@
-# $FreeBSD: d15ff9c3b4eab613d06e061a1cfdae0b5184ff06 $
 
 VOLUME=	papers
 DOC=	contents

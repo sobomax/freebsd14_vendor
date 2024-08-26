@@ -36,9 +36,6 @@
 /*
  * fabs(x) returns the absolute value of x.
  */
-#include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 6730a6746289f41dc27eb9297214384b169fcbf1 $");
-
 double
 fabs(double x)
 {

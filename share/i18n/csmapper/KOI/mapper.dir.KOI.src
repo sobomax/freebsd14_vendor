@@ -1,4 +1,3 @@
-# $FreeBSD: 281a2d6faed1e247669ab30dd2436cf2f5ed3922 $ 
 # $NetBSD: mapper.dir.KOI.src,v 1.1 2006/09/16 08:38:20 tnozaki Exp $
 
 GOST19768-74/UCS		mapper_std		KOI/GOST19768-74%UCS.mps

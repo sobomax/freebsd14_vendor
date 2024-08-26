@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2011 NetApp, Inc.
  * All rights reserved.
@@ -24,13 +24,9 @@
  * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
- *
- * $FreeBSD: 14ab6c7ad33e190cee3f57e4b09203ca0ff12648 $
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 14ab6c7ad33e190cee3f57e4b09203ca0ff12648 $");
-
 #include <sys/param.h>
 #include <sys/types.h>
 #include <sys/cpuset.h>
@@ -76,184 +72,6 @@ __FBSDID("$FreeBSD: 14ab6c7ad33e190cee3f57e4b09203ca0ff12648 $");
 
 static const char *progname;
 
-static void
-usage(bool cpu_intel)
-{
-
-	(void)fprintf(stderr,
-	"Usage: %s --vm=<vmname>\n"
-	"       [--cpu=<vcpu_number>]\n"
-	"       [--create]\n"
-	"       [--destroy]\n"
-#ifdef BHYVE_SNAPSHOT
-	"       [--checkpoint=<filename>]\n"
-	"       [--suspend=<filename>]\n"
-#endif
-	"       [--get-all]\n"
-	"       [--get-stats]\n"
-	"       [--set-desc-ds]\n"
-	"       [--get-desc-ds]\n"
-	"       [--set-desc-es]\n"
-	"       [--get-desc-es]\n"
-	"       [--set-desc-gs]\n"
-	"       [--get-desc-gs]\n"
-	"       [--set-desc-fs]\n"
-	"       [--get-desc-fs]\n"
-	"       [--set-desc-cs]\n"
-	"       [--get-desc-cs]\n"
-	"       [--set-desc-ss]\n"
-	"       [--get-desc-ss]\n"
-	"       [--set-desc-tr]\n"
-	"       [--get-desc-tr]\n"
-	"       [--set-desc-ldtr]\n"
-	"       [--get-desc-ldtr]\n"
-	"       [--set-desc-gdtr]\n"
-	"       [--get-desc-gdtr]\n"
-	"       [--set-desc-idtr]\n"
-	"       [--get-desc-idtr]\n"
-	"       [--run]\n"
-	"       [--capname=<capname>]\n"
-	"       [--getcap]\n"
-	"       [--setcap=<0|1>]\n"
-	"       [--desc-base=<BASE>]\n"
-	"       [--desc-limit=<LIMIT>]\n"
-	"       [--desc-access=<ACCESS>]\n"
-	"       [--set-cr0=<CR0>]\n"
-	"       [--get-cr0]\n"
-	"       [--set-cr2=<CR2>]\n"
-	"       [--get-cr2]\n"
-	"       [--set-cr3=<CR3>]\n"
-	"       [--get-cr3]\n"
-	"       [--set-cr4=<CR4>]\n"
-	"       [--get-cr4]\n"
-	"       [--set-dr0=<DR0>]\n"
-	"       [--get-dr0]\n"
-	"       [--set-dr1=<DR1>]\n"
-	"       [--get-dr1]\n"
-	"       [--set-dr2=<DR2>]\n"
-	"       [--get-dr2]\n"
-	"       [--set-dr3=<DR3>]\n"
-	"       [--get-dr3]\n"
-	"       [--set-dr6=<DR6>]\n"
-	"       [--get-dr6]\n"
-	"       [--set-dr7=<DR7>]\n"
-	"       [--get-dr7]\n"
-	"       [--set-rsp=<RSP>]\n"
-	"       [--get-rsp]\n"
-	"       [--set-rip=<RIP>]\n"
-	"       [--get-rip]\n"
-	"       [--get-rax]\n"
-	"       [--set-rax=<RAX>]\n"
-	"       [--get-rbx]\n"
-	"       [--get-rcx]\n"
-	"       [--get-rdx]\n"
-	"       [--get-rsi]\n"
-	"       [--get-rdi]\n"
-	"       [--get-rbp]\n"
-	"       [--get-r8]\n"
-	"       [--get-r9]\n"
-	"       [--get-r10]\n"
-	"       [--get-r11]\n"
-	"       [--get-r12]\n"
-	"       [--get-r13]\n"
-	"       [--get-r14]\n"
-	"       [--get-r15]\n"
-	"       [--set-rflags=<RFLAGS>]\n"
-	"       [--get-rflags]\n"
-	"       [--set-cs]\n"
-	"       [--get-cs]\n"
-	"       [--set-ds]\n"
-	"       [--get-ds]\n"
-	"       [--set-es]\n"
-	"       [--get-es]\n"
-	"       [--set-fs]\n"
-	"       [--get-fs]\n"
-	"       [--set-gs]\n"
-	"       [--get-gs]\n"
-	"       [--set-ss]\n"
-	"       [--get-ss]\n"
-	"       [--get-tr]\n"
-	"       [--get-ldtr]\n"
-	"       [--set-x2apic-state=<state>]\n"
-	"       [--get-x2apic-state]\n"
-	"       [--unassign-pptdev=<bus/slot/func>]\n"
-	"       [--set-mem=<memory in units of MB>]\n"
-	"       [--get-lowmem]\n"
-	"       [--get-highmem]\n"
-	"       [--get-gpa-pmap]\n"
-	"       [--assert-lapic-lvt=<pin>]\n"
-	"       [--inject-nmi]\n"
-	"       [--force-reset]\n"
-	"       [--force-poweroff]\n"
-	"       [--get-rtc-time]\n"
-	"       [--set-rtc-time=<secs>]\n"
-	"       [--get-rtc-nvram]\n"
-	"       [--set-rtc-nvram=<val>]\n"
-	"       [--rtc-nvram-offset=<offset>]\n"
-	"       [--get-active-cpus]\n"
-	"       [--get-suspended-cpus]\n"
-	"       [--get-intinfo]\n"
-	"       [--get-eptp]\n"
-	"       [--set-exception-bitmap]\n"
-	"       [--get-exception-bitmap]\n"
-	"       [--get-tsc-offset]\n"
-	"       [--get-guest-pat]\n"
-	"       [--get-io-bitmap-address]\n"
-	"       [--get-msr-bitmap]\n"
-	"       [--get-msr-bitmap-address]\n"
-	"       [--get-guest-sysenter]\n"
-	"       [--get-exit-reason]\n"
-	"       [--get-cpu-topology]\n",
-	progname);
-
-	if (cpu_intel) {
-		(void)fprintf(stderr,
-		"       [--get-vmcs-pinbased-ctls]\n"
-		"       [--get-vmcs-procbased-ctls]\n"
-		"       [--get-vmcs-procbased-ctls2]\n"
-		"       [--get-vmcs-entry-interruption-info]\n"
-		"       [--set-vmcs-entry-interruption-info=<info>]\n"
-		"       [--get-vmcs-guest-physical-address\n"
-		"       [--get-vmcs-guest-linear-address\n"
-		"       [--get-vmcs-host-pat]\n"
-		"       [--get-vmcs-host-cr0]\n"
-		"       [--get-vmcs-host-cr3]\n"
-		"       [--get-vmcs-host-cr4]\n"
-		"       [--get-vmcs-host-rip]\n"
-		"       [--get-vmcs-host-rsp]\n"
-		"       [--get-vmcs-cr0-mask]\n"
-		"       [--get-vmcs-cr0-shadow]\n"
-		"       [--get-vmcs-cr4-mask]\n"
-		"       [--get-vmcs-cr4-shadow]\n"
-		"       [--get-vmcs-cr3-targets]\n"
-		"       [--get-vmcs-apic-access-address]\n"
-		"       [--get-vmcs-virtual-apic-address]\n"
-		"       [--get-vmcs-tpr-threshold]\n"
-		"       [--get-vmcs-vpid]\n"
-		"       [--get-vmcs-instruction-error]\n"
-		"       [--get-vmcs-exit-ctls]\n"
-		"       [--get-vmcs-entry-ctls]\n"
-		"       [--get-vmcs-link]\n"
-		"       [--get-vmcs-exit-qualification]\n"
-		"       [--get-vmcs-exit-interruption-info]\n"
-		"       [--get-vmcs-exit-interruption-error]\n"
-		"       [--get-vmcs-interruptibility]\n"
-		);
-	} else {
-		(void)fprintf(stderr,
-		"       [--get-vmcb-intercepts]\n"
-		"       [--get-vmcb-asid]\n"
-		"       [--get-vmcb-exit-details]\n"
-		"       [--get-vmcb-tlb-ctrl]\n"
-		"       [--get-vmcb-virq]\n"
-		"       [--get-avic-apic-bar]\n"
-		"       [--get-avic-backing-page]\n"
-		"       [--get-avic-table]\n"
-		);
-	}
-	exit(1);
-}
-
 static int get_rtc_time, set_rtc_time;
 static int get_rtc_nvram, set_rtc_nvram;
 static int rtc_nvram_offset;
@@ -266,7 +84,7 @@ static int force_reset, force_poweroff;
 static const char *capname;
 static int create, destroy, get_memmap, get_memseg;
 static int get_intinfo;
-static int get_active_cpus, get_suspended_cpus;
+static int get_active_cpus, get_debug_cpus, get_suspended_cpus;
 static uint64_t memsize;
 static int set_cr0, get_cr0, set_cr2, get_cr2, set_cr3, get_cr3;
 static int set_cr4, get_cr4;
@@ -294,12 +112,11 @@ static int set_desc_ldtr, get_desc_ldtr;
 static int set_cs, set_ds, set_es, set_fs, set_gs, set_ss, set_tr, set_ldtr;
 static int get_cs, get_ds, get_es, get_fs, get_gs, get_ss, get_tr, get_ldtr;
 static int set_x2apic_state, get_x2apic_state;
-enum x2apic_state x2apic_state;
+static enum x2apic_state x2apic_state;
 static int unassign_pptdev, bus, slot, func;
 static int run;
 static int get_cpu_topology;
 #ifdef BHYVE_SNAPSHOT
-static int vm_checkpoint_opt;
 static int vm_suspend_opt;
 #endif
 
@@ -316,7 +133,6 @@ static int get_pinbased_ctls, get_procbased_ctls, get_procbased_ctls2;
 static int get_eptp, get_io_bitmap, get_tsc_offset;
 static int get_vmcs_entry_interruption_info;
 static int get_vmcs_interruptibility;
-uint32_t vmcs_entry_interruption_info;
 static int get_vmcs_gpa, get_vmcs_gla;
 static int get_exception_bitmap;
 static int get_cr0_mask, get_cr0_shadow;
@@ -497,8 +313,8 @@ dump_intel_msr_pm(const char *bitmap, int vcpu)
 static int
 dump_msr_bitmap(int vcpu, uint64_t addr, bool cpu_intel)
 {
+	char *bitmap;
 	int error, fd, map_size;
-	const char *bitmap;
 
 	error = -1;
 	bitmap = MAP_FAILED;
@@ -536,18 +352,18 @@ done:
 }
 
 static int
-vm_get_vmcs_field(struct vmctx *ctx, int vcpu, int field, uint64_t *ret_val)
+vm_get_vmcs_field(struct vcpu *vcpu, int field, uint64_t *ret_val)
 {
 
-	return (vm_get_register(ctx, vcpu, VMCS_IDENT(field), ret_val));
+	return (vm_get_register(vcpu, VMCS_IDENT(field), ret_val));
 }
 
 static int
-vm_get_vmcb_field(struct vmctx *ctx, int vcpu, int off, int bytes,
+vm_get_vmcb_field(struct vcpu *vcpu, int off, int bytes,
 	uint64_t *ret_val)
 {
 
-	return (vm_get_register(ctx, vcpu, VMCB_ACCESS(off, bytes), ret_val));
+	return (vm_get_register(vcpu, VMCB_ACCESS(off, bytes), ret_val));
 }
 
 enum {
@@ -648,29 +464,24 @@ print_intinfo(const char *banner, uint64_t info)
 static bool
 cpu_vendor_intel(void)
 {
-	u_int regs[4];
-	char cpu_vendor[13];
+	u_int regs[4], v[3];
 
 	do_cpuid(0, regs);
-	((u_int *)&cpu_vendor)[0] = regs[1];
-	((u_int *)&cpu_vendor)[1] = regs[3];
-	((u_int *)&cpu_vendor)[2] = regs[2];
-	cpu_vendor[12] = '\0';
+	v[0] = regs[1];
+	v[1] = regs[3];
+	v[2] = regs[2];
 
-	if (strcmp(cpu_vendor, "AuthenticAMD") == 0) {
-		return (false);
-	} else if (strcmp(cpu_vendor, "HygonGenuine") == 0) {
-		return (false);
-	} else if (strcmp(cpu_vendor, "GenuineIntel") == 0) {
+	if (memcmp(v, "GenuineIntel", sizeof(v)) == 0)
 		return (true);
-	} else {
-		fprintf(stderr, "Unknown cpu vendor \"%s\"\n", cpu_vendor);
-		exit(1);
-	}
+	if (memcmp(v, "AuthenticAMD", sizeof(v)) == 0 ||
+	    memcmp(v, "HygonGenuine", sizeof(v)) == 0)
+		return (false);
+	fprintf(stderr, "Unknown cpu vendor \"%s\"\n", (const char *)v);
+	exit(1);
 }
 
 static int
-get_all_registers(struct vmctx *ctx, int vcpu)
+get_all_registers(struct vcpu *vcpu, int vcpuid)
 {
 	uint64_t cr0, cr2, cr3, cr4, dr0, dr1, dr2, dr3, dr6, dr7;
 	uint64_t rsp, rip, rflags, efer;
@@ -679,651 +490,651 @@ get_all_registers(struct vmctx *ctx, int vcpu)
 	int error = 0;
 
 	if (!error && (get_efer || get_all)) {
-		error = vm_get_register(ctx, vcpu, VM_REG_GUEST_EFER, &efer);
+		error = vm_get_register(vcpu, VM_REG_GUEST_EFER, &efer);
 		if (error == 0)
-			printf("efer[%d]\t\t0x%016lx\n", vcpu, efer);
+			printf("efer[%d]\t\t0x%016lx\n", vcpuid, efer);
 	}
 
 	if (!error && (get_cr0 || get_all)) {
-		error = vm_get_register(ctx, vcpu, VM_REG_GUEST_CR0, &cr0);
+		error = vm_get_register(vcpu, VM_REG_GUEST_CR0, &cr0);
 		if (error == 0)
-			printf("cr0[%d]\t\t0x%016lx\n", vcpu, cr0);
+			printf("cr0[%d]\t\t0x%016lx\n", vcpuid, cr0);
 	}
 
 	if (!error && (get_cr2 || get_all)) {
-		error = vm_get_register(ctx, vcpu, VM_REG_GUEST_CR2, &cr2);
+		error = vm_get_register(vcpu, VM_REG_GUEST_CR2, &cr2);
 		if (error == 0)
-			printf("cr2[%d]\t\t0x%016lx\n", vcpu, cr2);
+			printf("cr2[%d]\t\t0x%016lx\n", vcpuid, cr2);
 	}
 
 	if (!error && (get_cr3 || get_all)) {
-		error = vm_get_register(ctx, vcpu, VM_REG_GUEST_CR3, &cr3);
+		error = vm_get_register(vcpu, VM_REG_GUEST_CR3, &cr3);
 		if (error == 0)
-			printf("cr3[%d]\t\t0x%016lx\n", vcpu, cr3);
+			printf("cr3[%d]\t\t0x%016lx\n", vcpuid, cr3);
 	}
 
 	if (!error && (get_cr4 || get_all)) {
-		error = vm_get_register(ctx, vcpu, VM_REG_GUEST_CR4, &cr4);
+		error = vm_get_register(vcpu, VM_REG_GUEST_CR4, &cr4);
 		if (error == 0)
-			printf("cr4[%d]\t\t0x%016lx\n", vcpu, cr4);
+			printf("cr4[%d]\t\t0x%016lx\n", vcpuid, cr4);
 	}
 
 	if (!error && (get_dr0 || get_all)) {
-		error = vm_get_register(ctx, vcpu, VM_REG_GUEST_DR0, &dr0);
+		error = vm_get_register(vcpu, VM_REG_GUEST_DR0, &dr0);
 		if (error == 0)
-			printf("dr0[%d]\t\t0x%016lx\n", vcpu, dr0);
+			printf("dr0[%d]\t\t0x%016lx\n", vcpuid, dr0);
 	}
 
 	if (!error && (get_dr1 || get_all)) {
-		error = vm_get_register(ctx, vcpu, VM_REG_GUEST_DR1, &dr1);
+		error = vm_get_register(vcpu, VM_REG_GUEST_DR1, &dr1);
 		if (error == 0)
-			printf("dr1[%d]\t\t0x%016lx\n", vcpu, dr1);
+			printf("dr1[%d]\t\t0x%016lx\n", vcpuid, dr1);
 	}
 
 	if (!error && (get_dr2 || get_all)) {
-		error = vm_get_register(ctx, vcpu, VM_REG_GUEST_DR2, &dr2);
+		error = vm_get_register(vcpu, VM_REG_GUEST_DR2, &dr2);
 		if (error == 0)
-			printf("dr2[%d]\t\t0x%016lx\n", vcpu, dr2);
+			printf("dr2[%d]\t\t0x%016lx\n", vcpuid, dr2);
 	}
 
 	if (!error && (get_dr3 || get_all)) {
-		error = vm_get_register(ctx, vcpu, VM_REG_GUEST_DR3, &dr3);
+		error = vm_get_register(vcpu, VM_REG_GUEST_DR3, &dr3);
 		if (error == 0)
-			printf("dr3[%d]\t\t0x%016lx\n", vcpu, dr3);
+			printf("dr3[%d]\t\t0x%016lx\n", vcpuid, dr3);
 	}
 
 	if (!error && (get_dr6 || get_all)) {
-		error = vm_get_register(ctx, vcpu, VM_REG_GUEST_DR6, &dr6);
+		error = vm_get_register(vcpu, VM_REG_GUEST_DR6, &dr6);
 		if (error == 0)
-			printf("dr6[%d]\t\t0x%016lx\n", vcpu, dr6);
+			printf("dr6[%d]\t\t0x%016lx\n", vcpuid, dr6);
 	}
 
 	if (!error && (get_dr7 || get_all)) {
-		error = vm_get_register(ctx, vcpu, VM_REG_GUEST_DR7, &dr7);
+		error = vm_get_register(vcpu, VM_REG_GUEST_DR7, &dr7);
 		if (error == 0)
-			printf("dr7[%d]\t\t0x%016lx\n", vcpu, dr7);
+			printf("dr7[%d]\t\t0x%016lx\n", vcpuid, dr7);
 	}
 
 	if (!error && (get_rsp || get_all)) {
-		error = vm_get_register(ctx, vcpu, VM_REG_GUEST_RSP, &rsp);
+		error = vm_get_register(vcpu, VM_REG_GUEST_RSP, &rsp);
 		if (error == 0)
-			printf("rsp[%d]\t\t0x%016lx\n", vcpu, rsp);
+			printf("rsp[%d]\t\t0x%016lx\n", vcpuid, rsp);
 	}
 
 	if (!error && (get_rip || get_all)) {
-		error = vm_get_register(ctx, vcpu, VM_REG_GUEST_RIP, &rip);
+		error = vm_get_register(vcpu, VM_REG_GUEST_RIP, &rip);
 		if (error == 0)
-			printf("rip[%d]\t\t0x%016lx\n", vcpu, rip);
+			printf("rip[%d]\t\t0x%016lx\n", vcpuid, rip);
 	}
 
 	if (!error && (get_rax || get_all)) {
-		error = vm_get_register(ctx, vcpu, VM_REG_GUEST_RAX, &rax);
+		error = vm_get_register(vcpu, VM_REG_GUEST_RAX, &rax);
 		if (error == 0)
-			printf("rax[%d]\t\t0x%016lx\n", vcpu, rax);
+			printf("rax[%d]\t\t0x%016lx\n", vcpuid, rax);
 	}
 
 	if (!error && (get_rbx || get_all)) {
-		error = vm_get_register(ctx, vcpu, VM_REG_GUEST_RBX, &rbx);
+		error = vm_get_register(vcpu, VM_REG_GUEST_RBX, &rbx);
 		if (error == 0)
-			printf("rbx[%d]\t\t0x%016lx\n", vcpu, rbx);
+			printf("rbx[%d]\t\t0x%016lx\n", vcpuid, rbx);
 	}
 
 	if (!error && (get_rcx || get_all)) {
-		error = vm_get_register(ctx, vcpu, VM_REG_GUEST_RCX, &rcx);
+		error = vm_get_register(vcpu, VM_REG_GUEST_RCX, &rcx);
 		if (error == 0)
-			printf("rcx[%d]\t\t0x%016lx\n", vcpu, rcx);
+			printf("rcx[%d]\t\t0x%016lx\n", vcpuid, rcx);
 	}
 
 	if (!error && (get_rdx || get_all)) {
-		error = vm_get_register(ctx, vcpu, VM_REG_GUEST_RDX, &rdx);
+		error = vm_get_register(vcpu, VM_REG_GUEST_RDX, &rdx);
 		if (error == 0)
-			printf("rdx[%d]\t\t0x%016lx\n", vcpu, rdx);
+			printf("rdx[%d]\t\t0x%016lx\n", vcpuid, rdx);
 	}
 
 	if (!error && (get_rsi || get_all)) {
-		error = vm_get_register(ctx, vcpu, VM_REG_GUEST_RSI, &rsi);
+		error = vm_get_register(vcpu, VM_REG_GUEST_RSI, &rsi);
 		if (error == 0)
-			printf("rsi[%d]\t\t0x%016lx\n", vcpu, rsi);
+			printf("rsi[%d]\t\t0x%016lx\n", vcpuid, rsi);
 	}
 
 	if (!error && (get_rdi || get_all)) {
-		error = vm_get_register(ctx, vcpu, VM_REG_GUEST_RDI, &rdi);
+		error = vm_get_register(vcpu, VM_REG_GUEST_RDI, &rdi);
 		if (error == 0)
-			printf("rdi[%d]\t\t0x%016lx\n", vcpu, rdi);
+			printf("rdi[%d]\t\t0x%016lx\n", vcpuid, rdi);
 	}
 
 	if (!error && (get_rbp || get_all)) {
-		error = vm_get_register(ctx, vcpu, VM_REG_GUEST_RBP, &rbp);
+		error = vm_get_register(vcpu, VM_REG_GUEST_RBP, &rbp);
 		if (error == 0)
-			printf("rbp[%d]\t\t0x%016lx\n", vcpu, rbp);
+			printf("rbp[%d]\t\t0x%016lx\n", vcpuid, rbp);
 	}
 
 	if (!error && (get_r8 || get_all)) {
-		error = vm_get_register(ctx, vcpu, VM_REG_GUEST_R8, &r8);
+		error = vm_get_register(vcpu, VM_REG_GUEST_R8, &r8);
 		if (error == 0)
-			printf("r8[%d]\t\t0x%016lx\n", vcpu, r8);
+			printf("r8[%d]\t\t0x%016lx\n", vcpuid, r8);
 	}
 
 	if (!error && (get_r9 || get_all)) {
-		error = vm_get_register(ctx, vcpu, VM_REG_GUEST_R9, &r9);
+		error = vm_get_register(vcpu, VM_REG_GUEST_R9, &r9);
 		if (error == 0)
-			printf("r9[%d]\t\t0x%016lx\n", vcpu, r9);
+			printf("r9[%d]\t\t0x%016lx\n", vcpuid, r9);
 	}
 
 	if (!error && (get_r10 || get_all)) {
-		error = vm_get_register(ctx, vcpu, VM_REG_GUEST_R10, &r10);
+		error = vm_get_register(vcpu, VM_REG_GUEST_R10, &r10);
 		if (error == 0)
-			printf("r10[%d]\t\t0x%016lx\n", vcpu, r10);
+			printf("r10[%d]\t\t0x%016lx\n", vcpuid, r10);
 	}
 
 	if (!error && (get_r11 || get_all)) {
-		error = vm_get_register(ctx, vcpu, VM_REG_GUEST_R11, &r11);
+		error = vm_get_register(vcpu, VM_REG_GUEST_R11, &r11);
 		if (error == 0)
-			printf("r11[%d]\t\t0x%016lx\n", vcpu, r11);
+			printf("r11[%d]\t\t0x%016lx\n", vcpuid, r11);
 	}
 
 	if (!error && (get_r12 || get_all)) {
-		error = vm_get_register(ctx, vcpu, VM_REG_GUEST_R12, &r12);
+		error = vm_get_register(vcpu, VM_REG_GUEST_R12, &r12);
 		if (error == 0)
-			printf("r12[%d]\t\t0x%016lx\n", vcpu, r12);
+			printf("r12[%d]\t\t0x%016lx\n", vcpuid, r12);
 	}
 
 	if (!error && (get_r13 || get_all)) {
-		error = vm_get_register(ctx, vcpu, VM_REG_GUEST_R13, &r13);
+		error = vm_get_register(vcpu, VM_REG_GUEST_R13, &r13);
 		if (error == 0)
-			printf("r13[%d]\t\t0x%016lx\n", vcpu, r13);
+			printf("r13[%d]\t\t0x%016lx\n", vcpuid, r13);
 	}
 
 	if (!error && (get_r14 || get_all)) {
-		error = vm_get_register(ctx, vcpu, VM_REG_GUEST_R14, &r14);
+		error = vm_get_register(vcpu, VM_REG_GUEST_R14, &r14);
 		if (error == 0)
-			printf("r14[%d]\t\t0x%016lx\n", vcpu, r14);
+			printf("r14[%d]\t\t0x%016lx\n", vcpuid, r14);
 	}
 
 	if (!error && (get_r15 || get_all)) {
-		error = vm_get_register(ctx, vcpu, VM_REG_GUEST_R15, &r15);
+		error = vm_get_register(vcpu, VM_REG_GUEST_R15, &r15);
 		if (error == 0)
-			printf("r15[%d]\t\t0x%016lx\n", vcpu, r15);
+			printf("r15[%d]\t\t0x%016lx\n", vcpuid, r15);
 	}
 
 	if (!error && (get_rflags || get_all)) {
-		error = vm_get_register(ctx, vcpu, VM_REG_GUEST_RFLAGS,
+		error = vm_get_register(vcpu, VM_REG_GUEST_RFLAGS,
 					&rflags);
 		if (error == 0)
-			printf("rflags[%d]\t0x%016lx\n", vcpu, rflags);
+			printf("rflags[%d]\t0x%016lx\n", vcpuid, rflags);
 	}
 
 	return (error);
 }
 
 static int
-get_all_segments(struct vmctx *ctx, int vcpu)
+get_all_segments(struct vcpu *vcpu, int vcpuid)
 {
 	uint64_t cs, ds, es, fs, gs, ss, tr, ldtr;
 	int error = 0;
 
 	if (!error && (get_desc_ds || get_all)) {
-		error = vm_get_desc(ctx, vcpu, VM_REG_GUEST_DS,
+		error = vm_get_desc(vcpu, VM_REG_GUEST_DS,
 				   &desc_base, &desc_limit, &desc_access);
 		if (error == 0) {
 			printf("ds desc[%d]\t0x%016lx/0x%08x/0x%08x\n",
-			      vcpu, desc_base, desc_limit, desc_access);
+			      vcpuid, desc_base, desc_limit, desc_access);
 		}
 	}
 
 	if (!error && (get_desc_es || get_all)) {
-		error = vm_get_desc(ctx, vcpu, VM_REG_GUEST_ES,
+		error = vm_get_desc(vcpu, VM_REG_GUEST_ES,
 				    &desc_base, &desc_limit, &desc_access);
 		if (error == 0) {
 			printf("es desc[%d]\t0x%016lx/0x%08x/0x%08x\n",
-			       vcpu, desc_base, desc_limit, desc_access);
+			       vcpuid, desc_base, desc_limit, desc_access);
 		}
 	}
 
 	if (!error && (get_desc_fs || get_all)) {
-		error = vm_get_desc(ctx, vcpu, VM_REG_GUEST_FS,
+		error = vm_get_desc(vcpu, VM_REG_GUEST_FS,
 				    &desc_base, &desc_limit, &desc_access);
 		if (error == 0) {
 			printf("fs desc[%d]\t0x%016lx/0x%08x/0x%08x\n",
-			       vcpu, desc_base, desc_limit, desc_access);
+			       vcpuid, desc_base, desc_limit, desc_access);
 		}
 	}
 
 	if (!error && (get_desc_gs || get_all)) {
-		error = vm_get_desc(ctx, vcpu, VM_REG_GUEST_GS,
+		error = vm_get_desc(vcpu, VM_REG_GUEST_GS,
 				    &desc_base, &desc_limit, &desc_access);
 		if (error == 0) {
 			printf("gs desc[%d]\t0x%016lx/0x%08x/0x%08x\n",
-			       vcpu, desc_base, desc_limit, desc_access);
+			       vcpuid, desc_base, desc_limit, desc_access);
 		}
 	}
 
 	if (!error && (get_desc_ss || get_all)) {
-		error = vm_get_desc(ctx, vcpu, VM_REG_GUEST_SS,
+		error = vm_get_desc(vcpu, VM_REG_GUEST_SS,
 				    &desc_base, &desc_limit, &desc_access);
 		if (error == 0) {
 			printf("ss desc[%d]\t0x%016lx/0x%08x/0x%08x\n",
-			       vcpu, desc_base, desc_limit, desc_access);
+			       vcpuid, desc_base, desc_limit, desc_access);
 		}
 	}
 
 	if (!error && (get_desc_cs || get_all)) {
-		error = vm_get_desc(ctx, vcpu, VM_REG_GUEST_CS,
+		error = vm_get_desc(vcpu, VM_REG_GUEST_CS,
 				    &desc_base, &desc_limit, &desc_access);
 		if (error == 0) {
 			printf("cs desc[%d]\t0x%016lx/0x%08x/0x%08x\n",
-			       vcpu, desc_base, desc_limit, desc_access);
+			       vcpuid, desc_base, desc_limit, desc_access);
 		}
 	}
 
 	if (!error && (get_desc_tr || get_all)) {
-		error = vm_get_desc(ctx, vcpu, VM_REG_GUEST_TR,
+		error = vm_get_desc(vcpu, VM_REG_GUEST_TR,
 				    &desc_base, &desc_limit, &desc_access);
 		if (error == 0) {
 			printf("tr desc[%d]\t0x%016lx/0x%08x/0x%08x\n",
-			       vcpu, desc_base, desc_limit, desc_access);
+			       vcpuid, desc_base, desc_limit, desc_access);
 		}
 	}
 
 	if (!error && (get_desc_ldtr || get_all)) {
-		error = vm_get_desc(ctx, vcpu, VM_REG_GUEST_LDTR,
+		error = vm_get_desc(vcpu, VM_REG_GUEST_LDTR,
 				    &desc_base, &desc_limit, &desc_access);
 		if (error == 0) {
 			printf("ldtr desc[%d]\t0x%016lx/0x%08x/0x%08x\n",
-			       vcpu, desc_base, desc_limit, desc_access);
+			       vcpuid, desc_base, desc_limit, desc_access);
 		}
 	}
 
 	if (!error && (get_desc_gdtr || get_all)) {
-		error = vm_get_desc(ctx, vcpu, VM_REG_GUEST_GDTR,
+		error = vm_get_desc(vcpu, VM_REG_GUEST_GDTR,
 				    &desc_base, &desc_limit, &desc_access);
 		if (error == 0) {
 			printf("gdtr[%d]\t\t0x%016lx/0x%08x\n",
-			       vcpu, desc_base, desc_limit);
+			       vcpuid, desc_base, desc_limit);
 		}
 	}
 
 	if (!error && (get_desc_idtr || get_all)) {
-		error = vm_get_desc(ctx, vcpu, VM_REG_GUEST_IDTR,
+		error = vm_get_desc(vcpu, VM_REG_GUEST_IDTR,
 				    &desc_base, &desc_limit, &desc_access);
 		if (error == 0) {
 			printf("idtr[%d]\t\t0x%016lx/0x%08x\n",
-			       vcpu, desc_base, desc_limit);
+			       vcpuid, desc_base, desc_limit);
 		}
 	}
 
 	if (!error && (get_cs || get_all)) {
-		error = vm_get_register(ctx, vcpu, VM_REG_GUEST_CS, &cs);
+		error = vm_get_register(vcpu, VM_REG_GUEST_CS, &cs);
 		if (error == 0)
-			printf("cs[%d]\t\t0x%04lx\n", vcpu, cs);
+			printf("cs[%d]\t\t0x%04lx\n", vcpuid, cs);
 	}
 
 	if (!error && (get_ds || get_all)) {
-		error = vm_get_register(ctx, vcpu, VM_REG_GUEST_DS, &ds);
+		error = vm_get_register(vcpu, VM_REG_GUEST_DS, &ds);
 		if (error == 0)
-			printf("ds[%d]\t\t0x%04lx\n", vcpu, ds);
+			printf("ds[%d]\t\t0x%04lx\n", vcpuid, ds);
 	}
 
 	if (!error && (get_es || get_all)) {
-		error = vm_get_register(ctx, vcpu, VM_REG_GUEST_ES, &es);
+		error = vm_get_register(vcpu, VM_REG_GUEST_ES, &es);
 		if (error == 0)
-			printf("es[%d]\t\t0x%04lx\n", vcpu, es);
+			printf("es[%d]\t\t0x%04lx\n", vcpuid, es);
 	}
 
 	if (!error && (get_fs || get_all)) {
-		error = vm_get_register(ctx, vcpu, VM_REG_GUEST_FS, &fs);
+		error = vm_get_register(vcpu, VM_REG_GUEST_FS, &fs);
 		if (error == 0)
-			printf("fs[%d]\t\t0x%04lx\n", vcpu, fs);
+			printf("fs[%d]\t\t0x%04lx\n", vcpuid, fs);
 	}
 
 	if (!error && (get_gs || get_all)) {
-		error = vm_get_register(ctx, vcpu, VM_REG_GUEST_GS, &gs);
+		error = vm_get_register(vcpu, VM_REG_GUEST_GS, &gs);
 		if (error == 0)
-			printf("gs[%d]\t\t0x%04lx\n", vcpu, gs);
+			printf("gs[%d]\t\t0x%04lx\n", vcpuid, gs);
 	}
 
 	if (!error && (get_ss || get_all)) {
-		error = vm_get_register(ctx, vcpu, VM_REG_GUEST_SS, &ss);
+		error = vm_get_register(vcpu, VM_REG_GUEST_SS, &ss);
 		if (error == 0)
-			printf("ss[%d]\t\t0x%04lx\n", vcpu, ss);
+			printf("ss[%d]\t\t0x%04lx\n", vcpuid, ss);
 	}
 
 	if (!error && (get_tr || get_all)) {
-		error = vm_get_register(ctx, vcpu, VM_REG_GUEST_TR, &tr);
+		error = vm_get_register(vcpu, VM_REG_GUEST_TR, &tr);
 		if (error == 0)
-			printf("tr[%d]\t\t0x%04lx\n", vcpu, tr);
+			printf("tr[%d]\t\t0x%04lx\n", vcpuid, tr);
 	}
 
 	if (!error && (get_ldtr || get_all)) {
-		error = vm_get_register(ctx, vcpu, VM_REG_GUEST_LDTR, &ldtr);
+		error = vm_get_register(vcpu, VM_REG_GUEST_LDTR, &ldtr);
 		if (error == 0)
-			printf("ldtr[%d]\t\t0x%04lx\n", vcpu, ldtr);
+			printf("ldtr[%d]\t\t0x%04lx\n", vcpuid, ldtr);
 	}
 
 	return (error);
 }
 
 static int
-get_misc_vmcs(struct vmctx *ctx, int vcpu)
+get_misc_vmcs(struct vcpu *vcpu, int vcpuid)
 {
 	uint64_t ctl, cr0, cr3, cr4, rsp, rip, pat, addr, u64;
 	int error = 0;
 
 	if (!error && (get_cr0_mask || get_all)) {
 		uint64_t cr0mask;
-		error = vm_get_vmcs_field(ctx, vcpu, VMCS_CR0_MASK, &cr0mask);
+		error = vm_get_vmcs_field(vcpu, VMCS_CR0_MASK, &cr0mask);
 		if (error == 0)
-			printf("cr0_mask[%d]\t\t0x%016lx\n", vcpu, cr0mask);
+			printf("cr0_mask[%d]\t\t0x%016lx\n", vcpuid, cr0mask);
 	}
 
 	if (!error && (get_cr0_shadow || get_all)) {
 		uint64_t cr0shadow;
-		error = vm_get_vmcs_field(ctx, vcpu, VMCS_CR0_SHADOW,
+		error = vm_get_vmcs_field(vcpu, VMCS_CR0_SHADOW,
 					  &cr0shadow);
 		if (error == 0)
-			printf("cr0_shadow[%d]\t\t0x%016lx\n", vcpu, cr0shadow);
+			printf("cr0_shadow[%d]\t\t0x%016lx\n", vcpuid, cr0shadow);
 	}
 
 	if (!error && (get_cr4_mask || get_all)) {
 		uint64_t cr4mask;
-		error = vm_get_vmcs_field(ctx, vcpu, VMCS_CR4_MASK, &cr4mask);
+		error = vm_get_vmcs_field(vcpu, VMCS_CR4_MASK, &cr4mask);
 		if (error == 0)
-			printf("cr4_mask[%d]\t\t0x%016lx\n", vcpu, cr4mask);
+			printf("cr4_mask[%d]\t\t0x%016lx\n", vcpuid, cr4mask);
 	}
 
 	if (!error && (get_cr4_shadow || get_all)) {
 		uint64_t cr4shadow;
-		error = vm_get_vmcs_field(ctx, vcpu, VMCS_CR4_SHADOW,
+		error = vm_get_vmcs_field(vcpu, VMCS_CR4_SHADOW,
 					  &cr4shadow);
 		if (error == 0)
-			printf("cr4_shadow[%d]\t\t0x%016lx\n", vcpu, cr4shadow);
+			printf("cr4_shadow[%d]\t\t0x%016lx\n", vcpuid, cr4shadow);
 	}
 	
 	if (!error && (get_cr3_targets || get_all)) {
 		uint64_t target_count, target_addr;
-		error = vm_get_vmcs_field(ctx, vcpu, VMCS_CR3_TARGET_COUNT,
+		error = vm_get_vmcs_field(vcpu, VMCS_CR3_TARGET_COUNT,
 					  &target_count);
 		if (error == 0) {
 			printf("cr3_target_count[%d]\t0x%016lx\n",
-				vcpu, target_count);
+				vcpuid, target_count);
 		}
 
-		error = vm_get_vmcs_field(ctx, vcpu, VMCS_CR3_TARGET0,
+		error = vm_get_vmcs_field(vcpu, VMCS_CR3_TARGET0,
 					  &target_addr);
 		if (error == 0) {
 			printf("cr3_target0[%d]\t\t0x%016lx\n",
-				vcpu, target_addr);
+				vcpuid, target_addr);
 		}
 
-		error = vm_get_vmcs_field(ctx, vcpu, VMCS_CR3_TARGET1,
+		error = vm_get_vmcs_field(vcpu, VMCS_CR3_TARGET1,
 					  &target_addr);
 		if (error == 0) {
 			printf("cr3_target1[%d]\t\t0x%016lx\n",
-				vcpu, target_addr);
+				vcpuid, target_addr);
 		}
 
-		error = vm_get_vmcs_field(ctx, vcpu, VMCS_CR3_TARGET2,
+		error = vm_get_vmcs_field(vcpu, VMCS_CR3_TARGET2,
 					  &target_addr);
 		if (error == 0) {
 			printf("cr3_target2[%d]\t\t0x%016lx\n",
-				vcpu, target_addr);
+				vcpuid, target_addr);
 		}
 
-		error = vm_get_vmcs_field(ctx, vcpu, VMCS_CR3_TARGET3,
+		error = vm_get_vmcs_field(vcpu, VMCS_CR3_TARGET3,
 					  &target_addr);
 		if (error == 0) {
 			printf("cr3_target3[%d]\t\t0x%016lx\n",
-				vcpu, target_addr);
+				vcpuid, target_addr);
 		}
 	}
 
 	if (!error && (get_pinbased_ctls || get_all)) {
-		error = vm_get_vmcs_field(ctx, vcpu, VMCS_PIN_BASED_CTLS, &ctl);
+		error = vm_get_vmcs_field(vcpu, VMCS_PIN_BASED_CTLS, &ctl);
 		if (error == 0)
-			printf("pinbased_ctls[%d]\t0x%016lx\n", vcpu, ctl);
+			printf("pinbased_ctls[%d]\t0x%016lx\n", vcpuid, ctl);
 	}
 
 	if (!error && (get_procbased_ctls || get_all)) {
-		error = vm_get_vmcs_field(ctx, vcpu,
+		error = vm_get_vmcs_field(vcpu,
 					  VMCS_PRI_PROC_BASED_CTLS, &ctl);
 		if (error == 0)
-			printf("procbased_ctls[%d]\t0x%016lx\n", vcpu, ctl);
+			printf("procbased_ctls[%d]\t0x%016lx\n", vcpuid, ctl);
 	}
 
 	if (!error && (get_procbased_ctls2 || get_all)) {
-		error = vm_get_vmcs_field(ctx, vcpu,
+		error = vm_get_vmcs_field(vcpu,
 					  VMCS_SEC_PROC_BASED_CTLS, &ctl);
 		if (error == 0)
-			printf("procbased_ctls2[%d]\t0x%016lx\n", vcpu, ctl);
+			printf("procbased_ctls2[%d]\t0x%016lx\n", vcpuid, ctl);
 	}
 
 	if (!error && (get_vmcs_gla || get_all)) {
-		error = vm_get_vmcs_field(ctx, vcpu,
+		error = vm_get_vmcs_field(vcpu,
 					  VMCS_GUEST_LINEAR_ADDRESS, &u64);
 		if (error == 0)
-			printf("gla[%d]\t\t0x%016lx\n", vcpu, u64);
+			printf("gla[%d]\t\t0x%016lx\n", vcpuid, u64);
 	}
 
 	if (!error && (get_vmcs_gpa || get_all)) {
-		error = vm_get_vmcs_field(ctx, vcpu,
+		error = vm_get_vmcs_field(vcpu,
 					  VMCS_GUEST_PHYSICAL_ADDRESS, &u64);
 		if (error == 0)
-			printf("gpa[%d]\t\t0x%016lx\n", vcpu, u64);
+			printf("gpa[%d]\t\t0x%016lx\n", vcpuid, u64);
 	}
 
 	if (!error && (get_vmcs_entry_interruption_info || 
 		get_all)) {
-		error = vm_get_vmcs_field(ctx, vcpu, VMCS_ENTRY_INTR_INFO,&u64);
+		error = vm_get_vmcs_field(vcpu, VMCS_ENTRY_INTR_INFO,&u64);
 		if (error == 0) {
 			printf("entry_interruption_info[%d]\t0x%016lx\n",
-				vcpu, u64);
+				vcpuid, u64);
 		}
 	}
 
 	if (!error && (get_tpr_threshold || get_all)) {
 		uint64_t threshold;
-		error = vm_get_vmcs_field(ctx, vcpu, VMCS_TPR_THRESHOLD,
+		error = vm_get_vmcs_field(vcpu, VMCS_TPR_THRESHOLD,
 					  &threshold);
 		if (error == 0)
-			printf("tpr_threshold[%d]\t0x%016lx\n", vcpu, threshold);
+			printf("tpr_threshold[%d]\t0x%016lx\n", vcpuid, threshold);
 	}
 
 	if (!error && (get_inst_err || get_all)) {
 		uint64_t insterr;
-		error = vm_get_vmcs_field(ctx, vcpu, VMCS_INSTRUCTION_ERROR,
+		error = vm_get_vmcs_field(vcpu, VMCS_INSTRUCTION_ERROR,
 					  &insterr);
 		if (error == 0) {
 			printf("instruction_error[%d]\t0x%016lx\n",
-				vcpu, insterr);
+				vcpuid, insterr);
 		}
 	}
 
 	if (!error && (get_exit_ctls || get_all)) {
-		error = vm_get_vmcs_field(ctx, vcpu, VMCS_EXIT_CTLS, &ctl);
+		error = vm_get_vmcs_field(vcpu, VMCS_EXIT_CTLS, &ctl);
 		if (error == 0)
-			printf("exit_ctls[%d]\t\t0x%016lx\n", vcpu, ctl);
+			printf("exit_ctls[%d]\t\t0x%016lx\n", vcpuid, ctl);
 	}
 
 	if (!error && (get_entry_ctls || get_all)) {
-		error = vm_get_vmcs_field(ctx, vcpu, VMCS_ENTRY_CTLS, &ctl);
+		error = vm_get_vmcs_field(vcpu, VMCS_ENTRY_CTLS, &ctl);
 		if (error == 0)
-			printf("entry_ctls[%d]\t\t0x%016lx\n", vcpu, ctl);
+			printf("entry_ctls[%d]\t\t0x%016lx\n", vcpuid, ctl);
 	}
 
 	if (!error && (get_host_pat || get_all)) {
-		error = vm_get_vmcs_field(ctx, vcpu, VMCS_HOST_IA32_PAT, &pat);
+		error = vm_get_vmcs_field(vcpu, VMCS_HOST_IA32_PAT, &pat);
 		if (error == 0)
-			printf("host_pat[%d]\t\t0x%016lx\n", vcpu, pat);
+			printf("host_pat[%d]\t\t0x%016lx\n", vcpuid, pat);
 	}
 
 	if (!error && (get_host_cr0 || get_all)) {
-		error = vm_get_vmcs_field(ctx, vcpu, VMCS_HOST_CR0, &cr0);
+		error = vm_get_vmcs_field(vcpu, VMCS_HOST_CR0, &cr0);
 		if (error == 0)
-			printf("host_cr0[%d]\t\t0x%016lx\n", vcpu, cr0);
+			printf("host_cr0[%d]\t\t0x%016lx\n", vcpuid, cr0);
 	}
 
 	if (!error && (get_host_cr3 || get_all)) {
-		error = vm_get_vmcs_field(ctx, vcpu, VMCS_HOST_CR3, &cr3);
+		error = vm_get_vmcs_field(vcpu, VMCS_HOST_CR3, &cr3);
 		if (error == 0)
-			printf("host_cr3[%d]\t\t0x%016lx\n", vcpu, cr3);
+			printf("host_cr3[%d]\t\t0x%016lx\n", vcpuid, cr3);
 	}
 
 	if (!error && (get_host_cr4 || get_all)) {
-		error = vm_get_vmcs_field(ctx, vcpu, VMCS_HOST_CR4, &cr4);
+		error = vm_get_vmcs_field(vcpu, VMCS_HOST_CR4, &cr4);
 		if (error == 0)
-			printf("host_cr4[%d]\t\t0x%016lx\n", vcpu, cr4);
+			printf("host_cr4[%d]\t\t0x%016lx\n", vcpuid, cr4);
 	}
 
 	if (!error && (get_host_rip || get_all)) {
-		error = vm_get_vmcs_field(ctx, vcpu, VMCS_HOST_RIP, &rip);
+		error = vm_get_vmcs_field(vcpu, VMCS_HOST_RIP, &rip);
 		if (error == 0)
-			printf("host_rip[%d]\t\t0x%016lx\n", vcpu, rip);
+			printf("host_rip[%d]\t\t0x%016lx\n", vcpuid, rip);
 	}
 
 	if (!error && (get_host_rsp || get_all)) {
-		error = vm_get_vmcs_field(ctx, vcpu, VMCS_HOST_RSP, &rsp);
+		error = vm_get_vmcs_field(vcpu, VMCS_HOST_RSP, &rsp);
 		if (error == 0)
-			printf("host_rsp[%d]\t\t0x%016lx\n", vcpu, rsp);
+			printf("host_rsp[%d]\t\t0x%016lx\n", vcpuid, rsp);
 	}
 
 	if (!error && (get_vmcs_link || get_all)) {
-		error = vm_get_vmcs_field(ctx, vcpu, VMCS_LINK_POINTER, &addr);
+		error = vm_get_vmcs_field(vcpu, VMCS_LINK_POINTER, &addr);
 		if (error == 0)
-			printf("vmcs_pointer[%d]\t0x%016lx\n", vcpu, addr);
+			printf("vmcs_pointer[%d]\t0x%016lx\n", vcpuid, addr);
 	}
 
 	if (!error && (get_vmcs_exit_interruption_info || get_all)) {
-		error = vm_get_vmcs_field(ctx, vcpu, VMCS_EXIT_INTR_INFO, &u64);
+		error = vm_get_vmcs_field(vcpu, VMCS_EXIT_INTR_INFO, &u64);
 		if (error == 0) {
 			printf("vmcs_exit_interruption_info[%d]\t0x%016lx\n",
-				vcpu, u64);
+				vcpuid, u64);
 		}
 	}
 
 	if (!error && (get_vmcs_exit_interruption_error || get_all)) {
-		error = vm_get_vmcs_field(ctx, vcpu, VMCS_EXIT_INTR_ERRCODE,
+		error = vm_get_vmcs_field(vcpu, VMCS_EXIT_INTR_ERRCODE,
 		    			  &u64);
 		if (error == 0) {
 			printf("vmcs_exit_interruption_error[%d]\t0x%016lx\n",
-				vcpu, u64);
+				vcpuid, u64);
 		}
 	}
 
 	if (!error && (get_vmcs_interruptibility || get_all)) {
-		error = vm_get_vmcs_field(ctx, vcpu,
+		error = vm_get_vmcs_field(vcpu,
 					  VMCS_GUEST_INTERRUPTIBILITY, &u64);
 		if (error == 0) {
 			printf("vmcs_guest_interruptibility[%d]\t0x%016lx\n",
-				vcpu, u64);
+				vcpuid, u64);
 		}
 	}
 
 	if (!error && (get_vmcs_exit_inst_length || get_all)) {
-		error = vm_get_vmcs_field(ctx, vcpu,
+		error = vm_get_vmcs_field(vcpu,
 		    VMCS_EXIT_INSTRUCTION_LENGTH, &u64);
 		if (error == 0)
-			printf("vmcs_exit_inst_length[%d]\t0x%08x\n", vcpu,
+			printf("vmcs_exit_inst_length[%d]\t0x%08x\n", vcpuid,
 			    (uint32_t)u64);
 	}
 
 	if (!error && (get_vmcs_exit_qualification || get_all)) {
-		error = vm_get_vmcs_field(ctx, vcpu, VMCS_EXIT_QUALIFICATION,
+		error = vm_get_vmcs_field(vcpu, VMCS_EXIT_QUALIFICATION,
 					  &u64);
 		if (error == 0)
 			printf("vmcs_exit_qualification[%d]\t0x%016lx\n",
-				vcpu, u64);
+				vcpuid, u64);
 	}
 	
 	return (error);
 }
 
 static int
-get_misc_vmcb(struct vmctx *ctx, int vcpu)
+get_misc_vmcb(struct vcpu *vcpu, int vcpuid)
 {
 	uint64_t ctl, addr;
 	int error = 0;
 
 	if (!error && (get_vmcb_intercept || get_all)) {
-		error = vm_get_vmcb_field(ctx, vcpu, VMCB_OFF_CR_INTERCEPT, 4,
+		error = vm_get_vmcb_field(vcpu, VMCB_OFF_CR_INTERCEPT, 4,
 		    &ctl);
 		if (error == 0)
-			printf("cr_intercept[%d]\t0x%08x\n", vcpu, (int)ctl);
+			printf("cr_intercept[%d]\t0x%08x\n", vcpuid, (int)ctl);
 
-		error = vm_get_vmcb_field(ctx, vcpu, VMCB_OFF_DR_INTERCEPT, 4,
+		error = vm_get_vmcb_field(vcpu, VMCB_OFF_DR_INTERCEPT, 4,
 		    &ctl);
 		if (error == 0)
-			printf("dr_intercept[%d]\t0x%08x\n", vcpu, (int)ctl);
+			printf("dr_intercept[%d]\t0x%08x\n", vcpuid, (int)ctl);
 
-		error = vm_get_vmcb_field(ctx, vcpu, VMCB_OFF_EXC_INTERCEPT, 4,
+		error = vm_get_vmcb_field(vcpu, VMCB_OFF_EXC_INTERCEPT, 4,
 		    &ctl);
 		if (error == 0)
-			printf("exc_intercept[%d]\t0x%08x\n", vcpu, (int)ctl);
+			printf("exc_intercept[%d]\t0x%08x\n", vcpuid, (int)ctl);
 
-		error = vm_get_vmcb_field(ctx, vcpu, VMCB_OFF_INST1_INTERCEPT,
+		error = vm_get_vmcb_field(vcpu, VMCB_OFF_INST1_INTERCEPT,
 		    4, &ctl);
 		if (error == 0)
-			printf("inst1_intercept[%d]\t0x%08x\n", vcpu, (int)ctl);
+			printf("inst1_intercept[%d]\t0x%08x\n", vcpuid, (int)ctl);
 
-		error = vm_get_vmcb_field(ctx, vcpu, VMCB_OFF_INST2_INTERCEPT,
+		error = vm_get_vmcb_field(vcpu, VMCB_OFF_INST2_INTERCEPT,
 		    4, &ctl);
 		if (error == 0)
-			printf("inst2_intercept[%d]\t0x%08x\n", vcpu, (int)ctl);
+			printf("inst2_intercept[%d]\t0x%08x\n", vcpuid, (int)ctl);
 	}
 
 	if (!error && (get_vmcb_tlb_ctrl || get_all)) {
-		error = vm_get_vmcb_field(ctx, vcpu, VMCB_OFF_TLB_CTRL,
+		error = vm_get_vmcb_field(vcpu, VMCB_OFF_TLB_CTRL,
 					  4, &ctl);
 		if (error == 0)
-			printf("TLB ctrl[%d]\t0x%016lx\n", vcpu, ctl);
+			printf("TLB ctrl[%d]\t0x%016lx\n", vcpuid, ctl);
 	}
 
 	if (!error && (get_vmcb_exit_details || get_all)) {
-		error = vm_get_vmcb_field(ctx, vcpu, VMCB_OFF_EXITINFO1,
+		error = vm_get_vmcb_field(vcpu, VMCB_OFF_EXITINFO1,
 					  8, &ctl);
 		if (error == 0)
-			printf("exitinfo1[%d]\t0x%016lx\n", vcpu, ctl);
-		error = vm_get_vmcb_field(ctx, vcpu, VMCB_OFF_EXITINFO2,
+			printf("exitinfo1[%d]\t0x%016lx\n", vcpuid, ctl);
+		error = vm_get_vmcb_field(vcpu, VMCB_OFF_EXITINFO2,
 					  8, &ctl);
 		if (error == 0)
-			printf("exitinfo2[%d]\t0x%016lx\n", vcpu, ctl);
-		error = vm_get_vmcb_field(ctx, vcpu, VMCB_OFF_EXITINTINFO,
+			printf("exitinfo2[%d]\t0x%016lx\n", vcpuid, ctl);
+		error = vm_get_vmcb_field(vcpu, VMCB_OFF_EXITINTINFO,
 					  8, &ctl);
 		if (error == 0)
-			printf("exitintinfo[%d]\t0x%016lx\n", vcpu, ctl);
+			printf("exitintinfo[%d]\t0x%016lx\n", vcpuid, ctl);
 	}
 
 	if (!error && (get_vmcb_virq || get_all)) {
-		error = vm_get_vmcb_field(ctx, vcpu, VMCB_OFF_VIRQ,
+		error = vm_get_vmcb_field(vcpu, VMCB_OFF_VIRQ,
 					  8, &ctl);
 		if (error == 0)
-			printf("v_irq/tpr[%d]\t0x%016lx\n", vcpu, ctl);
+			printf("v_irq/tpr[%d]\t0x%016lx\n", vcpuid, ctl);
 	}
 
 	if (!error && (get_apic_access_addr || get_all)) {
-		error = vm_get_vmcb_field(ctx, vcpu, VMCB_OFF_AVIC_BAR, 8,
+		error = vm_get_vmcb_field(vcpu, VMCB_OFF_AVIC_BAR, 8,
 					  &addr);
 		if (error == 0)
-			printf("AVIC apic_bar[%d]\t0x%016lx\n", vcpu, addr);
+			printf("AVIC apic_bar[%d]\t0x%016lx\n", vcpuid, addr);
 	}
 
 	if (!error && (get_virtual_apic_addr || get_all)) {
-		error = vm_get_vmcb_field(ctx, vcpu, VMCB_OFF_AVIC_PAGE, 8,
+		error = vm_get_vmcb_field(vcpu, VMCB_OFF_AVIC_PAGE, 8,
 					  &addr);
 		if (error == 0)
-			printf("AVIC backing page[%d]\t0x%016lx\n", vcpu, addr);
+			printf("AVIC backing page[%d]\t0x%016lx\n", vcpuid, addr);
 	}
 
 	if (!error && (get_avic_table || get_all)) {
-		error = vm_get_vmcb_field(ctx, vcpu, VMCB_OFF_AVIC_LT, 8,
+		error = vm_get_vmcb_field(vcpu, VMCB_OFF_AVIC_LT, 8,
 					  &addr);
 		if (error == 0)
 			printf("AVIC logical table[%d]\t0x%016lx\n",
-				vcpu, addr);
-		error = vm_get_vmcb_field(ctx, vcpu, VMCB_OFF_AVIC_PT, 8,
+				vcpuid, addr);
+		error = vm_get_vmcb_field(vcpu, VMCB_OFF_AVIC_PT, 8,
 					  &addr);
 		if (error == 0)
 			printf("AVIC physical table[%d]\t0x%016lx\n",
-				vcpu, addr);
+				vcpuid, addr);
 	}
 
 	return (error);
@@ -1458,6 +1269,7 @@ setup_options(bool cpu_intel)
 		{ "force-reset",	NO_ARG,	&force_reset,		1 },
 		{ "force-poweroff", 	NO_ARG,	&force_poweroff, 	1 },
 		{ "get-active-cpus", 	NO_ARG,	&get_active_cpus, 	1 },
+		{ "get-debug-cpus",	NO_ARG,	&get_debug_cpus,	1 },
 		{ "get-suspended-cpus", NO_ARG,	&get_suspended_cpus, 	1 },
 		{ "get-intinfo", 	NO_ARG,	&get_intinfo,		1 },
 		{ "get-cpu-topology",	NO_ARG, &get_cpu_topology,	1 },
@@ -1577,6 +1389,65 @@ setup_options(bool cpu_intel)
 	return (all_opts);
 }
 
+static void
+usage(const struct option *opts)
+{
+	static const char *set_desc[] = {
+	    [VCPU] = "vcpu_number",
+	    [SET_MEM] = "memory in units of MB",
+	    [SET_EFER] = "EFER",
+	    [SET_CR0] = "CR0",
+	    [SET_CR2] = "CR2",
+	    [SET_CR3] = "CR3",
+	    [SET_CR4] = "CR4",
+	    [SET_DR0] = "DR0",
+	    [SET_DR1] = "DR1",
+	    [SET_DR2] = "DR2",
+	    [SET_DR3] = "DR3",
+	    [SET_DR6] = "DR6",
+	    [SET_DR7] = "DR7",
+	    [SET_RSP] = "RSP",
+	    [SET_RIP] = "RIP",
+	    [SET_RAX] = "RAX",
+	    [SET_RFLAGS] = "RFLAGS",
+	    [DESC_BASE] = "BASE",
+	    [DESC_LIMIT] = "LIMIT",
+	    [DESC_ACCESS] = "ACCESS",
+	    [SET_CS] = "CS",
+	    [SET_DS] = "DS",
+	    [SET_ES] = "ES",
+	    [SET_FS] = "FS",
+	    [SET_GS] = "GS",
+	    [SET_SS] = "SS",
+	    [SET_TR] = "TR",
+	    [SET_LDTR] = "LDTR",
+	    [SET_X2APIC_STATE] = "state",
+	    [SET_CAP] = "0|1",
+	    [CAPNAME] = "capname",
+	    [UNASSIGN_PPTDEV] = "bus/slot.func",
+	    [GET_GPA_PMAP] = "gpa",
+	    [ASSERT_LAPIC_LVT] = "pin",
+	    [SET_RTC_TIME] = "secs",
+	    [SET_RTC_NVRAM] = "val",
+	    [RTC_NVRAM_OFFSET] = "offset",
+#ifdef BHYVE_SNAPSHOT
+	    [SET_CHECKPOINT_FILE] = "filename",
+	    [SET_SUSPEND_FILE] = "filename",
+#endif
+	};
+	(void)fprintf(stderr, "Usage: %s --vm=<vmname>\n", progname);
+	for (const struct option *o = opts; o->name; o++) {
+		if (strcmp(o->name, "vm") == 0)
+			continue;
+		if (o->has_arg == REQ_ARG)
+			(void)fprintf(stderr, "       [--%s=<%s>]\n",
+			    o->name, set_desc[o->val]);
+		else
+			(void)fprintf(stderr, "       [--%s]\n", o->name);
+	}
+	exit(1);
+}
+
 static const char *
 wday_str(int idx)
 {
@@ -1685,12 +1556,12 @@ static int
 send_message(const char *vmname, nvlist_t *nvl)
 {
 	struct sockaddr_un addr;
-	int err, socket_fd;
+	int err = 0, socket_fd;
 
 	socket_fd = socket(PF_UNIX, SOCK_STREAM, 0);
 	if (socket_fd < 0) {
 		perror("Error creating bhyvectl socket");
-		err = -1;
+		err = errno;
 		goto done;
 	}
 
@@ -1706,25 +1577,48 @@ send_message(const char *vmname, nvlist_t *nvl)
 		goto done;
 	}
 
-	if (nvlist_send(socket_fd, nvl) < 0)
+	if (nvlist_send(socket_fd, nvl) < 0) {
 		perror("nvlist_send() failed");
+		err = errno;
+	}
+done:
 	nvlist_destroy(nvl);
 
-done:
-	if (socket_fd > 0)
+	if (socket_fd >= 0)
 		close(socket_fd);
 	return (err);
 }
 
 static int
-snapshot_request(const char *vmname, const char *file, bool suspend)
+open_directory(const char *file)
+{
+	char *path;
+	int fd;
+
+	if ((path = strdup(file)) == NULL)
+		return (-1);
+
+	dirname(path);
+	fd = open(path, O_DIRECTORY);
+	free(path);
+
+	return (fd);
+}
+
+static int
+snapshot_request(const char *vmname, char *file, bool suspend)
 {
 	nvlist_t *nvl;
+	int fd;
+
+	if ((fd = open_directory(file)) < 0)
+		return (errno);
 
 	nvl = nvlist_create(0);
 	nvlist_add_string(nvl, "cmd", "checkpoint");
-	nvlist_add_string(nvl, "filename", file);
+	nvlist_add_string(nvl, "filename", basename(file));
 	nvlist_add_bool(nvl, "suspend", suspend);
+	nvlist_move_descriptor(nvl, "fddir", fd);
 
 	return (send_message(vmname, nvl));
 }
@@ -1734,26 +1628,27 @@ int
 main(int argc, char *argv[])
 {
 	char *vmname;
-	int error, ch, vcpu, ptenum;
+	int error, ch, vcpuid, ptenum;
 	vm_paddr_t gpa_pmap;
-	struct vm_exit vmexit;
+	struct vm_run vmrun;
 	uint64_t rax, cr0, cr2, cr3, cr4, dr0, dr1, dr2, dr3, dr6, dr7;
 	uint64_t rsp, rip, rflags, efer, pat;
 	uint64_t eptp, bm, addr, u64, pteval[4], *pte, info[2];
 	struct vmctx *ctx;
+	struct vcpu *vcpu;
 	cpuset_t cpus;
 	bool cpu_intel;
 	uint64_t cs, ds, es, fs, gs, ss, tr, ldtr;
 	struct tm tm;
 	struct option *opts;
 #ifdef BHYVE_SNAPSHOT
-	char *checkpoint_file, *suspend_file;
+	char *checkpoint_file = NULL;
 #endif
 
 	cpu_intel = cpu_vendor_intel();
 	opts = setup_options(cpu_intel);
 
-	vcpu = 0;
+	vcpuid = 0;
 	vmname = NULL;
 	assert_lapic_lvt = -1;
 	progname = basename(argv[0]);
@@ -1766,7 +1661,7 @@ main(int argc, char *argv[])
 			vmname = optarg;
 			break;
 		case VCPU:
-			vcpu = atoi(optarg);
+			vcpuid = atoi(optarg);
 			break;
 		case SET_MEM:
 			memsize = atoi(optarg) * MB;
@@ -1902,30 +1797,30 @@ main(int argc, char *argv[])
 		case UNASSIGN_PPTDEV:
 			unassign_pptdev = 1;
 			if (sscanf(optarg, "%d/%d/%d", &bus, &slot, &func) != 3)
-				usage(cpu_intel);
+				usage(opts);
 			break;
 		case ASSERT_LAPIC_LVT:
 			assert_lapic_lvt = atoi(optarg);
 			break;
 #ifdef BHYVE_SNAPSHOT
 		case SET_CHECKPOINT_FILE:
-			vm_checkpoint_opt = 1;
-			checkpoint_file = optarg;
-			break;
 		case SET_SUSPEND_FILE:
-			vm_suspend_opt = 1;
-			suspend_file = optarg;
+			if (checkpoint_file != NULL)
+				usage(opts);
+
+			checkpoint_file = optarg;
+			vm_suspend_opt = (ch == SET_SUSPEND_FILE);
 			break;
 #endif
 		default:
-			usage(cpu_intel);
+			usage(opts);
 		}
 	}
 	argc -= optind;
 	argv += optind;
 
 	if (vmname == NULL)
-		usage(cpu_intel);
+		usage(opts);
 
 	error = 0;
 
@@ -1940,144 +1835,145 @@ main(int argc, char *argv[])
 			    vmname, strerror(errno));
 			exit (1);
 		}
+		vcpu = vm_vcpu_open(ctx, vcpuid);
 	}
 
 	if (!error && memsize)
 		error = vm_setup_memory(ctx, memsize, VM_MMAP_ALL);
 
 	if (!error && set_efer)
-		error = vm_set_register(ctx, vcpu, VM_REG_GUEST_EFER, efer);
+		error = vm_set_register(vcpu, VM_REG_GUEST_EFER, efer);
 
 	if (!error && set_cr0)
-		error = vm_set_register(ctx, vcpu, VM_REG_GUEST_CR0, cr0);
+		error = vm_set_register(vcpu, VM_REG_GUEST_CR0, cr0);
 
 	if (!error && set_cr2)
-		error = vm_set_register(ctx, vcpu, VM_REG_GUEST_CR2, cr2);
+		error = vm_set_register(vcpu, VM_REG_GUEST_CR2, cr2);
 
 	if (!error && set_cr3)
-		error = vm_set_register(ctx, vcpu, VM_REG_GUEST_CR3, cr3);
+		error = vm_set_register(vcpu, VM_REG_GUEST_CR3, cr3);
 
 	if (!error && set_cr4)
-		error = vm_set_register(ctx, vcpu, VM_REG_GUEST_CR4, cr4);
+		error = vm_set_register(vcpu, VM_REG_GUEST_CR4, cr4);
 
 	if (!error && set_dr0)
-		error = vm_set_register(ctx, vcpu, VM_REG_GUEST_DR0, dr0);
+		error = vm_set_register(vcpu, VM_REG_GUEST_DR0, dr0);
 
 	if (!error && set_dr1)
-		error = vm_set_register(ctx, vcpu, VM_REG_GUEST_DR1, dr1);
+		error = vm_set_register(vcpu, VM_REG_GUEST_DR1, dr1);
 
 	if (!error && set_dr2)
-		error = vm_set_register(ctx, vcpu, VM_REG_GUEST_DR2, dr2);
+		error = vm_set_register(vcpu, VM_REG_GUEST_DR2, dr2);
 
 	if (!error && set_dr3)
-		error = vm_set_register(ctx, vcpu, VM_REG_GUEST_DR3, dr3);
+		error = vm_set_register(vcpu, VM_REG_GUEST_DR3, dr3);
 
 	if (!error && set_dr6)
-		error = vm_set_register(ctx, vcpu, VM_REG_GUEST_DR6, dr6);
+		error = vm_set_register(vcpu, VM_REG_GUEST_DR6, dr6);
 
 	if (!error && set_dr7)
-		error = vm_set_register(ctx, vcpu, VM_REG_GUEST_DR7, dr7);
+		error = vm_set_register(vcpu, VM_REG_GUEST_DR7, dr7);
 
 	if (!error && set_rsp)
-		error = vm_set_register(ctx, vcpu, VM_REG_GUEST_RSP, rsp);
+		error = vm_set_register(vcpu, VM_REG_GUEST_RSP, rsp);
 
 	if (!error && set_rip)
-		error = vm_set_register(ctx, vcpu, VM_REG_GUEST_RIP, rip);
+		error = vm_set_register(vcpu, VM_REG_GUEST_RIP, rip);
 
 	if (!error && set_rax)
-		error = vm_set_register(ctx, vcpu, VM_REG_GUEST_RAX, rax);
+		error = vm_set_register(vcpu, VM_REG_GUEST_RAX, rax);
 
 	if (!error && set_rflags) {
-		error = vm_set_register(ctx, vcpu, VM_REG_GUEST_RFLAGS,
+		error = vm_set_register(vcpu, VM_REG_GUEST_RFLAGS,
 					rflags);
 	}
 
 	if (!error && set_desc_ds) {
-		error = vm_set_desc(ctx, vcpu, VM_REG_GUEST_DS,
+		error = vm_set_desc(vcpu, VM_REG_GUEST_DS,
 				    desc_base, desc_limit, desc_access);
 	}
 
 	if (!error && set_desc_es) {
-		error = vm_set_desc(ctx, vcpu, VM_REG_GUEST_ES,
+		error = vm_set_desc(vcpu, VM_REG_GUEST_ES,
 				    desc_base, desc_limit, desc_access);
 	}
 
 	if (!error && set_desc_ss) {
-		error = vm_set_desc(ctx, vcpu, VM_REG_GUEST_SS,
+		error = vm_set_desc(vcpu, VM_REG_GUEST_SS,
 				    desc_base, desc_limit, desc_access);
 	}
 
 	if (!error && set_desc_cs) {
-		error = vm_set_desc(ctx, vcpu, VM_REG_GUEST_CS,
+		error = vm_set_desc(vcpu, VM_REG_GUEST_CS,
 				    desc_base, desc_limit, desc_access);
 	}
 
 	if (!error && set_desc_fs) {
-		error = vm_set_desc(ctx, vcpu, VM_REG_GUEST_FS,
+		error = vm_set_desc(vcpu, VM_REG_GUEST_FS,
 				    desc_base, desc_limit, desc_access);
 	}
 
 	if (!error && set_desc_gs) {
-		error = vm_set_desc(ctx, vcpu, VM_REG_GUEST_GS,
+		error = vm_set_desc(vcpu, VM_REG_GUEST_GS,
 				    desc_base, desc_limit, desc_access);
 	}
 
 	if (!error && set_desc_tr) {
-		error = vm_set_desc(ctx, vcpu, VM_REG_GUEST_TR,
+		error = vm_set_desc(vcpu, VM_REG_GUEST_TR,
 				    desc_base, desc_limit, desc_access);
 	}
 
 	if (!error && set_desc_ldtr) {
-		error = vm_set_desc(ctx, vcpu, VM_REG_GUEST_LDTR,
+		error = vm_set_desc(vcpu, VM_REG_GUEST_LDTR,
 				    desc_base, desc_limit, desc_access);
 	}
 
 	if (!error && set_desc_gdtr) {
-		error = vm_set_desc(ctx, vcpu, VM_REG_GUEST_GDTR,
+		error = vm_set_desc(vcpu, VM_REG_GUEST_GDTR,
 				    desc_base, desc_limit, 0);
 	}
 
 	if (!error && set_desc_idtr) {
-		error = vm_set_desc(ctx, vcpu, VM_REG_GUEST_IDTR,
+		error = vm_set_desc(vcpu, VM_REG_GUEST_IDTR,
 				    desc_base, desc_limit, 0);
 	}
 
 	if (!error && set_cs)
-		error = vm_set_register(ctx, vcpu, VM_REG_GUEST_CS, cs);
+		error = vm_set_register(vcpu, VM_REG_GUEST_CS, cs);
 
 	if (!error && set_ds)
-		error = vm_set_register(ctx, vcpu, VM_REG_GUEST_DS, ds);
+		error = vm_set_register(vcpu, VM_REG_GUEST_DS, ds);
 
 	if (!error && set_es)
-		error = vm_set_register(ctx, vcpu, VM_REG_GUEST_ES, es);
+		error = vm_set_register(vcpu, VM_REG_GUEST_ES, es);
 
 	if (!error && set_fs)
-		error = vm_set_register(ctx, vcpu, VM_REG_GUEST_FS, fs);
+		error = vm_set_register(vcpu, VM_REG_GUEST_FS, fs);
 
 	if (!error && set_gs)
-		error = vm_set_register(ctx, vcpu, VM_REG_GUEST_GS, gs);
+		error = vm_set_register(vcpu, VM_REG_GUEST_GS, gs);
 
 	if (!error && set_ss)
-		error = vm_set_register(ctx, vcpu, VM_REG_GUEST_SS, ss);
+		error = vm_set_register(vcpu, VM_REG_GUEST_SS, ss);
 
 	if (!error && set_tr)
-		error = vm_set_register(ctx, vcpu, VM_REG_GUEST_TR, tr);
+		error = vm_set_register(vcpu, VM_REG_GUEST_TR, tr);
 
 	if (!error && set_ldtr)
-		error = vm_set_register(ctx, vcpu, VM_REG_GUEST_LDTR, ldtr);
+		error = vm_set_register(vcpu, VM_REG_GUEST_LDTR, ldtr);
 
 	if (!error && set_x2apic_state)
-		error = vm_set_x2apic_state(ctx, vcpu, x2apic_state);
+		error = vm_set_x2apic_state(vcpu, x2apic_state);
 
 	if (!error && unassign_pptdev)
 		error = vm_unassign_pptdev(ctx, bus, slot, func);
 
 	if (!error && inject_nmi) {
-		error = vm_inject_nmi(ctx, vcpu);
+		error = vm_inject_nmi(vcpu);
 	}
 
 	if (!error && assert_lapic_lvt != -1) {
-		error = vm_lapic_local_irq(ctx, vcpu, assert_lapic_lvt);
+		error = vm_lapic_local_irq(vcpu, assert_lapic_lvt);
 	}
 
 	if (!error && (get_memseg || get_all))
@@ -2087,177 +1983,177 @@ main(int argc, char *argv[])
 		error = show_memmap(ctx);
 
 	if (!error)
-		error = get_all_registers(ctx, vcpu);
+		error = get_all_registers(vcpu, vcpuid);
 
 	if (!error)
-		error = get_all_segments(ctx, vcpu);
+		error = get_all_segments(vcpu, vcpuid);
 
 	if (!error) {
 		if (cpu_intel)
-			error = get_misc_vmcs(ctx, vcpu);
+			error = get_misc_vmcs(vcpu, vcpuid);
 		else
-			error = get_misc_vmcb(ctx, vcpu);
+			error = get_misc_vmcb(vcpu, vcpuid);
 	}
 	
 	if (!error && (get_x2apic_state || get_all)) {
-		error = vm_get_x2apic_state(ctx, vcpu, &x2apic_state);
+		error = vm_get_x2apic_state(vcpu, &x2apic_state);
 		if (error == 0)
-			printf("x2apic_state[%d]\t%d\n", vcpu, x2apic_state);
+			printf("x2apic_state[%d]\t%d\n", vcpuid, x2apic_state);
 	}
 
 	if (!error && (get_eptp || get_all)) {
 		if (cpu_intel)
-			error = vm_get_vmcs_field(ctx, vcpu, VMCS_EPTP, &eptp);
+			error = vm_get_vmcs_field(vcpu, VMCS_EPTP, &eptp);
 		else
-			error = vm_get_vmcb_field(ctx, vcpu, VMCB_OFF_NPT_BASE,
+			error = vm_get_vmcb_field(vcpu, VMCB_OFF_NPT_BASE,
 						   8, &eptp);
 		if (error == 0)
 			printf("%s[%d]\t\t0x%016lx\n",
-				cpu_intel ? "eptp" : "rvi/npt", vcpu, eptp);
+				cpu_intel ? "eptp" : "rvi/npt", vcpuid, eptp);
 	}
 
 	if (!error && (get_exception_bitmap || get_all)) {
 		if(cpu_intel)
-			error = vm_get_vmcs_field(ctx, vcpu,
+			error = vm_get_vmcs_field(vcpu,
 						VMCS_EXCEPTION_BITMAP, &bm);
 		else
-			error = vm_get_vmcb_field(ctx, vcpu,
+			error = vm_get_vmcb_field(vcpu,
 						  VMCB_OFF_EXC_INTERCEPT,
 						  4, &bm);
 		if (error == 0)
-			printf("exception_bitmap[%d]\t%#lx\n", vcpu, bm);
+			printf("exception_bitmap[%d]\t%#lx\n", vcpuid, bm);
 	}
 
 	if (!error && (get_io_bitmap || get_all)) {
 		if (cpu_intel) {
-			error = vm_get_vmcs_field(ctx, vcpu, VMCS_IO_BITMAP_A,
+			error = vm_get_vmcs_field(vcpu, VMCS_IO_BITMAP_A,
 						  &bm);
 			if (error == 0)
-				printf("io_bitmap_a[%d]\t%#lx\n", vcpu, bm);
-			error = vm_get_vmcs_field(ctx, vcpu, VMCS_IO_BITMAP_B,
+				printf("io_bitmap_a[%d]\t%#lx\n", vcpuid, bm);
+			error = vm_get_vmcs_field(vcpu, VMCS_IO_BITMAP_B,
 						  &bm);
 			if (error == 0)
-				printf("io_bitmap_b[%d]\t%#lx\n", vcpu, bm);
+				printf("io_bitmap_b[%d]\t%#lx\n", vcpuid, bm);
 		} else {
-			error = vm_get_vmcb_field(ctx, vcpu,
+			error = vm_get_vmcb_field(vcpu,
 						  VMCB_OFF_IO_PERM, 8, &bm);
 			if (error == 0)
-				printf("io_bitmap[%d]\t%#lx\n", vcpu, bm);
+				printf("io_bitmap[%d]\t%#lx\n", vcpuid, bm);
 		}
 	}
 
 	if (!error && (get_tsc_offset || get_all)) {
 		uint64_t tscoff;
 		if (cpu_intel)
-			error = vm_get_vmcs_field(ctx, vcpu, VMCS_TSC_OFFSET,
+			error = vm_get_vmcs_field(vcpu, VMCS_TSC_OFFSET,
 						  &tscoff);
 		else
-			error = vm_get_vmcb_field(ctx, vcpu,
+			error = vm_get_vmcb_field(vcpu,
 						  VMCB_OFF_TSC_OFFSET, 
 						  8, &tscoff);
 		if (error == 0)
-			printf("tsc_offset[%d]\t0x%016lx\n", vcpu, tscoff);
+			printf("tsc_offset[%d]\t0x%016lx\n", vcpuid, tscoff);
 	}
 
 	if (!error && (get_msr_bitmap_address || get_all)) {
 		if (cpu_intel)
-			error = vm_get_vmcs_field(ctx, vcpu, VMCS_MSR_BITMAP, 
+			error = vm_get_vmcs_field(vcpu, VMCS_MSR_BITMAP, 
 						  &addr);
 		else
-			error = vm_get_vmcb_field(ctx, vcpu,
+			error = vm_get_vmcb_field(vcpu,
 						  VMCB_OFF_MSR_PERM, 8, &addr);
 		if (error == 0)
-			printf("msr_bitmap[%d]\t\t%#lx\n", vcpu, addr);
+			printf("msr_bitmap[%d]\t\t%#lx\n", vcpuid, addr);
 	}
 
 	if (!error && (get_msr_bitmap || get_all)) {
 		if (cpu_intel) {
-			error = vm_get_vmcs_field(ctx, vcpu, 
+			error = vm_get_vmcs_field(vcpu, 
 						  VMCS_MSR_BITMAP, &addr);
 		} else {
-			error = vm_get_vmcb_field(ctx, vcpu,
+			error = vm_get_vmcb_field(vcpu,
 						  VMCB_OFF_MSR_PERM, 8,
 						  &addr);
 		}
 
 		if (error == 0)
-			error = dump_msr_bitmap(vcpu, addr, cpu_intel);
+			error = dump_msr_bitmap(vcpuid, addr, cpu_intel);
 	}
 
 	if (!error && (get_vpid_asid || get_all)) {
 		uint64_t vpid;
 		if (cpu_intel)
-			error = vm_get_vmcs_field(ctx, vcpu, VMCS_VPID, &vpid);
+			error = vm_get_vmcs_field(vcpu, VMCS_VPID, &vpid);
 		else
-			error = vm_get_vmcb_field(ctx, vcpu, VMCB_OFF_ASID, 
+			error = vm_get_vmcb_field(vcpu, VMCB_OFF_ASID, 
 						  4, &vpid);
 		if (error == 0)
 			printf("%s[%d]\t\t0x%04lx\n", 
-				cpu_intel ? "vpid" : "asid", vcpu, vpid);
+				cpu_intel ? "vpid" : "asid", vcpuid, vpid);
 	}
 
 	if (!error && (get_guest_pat || get_all)) {
 		if (cpu_intel)
-			error = vm_get_vmcs_field(ctx, vcpu,
+			error = vm_get_vmcs_field(vcpu,
 						  VMCS_GUEST_IA32_PAT, &pat);
 		else
-			error = vm_get_vmcb_field(ctx, vcpu,
+			error = vm_get_vmcb_field(vcpu,
 						  VMCB_OFF_GUEST_PAT, 8, &pat);
 		if (error == 0)
-			printf("guest_pat[%d]\t\t0x%016lx\n", vcpu, pat);
+			printf("guest_pat[%d]\t\t0x%016lx\n", vcpuid, pat);
 	}
 
 	if (!error && (get_guest_sysenter || get_all)) {
 		if (cpu_intel)
-			error = vm_get_vmcs_field(ctx, vcpu,
+			error = vm_get_vmcs_field(vcpu,
 						  VMCS_GUEST_IA32_SYSENTER_CS,
 						  &cs);
 		else
-			error = vm_get_vmcb_field(ctx, vcpu,
+			error = vm_get_vmcb_field(vcpu,
 						  VMCB_OFF_SYSENTER_CS, 8,
 						  &cs);
 
 		if (error == 0)
-			printf("guest_sysenter_cs[%d]\t%#lx\n", vcpu, cs);
+			printf("guest_sysenter_cs[%d]\t%#lx\n", vcpuid, cs);
 		if (cpu_intel)
-			error = vm_get_vmcs_field(ctx, vcpu,
+			error = vm_get_vmcs_field(vcpu,
 						  VMCS_GUEST_IA32_SYSENTER_ESP,
 						  &rsp);
 		else
-			error = vm_get_vmcb_field(ctx, vcpu,
+			error = vm_get_vmcb_field(vcpu,
 						  VMCB_OFF_SYSENTER_ESP, 8,
 						  &rsp);
 
 		if (error == 0)
-			printf("guest_sysenter_sp[%d]\t%#lx\n", vcpu, rsp);
+			printf("guest_sysenter_sp[%d]\t%#lx\n", vcpuid, rsp);
 		if (cpu_intel)
-			error = vm_get_vmcs_field(ctx, vcpu,
+			error = vm_get_vmcs_field(vcpu,
 						  VMCS_GUEST_IA32_SYSENTER_EIP,
 						  &rip);
 		else
-			error = vm_get_vmcb_field(ctx, vcpu,
+			error = vm_get_vmcb_field(vcpu,
 						  VMCB_OFF_SYSENTER_EIP, 8, 
 						  &rip);
 		if (error == 0)
-			printf("guest_sysenter_ip[%d]\t%#lx\n", vcpu, rip);
+			printf("guest_sysenter_ip[%d]\t%#lx\n", vcpuid, rip);
 	}
 
 	if (!error && (get_exit_reason || get_all)) {
 		if (cpu_intel)
-			error = vm_get_vmcs_field(ctx, vcpu, VMCS_EXIT_REASON,
+			error = vm_get_vmcs_field(vcpu, VMCS_EXIT_REASON,
 						  &u64);
 		else	
-			error = vm_get_vmcb_field(ctx, vcpu,
+			error = vm_get_vmcb_field(vcpu,
 						  VMCB_OFF_EXIT_REASON, 8,
 						  &u64);
 		if (error == 0)
-			printf("exit_reason[%d]\t%#lx\n", vcpu, u64);
+			printf("exit_reason[%d]\t%#lx\n", vcpuid, u64);
 	}
 
 	if (!error && setcap) {
 		int captype;
 		captype = vm_capability_name2type(capname);
-		error = vm_set_capability(ctx, vcpu, captype, capval);
+		error = vm_set_capability(vcpu, captype, capval);
 		if (error != 0 && errno == ENOENT)
 			printf("Capability \"%s\" is not available\n", capname);
 	}
@@ -2309,11 +2205,11 @@ main(int argc, char *argv[])
 		for (captype = 0; captype < VM_CAP_MAX; captype++) {
 			if (getcaptype >= 0 && captype != getcaptype)
 				continue;
-			error = vm_get_capability(ctx, vcpu, captype, &val);
+			error = vm_get_capability(vcpu, captype, &val);
 			if (error == 0) {
 				printf("Capability \"%s\" is %s on vcpu %d\n",
 					vm_capability_type2name(captype),
-					val ? "set" : "not set", vcpu);
+					val ? "set" : "not set", vcpuid);
 			} else if (errno == ENOENT) {
 				error = 0;
 				printf("Capability \"%s\" is not available\n",
@@ -2330,6 +2226,12 @@ main(int argc, char *argv[])
 			print_cpus("active cpus", &cpus);
 	}
 
+	if (!error && (get_debug_cpus || get_all)) {
+		error = vm_debug_cpus(ctx, &cpus);
+		if (!error)
+			print_cpus("debug cpus", &cpus);
+	}
+
 	if (!error && (get_suspended_cpus || get_all)) {
 		error = vm_suspended_cpus(ctx, &cpus);
 		if (!error)
@@ -2337,7 +2239,7 @@ main(int argc, char *argv[])
 	}
 
 	if (!error && (get_intinfo || get_all)) {
-		error = vm_get_intinfo(ctx, vcpu, &info[0], &info[1]);
+		error = vm_get_intinfo(vcpu, &info[0], &info[1]);
 		if (!error) {
 			print_intinfo("pending", info[0]);
 			print_intinfo("current", info[1]);
@@ -2350,9 +2252,9 @@ main(int argc, char *argv[])
 		struct timeval tv;
 		const char *desc;
 
-		stats = vm_get_stats(ctx, vcpu, &tv, &num_stats);
+		stats = vm_get_stats(vcpu, &tv, &num_stats);
 		if (stats != NULL) {
-			printf("vcpu%d stats:\n", vcpu);
+			printf("vcpu%d stats:\n", vcpuid);
 			for (i = 0; i < num_stats; i++) {
 				desc = vm_get_stat_desc(ctx, i);
 				printf("%-40s\t%ld\n", desc, stats[i]);
@@ -2369,9 +2271,15 @@ main(int argc, char *argv[])
 	}
 
 	if (!error && run) {
-		error = vm_run(ctx, vcpu, &vmexit);
+		struct vm_exit vmexit;
+		cpuset_t cpuset;
+
+		vmrun.vm_exit = &vmexit;
+		vmrun.cpuset = &cpuset;
+		vmrun.cpusetsize = sizeof(cpuset);
+		error = vm_run(vcpu, &vmrun);
 		if (error == 0)
-			dump_vm_run_exitcode(&vmexit, vcpu);
+			dump_vm_run_exitcode(&vmexit, vcpuid);
 		else
 			printf("vm_run error %d\n", error);
 	}
@@ -2389,11 +2297,8 @@ main(int argc, char *argv[])
 		vm_destroy(ctx);
 
 #ifdef BHYVE_SNAPSHOT
-	if (!error && vm_checkpoint_opt)
-		error = snapshot_request(vmname, checkpoint_file, false);
-
-	if (!error && vm_suspend_opt)
-		error = snapshot_request(vmname, suspend_file, true);
+	if (!error && checkpoint_file)
+		error = snapshot_request(vmname, checkpoint_file, vm_suspend_opt);
 #endif
 
 	free (opts);

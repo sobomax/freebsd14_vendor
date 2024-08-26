@@ -1,11 +1,7 @@
-/* $FreeBSD: 69880db86319b588d4ae4d968b90efe7548ea6b6 $ */
-
-#include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 69880db86319b588d4ae4d968b90efe7548ea6b6 $");
 
 #include <sys/param.h>
-#include <sys/errno.h>
 #include <sys/systm.h>
+#include <sys/errno.h>
 
 #include <compat/linux/linux.h>
 #include <compat/linux/linux_errno.h>

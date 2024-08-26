@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2004 David Schultz <das@FreeBSD.ORG>
  * All rights reserved.
@@ -24,8 +24,6 @@
  * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
- *
- * $FreeBSD: f33493a5df2bac9bf04c1d7e6905fa7f19cb2ce4 $
  */
 
 #define	__fenv_static
@@ -39,7 +37,11 @@
 #error "This file must be compiled with C99 'inline' semantics"
 #endif
 
+#ifdef __SPE__
+const fenv_t __fe_dfl_env = SPEFSCR_DFLT;
+#else
 const fenv_t __fe_dfl_env = 0x00000000;
+#endif
 
 extern inline int feclearexcept(int __excepts);
 extern inline int fegetexceptflag(fexcept_t *__flagp, int __excepts);

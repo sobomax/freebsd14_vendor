@@ -22,12 +22,8 @@
  * STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
- *
- * $FreeBSD: 79f19fea0a3cf582fa0dec3c349c967863414066 $
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 79f19fea0a3cf582fa0dec3c349c967863414066 $");
-
 #include <sys/stat.h>
 
 #include "libsecureboot-priv.h"

@@ -1,6 +1,5 @@
 #-
 # Copyright (C) 2010 The FreeBSD Foundation
-# All rights reserved.
 #
 # This software was developed by Shteryana Sotirova Shopova under
 # sponsorship from the FreeBSD Foundation.
@@ -26,7 +25,7 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: 5418a5a6cac14542903634420edb7db8d03e2fbd $
+# $FreeBSD: a68cc8eed1036bb1dcd93848aea28c7ac82667ae $
 #
 
 include "tc.def"

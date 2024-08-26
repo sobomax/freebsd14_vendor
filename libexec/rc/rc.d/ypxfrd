@@ -1,6 +1,5 @@
 #!/bin/sh
 #
-# $FreeBSD: afb5a060905e352ef1c7a5130e3b4cc83447d2e4 $
 #
 
 # PROVIDE: ypxfrd

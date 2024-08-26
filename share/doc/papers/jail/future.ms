@@ -1,6 +1,4 @@
 .\"
-.\" $FreeBSD: 01c325d4d19ca771ecf67ebae5fcb8ad3c4868af $
-.\"
 .NH
 Future Directions
 .PP

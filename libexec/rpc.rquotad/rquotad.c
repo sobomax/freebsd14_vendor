@@ -5,8 +5,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: cc78a9a71c3971b3172910e5134d139a620181ea $");
-
 #include <sys/param.h>
 #include <sys/mount.h>
 #include <sys/file.h>

@@ -15,8 +15,6 @@
  * WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
  * ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
- *
- * $FreeBSD: 347ad8891e366f90447241d9ee4e20353e9685af $
  */
 #include "opt_ah.h"
 
@@ -710,3 +708,26 @@ ar5210UpdateDiagReg(struct ath_hal *ah, uint32_t val)
 	val |= AR_DIAG_SW_DIS_CRYPTO;
 	OS_REG_WRITE(ah, AR_DIAG_SW, val);
 }
+
+/*
+ * Get the current NAV value from the hardware.
+ */
+u_int
+ar5210GetNav(struct ath_hal *ah)
+{
+	uint32_t reg;
+
+	reg = OS_REG_READ(ah, AR_NAV);
+	return (reg);
+}
+
+/*
+ * Set the current NAV value to the hardware.
+ */
+void
+ar5210SetNav(struct ath_hal *ah, u_int val)
+{
+
+	OS_REG_WRITE(ah, AR_NAV, val);
+}
+

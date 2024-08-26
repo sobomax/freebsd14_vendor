@@ -34,9 +34,6 @@
 
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 7999fa156d7e71fea5be0b1db4d33adee608f88b $");
-
-
 const char value1[] = "Large ------------------ value";
 const char value2[] = "Small -- value";
 char nameValuePair[] = "less=more";

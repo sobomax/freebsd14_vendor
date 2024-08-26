@@ -1,4 +1,3 @@
-# $FreeBSD: f397e66a22bc424ec3a08bcde3c21c74a38442f2 $
 
 PACKAGE=	tests
 
@@ -7,6 +6,8 @@ BINDIR=		${TESTSDIR}
 
 TAP_TESTS_SH+=	ng_macfilter_test
 
+# Serialize tests since some share netgraph node names.
+TEST_METADATA+=	is_exclusive=true
 TEST_METADATA.ng_macfilter_test+=	required_user="root"
 TEST_METADATA.ng_macfilter_test+=	required_programs="perl"
 

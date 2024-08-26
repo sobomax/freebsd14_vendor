@@ -22,8 +22,6 @@
  * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
- *
- * $FreeBSD: 3c31d48276b65af1f94e641599be68fedc250cb1 $
  */
 
 #ifndef _NTB_H_
@@ -31,13 +29,11 @@
 
 #include "ntb_if.h"
 
-extern devclass_t ntb_hw_devclass;
 SYSCTL_DECL(_hw_ntb);
 
 int ntb_register_device(device_t ntb);
 int ntb_unregister_device(device_t ntb);
-int ntb_child_location_str(device_t dev, device_t child, char *buf,
-    size_t buflen);
+int ntb_child_location(device_t dev, device_t child, struct sbuf *sb);
 int ntb_print_child(device_t dev, device_t child);
 bus_dma_tag_t ntb_get_dma_tag(device_t bus, device_t child);
 
@@ -283,7 +279,7 @@ int ntb_mw_set_wc(device_t ntb, unsigned mw_idx, vm_memattr_t mode);
 uint8_t ntb_spad_count(device_t ntb);
 
 /*
- * ntb_get_max_spads() - zero local scratch registers
+ * ntb_spad_clear() - zero local scratch registers
  * @ntb: pointer to ntb_softc instance
  *
  * This functions overwrites all local scratchpad registers with zeroes.

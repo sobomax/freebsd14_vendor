@@ -28,8 +28,6 @@
 #include "opt_platform.h"
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 2d3e5e342889a738d3932f9ed4953982a9b1e0b9 $");
-
 #include <sys/param.h>
 #include <sys/systm.h>
 #include <sys/limits.h>
@@ -54,8 +52,6 @@ __FBSDID("$FreeBSD: 2d3e5e342889a738d3932f9ed4953982a9b1e0b9 $");
 #ifdef VFP
 #include <machine/vfp.h>
 #endif
-
-uint32_t initial_fpcr = VFPCR_DN;
 
 #include <dev/psci/psci.h>
 
@@ -96,6 +92,8 @@ cpu_fork(struct thread *td1, struct proc *p2, struct thread *td2, int flags)
 	/* Clear the debug register state. */
 	bzero(&pcb2->pcb_dbg_regs, sizeof(pcb2->pcb_dbg_regs));
 
+	ptrauth_fork(td2, td1);
+
 	tf = (struct trapframe *)STACKALIGN((struct trapframe *)pcb2 - 1);
 	bcopy(td1->td_frame, tf, sizeof(*tf));
 	tf->tf_x[0] = 0;
@@ -105,9 +103,9 @@ cpu_fork(struct thread *td1, struct proc *p2, struct thread *td2, int flags)
 	td2->td_frame = tf;
 
 	/* Set the return value registers for fork() */
-	td2->td_pcb->pcb_x[8] = (uintptr_t)fork_return;
-	td2->td_pcb->pcb_x[9] = (uintptr_t)td2;
-	td2->td_pcb->pcb_lr = (uintptr_t)fork_trampoline;
+	td2->td_pcb->pcb_x[PCB_X19] = (uintptr_t)fork_return;
+	td2->td_pcb->pcb_x[PCB_X20] = (uintptr_t)td2;
+	td2->td_pcb->pcb_x[PCB_LR] = (uintptr_t)fork_trampoline;
 	td2->td_pcb->pcb_sp = (uintptr_t)td2->td_frame;
 
 	vfp_new_thread(td2, td1, true);
@@ -183,9 +181,9 @@ cpu_copy_thread(struct thread *td, struct thread *td0)
 	bcopy(td0->td_frame, td->td_frame, sizeof(struct trapframe));
 	bcopy(td0->td_pcb, td->td_pcb, sizeof(struct pcb));
 
-	td->td_pcb->pcb_x[8] = (uintptr_t)fork_return;
-	td->td_pcb->pcb_x[9] = (uintptr_t)td;
-	td->td_pcb->pcb_lr = (uintptr_t)fork_trampoline;
+	td->td_pcb->pcb_x[PCB_X19] = (uintptr_t)fork_return;
+	td->td_pcb->pcb_x[PCB_X20] = (uintptr_t)td;
+	td->td_pcb->pcb_x[PCB_LR] = (uintptr_t)fork_trampoline;
 	td->td_pcb->pcb_sp = (uintptr_t)td->td_frame;
 
 	/* Update VFP state for the new thread */
@@ -199,25 +197,35 @@ cpu_copy_thread(struct thread *td, struct thread *td0)
 	/* Set the new canary */
 	arc4random_buf(&td->td_md.md_canary, sizeof(td->td_md.md_canary));
 #endif
+
+	/* Generate new pointer authentication keys. */
+	ptrauth_copy_thread(td, td0);
 }
 
 /*
  * Set that machine state for performing an upcall that starts
  * the entry function with the given argument.
  */
-void
+int
 cpu_set_upcall(struct thread *td, void (*entry)(void *), void *arg,
 	stack_t *stack)
 {
 	struct trapframe *tf = td->td_frame;
 
 	/* 32bits processes use r13 for sp */
-	if (td->td_frame->tf_spsr & PSR_M_32)
-		tf->tf_x[13] = STACKALIGN((uintptr_t)stack->ss_sp + stack->ss_size);
-	else
-		tf->tf_sp = STACKALIGN((uintptr_t)stack->ss_sp + stack->ss_size);
+	if (td->td_frame->tf_spsr & PSR_M_32) {
+		tf->tf_x[13] = STACKALIGN((uintptr_t)stack->ss_sp +
+		    stack->ss_size);
+		if ((register_t)entry & 1)
+			tf->tf_spsr |= PSR_T;
+	} else
+		tf->tf_sp = STACKALIGN((uintptr_t)stack->ss_sp +
+		    stack->ss_size);
 	tf->tf_elr = (register_t)entry;
 	tf->tf_x[0] = (register_t)arg;
+	tf->tf_x[29] = 0;
+	tf->tf_lr = 0;
+	return (0);
 }
 
 int
@@ -259,6 +267,7 @@ cpu_thread_alloc(struct thread *td)
 	    td->td_kstack_pages * PAGE_SIZE) - 1;
 	td->td_frame = (struct trapframe *)STACKALIGN(
 	    (struct trapframe *)td->td_pcb - 1);
+	ptrauth_thread_alloc(td);
 }
 
 void
@@ -281,8 +290,8 @@ void
 cpu_fork_kthread_handler(struct thread *td, void (*func)(void *), void *arg)
 {
 
-	td->td_pcb->pcb_x[8] = (uintptr_t)func;
-	td->td_pcb->pcb_x[9] = (uintptr_t)arg;
+	td->td_pcb->pcb_x[PCB_X19] = (uintptr_t)func;
+	td->td_pcb->pcb_x[PCB_X20] = (uintptr_t)arg;
 }
 
 void
@@ -303,4 +312,15 @@ cpu_procctl(struct thread *td __unused, int idtype __unused, id_t id __unused,
 {
 
 	return (EINVAL);
+}
+
+void
+cpu_sync_core(void)
+{
+	/*
+	 * Do nothing. According to ARM ARMv8 D1.11 Exception return
+	 * If FEAT_ExS is not implemented, or if FEAT_ExS is
+	 * implemented and the SCTLR_ELx.EOS field is set, exception
+	 * return from ELx is a context synchronization event.
+	 */
 }

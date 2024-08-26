@@ -1,4 +1,3 @@
-# $FreeBSD: cbf7c5c566c8d0cd4aa2b84f1d4ce665a62b668b $
 
 .PATH: ${SRCTOP}/contrib/tzcode
 

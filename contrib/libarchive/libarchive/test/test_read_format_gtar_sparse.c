@@ -23,8 +23,6 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 #include "test.h"
-__FBSDID("$FreeBSD: 5781c7fde7cf861294022ec7e0f89b1b75dca915 $");
-
 
 struct contents {
 	int64_t	o;

@@ -1,7 +1,5 @@
 /*
  * MD header for contrib/gdtoa
- *
- * $FreeBSD: 03a162fd035b31cdc1d3cd1e08d16efc879c2f42 $
  */
 
 /*

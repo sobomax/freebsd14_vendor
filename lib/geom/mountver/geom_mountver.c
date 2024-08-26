@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2010 Edward Tomasz Napierala <trasz@FreeBSD.org>
  *
@@ -26,8 +26,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 91e895e77a3885d04353c621e5a08102c02ac27c $");
-
 #include <stdio.h>
 #include <stdint.h>
 #include <libgeom.h>

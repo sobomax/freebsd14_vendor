@@ -1,4 +1,3 @@
-# $FreeBSD: 83caf8cb3bd31ecbe86cf1a67d03a1430aa15a1c $
 
 .include <bsd.own.mk>
 
@@ -13,6 +12,7 @@ ATF_TESTS_C+=		mbsnrtowcs_2_test
 ATF_TESTS_C+=		mbsrtowcs_test
 ATF_TESTS_C+=		mbstowcs_2_test
 ATF_TESTS_C+=		mbtowc_2_test
+ATF_TESTS_C+=		newlocale_test
 ATF_TESTS_C+=		towctrans_test
 ATF_TESTS_C+=		wcrtomb_test
 ATF_TESTS_C+=		wcsnrtombs_test

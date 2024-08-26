@@ -1,5 +1,5 @@
 /*
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 1996, Sujal M. Patel
  * All rights reserved.
@@ -29,8 +29,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 768c2c4dd3ed61374365a7489084e251b54103eb $");
-
 #include <sys/param.h>
 #include <sys/systm.h>
 #include <sys/kernel.h>
@@ -767,6 +765,4 @@ static driver_t pnp_driver = {
 	1,			/* no softc */
 };
 
-static devclass_t pnp_devclass;
-
-DRIVER_MODULE(pnp, isa, pnp_driver, pnp_devclass, 0, 0);
+DRIVER_MODULE(pnp, isa, pnp_driver, 0, 0);

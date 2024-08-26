@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2008 Ed Schouten <ed@FreeBSD.org>
  * All rights reserved.
@@ -30,8 +30,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: eaf2f334ebc1fcc440e6556533488c3a0d11731b $");
-
 /* Add compatibility bits for FreeBSD. */
 #define PTS_COMPAT
 /* Add pty(4) compat bits. */
@@ -273,12 +271,7 @@ ptsdev_ioctl(struct file *fp, u_long cmd, void *data,
 		return (0);
 	case FIONREAD:
 		tty_lock(tp);
-		if (psc->pts_flags & PTS_FINISHED) {
-			/* Force read() to be called. */
-			*(int *)data = 1;
-		} else {
-			*(int *)data = ttydisc_getc_poll(tp);
-		}
+		*(int *)data = ttydisc_getc_poll(tp);
 		tty_unlock(tp);
 		return (0);
 	case FIODGNAME:
@@ -534,8 +527,7 @@ ptsdev_kqfilter(struct file *fp, struct knote *kn)
 }
 
 static int
-ptsdev_stat(struct file *fp, struct stat *sb, struct ucred *active_cred,
-    struct thread *td)
+ptsdev_stat(struct file *fp, struct stat *sb, struct ucred *active_cred)
 {
 	struct tty *tp = fp->f_data;
 #ifdef PTS_EXTERNAL
@@ -618,6 +610,7 @@ static struct fileops ptsdev_ops = {
 	.fo_chown	= invfo_chown,
 	.fo_sendfile	= invfo_sendfile,
 	.fo_fill_kinfo	= ptsdev_fill_kinfo,
+	.fo_cmp		= file_kcmp_generic,
 	.fo_flags	= DFLAG_PASSABLE,
 };
 

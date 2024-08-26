@@ -1,7 +1,7 @@
 /*-
  * bcmfw.c
  *
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2003 Maksim Yevmenkin <m_evmenkin@yahoo.com>
  * All rights reserved.
@@ -28,7 +28,6 @@
  * SUCH DAMAGE.
  *
  * $Id: bcmfw.c,v 1.4 2003/04/27 19:28:09 max Exp $
- * $FreeBSD: f385eae0d9ea5b6c22f34390ca0635148be3e7b8 $
  *
  * Based on Linux BlueZ BlueFW-0.9 package
  *

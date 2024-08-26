@@ -4,7 +4,6 @@
 #
 # $Title: dwatch(8) module for VOP_RENAME(9) [or similar] entry $
 # $Copyright: 2014-2018 Devin Teske. All rights reserved. $
-# $FreeBSD: a9dbf16e73fa06e8ceec10df5a70ddf8ae0a42f1 $
 #
 ############################################################ DESCRIPTION
 #

@@ -1,4 +1,3 @@
-# $FreeBSD: 51394a055b579731fcc52e5793376e1de6cd098f $
 .PATH: ${SRCTOP}/sys/dev/sound/pci
 
 KMOD=	snd_emu10kx

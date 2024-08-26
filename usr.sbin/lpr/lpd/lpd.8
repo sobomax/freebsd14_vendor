@@ -26,9 +26,8 @@
 .\" SUCH DAMAGE.
 .\"
 .\"     @(#)lpd.8	8.3 (Berkeley) 4/19/94
-.\" $FreeBSD: 2554aba2f8342c18207c3c8f939637ae92246933 $
 .\"
-.Dd April 9, 2021
+.Dd April 15, 2021
 .Dt LPD 8
 .Os
 .Sh NAME
@@ -36,7 +35,7 @@
 .Nd line printer spooler daemon
 .Sh SYNOPSIS
 .Nm
-.Op Fl cdlpsW46
+.Op Fl cdlpsFW46
 .Op Ar port#
 .Sh DESCRIPTION
 The
@@ -108,6 +107,17 @@ This means that
 will not accept any connections from any remote
 hosts, although it will still accept print requests
 from all local users.
+.It Fl F
+By default,
+.Nm
+will daemonize into the background.
+The
+.Fl F
+flag causes
+.Nm
+to remain in the foreground.
+Logging is still performed with
+.Xr syslog 3 .
 .It Fl W
 By default, the
 .Nm
@@ -211,7 +221,7 @@ as a filter.
 .It t
 Troff File.
 The file contains
-.Xr troff 1
+.Xr troff 1 Pq Pa ports/textproc/groff
 output (cat phototypesetter commands).
 .It n
 Ditroff File.

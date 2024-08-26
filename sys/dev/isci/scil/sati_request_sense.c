@@ -53,8 +53,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 457b09d92f8ab93425001abc030bf081c3489a07 $");
-
 /**
  * @file
  * @brief This file contains the implementation to translate

@@ -1,7 +1,6 @@
 #
 # Filesystem related tools
 #
-# $FreeBSD: 5f6833723c91d8831046816c07a19aa22202971b $
 
 # mfs
 CRUNCH_PROGS_sbin+=	mdmfs mdconfig newfs

@@ -1,4 +1,3 @@
-# $FreeBSD: b93d99a8a8c70cecb6e551358134426d83392557 $
 
 env IFS=_ ${SH} -c '
 rc=2

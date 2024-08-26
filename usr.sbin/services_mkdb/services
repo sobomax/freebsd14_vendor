@@ -17,7 +17,6 @@
 # port number for both TCP and UDP; hence, most entries here have two entries
 # even if the protocol doesn't support UDP operations.
 #
-# $FreeBSD: 71dda5b8d80f09472113f0c988a388f9047c51db $
 #	From: @(#)services	5.8 (Berkeley) 5/9/91
 #
 # WELL KNOWN PORT NUMBERS

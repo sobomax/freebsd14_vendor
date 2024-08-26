@@ -1,4 +1,3 @@
-/* $FreeBSD: 0dfded94a5832ef9e6eaf4a35958aaa0df38d9d8 $ */
 /*
  * Copyright (c) 2000 by Matthew Jacob
  * All rights reserved.

@@ -1,4 +1,3 @@
-.\" $FreeBSD: ed90ff41584c16b1314830b2f8c708010afc3a2d $
 Do not build nor install the
 .Fx
 Test Suite in

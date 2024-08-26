@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2011 NetApp, Inc.
  * All rights reserved.
@@ -24,13 +24,9 @@
  * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
- *
- * $FreeBSD: 123d35a983c0b03025678204c55815b8c1164351 $
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 123d35a983c0b03025678204c55815b8c1164351 $");
-
 #include "opt_bhyve_snapshot.h"
 
 #include <sys/param.h>
@@ -123,6 +119,7 @@ struct vcpu {
 	uint64_t	guest_xcr0;	/* (i) guest %xcr0 register */
 	void		*stats;		/* (a,i) statistics */
 	struct vm_exit	exitinfo;	/* (x) exit reason and collateral */
+	cpuset_t	exitinfo_cpuset; /* (x) storage for vmexit handlers */
 	uint64_t	nextrip;	/* (x) next instruction to execute */
 	uint64_t	tsc_offset;	/* (o) TSC offsetting */
 };
@@ -254,14 +251,10 @@ DEFINE_VMMOPS_IFUNC(void, vmspace_free, (struct vmspace *vmspace))
 DEFINE_VMMOPS_IFUNC(struct vlapic *, vlapic_init, (void *vcpui))
 DEFINE_VMMOPS_IFUNC(void, vlapic_cleanup, (struct vlapic *vlapic))
 #ifdef BHYVE_SNAPSHOT
-DEFINE_VMMOPS_IFUNC(int, snapshot, (void *vmi, struct vm_snapshot_meta *meta))
 DEFINE_VMMOPS_IFUNC(int, vcpu_snapshot, (void *vcpui,
     struct vm_snapshot_meta *meta))
 DEFINE_VMMOPS_IFUNC(int, restore_tsc, (void *vcpui, uint64_t now))
 #endif
-
-#define	fpu_start_emulating()	load_cr0(rcr0() | CR0_TS)
-#define	fpu_stop_emulating()	clts()
 
 SDT_PROVIDER_DEFINE(vmm);
 
@@ -398,6 +391,12 @@ struct vm_exit *
 vm_exitinfo(struct vcpu *vcpu)
 {
 	return (&vcpu->exitinfo);
+}
+
+cpuset_t *
+vm_exitinfo_cpuset(struct vcpu *vcpu)
+{
+	return (&vcpu->exitinfo_cpuset);
 }
 
 static int
@@ -1038,54 +1037,79 @@ vmm_sysmem_maxaddr(struct vm *vm)
 }
 
 static void
-vm_iommu_modify(struct vm *vm, bool map)
+vm_iommu_map(struct vm *vm)
 {
-	int i, sz;
 	vm_paddr_t gpa, hpa;
 	struct mem_map *mm;
-	void *vp, *cookie, *host_domain;
+	int i;
 
-	sz = PAGE_SIZE;
-	host_domain = iommu_host_domain();
+	sx_assert(&vm->mem_segs_lock, SX_LOCKED);
 
 	for (i = 0; i < VM_MAX_MEMMAPS; i++) {
 		mm = &vm->mem_maps[i];
 		if (!sysmem_mapping(vm, mm))
 			continue;
 
-		if (map) {
-			KASSERT((mm->flags & VM_MEMMAP_F_IOMMU) == 0,
-			    ("iommu map found invalid memmap %#lx/%#lx/%#x",
-			    mm->gpa, mm->len, mm->flags));
-			if ((mm->flags & VM_MEMMAP_F_WIRED) == 0)
-				continue;
-			mm->flags |= VM_MEMMAP_F_IOMMU;
-		} else {
-			if ((mm->flags & VM_MEMMAP_F_IOMMU) == 0)
-				continue;
-			mm->flags &= ~VM_MEMMAP_F_IOMMU;
-			KASSERT((mm->flags & VM_MEMMAP_F_WIRED) != 0,
-			    ("iommu unmap found invalid memmap %#lx/%#lx/%#x",
-			    mm->gpa, mm->len, mm->flags));
+		KASSERT((mm->flags & VM_MEMMAP_F_IOMMU) == 0,
+		    ("iommu map found invalid memmap %#lx/%#lx/%#x",
+		    mm->gpa, mm->len, mm->flags));
+		if ((mm->flags & VM_MEMMAP_F_WIRED) == 0)
+			continue;
+		mm->flags |= VM_MEMMAP_F_IOMMU;
+
+		for (gpa = mm->gpa; gpa < mm->gpa + mm->len; gpa += PAGE_SIZE) {
+			hpa = pmap_extract(vmspace_pmap(vm->vmspace), gpa);
+
+			/*
+			 * All mappings in the vmm vmspace must be
+			 * present since they are managed by vmm in this way.
+			 * Because we are in pass-through mode, the
+			 * mappings must also be wired.  This implies
+			 * that all pages must be mapped and wired,
+			 * allowing to use pmap_extract() and avoiding the
+			 * need to use vm_gpa_hold_global().
+			 *
+			 * This could change if/when we start
+			 * supporting page faults on IOMMU maps.
+			 */
+			KASSERT(vm_page_wired(PHYS_TO_VM_PAGE(hpa)),
+			    ("vm_iommu_map: vm %p gpa %jx hpa %jx not wired",
+			    vm, (uintmax_t)gpa, (uintmax_t)hpa));
+
+			iommu_create_mapping(vm->iommu, gpa, hpa, PAGE_SIZE);
 		}
+	}
 
-		gpa = mm->gpa;
-		while (gpa < mm->gpa + mm->len) {
-			vp = vm_gpa_hold_global(vm, gpa, PAGE_SIZE,
-			    VM_PROT_WRITE, &cookie);
-			KASSERT(vp != NULL, ("vm(%s) could not map gpa %#lx",
-			    vm_name(vm), gpa));
+	iommu_invalidate_tlb(iommu_host_domain());
+}
 
-			vm_gpa_release(cookie);
+static void
+vm_iommu_unmap(struct vm *vm)
+{
+	vm_paddr_t gpa;
+	struct mem_map *mm;
+	int i;
 
-			hpa = DMAP_TO_PHYS((uintptr_t)vp);
-			if (map) {
-				iommu_create_mapping(vm->iommu, gpa, hpa, sz);
-			} else {
-				iommu_remove_mapping(vm->iommu, gpa, sz);
-			}
+	sx_assert(&vm->mem_segs_lock, SX_LOCKED);
 
-			gpa += PAGE_SIZE;
+	for (i = 0; i < VM_MAX_MEMMAPS; i++) {
+		mm = &vm->mem_maps[i];
+		if (!sysmem_mapping(vm, mm))
+			continue;
+
+		if ((mm->flags & VM_MEMMAP_F_IOMMU) == 0)
+			continue;
+		mm->flags &= ~VM_MEMMAP_F_IOMMU;
+		KASSERT((mm->flags & VM_MEMMAP_F_WIRED) != 0,
+		    ("iommu unmap found invalid memmap %#lx/%#lx/%#x",
+		    mm->gpa, mm->len, mm->flags));
+
+		for (gpa = mm->gpa; gpa < mm->gpa + mm->len; gpa += PAGE_SIZE) {
+			KASSERT(vm_page_wired(PHYS_TO_VM_PAGE(pmap_extract(
+			    vmspace_pmap(vm->vmspace), gpa))),
+			    ("vm_iommu_unmap: vm %p gpa %jx not wired",
+			    vm, (uintmax_t)gpa));
+			iommu_remove_mapping(vm->iommu, gpa, PAGE_SIZE);
 		}
 	}
 
@@ -1093,14 +1117,8 @@ vm_iommu_modify(struct vm *vm, bool map)
 	 * Invalidate the cached translations associated with the domain
 	 * from which pages were removed.
 	 */
-	if (map)
-		iommu_invalidate_tlb(host_domain);
-	else
-		iommu_invalidate_tlb(vm->iommu);
+	iommu_invalidate_tlb(vm->iommu);
 }
-
-#define	vm_iommu_unmap(vm)	vm_iommu_modify((vm), false)
-#define	vm_iommu_map(vm)	vm_iommu_modify((vm), true)
 
 int
 vm_unassign_pptdev(struct vm *vm, int bus, int slot, int func)
@@ -1289,7 +1307,7 @@ restore_guest_fpustate(struct vcpu *vcpu)
 	fpuexit(curthread);
 
 	/* restore guest FPU state */
-	fpu_stop_emulating();
+	fpu_enable();
 	fpurestore(vcpu->guestfpu);
 
 	/* restore guest XCR0 if XSAVE is enabled in the host */
@@ -1297,10 +1315,10 @@ restore_guest_fpustate(struct vcpu *vcpu)
 		load_xcr(0, vcpu->guest_xcr0);
 
 	/*
-	 * The FPU is now "dirty" with the guest's state so turn on emulation
-	 * to trap any access to the FPU by the host.
+	 * The FPU is now "dirty" with the guest's state so disable
+	 * the FPU to trap any access by the host.
 	 */
-	fpu_start_emulating();
+	fpu_disable();
 }
 
 static void
@@ -1317,9 +1335,9 @@ save_guest_fpustate(struct vcpu *vcpu)
 	}
 
 	/* save guest FPU state */
-	fpu_stop_emulating();
+	fpu_enable();
 	fpusave(vcpu->guestfpu);
-	fpu_start_emulating();
+	fpu_disable();
 }
 
 static VMM_STAT(VCPU_IDLE_TICKS, "number of ticks vcpu was idle");
@@ -1446,7 +1464,7 @@ vm_handle_rendezvous(struct vcpu *vcpu)
 		VMM_CTR0(vcpu, "Wait for rendezvous completion");
 		mtx_sleep(&vm->rendezvous_func, &vm->rendezvous_mtx, 0,
 		    "vmrndv", hz);
-		if ((td->td_flags & TDF_NEEDSUSPCHK) != 0) {
+		if (td_ast_pending(td, TDA_SUSPEND)) {
 			mtx_unlock(&vm->rendezvous_mtx);
 			error = thread_check_susp(td, true);
 			if (error != 0)
@@ -1536,7 +1554,7 @@ vm_handle_hlt(struct vcpu *vcpu, bool intr_disabled, bool *retu)
 		msleep_spin(vcpu, &vcpu->mtx, wmesg, hz);
 		vcpu_require_state_locked(vcpu, VCPU_FROZEN);
 		vmm_stat_incr(vcpu, VCPU_IDLE_TICKS, ticks - t);
-		if ((td->td_flags & TDF_NEEDSUSPCHK) != 0) {
+		if (td_ast_pending(td, TDA_SUSPEND)) {
 			vcpu_unlock(vcpu);
 			error = thread_check_susp(td, false);
 			if (error != 0) {
@@ -1709,7 +1727,7 @@ vm_handle_suspend(struct vcpu *vcpu, bool *retu)
 			vcpu_require_state_locked(vcpu, VCPU_SLEEPING);
 			msleep_spin(vcpu, &vcpu->mtx, "vmsusp", hz);
 			vcpu_require_state_locked(vcpu, VCPU_FROZEN);
-			if ((td->td_flags & TDF_NEEDSUSPCHK) != 0) {
+			if (td_ast_pending(td, TDA_SUSPEND)) {
 				vcpu_unlock(vcpu);
 				error = thread_check_susp(td, false);
 				vcpu_lock(vcpu);
@@ -1744,6 +1762,40 @@ vm_handle_reqidle(struct vcpu *vcpu, bool *retu)
 	vcpu->reqidle = 0;
 	vcpu_unlock(vcpu);
 	*retu = true;
+	return (0);
+}
+
+static int
+vm_handle_db(struct vcpu *vcpu, struct vm_exit *vme, bool *retu)
+{
+	int error, fault;
+	uint64_t rsp;
+	uint64_t rflags;
+	struct vm_copyinfo copyinfo;
+
+	*retu = true;
+	if (!vme->u.dbg.pushf_intercept || vme->u.dbg.tf_shadow_val != 0) {
+		return (0);
+	}
+
+	vm_get_register(vcpu, VM_REG_GUEST_RSP, &rsp);
+	error = vm_copy_setup(vcpu, &vme->u.dbg.paging, rsp, sizeof(uint64_t),
+	    VM_PROT_RW, &copyinfo, 1, &fault);
+	if (error != 0 || fault != 0) {
+		*retu = false;
+		return (EINVAL);
+	}
+
+	/* Read pushed rflags value from top of stack. */
+	vm_copyin(&copyinfo, &rflags, sizeof(uint64_t));
+
+	/* Clear TF bit. */
+	rflags &= ~(PSL_T);
+
+	/* Write updated value back to memory. */
+	vm_copyout(&rflags, &copyinfo, sizeof(uint64_t));
+	vm_copy_teardown(&copyinfo, 1);
+
 	return (0);
 }
 
@@ -1838,7 +1890,7 @@ vm_exit_astpending(struct vcpu *vcpu, uint64_t rip)
 }
 
 int
-vm_run(struct vcpu *vcpu, struct vm_exit *vme_user)
+vm_run(struct vcpu *vcpu)
 {
 	struct vm *vm = vcpu->vm;
 	struct vm_eventinfo evinfo;
@@ -1915,6 +1967,9 @@ restart:
 		case VM_EXITCODE_INOUT_STR:
 			error = vm_handle_inout(vcpu, vme, &retu);
 			break;
+		case VM_EXITCODE_DB:
+			error = vm_handle_db(vcpu, vme, &retu);
+			break;
 		case VM_EXITCODE_MONITOR:
 		case VM_EXITCODE_MWAIT:
 		case VM_EXITCODE_VMINSN:
@@ -1930,10 +1985,8 @@ restart:
 	 * VM_EXITCODE_INST_EMUL could access the apic which could transform the
 	 * exit code into VM_EXITCODE_IPI.
 	 */
-	if (error == 0 && vme->exitcode == VM_EXITCODE_IPI) {
-		retu = false;
+	if (error == 0 && vme->exitcode == VM_EXITCODE_IPI)
 		error = vm_handle_ipi(vcpu, vme, &retu);
-	}
 
 	if (error == 0 && retu == false)
 		goto restart;
@@ -1941,8 +1994,6 @@ restart:
 	vmm_stat_incr(vcpu, VMEXIT_USERSPACE, 1);
 	VMM_CTR2(vcpu, "retu %d/%d", error, vme->exitcode);
 
-	/* copy the exit information */
-	*vme_user = *vme;
 	return (error);
 }
 
@@ -2861,6 +2912,8 @@ vm_snapshot_vcpus(struct vm *vm, struct vm_snapshot_meta *meta)
 		 */
 		tsc = now + vcpu->tsc_offset;
 		SNAPSHOT_VAR_OR_LEAVE(tsc, meta, ret, done);
+		if (meta->op == VM_SNAPSHOT_RESTORE)
+			vcpu->tsc_offset = tsc;
 	}
 
 done:
@@ -2917,9 +2970,6 @@ vm_snapshot_req(struct vm *vm, struct vm_snapshot_meta *meta)
 	int ret = 0;
 
 	switch (meta->dev_req) {
-	case STRUCT_VMX:
-		ret = vmmops_snapshot(vm->cookie, meta);
-		break;
 	case STRUCT_VMCX:
 		ret = vm_snapshot_vcpu(vm, meta);
 		break;

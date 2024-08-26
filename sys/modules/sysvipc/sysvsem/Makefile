@@ -1,4 +1,3 @@
-# $FreeBSD: 89509341c2e5fdeca8fd10f91c7e36720ae1ec7a $
 
 .PATH: ${SRCTOP}/sys/kern
 

@@ -22,8 +22,6 @@
  * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
- *
- * $FreeBSD: 023acdb80d9c3d48b312e3db62b73ca6fe7318be $
  */
 
 #ifndef X86_PVCLOCK
@@ -121,6 +119,7 @@ struct pvclock {
 
 	/* Private; initialized by the 'pvclock' API: */
 	bool				 vdso_force_unstable;
+	bool				 vdso_enable_without_rdtscp;
 	struct timecounter		 tc;
 	struct cdev			*cdev;
 };

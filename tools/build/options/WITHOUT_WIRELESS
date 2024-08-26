@@ -1,4 +1,3 @@
-.\" $FreeBSD: 7eae3735c8e627674fa2d6acb66eca6d0a7f17b7 $
 Do not build programs used for 802.11 wireless networks; especially
 .Xr wpa_supplicant 8
 and

@@ -1,3 +1,2 @@
-# $FreeBSD: 8987110dba31f2bba071562b0f294c7e302367b9 $
 
 SUBDIR+=	ofwdump

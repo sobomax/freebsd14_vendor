@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2011 HighPoint Technologies, Inc.
  * All rights reserved.
@@ -24,8 +24,6 @@
  * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
- *
- * $FreeBSD: ce768b846fba09ea10aac89ccc076b2f07d1f644 $
  */
 
 #include <dev/hpt27xx/hpt27xx_config.h>
@@ -132,7 +130,7 @@ typedef HPT_U32 DEVICEID;
 #define MAX_ARRAY_MEMBERS_V3 64
 #endif
 
-/* keep definition for source code compatiblity */
+/* keep definition for source code compatibility */
 #define MAX_ARRAY_MEMBERS MAX_ARRAY_MEMBERS_V1
 
 /*

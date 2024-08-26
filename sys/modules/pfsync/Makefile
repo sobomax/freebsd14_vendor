@@ -1,9 +1,8 @@
-# $FreeBSD: 1c1191d95b142c10f3e728b57c05324f0b01ad7a $
 
 .PATH: ${SRCTOP}/sys/netpfil/pf
 
 KMOD=	pfsync
-SRCS=	if_pfsync.c \
+SRCS=	if_pfsync.c pfsync_nv.c \
 	opt_pf.h opt_inet.h opt_inet6.h opt_global.h
 SRCS+=	bus_if.h device_if.h
 

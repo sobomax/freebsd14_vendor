@@ -1,4 +1,3 @@
-#	$FreeBSD: 0c7c8783e785cd2f9a51453156ddff5e71ff8dab $
 
 PACKAGE=	ipf
 PROG=		ipscan

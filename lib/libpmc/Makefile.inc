@@ -1,3 +1,2 @@
-# $FreeBSD: 1b7d7d41c4c6d29592ee32770eb8834a7ba8e577 $
 
 WARNS?=	3

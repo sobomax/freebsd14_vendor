@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2011 NetApp, Inc.
  * All rights reserved.
@@ -24,13 +24,9 @@
  * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
- *
- * $FreeBSD: ea04c32456719c1623a3ce6e8bb65dc62518a991 $
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: ea04c32456719c1623a3ce6e8bb65dc62518a991 $");
-
 #include <sys/param.h>
 #include <sys/systm.h>
 #include <sys/kernel.h>
@@ -182,7 +178,9 @@ ppt_detach(device_t dev)
 	num_pptdevs--;
 	TAILQ_REMOVE(&pptdev_list, ppt, next);
 	pci_disable_busmaster(dev);
-	iommu_add_device(iommu_host_domain(), pci_get_rid(dev));
+
+	if (iommu_host_domain() != NULL)
+		iommu_add_device(iommu_host_domain(), pci_get_rid(dev));
 
 	return (0);
 }
@@ -195,9 +193,8 @@ static device_method_t ppt_methods[] = {
 	{0, 0}
 };
 
-static devclass_t ppt_devclass;
 DEFINE_CLASS_0(ppt, ppt_driver, ppt_methods, sizeof(struct pptdev));
-DRIVER_MODULE(ppt, pci, ppt_driver, ppt_devclass, NULL, NULL);
+DRIVER_MODULE(ppt, pci, ppt_driver, NULL, NULL);
 
 static int
 ppt_find(struct vm *vm, int bus, int slot, int func, struct pptdev **pptp)

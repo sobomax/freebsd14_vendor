@@ -1,4 +1,0 @@
-.\" $FreeBSD: c08681954b0f4f4bd5780fd3b4210e7cd2cab2eb $
-Do not build
-.Xr svnlite 1
-and related programs.

@@ -31,9 +31,6 @@
  * may be omitted in redistributions.
  */
 
-#include <sys/cdefs.h>
-__FBSDID("$FreeBSD: c19a1a54a8b6fc5a86557982664f8891ef7eb94a $");
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdarg.h>

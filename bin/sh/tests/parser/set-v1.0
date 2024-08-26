@@ -1,4 +1,3 @@
-# $FreeBSD: 687cb83175575d62961f91bf8319d9f3fd7030b4 $
 
 ${SH} <<\EOF
 echo one >&2

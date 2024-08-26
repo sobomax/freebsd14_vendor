@@ -1,3 +1,2 @@
-.\" $FreeBSD: 55e6a726b4ffe882fbbd80a86a2fbb37743c42fc $
 Do not build
 .Xr authpf 8 .

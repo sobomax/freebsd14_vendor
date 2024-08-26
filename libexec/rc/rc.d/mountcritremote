@@ -1,6 +1,5 @@
 #!/bin/sh
 #
-# $FreeBSD: 2924bfea2f986b4234ca8176276e9d50dab3c5fe $
 #
 
 # PROVIDE: mountcritremote

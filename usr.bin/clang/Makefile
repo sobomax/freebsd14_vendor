@@ -1,4 +1,3 @@
-# $FreeBSD: b7acb7e6c6dbdd9df6097d30762ec05822f90cb2 $
 
 .include <src.opts.mk>
 
@@ -35,6 +34,7 @@ SUBDIR+=	llvm-cxxdump
 SUBDIR+=	llvm-diff
 SUBDIR+=	llvm-dis
 SUBDIR+=	llvm-dwarfdump
+SUBDIR+=	llvm-dwarfutil
 SUBDIR+=	llvm-dwp
 SUBDIR+=	llvm-extract
 SUBDIR+=	llvm-link

@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2003 Marcel Moolenaar
  * All rights reserved.
@@ -27,8 +27,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 482a392cdb279e61cdb780abc25fd1b732bff981 $");
-
 #include <sys/param.h>
 #include <sys/systm.h>
 #include <sys/bus.h>
@@ -391,9 +389,19 @@ uart_tty_busy(struct tty *tp)
 
 	sc = tty_softc(tp);
 	if (sc == NULL || sc->sc_leaving)
-                return (FALSE);
+                return (false);
 
-	return (sc->sc_txbusy);
+	/*
+	 * The tty locking is sufficient here; we may lose the race against
+	 * uart_bus_ihand()/uart_intr() clearing sc_txbusy underneath us, in
+	 * which case we will incorrectly but non-fatally report a busy Tx
+	 * path upward. However, tty locking ensures that no additional output
+	 * is enqueued before UART_TXBUSY() returns, which means that there
+	 * are no Tx interrupts to be lost.
+	 */
+	if (sc->sc_txbusy)
+		return (true);
+	return (UART_TXBUSY(sc));
 }
 
 static struct ttydevsw uart_tty_class = {

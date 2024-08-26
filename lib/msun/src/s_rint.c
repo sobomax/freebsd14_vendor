@@ -10,9 +10,6 @@
  * ====================================================
  */
 
-#include <sys/cdefs.h>
-__FBSDID("$FreeBSD: c56f8fb264bad9d18b473c1e1c1831af104dc885 $");
-
 /*
  * rint(x)
  * Return x rounded to integral value according to the prevailing

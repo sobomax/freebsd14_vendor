@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2009 Oleksandr Tymoshenko <gonzo@freebsd.org>
  * All rights reserved.
@@ -27,8 +27,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: dec69b434f7a1f984644100d28ae28335a9f8748 $");
-
 #include <sys/param.h>
 #include <sys/systm.h>
 #include <sys/bus.h>
@@ -1061,7 +1059,5 @@ driver_t gpioc_driver = {
 	sizeof(struct gpioc_softc)
 };
 
-devclass_t	gpioc_devclass;
-
-DRIVER_MODULE(gpioc, gpio, gpioc_driver, gpioc_devclass, 0, 0);
+DRIVER_MODULE(gpioc, gpio, gpioc_driver, 0, 0);
 MODULE_VERSION(gpioc, 1);

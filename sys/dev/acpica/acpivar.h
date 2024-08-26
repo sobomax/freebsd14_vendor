@@ -24,8 +24,6 @@
  * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
- *
- * $FreeBSD: f53adaa1d834203244917613590ff289bb88f7b8 $
  */
 
 #ifndef _ACPIVAR_H_
@@ -57,7 +55,6 @@ struct acpi_softc {
     int			acpi_enabled;
     int			acpi_sstate;
     int			acpi_sleep_disabled;
-    int			acpi_resources_reserved;
 
     struct sysctl_ctx_list acpi_sysctl_ctx;
     struct sysctl_oid	*acpi_sysctl_tree;
@@ -239,8 +236,8 @@ extern int	acpi_quirks;
  * is compatible with ids parameter of ACPI_ID_PROBE bus method.
  *
  * XXX: While ACPI_ID_PROBE matches against _HID and all _CIDs, current
- *      acpi_pnpinfo_str() exports only _HID and first _CID.  That means second
- *      and further _CIDs should be added to both acpi_pnpinfo_str() and
+ *      acpi_pnpinfo() exports only _HID and first _CID.  That means second
+ *      and further _CIDs should be added to both acpi_pnpinfo() and
  *      ACPICOMPAT_PNP_INFO if device matching against them is required.
  */
 #define	ACPICOMPAT_PNP_INFO(t, busname)					\
@@ -465,8 +462,7 @@ EVENTHANDLER_DECLARE(acpi_video_event, acpi_event_handler_t);
 /* Device power control. */
 ACPI_STATUS	acpi_pwr_wake_enable(ACPI_HANDLE consumer, int enable);
 ACPI_STATUS	acpi_pwr_switch_consumer(ACPI_HANDLE consumer, int state);
-int		acpi_device_pwr_for_sleep(device_t bus, device_t dev,
-		    int *dstate);
+acpi_pwr_for_sleep_t	acpi_device_pwr_for_sleep;
 int		acpi_set_powerstate(device_t child, int state);
 
 /* APM emulation */
@@ -495,6 +491,8 @@ acpi_get_verbose(struct acpi_softc *sc)
 char		*acpi_name(ACPI_HANDLE handle);
 int		acpi_avoid(ACPI_HANDLE handle);
 int		acpi_disabled(char *subsys);
+int		acpi_get_acpi_device_path(device_t bus, device_t child,
+		    const char *locator, struct sbuf *sb);
 int		acpi_machdep_init(device_t dev);
 void		acpi_install_wakeup_handler(struct acpi_softc *sc);
 int		acpi_sleep_machdep(struct acpi_softc *sc, int state);
@@ -502,7 +500,7 @@ int		acpi_wakeup_machdep(struct acpi_softc *sc, int state,
 		    int sleep_result, int intr_enabled);
 int		acpi_table_quirks(int *quirks);
 int		acpi_machdep_quirks(int *quirks);
-int		acpi_pnpinfo_str(ACPI_HANDLE handle, char *buf, size_t buflen);
+int		acpi_pnpinfo(ACPI_HANDLE handle, struct sbuf *sb);
 
 uint32_t	hpet_get_uid(device_t dev);
 
@@ -579,9 +577,8 @@ int		acpi_pxm_get_cpu_locality(int apic_id);
  * Returns the VM domain ID if found, or -1 if not found / invalid.
  */
 int		acpi_map_pxm_to_vm_domainid(int pxm);
-int		acpi_get_cpus(device_t dev, device_t child, enum cpu_sets op,
-		    size_t setsize, cpuset_t *cpuset);
-int		acpi_get_domain(device_t dev, device_t child, int *domain);
+bus_get_cpus_t		acpi_get_cpus;
+bus_get_domain_t	acpi_get_domain;
 
 #ifdef __aarch64__
 /*

@@ -2,7 +2,6 @@
  *
  * This file is in the public domain.
  */
-/* $FreeBSD: d2d9ec0cd67770b230852c86fab0cc6688e3acb9 $ */
 
 #pragma once
 

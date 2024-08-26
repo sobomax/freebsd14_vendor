@@ -1,4 +1,3 @@
-# $FreeBSD: 79f9cc942c6b1e97a45db2fd9772e93616cd8d34 $
 
 .include <src.opts.mk>
 .include "${SRCTOP}/secure/ssh.mk"
@@ -45,7 +44,7 @@ LIBADD+=	bsm
 .endif
 
 .if ${MK_BLACKLIST_SUPPORT} != "no"
-CFLAGS+= -DUSE_BLACKLIST=1 -I${SRCTOP}/contrib/blacklist/include
+CFLAGS+= -DUSE_BLACKLIST=1 -I${SRCTOP}/contrib/blocklist/include
 SRCS+=	blacklist.c
 LIBADD+= blacklist
 LDFLAGS+=-L${LIBBLACKLISTDIR}

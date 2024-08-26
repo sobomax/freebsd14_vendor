@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2015 Netflix, Inc.
  *
@@ -7,30 +7,28 @@
  * modification, are permitted provided that the following conditions
  * are met:
  * 1. Redistributions of source code must retain the above copyright
- *    notice, this list of conditions and the following disclaimer,
- *    without modification, immediately at the beginning of the file.
+ *    notice, this list of conditions and the following disclaimer.
  * 2. Redistributions in binary form must reproduce the above copyright
  *    notice, this list of conditions and the following disclaimer in the
  *    documentation and/or other materials provided with the distribution.
  *
- * THIS SOFTWARE IS PROVIDED BY THE AUTHOR ``AS IS'' AND ANY EXPRESS OR
- * IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
- * OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
- * IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT,
- * INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
- * NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
- * DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
- * THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
- * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * THIS SOFTWARE IS PROVIDED BY THE AUTHOR AND CONTRIBUTORS ``AS IS'' AND
+ * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ * ARE DISCLAIMED.  IN NO EVENT SHALL THE AUTHOR OR CONTRIBUTORS BE LIABLE
+ * FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+ * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
+ * OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+ * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+ * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
+ * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
+ * SUCH DAMAGE.
  *
  * Derived from ata_da.c:
  * Copyright (c) 2009 Alexander Motin <mav@FreeBSD.org>
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 16214f4a14889727e8cba20e6a5f3afc2579e62b $");
-
 #include <sys/param.h>
 
 #ifdef _KERNEL
@@ -149,7 +147,7 @@ static	disk_ioctl_t	ndaioctl;
 static	disk_strategy_t	ndastrategy;
 static	dumper_t	ndadump;
 static	periph_init_t	ndainit;
-static	void		ndaasync(void *callback_arg, u_int32_t code,
+static	void		ndaasync(void *callback_arg, uint32_t code,
 				struct cam_path *path, void *arg);
 static	void		ndasysctlinit(void *context, int pending);
 static	int		ndaflagssysctl(SYSCTL_HANDLER_ARGS);
@@ -159,8 +157,8 @@ static	periph_start_t	ndastart;
 static	periph_oninv_t	ndaoninvalidate;
 static	void		ndadone(struct cam_periph *periph,
 			       union ccb *done_ccb);
-static  int		ndaerror(union ccb *ccb, u_int32_t cam_flags,
-				u_int32_t sense_flags);
+static  int		ndaerror(union ccb *ccb, uint32_t cam_flags,
+				uint32_t sense_flags);
 static void		ndashutdown(void *arg, int howto);
 static void		ndasuspend(void *arg);
 
@@ -440,8 +438,9 @@ ndaioctl(struct disk *dp, u_long cmd, void *data, int fflag,
 		 * Tear down mapping and return status.
 		 */
 		cam_periph_unlock(periph);
-		cam_periph_unmapmem(ccb, &mapinfo);
-		error = (ccb->ccb_h.status == CAM_REQ_CMP) ? 0 : EIO;
+		error = cam_periph_unmapmem(ccb, &mapinfo);
+		if (!cam_ccb_success(ccb))
+			error = EIO;
 out:
 		cam_periph_lock(periph);
 		xpt_release_ccb(ccb);
@@ -601,12 +600,17 @@ ndaoninvalidate(struct cam_periph *periph)
 #endif
 
 	/*
-	 * Return all queued I/O with ENXIO.
-	 * XXX Handle any transactions queued to the card
-	 *     with XPT_ABORT_CCB.
+	 * Return all queued I/O with ENXIO. Transactions may be queued up here
+	 * for retry (since we are called while there's other transactions
+	 * pending). Any requests in the hardware will drain before ndacleanup
+	 * is called.
 	 */
 	cam_iosched_flush(softc->cam_iosched, NULL, ENXIO);
 
+	/*
+	 * Tell GEOM that we've gone away, we'll get a callback when it is
+	 * done cleaning up its resources.
+	 */
 	disk_gone(softc->disk);
 }
 
@@ -641,7 +645,7 @@ ndacleanup(struct cam_periph *periph)
 }
 
 static void
-ndaasync(void *callback_arg, u_int32_t code,
+ndaasync(void *callback_arg, uint32_t code,
 	struct cam_path *path, void *arg)
 {
 	struct cam_periph *periph;
@@ -693,9 +697,9 @@ ndaasync(void *callback_arg, u_int32_t code,
 	}
 	case AC_LOST_DEVICE:
 	default:
-		cam_periph_async(periph, code, path, arg);
 		break;
 	}
+	cam_periph_async(periph, code, path, arg);
 }
 
 static void
@@ -1263,7 +1267,7 @@ ndadone(struct cam_periph *periph, union ccb *done_ccb)
 }
 
 static int
-ndaerror(union ccb *ccb, u_int32_t cam_flags, u_int32_t sense_flags)
+ndaerror(union ccb *ccb, uint32_t cam_flags, uint32_t sense_flags)
 {
 #ifdef CAM_IO_STATS
 	struct nda_softc *softc;
@@ -1279,12 +1283,8 @@ ndaerror(union ccb *ccb, u_int32_t cam_flags, u_int32_t sense_flags)
 		softc->timeouts++;
 #endif
 		break;
-	case CAM_REQ_ABORTED:
 	case CAM_REQ_CMP_ERR:
-	case CAM_REQ_TERMIO:
-	case CAM_UNREC_HBA_ERROR:
-	case CAM_DATA_RUN_ERR:
-	case CAM_ATA_STATUS_ERROR:
+	case CAM_NVME_STATUS_ERROR:
 #ifdef CAM_IO_STATS
 		softc->errors++;
 #endif

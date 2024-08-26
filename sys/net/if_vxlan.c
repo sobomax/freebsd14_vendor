@@ -29,8 +29,6 @@
 #include "opt_inet6.h"
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 7ea480899d7d268cf65d9cbe834848c448c30f26 $");
-
 #include <sys/param.h>
 #include <sys/eventhandler.h>
 #include <sys/kernel.h>
@@ -55,6 +53,7 @@ __FBSDID("$FreeBSD: 7ea480899d7d268cf65d9cbe834848c448c30f26 $");
 #include <net/ethernet.h>
 #include <net/if.h>
 #include <net/if_var.h>
+#include <net/if_private.h>
 #include <net/if_clone.h>
 #include <net/if_dl.h>
 #include <net/if_media.h>
@@ -364,7 +363,7 @@ static int	vxlan_encap6(struct vxlan_softc *,
 		    const union vxlan_sockaddr *, struct mbuf *);
 static int	vxlan_transmit(struct ifnet *, struct mbuf *);
 static void	vxlan_qflush(struct ifnet *);
-static void	vxlan_rcv_udp_packet(struct mbuf *, int, struct inpcb *,
+static bool	vxlan_rcv_udp_packet(struct mbuf *, int, struct inpcb *,
 		    const struct sockaddr *, void *);
 static int	vxlan_input(struct vxlan_socket *, uint32_t, struct mbuf **,
 		    const struct sockaddr *);
@@ -376,8 +375,9 @@ static int	vxlan_set_user_config(struct vxlan_softc *,
 		     struct ifvxlanparam *);
 static int	vxlan_set_reqcap(struct vxlan_softc *, struct ifnet *, int);
 static void	vxlan_set_hwcaps(struct vxlan_softc *);
-static int	vxlan_clone_create(struct if_clone *, int, caddr_t);
-static void	vxlan_clone_destroy(struct ifnet *);
+static int	vxlan_clone_create(struct if_clone *, char *, size_t,
+		    struct ifc_data *, struct ifnet **);
+static int	vxlan_clone_destroy(struct if_clone *, struct ifnet *, uint32_t);
 
 static uint32_t vxlan_mac_hash(struct vxlan_softc *, const uint8_t *);
 static int	vxlan_media_change(struct ifnet *);
@@ -432,6 +432,21 @@ static int vxlan_legacy_port = 0;
 TUNABLE_INT("net.link.vxlan.legacy_port", &vxlan_legacy_port);
 static int vxlan_reuse_port = 0;
 TUNABLE_INT("net.link.vxlan.reuse_port", &vxlan_reuse_port);
+
+/*
+ * This macro controls the default upper limitation on nesting of vxlan
+ * tunnels. By default it is 3, as the overhead of IPv6 vxlan tunnel is 70
+ * bytes, this will create at most 210 bytes overhead and the most inner
+ * tunnel's MTU will be 1290 which will meet IPv6 minimum MTU size 1280.
+ * Be careful to configure the tunnels when raising the limit. A large
+ * number of nested tunnels can introduce system crash.
+ */
+#ifndef MAX_VXLAN_NEST
+#define MAX_VXLAN_NEST	3
+#endif
+static int max_vxlan_nesting = MAX_VXLAN_NEST;
+SYSCTL_INT(_net_link_vxlan, OID_AUTO, max_nesting, CTLFLAG_RW,
+    &max_vxlan_nesting, 0, "Max nested tunnels");
 
 /* Default maximum number of addresses in the forwarding table. */
 #ifndef VXLAN_FTABLE_MAX
@@ -2450,6 +2465,7 @@ vxlan_encap_header(struct vxlan_softc *sc, struct mbuf *m, int ipoff,
 }
 #endif
 
+#if defined(INET6) || defined(INET)
 /*
  * Return the CSUM_INNER_* equivalent of CSUM_* caps.
  */
@@ -2491,6 +2507,7 @@ csum_flags_to_inner_flags(uint32_t csum_flags_in, const uint32_t encap)
 
 	return (csum_flags);
 }
+#endif
 
 static int
 vxlan_encap4(struct vxlan_softc *sc, const union vxlan_sockaddr *fvxlsa,
@@ -2720,6 +2737,7 @@ vxlan_encap6(struct vxlan_softc *sc, const union vxlan_sockaddr *fvxlsa,
 #endif
 }
 
+#define MTAG_VXLAN_LOOP	0x7876706c /* vxlp */
 static int
 vxlan_transmit(struct ifnet *ifp, struct mbuf *m)
 {
@@ -2744,6 +2762,13 @@ vxlan_transmit(struct ifnet *ifp, struct mbuf *m)
 		VXLAN_RUNLOCK(sc, &tracker);
 		m_freem(m);
 		return (ENETDOWN);
+	}
+	if (__predict_false(if_tunnel_check_nesting(ifp, m, MTAG_VXLAN_LOOP,
+	    max_vxlan_nesting) != 0)) {
+		VXLAN_RUNLOCK(sc, &tracker);
+		m_freem(m);
+		if_inc_counter(ifp, IFCOUNTER_OERRORS, 1);
+		return (ELOOP);
 	}
 
 	if ((m->m_flags & (M_BCAST | M_MCAST)) == 0)
@@ -2776,7 +2801,7 @@ vxlan_qflush(struct ifnet *ifp __unused)
 {
 }
 
-static void
+static bool
 vxlan_rcv_udp_packet(struct mbuf *m, int offset, struct inpcb *inpcb,
     const struct sockaddr *srcsa, void *xvso)
 {
@@ -2820,6 +2845,8 @@ vxlan_rcv_udp_packet(struct mbuf *m, int offset, struct inpcb *inpcb,
 out:
 	if (m != NULL)
 		m_freem(m);
+
+	return (true);
 }
 
 static int
@@ -3195,7 +3222,8 @@ done:
 }
 
 static int
-vxlan_clone_create(struct if_clone *ifc, int unit, caddr_t params)
+vxlan_clone_create(struct if_clone *ifc, char *name, size_t len,
+    struct ifc_data *ifd, struct ifnet **ifpp)
 {
 	struct vxlan_softc *sc;
 	struct ifnet *ifp;
@@ -3203,15 +3231,15 @@ vxlan_clone_create(struct if_clone *ifc, int unit, caddr_t params)
 	int error;
 
 	sc = malloc(sizeof(struct vxlan_softc), M_VXLAN, M_WAITOK | M_ZERO);
-	sc->vxl_unit = unit;
+	sc->vxl_unit = ifd->unit;
 	sc->vxl_fibnum = curthread->td_proc->p_fibnum;
 	vxlan_set_default_config(sc);
 	error = vxlan_stats_alloc(sc);
 	if (error != 0)
 		goto fail;
 
-	if (params != 0) {
-		error = copyin(params, &vxlp, sizeof(vxlp));
+	if (ifd->params != NULL) {
+		error = ifc_copyin(ifd, &vxlp, sizeof(vxlp));
 		if (error)
 			goto fail;
 
@@ -3235,7 +3263,7 @@ vxlan_clone_create(struct if_clone *ifc, int unit, caddr_t params)
 	vxlan_sysctl_setup(sc);
 
 	ifp->if_softc = sc;
-	if_initname(ifp, vxlan_name, unit);
+	if_initname(ifp, vxlan_name, ifd->unit);
 	ifp->if_flags = IFF_BROADCAST | IFF_SIMPLEX | IFF_MULTICAST;
 	ifp->if_init = vxlan_init;
 	ifp->if_ioctl = vxlan_ioctl;
@@ -3258,6 +3286,7 @@ vxlan_clone_create(struct if_clone *ifc, int unit, caddr_t params)
 	VXLAN_WLOCK(sc);
 	vxlan_setup_interface_hdrlen(sc);
 	VXLAN_WUNLOCK(sc);
+	*ifpp = ifp;
 
 	return (0);
 
@@ -3266,8 +3295,8 @@ fail:
 	return (error);
 }
 
-static void
-vxlan_clone_destroy(struct ifnet *ifp)
+static int
+vxlan_clone_destroy(struct if_clone *ifc, struct ifnet *ifp, uint32_t flags)
 {
 	struct vxlan_softc *sc;
 
@@ -3287,6 +3316,8 @@ vxlan_clone_destroy(struct ifnet *ifp)
 	rm_destroy(&sc->vxl_lock);
 	vxlan_stats_free(sc);
 	free(sc, M_VXLAN);
+
+	return (0);
 }
 
 /* BMV: Taken from if_bridge. */
@@ -3640,8 +3671,13 @@ vxlan_load(void)
 	LIST_INIT(&vxlan_socket_list);
 	vxlan_ifdetach_event_tag = EVENTHANDLER_REGISTER(ifnet_departure_event,
 	    vxlan_ifdetach_event, NULL, EVENTHANDLER_PRI_ANY);
-	vxlan_cloner = if_clone_simple(vxlan_name, vxlan_clone_create,
-	    vxlan_clone_destroy, 0);
+
+	struct if_clone_addreq req = {
+		.create_f = vxlan_clone_create,
+		.destroy_f = vxlan_clone_destroy,
+		.flags = IFC_F_AUTOUNIT,
+	};
+	vxlan_cloner = ifc_attach_cloner(vxlan_name, &req);
 }
 
 static void
@@ -3650,7 +3686,7 @@ vxlan_unload(void)
 
 	EVENTHANDLER_DEREGISTER(ifnet_departure_event,
 	    vxlan_ifdetach_event_tag);
-	if_clone_detach(vxlan_cloner);
+	ifc_detach_cloner(vxlan_cloner);
 	mtx_destroy(&vxlan_list_mtx);
 	MPASS(LIST_EMPTY(&vxlan_socket_list));
 }

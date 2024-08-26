@@ -27,16 +27,8 @@
  * SUCH DAMAGE.
  */
 
-#include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 12ec81b022c4b21f246a3592e9c42ffa4bb1e7c4 $");
-
-#include <sys/cdefs.h>
-#include <string.h>
 #include "stand.h"
-
-#if defined(LIBC_SCCS) && !defined(lint)
-static char sccsid[] = "@(#)strcasecmp.c	8.1 (Berkeley) 6/4/93";
-#endif /* LIBC_SCCS and not lint */
+#include <string.h>
 
 int
 strcasecmp(const char *s1, const char *s2)

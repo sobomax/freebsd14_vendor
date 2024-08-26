@@ -61,8 +61,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 019093abf75a52fa88cffc3ee53f1a37cc58a44f $");
-
 #include <sys/types.h>
 #include <sys/param.h>
 #include <sys/module.h>
@@ -98,6 +96,7 @@ __FBSDID("$FreeBSD: 019093abf75a52fa88cffc3ee53f1a37cc58a44f $");
 #include <vm/vm_map.h>
 #include <vm/vm_page.h>
 #include <vm/vm_object.h>
+#include <vm/vnode_pager.h>
 
 #include "fuse.h"
 #include "fuse_file.h"
@@ -711,7 +710,8 @@ again:
 				bp->b_flags |= B_CLUSTEROK;
 				SDT_PROBE2(fusefs, , io, write_biobackend_issue,
 					4, bp);
-				cluster_write(vp, bp, filesize, seqcount, 0);
+				cluster_write(vp, &fvdat->clusterw, bp,
+				    filesize, seqcount, 0);
 			} else {
 				SDT_PROBE2(fusefs, , io, write_biobackend_issue,
 					5, bp);
@@ -947,11 +947,7 @@ fuse_io_invalbuf(struct vnode *vp, struct thread *td)
 	}
 	fvdat->flag |= FN_FLUSHINPROG;
 
-	if (vp->v_bufobj.bo_object != NULL) {
-		VM_OBJECT_WLOCK(vp->v_bufobj.bo_object);
-		vm_object_page_clean(vp->v_bufobj.bo_object, 0, 0, OBJPC_SYNC);
-		VM_OBJECT_WUNLOCK(vp->v_bufobj.bo_object);
-	}
+	vnode_pager_clean_sync(vp);
 	error = vinvalbuf(vp, V_SAVE, PCATCH, 0);
 	while (error) {
 		if (error == ERESTART || error == EINTR) {

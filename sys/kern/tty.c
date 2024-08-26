@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2008 Ed Schouten <ed@FreeBSD.org>
  * All rights reserved.
@@ -30,8 +30,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 92dee3ceefc9f4a13d54e03aee22f66dbaf4b099 $");
-
 #include "opt_capsicum.h"
 #include "opt_printf.h"
 
@@ -88,8 +86,8 @@ static const char	*dev_console_filename;
 /*
  * Flags that are supported and stored by this implementation.
  */
-#define TTYSUP_IFLAG	(IGNBRK|BRKINT|IGNPAR|PARMRK|INPCK|ISTRIP|\
-			INLCR|IGNCR|ICRNL|IXON|IXOFF|IXANY|IMAXBEL)
+#define TTYSUP_IFLAG	(IGNBRK|BRKINT|IGNPAR|PARMRK|INPCK|ISTRIP|INLCR|\
+			IGNCR|ICRNL|IXON|IXOFF|IXANY|IMAXBEL|IUTF8)
 #define TTYSUP_OFLAG	(OPOST|ONLCR|TAB3|ONOEOT|OCRNL|ONOCR|ONLRET)
 #define TTYSUP_LFLAG	(ECHOKE|ECHOE|ECHOK|ECHO|ECHONL|ECHOPRT|\
 			ECHOCTL|ISIG|ICANON|ALTWERASE|IEXTEN|TOSTOP|\
@@ -1291,6 +1289,7 @@ tty_to_xtty(struct tty *tp, struct xtty *xt)
 
 	tty_assert_locked(tp);
 
+	memset(xt, 0, sizeof(*xt));
 	xt->xt_size = sizeof(struct xtty);
 	xt->xt_insize = ttyinq_getsize(&tp->t_inq);
 	xt->xt_incc = ttyinq_bytescanonicalized(&tp->t_inq);
@@ -1691,7 +1690,7 @@ tty_generic_ioctl(struct tty *tp, u_long cmd, void *data, int fflag,
 		/* This device supports non-blocking operation. */
 		return (0);
 	case FIONREAD:
-		*(int *)data = ttyinq_bytescanonicalized(&tp->t_inq);
+		*(int *)data = ttydisc_bytesavail(tp);
 		return (0);
 	case FIONWRITE:
 	case TIOCOUTQ:
@@ -1723,6 +1722,7 @@ tty_generic_ioctl(struct tty *tp, u_long cmd, void *data, int fflag,
 	case TIOCSETAW:
 	case TIOCSETAF: {
 		struct termios *t = data;
+		bool canonicalize = false;
 
 		/*
 		 * Who makes up these funny rules? According to POSIX,
@@ -1772,6 +1772,19 @@ tty_generic_ioctl(struct tty *tp, u_long cmd, void *data, int fflag,
 				return (error);
 		}
 
+		/*
+		 * We'll canonicalize any partial input if we're transitioning
+		 * ICANON one way or the other.  If we're going from -ICANON ->
+		 * ICANON, then in the worst case scenario we're in the middle
+		 * of a line but both ttydisc_read() and FIONREAD will search
+		 * for one of our line terminals.
+		 */
+		if ((t->c_lflag & ICANON) != (tp->t_termios.c_lflag & ICANON))
+			canonicalize = true;
+		else if (tp->t_termios.c_cc[VEOF] != t->c_cc[VEOF] ||
+		    tp->t_termios.c_cc[VEOL] != t->c_cc[VEOL])
+			canonicalize = true;
+
 		/* Copy new non-device driver parameters. */
 		tp->t_termios.c_iflag = t->c_iflag;
 		tp->t_termios.c_oflag = t->c_oflag;
@@ -1780,13 +1793,15 @@ tty_generic_ioctl(struct tty *tp, u_long cmd, void *data, int fflag,
 
 		ttydisc_optimize(tp);
 
+		if (canonicalize)
+			ttydisc_canonicalize(tp);
 		if ((t->c_lflag & ICANON) == 0) {
 			/*
 			 * When in non-canonical mode, wake up all
-			 * readers. Canonicalize any partial input. VMIN
-			 * and VTIME could also be adjusted.
+			 * readers. Any partial input has already been
+			 * canonicalized above if we were in canonical mode.
+			 * VMIN and VTIME could also be adjusted.
 			 */
-			ttyinq_canonicalize(&tp->t_inq);
 			tty_wakeup(tp, FREAD);
 		}
 
@@ -2093,9 +2108,18 @@ ttyhook_register(struct tty **rtp, struct proc *p, int fd, struct ttyhook *th,
 	int error, ref;
 
 	/* Validate the file descriptor. */
+	/*
+	 * XXX this code inspects a file descriptor from a different process,
+	 * but there is no dedicated routine to do it in fd code, making the
+	 * ordeal highly questionable.
+	 */
 	fdp = p->p_fd;
-	error = fget_unlocked(fdp, fd, cap_rights_init_one(&rights, CAP_TTYHOOK),
-	    &fp);
+	FILEDESC_SLOCK(fdp);
+	error = fget_cap_noref(fdp, fd, cap_rights_init_one(&rights, CAP_TTYHOOK),
+	    &fp, NULL);
+	if (error == 0 && !fhold(fp))
+		error = EBADF;
+	FILEDESC_SUNLOCK(fdp);
 	if (error != 0)
 		return (error);
 	if (fp->f_ops == &badfileops) {

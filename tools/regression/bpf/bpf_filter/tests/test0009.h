@@ -1,7 +1,5 @@
 /*-
  * Test 0009:	BPF_LDX+BPF_IMM & BPF_LD+BPF_W+BPF_IND
- *
- * $FreeBSD: 7053450c48932c121b024dcb42c48f0c6345700c $
  */
 
 /* BPF program */

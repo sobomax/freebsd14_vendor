@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright 2008 by Nathan Whitehorn. All rights reserved.
  *
@@ -23,8 +23,6 @@
  * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
- *
- * $FreeBSD: 68eb07e7b3914d33b25627c9d03cba7973497333 $
  */
 
 /*
@@ -104,7 +102,7 @@ static device_method_t macgpio_methods[] = {
         DEVMETHOD(bus_deactivate_resource, macgpio_deactivate_resource),
         DEVMETHOD(bus_release_resource, bus_generic_release_resource),
 
-	DEVMETHOD(bus_child_pnpinfo_str, ofw_bus_gen_child_pnpinfo_str),
+	DEVMETHOD(bus_child_pnpinfo,	ofw_bus_gen_child_pnpinfo),
 
 	/* ofw_bus interface */
 	DEVMETHOD(ofw_bus_get_devinfo,	macgpio_get_devinfo),
@@ -122,10 +120,7 @@ static driver_t macgpio_pci_driver = {
 	sizeof(struct macgpio_softc)
 };
 
-devclass_t macgpio_devclass;
-
-EARLY_DRIVER_MODULE(macgpio, macio, macgpio_pci_driver, macgpio_devclass, 0, 0,
-    BUS_PASS_BUS);
+EARLY_DRIVER_MODULE(macgpio, macio, macgpio_pci_driver, 0, 0, BUS_PASS_BUS);
 
 struct macgpio_devinfo {
 	struct ofw_bus_devinfo mdi_obdinfo;

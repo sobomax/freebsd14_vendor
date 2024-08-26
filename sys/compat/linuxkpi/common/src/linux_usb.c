@@ -1,4 +1,3 @@
-/* $FreeBSD: 39a9f29e51eecd4a9dbb9d5b4bc5c7ef570dec00 $ */
 /*-
  * Copyright (c) 2007 Luigi Rizzo - Universita` di Pisa. All rights reserved.
  * Copyright (c) 2007 Hans Petter Selasky. All rights reserved.
@@ -122,9 +121,7 @@ static driver_t usb_linux_driver = {
 	.size = sizeof(struct usb_linux_softc),
 };
 
-static devclass_t usb_linux_devclass;
-
-DRIVER_MODULE(usb_linux, uhub, usb_linux_driver, usb_linux_devclass, NULL, 0);
+DRIVER_MODULE(usb_linux, uhub, usb_linux_driver, NULL, NULL);
 MODULE_VERSION(usb_linux, 1);
 
 /*------------------------------------------------------------------------*

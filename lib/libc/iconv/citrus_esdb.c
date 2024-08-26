@@ -1,4 +1,3 @@
-/* $FreeBSD: a07d5d09e72f3ca02c07d5d44404bb24d2a96e44 $ */
 /* $NetBSD: citrus_esdb.c,v 1.5 2008/02/09 14:56:20 junyoung Exp $ */
 
 /*-
@@ -29,7 +28,6 @@
  * SUCH DAMAGE.
  */
 
-#include <sys/cdefs.h>
 #include <sys/types.h>
 
 #include <assert.h>

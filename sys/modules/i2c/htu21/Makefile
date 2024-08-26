@@ -1,6 +1,5 @@
-# $FreeBSD: 8586b0c1515329f1981f1463b022f1700e3c2226 $
 
-.PATH:	${SRCTOP}/sys/dev/iicbus
+.PATH:	${SRCTOP}/sys/dev/iicbus/sensor
 KMOD=	htu21
 SRCS=	htu21.c
 

@@ -37,8 +37,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: e0abf927002d01b41ded49e75bd7418f12b6c669 $");
-
 #include <sys/param.h>
 #include <sys/kernel.h>
 #include <sys/systm.h>
@@ -3475,7 +3473,7 @@ static device_method_t ntb_intel_methods[] = {
 	DEVMETHOD(device_attach,	intel_ntb_attach),
 	DEVMETHOD(device_detach,	intel_ntb_detach),
 	/* Bus interface */
-	DEVMETHOD(bus_child_location_str, ntb_child_location_str),
+	DEVMETHOD(bus_child_location,	ntb_child_location),
 	DEVMETHOD(bus_print_child,	ntb_print_child),
 	DEVMETHOD(bus_get_dma_tag,	ntb_get_dma_tag),
 	/* NTB interface */
@@ -3513,7 +3511,7 @@ static device_method_t ntb_intel_methods[] = {
 
 static DEFINE_CLASS_0(ntb_hw, ntb_intel_driver, ntb_intel_methods,
     sizeof(struct ntb_softc));
-DRIVER_MODULE(ntb_hw_intel, pci, ntb_intel_driver, ntb_hw_devclass, NULL, NULL);
+DRIVER_MODULE(ntb_hw_intel, pci, ntb_intel_driver, NULL, NULL);
 MODULE_DEPEND(ntb_hw_intel, ntb, 1, 1, 1);
 MODULE_VERSION(ntb_hw_intel, 1);
 MODULE_PNP_INFO("W32:vendor/device;D:#", pci, ntb_hw_intel, pci_ids,

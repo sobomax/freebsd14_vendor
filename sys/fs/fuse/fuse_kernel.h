@@ -32,8 +32,6 @@
  * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
- *
- * $FreeBSD: 51445637b9a8cba30920968024cb102ce828223e $
  */
 
 /*
@@ -399,6 +397,12 @@ struct fuse_file_lock {
  * FUSE_FSYNC_FDATASYNC: Sync data only, not metadata
  */
 #define FUSE_FSYNC_FDATASYNC	(1 << 0)
+
+/**
+ * Fallocate flags.
+ */
+#define FUSE_FALLOC_FL_KEEP_SIZE	0x1
+#define FUSE_FALLOC_FL_PUNCH_HOLE	0x2
 
 enum fuse_opcode {
 	FUSE_LOOKUP		= 1,

@@ -1,4 +1,3 @@
-#$FreeBSD: f27e9934034e2f170440bff2169473764433bfb6 $
 
 .PATH:  ${SRCTOP}/sys/dev/bnxt
 

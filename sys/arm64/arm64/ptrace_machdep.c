@@ -26,8 +26,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 408c67a6c396eb3ddc0fffd0a9eb910a27cbe9d2 $");
-
 #include <sys/param.h>
 #include <sys/systm.h>
 #include <sys/elf.h>
@@ -48,6 +46,7 @@ __FBSDID("$FreeBSD: 408c67a6c396eb3ddc0fffd0a9eb910a27cbe9d2 $");
 #include <sys/ucontext.h>
 
 #include <machine/armreg.h>
+#include <machine/pcb.h>
 
 /* Only used to get/set 32bits VFP regs */
 int
@@ -188,3 +187,4 @@ ptrace_clear_single_step(struct thread *td)
 	td->td_dbgflags &= ~TDB_STEP;
 	return (0);
 }
+

@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 1998-2000 Doug Rabson
  * Copyright (c) 2004 Peter Wemm
@@ -28,8 +28,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 689aeae86840b74e3564b49b5876759306aa0c7a $");
-
 #include "opt_ddb.h"
 
 #include <sys/param.h>
@@ -650,6 +648,30 @@ link_elf_invoke_cbs(caddr_t addr, size_t size)
 	}
 }
 
+static void
+link_elf_invoke_ctors(linker_file_t lf)
+{
+	KASSERT(lf->ctors_invoked == LF_NONE,
+	    ("%s: file %s ctor state %d",
+	    __func__, lf->filename, lf->ctors_invoked));
+
+	link_elf_invoke_cbs(lf->ctors_addr, lf->ctors_size);
+	lf->ctors_invoked = LF_CTORS;
+}
+
+static void
+link_elf_invoke_dtors(linker_file_t lf)
+{
+	KASSERT(lf->ctors_invoked != LF_DTORS,
+	    ("%s: file %s ctor state %d",
+	    __func__, lf->filename, lf->ctors_invoked));
+
+	if (lf->ctors_invoked == LF_CTORS) {
+		link_elf_invoke_cbs(lf->dtors_addr, lf->dtors_size);
+		lf->ctors_invoked = LF_DTORS;
+	}
+}
+
 static int
 link_elf_link_preload_finish(linker_file_t lf)
 {
@@ -676,7 +698,7 @@ link_elf_link_preload_finish(linker_file_t lf)
 	/* Apply protections now that relocation processing is complete. */
 	link_elf_protect(ef);
 
-	link_elf_invoke_cbs(lf->ctors_addr, lf->ctors_size);
+	link_elf_invoke_ctors(lf);
 	return (0);
 }
 
@@ -710,14 +732,14 @@ link_elf_load_file(linker_class_t cls, const char *filename,
 	hdr = NULL;
 
 	nd = malloc(sizeof(struct nameidata), M_TEMP, M_WAITOK);
-	NDINIT(nd, LOOKUP, FOLLOW, UIO_SYSSPACE, filename, td);
+	NDINIT(nd, LOOKUP, FOLLOW, UIO_SYSSPACE, filename);
 	flags = FREAD;
 	error = vn_open(nd, &flags, 0, NULL);
 	if (error) {
 		free(nd, M_TEMP);
 		return error;
 	}
-	NDFREE(nd, NDF_ONLY_PNBUF);
+	NDFREE_PNBUF(nd);
 	if (nd->ni_vp->v_type != VREG) {
 		error = ENOEXEC;
 		goto out;
@@ -1232,7 +1254,7 @@ link_elf_load_file(linker_class_t cls, const char *filename,
 #endif
 
 	link_elf_protect(ef);
-	link_elf_invoke_cbs(lf->ctors_addr, lf->ctors_size);
+	link_elf_invoke_ctors(lf);
 	*result = lf;
 
 out:
@@ -1252,7 +1274,7 @@ link_elf_unload_file(linker_file_t file)
 	elf_file_t ef = (elf_file_t) file;
 	u_int i;
 
-	link_elf_invoke_cbs(file->dtors_addr, file->dtors_size);
+	link_elf_invoke_dtors(file);
 
 	/* Notify MD code that a module is being unloaded. */
 	elf_cpu_unload_file(file);

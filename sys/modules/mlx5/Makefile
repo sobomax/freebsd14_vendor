@@ -1,4 +1,3 @@
-# $FreeBSD: 2742a5f1ba9081c24098da795ef67db6ec52ade1 $
 .PATH:	${SRCTOP}/sys/dev/mlx5/mlx5_core \
 	${SRCTOP}/sys/dev/mlx5/mlx5_lib \
 	${SRCTOP}/sys/dev/mlx5/mlx5_fpga
@@ -8,12 +7,15 @@ SRCS= \
 mlx5_alloc.c \
 mlx5_cmd.c \
 mlx5_cq.c \
+mlx5_diag_cnt.c \
 mlx5_diagnostics.c \
 mlx5_eq.c \
 mlx5_eswitch.c \
+mlx5_fc_cmd.c \
 mlx5_fs_cmd.c \
 mlx5_fs_tcp.c \
 mlx5_fs_tree.c \
+mlx5_fs_counters.c \
 mlx5_fw.c \
 mlx5_fwdump.c \
 mlx5_health.c \
@@ -39,6 +41,7 @@ SRCS+=	${LINUXKPI_GENSRCS}
 SRCS+=	opt_inet.h opt_inet6.h opt_rss.h opt_ratelimit.h
 
 CFLAGS+= -I${SRCTOP}/sys/ofed/include
+CFLAGS+= -I${SRCTOP}/sys/ofed/include/uapi
 CFLAGS+= ${LINUXKPI_INCLUDES}
 
 .if defined(CONFIG_BUILD_FPGA)

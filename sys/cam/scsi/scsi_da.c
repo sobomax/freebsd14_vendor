@@ -1,7 +1,7 @@
 /*-
  * Implementation of SCSI Direct Access Peripheral driver for CAM.
  *
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 1997 Justin T. Gibbs.
  * All rights reserved.
@@ -29,8 +29,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 8edad23402be0693ad172f05cbef70f8ffe49838 $");
-
 #include <sys/param.h>
 
 #ifdef _KERNEL
@@ -302,11 +300,11 @@ static const char *da_delete_method_desc[] =
 #define ccb_bp		ppriv_ptr1
 
 struct disk_params {
-	u_int8_t  heads;
-	u_int32_t cylinders;
-	u_int8_t  secs_per_track;
-	u_int32_t secsize;	/* Number of bytes/sector */
-	u_int64_t sectors;	/* total number sectors */
+	uint8_t  heads;
+	uint32_t cylinders;
+	uint8_t  secs_per_track;
+	uint32_t secsize;	/* Number of bytes/sector */
+	uint64_t sectors;	/* total number sectors */
 	u_int     stripesize;
 	u_int     stripeoffset;
 };
@@ -374,7 +372,6 @@ struct da_softc {
 	int			p_type;
 	struct	 disk_params params;
 	struct	 disk *disk;
-	union	 ccb saved_ccb;
 	struct task		sysctl_task;
 	struct sysctl_ctx_list	sysctl_ctx;
 	struct sysctl_oid	*sysctl_tree;
@@ -403,6 +400,8 @@ struct da_softc {
 	} else {							\
 		softc->delete_available &= ~(1 << delete_method);	\
 	}
+
+static uma_zone_t da_ccb_zone;
 
 struct da_quirk_entry {
 	struct scsi_inquiry_pattern inq_pat;
@@ -1399,6 +1398,22 @@ static struct da_quirk_entry da_quirk_table[] =
 	},
 	{
 		/*
+		 * Samsung 860 SSDs
+		 * 4k optimised & trim only works in 4k requests + 4k aligned
+		 */
+		{ T_DIRECT, SIP_MEDIA_FIXED, "ATA", "Samsung SSD 860*", "*" },
+		/*quirks*/DA_Q_4K
+	},
+	{
+		/*
+		 * Samsung 870 SSDs
+		 * 4k optimised & trim only works in 4k requests + 4k aligned
+		 */
+		{ T_DIRECT, SIP_MEDIA_FIXED, "ATA", "Samsung SSD 870*", "*" },
+		/*quirks*/DA_Q_4K
+	},
+	{
+		/*
 		 * Samsung 843T Series SSDs (MZ7WD*)
 		 * Samsung PM851 Series SSDs (MZ7TE*)
 		 * Samsung PM853T Series SSDs (MZ7GE*)
@@ -1469,7 +1484,7 @@ static struct da_quirk_entry da_quirk_table[] =
 static	disk_strategy_t	dastrategy;
 static	dumper_t	dadump;
 static	periph_init_t	dainit;
-static	void		daasync(void *callback_arg, u_int32_t code,
+static	void		daasync(void *callback_arg, uint32_t code,
 				struct cam_path *path, void *arg);
 static	void		dasysctlinit(void *context, int pending);
 static	int		dasysctlsofttimeout(SYSCTL_HANDLER_ARGS);
@@ -1519,8 +1534,8 @@ static void		dadone_probezone(struct cam_periph *periph,
 					 union ccb *done_ccb);
 static void		dadone_tur(struct cam_periph *periph,
 				   union ccb *done_ccb);
-static  int		daerror(union ccb *ccb, u_int32_t cam_flags,
-				u_int32_t sense_flags);
+static  int		daerror(union ccb *ccb, uint32_t cam_flags,
+				uint32_t sense_flags);
 static void		daprevent(struct cam_periph *periph, int action);
 static void		dareprobe(struct cam_periph *periph);
 static void		dasetgeom(struct cam_periph *periph, uint32_t block_len,
@@ -1558,6 +1573,7 @@ static sbintime_t da_default_softtimeout = DA_DEFAULT_SOFTTIMEOUT;
 static int da_send_ordered = DA_DEFAULT_SEND_ORDERED;
 static int da_disable_wp_detection = 0;
 static int da_enable_biospeedup = 1;
+static int da_enable_uma_ccbs = 1;
 
 static SYSCTL_NODE(_kern_cam, OID_AUTO, da, CTLFLAG_RD | CTLFLAG_MPSAFE, 0,
     "CAM Direct Access Disk driver");
@@ -1574,6 +1590,8 @@ SYSCTL_INT(_kern_cam_da, OID_AUTO, disable_wp_detection, CTLFLAG_RWTUN,
 	   "Disable detection of write-protected disks");
 SYSCTL_INT(_kern_cam_da, OID_AUTO, enable_biospeedup, CTLFLAG_RDTUN,
 	    &da_enable_biospeedup, 0, "Enable BIO_SPEEDUP processing");
+SYSCTL_INT(_kern_cam_da, OID_AUTO, enable_uma_ccbs, CTLFLAG_RWTUN,
+	    &da_enable_uma_ccbs, 0, "Use UMA for CCBs");
 
 SYSCTL_PROC(_kern_cam_da, OID_AUTO, default_softtimeout,
     CTLTYPE_UINT | CTLFLAG_RW | CTLFLAG_MPSAFE, NULL, 0,
@@ -1940,7 +1958,7 @@ dadump(void *arg, void *virtual, off_t offset, size_t length)
 				/*minimum_cmd_size*/ softc->minimum_cmd_size,
 				offset / secsize,
 				length / secsize,
-				/*data_ptr*/(u_int8_t *) virtual,
+				/*data_ptr*/(uint8_t *) virtual,
 				/*dxfer_len*/length,
 				/*sense_len*/SSD_FULL_SIZE,
 				da_default_timeout * 1000);
@@ -1997,6 +2015,10 @@ dainit(void)
 {
 	cam_status status;
 
+	da_ccb_zone = uma_zcreate("da_ccb",
+	    sizeof(struct ccb_scsiio), NULL, NULL, NULL, NULL,
+	    UMA_ALIGN_PTR, 0);
+
 	/*
 	 * Install a global async callback.  This callback will
 	 * receive async callbacks like "new device found".
@@ -2046,9 +2068,10 @@ daoninvalidate(struct cam_periph *periph)
 #endif
 
 	/*
-	 * Return all queued I/O with ENXIO.
-	 * XXX Handle any transactions queued to the card
-	 *     with XPT_ABORT_CCB.
+	 * Return all queued I/O with ENXIO. Transactions may be queued up here
+	 * for retry (since we are called while there's other transactions
+	 * pending). Any requests in the hardware will drain before dacleanup
+	 * is called.
 	 */
 	cam_iosched_flush(softc->cam_iosched, NULL, ENXIO);
 
@@ -2092,7 +2115,7 @@ dacleanup(struct cam_periph *periph)
 }
 
 static void
-daasync(void *callback_arg, u_int32_t code,
+daasync(void *callback_arg, uint32_t code,
 	struct cam_path *path, void *arg)
 {
 	struct cam_periph *periph;
@@ -2344,11 +2367,11 @@ dasysctlinit(void *context, int pending)
 	SYSCTL_ADD_PROC(&softc->sysctl_ctx, SYSCTL_CHILDREN(softc->sysctl_tree),
 	    OID_AUTO, "rotating", CTLTYPE_INT | CTLFLAG_RD | CTLFLAG_MPSAFE,
 	    &softc->flags, (u_int)DA_FLAG_ROTATING, dabitsysctl, "I",
-	    "Rotating media *DEPRECATED* gone in FreeBSD 14");
+	    "Rotating media *DEPRECATED* gone in FreeBSD 15");
 	SYSCTL_ADD_PROC(&softc->sysctl_ctx, SYSCTL_CHILDREN(softc->sysctl_tree),
 	    OID_AUTO, "unmapped_io", CTLTYPE_INT | CTLFLAG_RD | CTLFLAG_MPSAFE,
 	    &softc->flags, (u_int)DA_FLAG_UNMAPPEDIO, dabitsysctl, "I",
-	    "Unmapped I/O support *DEPRECATED* gone in FreeBSD 14");
+	    "Unmapped I/O support *DEPRECATED* gone in FreeBSD 15");
 
 #ifdef CAM_TEST_FAILURE
 	SYSCTL_ADD_PROC(&softc->sysctl_ctx, SYSCTL_CHILDREN(softc->sysctl_tree),
@@ -2728,7 +2751,6 @@ dazonemodesysctl(SYSCTL_HANDLER_ARGS)
 static int
 dazonesupsysctl(SYSCTL_HANDLER_ARGS)
 {
-	char tmpbuf[180];
 	struct da_softc *softc;
 	struct sbuf sb;
 	int error, first;
@@ -2736,15 +2758,14 @@ dazonesupsysctl(SYSCTL_HANDLER_ARGS)
 
 	softc = (struct da_softc *)arg1;
 
-	error = 0;
 	first = 1;
-	sbuf_new(&sb, tmpbuf, sizeof(tmpbuf), 0);
+	sbuf_new_for_sysctl(&sb, NULL, 0, req);
 
 	for (i = 0; i < sizeof(da_zone_desc_table) /
 	     sizeof(da_zone_desc_table[0]); i++) {
 		if (softc->zone_flags & da_zone_desc_table[i].value) {
 			if (first == 0)
-				sbuf_printf(&sb, ", ");
+				sbuf_cat(&sb, ", ");
 			else
 				first = 0;
 			sbuf_cat(&sb, da_zone_desc_table[i].desc);
@@ -2754,10 +2775,8 @@ dazonesupsysctl(SYSCTL_HANDLER_ARGS)
 	if (first == 1)
 		sbuf_printf(&sb, "None");
 
-	sbuf_finish(&sb);
-
-	error = sysctl_handle_string(oidp, sbuf_data(&sb), sbuf_len(&sb), req);
-
+	error = sbuf_finish(&sb);
+	sbuf_delete(&sb);
 	return (error);
 }
 
@@ -2851,6 +2870,15 @@ daregister(struct cam_periph *periph, void *arg)
 	}
 
 	TASK_INIT(&softc->sysctl_task, 0, dasysctlinit, periph);
+
+	/*
+	 * Let XPT know we can use UMA-allocated CCBs.
+	 */
+	if (da_enable_uma_ccbs) {
+		KASSERT(da_ccb_zone != NULL,
+		    ("%s: NULL da_ccb_zone", __func__));
+		periph->ccb_zone = da_ccb_zone;
+	}
 
 	/*
 	 * Take a reference on the periph while dastart is called to finish the
@@ -3587,7 +3615,7 @@ out:
 			     /*retries*/da_retry_count,
 			     /*cbfcnp*/dadone_probelbp,
 			     /*tag_action*/MSG_SIMPLE_Q_TAG,
-			     /*inq_buf*/(u_int8_t *)lbp,
+			     /*inq_buf*/(uint8_t *)lbp,
 			     /*inq_len*/sizeof(*lbp),
 			     /*evpd*/TRUE,
 			     /*page_code*/SVPD_LBP,
@@ -3621,7 +3649,7 @@ out:
 			     /*retries*/da_retry_count,
 			     /*cbfcnp*/dadone_probeblklimits,
 			     /*tag_action*/MSG_SIMPLE_Q_TAG,
-			     /*inq_buf*/(u_int8_t *)block_limits,
+			     /*inq_buf*/(uint8_t *)block_limits,
 			     /*inq_len*/sizeof(*block_limits),
 			     /*evpd*/TRUE,
 			     /*page_code*/SVPD_BLOCK_LIMITS,
@@ -3654,7 +3682,7 @@ out:
 			     /*retries*/da_retry_count,
 			     /*cbfcnp*/dadone_probebdc,
 			     /*tag_action*/MSG_SIMPLE_Q_TAG,
-			     /*inq_buf*/(u_int8_t *)bdc,
+			     /*inq_buf*/(uint8_t *)bdc,
 			     /*inq_len*/sizeof(*bdc),
 			     /*evpd*/TRUE,
 			     /*page_code*/SVPD_BDC,
@@ -3692,7 +3720,7 @@ out:
 				  /*retries*/da_retry_count,
 				  /*cbfcnp*/dadone_probeata,
                                   /*tag_action*/MSG_SIMPLE_Q_TAG,
-				  /*data_ptr*/(u_int8_t *)ata_params,
+				  /*data_ptr*/(uint8_t *)ata_params,
 				  /*dxfer_len*/sizeof(*ata_params),
 				  /*sense_len*/SSD_FULL_SIZE,
 				  /*timeout*/da_default_timeout * 1000);
@@ -3935,7 +3963,7 @@ out:
 			     /*retries*/da_retry_count,
 			     /*cbfcnp*/dadone_probezone,
 			     /*tag_action*/MSG_SIMPLE_Q_TAG,
-			     /*inq_buf*/(u_int8_t *)bdc,
+			     /*inq_buf*/(uint8_t *)bdc,
 			     /*inq_len*/sizeof(*bdc),
 			     /*evpd*/TRUE,
 			     /*page_code*/SVPD_ZONED_BDC,
@@ -4250,7 +4278,7 @@ cmd6workaround(union ccb *ccb)
 	struct scsi_rw_6 cmd6;
 	struct scsi_rw_10 *cmd10;
 	struct da_softc *softc;
-	u_int8_t *cdb;
+	uint8_t *cdb;
 	struct bio *bp;
 	int frozen;
 
@@ -4657,7 +4685,7 @@ dadone_probewp(struct cam_periph *periph, union ccb *done_ccb)
 {
 	struct da_softc *softc;
 	struct ccb_scsiio *csio;
-	u_int32_t  priority;
+	uint32_t  priority;
 
 	CAM_DEBUG(periph->path, CAM_DEBUG_TRACE, ("dadone_probewp\n"));
 
@@ -4741,7 +4769,7 @@ dadone_proberc(struct cam_periph *periph, union ccb *done_ccb)
 	struct ccb_scsiio *csio;
 	da_ccb_state state;
 	char *announce_buf;
-	u_int32_t  priority;
+	uint32_t  priority;
 	int lbp, n;
 
 	CAM_DEBUG(periph->path, CAM_DEBUG_TRACE, ("dadone_proberc\n"));
@@ -4874,6 +4902,7 @@ dadone_proberc(struct cam_periph *periph, union ccb *done_ccb)
 						 /*timeout*/0,
 						 /*getcount_only*/0);
 
+			memset(&cgd, 0, sizeof(cgd));
 			xpt_setup_ccb(&cgd.ccb_h, done_ccb->ccb_h.path,
 				      CAM_PRIORITY_NORMAL);
 			cgd.ccb_h.func_code = XPT_GDEV_TYPE;
@@ -5026,7 +5055,7 @@ dadone_probelbp(struct cam_periph *periph, union ccb *done_ccb)
 	struct scsi_vpd_logical_block_prov *lbp;
 	struct da_softc *softc;
 	struct ccb_scsiio *csio;
-	u_int32_t  priority;
+	uint32_t  priority;
 
 	CAM_DEBUG(periph->path, CAM_DEBUG_TRACE, ("dadone_probelbp\n"));
 
@@ -5084,7 +5113,7 @@ dadone_probeblklimits(struct cam_periph *periph, union ccb *done_ccb)
 	struct scsi_vpd_block_limits *block_limits;
 	struct da_softc *softc;
 	struct ccb_scsiio *csio;
-	u_int32_t  priority;
+	uint32_t  priority;
 
 	CAM_DEBUG(periph->path, CAM_DEBUG_TRACE, ("dadone_probeblklimits\n"));
 
@@ -5178,7 +5207,7 @@ dadone_probebdc(struct cam_periph *periph, union ccb *done_ccb)
 	struct scsi_vpd_block_device_characteristics *bdc;
 	struct da_softc *softc;
 	struct ccb_scsiio *csio;
-	u_int32_t  priority;
+	uint32_t  priority;
 
 	CAM_DEBUG(periph->path, CAM_DEBUG_TRACE, ("dadone_probebdc\n"));
 
@@ -5196,7 +5225,7 @@ dadone_probebdc(struct cam_periph *periph, union ccb *done_ccb)
 		 * Disable queue sorting for non-rotational media
 		 * by default.
 		 */
-		u_int16_t old_rate = softc->disk->d_rotation_rate;
+		uint16_t old_rate = softc->disk->d_rotation_rate;
 
 		valid_len = csio->dxfer_len - csio->resid;
 		if (SBDC_IS_PRESENT(bdc, valid_len,
@@ -5278,7 +5307,7 @@ dadone_probeata(struct cam_periph *periph, union ccb *done_ccb)
 	struct ata_params *ata_params;
 	struct ccb_scsiio *csio;
 	struct da_softc *softc;
-	u_int32_t  priority;
+	uint32_t  priority;
 	int continue_probe;
 	int error;
 
@@ -5417,7 +5446,7 @@ dadone_probeatalogdir(struct cam_periph *periph, union ccb *done_ccb)
 {
 	struct da_softc *softc;
 	struct ccb_scsiio *csio;
-	u_int32_t  priority;
+	uint32_t  priority;
 	int error;
 
 	CAM_DEBUG(periph->path, CAM_DEBUG_TRACE, ("dadone_probeatalogdir\n"));
@@ -5498,7 +5527,7 @@ dadone_probeataiddir(struct cam_periph *periph, union ccb *done_ccb)
 {
 	struct da_softc *softc;
 	struct ccb_scsiio *csio;
-	u_int32_t  priority;
+	uint32_t  priority;
 	int error;
 
 	CAM_DEBUG(periph->path, CAM_DEBUG_TRACE, ("dadone_probeataiddir\n"));
@@ -5589,7 +5618,7 @@ dadone_probeatasup(struct cam_periph *periph, union ccb *done_ccb)
 {
 	struct da_softc *softc;
 	struct ccb_scsiio *csio;
-	u_int32_t  priority;
+	uint32_t  priority;
 	int error;
 
 	CAM_DEBUG(periph->path, CAM_DEBUG_TRACE, ("dadone_probeatasup\n"));
@@ -5900,7 +5929,7 @@ static void
 dareprobe(struct cam_periph *periph)
 {
 	struct da_softc	  *softc;
-	int status;
+	int status __diagused;
 
 	softc = (struct da_softc *)periph->softc;
 
@@ -5918,7 +5947,7 @@ dareprobe(struct cam_periph *periph)
 }
 
 static int
-daerror(union ccb *ccb, u_int32_t cam_flags, u_int32_t sense_flags)
+daerror(union ccb *ccb, uint32_t cam_flags, uint32_t sense_flags)
 {
 	struct da_softc	  *softc;
 	struct cam_periph *periph;
@@ -5984,6 +6013,8 @@ daerror(union ccb *ccb, u_int32_t cam_flags, u_int32_t sense_flags)
 	case CAM_REQ_TERMIO:
 	case CAM_UNREC_HBA_ERROR:
 	case CAM_DATA_RUN_ERR:
+	case CAM_SCSI_STATUS_ERROR:
+	case CAM_ATA_STATUS_ERROR:
 		softc->errors++;
 		break;
 	default:
@@ -6119,6 +6150,7 @@ dasetgeom(struct cam_periph *periph, uint32_t block_len, uint64_t maxsector,
 	 * up with something that will make this a bootable
 	 * device.
 	 */
+	memset(&ccg, 0, sizeof(ccg));
 	xpt_setup_ccb(&ccg.ccb_h, periph->path, CAM_PRIORITY_NORMAL);
 	ccg.ccb_h.func_code = XPT_CALC_GEOMETRY;
 	ccg.block_size = dp->secsize;
@@ -6156,6 +6188,7 @@ dasetgeom(struct cam_periph *periph, uint32_t block_len, uint64_t maxsector,
 		  min(sizeof(softc->rcaplong), rcap_len)) != 0)) {
 		struct ccb_dev_advinfo cdai;
 
+		memset(&cdai, 0, sizeof(cdai));
 		xpt_setup_ccb(&cdai.ccb_h, periph->path, CAM_PRIORITY_NORMAL);
 		cdai.ccb_h.func_code = XPT_DEV_ADVINFO;
 		cdai.buftype = CDAI_TYPE_RCAPLONG;
@@ -6278,11 +6311,11 @@ dashutdown(void * arg, int howto)
  * be moved so they are included both in the kernel and userland.
  */
 void
-scsi_format_unit(struct ccb_scsiio *csio, u_int32_t retries,
+scsi_format_unit(struct ccb_scsiio *csio, uint32_t retries,
 		 void (*cbfcnp)(struct cam_periph *, union ccb *),
-		 u_int8_t tag_action, u_int8_t byte2, u_int16_t ileave,
-		 u_int8_t *data_ptr, u_int32_t dxfer_len, u_int8_t sense_len,
-		 u_int32_t timeout)
+		 uint8_t tag_action, uint8_t byte2, uint16_t ileave,
+		 uint8_t *data_ptr, uint32_t dxfer_len, uint8_t sense_len,
+		 uint32_t timeout)
 {
 	struct scsi_format_unit *scsi_cmd;
 
@@ -6357,11 +6390,11 @@ scsi_read_defects(struct ccb_scsiio *csio, uint32_t retries,
 }
 
 void
-scsi_sanitize(struct ccb_scsiio *csio, u_int32_t retries,
+scsi_sanitize(struct ccb_scsiio *csio, uint32_t retries,
 	      void (*cbfcnp)(struct cam_periph *, union ccb *),
-	      u_int8_t tag_action, u_int8_t byte2, u_int16_t control,
-	      u_int8_t *data_ptr, u_int32_t dxfer_len, u_int8_t sense_len,
-	      u_int32_t timeout)
+	      uint8_t tag_action, uint8_t byte2, uint16_t control,
+	      uint8_t *data_ptr, uint32_t dxfer_len, uint8_t sense_len,
+	      uint32_t timeout)
 {
 	struct scsi_sanitize *scsi_cmd;
 

@@ -1,5 +1,4 @@
 /*	$OpenBSD: ber.c,v 1.9 2015/02/12 00:30:38 pelikan Exp $ */
-/*	$FreeBSD: 62ba8f0f0d3bcea1672dfd115b9a1b8dd5b3fd93 $ */
 
 /*
  * Copyright (c) 2007 Reyk Floeter <reyk@vantronix.net>

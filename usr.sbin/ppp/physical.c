@@ -16,8 +16,6 @@
  * IMPLIED WARRANTIES, INCLUDING, WITHOUT LIMITATION, THE IMPLIED
  * WARRANTIES OF MERCHANTIBILITY AND FITNESS FOR A PARTICULAR PURPOSE.
  *
- * $FreeBSD: 5612c1194e9dd2a33aa4859d67879c85534da251 $
- *
  */
 
 #include <sys/param.h>
@@ -646,7 +644,7 @@ iov2physical(struct datalink *dl, struct iovec *iov, int *niov, int maxiov,
 }
 
 unsigned
-physical_MaxDeviceSize()
+physical_MaxDeviceSize(void)
 {
   unsigned biggest, sz, n;
 

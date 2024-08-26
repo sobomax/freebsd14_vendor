@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2010 Spectra Logic Corporation
  * All rights reserved.
@@ -37,8 +37,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 1b82327f9fb9be3543dff9ee0d83b462ecb0b159 $");
-
 #include <sys/param.h>
 #include <sys/types.h>
 #ifdef _KERNEL

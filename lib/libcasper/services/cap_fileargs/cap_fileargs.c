@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2018-2021 Mariusz Zaborski <oshogbo@FreeBSD.org>
  * All rights reserved.
@@ -27,8 +27,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 2e501a860ee6bc4dd9c521b54dd00adff8b45ebc $");
-
 #include <sys/types.h>
 #include <sys/capsicum.h>
 #include <sys/sysctl.h>
@@ -561,8 +559,12 @@ fileargs_add_cache(nvlist_t *nvlout, const nvlist_t *limits,
 			break;
 		}
 
-		if (type != NV_TYPE_NULL || (current_name != NULL &&
-		    strcmp(fname, current_name) == 0)) {
+		if (type != NV_TYPE_NULL) {
+			i--;
+			continue;
+		}
+		if (current_name != NULL &&
+		    strcmp(fname, current_name) == 0) {
 			current_name = NULL;
 			i--;
 			continue;

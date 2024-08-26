@@ -1,4 +1,3 @@
-# $FreeBSD: 6a4e8af952e124f2b2b57f1e92a93721f11aac07 $
 
 .PATH: ${SRCTOP}/sys/dev/vmware/pvscsi
 

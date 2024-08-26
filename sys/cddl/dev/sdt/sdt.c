@@ -20,8 +20,6 @@
  *
  * Portions Copyright 2006-2008 John Birrell jb@freebsd.org
  *
- * $FreeBSD: d352ed177e8c604e74c0dc6333a06f971454dec6 $
- *
  */
 
 /*

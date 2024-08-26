@@ -25,8 +25,6 @@
  * LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
  * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- *
- * $FreeBSD: 4b492cf786b334f62c5722cf9d04d6019d024be3 $
  */
 /*-
  * Copyright (C) 1995, 1996 Wolfgang Solfrank.
@@ -1025,10 +1023,8 @@ CNAME(trapexit):
 
 	GET_CPUINFO(%r3)
 	LOAD	%r4, PC_CURTHREAD(%r3)
-	lwz	%r4, TD_FLAGS(%r4)
-	lis	%r5, (TDF_ASTPENDING | TDF_NEEDRESCHED)@h
-	ori	%r5, %r5, (TDF_ASTPENDING | TDF_NEEDRESCHED)@l
-	and.	%r4, %r4, %r5
+	lwz	%r4, TD_AST(%r4)
+	cmpwi	%r4, 0
 	beq	1f
 
 	/* re-enable interrupts before calling ast() */

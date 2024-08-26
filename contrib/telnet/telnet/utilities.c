@@ -32,8 +32,6 @@
 static const char sccsid[] = "@(#)utilities.c	8.3 (Berkeley) 5/30/95";
 #endif
 #endif
-#include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 36432e6a32f02e0d32275bdb7a22c3a2d7071b28 $");
 
 #define	TELOPTS
 #define	TELCMDS

@@ -1,4 +1,3 @@
-# $FreeBSD: 8beab3177334f658aab27ae21e504baf019e26d6 $
 
 PROG=	sort_bench
 MAN=

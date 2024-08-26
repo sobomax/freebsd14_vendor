@@ -29,7 +29,6 @@
  * SUCH DAMAGE.
  *
  *	$KAME: raw_ip6.h,v 1.2 2001/05/27 13:28:35 itojun Exp $
- * $FreeBSD: e2dcac36da6cf3385af263559d69105d426f77e4 $
  */
 
 #ifndef _NETINET6_RAW_IP6_H_

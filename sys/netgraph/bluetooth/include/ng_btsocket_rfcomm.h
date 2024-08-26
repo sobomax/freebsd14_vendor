@@ -3,7 +3,7 @@
  */
 
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2001-2003 Maksim Yevmenkin <m_evmenkin@yahoo.com>
  * All rights reserved.
@@ -30,7 +30,6 @@
  * SUCH DAMAGE.
  *
  * $Id: ng_btsocket_rfcomm.h,v 1.10 2003/03/29 22:27:42 max Exp $
- * $FreeBSD: 569a407ef629b3ba2b3fc926264b4ead9723db36 $
  */
 
 #ifndef _NETGRAPH_BTSOCKET_RFCOMM_H_
@@ -315,7 +314,6 @@ typedef struct ng_btsocket_rfcomm_pcb *	ng_btsocket_rfcomm_pcb_p;
 
 #ifdef _KERNEL
 
-void ng_btsocket_rfcomm_init       (void);
 void ng_btsocket_rfcomm_abort      (struct socket *);
 void ng_btsocket_rfcomm_close      (struct socket *);
 int  ng_btsocket_rfcomm_accept     (struct socket *, struct sockaddr **);
@@ -324,7 +322,7 @@ int  ng_btsocket_rfcomm_bind       (struct socket *, struct sockaddr *,
                                     struct thread *);
 int  ng_btsocket_rfcomm_connect    (struct socket *, struct sockaddr *,
                                     struct thread *);
-int  ng_btsocket_rfcomm_control    (struct socket *, u_long, caddr_t,
+int  ng_btsocket_rfcomm_control    (struct socket *, u_long, void *,
                                     struct ifnet *, struct thread *);
 int  ng_btsocket_rfcomm_ctloutput  (struct socket *, struct sockopt *);
 void ng_btsocket_rfcomm_detach     (struct socket *);

@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (C) 1993-1998 by Andrey A. Chernov, Moscow, Russia.
  * All rights reserved.
@@ -34,8 +34,6 @@ static const char copyright[] =
 #endif /* not lint */
 #endif
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: e6cadcf7f1894325c5305080e67d25d142e3185d $");
-
 /*
  * Andrey A. Chernov   <ache@astral.msk.su>    Dec 20 1993
  *
@@ -67,7 +65,7 @@ __FBSDID("$FreeBSD: e6cadcf7f1894325c5305080e67d25d142e3185d $");
 #define REPORT_PERIOD (30*60)
 
 static void fake(int);
-static void usage(void);
+static void usage(void) __dead2;
 
 static void
 fake(int unused __unused)

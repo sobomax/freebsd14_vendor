@@ -1,4 +1,3 @@
-# $FreeBSD: f3a15badeb527b331ecafefb2fc1ae0cced4ac9f $
 
 PACKAGE=	tests
 
@@ -65,6 +64,9 @@ ${PACKAGE}FILES+=	heredoc10.0
 ${PACKAGE}FILES+=	heredoc11.0
 ${PACKAGE}FILES+=	heredoc12.0
 ${PACKAGE}FILES+=	heredoc13.0
+${PACKAGE}FILES+=	heredoc14.0
+${PACKAGE}FILES+=	heredoc15.0
+${PACKAGE}FILES+=	heredoc16.0
 ${PACKAGE}FILES+=	line-cont1.0
 ${PACKAGE}FILES+=	line-cont2.0
 ${PACKAGE}FILES+=	line-cont3.0

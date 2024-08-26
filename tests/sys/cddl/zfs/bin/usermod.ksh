@@ -1,7 +1,5 @@
 #! /usr/local/bin/ksh93 -p
 
-# $FreeBSD: 37c51519676ed3389006b553d57b91b65e9458c6 $
-
 a=
 g=
 for i in $*

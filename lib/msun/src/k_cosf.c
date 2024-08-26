@@ -14,11 +14,6 @@
  * ====================================================
  */
 
-#ifndef INLINE_KERNEL_COSDF
-#include <sys/cdefs.h>
-__FBSDID("$FreeBSD: f7a2c0ae15c256a1cf05d3df5f74dfc9e671342c $");
-#endif
-
 #include "math.h"
 #include "math_private.h"
 

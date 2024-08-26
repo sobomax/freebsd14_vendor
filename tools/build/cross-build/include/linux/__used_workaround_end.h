@@ -33,8 +33,6 @@
  * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
- *
- * $FreeBSD: 99cc6c16ac265d7d72801c6110632b6b64d16f0f $
  */
 /* Used to workaround system headers with struct members called __used */
 #ifdef __used_undefd

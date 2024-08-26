@@ -56,8 +56,6 @@
 *
 *******************************************************************************/
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: e9e1836f8871d1dd9c53f0fa4449d46cc20c9895 $");
-
 #include <sys/types.h>
 #include <crypto/aesni/aesni_os.h>
 #include <crypto/aesni/sha_sse.h>

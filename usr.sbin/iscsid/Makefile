@@ -1,4 +1,3 @@
-# $FreeBSD: f9694866b7f6fb22d72c38ef98e3eee24e7e668b $
 
 PACKAGE=	iscsi
 PROG=		iscsid

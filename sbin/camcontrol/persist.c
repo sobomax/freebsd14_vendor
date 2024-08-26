@@ -34,8 +34,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: ce4de9f8feb191dac2a4b4011c0ed94eb0168972 $");
-
 #include <sys/ioctl.h>
 #include <sys/stdint.h>
 #include <sys/types.h>
@@ -452,8 +450,6 @@ scsipersist(struct cam_device *device, int argc, char **argv, char *combinedopt,
 		error = 1;
 		goto bailout;
 	}
-
-	CCB_CLEAR_ALL_EXCEPT_HDR(&ccb->csio);
 
 	while ((c = getopt(argc, argv, combinedopt)) != -1) {
 		switch (c) {

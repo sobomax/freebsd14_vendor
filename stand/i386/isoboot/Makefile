@@ -1,4 +1,3 @@
-# $FreeBSD: 7732882b1e5c9385aadcfc4bab3c758e88bcb3b7 $
 
 .include <bsd.init.mk>
 
@@ -9,7 +8,7 @@ FILES=		isoboot
 MAN=		isoboot.8
 
 BOOT_COMCONSOLE_PORT?= 0x3f8
-BOOT_COMCONSOLE_SPEED?= 9600
+BOOT_COMCONSOLE_SPEED?= 115200
 B2SIOFMT?=	0x3
 
 REL1=	0x700

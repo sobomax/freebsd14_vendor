@@ -79,8 +79,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: a851db6e4556e1aa80d3a3d2c4aa433510b57360 $");
-
 #include <sys/param.h>
 #include <sys/systm.h>
 #include <sys/kernel.h>
@@ -100,7 +98,7 @@ int
 cpu_fetch_syscall_args(struct thread *td)
 {
 	struct proc *p;
-	register_t *ap;
+	syscallarg_t *ap;
 	struct syscall_args *sa;
 	u_int nap;
 	int error;
@@ -108,6 +106,7 @@ cpu_fetch_syscall_args(struct thread *td)
 	nap = 4;
 	sa = &td->td_sa;
 	sa->code = td->td_frame->tf_r7;
+	sa->original_code = sa->code;
 	ap = &td->td_frame->tf_r0;
 	if (sa->code == SYS_syscall) {
 		sa->code = *ap++;
@@ -119,14 +118,14 @@ cpu_fetch_syscall_args(struct thread *td)
 	}
 	p = td->td_proc;
 	if (sa->code >= p->p_sysent->sv_size)
-		sa->callp = &p->p_sysent->sv_table[0];
+		sa->callp = &nosys_sysent;
 	else
 		sa->callp = &p->p_sysent->sv_table[sa->code];
 	error = 0;
-	memcpy(sa->args, ap, nap * sizeof(register_t));
+	memcpy(sa->args, ap, nap * sizeof(*sa->args));
 	if (sa->callp->sy_narg > nap) {
 		error = copyin((void *)td->td_frame->tf_usr_sp, sa->args +
-		    nap, (sa->callp->sy_narg - nap) * sizeof(register_t));
+		    nap, (sa->callp->sy_narg - nap) * sizeof(*sa->args));
 	}
 	if (error == 0) {
 		td->td_retval[0] = 0;

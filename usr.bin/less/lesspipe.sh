@@ -1,8 +1,6 @@
 #! /bin/sh
 # ex:ts=8
 
-# $FreeBSD: 05df4d02b42c2aba94f0bc99b062f1a74701b2db $
-
 case "$1" in
 	*.zip)
 		exec unzip -c "$1" 2>/dev/null
@@ -24,5 +22,7 @@ case "$1" in
 		;;
 	*.zst)
 		exec zstd -d -q -c "$1"	2>/dev/null
+		;;
+	*)	exec cat "$1"		2>/dev/null
 		;;
 esac

@@ -1,4 +1,3 @@
-$FreeBSD: a218368cc39927fc97cd17cb358eeb7c13283e74 $
 
 This directory contains gdb macros for kernel debugging.  When you
 build a debug kernel, the target "gdbinit" in the kernel Makefile will

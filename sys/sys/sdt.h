@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright 2006-2008 John Birrell <jb@FreeBSD.org>
  *
@@ -23,8 +23,6 @@
  * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
- *
- * $FreeBSD: fb5c3d6716045e2e9e8ee606149537f0c47b7215 $
  *
  * Statically Defined Tracing (SDT) definitions.
  *
@@ -86,6 +84,8 @@ extern volatile bool sdt_probes_enabled;
 
 #ifndef KDTRACE_HOOKS
 
+#define __sdt_used	__unused
+
 #define SDT_PROVIDER_DEFINE(prov)
 #define SDT_PROVIDER_DECLARE(prov)
 #define SDT_PROBE_DEFINE(prov, mod, func, name)
@@ -141,26 +141,32 @@ extern volatile bool sdt_probes_enabled;
 
 #else
 
+#define __sdt_used
+
 SET_DECLARE(sdt_providers_set, struct sdt_provider);
 SET_DECLARE(sdt_probes_set, struct sdt_probe);
 SET_DECLARE(sdt_argtypes_set, struct sdt_argtype);
 
-#define SDT_PROVIDER_DEFINE(prov)						\
-	struct sdt_provider sdt_provider_##prov[1] = {				\
-		{ #prov, { NULL, NULL }, 0, 0 }					\
-	};									\
-	DATA_SET(sdt_providers_set, sdt_provider_##prov);
+#define SDT_PROVIDER_DEFINE(_prov)					\
+	struct sdt_provider sdt_provider_##_prov[1] = {			\
+		[0] = { .name = #_prov },				\
+	};								\
+	DATA_SET(sdt_providers_set, sdt_provider_##_prov);
 
 #define SDT_PROVIDER_DECLARE(prov)						\
 	extern struct sdt_provider sdt_provider_##prov[1]
 
-#define SDT_PROBE_DEFINE(prov, mod, func, name)					\
-	struct sdt_probe sdt_##prov##_##mod##_##func##_##name[1] = {		\
-		{ sizeof(struct sdt_probe), sdt_provider_##prov,		\
-		    { NULL, NULL }, { NULL, NULL }, #mod, #func, #name, 0, 0,	\
-		    NULL }							\
-	};									\
-	DATA_SET(sdt_probes_set, sdt_##prov##_##mod##_##func##_##name);
+#define SDT_PROBE_DEFINE(_prov, _mod, _func, _name)			\
+	struct sdt_probe sdt_##_prov##_##_mod##_##_func##_##_name[1] = {\
+		[0] = {							\
+		    .version = sizeof(struct sdt_probe),		\
+		    .prov = sdt_provider_##_prov,			\
+		    .mod = #_mod,					\
+		    .func = #_func,					\
+		    .name = #_name,					\
+		},							\
+	};								\
+	DATA_SET(sdt_probes_set, sdt_##_prov##_##_mod##_##_func##_##_name)
 
 #define SDT_PROBE_DECLARE(prov, mod, func, name)				\
 	extern struct sdt_probe sdt_##prov##_##mod##_##func##_##name[1]
@@ -176,12 +182,18 @@ SET_DECLARE(sdt_argtypes_set, struct sdt_argtype);
 	} \
 } while (0)
 
-#define SDT_PROBE_ARGTYPE(prov, mod, func, name, num, type, xtype)		\
-	static struct sdt_argtype sdta_##prov##_##mod##_##func##_##name##num[1]	\
-	    = { { num, type, xtype, { NULL, NULL },				\
-	    sdt_##prov##_##mod##_##func##_##name }				\
-	};									\
-	DATA_SET(sdt_argtypes_set, sdta_##prov##_##mod##_##func##_##name##num);
+#define SDT_PROBE_ARGTYPE(_prov, _mod, _func, _name, _num, _type, _xtype) \
+	static struct sdt_argtype					\
+	    sdta_##_prov##_##_mod##_##_func##_##_name##_num[1] = {	\
+		[0] = {							\
+		    .ndx = _num,					\
+		    .type = _type,					\
+		    .xtype = _xtype,					\
+		    .probe = sdt_##_prov##_##_mod##_##_func##_##_name,	\
+		},							\
+	};								\
+	DATA_SET(sdt_argtypes_set,					\
+	    sdta_##_prov##_##_mod##_##_func##_##_name##_num);
 
 #define	SDT_PROBE_DEFINE0(prov, mod, func, name)			\
 	SDT_PROBE_DEFINE(prov, mod, func, name)

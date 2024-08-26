@@ -34,8 +34,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 025eae3eb19d7fc5d5ea120542085d431f86ede2 $");
-
 #include "opt_kgssapi.h"
 #include "opt_kern_tls.h"
 

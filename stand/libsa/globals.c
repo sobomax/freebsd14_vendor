@@ -7,9 +7,6 @@
  *	must be included extraneously.
  */
 
-#include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 8fb56cf23e6b0755e513d9183f2f575acf90e47b $");
-
 #include <sys/param.h>
 #include <netinet/in.h>
 #include <netinet/in_systm.h>

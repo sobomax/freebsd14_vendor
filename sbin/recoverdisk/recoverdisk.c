@@ -7,8 +7,6 @@
  * can do whatever you want with this stuff. If we meet some day, and you think
  * this stuff is worth it, you can buy me a beer in return.   Poul-Henning Kamp
  * ----------------------------------------------------------------------------
- *
- * $FreeBSD: 8c4aabebc76f0f32f53972e65cea33821048fd1e $
  */
 #include <sys/param.h>
 #include <sys/queue.h>
@@ -149,12 +147,10 @@ static void
 set_verbose(void)
 {
 	struct winsize wsz;
-	time_t t0;
 
 	if (!isatty(STDIN_FILENO) || ioctl(STDIN_FILENO, TIOCGWINSZ, &wsz))
 		return;
 	verbose = 1;
-	t0 = time(NULL);
 }
 
 static void
@@ -587,6 +583,13 @@ if (!(random() & 0xf)) {
 			    lp->start, sz, lp->state, strerror(error));
 			if (verbose)
 				report(lp, sz);
+			if (fdw >= 0 && strlen(unreadable_pattern)) {
+				fill_buf(buf, sz, unreadable_pattern);
+				write_buf(fdw, buf, sz, lp->start);
+			}
+			new_lump(lp->start, sz, lp->state + 1);
+			lp->start += sz;
+			lp->len -= sz;
 			if (error == EINVAL) {
 				printf("Try with -b 131072 or lower ?\n");
 				aborting = 1;
@@ -597,13 +600,6 @@ if (!(random() & 0xf)) {
 				aborting = 1;
 				break;
 			}
-			if (fdw >= 0 && strlen(unreadable_pattern)) {
-				fill_buf(buf, sz, unreadable_pattern);
-				write_buf(fdw, buf, sz, lp->start);
-			}
-			new_lump(lp->start, sz, lp->state + 1);
-			lp->start += sz;
-			lp->len -= sz;
 		}
 		if (aborting)
 			save_worklist();

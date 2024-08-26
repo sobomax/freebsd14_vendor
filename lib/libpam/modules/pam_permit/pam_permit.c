@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright 2001 Mark R V Murray
  * All rights reserved.
@@ -27,8 +27,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 38f44b22260987e4c89fef536197b6e9b6cec5d5 $");
-
 #include <stddef.h>
 
 #define	PAM_SM_AUTH

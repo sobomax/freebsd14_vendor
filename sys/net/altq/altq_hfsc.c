@@ -28,7 +28,6 @@
  * changes without encumbrance.
  *
  * $KAME: altq_hfsc.c,v 1.24 2003/12/05 05:40:46 kjc Exp $
- * $FreeBSD: 0d15b903cd64a64d51f94cb6a4907bc62faa5580 $
  */
 /*
  * H-FSC is described in Proceedings of SIGCOMM'97,
@@ -63,6 +62,7 @@
 
 #include <net/if.h>
 #include <net/if_var.h>
+#include <net/if_private.h>
 #include <netinet/in.h>
 
 #include <netpfil/pf/pf.h>
@@ -150,7 +150,7 @@ hfsc_pfattach(struct pf_altq *a)
 		return (EINVAL);
 	s = splnet();
 	error = altq_attach(&ifp->if_snd, ALTQT_HFSC, a->altq_disc,
-	    hfsc_enqueue, hfsc_dequeue, hfsc_request, NULL, NULL);
+	    hfsc_enqueue, hfsc_dequeue, hfsc_request);
 	splx(s);
 	return (error);
 }

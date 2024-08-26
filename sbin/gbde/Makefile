@@ -1,11 +1,9 @@
-# $FreeBSD: 867a7f8e9b55bf84ae02dd7a7418b90f66fde40f $
 
 PACKAGE=geom
 PROG=	gbde
 SRCS=	gbde.c template.c
 SRCS+=	rijndael-alg-fst.c
 SRCS+=	rijndael-api-fst.c
-SRCS+=	sha512c.c
 SRCS+=	g_bde_lock.c
 
 # rijndael-fst.c does evil casting things which can results in warnings,

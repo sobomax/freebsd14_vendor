@@ -1,7 +1,7 @@
 /*-
  * host_controller_baseband.c
  *
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2001-2002 Maksim Yevmenkin <m_evmenkin@yahoo.com>
  * All rights reserved.
@@ -28,7 +28,6 @@
  * SUCH DAMAGE.
  *
  * $Id: host_controller_baseband.c,v 1.4 2003/08/18 19:19:53 max Exp $
- * $FreeBSD: 6f912c2238bab81ce63cbf935b339d0a0a4805d2 $
  */
 
 #define L2CAP_SOCKET_CHECKED

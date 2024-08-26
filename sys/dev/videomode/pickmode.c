@@ -1,5 +1,4 @@
 /* $NetBSD: pickmode.c,v 1.3 2011/04/09 18:22:31 jdc Exp $ */
-/* $FreeBSD: 533a0ce6032b86880c6c9fdddde3bad142cc633b $ */
 
 /*-
  * Copyright (c) 2006 The NetBSD Foundation
@@ -30,8 +29,6 @@
  */ 
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 533a0ce6032b86880c6c9fdddde3bad142cc633b $");
-
 #include <sys/param.h>
 #include <sys/libkern.h>
 #include <dev/videomode/videomode.h>

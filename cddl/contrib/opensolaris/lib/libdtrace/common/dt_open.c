@@ -59,6 +59,7 @@
 #include <dt_printf.h>
 #include <dt_string.h>
 #include <dt_provider.h>
+#include <dt_oformat.h>
 #ifndef illumos
 #include <sys/sysctl.h>
 #include <string.h>
@@ -1115,6 +1116,15 @@ dt_vopen(int version, int flags, int *errp,
 	 */
 	if (err == ENOENT && modfind("dtraceall") < 0) {
 		kldload("dtraceall"); /* ignore the error */
+#if __SIZEOF_LONG__ == 8
+		if (modfind("linux64elf") >= 0)
+			kldload("systrace_linux");
+		if (modfind("linuxelf") >= 0)
+			kldload("systrace_linux32");
+#else
+		if (modfind("linuxelf") >= 0)
+			kldload("systrace_linux");
+#endif
 		dtfd = open("/dev/dtrace/dtrace", O_RDWR | O_CLOEXEC);
 		err = errno;
 	}
@@ -1173,6 +1183,7 @@ alloc:
 	dtp->dt_version = version;
 	dtp->dt_fd = dtfd;
 	dtp->dt_ftfd = ftfd;
+	dtp->dt_kinstfd = -1;
 	dtp->dt_fterr = fterr;
 	dtp->dt_cdefs_fd = -1;
 	dtp->dt_ddefs_fd = -1;
@@ -1681,6 +1692,8 @@ dtrace_close(dtrace_hdl_t *dtp)
 		(void) close(dtp->dt_fd);
 	if (dtp->dt_ftfd != -1)
 		(void) close(dtp->dt_ftfd);
+	if (dtp->dt_kinstfd != -1)
+		(void) close(dtp->dt_kinstfd);
 	if (dtp->dt_cdefs_fd != -1)
 		(void) close(dtp->dt_cdefs_fd);
 	if (dtp->dt_ddefs_fd != -1)
@@ -1724,6 +1737,8 @@ dtrace_close(dtrace_hdl_t *dtp)
 	free(dtp->dt_kmods);
 #endif
 	free(dtp->dt_provs);
+
+	xo_finish();
 	free(dtp);
 }
 

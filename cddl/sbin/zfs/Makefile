@@ -1,4 +1,3 @@
-# $FreeBSD: 0babca17e98a856bf4c1e4bcf6f6b1febb5ef1c8 $
 
 ZFSTOP=	${SRCTOP}/sys/contrib/openzfs
 
@@ -77,3 +76,5 @@ CFLAGS+= \
 LIBADD=	jail avl nvpair geom  uutil zfs_core spl tpool zutil zfs m crypto
 LDADD+=	-pthread
 .include <bsd.prog.mk>
+
+CWARNFLAGS.zfs_main.c+=	-Wno-unused-variable

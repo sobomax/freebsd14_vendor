@@ -11,7 +11,7 @@
  *    May 12, 1995
  *
  * Copyright (c) 2011 The FreeBSD Foundation
- * All rights reserved.
+ *
  * Portions of this software were developed by David Chisnall
  * under sponsorship from the FreeBSD Foundation.
  *
@@ -45,9 +45,6 @@
 #if defined(LIBC_SCCS) && !defined(lint)
 static char sccsid[] = "@(#)mskanji.c	1.0 (Phase One) 5/5/95";
 #endif /* LIBC_SCCS and not lint */
-#include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 1585886cea31124b3a10401278d2e931cafb4615 $");
-
 #include <sys/types.h>
 #include <errno.h>
 #include <runetype.h>

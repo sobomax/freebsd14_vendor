@@ -1,7 +1,5 @@
 #!/bin/sh
 
-# $FreeBSD: ddb95a753ccaa0cb184d3122dcd795289c59abbc $
-
 scriptpath=$(realpath $0)
 parent=$(dirname $scriptpath)
 blockfiles=${parent}/blockfiles

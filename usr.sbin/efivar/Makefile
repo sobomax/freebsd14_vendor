@@ -1,4 +1,3 @@
-# $FreeBSD: aa00f4b79502cf41aaeeb7400f588121eacaefb5 $
 
 PACKAGE=	efi-tools
 

@@ -31,8 +31,6 @@
 
 #include <sys/cdefs.h>
 __SCCSID("@(#)err.c	8.1 (Berkeley) 6/4/93");
-__FBSDID("$FreeBSD: e72fac99ee614e7c8a5b59fd7b69b1ff23c91439 $");
-
 #include "namespace.h"
 #include <err.h>
 #include <errno.h>

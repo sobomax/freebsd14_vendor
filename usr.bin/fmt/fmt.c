@@ -173,8 +173,6 @@ static const char copyright[] =
 "Copyright (c) 1997 Gareth McCaughan. All rights reserved.\n";
 #endif	/* not lint */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: be196c26977a73ffff37ec5d52c012e84891a74d $");
-
 #include <err.h>
 #include <limits.h>
 #include <locale.h>
@@ -624,7 +622,7 @@ output_word(size_t indent0, size_t indent1, const wchar_t *word, size_t length, 
 	if (new_x <= goal_length) {
 		/*
 		 * After adding the word we still aren't at the goal length,
-		 * so clearly we add it to the buffer rather than outputing
+		 * so clearly we add it to the buffer rather than outputting
 		 * it.
 		 */
 		wmemset(output_buffer + output_buffer_length, L' ',

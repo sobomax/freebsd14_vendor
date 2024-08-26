@@ -25,8 +25,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: c6bf5cbbbf146f3cdbd562f557a749cbc7458cd2 $");
-
 #include "opt_evdev.h"
 
 #include <sys/param.h>
@@ -269,9 +267,8 @@ hvkbd_read_char_locked(keyboard_t *kbd, int wait)
 	uint32_t action;
 	keystroke ks;
 	hv_kbd_sc *sc = kbd->kb_data;
-#ifdef EVDEV_SUPPORT
 	int keycode;
-#endif
+
 	HVKBD_LOCK_ASSERT();
 
 	if (!KBD_IS_ACTIVE(kbd) || !hv_kbd_prod_is_ready(sc))
@@ -664,10 +661,12 @@ hvkbd_ioctl_locked(keyboard_t *kbd, u_long cmd, caddr_t arg)
 		KBD_LED_VAL(kbd) = *(int *)arg;
 		break;
 	case PIO_KEYMAP:	/* set keyboard translation table */
-	case OPIO_KEYMAP:	/* set keyboard translation table (compat) */
 	case PIO_KEYMAPENT:	/* set keyboard translation table entry */
 	case PIO_DEADKEYMAP:	/* set accent key translation table */
+#ifdef COMPAT_FREEBSD13
+	case OPIO_KEYMAP:	/* set keyboard translation table (compat) */
 	case OPIO_DEADKEYMAP:	/* set accent key translation table (compat) */
+#endif /* COMPAT_FREEBSD13 */
 		sc->sc_accents = 0;
 		/* FALLTHROUGH */
 	default:

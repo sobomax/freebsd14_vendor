@@ -42,8 +42,6 @@ static char sccsid[] = "@(#)indent.c	5.17 (Berkeley) 6/7/93";
 #endif
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 7af4c6ae17c60b041b54b651ccfaa6b5938136d8 $");
-
 #include <sys/param.h>
 #include <sys/capsicum.h>
 #include <capsicum_helpers.h>

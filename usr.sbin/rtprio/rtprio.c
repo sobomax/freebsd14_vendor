@@ -35,8 +35,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 9ce74b5547adcc622911bf6831f498390130bfac $");
-
 #include <sys/param.h>
 #include <sys/rtprio.h>
 
@@ -49,7 +47,7 @@ __FBSDID("$FreeBSD: 9ce74b5547adcc622911bf6831f498390130bfac $");
 #include <unistd.h>
 
 static int parseint(const char *, const char *);
-static void usage(void);
+static void usage(void) __dead2;
 
 int
 main(int argc, char *argv[])

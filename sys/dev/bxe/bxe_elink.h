@@ -27,8 +27,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: e5a52a18738a2f3ca3b21c7636e767ef6bd538fd $");
-
 #ifndef ELINK_H
 #define ELINK_H
 

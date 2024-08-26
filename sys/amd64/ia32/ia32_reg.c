@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2005 Peter Wemm
  * All rights reserved.
@@ -24,13 +24,9 @@
  * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
- *
- * $FreeBSD: 539a268ef350bbb5ad2e8307bcf242e81b2b9058 $
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 539a268ef350bbb5ad2e8307bcf242e81b2b9058 $");
-
 #include <sys/param.h>
 #include <sys/elf.h>
 #include <sys/exec.h>

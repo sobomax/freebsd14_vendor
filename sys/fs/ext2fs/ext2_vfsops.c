@@ -35,7 +35,6 @@
  * SUCH DAMAGE.
  *
  *	@(#)ffs_vfsops.c	8.8 (Berkeley) 4/18/94
- * $FreeBSD: e35b989c285b32056c402052363c97b0b0ad13c0 $
  */
 
 #include <sys/param.h>
@@ -111,7 +110,7 @@ static int	ext2_check_sb_compat(struct ext2fs *es, struct cdev *dev,
 static int	ext2_compute_sb_data(struct vnode * devvp,
 		    struct ext2fs * es, struct m_ext2fs * fs);
 
-static const char *ext2_opts[] = { "acls", "async", "noatime", "noclusterr", 
+static const char *ext2_opts[] = { "acls", "async", "noatime", "noclusterr",
     "noclusterw", "noexec", "export", "force", "from", "multilabel",
     "suiddir", "nosymfollow", "sync", "union", NULL };
 
@@ -240,10 +239,10 @@ ext2_mount(struct mount *mp)
 	 */
 	if (fspec == NULL)
 		return (EINVAL);
-	NDINIT(ndp, LOOKUP, FOLLOW | LOCKLEAF, UIO_SYSSPACE, fspec, td);
+	NDINIT(ndp, LOOKUP, FOLLOW | LOCKLEAF, UIO_SYSSPACE, fspec);
 	if ((error = namei(ndp)) != 0)
 		return (error);
-	NDFREE(ndp, NDF_ONLY_PNBUF);
+	NDFREE_PNBUF(ndp);
 	devvp = ndp->ni_vp;
 
 	if (!vn_isdisk_error(devvp, &error)) {
@@ -343,7 +342,7 @@ ext2_cg_location(struct m_ext2fs *fs, int number)
 	 * Godmar thinks: if the blocksize is greater than 1024, then
 	 * the superblock is logically part of block zero.
 	 */
-	logical_sb = fs->e2fs_bsize > SBSIZE ? 0 : 1;
+	logical_sb = fs->e2fs_bsize > SBLOCKSIZE ? 0 : 1;
 
 	if (!EXT2_HAS_INCOMPAT_FEATURE(fs, EXT2F_INCOMPAT_META_BG) ||
 	    number < le32toh(fs->e2fs->e3fs_first_meta_bg))
@@ -464,13 +463,6 @@ ext2_compute_sb_data(struct vnode *devvp, struct ext2fs *es,
 	int i, j;
 	int g_count = 0;
 	int error;
-
-	/* Check if first dblock is valid */
-	if (fs->e2fs->e2fs_bcount >= 1024 && fs->e2fs->e2fs_first_dblock) {
-		SDT_PROBE1(ext2fs, , vfsops, ext2_compute_sb_data_error,
-		    "first dblock is invalid");
-		return (EINVAL);
-	}
 
 	/* Check checksum features */
 	if (EXT2_HAS_RO_COMPAT_FEATURE(fs, EXT2F_ROCOMPAT_GDT_CSUM) &&
@@ -767,9 +759,9 @@ ext2_reload(struct mount *mp, struct thread *td)
 	 * Step 2: re-read superblock from disk.
 	 * constants have been adjusted for ext2
 	 */
-	if ((error = bread(devvp, SBLOCK, SBSIZE, NOCRED, &bp)) != 0)
+	if ((error = bread(devvp, SBLOCK, SBLOCKBLKSIZE, NOCRED, &bp)) != 0)
 		return (error);
-	es = (struct ext2fs *)bp->b_data;
+	es = (struct ext2fs *)((char *)bp->b_data + SBLOCKOFFSET);
 	if (ext2_check_sb_compat(es, devvp->v_rdev, 0) != 0) {
 		brelse(bp);
 		return (EIO);		/* XXX needs translation */
@@ -781,10 +773,7 @@ ext2_reload(struct mount *mp, struct thread *td)
 		brelse(bp);
 		return (error);
 	}
-#ifdef UNKLAR
-	if (fs->fs_sbsize < SBSIZE)
-		bp->b_flags |= B_INVAL;
-#endif
+
 	brelse(bp);
 
 	/*
@@ -819,8 +808,7 @@ loop:
 		error = bread(devvp, fsbtodb(fs, ino_to_fsba(fs, ip->i_number)),
 		    (int)fs->e2fs_bsize, NOCRED, &bp);
 		if (error) {
-			VOP_UNLOCK(vp);
-			vrele(vp);
+			vput(vp);
 			MNT_VNODE_FOREACH_ALL_ABORT(mp, mvp);
 			return (error);
 		}
@@ -829,8 +817,7 @@ loop:
 		    EXT2_INODE_SIZE(fs) * ino_to_fsbo(fs, ip->i_number)), ip);
 
 		brelse(bp);
-		VOP_UNLOCK(vp);
-		vrele(vp);
+		vput(vp);
 
 		if (error) {
 			MNT_VNODE_FOREACH_ALL_ABORT(mp, mvp);
@@ -861,6 +848,9 @@ ext2_mountfs(struct vnode *devvp, struct mount *mp)
 	int32_t *lp;
 	int32_t e2fs_maxcontig;
 
+	bp = NULL;
+	ump = NULL;
+
 	ronly = vfs_flagopt(mp->mnt_optnew, "ro", NULL, 0);
 	/* XXX: use VOP_ACESS to check FS perms */
 	g_topology_lock();
@@ -870,13 +860,16 @@ ext2_mountfs(struct vnode *devvp, struct mount *mp)
 	if (error)
 		return (error);
 
-	/* XXX: should we check for some sectorsize or 512 instead? */
-	if (((SBSIZE % cp->provider->sectorsize) != 0) ||
-	    (SBSIZE < cp->provider->sectorsize)) {
-		g_topology_lock();
-		g_vfs_close(cp);
-		g_topology_unlock();
-		return (EINVAL);
+	if (PAGE_SIZE != SBLOCKBLKSIZE) {
+		printf("WARNING: Unsupported page size %d\n", PAGE_SIZE);
+		error = EINVAL;
+		goto out;
+	}
+	if (cp->provider->sectorsize > PAGE_SIZE) {
+		printf("WARNING: Device sectorsize(%d) is more than %d\n",
+		    cp->provider->sectorsize, PAGE_SIZE);
+		error = EINVAL;
+		goto out;
 	}
 
 	bo = &devvp->v_bufobj;
@@ -886,12 +879,9 @@ ext2_mountfs(struct vnode *devvp, struct mount *mp)
 		mp->mnt_iosize_max = devvp->v_rdev->si_iosize_max;
 	if (mp->mnt_iosize_max > maxphys)
 		mp->mnt_iosize_max = maxphys;
-
-	bp = NULL;
-	ump = NULL;
-	if ((error = bread(devvp, SBLOCK, SBSIZE, NOCRED, &bp)) != 0)
+	if ((error = bread(devvp, SBLOCK, SBLOCKBLKSIZE, NOCRED, &bp)) != 0)
 		goto out;
-	es = (struct ext2fs *)bp->b_data;
+	es = (struct ext2fs *)((char *)bp->b_data + SBLOCKOFFSET);
 	if (ext2_check_sb_compat(es, dev, ronly) != 0) {
 		error = EINVAL;		/* XXX needs translation */
 		goto out;
@@ -1171,8 +1161,7 @@ loop:
 		}
 		if ((error = VOP_FSYNC(vp, waitfor, td)) != 0)
 			allerror = error;
-		VOP_UNLOCK(vp);
-		vrele(vp);
+		vput(vp);
 	}
 
 	/*
@@ -1234,6 +1223,7 @@ ext2_vget(struct mount *mp, ino_t ino, int flags, struct vnode **vpp)
 	ip->i_e2fs = fs = ump->um_e2fs;
 	ip->i_ump = ump;
 	ip->i_number = ino;
+	cluster_init_vn(&ip->i_clusterw);
 
 	lockmgr(vp->v_vnlock, LK_EXCLUSIVE, NULL);
 	error = insmntque(vp, mp);
@@ -1287,11 +1277,18 @@ ext2_vget(struct mount *mp, ino_t ino, int flags, struct vnode **vpp)
 		for (i = used_blocks; i < EXT2_NDIR_BLOCKS; i++)
 			ip->i_db[i] = 0;
 	}
+
+	bqrelse(bp);
+
 #ifdef EXT2FS_PRINT_EXTENTS
 	ext2_print_inode(ip);
-	ext4_ext_print_extent_tree_status(ip);
+	error = ext4_ext_walk(ip);
+	if (error) {
+		vput(vp);
+		*vpp = NULL;
+		return (error);
+	}
 #endif
-	bqrelse(bp);
 
 	/*
 	 * Initialize the vnode from the inode, check for aliases.
@@ -1307,6 +1304,7 @@ ext2_vget(struct mount *mp, ino_t ino, int flags, struct vnode **vpp)
 	 * Finish inode initialization.
 	 */
 
+	vn_set_state(vp, VSTATE_CONSTRUCTED);
 	*vpp = vp;
 	return (0);
 }
@@ -1378,8 +1376,12 @@ ext2_sbupdate(struct ext2mount *mp, int waitfor)
 	if (EXT2_HAS_RO_COMPAT_FEATURE(fs, EXT2F_ROCOMPAT_METADATA_CKSUM))
 		ext2_sb_csum_set(fs);
 
-	bp = getblk(mp->um_devvp, SBLOCK, SBSIZE, 0, 0, 0);
-	bcopy((caddr_t)es, bp->b_data, (u_int)sizeof(struct ext2fs));
+	error = bread(mp->um_devvp, SBLOCK, SBLOCKBLKSIZE, NOCRED, &bp);
+	if (error != 0)
+		return (error);
+
+	memcpy((char *)bp->b_data + SBLOCKOFFSET, (caddr_t)es,
+	    (u_int)sizeof(struct ext2fs));
 	if (waitfor == MNT_WAIT)
 		error = bwrite(bp);
 	else

@@ -1,4 +1,3 @@
-# $FreeBSD: 5caccbe6eb61c1ba3937e4b3a6a086b0c1c3d3c0 $
 
 .include <src.opts.mk>
 
@@ -10,6 +9,28 @@ DEVD=	devmatch.conf
 DEVDDIR=	/etc/devd
 .if ${MK_ACPI} != "no"
 DEVD+=	asus.conf
+.endif
+
+CONFGROUPS+=		DHCLIENT
+DHCLIENTDIR=		${DEVDDIR}
+DHCLIENT+=		dhclient.conf
+DHCLIENTPACKAGE=	dhclient
+
+CONFGROUPS+=		POWERPROFILE
+POWERPROFILEDIR=	${DEVDDIR}
+POWERPROFILE+=		power_profile.conf
+POWERPROFILEPACKAGE=	acpi
+
+CONFGROUPS+=		CONSOLE
+CONSOLEDIR=		${DEVDDIR}
+CONSOLE+=		moused.conf syscons.conf
+CONSOLEPACKAGE=		console-tools
+
+.if ${MK_BLUETOOTH} != "no"
+CONFGROUPS+=		BLUETOOTH
+BLUETOOTHDIR=		${DEVDDIR}
+BLUETOOTH+=		bluetooth.conf
+BLUETOOTHPACKAGE=	bluetooth
 .endif
 
 .if ${MK_HYPERV} != "no"
@@ -34,8 +55,6 @@ DEVD+=	zfs.conf
 PROG_CXX=devd
 SRCS=	devd.cc token.l parse.y y.tab.h
 MAN=	devd.8 devd.conf.5
-
-NO_SHARED?=YES
 
 LIBADD=	util
 

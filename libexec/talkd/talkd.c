@@ -39,8 +39,6 @@ static const char copyright[] =
 #if 0
 static char sccsid[] = "@(#)talkd.c	8.1 (Berkeley) 6/4/93";
 #endif
-static const char rcsid[] =
-  "$FreeBSD: eb609207b1569940b91f527dd158d641cb5ab5c0 $";
 #endif /* not lint */
 
 /*

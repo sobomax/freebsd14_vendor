@@ -1,4 +1,3 @@
-# $FreeBSD: 036ec7fad4faa567153dea16368719b047cfbfe2 $
 # All the dts files for omap4 systems we support.
 DTS=	\
 	omap4-duovero-parlor.dts \

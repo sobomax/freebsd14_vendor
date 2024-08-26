@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 1999, 2000, 2001 Robert N. M. Watson
  * All rights reserved.
@@ -28,9 +28,6 @@
 /*
  * acl_free -- free ACL objects from user memory
  */
-
-#include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 49d6b722d2a9313dbe105ad04627e9350e92b05d $");
 
 #include <sys/types.h>
 #include "namespace.h"

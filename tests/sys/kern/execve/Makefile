@@ -1,4 +1,3 @@
-# $FreeBSD: d1dcae623df46330cd5afe0ea0abf22a6858b760 $
 
 TESTSDIR=	${TESTSBASE}/sys/kern/execve
 

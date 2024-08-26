@@ -22,8 +22,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: cde1ad990ff93d8359b59b1256686b4f405b72c2 $");
-
 #include "opt_wlan.h"
 
 #include <sys/param.h>
@@ -174,7 +172,7 @@ void		otus_sub_rxeof(struct otus_softc *, uint8_t *, int,
 static int	otus_tx(struct otus_softc *, struct ieee80211_node *,
 		    struct mbuf *, struct otus_data *,
 		    const struct ieee80211_bpf_params *);
-int		otus_ioctl(struct ifnet *, u_long, caddr_t);
+int		otus_ioctl(if_t, u_long, caddr_t);
 int		otus_set_multi(struct otus_softc *);
 static int	otus_updateedca(struct ieee80211com *);
 static void	otus_updateedca_locked(struct otus_softc *);
@@ -221,9 +219,7 @@ static driver_t otus_driver = {
 	.size = sizeof(struct otus_softc)
 };
 
-static devclass_t otus_devclass;
-
-DRIVER_MODULE(otus, uhub, otus_driver, otus_devclass, NULL, 0);
+DRIVER_MODULE(otus, uhub, otus_driver, NULL, NULL);
 MODULE_DEPEND(otus, wlan, 1, 1, 1);
 MODULE_DEPEND(otus, usb, 1, 1, 1);
 MODULE_DEPEND(otus, firmware, 1, 1, 1);
@@ -1806,7 +1802,6 @@ otus_rxeof(struct usb_xfer *xfer, struct otus_data *data, struct mbufq *rxq)
 static void
 otus_bulk_rx_callback(struct usb_xfer *xfer, usb_error_t error)
 {
-	struct epoch_tracker et;
 	struct otus_softc *sc = usbd_xfer_softc(xfer);
 	struct ieee80211com *ic = &sc->sc_ic;
 	struct ieee80211_frame *wh;
@@ -1857,7 +1852,6 @@ tr_setup:
 		 * callback and safe to unlock.
 		 */
 		OTUS_UNLOCK(sc);
-		NET_EPOCH_ENTER(et);
 		while ((m = mbufq_dequeue(&scrx)) != NULL) {
 			wh = mtod(m, struct ieee80211_frame *);
 			ni = ieee80211_find_rxnode(ic,
@@ -1870,7 +1864,6 @@ tr_setup:
 			} else
 				(void)ieee80211_input_mimo_all(ic, m);
 		}
-		NET_EPOCH_EXIT(et);
 #ifdef	IEEE80211_SUPPORT_SUPERG
 		ieee80211_ff_age_all(ic, 100);
 #endif

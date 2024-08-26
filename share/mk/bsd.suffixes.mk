@@ -1,4 +1,3 @@
-# $FreeBSD: 5396bae05087891ff3b7ea267e30f7d5f86fdfb4 $
 
 .sh:
 	cp -f ${.IMPSRC} ${.TARGET}
@@ -55,7 +54,7 @@
 	${CTFCONVERT_CMD}
 
 .s.o:
-	${AS} ${AFLAGS} -o ${.TARGET} ${.IMPSRC}
+	${CC:N${CCACHE_BIN}} -x assembler ${ACFLAGS} -c ${.IMPSRC} -o ${.TARGET}
 	${CTFCONVERT_CMD}
 
 # XXX not -j safe

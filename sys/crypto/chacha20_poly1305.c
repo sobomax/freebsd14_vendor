@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2021 The FreeBSD Foundation
  *
@@ -15,10 +15,10 @@
  *    notice, this list of conditions and the following disclaimer in the
  *    documentation and/or other materials provided with the distribution.
  *
- * THIS SOFTWARE IS PROVIDED BY THE REGENTS AND CONTRIBUTORS ``AS IS'' AND
+ * THIS SOFTWARE IS PROVIDED BY THE AUTHOR AND CONTRIBUTORS ``AS IS'' AND
  * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
- * ARE DISCLAIMED.  IN NO EVENT SHALL THE REGENTS OR CONTRIBUTORS BE LIABLE
+ * ARE DISCLAIMED.  IN NO EVENT SHALL THE AUTHOR OR CONTRIBUTORS BE LIABLE
  * FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
  * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
  * OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
@@ -30,42 +30,55 @@
 
 #include <sys/endian.h>
 #include <crypto/chacha20_poly1305.h>
+#include <opencrypto/xform_enc.h>
 
-#include <sodium/crypto_aead_chacha20poly1305.h>
-#include <sodium/crypto_aead_xchacha20poly1305.h>
+static const uint8_t zeroes[POLY1305_BLOCK_LEN];
 
-/*
- * libsodium's chacha20poly1305 AEAD cipher does not construct the
- * Poly1305 digest in the same method as the IETF AEAD construct.
- * Specifically, libsodium does not pad the AAD and cipher text with
- * zeroes to a 16 byte boundary, and libsodium inserts the AAD and
- * cipher text lengths as inputs into the digest after each data
- * segment rather than appending both data lengths after the padded
- * cipher text.
- *
- * Instead, always use libsodium's chacha20poly1305 IETF AEAD cipher.
- * This cipher uses a 96-bit nonce with a 32-bit counter.  The data
- * encrypted here should never be large enough to overflow the counter
- * to the second word, so just pass zeros as the first word of the
- * nonce to mimic a 64-bit nonce and 64-bit counter.
- */
 void
 chacha20_poly1305_encrypt(uint8_t *dst, const uint8_t *src,
     const size_t src_len, const uint8_t *aad, const size_t aad_len,
     const uint8_t *nonce, const size_t nonce_len, const uint8_t *key)
 {
-	char local_nonce[12];
+	const struct enc_xform *exf;
+	void *ctx;
+	size_t resid, todo;
+	uint64_t lengths[2];
 
-	MPASS(aad_len + src_len <=
-	    crypto_aead_chacha20poly1305_ietf_MESSAGEBYTES_MAX);
-	if (nonce_len == crypto_aead_chacha20poly1305_ietf_NPUBBYTES)
-		memcpy(local_nonce, nonce, sizeof(local_nonce));
-	else {
-		memset(local_nonce, 0, 4);
-		memcpy(local_nonce + 4, nonce, 8);
+	exf = &enc_xform_chacha20_poly1305;
+	ctx = __builtin_alloca(exf->ctxsize);
+	exf->setkey(ctx, key, CHACHA20_POLY1305_KEY);
+	exf->reinit(ctx, nonce, nonce_len);
+
+	exf->update(ctx, aad, aad_len);
+	if (aad_len % POLY1305_BLOCK_LEN != 0)
+		exf->update(ctx, zeroes,
+		    POLY1305_BLOCK_LEN - aad_len % POLY1305_BLOCK_LEN);
+
+	resid = src_len;
+	todo = rounddown2(resid, CHACHA20_NATIVE_BLOCK_LEN);
+	if (todo > 0) {
+		exf->encrypt_multi(ctx, src, dst, todo);
+		exf->update(ctx, dst, todo);
+		src += todo;
+		dst += todo;
+		resid -= todo;
 	}
-	crypto_aead_chacha20poly1305_ietf_encrypt(dst, NULL, src, src_len,
-	    aad, aad_len, NULL, local_nonce, key);
+	if (resid > 0) {
+		exf->encrypt_last(ctx, src, dst, resid);
+		exf->update(ctx, dst, resid);
+		dst += resid;
+		if (resid % POLY1305_BLOCK_LEN != 0)
+			exf->update(ctx, zeroes,
+			    POLY1305_BLOCK_LEN - resid % POLY1305_BLOCK_LEN);
+	}
+
+	lengths[0] = htole64(aad_len);
+	lengths[1] = htole64(src_len);
+	exf->update(ctx, lengths, sizeof(lengths));
+	exf->final(dst, ctx);
+
+	explicit_bzero(ctx, exf->ctxsize);
+	explicit_bzero(lengths, sizeof(lengths));
 }
 
 bool
@@ -73,20 +86,55 @@ chacha20_poly1305_decrypt(uint8_t *dst, const uint8_t *src,
     const size_t src_len, const uint8_t *aad, const size_t aad_len,
     const uint8_t *nonce, const size_t nonce_len, const uint8_t *key)
 {
-	char local_nonce[12];
-	int ret;
+	const struct enc_xform *exf;
+	void *ctx;
+	size_t resid, todo;
+	union {
+		uint64_t lengths[2];
+		char tag[POLY1305_HASH_LEN];
+	} u;
+	bool result;
 
-	MPASS(aad_len + src_len <=
-	    crypto_aead_chacha20poly1305_ietf_MESSAGEBYTES_MAX);
-	if (nonce_len == crypto_aead_chacha20poly1305_ietf_NPUBBYTES)
-		memcpy(local_nonce, nonce, sizeof(local_nonce));
-	else {
-		memset(local_nonce, 0, 4);
-		memcpy(local_nonce + 4, nonce, 8);
+	if (src_len < POLY1305_HASH_LEN)
+		return (false);
+	resid = src_len - POLY1305_HASH_LEN;
+
+	exf = &enc_xform_chacha20_poly1305;
+	ctx = __builtin_alloca(exf->ctxsize);
+	exf->setkey(ctx, key, CHACHA20_POLY1305_KEY);
+	exf->reinit(ctx, nonce, nonce_len);
+
+	exf->update(ctx, aad, aad_len);
+	if (aad_len % POLY1305_BLOCK_LEN != 0)
+		exf->update(ctx, zeroes,
+		    POLY1305_BLOCK_LEN - aad_len % POLY1305_BLOCK_LEN);
+	exf->update(ctx, src, resid);
+	if (resid % POLY1305_BLOCK_LEN != 0)
+		exf->update(ctx, zeroes,
+		    POLY1305_BLOCK_LEN - resid % POLY1305_BLOCK_LEN);
+
+	u.lengths[0] = htole64(aad_len);
+	u.lengths[1] = htole64(resid);
+	exf->update(ctx, u.lengths, sizeof(u.lengths));
+	exf->final(u.tag, ctx);
+	result = (timingsafe_bcmp(u.tag, src + resid, POLY1305_HASH_LEN) == 0);
+	if (!result)
+		goto out;
+
+	todo = rounddown2(resid, CHACHA20_NATIVE_BLOCK_LEN);
+	if (todo > 0) {
+		exf->decrypt_multi(ctx, src, dst, todo);
+		src += todo;
+		dst += todo;
+		resid -= todo;
 	}
-	ret = crypto_aead_chacha20poly1305_ietf_decrypt(dst, NULL, NULL,
-	    src, src_len, aad, aad_len, local_nonce, key);
-	return (ret == 0);
+	if (resid > 0)
+		exf->decrypt_last(ctx, src, dst, resid);
+
+out:
+	explicit_bzero(ctx, exf->ctxsize);
+	explicit_bzero(&u, sizeof(u));
+	return (result);
 }
 
 void
@@ -94,8 +142,46 @@ xchacha20_poly1305_encrypt(uint8_t *dst, const uint8_t *src,
     const size_t src_len, const uint8_t *aad, const size_t aad_len,
     const uint8_t *nonce, const uint8_t *key)
 {
-	crypto_aead_xchacha20poly1305_ietf_encrypt(dst, NULL, src, src_len,
-	    aad, aad_len, NULL, nonce, key);
+	const struct enc_xform *exf;
+	void *ctx;
+	size_t resid, todo;
+	uint64_t lengths[2];
+
+	exf = &enc_xform_xchacha20_poly1305;
+	ctx = __builtin_alloca(exf->ctxsize);
+	exf->setkey(ctx, key, XCHACHA20_POLY1305_KEY);
+	exf->reinit(ctx, nonce, XCHACHA20_POLY1305_IV_LEN);
+
+	exf->update(ctx, aad, aad_len);
+	if (aad_len % POLY1305_BLOCK_LEN != 0)
+		exf->update(ctx, zeroes,
+		    POLY1305_BLOCK_LEN - aad_len % POLY1305_BLOCK_LEN);
+
+	resid = src_len;
+	todo = rounddown2(resid, CHACHA20_NATIVE_BLOCK_LEN);
+	if (todo > 0) {
+		exf->encrypt_multi(ctx, src, dst, todo);
+		exf->update(ctx, dst, todo);
+		src += todo;
+		dst += todo;
+		resid -= todo;
+	}
+	if (resid > 0) {
+		exf->encrypt_last(ctx, src, dst, resid);
+		exf->update(ctx, dst, resid);
+		dst += resid;
+		if (resid % POLY1305_BLOCK_LEN != 0)
+			exf->update(ctx, zeroes,
+			    POLY1305_BLOCK_LEN - resid % POLY1305_BLOCK_LEN);
+	}
+
+	lengths[0] = htole64(aad_len);
+	lengths[1] = htole64(src_len);
+	exf->update(ctx, lengths, sizeof(lengths));
+	exf->final(dst, ctx);
+
+	explicit_bzero(ctx, exf->ctxsize);
+	explicit_bzero(lengths, sizeof(lengths));
 }
 
 bool
@@ -103,6 +189,53 @@ xchacha20_poly1305_decrypt(uint8_t *dst, const uint8_t *src,
     const size_t src_len, const uint8_t *aad, const size_t aad_len,
     const uint8_t *nonce, const uint8_t *key)
 {
-	return (crypto_aead_xchacha20poly1305_ietf_decrypt(dst, NULL, NULL,
-	    src, src_len, aad, aad_len, nonce, key) == 0);
+	const struct enc_xform *exf;
+	void *ctx;
+	size_t resid, todo;
+	union {
+		uint64_t lengths[2];
+		char tag[POLY1305_HASH_LEN];
+	} u;
+	bool result;
+
+	if (src_len < POLY1305_HASH_LEN)
+		return (false);
+	resid = src_len - POLY1305_HASH_LEN;
+
+	exf = &enc_xform_xchacha20_poly1305;
+	ctx = __builtin_alloca(exf->ctxsize);
+	exf->setkey(ctx, key, XCHACHA20_POLY1305_KEY);
+	exf->reinit(ctx, nonce, XCHACHA20_POLY1305_IV_LEN);
+
+	exf->update(ctx, aad, aad_len);
+	if (aad_len % POLY1305_BLOCK_LEN != 0)
+		exf->update(ctx, zeroes,
+		    POLY1305_BLOCK_LEN - aad_len % POLY1305_BLOCK_LEN);
+	exf->update(ctx, src, resid);
+	if (resid % POLY1305_BLOCK_LEN != 0)
+		exf->update(ctx, zeroes,
+		    POLY1305_BLOCK_LEN - resid % POLY1305_BLOCK_LEN);
+
+	u.lengths[0] = htole64(aad_len);
+	u.lengths[1] = htole64(resid);
+	exf->update(ctx, u.lengths, sizeof(u.lengths));
+	exf->final(u.tag, ctx);
+	result = (timingsafe_bcmp(u.tag, src + resid, POLY1305_HASH_LEN) == 0);
+	if (!result)
+		goto out;
+
+	todo = rounddown2(resid, CHACHA20_NATIVE_BLOCK_LEN);
+	if (todo > 0) {
+		exf->decrypt_multi(ctx, src, dst, todo);
+		src += todo;
+		dst += todo;
+		resid -= todo;
+	}
+	if (resid > 0)
+		exf->decrypt_last(ctx, src, dst, resid);
+
+out:
+	explicit_bzero(ctx, exf->ctxsize);
+	explicit_bzero(&u, sizeof(u));
+	return (result);
 }

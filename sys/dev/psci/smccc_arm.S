@@ -32,8 +32,6 @@
  */
 
 #include <machine/asm.h>
-__FBSDID("$FreeBSD: dd7cd6a690bdbf66ebb003ea5eef208a7d9d80fb $");
-
 .arch_extension sec	/* For smc */
 .arch_extension virt	/* For hvc */
 

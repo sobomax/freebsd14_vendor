@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2011-2013 Qlogic Corporation
  * All rights reserved.
@@ -33,8 +33,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 7966fc53b84f585f0d2d5689c0894cdd6b5c6e02 $");
-
 #include "qla_os.h"
 #include "qla_reg.h"
 #include "qla_hw.h"
@@ -58,7 +56,7 @@ qla_rx_intr(qla_host_t *ha, uint64_t data, uint32_t sds_idx,
 	uint32_t idx, length, status, ring;
 	qla_rx_buf_t *rxb;
 	struct mbuf *mp;
-	struct ifnet *ifp = ha->ifp;
+	if_t ifp = ha->ifp;
 	qla_sds_t *sdsp;
 	struct ether_vlan_header *eh;
 
@@ -145,7 +143,7 @@ qla_rx_intr(qla_host_t *ha, uint64_t data, uint32_t sds_idx,
 	} else
 #endif
 	{
-		(*ifp->if_input)(ifp, mp);
+		if_input(ifp, mp);
 	}
 
 	if (sdsp->rx_free > std_replenish)
@@ -383,14 +381,12 @@ qla_rcv(void *context, int pending)
 {
 	qla_ivec_t *ivec = context;
 	qla_host_t *ha;
-	device_t dev;
 	qla_hw_t *hw;
 	uint32_t sds_idx;
 	uint32_t ret;
-	struct ifnet *ifp;
+	if_t ifp;
 
 	ha = ivec->ha;
-	dev = ha->pci_dev;
 	hw = &ha->hw;
 	sds_idx = ivec->irq_rid - 1;
 	ifp = ha->ifp;
@@ -399,7 +395,7 @@ qla_rcv(void *context, int pending)
 		if (sds_idx == 0) {
 			if (qla_le32_to_host(*(hw->tx_cons)) != hw->txr_comp) {
 				taskqueue_enqueue(ha->tx_tq, &ha->tx_task);
-			} else if ((ifp->if_snd.ifq_head != NULL) &&
+			} else if (!if_sendq_empty(ifp) &&
 					QL_RUNNING(ifp)) {
 				taskqueue_enqueue(ha->tx_tq, &ha->tx_task);
 			}

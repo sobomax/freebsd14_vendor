@@ -1,7 +1,7 @@
-# $FreeBSD: ddcfbdc6146ea5d24868716b7500f3f6334ec6e7 $
 
 PACKAGE=	tests
 
+ATF_TESTS_SH=	unifdef_test
 NETBSD_ATF_TESTS_SH=	basic_test
 
 ${PACKAGE}FILES+=	d_basic.in

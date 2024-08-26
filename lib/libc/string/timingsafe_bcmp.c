@@ -15,9 +15,6 @@
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  */
 
-#include <sys/cdefs.h>
-__FBSDID("$FreeBSD: d098158059f343930610b54cd014552fe7679fc6 $");
-
 #include <string.h>
 
 int __timingsafe_bcmp(const void *, const void *, size_t);

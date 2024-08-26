@@ -31,8 +31,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 9f934e19e763e2ad22d6df053962be1cc2c3916d $");
-
 /* Communications core for Avago Technologies (LSI) MPT3 */
 
 /* TODO Move headers to mprvar */
@@ -306,7 +304,6 @@ mprsas_log_command(struct mpr_command *cm, u_int level, const char *fmt, ...)
 	struct sbuf sb;
 	va_list ap;
 	char str[224];
-	char path_str[64];
 
 	if (cm == NULL)
 		return;
@@ -320,9 +317,7 @@ mprsas_log_command(struct mpr_command *cm, u_int level, const char *fmt, ...)
 	va_start(ap, fmt);
 
 	if (cm->cm_ccb != NULL) {
-		xpt_path_string(cm->cm_ccb->csio.ccb_h.path, path_str,
-		    sizeof(path_str));
-		sbuf_cat(&sb, path_str);
+		xpt_path_sbuf(cm->cm_ccb->csio.ccb_h.path, &sb);
 		if (cm->cm_ccb->ccb_h.func_code == XPT_SCSI_IO) {
 			scsi_command_string(&cm->cm_ccb->csio, &sb);
 			sbuf_printf(&sb, "length %d ",
@@ -618,7 +613,9 @@ mprsas_remove_device(struct mpr_softc *sc, struct mpr_command *tm)
 	 * if so.
 	 */
 	if (TAILQ_FIRST(&targ->commands) == NULL) {
-		mpr_dprint(sc, MPR_INFO, "No pending commands: starting remove_device\n");
+		mpr_dprint(sc, MPR_INFO,
+		    "No pending commands: starting remove_device for target %u handle 0x%04x\n",
+		    targ->tid, handle);
 		mpr_map_command(sc, tm);
 		targ->pending_remove_tm = NULL;
 	} else {
@@ -820,8 +817,6 @@ mpr_attach_sas(struct mpr_softc *sc)
 	sc->sassc->startup_refcount = 0;
 	mprsas_startup_increment(sassc);
 
-	callout_init(&sassc->discovery_callout, 1 /*mpsafe*/);
-
 	mpr_unlock(sc);
 
 	/*
@@ -936,9 +931,6 @@ mprsas_discovery_end(struct mprsas_softc *sassc)
 	struct mpr_softc *sc = sassc->sc;
 
 	MPR_FUNCTRACE(sc);
-
-	if (sassc->flags & MPRSAS_DISCOVERY_TIMEOUT_PENDING)
-		callout_stop(&sassc->discovery_callout);
 
 	/*
 	 * After discovery has completed, check the mapping table for any
@@ -1869,6 +1861,15 @@ mprsas_action_scsiio(struct mprsas_softc *sassc, union ccb *ccb)
 	targ = &sassc->targets[csio->ccb_h.target_id];
 	mpr_dprint(sc, MPR_TRACE, "ccb %p target flag %x\n", ccb, targ->flags);
 	if (targ->handle == 0x0) {
+		if (targ->flags & MPRSAS_TARGET_INDIAGRESET) {
+			mpr_dprint(sc, MPR_ERROR,
+			    "%s NULL handle for target %u in diag reset freezing queue\n",
+			    __func__, csio->ccb_h.target_id);
+			ccb->ccb_h.status = CAM_REQUEUE_REQ | CAM_DEV_QFRZN;
+			xpt_freeze_devq(ccb->ccb_h.path, 1);
+			xpt_done(ccb);
+			return;
+		}
 		mpr_dprint(sc, MPR_ERROR, "%s NULL handle for target %u\n", 
 		    __func__, csio->ccb_h.target_id);
 		mprsas_set_ccbstatus(ccb, CAM_DEV_NOT_THERE);
@@ -2761,13 +2762,13 @@ mprsas_scsiio_complete(struct mpr_softc *sc, struct mpr_command *cm)
 		 * count by returning CAM_REQUEUE_REQ.  Unfortunately, if
 		 * we hit a persistent drive problem that returns one of
 		 * these error codes, we would retry indefinitely.  So,
-		 * return CAM_REQ_CMP_ERROR so that we decrement the retry
+		 * return CAM_REQ_CMP_ERR so that we decrement the retry
 		 * count and avoid infinite retries.  We're taking the
 		 * potential risk of flagging false failures in the event
 		 * of a topology-related error (e.g. a SAS expander problem
 		 * causes a command addressed to a drive to fail), but
 		 * avoiding getting into an infinite retry loop. However,
-		 * if we get them while were moving a device, we should
+		 * if we get them while were removing a device, we should
 		 * fail the request as 'not there' because the device
 		 * is effectively gone.
 		 */
@@ -2838,7 +2839,9 @@ mprsas_scsiio_complete(struct mpr_softc *sc, struct mpr_command *cm)
 	if (cm->cm_targ->flags & MPRSAS_TARGET_INREMOVAL) {
 		if (TAILQ_FIRST(&cm->cm_targ->commands) == NULL &&
 		    cm->cm_targ->pending_remove_tm != NULL) {
-			mpr_dprint(sc, MPR_INFO, "Last pending command complete: starting remove_device\n");
+			mpr_dprint(sc, MPR_INFO,
+			    "Last pending command complete: starting remove_device target %u handle 0x%04x\n",
+			    cm->cm_targ->tid, cm->cm_targ->handle);
 			mpr_map_command(sc, cm->cm_targ->pending_remove_tm);
 			cm->cm_targ->pending_remove_tm = NULL;
 		}
@@ -3382,6 +3385,7 @@ mprsas_async(void *callback_arg, uint32_t code, struct cam_path *path,
 		}
 
 		bzero(&rcap_buf, sizeof(rcap_buf));
+		bzero(&cdai, sizeof(cdai));
 		xpt_setup_ccb(&cdai.ccb_h, path, CAM_PRIORITY_NORMAL);
 		cdai.ccb_h.func_code = XPT_DEV_ADVINFO;
 		cdai.ccb_h.flags = CAM_DIR_IN;

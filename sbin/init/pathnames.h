@@ -32,7 +32,6 @@
  * SUCH DAMAGE.
  *
  *	@(#)pathnames.h	8.1 (Berkeley) 6/5/93
- * $FreeBSD: 7dc75ba524914467c334150a9c4144596b8ae127 $
  */
 
 #include <paths.h>

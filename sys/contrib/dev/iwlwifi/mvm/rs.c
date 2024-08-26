@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: fb9c7210122c8c743e9156aaf042e190c283d941 $
+ * $FreeBSD: 981686e66920c63ead343e12d4444098d1f76826 $
  */
 
 /*
@@ -72,8 +72,10 @@ iwl_mvm_rate_control_unregister(void)
 }
 
 void
-iwl_mvm_rs_rate_init(struct iwl_mvm *mvm, struct ieee80211_sta *sta,
-    enum nl80211_band band, bool t)
+iwl_mvm_rs_rate_init(struct iwl_mvm *mvm, struct ieee80211_vif *vif,
+    struct ieee80211_sta *sta,
+    struct ieee80211_bss_conf *link_conf, struct ieee80211_link_sta *link_sta,
+    enum nl80211_band band)
 {
 }
 

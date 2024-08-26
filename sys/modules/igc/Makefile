@@ -1,4 +1,3 @@
-# $FreeBSD: ea96c1b0a9eb9df0315b42a5426203ea208a051a $
 
 .PATH:  ${SRCTOP}/sys/dev/igc
 

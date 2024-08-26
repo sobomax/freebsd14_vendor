@@ -25,13 +25,10 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: cc1807b18a80457847b19a108b657644256375d9 $");
-
 #include <sys/types.h>
 #include <sys/capsicum.h>
 #include <sys/endian.h>
 #include <sys/kerneldump.h>
-#include <sys/sysctl.h>
 #include <sys/wait.h>
 
 #include <ctype.h>
@@ -42,6 +39,7 @@ __FBSDID("$FreeBSD: cc1807b18a80457847b19a108b657644256375d9 $");
 #include <string.h>
 #include <unistd.h>
 
+#include <openssl/err.h>
 #include <openssl/evp.h>
 #include <openssl/pem.h>
 #include <openssl/rsa.h>
@@ -180,8 +178,10 @@ decrypt(int ofd, const char *privkeyfile, const char *keyfile,
 		unsigned char c[1];
 		RAND_bytes(c, 1);
 	}
-#endif
 	ERR_load_crypto_strings();
+#else
+	OPENSSL_init_crypto(OPENSSL_INIT_LOAD_CONFIG, NULL);
+#endif
 
 	caph_cache_catpages();
 	if (caph_enter() < 0) {

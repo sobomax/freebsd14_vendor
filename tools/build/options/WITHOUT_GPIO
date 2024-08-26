@@ -1,4 +1,3 @@
-.\" $FreeBSD: 70b3673bb5db023f821489e8775b884a754a3561 $
 Do not build
 .Xr gpioctl 8
 as part of the base system.

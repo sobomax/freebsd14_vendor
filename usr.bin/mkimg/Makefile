@@ -1,4 +1,3 @@
-# $FreeBSD: 89aeefe813b7ddf84632524eb2948d3d06346180 $
 
 .include <src.opts.mk>
 
@@ -27,8 +26,7 @@ SRCS+=	\
 	bsd.c \
 	ebr.c \
 	gpt.c \
-	mbr.c \
-	vtoc8.c
+	mbr.c
 
 BINDIR?=/usr/bin
 

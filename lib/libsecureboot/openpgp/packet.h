@@ -23,7 +23,6 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 /*
- * $FreeBSD: 28ac3c9b40fe22f926a124a7c0176eabdbf0c6fd $
  */
 
 #include <sys/queue.h>

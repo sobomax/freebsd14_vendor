@@ -58,8 +58,6 @@
  * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
- *
- * $FreeBSD: ccd72086db2ae8538328283a120eec859369e42a $
  */
 
 #ifndef _FUSE_INTERNAL_H_
@@ -90,7 +88,7 @@ vnode_mount(struct vnode *vp)
 	return (vp->v_mount);
 }
 
-static inline enum vtype
+static inline __enum_uint8(vtype)
 vnode_vtype(struct vnode *vp)
 {
 	return (vp->v_type);
@@ -252,10 +250,10 @@ struct pseudo_dirent {
 };
 int fuse_internal_readdir(struct vnode *vp, struct uio *uio,
     struct fuse_filehandle *fufh, struct fuse_iov *cookediov, int *ncookies,
-    u_long *cookies);
+    uint64_t *cookies);
 int fuse_internal_readdir_processdata(struct uio *uio, size_t reqsize,
     void *buf, size_t bufsize, struct fuse_iov *cookediov, int *ncookies,
-    u_long **cookiesp);
+    uint64_t **cookiesp);
 
 /* remove */
 
@@ -284,7 +282,7 @@ void fuse_internal_clear_suid_on_write(struct vnode *vp, struct ucred *cred,
 /* entity creation */
 
 static inline int
-fuse_internal_checkentry(struct fuse_entry_out *feo, enum vtype vtyp)
+fuse_internal_checkentry(struct fuse_entry_out *feo, __enum_uint8(vtype) vtyp)
 {
 	if (vtyp != IFTOVT(feo->attr.mode)) {
 		return (EINVAL);
@@ -303,14 +301,14 @@ fuse_internal_checkentry(struct fuse_entry_out *feo, enum vtype vtyp)
 
 int fuse_internal_newentry(struct vnode *dvp, struct vnode **vpp,
     struct componentname *cnp, enum fuse_opcode op, void *buf, size_t bufsize,
-    enum vtype vtyp);
+    __enum_uint8(vtype) vtyp);
 
 void fuse_internal_newentry_makerequest(struct mount *mp, uint64_t dnid,
     struct componentname *cnp, enum fuse_opcode op, void *buf, size_t bufsize,
     struct fuse_dispatcher *fdip);
 
 int fuse_internal_newentry_core(struct vnode *dvp, struct vnode **vpp,
-    struct componentname *cnp, enum vtype vtyp, struct fuse_dispatcher *fdip);
+    struct componentname *cnp, __enum_uint8(vtype) vtyp, struct fuse_dispatcher *fdip);
 
 /* entity destruction */
 

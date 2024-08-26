@@ -1,4 +1,3 @@
-# $FreeBSD: 070c2c3d6901054cdc6750d846a232af6ad3e77e $
 
 PACKAGE=runtime
 PROG=	ldconfig

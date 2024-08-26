@@ -42,8 +42,6 @@
  */
 
 #include <machine/asm.h>
-__FBSDID("$FreeBSD: eeeab3588ce2a9b73be8234d9bf757f417eaf412 $");
-
 #include <sys/param.h>
 #include <sys/elf_common.h>
 #include "notes.h"

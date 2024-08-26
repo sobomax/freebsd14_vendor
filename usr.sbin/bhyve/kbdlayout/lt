@@ -3,7 +3,6 @@
 #
 # Created by: Koine Yuusuke(koinec) <koinec@users.osdn.me>
 #
-# $FreeBSD: 114d0624dfe2f7ee268f957cf3df35a183687b50 $
 
 '*',0xb7;	*  (0x2a)
 0xffea,0x61;	Right alt

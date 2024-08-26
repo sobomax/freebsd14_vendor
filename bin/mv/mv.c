@@ -44,8 +44,6 @@ static char sccsid[] = "@(#)mv.c	8.2 (Berkeley) 4/2/94";
 #endif /* not lint */
 #endif
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 01d88ff625b76cdc012e286672bcccd6a2a1f0ca $");
-
 #include <sys/types.h>
 #include <sys/acl.h>
 #include <sys/param.h>
@@ -333,6 +331,12 @@ err:		if (unlink(to))
 	 */
 	preserve_fd_acls(from_fd, to_fd, from, to);
 	(void)close(from_fd);
+
+	ts[0] = sbp->st_atim;
+	ts[1] = sbp->st_mtim;
+	if (futimens(to_fd, ts))
+		warn("%s: set times", to);
+
 	/*
 	 * XXX
 	 * NFS doesn't support chflags; ignore errors unless there's reason
@@ -352,11 +356,6 @@ err:		if (unlink(to))
 		}
 	} else
 		warn("%s: cannot stat", to);
-
-	ts[0] = sbp->st_atim;
-	ts[1] = sbp->st_mtim;
-	if (futimens(to_fd, ts))
-		warn("%s: set times", to);
 
 	if (close(to_fd)) {
 		warn("%s", to);

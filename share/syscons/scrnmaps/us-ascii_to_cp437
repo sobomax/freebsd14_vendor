@@ -1,5 +1,4 @@
 /*
- * $FreeBSD: 5e7d631237b3ca7caa485811da122ca01589256b $
  */
 
 static scrmap_t scrmap = {

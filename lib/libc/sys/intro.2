@@ -26,7 +26,6 @@
 .\" SUCH DAMAGE.
 .\"
 .\"     @(#)intro.2	8.5 (Berkeley) 2/27/95
-.\" $FreeBSD: 7ae16728c4a944ed64cfc067558deea495b7d7f2 $
 .\"
 .Dd September 8, 2016
 .Dt INTRO 2
@@ -37,6 +36,7 @@
 .Sh LIBRARY
 .Lb libc
 .Sh SYNOPSIS
+.In sys/syscall.h
 .In errno.h
 .Sh DESCRIPTION
 This section provides an overview of the system calls,
@@ -229,8 +229,13 @@ system call was issued on a socket, pipe or
 An attempt was made to modify a file or directory
 on a file system that was read-only at the time.
 .It Er 31 EMLINK Em "Too many links" .
-Maximum allowable hard links to a single file has been exceeded (limit
-of 32767 hard links per file).
+Maximum allowable hard links to a single file has been exceeded.
+This limit is a filesystem dependent variable
+.Po
+.Va UFS_LINK_MAX No on Xr ufs 4 ,
+.Va FUSE_LINK_MAX No on Xr fusefs 4 , and
+.Va TMPFS_MAX No on Xr tmpfs 4
+.Pc .
 .It Er 32 EPIPE Em "Broken pipe" .
 A write on a pipe, socket or
 .Tn FIFO
@@ -474,7 +479,7 @@ The state protected by a robust mutex is not recoverable.
 The owner of a robust mutex terminated while holding the mutex lock.
 .It Er 97 EINTEGRITY Em "Integrity check failed" .
 An integrity check such as a check-hash or a cross-correlation failed.
-The integrity error falls between
+The integrity error falls in the kernel I/O stack between
 .Er EINVAL
 that identifies errors in parameters to a system call and
 .Er EIO

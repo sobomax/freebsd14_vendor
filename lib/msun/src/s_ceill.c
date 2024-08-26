@@ -11,9 +11,6 @@
  * From: @(#)s_ceil.c 5.1 93/09/24
  */
 
-#include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 2d1045fe60d115135f0a7dc60975b7920073b99f $");
-
 /*
  * ceill(x)
  * Return x rounded toward -inf to integral value

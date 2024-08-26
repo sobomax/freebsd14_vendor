@@ -25,8 +25,6 @@
  */
 
 #include <machine/asm.h>
-__FBSDID("$FreeBSD: 25df7b1fe3168f16dc825b3d44ebdb9e8a19ca5b $")
-	
 ENTRY(sqrtf)
 	sqrtss	%xmm0, %xmm0
 	ret

@@ -1,4 +1,3 @@
-# $FreeBSD: 3cb678c2d08a4d787a0a509fba910095a8f0666e $
 
 result=$(${SH} -c 'f() { ps -p $$ -o comm=; }; f')
 test "$result" = "ps"

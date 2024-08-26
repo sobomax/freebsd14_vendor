@@ -30,7 +30,6 @@
  * SUCH DAMAGE.
  *
  *	@(#)signal.h	8.1 (Berkeley) 6/11/93
- * $FreeBSD: 553757c990df2b72346299045ab7b3a6cf78c1ee $
  */
 
 #ifndef _X86_SIGNAL_H

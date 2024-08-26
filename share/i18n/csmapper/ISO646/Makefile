@@ -1,4 +1,3 @@
-# $FreeBSD: 568d5dcb498e9fa4cb3b550331d51f0226510583 $
 # $NetBSD: Makefile.inc,v 1.4 2008/10/25 22:35:36 apb Exp $
 
 CODE=	ISO646

@@ -1,7 +1,7 @@
 /*	$NetBSD: channel.c,v 1.1 2008/08/17 13:20:57 plunky Exp $	*/
 
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-NetBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2008 Iain Hibbert
  * All rights reserved.
@@ -27,7 +27,6 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-/* $FreeBSD: a8a0d6ac8a06e2d575e59828aea310a438cb8fd6 $ */
 
 #include <sys/cdefs.h>
 __RCSID("$NetBSD: channel.c,v 1.1 2008/08/17 13:20:57 plunky Exp $");

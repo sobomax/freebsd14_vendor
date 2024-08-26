@@ -37,7 +37,6 @@
  * SUCH DAMAGE.
  *
  *      @(#)pr.h	8.1 (Berkeley) 6/6/93
- * $FreeBSD: 2c9e50f6b4fae1c14257d34658af8ae6d1e2ff3c $
  */
 
 /*

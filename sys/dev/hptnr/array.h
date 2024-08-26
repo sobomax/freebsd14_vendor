@@ -1,6 +1,6 @@
 /* $Id: array.h,v 1.46 2010/02/05 06:57:43 mah Exp $ */
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (C) 2004-2011 HighPoint Technologies, Inc.
  * All rights reserved.
@@ -26,7 +26,6 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  * 
- * $FreeBSD: 780ab75e180d7440ff322fd482e3d8c5c2b2a845 $
  */
 #include <dev/hptnr/hptnr_config.h>
 #ifndef _HPT_ARRAY_H_

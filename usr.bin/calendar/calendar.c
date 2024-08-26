@@ -42,8 +42,6 @@ static char sccsid[] = "@(#)calendar.c	8.3 (Berkeley) 3/25/94";
 #endif
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 5f6d97ad1494b6cea191ae755aff5b776b466c96 $");
-
 #include <sys/types.h>
 #include <err.h>
 #include <errno.h>

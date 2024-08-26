@@ -40,13 +40,6 @@
 
 #include <machine/asm.h>
 #include <sys/errno.h>
-
-.L_arm_memcpy:
-	.word	_C_LABEL(_arm_memcpy)
-.L_min_memcpy_size:
-	.word	_C_LABEL(_min_memcpy_size)
-
-__FBSDID("$FreeBSD: 2a9d48f989ea7f5b2c90923d7696b5d5375bb0c0 $");
 #include <arm/arm/bcopyinout_xscale.S>
 
 /*

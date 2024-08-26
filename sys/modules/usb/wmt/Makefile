@@ -1,4 +1,3 @@
-# $FreeBSD: e7f8065fa1af1a6b2a0d2c22f5bb0e1bda391442 $
 
 S=     ${SRCTOP}/sys
 

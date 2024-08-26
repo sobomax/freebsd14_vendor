@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2003-2004  Sean M. Kelly <smkelly@FreeBSD.org>
  * Copyright (c) 2013 iXsystems.com,
@@ -34,8 +34,6 @@
  */
 
 #include <sys/types.h>
-__FBSDID("$FreeBSD: a926c0d25388bcf76610a4cb3756c96f57579f6d $");
-
 #include <sys/mman.h>
 #include <sys/param.h>
 #include <sys/rtprio.h>

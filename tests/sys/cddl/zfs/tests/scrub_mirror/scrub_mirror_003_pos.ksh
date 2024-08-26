@@ -20,8 +20,6 @@
 # CDDL HEADER END
 #
 
-# $FreeBSD: 4a3fa933701035e8fb9e48e864ada6814db47f04 $
-
 #
 # ident	"@(#)scrub_mirror_003_pos.ksh	1.2	07/01/09 SMI"
 #

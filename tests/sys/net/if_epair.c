@@ -21,8 +21,6 @@
  * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
- *
- * $FreeBSD: e6864d3ebf9360e791f51b992e6de3e373b0063b $
  */
 
 #include <sys/param.h>
@@ -64,7 +62,11 @@ ATF_TC_BODY(params, tc)
 	ifr.ifr_data = (caddr_t)-1;
         (void) strlcpy(ifr.ifr_name, "epair", sizeof(ifr.ifr_name));
 
-	ioctl(s, SIOCIFCREATE2, &ifr);
+	if (ioctl(s, SIOCIFCREATE2, &ifr) < 0)
+		atf_tc_fail("Failed to create interface");
+
+	if (ioctl(s, SIOCIFDESTROY, &ifr) < 0)
+		atf_tc_fail("Failed to destroy interface");
 }
 
 ATF_TP_ADD_TCS(tp)

@@ -34,8 +34,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 583a1b72cb8901b671a2a7d367018e2d925e804a $");
-
 #include <libkern/quad.h>
 
 /*
@@ -43,9 +41,7 @@ __FBSDID("$FreeBSD: 583a1b72cb8901b671a2a7d367018e2d925e804a $");
  * This is the same as logical shift left!
  */
 quad_t
-__ashldi3(a, shift)
-	quad_t a;
-	qshift_t shift;
+__ashldi3(quad_t a, qshift_t shift)
 {
 	union uu aa;
 

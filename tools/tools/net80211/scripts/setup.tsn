@@ -2,7 +2,6 @@
 #
 # Script for testing TSN support.
 #
-# $FreeBSD: c5b906381fb1795ff32c75183d7248598d10f020 $
 #
 PATH=.:$PATH
 . config

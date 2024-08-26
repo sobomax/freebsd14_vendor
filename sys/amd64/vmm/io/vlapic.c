@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2011 NetApp, Inc.
  * All rights reserved.
@@ -25,13 +25,9 @@
  * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
- *
- * $FreeBSD: f7370e440d668dbb8096d885e60718dd4d6fd2ab $
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: f7370e440d668dbb8096d885e60718dd4d6fd2ab $");
-
 #include "opt_bhyve_snapshot.h"
 
 #include <sys/param.h>
@@ -905,7 +901,8 @@ vlapic_calcdest(struct vm *vm, cpuset_t *dmask, uint32_t dest, bool phys,
 	}
 }
 
-static VMM_STAT_ARRAY(IPIS_SENT, VMM_STAT_NELEMS_VCPU, "ipis sent to vcpu");
+static VMM_STAT(VLAPIC_IPI_SEND, "ipis sent from vcpu");
+static VMM_STAT(VLAPIC_IPI_RECV, "ipis received by vcpu");
 
 static void
 vlapic_set_tpr(struct vlapic *vlapic, uint8_t val)
@@ -1102,7 +1099,8 @@ vlapic_icrlo_write_handler(struct vlapic *vlapic, bool *retu)
 		CPU_FOREACH_ISSET(i, &dmask) {
 			vcpu = vm_vcpu(vlapic->vm, i);
 			lapic_intr_edge(vcpu, vec);
-			vmm_stat_array_incr(vlapic->vcpu, IPIS_SENT, i, 1);
+			vmm_stat_incr(vlapic->vcpu, VLAPIC_IPI_SEND, 1);
+			vmm_stat_incr(vcpu, VLAPIC_IPI_RECV, 1);
 			VLAPIC_CTR2(vlapic,
 			    "vlapic sending ipi %d to vcpuid %d", vec, i);
 		}
@@ -1118,22 +1116,6 @@ vlapic_icrlo_write_handler(struct vlapic *vlapic, bool *retu)
 
 		break;
 	case APIC_DELMODE_INIT:
-		if (!vlapic->ipi_exit) {
-			if (!phys)
-				break;
-
-			i = vm_apicid2vcpuid(vlapic->vm, dest);
-			if (i >= vm_get_maxcpus(vlapic->vm) ||
-			    i == vlapic->vcpuid)
-				break;
-
-			CPU_SETOF(i, &ipimask);
-
-			break;
-		}
-
-		CPU_COPY(&dmask, &ipimask);
-		break;
 	case APIC_DELMODE_STARTUP:
 		if (!vlapic->ipi_exit) {
 			if (!phys)
@@ -1160,7 +1142,7 @@ vlapic_icrlo_write_handler(struct vlapic *vlapic, bool *retu)
 		vmexit->exitcode = VM_EXITCODE_IPI;
 		vmexit->u.ipi.mode = mode;
 		vmexit->u.ipi.vector = vec;
-		vmexit->u.ipi.dmask = ipimask;
+		*vm_exitinfo_cpuset(vlapic->vcpu) = ipimask;
 
 		*retu = true;
 	}
@@ -1180,7 +1162,7 @@ int
 vm_handle_ipi(struct vcpu *vcpu, struct vm_exit *vme, bool *retu)
 {
 	struct vlapic *vlapic = vm_lapic(vcpu);
-	cpuset_t *dmask = &vme->u.ipi.dmask;
+	cpuset_t *dmask = vm_exitinfo_cpuset(vcpu);
 	uint8_t vec = vme->u.ipi.vector;
 
 	*retu = true;
@@ -1239,7 +1221,8 @@ vlapic_self_ipi_handler(struct vlapic *vlapic, uint64_t val)
 
 	vec = val & 0xff;
 	lapic_intr_edge(vlapic->vcpu, vec);
-	vmm_stat_array_incr(vlapic->vcpu, IPIS_SENT, vlapic->vcpuid, 1);
+	vmm_stat_incr(vlapic->vcpu, VLAPIC_IPI_SEND, 1);
+	vmm_stat_incr(vlapic->vcpu, VLAPIC_IPI_RECV, 1);
 	VLAPIC_CTR1(vlapic, "vlapic self-ipi %d", vec);
 }
 

@@ -1,2 +1,1 @@
-.\" $FreeBSD: cba7dcd89e4501fa802aa0cff4a08a47ddb4bde9 $
 Do not build NLS catalogs.

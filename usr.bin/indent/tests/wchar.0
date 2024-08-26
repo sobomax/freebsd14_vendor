@@ -1,4 +1,3 @@
-/* $FreeBSD: 9910e77857f229db0ec617a1c21b748c296f65db $ */
 /* See r309220 */
 #include <wchar.h>
 

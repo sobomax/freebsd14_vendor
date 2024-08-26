@@ -29,7 +29,6 @@
  * SUCH DAMAGE.
  *
  *	@(#)ptrace.h	8.2 (Berkeley) 1/4/94
- * $FreeBSD: 0eecb64bf769ca18ff16531f265882e23c0cfae7 $
  */
 
 #ifndef	_SYS_PTRACE_H_
@@ -163,7 +162,7 @@ struct ptrace_lwpinfo32 {
 
 /* Argument structure for PT_GET_SC_RET. */
 struct ptrace_sc_ret {
-	register_t	sr_retval[2];	/* Only valid if sr_error == 0. */
+	syscallarg_t	sr_retval[2];	/* Only valid if sr_error == 0. */
 	int		sr_error;
 };
 
@@ -197,7 +196,7 @@ struct ptrace_sc_remote {
 	struct ptrace_sc_ret pscr_ret;
 	u_int	pscr_syscall;
 	u_int	pscr_nargs;
-	register_t	*pscr_args;
+	syscallarg_t	*pscr_args;
 };
 
 #ifdef _KERNEL

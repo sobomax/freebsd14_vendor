@@ -1,4 +1,3 @@
-/*	$FreeBSD: acdd441e0476fb4924a387f8bac88d4bb2ed8b18 $	*/
 
 /*
  * Copyright (C) 2012 by Darren Reed.
@@ -177,9 +176,7 @@ ipf_htable_soft_destroy(ipf_main_softc_t *softc, void *arg)
 /* Initialise the hash table ready for use.                                 */
 /* ------------------------------------------------------------------------ */
 static int
-ipf_htable_soft_init(softc, arg)
-	ipf_main_softc_t *softc;
-	void *arg;
+ipf_htable_soft_init(ipf_main_softc_t *softc, void *arg)
 {
 	ipf_htable_softc_t *softh = arg;
 

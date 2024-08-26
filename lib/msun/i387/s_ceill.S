@@ -4,8 +4,6 @@
  */
 	
 #include <machine/asm.h>
-__FBSDID("$FreeBSD: 8ed48aa1e603395af4413518dd256da3b9d7c0f1 $")
-
 ENTRY(ceill)
 	pushl	%ebp
 	movl	%esp,%ebp

@@ -26,8 +26,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: f1454f440b0b35b319e83ae59f994bb182399689 $");
-
 #include "opt_platform.h"
 
 #include <sys/param.h>

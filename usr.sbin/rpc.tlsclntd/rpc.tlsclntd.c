@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2008 Isilon Inc http://www.isilon.com/
  * Authors: Doug Rabson <dfr@rabson.org>
@@ -33,8 +33,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: caa3b5266e48094bddc9201fe11b55cfbd293bc1 $");
-
 #include <sys/param.h>
 #include <sys/types.h>
 #include <sys/queue.h>
@@ -299,7 +297,6 @@ main(int argc, char **argv)
 	rpctls_syscall(RPCTLS_SYSC_CLSHUTDOWN, "");
 
 	SSL_CTX_free(rpctls_ctx);
-	EVP_cleanup();
 	return (0);
 }
 
@@ -480,17 +477,12 @@ rpctls_setupcl_ssl(void)
 	size_t len, rlen;
 	int ret;
 
-	SSL_library_init();
-	SSL_load_error_strings();
-	OpenSSL_add_all_algorithms();
-
 	ctx = SSL_CTX_new(TLS_client_method());
 	if (ctx == NULL) {
 		rpctls_verbose_out("rpctls_setupcl_ssl: SSL_CTX_new "
 		    "failed\n");
 		return (NULL);
 	}
-	SSL_CTX_set_ecdh_auto(ctx, 1);
 
 	if (rpctls_ciphers != NULL) {
 		/*
@@ -680,13 +672,17 @@ rpctls_connect(SSL_CTX *ctx, int s, char *certname, u_int certlen, X509 **certp)
 	ret = SSL_connect(ssl);
 	if (ret != 1) {
 		rpctls_verbose_out("rpctls_connect: "
-		    "SSL_connect failed %d\n",
-		    ret);
+		    "SSL_connect failed %d: %s\n",
+		    ret, ERR_error_string(ERR_get_error(), NULL));
 		SSL_free(ssl);
 		return (NULL);
 	}
 
+#if OPENSSL_VERSION_NUMBER >= 0x30000000
+	cert = SSL_get1_peer_certificate(ssl);
+#else
 	cert = SSL_get_peer_certificate(ssl);
+#endif
 	if (cert == NULL) {
 		rpctls_verbose_out("rpctls_connect: get peer"
 		    " certificate failed\n");

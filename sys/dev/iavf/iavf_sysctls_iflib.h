@@ -28,7 +28,6 @@
  *  ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  *  POSSIBILITY OF SUCH DAMAGE.
  */
-/*$FreeBSD: 92253a1a3a5a97b2df783a5dcfecbc6b99f63976 $*/
 
 /**
  * @file iavf_sysctls_iflib.h

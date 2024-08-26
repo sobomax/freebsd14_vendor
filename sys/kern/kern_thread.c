@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (C) 2001 Julian Elischer <julian@freebsd.org>.
  *  All rights reserved.
@@ -31,13 +31,10 @@
 #include "opt_witness.h"
 #include "opt_hwpmc_hooks.h"
 
-#include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 846d3dafb5ac4b527652e011f9bded22a3bfeb79 $");
-
-#include <sys/param.h>
 #include <sys/systm.h>
 #include <sys/kernel.h>
 #include <sys/lock.h>
+#include <sys/msan.h>
 #include <sys/mutex.h>
 #include <sys/proc.h>
 #include <sys/bitstring.h>
@@ -84,43 +81,43 @@ __FBSDID("$FreeBSD: 846d3dafb5ac4b527652e011f9bded22a3bfeb79 $");
  * structures.
  */
 #ifdef __amd64__
-_Static_assert(offsetof(struct thread, td_flags) == 0xfc,
+_Static_assert(offsetof(struct thread, td_flags) == 0x108,
     "struct thread KBI td_flags");
-_Static_assert(offsetof(struct thread, td_pflags) == 0x104,
+_Static_assert(offsetof(struct thread, td_pflags) == 0x114,
     "struct thread KBI td_pflags");
-_Static_assert(offsetof(struct thread, td_frame) == 0x4a0,
+_Static_assert(offsetof(struct thread, td_frame) == 0x4b8,
     "struct thread KBI td_frame");
-_Static_assert(offsetof(struct thread, td_emuldata) == 0x6b0,
+_Static_assert(offsetof(struct thread, td_emuldata) == 0x6c0,
     "struct thread KBI td_emuldata");
 _Static_assert(offsetof(struct proc, p_flag) == 0xb8,
     "struct proc KBI p_flag");
 _Static_assert(offsetof(struct proc, p_pid) == 0xc4,
     "struct proc KBI p_pid");
-_Static_assert(offsetof(struct proc, p_filemon) == 0x3c0,
+_Static_assert(offsetof(struct proc, p_filemon) == 0x3c8,
     "struct proc KBI p_filemon");
-_Static_assert(offsetof(struct proc, p_comm) == 0x3d8,
+_Static_assert(offsetof(struct proc, p_comm) == 0x3e0,
     "struct proc KBI p_comm");
-_Static_assert(offsetof(struct proc, p_emuldata) == 0x4b8,
+_Static_assert(offsetof(struct proc, p_emuldata) == 0x4d0,
     "struct proc KBI p_emuldata");
 #endif
 #ifdef __i386__
-_Static_assert(offsetof(struct thread, td_flags) == 0x98,
+_Static_assert(offsetof(struct thread, td_flags) == 0x9c,
     "struct thread KBI td_flags");
-_Static_assert(offsetof(struct thread, td_pflags) == 0xa0,
+_Static_assert(offsetof(struct thread, td_pflags) == 0xa8,
     "struct thread KBI td_pflags");
-_Static_assert(offsetof(struct thread, td_frame) == 0x300,
+_Static_assert(offsetof(struct thread, td_frame) == 0x314,
     "struct thread KBI td_frame");
-_Static_assert(offsetof(struct thread, td_emuldata) == 0x344,
+_Static_assert(offsetof(struct thread, td_emuldata) == 0x358,
     "struct thread KBI td_emuldata");
 _Static_assert(offsetof(struct proc, p_flag) == 0x6c,
     "struct proc KBI p_flag");
 _Static_assert(offsetof(struct proc, p_pid) == 0x78,
     "struct proc KBI p_pid");
-_Static_assert(offsetof(struct proc, p_filemon) == 0x26c,
+_Static_assert(offsetof(struct proc, p_filemon) == 0x270,
     "struct proc KBI p_filemon");
-_Static_assert(offsetof(struct proc, p_comm) == 0x280,
+_Static_assert(offsetof(struct proc, p_comm) == 0x284,
     "struct proc KBI p_comm");
-_Static_assert(offsetof(struct proc, p_emuldata) == 0x30c,
+_Static_assert(offsetof(struct proc, p_emuldata) == 0x318,
     "struct proc KBI p_emuldata");
 #endif
 
@@ -338,6 +335,46 @@ tidbatch_final(struct tidbatch *tb)
 }
 
 /*
+ * Batching thread count free, for consistency
+ */
+struct tdcountbatch {
+	int n;
+};
+
+static void
+tdcountbatch_prep(struct tdcountbatch *tb)
+{
+
+	tb->n = 0;
+}
+
+static void
+tdcountbatch_add(struct tdcountbatch *tb, struct thread *td __unused)
+{
+
+	tb->n++;
+}
+
+static void
+tdcountbatch_process(struct tdcountbatch *tb)
+{
+
+	if (tb->n == 32) {
+		thread_count_sub(tb->n);
+		tb->n = 0;
+	}
+}
+
+static void
+tdcountbatch_final(struct tdcountbatch *tb)
+{
+
+	if (tb->n != 0) {
+		thread_count_sub(tb->n);
+	}
+}
+
+/*
  * Prepare a thread for use.
  */
 static int
@@ -346,7 +383,7 @@ thread_ctor(void *mem, int size, void *arg, int flags)
 	struct thread	*td;
 
 	td = (struct thread *)mem;
-	td->td_state = TDS_INACTIVE;
+	TD_SET_STATE(td, TDS_INACTIVE);
 	td->td_lastcpu = td->td_oncpu = NOCPU;
 
 	/*
@@ -379,7 +416,7 @@ thread_dtor(void *mem, int size, void *arg)
 
 #ifdef INVARIANTS
 	/* Verify that this thread is in a safe state to free. */
-	switch (td->td_state) {
+	switch (TD_GET_STATE(td)) {
 	case TDS_INHIBITED:
 	case TDS_RUNNING:
 	case TDS_CAN_RUN:
@@ -405,8 +442,7 @@ thread_dtor(void *mem, int size, void *arg)
 #endif
 	/* Free all OSD associated to this thread. */
 	osd_thread_exit(td);
-	td_softdep_cleanup(td);
-	MPASS(td->td_su == NULL);
+	ast_kclear(td);
 	seltdfini(td);
 }
 
@@ -478,6 +514,21 @@ proc_linkup(struct proc *p, struct thread *td)
 	thread_link(td, p);
 }
 
+static void
+ast_suspend(struct thread *td, int tda __unused)
+{
+	struct proc *p;
+
+	p = td->td_proc;
+	/*
+	 * We need to check to see if we have to exit or wait due to a
+	 * single threading requirement or some other STOP condition.
+	 */
+	PROC_LOCK(p);
+	thread_suspend_check(0);
+	PROC_UNLOCK(p);
+}
+
 extern int max_threads_per_proc;
 
 /*
@@ -488,7 +539,6 @@ threadinit(void)
 {
 	u_long i;
 	lwpid_t tid0;
-	uint32_t flags;
 
 	/*
 	 * Place an upper limit on threads which can be allocated.
@@ -516,20 +566,15 @@ threadinit(void)
 	if (tid0 != THREAD0_TID)
 		panic("tid0 %d != %d\n", tid0, THREAD0_TID);
 
-	flags = UMA_ZONE_NOFREE;
-#ifdef __aarch64__
 	/*
-	 * Force thread structures to be allocated from the direct map.
-	 * Otherwise, superpage promotions and demotions may temporarily
-	 * invalidate thread structure mappings.  For most dynamically allocated
-	 * structures this is not a problem, but translation faults cannot be
-	 * handled without accessing curthread.
+	 * Thread structures are specially aligned so that (at least) the
+	 * 5 lower bits of a pointer to 'struct thead' must be 0.  These bits
+	 * are used by synchronization primitives to store flags in pointers to
+	 * such structures.
 	 */
-	flags |= UMA_ZONE_CONTIG;
-#endif
 	thread_zone = uma_zcreate("THREAD", sched_sizeof_thread(),
 	    thread_ctor, thread_dtor, thread_init, thread_fini,
-	    32 - 1, flags);
+	    UMA_ALIGN_CACHE_AND_MASK(32 - 1), UMA_ZONE_NOFREE);
 	tidhashtbl = hashinit(maxproc / 2, M_TIDHASH, &tidhash);
 	tidhashlock = (tidhash + 1) / 64;
 	if (tidhashlock > 0)
@@ -543,6 +588,7 @@ threadinit(void)
 	callout_init(&thread_reap_callout, 1);
 	callout_reset(&thread_reap_callout, 5 * hz,
 	    thread_reap_callout_cb, NULL);
+	ast_register(TDA_SUSPEND, ASTR_ASTF_REQUIRED, 0, ast_suspend);
 }
 
 /*
@@ -584,9 +630,8 @@ thread_reap_domain(struct thread_domain_data *tdd)
 	struct thread *itd, *ntd;
 	struct tidbatch tidbatch;
 	struct credbatch credbatch;
-	int tdcount;
-	struct plimit *lim;
-	int limcount;
+	struct limbatch limbatch;
+	struct tdcountbatch tdcountbatch;
 
 	/*
 	 * Reading upfront is pessimal if followed by concurrent atomic_swap,
@@ -608,42 +653,32 @@ thread_reap_domain(struct thread_domain_data *tdd)
 
 	tidbatch_prep(&tidbatch);
 	credbatch_prep(&credbatch);
-	tdcount = 0;
-	lim = NULL;
-	limcount = 0;
+	limbatch_prep(&limbatch);
+	tdcountbatch_prep(&tdcountbatch);
 
 	while (itd != NULL) {
 		ntd = itd->td_zombie;
 		EVENTHANDLER_DIRECT_INVOKE(thread_dtor, itd);
+
 		tidbatch_add(&tidbatch, itd);
 		credbatch_add(&credbatch, itd);
-		MPASS(itd->td_limit != NULL);
-		if (lim != itd->td_limit) {
-			if (limcount != 0) {
-				lim_freen(lim, limcount);
-				limcount = 0;
-			}
-		}
-		lim = itd->td_limit;
-		limcount++;
+		limbatch_add(&limbatch, itd);
+		tdcountbatch_add(&tdcountbatch, itd);
+
 		thread_free_batched(itd);
+
 		tidbatch_process(&tidbatch);
 		credbatch_process(&credbatch);
-		tdcount++;
-		if (tdcount == 32) {
-			thread_count_sub(tdcount);
-			tdcount = 0;
-		}
+		limbatch_process(&limbatch);
+		tdcountbatch_process(&tdcountbatch);
+
 		itd = ntd;
 	}
 
 	tidbatch_final(&tidbatch);
 	credbatch_final(&credbatch);
-	if (tdcount != 0) {
-		thread_count_sub(tdcount);
-	}
-	MPASS(limcount != 0);
-	lim_freen(lim, limcount);
+	limbatch_final(&limbatch);
+	tdcountbatch_final(&tdcountbatch);
 }
 
 /*
@@ -762,6 +797,7 @@ thread_alloc(int pages)
 	}
 	td->td_tid = tid;
 	bzero(&td->td_sa.args, sizeof(td->td_sa.args));
+	kmsan_thread_alloc(td);
 	cpu_thread_alloc(td);
 	EVENTHANDLER_DIRECT_INVOKE(thread_ctor, td);
 	return (td);
@@ -798,6 +834,7 @@ thread_free_batched(struct thread *td)
 	 * Freeing handled by the caller.
 	 */
 	td->td_tid = -1;
+	kmsan_thread_free(td);
 	uma_zfree(thread_zone, td);
 }
 
@@ -853,19 +890,28 @@ thread_cow_update(struct thread *td)
 	struct plimit *oldlimit;
 
 	p = td->td_proc;
-	oldlimit = NULL;
 	PROC_LOCK(p);
 	oldcred = crcowsync();
-	if (td->td_limit != p->p_limit) {
-		oldlimit = td->td_limit;
-		td->td_limit = lim_hold(p->p_limit);
-	}
+	oldlimit = lim_cowsync();
 	td->td_cowgen = p->p_cowgen;
 	PROC_UNLOCK(p);
 	if (oldcred != NULL)
 		crfree(oldcred);
 	if (oldlimit != NULL)
 		lim_free(oldlimit);
+}
+
+void
+thread_cow_synced(struct thread *td)
+{
+	struct proc *p;
+
+	p = td->td_proc;
+	PROC_LOCK_ASSERT(p, MA_OWNED);
+	MPASS(td->td_cowgen != p->p_cowgen);
+	MPASS(td->td_ucred == p->p_ucred);
+	MPASS(td->td_limit == p->p_limit);
+	td->td_cowgen = p->p_cowgen;
 }
 
 /*
@@ -976,7 +1022,7 @@ thread_exit(void)
 	rucollect(&p->p_ru, &td->td_ru);
 	PROC_STATUNLOCK(p);
 
-	td->td_state = TDS_INACTIVE;
+	TD_SET_STATE(td, TDS_INACTIVE);
 #ifdef WITNESS
 	witness_thread_exit(td);
 #endif
@@ -1025,7 +1071,7 @@ thread_link(struct thread *td, struct proc *p)
 	 * its lock has been created.
 	 * PROC_LOCK_ASSERT(p, MA_OWNED);
 	 */
-	td->td_state    = TDS_INACTIVE;
+	TD_SET_STATE(td, TDS_INACTIVE);
 	td->td_proc     = p;
 	td->td_flags    = TDF_INMEM;
 
@@ -1136,8 +1182,8 @@ restart:
 		 * boundary, TDF_ALLPROCSUSP is used to avoid immediate
 		 * un-suspend.
 		 */
-		if (TD_IS_SUSPENDED(td2) && (td2->td_flags &
-		    TDF_ALLPROCSUSP) == 0) {
+		if (TD_IS_SUSPENDED(td2) &&
+		    (td2->td_flags & TDF_ALLPROCSUSP) == 0) {
 			wakeup_swapper |= thread_unsuspend_one(td2, p, false);
 			thread_lock(td2);
 			goto restart;
@@ -1201,6 +1247,9 @@ thread_single(struct proc *p, int mode)
 				return (1);
 			msleep(&p->p_flag, &p->p_mtx, PCATCH, "thrsgl", 0);
 		}
+		if ((p->p_flag & (P_STOPPED_SIG | P_TRACED)) != 0 ||
+		    (p->p_flag2 & P2_WEXIT) != 0)
+			return (1);
 	} else if ((p->p_flag & P_HADTHREADS) == 0)
 		return (0);
 	if (p->p_singlethread != NULL && p->p_singlethread != td)
@@ -1230,7 +1279,7 @@ thread_single(struct proc *p, int mode)
 			if (td2 == td)
 				continue;
 			thread_lock(td2);
-			td2->td_flags |= TDF_ASTPENDING | TDF_NEEDSUSPCHK;
+			ast_sched_locked(td2, TDA_SUSPEND);
 			if (TD_IS_INHIBITED(td2)) {
 				wakeup_swapper |= weed_inhib(mode, td2, p);
 #ifdef SMP
@@ -1471,10 +1520,10 @@ thread_check_susp(struct thread *td, bool sleep)
 	int error;
 
 	/*
-	 * The check for TDF_NEEDSUSPCHK is racy, but it is enough to
+	 * The check for TDA_SUSPEND is racy, but it is enough to
 	 * eventually break the lockstep loop.
 	 */
-	if ((td->td_flags & TDF_NEEDSUSPCHK) == 0)
+	if (!td_ast_pending(td, TDA_SUSPEND))
 		return (0);
 	error = 0;
 	p = td->td_proc;
@@ -1505,7 +1554,7 @@ thread_suspend_switch(struct thread *td, struct proc *p)
 	}
 	PROC_UNLOCK(p);
 	thread_lock(td);
-	td->td_flags &= ~TDF_NEEDSUSPCHK;
+	ast_unsched_locked(td, TDA_SUSPEND);
 	TD_SET_SUSPENDED(td);
 	sched_sleep(td, 0);
 	PROC_SUNLOCK(p);
@@ -1526,7 +1575,7 @@ thread_suspend_one(struct thread *td)
 	THREAD_LOCK_ASSERT(td, MA_OWNED);
 	KASSERT(!TD_IS_SUSPENDED(td), ("already suspended"));
 	p->p_suspcount++;
-	td->td_flags &= ~TDF_NEEDSUSPCHK;
+	ast_unsched_locked(td, TDA_SUSPEND);
 	TD_SET_SUSPENDED(td);
 	sched_sleep(td, 0);
 }

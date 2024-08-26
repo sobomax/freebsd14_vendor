@@ -37,8 +37,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 1fc21fecad67a20b0b02aad6060574c49571f340 $");
-
 #include <dev/drm2/drmP.h>
 
 static int drm_msi = 1;	/* Enable by default. */

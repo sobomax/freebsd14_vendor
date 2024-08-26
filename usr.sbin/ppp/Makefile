@@ -1,4 +1,3 @@
-# $FreeBSD: a7a35d49295edfdac39de0079127663ff7b434c7 $
 
 .include <src.opts.mk>
 
@@ -66,6 +65,7 @@ SRCS+=	id.c
 CFLAGS+=-DNODES
 .else
 SRCS+=	chap_ms.c mppe.c
+CFLAGS+=	-DOPENSSL_API_COMPAT=0x10100000L
 LIBADD+=	crypto
 .endif
 

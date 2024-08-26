@@ -12,7 +12,7 @@
   * 
   * Author: Wietse Venema, Eindhoven University of Technology, The Netherlands.
   *
-  * $FreeBSD: db7375313ad42dd76e33008c17fce62e4adb29b5 $
+  * $FreeBSD: b5e517ec738da3db1f3cc789eeb1d4fb7b6a22ec $
   */
 
 #ifndef lint
@@ -33,9 +33,8 @@ static char sccsid[] = "@(#) update.c 1.1 94/12/28 17:42:56";
 
 /* request_fill - request update engine */
 
-static struct request_info *request_fill(request, ap)
-struct request_info *request;
-va_list ap;
+static struct request_info *request_fill(struct request_info *request,
+    va_list ap)
 {
     int     key;
     char   *ptr;

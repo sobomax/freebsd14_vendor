@@ -1,4 +1,3 @@
-/* $FreeBSD: 3ac58b2431caedfbbc7dc8402b1915bbe8adb59c $ */
 #ifndef _EFINET_H
 #define _EFINET_H
 

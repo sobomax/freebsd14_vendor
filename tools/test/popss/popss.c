@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2018 The FreeBSD Foundation
  * All rights reserved.
@@ -29,7 +29,6 @@
  * SUCH DAMAGE.
  *
  * $Id: popss.c,v 1.28 2018/05/09 21:35:29 kostik Exp kostik $
- * $FreeBSD: b41f2a32ae91d15a0554bade01c87e4cb038228c $
  *
  * cc -m32 -Wall -Wextra -O2 -g -o popss popss.c
  * Use as "popss <instruction>", where instruction is one of

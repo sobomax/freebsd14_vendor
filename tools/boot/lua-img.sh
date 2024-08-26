@@ -1,5 +1,4 @@
 #!/bin/sh
-# $FreeBSD: 9693c726501db0ce1d57a60d9c011356250a2396 $
 
 # Quick script to build a suitable /boot dir somewhere in the tree for testing.
 # dir may be passed in, will default to /tmp/loadertest if not specified
@@ -21,6 +20,6 @@ mkdir -p ${dir}
 mtree -deUW -f etc/mtree/BSD.root.dist -p ${dir}
 mtree -deUW -f etc/mtree/BSD.usr.dist -p ${dir}/usr
 cd stand
-make all install DESTDIR=${dir} NO_ROOT=t MK_LOADER_LUA=yes MK_FORTH=no MK_INSTALL_AS_USER=yes
+make -j4 all install DESTDIR=${dir} NO_ROOT=t MK_LOADER_LUA=yes MK_FORTH=no MK_INSTALL_AS_USER=yes
 mkdir -p ${dir}/boot/kernel
 cp /boot/kernel/kernel ${dir}/boot/kernel

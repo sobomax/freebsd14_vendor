@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2012 Ian Lepore
  * All rights reserved.
@@ -27,7 +27,6 @@
  */
 
 /*
- * $FreeBSD: fe281212d20af1bcd70e3f9a09917acb82573ccf $
  */
 
 /*

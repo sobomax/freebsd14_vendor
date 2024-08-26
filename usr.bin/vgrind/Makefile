@@ -1,5 +1,4 @@
 #	@(#)Makefile	8.1 (Berkeley) 6/9/93
-# $FreeBSD: 5c9b1154fdd10859071ff6928a45a6adafe491f4 $
 
 PROG=	vfontedpr
 SRCS=	regexp.c vfontedpr.c

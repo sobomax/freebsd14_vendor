@@ -1,5 +1,4 @@
 /*	$OpenBSD: libgen.h,v 1.4 1999/05/28 22:00:22 espie Exp $	*/
-/*	$FreeBSD: 615d1dd6202ef358691698efba2598375c1c6881 $	*/
 
 /*-
  * SPDX-License-Identifier: BSD-3-Clause

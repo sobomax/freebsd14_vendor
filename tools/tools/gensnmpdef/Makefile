@@ -1,4 +1,3 @@
-# $FreeBSD: 104c97d66f45a2abb89aaca7b7dc51e99cb06f7d $
 #
 # NB: Install ports/net-mgmt/libsmi
 

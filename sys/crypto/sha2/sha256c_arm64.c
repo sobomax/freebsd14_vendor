@@ -27,8 +27,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 8c0153c2b6031a2b0f063d39e7bceb15fe3ee8e9 $");
-
 #include <sys/types.h>
 
 #include <arm_neon.h>

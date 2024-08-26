@@ -25,8 +25,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: c7984df6c87eff85eea7d565592f55241b522b78 $");
-
 /* PCI/PCI-X/PCIe bus interface for the Avago Tech (LSI) MPT3 controllers */
 
 /* TODO Move headers to mprvar */
@@ -174,8 +172,7 @@ struct mpr_ident {
 	{ 0, 0, 0, 0, 0, NULL }
 };
 
-static devclass_t	mpr_devclass;
-DRIVER_MODULE(mpr, pci, mpr_pci_driver, mpr_devclass, 0, 0);
+DRIVER_MODULE(mpr, pci, mpr_pci_driver, 0, 0);
 MODULE_PNP_INFO("U16:vendor;U16:device;U16:subvendor;U16:subdevice;D:#", pci,
     mpr, mpr_identifiers, nitems(mpr_identifiers) - 1);
 

@@ -1,4 +1,3 @@
-/*	$FreeBSD: 58538d8e4d1c69c51b9521c9f5a7ffd96cb90f6c $	*/
 
 %{
 /*

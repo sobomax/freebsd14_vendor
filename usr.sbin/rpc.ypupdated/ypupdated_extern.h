@@ -1,5 +1,4 @@
 /*
- * $FreeBSD: 2cacb9511e1ff3ba4008d0c0c5a14650f5bf67b1 $
  */
 
 #include <db.h>

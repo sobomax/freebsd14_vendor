@@ -1,5 +1,4 @@
 #	@(#)Makefile	8.1 (Berkeley) 6/5/93
-# $FreeBSD: e65030f805bb389d0b5e0de6ba6df0626948c18c $
 
 .include <src.opts.mk>
 
@@ -18,6 +17,17 @@ CFLAGS+= -DINET
 CFLAGS+= -DINET6
 .endif
 CFLAGS+= -I.
+
+.if ${MK_NETLINK_SUPPORT} != "no"
+SRCS+= route_netlink.c
+.else
+CFLAGS+=-DWITHOUT_NETLINK
+.endif
+
+.if ${MK_JAIL} != "no" && !defined(RESCUE)
+CFLAGS+= -DJAIL
+LIBADD+= jail
+.endif
 
 HAS_TESTS=
 SUBDIR.${MK_TESTS}+= tests

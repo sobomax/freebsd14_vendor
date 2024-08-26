@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2008,  Jeffrey Roberson <jeff@freebsd.org>
  * All rights reserved.
@@ -31,8 +31,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: dfc32d01295e224dd2b633c753669bdc5f9eac7f $");
-
 #include "opt_ddb.h"
 #include "opt_ktrace.h"
 
@@ -2576,7 +2574,7 @@ ddb_display_domainset(const domainset_t *set)
 	ddb_display_bitset((const struct bitset *)set, DOMAINSET_SETSIZE);
 }
 
-DB_SHOW_COMMAND(cpusets, db_show_cpusets)
+DB_SHOW_COMMAND_FLAGS(cpusets, db_show_cpusets, DB_CMD_MEMSAFE)
 {
 	struct cpuset *set;
 
@@ -2596,7 +2594,7 @@ DB_SHOW_COMMAND(cpusets, db_show_cpusets)
 	}
 }
 
-DB_SHOW_COMMAND(domainsets, db_show_domainsets)
+DB_SHOW_COMMAND_FLAGS(domainsets, db_show_domainsets, DB_CMD_MEMSAFE)
 {
 	struct domainset *set;
 

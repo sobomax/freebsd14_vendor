@@ -1,4 +1,3 @@
-/* $FreeBSD: c542046532c14cde164acaf3ea09669db28cc320 $ */
 /* $NetBSD: citrus_db_factory.h,v 1.3 2008/02/09 14:56:20 junyoung Exp $ */
 
 /*-

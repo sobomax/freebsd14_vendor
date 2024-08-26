@@ -43,8 +43,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: c9c498180c7e0e71f2d5a86da9776c55b44f49d6 $");
-
 #include "opt_isa.h"
 #include "opt_cpu.h"
 
@@ -169,6 +167,8 @@ copy_thread(struct thread *td1, struct thread *td2)
 		bcopy(get_pcb_user_save_td(td1), get_pcb_user_save_pcb(pcb2),
 		    cpu_max_ext_state_size);
 	}
+
+	td2->td_frame = (struct trapframe *)td2->td_md.md_stack_base - 1;
 
 	/*
 	 * Set registers for trampoline to user mode.  Leave space for the
@@ -371,7 +371,7 @@ cpu_thread_clean(struct thread *td)
 	if (pcb->pcb_tssp != NULL) {
 		pmap_pti_remove_kva((vm_offset_t)pcb->pcb_tssp,
 		    (vm_offset_t)pcb->pcb_tssp + ctob(IOPAGES + 1));
-		kmem_free((vm_offset_t)pcb->pcb_tssp, ctob(IOPAGES + 1));
+		kmem_free(pcb->pcb_tssp, ctob(IOPAGES + 1));
 		pcb->pcb_tssp = NULL;
 	}
 }
@@ -613,7 +613,7 @@ cpu_copy_thread(struct thread *td, struct thread *td0)
  * Set that machine state for performing an upcall that starts
  * the entry function with the given argument.
  */
-void
+int
 cpu_set_upcall(struct thread *td, void (*entry)(void *), void *arg,
     stack_t *stack)
 {
@@ -639,13 +639,15 @@ cpu_set_upcall(struct thread *td, void (*entry)(void *), void *arg,
 		td->td_frame->tf_rip = (uintptr_t)entry;
 
 		/* Return address sentinel value to stop stack unwinding. */
-		suword32((void *)td->td_frame->tf_rsp, 0);
+		if (suword32((void *)td->td_frame->tf_rsp, 0) != 0)
+			return (EFAULT);
 
 		/* Pass the argument to the entry point. */
-		suword32((void *)(td->td_frame->tf_rsp + sizeof(int32_t)),
-		    (uint32_t)(uintptr_t)arg);
-
-		return;
+		if (suword32(
+		    (void *)(td->td_frame->tf_rsp + sizeof(int32_t)),
+		    (uint32_t)(uintptr_t)arg) != 0)
+			return (EFAULT);
+		return (0);
 	}
 #endif
 
@@ -665,10 +667,13 @@ cpu_set_upcall(struct thread *td, void (*entry)(void *), void *arg,
 	td->td_frame->tf_flags = TF_HASSEGS;
 
 	/* Return address sentinel value to stop stack unwinding. */
-	suword((void *)td->td_frame->tf_rsp, 0);
+	if (suword((void *)td->td_frame->tf_rsp, 0) != 0)
+		return (EFAULT);
 
 	/* Pass the argument to the entry point. */
 	td->td_frame->tf_rdi = (register_t)arg;
+
+	return (0);
 }
 
 int

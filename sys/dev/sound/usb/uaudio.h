@@ -1,7 +1,6 @@
-/* $FreeBSD: ece0a5b41849ccbb602e427a9fb822d3906bf06e $ */
 
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2000-2002 Hiroyuki Aizu <aizu@navi.org>
  *

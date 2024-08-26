@@ -31,20 +31,12 @@
  * ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
- *
- * $FreeBSD: 7c20b5780fe73abb3d602c57497375e87bb4c18c $
  */
 
 #ifndef IB_USER_MAD_H
 #define IB_USER_MAD_H
 
-#ifdef _KERNEL
-#include <linux/types.h>
-#include <linux/ioctl.h>
-#else
-#include <infiniband/types.h>
-#include <sys/ioccom.h>
-#endif
+#include <rdma/rdma_user_ioctl.h>
 
 /*
  * Increment this value if any changes that break userspace ABI
@@ -238,17 +230,5 @@ struct ib_user_mad_reg_req2 {
 	__u8	rmpp_version;
 	__u8	reserved[3];
 };
-
-#define IB_IOCTL_MAGIC		0x1b
-
-#define IB_USER_MAD_REGISTER_AGENT	_IOWR(IB_IOCTL_MAGIC, 1, \
-					      struct ib_user_mad_reg_req)
-
-#define IB_USER_MAD_UNREGISTER_AGENT	_IOW(IB_IOCTL_MAGIC, 2, __u32)
-
-#define IB_USER_MAD_ENABLE_PKEY		_IO(IB_IOCTL_MAGIC, 3)
-
-#define IB_USER_MAD_REGISTER_AGENT2     _IOWR(IB_IOCTL_MAGIC, 4, \
-					      struct ib_user_mad_reg_req2)
 
 #endif /* IB_USER_MAD_H */

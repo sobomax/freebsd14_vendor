@@ -1,4 +1,3 @@
-# $FreeBSD: d8510e62fb29fd414f64632a5b2c545e1181cf01 $
 
 .include <src.opts.mk>
 
@@ -30,7 +29,12 @@ CFLAGS+= -DHAVE_ISSETUGID
 #CFLAGS+=	-DNEED_ERRLOC
 #YFLAGS+=	-d
 
-LIBADD=	dtrace ctf elf proc spl
+.if ${MK_DTRACE_ASAN} != "no"
+CFLAGS+=	-fsanitize=address -fsanitize=undefined
+LDFLAGS+=	-fsanitize=address -fsanitize=undefined
+.endif
+
+LIBADD=	dtrace ctf elf proc spl xo
 
 .if ${MK_DTRACE_TESTS} != "no"
 SUBDIR+=	tests

@@ -1,7 +1,5 @@
 /*-
  * Test 0016:	BPF_JMP+BPF_JGT+BPF_K
- *
- * $FreeBSD: eeb26fa7b33c35ca9e9a838b6d0b8f14c171792c $
  */
 
 /* BPF program */

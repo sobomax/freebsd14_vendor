@@ -3,7 +3,6 @@
 # This file, originally written by Garrett A. Wollman, is in the public
 # domain.
 #
-# $FreeBSD: 1bbf3e40efa30bb1b3e4ee5228fbcd90fdb3bbcd $
 #
 
 # PROVIDE: disks

@@ -1,5 +1,4 @@
 #!/bin/sh
-# $FreeBSD: 29d6ab77b6ab2ffb0e7e15d5d7c2728188d7f90e $
 
 base=`basename $0`
 

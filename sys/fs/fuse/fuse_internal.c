@@ -61,8 +61,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: b3bbf83d0033002785cf25e251a69c1ae5e962b9 $");
-
 #include <sys/param.h>
 #include <sys/systm.h>
 #include <sys/counter.h>
@@ -272,10 +270,10 @@ fuse_internal_cache_attrs(struct vnode *vp, struct fuse_attr *attr,
 
 	if (vnode_isreg(vp) &&
 	    fvdat->cached_attrs.va_size != VNOVAL &&
+	    fvdat->flag & FN_SIZECHANGE &&
 	    attr->size != fvdat->cached_attrs.va_size)
 	{
-		if ( data->cache_mode == FUSE_CACHE_WB &&
-		    fvdat->flag & FN_SIZECHANGE)
+		if (data->cache_mode == FUSE_CACHE_WB)
 		{
 			const char *msg;
 
@@ -328,7 +326,6 @@ fuse_internal_cache_attrs(struct vnode *vp, struct fuse_attr *attr,
 	else
 		return;
 
-	vattr_null(vp_cache_at);
 	vp_cache_at->va_fsid = mp->mnt_stat.f_fsid.val[0];
 	vp_cache_at->va_fileid = attr->ino;
 	vp_cache_at->va_mode = attr->mode & ~S_IFMT;
@@ -475,7 +472,6 @@ fuse_internal_invalidate_entry(struct mount *mp, struct uio *uio)
 
 	cn.cn_nameiop = LOOKUP;
 	cn.cn_flags = 0;	/* !MAKEENTRY means free cached entry */
-	cn.cn_thread = curthread;
 	cn.cn_cred = curthread->td_ucred;
 	cn.cn_lkflags = LK_SHARED;
 	cn.cn_pnbuf = NULL;
@@ -558,7 +554,7 @@ fuse_internal_readdir(struct vnode *vp,
     struct fuse_filehandle *fufh,
     struct fuse_iov *cookediov,
     int *ncookies,
-    u_long *cookies)
+    uint64_t *cookies)
 {
 	int err = 0;
 	struct fuse_dispatcher fdi;
@@ -604,7 +600,7 @@ fuse_internal_readdir_processdata(struct uio *uio,
     size_t bufsize,
     struct fuse_iov *cookediov,
     int *ncookies,
-    u_long **cookiesp)
+    uint64_t **cookiesp)
 {
 	int err = 0;
 	int oreclen;
@@ -612,7 +608,7 @@ fuse_internal_readdir_processdata(struct uio *uio,
 
 	struct dirent *de;
 	struct fuse_dirent *fudge;
-	u_long *cookies;
+	uint64_t *cookies;
 
 	cookies = *cookiesp;
 	if (bufsize < FUSE_NAME_OFFSET)
@@ -700,7 +696,7 @@ fuse_internal_remove(struct vnode *dvp,
 	int err = 0;
 
 	fdisp_init(&fdi, cnp->cn_namelen + 1);
-	fdisp_make_vp(&fdi, op, dvp, cnp->cn_thread, cnp->cn_cred);
+	fdisp_make_vp(&fdi, op, dvp, curthread, cnp->cn_cred);
 
 	memcpy(fdi.indata, cnp->cn_nameptr, cnp->cn_namelen);
 	((char *)fdi.indata)[cnp->cn_namelen] = '\0';
@@ -752,7 +748,7 @@ fuse_internal_rename(struct vnode *fdvp,
 	int err = 0;
 
 	fdisp_init(&fdi, sizeof(*fri) + fcnp->cn_namelen + tcnp->cn_namelen + 2);
-	fdisp_make_vp(&fdi, FUSE_RENAME, fdvp, tcnp->cn_thread, tcnp->cn_cred);
+	fdisp_make_vp(&fdi, FUSE_RENAME, fdvp, curthread, tcnp->cn_cred);
 
 	fri = fdi.indata;
 	fri->newdir = VTOI(tdvp);
@@ -784,7 +780,7 @@ fuse_internal_newentry_makerequest(struct mount *mp,
 {
 	fdip->iosize = bufsize + cnp->cn_namelen + 1;
 
-	fdisp_make(fdip, op, mp, dnid, cnp->cn_thread, cnp->cn_cred);
+	fdisp_make(fdip, op, mp, dnid, curthread, cnp->cn_cred);
 	memcpy(fdip->indata, buf, bufsize);
 	memcpy((char *)fdip->indata + bufsize, cnp->cn_nameptr, cnp->cn_namelen);
 	((char *)fdip->indata)[bufsize + cnp->cn_namelen] = '\0';
@@ -794,7 +790,7 @@ int
 fuse_internal_newentry_core(struct vnode *dvp,
     struct vnode **vpp,
     struct componentname *cnp,
-    enum vtype vtyp,
+    __enum_uint8(vtype) vtyp,
     struct fuse_dispatcher *fdip)
 {
 	int err = 0;
@@ -811,7 +807,7 @@ fuse_internal_newentry_core(struct vnode *dvp,
 	}
 	err = fuse_vnode_get(mp, feo, feo->nodeid, dvp, vpp, cnp, vtyp);
 	if (err) {
-		fuse_internal_forget_send(mp, cnp->cn_thread, cnp->cn_cred,
+		fuse_internal_forget_send(mp, curthread, cnp->cn_cred,
 		    feo->nodeid, 1);
 		return err;
 	}
@@ -835,7 +831,7 @@ fuse_internal_newentry(struct vnode *dvp,
     enum fuse_opcode op,
     void *buf,
     size_t bufsize,
-    enum vtype vtype)
+    __enum_uint8(vtype) vtype)
 {
 	int err;
 	struct fuse_dispatcher fdi;
@@ -900,7 +896,7 @@ fuse_internal_do_getattr(struct vnode *vp, struct vattr *vap,
 	struct timespec old_atime = fvdat->cached_attrs.va_atime;
 	struct timespec old_ctime = fvdat->cached_attrs.va_ctime;
 	struct timespec old_mtime = fvdat->cached_attrs.va_mtime;
-	enum vtype vtyp;
+	__enum_uint8(vtype) vtyp;
 	int err;
 
 	ASSERT_VOP_LOCKED(vp, __func__);
@@ -1000,7 +996,7 @@ fuse_internal_init_callback(struct fuse_ticket *tick, struct uio *uio)
 		 * But there would be little payoff.
 		 */
 		SDT_PROBE2(fusefs, , internal, trace, 1,
-			"userpace version too low");
+			"userspace version too low");
 		err = EPROTONOSUPPORT;
 		goto out;
 	}
@@ -1142,7 +1138,7 @@ int fuse_internal_setattr(struct vnode *vp, struct vattr *vap,
 	pid_t pid = td->td_proc->p_pid;
 	struct fuse_data *data;
 	int err = 0;
-	enum vtype vtyp;
+	__enum_uint8(vtype) vtyp;
 
 	ASSERT_VOP_ELOCKED(vp, __func__);
 

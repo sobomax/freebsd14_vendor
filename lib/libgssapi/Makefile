@@ -1,4 +1,3 @@
-# $FreeBSD: 0982b88ab59c8b942cf4d21367cd35c84d4d18f6 $
 
 PACKAGE= runtime
 LIB=		gssapi

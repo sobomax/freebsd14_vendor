@@ -18,8 +18,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: d83174e61d9e527474ec46213521f2f01e82223e $");
-
 /*-
  * Ralink Technology RT2860/RT3090/RT3390/RT3562/RT5390/RT5392 chipset driver
  * http://www.ralinktech.com/
@@ -1178,7 +1176,6 @@ rt2860_maxrssi_chain(struct rt2860_softc *sc, const struct rt2860_rxwi *rxwi)
 static void
 rt2860_rx_intr(struct rt2860_softc *sc)
 {
-	struct epoch_tracker et;
 	struct rt2860_rx_radiotap_header *tap;
 	struct ieee80211com *ic = &sc->sc_ic;
 	struct ieee80211_frame *wh;
@@ -1326,13 +1323,11 @@ rt2860_rx_intr(struct rt2860_softc *sc)
 		/* send the frame to the 802.11 layer */
 		ni = ieee80211_find_rxnode(ic,
 		    (struct ieee80211_frame_min *)wh);
-		NET_EPOCH_ENTER(et);
 		if (ni != NULL) {
 			(void)ieee80211_input(ni, m, rssi - nf, nf);
 			ieee80211_free_node(ni);
 		} else
 			(void)ieee80211_input_all(ic, m, rssi - nf, nf);
-		NET_EPOCH_EXIT(et);
 
 		RAL_LOCK(sc);
 
@@ -1468,7 +1463,7 @@ rt2860_tx(struct rt2860_softc *sc, struct mbuf *m, struct ieee80211_node *ni)
 	bus_dma_segment_t *seg;
 	u_int hdrlen;
 	uint16_t qos, dur;
-	uint8_t type, qsel, mcs, pid, tid, qid;
+	uint8_t type, qsel, mcs, pid, qid;
 	int i, nsegs, ntxds, pad, rate, ridx, error;
 
 	/* the data pool contains at least one element, pick the first */
@@ -1505,10 +1500,8 @@ rt2860_tx(struct rt2860_softc *sc, struct mbuf *m, struct ieee80211_node *ni)
 	qid = M_WME_GETAC(m);
 	if (IEEE80211_QOS_HAS_SEQ(wh)) {
 		qos = ((const struct ieee80211_qosframe *)wh)->i_qos[0];
-		tid = qos & IEEE80211_QOS_TID;
 	} else {
 		qos = 0;
-		tid = 0;
 	}
 	ring = &sc->txq[qid];
 	ridx = ieee80211_legacy_rate_lookup(ic->ic_rt, rate);
@@ -1742,7 +1735,7 @@ rt2860_tx_raw(struct rt2860_softc *sc, struct mbuf *m,
 	bus_dma_segment_t *seg;
 	u_int hdrlen;
 	uint16_t dur;
-	uint8_t type, qsel, mcs, pid, tid, qid;
+	uint8_t qsel, mcs, pid, qid;
 	int i, nsegs, ntxds, pad, rate, ridx, error;
 
 	/* the data pool contains at least one element, pick the first */
@@ -1750,7 +1743,6 @@ rt2860_tx_raw(struct rt2860_softc *sc, struct mbuf *m,
 
 	wh = mtod(m, struct ieee80211_frame *);
 	hdrlen = ieee80211_hdrsize(wh);
-	type = wh->i_fc[0] & IEEE80211_FC0_TYPE_MASK;
 
 	/* Choose a TX rate index. */
 	rate = params->ibp_rate0;
@@ -1763,7 +1755,6 @@ rt2860_tx_raw(struct rt2860_softc *sc, struct mbuf *m,
 	}
 
 	qid = params->ibp_pri & 3;
-	tid = 0;
 	ring = &sc->txq[qid];
 
 	/* get MCS code from rate index */

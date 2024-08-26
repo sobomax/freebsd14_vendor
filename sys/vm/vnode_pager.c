@@ -53,8 +53,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 08927b5671f6974f1e97bced5048ab4b039db78e $");
-
 #include "opt_vm.h"
 
 #include <sys/param.h>
@@ -155,7 +153,6 @@ vnode_create_vobject(struct vnode *vp, off_t isize, struct thread *td)
 {
 	vm_object_t object;
 	vm_ooffset_t size = isize;
-	struct vattr va;
 	bool last;
 
 	if (!vn_isdisk(vp) && vn_canvmio(vp) == FALSE)
@@ -169,9 +166,8 @@ vnode_create_vobject(struct vnode *vp, off_t isize, struct thread *td)
 		if (vn_isdisk(vp)) {
 			size = IDX_TO_OFF(INT_MAX);
 		} else {
-			if (VOP_GETATTR(vp, &va, td->td_ucred))
+			if (vn_getsize_locked(vp, &size, td->td_ucred) != 0)
 				return (0);
-			size = va.va_size;
 		}
 	}
 
@@ -428,6 +424,53 @@ vnode_pager_haspage(vm_object_t object, vm_pindex_t pindex, int *before,
 }
 
 /*
+ * Internal routine clearing partial-page content
+ */
+static void
+vnode_pager_subpage_purge(struct vm_page *m, int base, int end)
+{
+	int size;
+
+	KASSERT(end > base && end <= PAGE_SIZE,
+	    ("%s: start %d end %d", __func__, base, end));
+	size = end - base;
+
+	/*
+	 * Clear out partial-page garbage in case
+	 * the page has been mapped.
+	 */
+	pmap_zero_page_area(m, base, size);
+
+	/*
+	 * Update the valid bits to reflect the blocks
+	 * that have been zeroed.  Some of these valid
+	 * bits may have already been set.
+	 */
+	vm_page_set_valid_range(m, base, size);
+
+	/*
+	 * Round up "base" to the next block boundary so
+	 * that the dirty bit for a partially zeroed
+	 * block is not cleared.
+	 */
+	base = roundup2(base, DEV_BSIZE);
+	end = rounddown2(end, DEV_BSIZE);
+
+	if (end > base) {
+		/*
+		 * Clear out partial-page dirty bits.
+		 *
+		 * note that we do not clear out the
+		 * valid bits.  This would prevent
+		 * bogus_page replacement from working
+		 * properly.
+		 */
+		vm_page_clear_dirty(m, base, end - base);
+	}
+
+}
+
+/*
  * Lets the VM system know about a change in size for a file.
  * We adjust our own internal size and flush any cached pages in
  * the associated object that are affected by the size change.
@@ -489,39 +532,9 @@ vnode_pager_setsize(struct vnode *vp, vm_ooffset_t nsize)
 		m = vm_page_grab(object, OFF_TO_IDX(nsize), VM_ALLOC_NOCREAT);
 		if (m == NULL)
 			goto out;
-		if (!vm_page_none_valid(m)) {
-			int base = (int)nsize & PAGE_MASK;
-			int size = PAGE_SIZE - base;
-
-			/*
-			 * Clear out partial-page garbage in case
-			 * the page has been mapped.
-			 */
-			pmap_zero_page_area(m, base, size);
-
-			/*
-			 * Update the valid bits to reflect the blocks that
-			 * have been zeroed.  Some of these valid bits may
-			 * have already been set.
-			 */
-			vm_page_set_valid_range(m, base, size);
-
-			/*
-			 * Round "base" to the next block boundary so that the
-			 * dirty bit for a partially zeroed block is not
-			 * cleared.
-			 */
-			base = roundup2(base, DEV_BSIZE);
-
-			/*
-			 * Clear out partial-page dirty bits.
-			 *
-			 * note that we do not clear out the valid
-			 * bits.  This would prevent bogus_page
-			 * replacement from working properly.
-			 */
-			vm_page_clear_dirty(m, base, PAGE_SIZE - base);
-		}
+		if (!vm_page_none_valid(m))
+			vnode_pager_subpage_purge(m, (int)nsize & PAGE_MASK,
+			    PAGE_SIZE);
 		vm_page_xunbusy(m);
 	}
 out:
@@ -531,6 +544,63 @@ out:
 	atomic_store_64(&object->un_pager.vnp.vnp_size, nsize);
 #endif
 	object->size = nobjsize;
+	VM_OBJECT_WUNLOCK(object);
+}
+
+/*
+ * Lets the VM system know about the purged range for a file. We toss away any
+ * cached pages in the associated object that are affected by the purge
+ * operation. Partial-page area not aligned to page boundaries will be zeroed
+ * and the dirty blocks in DEV_BSIZE unit within a page will not be flushed.
+ */
+void
+vnode_pager_purge_range(struct vnode *vp, vm_ooffset_t start, vm_ooffset_t end)
+{
+	struct vm_page *m;
+	struct vm_object *object;
+	vm_pindex_t pi, pistart, piend;
+	bool same_page;
+	int base, pend;
+
+	ASSERT_VOP_LOCKED(vp, "vnode_pager_purge_range");
+
+	object = vp->v_object;
+	pi = start + PAGE_MASK < start ? OBJ_MAX_SIZE :
+	    OFF_TO_IDX(start + PAGE_MASK);
+	pistart = OFF_TO_IDX(start);
+	piend = end == 0 ? OBJ_MAX_SIZE : OFF_TO_IDX(end);
+	same_page = pistart == piend;
+	if ((end != 0 && end <= start) || object == NULL)
+		return;
+
+	VM_OBJECT_WLOCK(object);
+
+	if (pi < piend)
+		vm_object_page_remove(object, pi, piend, 0);
+
+	if ((start & PAGE_MASK) != 0) {
+		base = (int)start & PAGE_MASK;
+		pend = same_page ? (int)end & PAGE_MASK : PAGE_SIZE;
+		m = vm_page_grab(object, pistart, VM_ALLOC_NOCREAT);
+		if (m != NULL) {
+			if (!vm_page_none_valid(m))
+				vnode_pager_subpage_purge(m, base, pend);
+			vm_page_xunbusy(m);
+		}
+		if (same_page)
+			goto out;
+	}
+	if ((end & PAGE_MASK) != 0) {
+		base = same_page ? (int)start & PAGE_MASK : 0 ;
+		pend = (int)end & PAGE_MASK;
+		m = vm_page_grab(object, piend, VM_ALLOC_NOCREAT);
+		if (m != NULL) {
+			if (!vm_page_none_valid(m))
+				vnode_pager_subpage_purge(m, base, pend);
+			vm_page_xunbusy(m);
+		}
+	}
+out:
 	VM_OBJECT_WUNLOCK(object);
 }
 
@@ -566,6 +636,13 @@ vnode_pager_addr(struct vnode *vp, vm_ooffset_t address, daddr_t *rtaddress,
 	}
 
 	return (err);
+}
+
+static void
+vnode_pager_input_bdone(struct buf *bp)
+{
+	runningbufwakeup(bp);
+	bdone(bp);
 }
 
 /*
@@ -614,7 +691,7 @@ vnode_pager_input_smlfs(vm_object_t object, vm_page_t m)
 
 			/* build a minimal buffer header */
 			bp->b_iocmd = BIO_READ;
-			bp->b_iodone = bdone;
+			bp->b_iodone = vnode_pager_input_bdone;
 			KASSERT(bp->b_rcred == NOCRED, ("leaking read ucred"));
 			KASSERT(bp->b_wcred == NOCRED, ("leaking write ucred"));
 			bp->b_rcred = crhold(curthread->td_ucred);
@@ -1132,6 +1209,8 @@ vnode_pager_generic_getpages_done(struct buf *bp)
 	error = (bp->b_ioflags & BIO_ERROR) != 0 ? bp->b_error : 0;
 	object = bp->b_vp->v_object;
 
+	runningbufwakeup(bp);
+
 	if (error == 0 && bp->b_bcount != bp->b_npages * PAGE_SIZE) {
 		if (!buf_mapped(bp)) {
 			bp->b_data = bp->b_kvabase;
@@ -1216,7 +1295,7 @@ static void
 vnode_pager_putpages(vm_object_t object, vm_page_t *m, int count,
     int flags, int *rtvals)
 {
-	int rtval;
+	int rtval __diagused;
 	struct vnode *vp;
 	int bytes = count * PAGE_SIZE;
 
@@ -1279,7 +1358,7 @@ vnode_pager_generic_putpages(struct vnode *vp, vm_page_t *ma, int bytecount,
 {
 	vm_object_t object;
 	vm_page_t m;
-	vm_ooffset_t maxblksz, next_offset, poffset, prev_offset;
+	vm_ooffset_t max_offset, next_offset, poffset, prev_offset;
 	struct uio auio;
 	struct iovec aiov;
 	off_t prev_resid, wrsz;
@@ -1354,15 +1433,15 @@ vnode_pager_generic_putpages(struct vnode *vp, vm_page_t *ma, int bytecount,
 	auio.uio_segflg = UIO_NOCOPY;
 	auio.uio_rw = UIO_WRITE;
 	auio.uio_td = NULL;
-	maxblksz = roundup2(poffset + maxsize, DEV_BSIZE);
+	max_offset = roundup2(poffset + maxsize, DEV_BSIZE);
 
-	for (prev_offset = poffset; prev_offset < maxblksz;) {
+	for (prev_offset = poffset; prev_offset < max_offset;) {
 		/* Skip clean blocks. */
-		for (in_hole = true; in_hole && prev_offset < maxblksz;) {
+		for (in_hole = true; in_hole && prev_offset < max_offset;) {
 			m = ma[OFF_TO_IDX(prev_offset - poffset)];
 			for (i = vn_off2bidx(prev_offset);
 			    i < sizeof(vm_page_bits_t) * NBBY &&
-			    prev_offset < maxblksz; i++) {
+			    prev_offset < max_offset; i++) {
 				if (vn_dirty_blk(m, prev_offset)) {
 					in_hole = false;
 					break;
@@ -1374,11 +1453,11 @@ vnode_pager_generic_putpages(struct vnode *vp, vm_page_t *ma, int bytecount,
 			goto write_done;
 
 		/* Find longest run of dirty blocks. */
-		for (next_offset = prev_offset; next_offset < maxblksz;) {
+		for (next_offset = prev_offset; next_offset < max_offset;) {
 			m = ma[OFF_TO_IDX(next_offset - poffset)];
 			for (i = vn_off2bidx(next_offset);
 			    i < sizeof(vm_page_bits_t) * NBBY &&
-			    next_offset < maxblksz; i++) {
+			    next_offset < max_offset; i++) {
 				if (!vn_dirty_blk(m, next_offset))
 					goto start_write;
 				next_offset += DEV_BSIZE;
@@ -1387,12 +1466,13 @@ vnode_pager_generic_putpages(struct vnode *vp, vm_page_t *ma, int bytecount,
 start_write:
 		if (next_offset > poffset + maxsize)
 			next_offset = poffset + maxsize;
+		if (prev_offset == next_offset)
+			goto write_done;
 
 		/*
 		 * Getting here requires finding a dirty block in the
 		 * 'skip clean blocks' loop.
 		 */
-		MPASS(prev_offset < next_offset);
 
 		aiov.iov_base = NULL;
 		auio.uio_iovcnt = 1;
@@ -1482,12 +1562,10 @@ void
 vnode_pager_undirty_pages(vm_page_t *ma, int *rtvals, int written, off_t eof,
     int lpos)
 {
-	vm_object_t obj;
 	int i, pos, pos_devb;
 
 	if (written == 0 && eof >= lpos)
 		return;
-	obj = ma[0]->object;
 	for (i = 0, pos = 0; pos < written; i++, pos += PAGE_SIZE) {
 		if (pos < trunc_page(written)) {
 			rtvals[i] = VM_PAGER_OK;
@@ -1613,4 +1691,31 @@ static void
 vnode_pager_getvp(vm_object_t object, struct vnode **vpp, bool *vp_heldp)
 {
 	*vpp = object->handle;
+}
+
+static void
+vnode_pager_clean1(struct vnode *vp, int sync_flags)
+{
+	struct vm_object *obj;
+
+	ASSERT_VOP_LOCKED(vp, "needs lock for writes");
+	obj = vp->v_object;
+	if (obj == NULL)
+		return;
+
+	VM_OBJECT_WLOCK(obj);
+	vm_object_page_clean(obj, 0, 0, sync_flags);
+	VM_OBJECT_WUNLOCK(obj);
+}
+
+void
+vnode_pager_clean_sync(struct vnode *vp)
+{
+	vnode_pager_clean1(vp, OBJPC_SYNC);
+}
+
+void
+vnode_pager_clean_async(struct vnode *vp)
+{
+	vnode_pager_clean1(vp, 0);
 }

@@ -1,4 +1,3 @@
-# $FreeBSD: 556652cf640424bfabaa0ad6527c7c6f3d6703b9 $
 
 PACKAGE=		tests
 TESTSDIR=		${TESTSBASE}/sys/common

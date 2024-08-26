@@ -1,4 +1,3 @@
-# $FreeBSD: 1bd2c32db81cc8337a439a5dbf3c85f69fb89556 $
 set - -ax
 getopts ax option
 set -C

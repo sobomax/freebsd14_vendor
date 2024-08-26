@@ -1,5 +1,4 @@
 #	@(#)Makefile	8.1 (Berkeley) 6/6/93
-# $FreeBSD: f2592aa1ac338a092e2583bc525816b03bbf971f $
 
 .include <src.opts.mk>
 

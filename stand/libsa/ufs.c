@@ -67,9 +67,6 @@
  * rights to redistribute these changes.
  */
 
-#include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 8385a1a3419dc80a35ccfe154351ffa49cf494d2 $");
-
 /*
  *	Stand-alone file reading package.
  */
@@ -151,13 +148,11 @@ static int	search_directory(char *, struct open_file *, ino_t *);
 static int	ufs_use_sa_read(void *, off_t, void **, int);
 
 /* from ffs_subr.c */
-int	ffs_sbget(void *, struct fs **, off_t, char *,
+int	ffs_sbget(void *devfd, struct fs **fsp, off_t sblock, int flags,
+	    char *filltype,
+	    int (*readfunc)(void *devfd, off_t loc, void **bufp, int size));
+int	ffs_sbsearch(void *, struct fs **, int, char *,
 	    int (*)(void *, off_t, void **, int));
-/*
- * Request standard superblock location in ffs_sbget
- */
-#define	STDSB			-1	/* Fail if check-hash is bad */
-#define	STDSB_NOHASHFAIL	-2	/* Ignore check-hash failure */
 
 /*
  * Read a new inode into a file structure.
@@ -411,7 +406,7 @@ buf_read_file(struct open_file *f, char **buf_p, size_t *size_p)
 	block_size = sblksize(fs, DIP(fp, di_size), file_block);
 
 	if (file_block != fp->f_buf_blkno) {
-		if (fp->f_buf == (char *)0)
+		if (fp->f_buf == NULL)
 			fp->f_buf = malloc(fs->fs_bsize);
 
 		rc = block_map(f, file_block, &disk_block);
@@ -534,8 +529,8 @@ ufs_open(const char *upath, struct open_file *f)
 	if (mnt == NULL) {
 		/* read super block */
 		twiddle(1);
-		if ((rc = ffs_sbget(f, &fs, STDSB_NOHASHFAIL, "stand",
-		     ufs_use_sa_read)) != 0) {
+		if ((rc = ffs_sbget(f, &fs, UFS_STDSB, UFS_NOHASHFAIL, "stand",
+		    ufs_use_sa_read)) != 0) {
 			goto out;
 		}
 	} else {
@@ -890,16 +885,17 @@ ufs_readdir(struct open_file *f, struct dirent *d)
 	/*
 	 * assume that a directory entry will not be split across blocks
 	 */
-again:
-	if (fp->f_seekp >= DIP(fp, di_size))
-		return (ENOENT);
-	error = buf_read_file(f, &buf, &buf_size);
-	if (error)
-		return (error);
-	dp = (struct direct *)buf;
-	fp->f_seekp += dp->d_reclen;
-	if (dp->d_ino == (ino_t)0)
-		goto again;
+
+	do {
+		if (fp->f_seekp >= DIP(fp, di_size))
+			return (ENOENT);
+		error = buf_read_file(f, &buf, &buf_size);
+		if (error)
+			return (error);
+		dp = (struct direct *)buf;
+		fp->f_seekp += dp->d_reclen;
+	} while (dp->d_ino == (ino_t)0);
+
 	d->d_type = dp->d_type;
 	strcpy(d->d_name, dp->d_name);
 	return (0);

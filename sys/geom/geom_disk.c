@@ -36,8 +36,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 2d0b478a835329efa86519284022458110f40acf $");
-
 #include "opt_geom.h"
 
 #include <sys/param.h>
@@ -49,6 +47,7 @@ __FBSDID("$FreeBSD: 2d0b478a835329efa86519284022458110f40acf $");
 #include <sys/devctl.h>
 #include <sys/fcntl.h>
 #include <sys/malloc.h>
+#include <sys/msan.h>
 #include <sys/sbuf.h>
 #include <sys/devicestat.h>
 
@@ -70,6 +69,7 @@ struct g_disk_softc {
 	char			led[64];
 	uint32_t		state;
 	struct mtx		 done_mtx;
+	bool                    flush_notsup_succeed;
 };
 
 static g_access_t g_disk_access;
@@ -239,6 +239,9 @@ g_disk_done(struct bio *bp)
 		bp2->bio_error = bp->bio_error;
 	bp2->bio_completed += bp->bio_length - bp->bio_resid;
 
+	if (bp->bio_cmd == BIO_READ)
+		kmsan_check(bp2->bio_data, bp2->bio_completed, "g_disk_done");
+
 	switch (bp->bio_cmd) {
 	case BIO_ZONE:
 		bcopy(&bp->bio_zone, &bp2->bio_zone, sizeof(bp->bio_zone));
@@ -358,7 +361,7 @@ g_disk_seg_limit(bus_dma_segment_t *seg, off_t *poffset,
 static off_t
 g_disk_vlist_limit(struct disk *dp, struct bio *bp, bus_dma_segment_t **pendseg)
 {
-	bus_dma_segment_t *seg, *end;
+	bus_dma_segment_t *seg, *end __diagused;
 	off_t residual;
 	off_t offset;
 	int pages;
@@ -445,6 +448,10 @@ g_disk_start(struct bio *bp)
 		KASSERT((dp->d_flags & DISKFLAG_UNMAPPED_BIO) != 0 ||
 		    (bp->bio_flags & BIO_UNMAPPED) == 0,
 		    ("unmapped bio not supported by disk %s", dp->d_name));
+
+		if (bp->bio_cmd == BIO_WRITE)
+			kmsan_check_bio(bp, "g_disk_start");
+
 		off = 0;
 		bp3 = NULL;
 		bp2 = g_clone_bio(bp);
@@ -531,7 +538,7 @@ g_disk_start(struct bio *bp)
 		g_trace(G_T_BIO, "g_disk_flushcache(%s)",
 		    bp->bio_to->name);
 		if (!(dp->d_flags & DISKFLAG_CANFLUSHCACHE)) {
-			error = EOPNOTSUPP;
+			error = (sc->flush_notsup_succeed) ? 0 : EOPNOTSUPP;
 			break;
 		}
 		/*FALLTHROUGH*/
@@ -752,6 +759,10 @@ g_disk_create(void *arg, int flag)
 		    SYSCTL_CHILDREN(sc->sysctl_tree), OID_AUTO, "flags",
 		    CTLTYPE_STRING | CTLFLAG_RD | CTLFLAG_MPSAFE, dp, 0,
 		    g_disk_sysctl_flags, "A", "Report disk flags");
+		SYSCTL_ADD_BOOL(&sc->sysctl_ctx,
+		    SYSCTL_CHILDREN(sc->sysctl_tree), OID_AUTO, "flush_notsup_succeed",
+		    CTLFLAG_RWTUN, &sc->flush_notsup_succeed, sizeof(sc->flush_notsup_succeed),
+		    "Do not return EOPNOTSUPP if there is no cache to flush");
 	}
 	pp->private = sc;
 	dp->d_geom = gp;

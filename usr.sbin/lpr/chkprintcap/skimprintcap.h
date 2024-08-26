@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * ------+---------+---------+---------+---------+---------+---------+---------*
  * Copyright (c) 2001  - Garance Alistair Drosehn <gad@FreeBSD.org>.
@@ -31,7 +31,6 @@
  * official policies, either expressed or implied, of the FreeBSD Project.
  *
  * ------+---------+---------+---------+---------+---------+---------+---------*
- * $FreeBSD: 29b5627458a9e35b5c9e23acfd290d82e660b21d $
  * ------+---------+---------+---------+---------+---------+---------+---------*
  */
 

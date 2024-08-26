@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 1998-2003 Poul-Henning Kamp
  * All rights reserved.
@@ -27,8 +27,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 0dcee196788955e9a8dc1376ce26839b6a3e9dbd $");
-
 #include "opt_clock.h"
 
 #include <sys/param.h>
@@ -144,6 +142,21 @@ tsc_freq_vmware(void)
 	vmware_hvcall(VMW_HVCMD_GETHZ, regs);
 	if (regs[1] != UINT_MAX)
 		tsc_freq = regs[0] | ((uint64_t)regs[1] << 32);
+	tsc_early_calib_exact = 1;
+}
+
+static void
+tsc_freq_xen(void)
+{
+	u_int regs[4];
+
+	/*
+	 * Must run *after* generic tsc_freq_cpuid_vm, so that when Xen is
+	 * emulating Viridian support the Viridian leaf is used instead.
+	 */
+	KASSERT(hv_high >= 0x40000003, ("Invalid max hypervisor leaf on Xen"));
+	cpuid_count(0x40000003, 0, regs);
+	tsc_freq = (uint64_t)(regs[2]) * 1000;
 	tsc_early_calib_exact = 1;
 }
 
@@ -358,6 +371,12 @@ probe_tsc_freq_early(void)
 			printf(
 		    "Early TSC frequency %juHz derived from VMWare hypercall\n",
 			    (uintmax_t)tsc_freq);
+	} else if (vm_guest == VM_GUEST_XEN) {
+		tsc_freq_xen();
+		if (bootverbose)
+			printf(
+			"Early TSC frequency %juHz derived from Xen CPUID\n",
+			    (uintmax_t)tsc_freq);
 	} else if (tsc_freq_cpuid(&tsc_freq)) {
 		/*
 		 * If possible, use the value obtained from CPUID as the initial
@@ -571,6 +590,7 @@ test_tsc(int adj_max_count)
 	if (vm_guest == VM_GUEST_VBOX)
 		return (0);
 
+	TSENTER();
 	size = (mp_maxid + 1) * 3;
 	data = malloc(sizeof(*data) * size * N, M_TEMP, M_WAITOK);
 	adj = 0;
@@ -591,6 +611,7 @@ retry:
 		printf("SMP: %sed TSC synchronization test%s\n",
 		    smp_tsc ? "pass" : "fail", 
 		    adj > 0 ? " after adjustment" : "");
+	TSEXIT();
 	if (smp_tsc && tsc_is_invariant) {
 		switch (cpu_vendor_id) {
 		case CPU_VENDOR_AMD:
@@ -967,7 +988,8 @@ x86_tsc_vdso_timehands32(struct vdso_timehands32 *vdso_th32,
 	vdso_th32->th_algo = VDSO_TH_ALGO_X86_TSC;
 	vdso_th32->th_x86_shift = (int)(intptr_t)tc->tc_priv;
 	vdso_th32->th_x86_hpet_idx = 0xffffffff;
-	vdso_th32->th_x86_pvc_last_systime = 0;
+	vdso_th32->th_x86_pvc_last_systime[0] = 0;
+	vdso_th32->th_x86_pvc_last_systime[1] = 0;
 	vdso_th32->th_x86_pvc_stable_mask = 0;
 	bzero(vdso_th32->th_res, sizeof(vdso_th32->th_res));
 	return (1);

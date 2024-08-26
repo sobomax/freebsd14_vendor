@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2000 Katsurajima Naoto <raven@katsurajima.seya.yokohama.jp>
  * Copyright (c) 2001 Cameron Grant <cg@freebsd.org>
@@ -37,8 +37,6 @@
 
 #include <dev/pci/pcireg.h>
 #include <dev/pci/pcivar.h>
-
-SND_DECLARE_FILE("$FreeBSD: 2ee8c00cd6e4e0ed11bef2db0952f604bc5d7319 $");
 
 /* -------------------------------------------------------------------- */
 
@@ -688,9 +686,10 @@ ich_setstatus(struct sc_info *sc)
 	char status[SND_STATUSLEN];
 
 	snprintf(status, SND_STATUSLEN,
-	    "at io 0x%jx, 0x%jx irq %jd bufsz %u %s",
+	    "port 0x%jx,0x%jx irq %jd on %s",
 	    rman_get_start(sc->nambar), rman_get_start(sc->nabmbar),
-	    rman_get_start(sc->irq), sc->bufsz,PCM_KLDSTRING(snd_ich));
+	    rman_get_start(sc->irq),
+	    device_get_nameunit(device_get_parent(sc->dev)));
 
 	if (bootverbose && (sc->flags & ICH_DMA_NOCACHE))
 		device_printf(sc->dev,
@@ -1237,6 +1236,6 @@ static driver_t ich_driver = {
 	PCM_SOFTC_SIZE,
 };
 
-DRIVER_MODULE(snd_ich, pci, ich_driver, pcm_devclass, 0, 0);
+DRIVER_MODULE(snd_ich, pci, ich_driver, 0, 0);
 MODULE_DEPEND(snd_ich, sound, SOUND_MINVER, SOUND_PREFVER, SOUND_MAXVER);
 MODULE_VERSION(snd_ich, 1);

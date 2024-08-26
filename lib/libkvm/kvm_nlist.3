@@ -30,7 +30,6 @@
 .\" SUCH DAMAGE.
 .\"
 .\"     @(#)kvm_nlist.3	8.1 (Berkeley) 6/4/93
-.\" $FreeBSD: c9b870e13e7539423c4738fe2d7992677fb8c775 $
 .\"
 .Dd November 27, 2015
 .Dt KVM_NLIST 3
@@ -116,3 +115,8 @@ If the kernel symbol table was unreadable, -1 is returned.
 .Xr kvm_openfiles 3 ,
 .Xr kvm_read 3 ,
 .Xr kvm_write 3
+.Sh HISTORY
+The
+.Fn kvm_nlist2
+function first appeared in
+.Fx 11.0 .

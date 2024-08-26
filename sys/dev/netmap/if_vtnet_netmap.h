@@ -24,7 +24,6 @@
  */
 
 /*
- * $FreeBSD: a057812552187df506fd545a915869314a5264a8 $
  */
 
 #include <net/netmap.h>
@@ -37,15 +36,15 @@
 static int
 vtnet_netmap_reg(struct netmap_adapter *na, int state)
 {
-	struct ifnet *ifp = na->ifp;
-	struct vtnet_softc *sc = ifp->if_softc;
+	if_t ifp = na->ifp;
+	struct vtnet_softc *sc = if_getsoftc(ifp);
 
 	/*
 	 * Trigger a device reinit, asking vtnet_init_locked() to
 	 * also enter or exit netmap mode.
 	 */
 	VTNET_CORE_LOCK(sc);
-	ifp->if_drv_flags &= ~IFF_DRV_RUNNING;
+	if_setdrvflagbits(ifp, 0, IFF_DRV_RUNNING);
 	vtnet_init_locked(sc, state ? VTNET_INIT_NETMAP_ENTER
 	    : VTNET_INIT_NETMAP_EXIT);
 	VTNET_CORE_UNLOCK(sc);
@@ -59,7 +58,7 @@ static int
 vtnet_netmap_txsync(struct netmap_kring *kring, int flags)
 {
 	struct netmap_adapter *na = kring->na;
-	struct ifnet *ifp = na->ifp;
+	if_t ifp = na->ifp;
 	struct netmap_ring *ring = kring->ring;
 	u_int ring_nr = kring->ring_id;
 	u_int nm_i;	/* index into the netmap ring */
@@ -67,7 +66,7 @@ vtnet_netmap_txsync(struct netmap_kring *kring, int flags)
 	u_int const head = kring->rhead;
 
 	/* device-specific */
-	struct vtnet_softc *sc = ifp->if_softc;
+	struct vtnet_softc *sc = if_getsoftc(ifp);
 	struct vtnet_txq *txq = &sc->vtnet_txqs[ring_nr];
 	struct virtqueue *vq = txq->vtntx_vq;
 	int interrupts = !(kring->nr_kflags & NKR_NOINTR);
@@ -84,12 +83,13 @@ vtnet_netmap_txsync(struct netmap_kring *kring, int flags)
 		for (; nm_i != head; nm_i = nm_next(nm_i, lim)) {
 			/* we use an empty header here */
 			struct netmap_slot *slot = &ring->slot[nm_i];
+			uint64_t offset = nm_get_offset(kring, slot);
 			u_int len = slot->len;
 			uint64_t paddr;
-			void *addr = PNMB(na, slot, &paddr);
 			int err;
 
-			NM_CHECK_ADDR_LEN(na, addr, len);
+			(void)PNMB(na, slot, &paddr);
+			NM_CHECK_ADDR_LEN_OFF(na, len, offset);
 
 			slot->flags &= ~(NS_REPORT | NS_BUF_CHANGED);
 			/* Initialize the scatterlist, expose it to the hypervisor,
@@ -97,7 +97,7 @@ vtnet_netmap_txsync(struct netmap_kring *kring, int flags)
 			 */
 			sglist_reset(sg); // cheap
 			err = sglist_append(sg, &txq->vtntx_shrhdr, sc->vtnet_hdr_size);
-			err |= sglist_append_phys(sg, paddr, len);
+			err |= sglist_append_phys(sg, paddr + offset, len);
 			KASSERT(err == 0, ("%s: cannot append to sglist %d",
 						__func__, err));
 			err = virtqueue_enqueue(vq, /*cookie=*/txq, sg,
@@ -153,14 +153,14 @@ static int
 vtnet_netmap_kring_refill(struct netmap_kring *kring, u_int num)
 {
 	struct netmap_adapter *na = kring->na;
-	struct ifnet *ifp = na->ifp;
+	if_t ifp = na->ifp;
 	struct netmap_ring *ring = kring->ring;
 	u_int ring_nr = kring->ring_id;
 	u_int const lim = kring->nkr_num_slots - 1;
 	u_int nm_i;
 
 	/* device-specific */
-	struct vtnet_softc *sc = ifp->if_softc;
+	struct vtnet_softc *sc = if_getsoftc(ifp);
 	struct vtnet_rxq *rxq = &sc->vtnet_rxqs[ring_nr];
 	struct virtqueue *vq = rxq->vtnrx_vq;
 
@@ -171,19 +171,21 @@ vtnet_netmap_kring_refill(struct netmap_kring *kring, u_int num)
 	for (nm_i = rxq->vtnrx_nm_refill; num > 0;
 	    nm_i = nm_next(nm_i, lim), num--) {
 		struct netmap_slot *slot = &ring->slot[nm_i];
+		uint64_t offset = nm_get_offset(kring, slot);
 		uint64_t paddr;
 		void *addr = PNMB(na, slot, &paddr);
 		int err;
 
 		if (addr == NETMAP_BUF_BASE(na)) { /* bad buf */
-			if (netmap_ring_reinit(kring))
-				return EFAULT;
+			netmap_ring_reinit(kring);
+			return EFAULT;
 		}
 
 		slot->flags &= ~NS_BUF_CHANGED;
 		sglist_reset(&sg);
 		err = sglist_append(&sg, &rxq->vtnrx_shrhdr, sc->vtnet_hdr_size);
-		err |= sglist_append_phys(&sg, paddr, NETMAP_BUF_SIZE(na));
+		err |= sglist_append_phys(&sg, paddr + offset,
+		    NETMAP_BUF_SIZE(na) - offset);
 		KASSERT(err == 0, ("%s: cannot append to sglist %d",
 					__func__, err));
 		/* writable for the host */
@@ -242,7 +244,7 @@ static int
 vtnet_netmap_rxsync(struct netmap_kring *kring, int flags)
 {
 	struct netmap_adapter *na = kring->na;
-	struct ifnet *ifp = na->ifp;
+	if_t ifp = na->ifp;
 	struct netmap_ring *ring = kring->ring;
 	u_int ring_nr = kring->ring_id;
 	u_int nm_i;	/* index into the netmap ring */
@@ -253,7 +255,7 @@ vtnet_netmap_rxsync(struct netmap_kring *kring, int flags)
 	int interrupts = !(kring->nr_kflags & NKR_NOINTR);
 
 	/* device-specific */
-	struct vtnet_softc *sc = ifp->if_softc;
+	struct vtnet_softc *sc = if_getsoftc(ifp);
 	struct vtnet_rxq *rxq = &sc->vtnet_rxqs[ring_nr];
 	struct virtqueue *vq = rxq->vtnrx_vq;
 
@@ -346,7 +348,7 @@ vtnet_netmap_rxsync(struct netmap_kring *kring, int flags)
 static void
 vtnet_netmap_intr(struct netmap_adapter *na, int state)
 {
-	struct vtnet_softc *sc = na->ifp->if_softc;
+	struct vtnet_softc *sc = if_getsoftc(na->ifp);
 	int i;
 
 	for (i = 0; i < sc->vtnet_max_vq_pairs; i++) {
@@ -413,7 +415,7 @@ vtnet_netmap_rx_slots(struct vtnet_softc *sc)
 static int
 vtnet_netmap_config(struct netmap_adapter *na, struct nm_config_info *info)
 {
-	struct vtnet_softc *sc = na->ifp->if_softc;
+	struct vtnet_softc *sc = if_getsoftc(na->ifp);
 
 	info->num_tx_rings = sc->vtnet_act_vq_pairs;
 	info->num_rx_rings = sc->vtnet_act_vq_pairs;
@@ -432,7 +434,7 @@ vtnet_netmap_attach(struct vtnet_softc *sc)
 	bzero(&na, sizeof(na));
 
 	na.ifp = sc->vtnet_ifp;
-	na.na_flags = 0;
+	na.na_flags = NAF_OFFSETS;
 	na.num_tx_desc = vtnet_netmap_tx_slots(sc);
 	na.num_rx_desc = vtnet_netmap_rx_slots(sc);
 	na.num_tx_rings = na.num_rx_rings = sc->vtnet_max_vq_pairs;

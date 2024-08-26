@@ -29,8 +29,6 @@
  * SUCH DAMAGE.
  *
  *	@(#)ranlib.h	8.1 (Berkeley) 6/2/93
- *
- * $FreeBSD: cdba75f9f6f33adf3ff7927f5f4756b8461c14af $
  */
 
 #ifndef _RANLIB_H_

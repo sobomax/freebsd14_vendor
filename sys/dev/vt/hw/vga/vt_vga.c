@@ -33,8 +33,6 @@
 #include "opt_acpi.h"
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: d457f8c7b31daa9740431222cb0f5a191c9541a0 $");
-
 #include <sys/param.h>
 #include <sys/kernel.h>
 #include <sys/systm.h>
@@ -1389,6 +1387,5 @@ static device_method_t vtvga_methods[] = {
 };
 
 DEFINE_CLASS_0(vtvga, vtvga_driver, vtvga_methods, 0);
-devclass_t vtvga_devclass;
 
-DRIVER_MODULE(vtvga, nexus, vtvga_driver, vtvga_devclass, NULL, NULL);
+DRIVER_MODULE(vtvga, nexus, vtvga_driver, NULL, NULL);

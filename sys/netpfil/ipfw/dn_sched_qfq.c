@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2010 Fabio Checconi, Luigi Rizzo, Paolo Valente
  * All rights reserved
@@ -27,7 +27,6 @@
  */
 
 /*
- * $FreeBSD: e02f27dfd85e1de670ccbeba3a1d9f4d5874fee9 $
  */
 
 #ifdef _KERNEL

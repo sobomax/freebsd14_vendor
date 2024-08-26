@@ -1,12 +1,11 @@
 #	@(#)Makefile	8.1 (Berkeley) 6/5/93
-# $FreeBSD: c4e12b05f7db2989ad7c7a38981585e544999065 $
 
 .include <src.opts.mk>
 
 # Do not include `info' in the SUBDIR list, it is handled separately.
 
 SUBDIR=	${_colldef} \
-	${_ctypedef} \
+	ctypedef \
 	${_dict} \
 	${_doc} \
 	${_dtrace} \
@@ -53,11 +52,10 @@ _i18n=		i18n
 .endif
 
 .if ${MK_LOCALES} != "no"
-_colldef=	colldef
-_ctypedef=	ctypedef
-_monetdef=	monetdef
-_msgdef=	msgdef
-_numericdef=	numericdef
+_colldef=	colldef colldef_unicode
+_monetdef=	monetdef monetdef_unicode
+_msgdef=	msgdef msgdef_unicode
+_numericdef=	numericdef numericdef_unicode
 _timedef=	timedef
 .endif
 

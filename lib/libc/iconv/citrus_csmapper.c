@@ -1,4 +1,3 @@
-/* $FreeBSD: 90d52cba2ce37251ad9302e2435c505c672dddf8 $ */
 /*	$NetBSD: citrus_csmapper.c,v 1.11 2011/11/20 07:43:52 tnozaki Exp $	*/
 
 /*-
@@ -29,7 +28,6 @@
  * SUCH DAMAGE.
  */
 
-#include <sys/cdefs.h>
 #include <sys/endian.h>
 #include <sys/types.h>
 #include <sys/queue.h>

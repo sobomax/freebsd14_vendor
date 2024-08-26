@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 0354b986cd5f624e9c3c61a004673ca43a702911 $");
+__FBSDID("$FreeBSD: e3653167323b76eeab8210cf5dd411c11fde8a6a $");
 
 #include <sys/types.h>
 #include <sys/param.h>
@@ -43,15 +43,11 @@ static struct opensolaris_utsname hw_utsname = {
 	.machine = MACHINE
 };
 
-#ifndef KERNEL_STATIC
-char hw_serial[11] = "0";
-
 utsname_t *
 utsname(void)
 {
 	return (&hw_utsname);
 }
-#endif
 
 static void
 opensolaris_utsname_init(void *arg)
@@ -98,7 +94,7 @@ ddi_copyout(const void *from, void *to, size_t len, int flags)
 	return (copyout(from, to, len));
 }
 
-int
+void
 spl_panic(const char *file, const char *func, int line, const char *fmt, ...)
 {
 	va_list ap;

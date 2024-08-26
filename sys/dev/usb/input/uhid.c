@@ -5,10 +5,8 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: d9653ae8761f053a8918120ca4fae4a5903caed1 $");
-
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-NetBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 1998 The NetBSD Foundation, Inc.
  * All rights reserved.
@@ -636,9 +634,10 @@ uhid_ioctl(struct usb_fifo *fifo, u_long cmd, void *addr,
 			return (EINVAL);
 		}
 		if (id != 0)
-			copyin(ugd->ugd_data, &id, 1);
-		error = uhid_get_report(sc, ugd->ugd_report_type, id,
-		    NULL, ugd->ugd_data, imin(ugd->ugd_maxlen, size));
+			error = copyin(ugd->ugd_data, &id, 1);
+		if (error == 0)
+			error = uhid_get_report(sc, ugd->ugd_report_type, id,
+			    NULL, ugd->ugd_data, imin(ugd->ugd_maxlen, size));
 		break;
 
 	case USB_SET_REPORT:
@@ -663,9 +662,10 @@ uhid_ioctl(struct usb_fifo *fifo, u_long cmd, void *addr,
 			return (EINVAL);
 		}
 		if (id != 0)
-			copyin(ugd->ugd_data, &id, 1);
-		error = uhid_set_report(sc, ugd->ugd_report_type, id,
-		    NULL, ugd->ugd_data, imin(ugd->ugd_maxlen, size));
+			error = copyin(ugd->ugd_data, &id, 1);
+		if (error == 0)
+			error = uhid_set_report(sc, ugd->ugd_report_type, id,
+			    NULL, ugd->ugd_data, imin(ugd->ugd_maxlen, size));
 		break;
 
 	case USB_GET_REPORT_ID:
@@ -918,10 +918,6 @@ uhid_detach(device_t dev)
 	return (0);
 }
 
-#ifndef HIDRAW_MAKE_UHID_ALIAS
-static devclass_t uhid_devclass;
-#endif
-
 static device_method_t uhid_methods[] = {
 	DEVMETHOD(device_probe, uhid_probe),
 	DEVMETHOD(device_attach, uhid_attach),
@@ -940,11 +936,7 @@ static driver_t uhid_driver = {
 	.size = sizeof(struct uhid_softc),
 };
 
-#ifdef HIDRAW_MAKE_UHID_ALIAS
-DRIVER_MODULE(uhid, uhub, uhid_driver, hidraw_devclass, NULL, 0);
-#else
-DRIVER_MODULE(uhid, uhub, uhid_driver, uhid_devclass, NULL, 0);
-#endif
+DRIVER_MODULE(uhid, uhub, uhid_driver, NULL, NULL);
 MODULE_DEPEND(uhid, usb, 1, 1, 1);
 MODULE_DEPEND(uhid, hid, 1, 1, 1);
 MODULE_VERSION(uhid, 1);

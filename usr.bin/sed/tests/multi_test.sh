@@ -30,7 +30,6 @@
 #
 #	@(#)sed.test	8.1 (Berkeley) 6/6/93
 #
-#	$FreeBSD: ede97239f9bf2a283977c34e22a3616e794eeb7a $
 #
 
 # sed Regression Tests

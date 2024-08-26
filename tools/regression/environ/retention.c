@@ -29,9 +29,6 @@
 
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 7f75cd100e15eeb4a0e47b89871017b0cfb4360e $");
-
-
 extern char **environ;
 const char *envName = "FOOBAR";
 const char *envValSmall = "Hi";

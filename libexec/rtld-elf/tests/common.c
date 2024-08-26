@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  * Copyright 2014 Jonathan Anderson.
  * Copyright 2021 Mariusz Zaborski <oshogbo@FreeBSD.org>
  *
@@ -22,8 +22,6 @@
  * THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- *
- * $FreeBSD: 6eb3edfbc14c260b8d6e26b2d8e69f799c3234ef $
  */
 
 #include <atf-c.h>
@@ -67,7 +65,7 @@ try_to_run(int binary, int exit_status, char * const *env,
 }
 
 int
-opendir(const char *name)
+opendir_fd(const char *name)
 {
 
 	return open(name, O_RDONLY | O_DIRECTORY);

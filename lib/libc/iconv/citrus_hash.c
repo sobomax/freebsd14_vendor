@@ -1,4 +1,3 @@
-/* $FreeBSD: aff6d55bcfbd0dcd5ffa9fc833545c01e6a6c0e1 $ */
 /* $NetBSD: citrus_hash.c,v 1.3 2008/02/09 14:56:20 junyoung Exp $ */
 
 /*-
@@ -29,7 +28,6 @@
  * SUCH DAMAGE.
  */
 
-#include <sys/cdefs.h>
 #include <sys/types.h>
 
 #include <assert.h>

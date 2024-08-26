@@ -81,8 +81,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: e49f730bb29f7d4b453b3a19cddcbc70eeb25afd $");
-
 #include "opt_inet6.h"
 
 #include <sys/param.h>
@@ -108,6 +106,7 @@ __FBSDID("$FreeBSD: e49f730bb29f7d4b453b3a19cddcbc70eeb25afd $");
 
 #include <net/if.h>
 #include <net/if_var.h>
+#include <net/if_private.h>
 #include <net/if_types.h>
 #include <net/vnet.h>
 
@@ -555,12 +554,7 @@ static int
 ip6_mrouter_init(struct socket *so, int v, int cmd)
 {
 
-	MRT6_DLOG(DEBUG_ANY, "so_type = %d, pr_protocol = %d",
-	    so->so_type, so->so_proto->pr_protocol);
-
-	if (so->so_type != SOCK_RAW ||
-	    so->so_proto->pr_protocol != IPPROTO_ICMPV6)
-		return (EOPNOTSUPP);
+	MRT6_DLOG(DEBUG_ANY, "%s: socket %p", __func__, so);
 
 	if (v != 1)
 		return (ENOPROTOOPT);
@@ -677,6 +671,7 @@ static struct sockaddr_in6 sin6 = { sizeof(sin6), AF_INET6 };
 static int
 add_m6if(struct mif6ctl *mifcp)
 {
+	struct epoch_tracker et;
 	struct mif6 *mifp;
 	struct ifnet *ifp;
 	int error;
@@ -692,12 +687,14 @@ add_m6if(struct mif6ctl *mifcp)
 		MIF6_UNLOCK();
 		return (EADDRINUSE); /* XXX: is it appropriate? */
 	}
-	if (mifcp->mif6c_pifi == 0 || mifcp->mif6c_pifi > V_if_index) {
+
+	NET_EPOCH_ENTER(et);
+	if ((ifp = ifnet_byindex(mifcp->mif6c_pifi)) == NULL) {
+		NET_EPOCH_EXIT(et);
 		MIF6_UNLOCK();
 		return (ENXIO);
 	}
-
-	ifp = ifnet_byindex(mifcp->mif6c_pifi);
+	NET_EPOCH_EXIT(et);	/* XXXGL: unsafe ifp */
 
 	if (mifcp->mif6c_flags & MIFF_REGISTER) {
 		if (reg_mif_num == (mifi_t)-1) {
@@ -1100,8 +1097,7 @@ X_ip6_mforward(struct ip6_hdr *ip6, struct ifnet *ifp, struct mbuf *m)
 	 */
 	if (IN6_IS_ADDR_UNSPECIFIED(&ip6->ip6_src)) {
 		IP6STAT_INC(ip6s_cantforward);
-		if (V_ip6_log_time + V_ip6_log_interval < time_uptime) {
-			V_ip6_log_time = time_uptime;
+		if (V_ip6_log_cannot_forward && ip6_log_ratelimit()) {
 			log(LOG_DEBUG,
 			    "cannot forward "
 			    "from %s to %s nxt %d received on %s\n",
@@ -1530,7 +1526,7 @@ phyint_send(struct ip6_hdr *ip6, struct mif6 *mifp, struct mbuf *m)
 #endif
 	struct mbuf *mb_copy;
 	struct ifnet *ifp = mifp->m6_ifp;
-	int error = 0;
+	int error __unused = 0;
 	u_long linkmtu;
 
 	/*

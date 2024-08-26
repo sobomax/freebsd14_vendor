@@ -1,6 +1,0 @@
-.\" $FreeBSD: 9ab78c569dd2c8ba7660190064dda08a1077aaf6 $
-Install links to the Clang C/C++ compiler as
-.Pa /usr/bin/cc ,
-.Pa /usr/bin/c++
-and
-.Pa /usr/bin/cpp .

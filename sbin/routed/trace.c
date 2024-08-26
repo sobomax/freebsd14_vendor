@@ -27,8 +27,6 @@
  * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
- *
- * $FreeBSD: 98c29218fb891e1b41d6cb97f28270c10248c7d0 $
  */
 
 #define	RIPCMDS
@@ -37,9 +35,6 @@
 #include <sys/stat.h>
 #include <sys/signal.h>
 #include <fcntl.h>
-
-__RCSID("$FreeBSD: 98c29218fb891e1b41d6cb97f28270c10248c7d0 $");
-
 
 
 int	tracelevel, new_tracelevel;

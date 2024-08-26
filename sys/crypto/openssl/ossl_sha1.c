@@ -8,8 +8,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 7d9c9938b1bd8bed1cb8cc622cc7ed69515b82ee $");
-
 #include <sys/libkern.h>
 #include <sys/malloc.h>
 

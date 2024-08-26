@@ -35,8 +35,6 @@
 .\" IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 .\"
 .\"	@(#)m5	8.1 (Berkeley) 8/14/93
-.\"
-.\" $FreeBSD: 692db286d85c846e7f3712e7c342178a11efb92d $
 .ds H T
 .tr |
 .tr ~|

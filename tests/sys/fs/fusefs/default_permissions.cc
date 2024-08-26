@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2019 The FreeBSD Foundation
  *
@@ -26,13 +26,11 @@
  * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
- *
- * $FreeBSD: 0739ad48f1e23e8b2e0d5cf4a48c11110fc63b4f $
  */
 
 /*
  * Tests for the "default_permissions" mount option.  They must be in their own
- * file so they can be run as an unprivileged user
+ * file so they can be run as an unprivileged user.
  */
 
 extern "C" {
@@ -161,9 +159,11 @@ class Access: public DefaultPermissions {};
 class Chown: public DefaultPermissions {};
 class Chgrp: public DefaultPermissions {};
 class CopyFileRange: public DefaultPermissions {};
+class Fspacectl: public DefaultPermissions {};
 class Lookup: public DefaultPermissions {};
 class Open: public DefaultPermissions {};
 class PosixFallocate: public DefaultPermissions {};
+class Read: public DefaultPermissions {};
 class Setattr: public DefaultPermissions {};
 class Unlink: public DefaultPermissions {};
 class Utimensat: public DefaultPermissions {};
@@ -835,6 +835,104 @@ TEST_F(Listextattr, system)
 	ASSERT_EQ(EPERM, errno);
 }
 
+/* A write by a non-owner should clear a file's SGID bit */
+TEST_F(Fspacectl, clear_sgid)
+{
+	const char FULLPATH[] = "mountpoint/file.txt";
+	const char RELPATH[] = "file.txt";
+	struct stat sb;
+	struct spacectl_range rqsr;
+	uint64_t ino = 42;
+	mode_t oldmode = 02777;
+	mode_t newmode = 0777;
+	off_t fsize = 16;
+	off_t off = 8;
+	off_t len = 8;
+	int fd;
+
+	expect_getattr(FUSE_ROOT_ID, S_IFDIR | 0755, UINT64_MAX, 1);
+	FuseTest::expect_lookup(RELPATH, ino, S_IFREG | oldmode, fsize,
+	    1, UINT64_MAX, 0, 0);
+	expect_open(ino, 0, 1);
+	expect_fallocate(ino, off, len,
+		FUSE_FALLOC_FL_KEEP_SIZE | FUSE_FALLOC_FL_PUNCH_HOLE, 0);
+	expect_chmod(ino, newmode, fsize);
+
+	fd = open(FULLPATH, O_WRONLY);
+	ASSERT_LE(0, fd) << strerror(errno);
+	rqsr.r_len = len;
+	rqsr.r_offset = off;
+	EXPECT_EQ(0, fspacectl(fd, SPACECTL_DEALLOC, &rqsr, 0, NULL));
+	ASSERT_EQ(0, fstat(fd, &sb)) << strerror(errno);
+	EXPECT_EQ(S_IFREG | newmode, sb.st_mode);
+
+	leak(fd);
+}
+
+/* A write by a non-owner should clear a file's SUID bit */
+TEST_F(Fspacectl, clear_suid)
+{
+	const char FULLPATH[] = "mountpoint/file.txt";
+	const char RELPATH[] = "file.txt";
+	struct stat sb;
+	struct spacectl_range rqsr;
+	uint64_t ino = 42;
+	mode_t oldmode = 04777;
+	mode_t newmode = 0777;
+	off_t fsize = 16;
+	off_t off = 8;
+	off_t len = 8;
+	int fd;
+
+	expect_getattr(FUSE_ROOT_ID, S_IFDIR | 0755, UINT64_MAX, 1);
+	FuseTest::expect_lookup(RELPATH, ino, S_IFREG | oldmode, fsize,
+	    1, UINT64_MAX, 0, 0);
+	expect_open(ino, 0, 1);
+	expect_fallocate(ino, off, len,
+		FUSE_FALLOC_FL_KEEP_SIZE | FUSE_FALLOC_FL_PUNCH_HOLE, 0);
+	expect_chmod(ino, newmode, fsize);
+
+	fd = open(FULLPATH, O_WRONLY);
+	ASSERT_LE(0, fd) << strerror(errno);
+	rqsr.r_len = len;
+	rqsr.r_offset = off;
+	EXPECT_EQ(0, fspacectl(fd, SPACECTL_DEALLOC, &rqsr, 0, NULL));
+	ASSERT_EQ(0, fstat(fd, &sb)) << strerror(errno);
+	EXPECT_EQ(S_IFREG | newmode, sb.st_mode);
+
+	leak(fd);
+}
+
+/*
+ * fspacectl() of a file without writable permissions should succeed as
+ * long as the file descriptor is writable.  This is important when combined
+ * with O_CREAT
+ */
+TEST_F(Fspacectl, posix_fallocate_of_newly_created_file)
+{
+	const char FULLPATH[] = "mountpoint/some_file.txt";
+	const char RELPATH[] = "some_file.txt";
+	struct spacectl_range rqsr;
+	const uint64_t ino = 42;
+	off_t off = 8;
+	off_t len = 8;
+	int fd;
+
+	expect_getattr(FUSE_ROOT_ID, S_IFDIR | 0777, UINT64_MAX, 1);
+	EXPECT_LOOKUP(FUSE_ROOT_ID, RELPATH)
+		.WillOnce(Invoke(ReturnErrno(ENOENT)));
+	expect_create(RELPATH, ino);
+	expect_fallocate(ino, off, len,
+		FUSE_FALLOC_FL_KEEP_SIZE | FUSE_FALLOC_FL_PUNCH_HOLE, 0);
+
+	fd = open(FULLPATH, O_CREAT | O_RDWR, 0);
+	ASSERT_LE(0, fd) << strerror(errno);
+	rqsr.r_len = len;
+	rqsr.r_offset = off;
+	EXPECT_EQ(0, fspacectl(fd, SPACECTL_DEALLOC, &rqsr, 0, NULL));
+	leak(fd);
+}
+
 /* A component of the search path lacks execute permissions */
 TEST_F(Lookup, eacces)
 {
@@ -939,7 +1037,7 @@ TEST_F(PosixFallocate, clear_suid)
 }
 
 /*
- * posix_fallcoate() of a file without writable permissions should succeed as
+ * posix_fallocate() of a file without writable permissions should succeed as
  * long as the file descriptor is writable.  This is important when combined
  * with O_CREAT
  */
@@ -1140,6 +1238,44 @@ TEST_F(Rename, ok_to_remove_src_because_of_stickiness)
 	expect_rename(0);
 
 	ASSERT_EQ(0, rename(FULLSRC, FULLDST)) << strerror(errno);
+}
+
+// Don't update atime during close after read, if we lack permissions to write
+// that file.
+TEST_F(Read, atime_during_close)
+{
+	const char FULLPATH[] = "mountpoint/some_file.txt";
+	const char RELPATH[] = "some_file.txt";
+	uint64_t ino = 42;
+	int fd;
+	ssize_t bufsize = 100;
+	uint8_t buf[bufsize];
+	const char *CONTENTS = "abcdefgh";
+	ssize_t fsize = sizeof(CONTENTS);
+
+	expect_getattr(FUSE_ROOT_ID, S_IFDIR | 0755, UINT64_MAX, 1);
+	FuseTest::expect_lookup(RELPATH, ino, S_IFREG | 0755, fsize,
+		1, UINT64_MAX, 0, 0);
+	expect_open(ino, 0, 1);
+	expect_read(ino, 0, fsize, fsize, CONTENTS);
+	EXPECT_CALL(*m_mock, process(
+		ResultOf([&](auto in) {
+			return (in.header.opcode == FUSE_SETATTR);
+		}, Eq(true)),
+		_)
+	).Times(0);
+	expect_flush(ino, 1, ReturnErrno(0));
+	expect_release(ino, FuseTest::FH);
+
+	fd = open(FULLPATH, O_RDONLY);
+	ASSERT_LE(0, fd) << strerror(errno);
+
+	/* Ensure atime will be different than during lookup */
+	nap();
+
+	ASSERT_EQ(fsize, read(fd, buf, bufsize)) << strerror(errno);
+
+	close(fd);
 }
 
 TEST_F(Setattr, ok)

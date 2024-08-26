@@ -26,8 +26,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: ea4a5e3baeee22abed5dc5a0ccdca7313470d5d2 $");
-
 #include "opt_acpi.h"
 #include <sys/param.h>
 #include <sys/kernel.h>
@@ -268,7 +266,14 @@ acpi_battery_get_battinfo(device_t dev, struct acpi_battinfo *battinfo)
      */
     if (valid_units > 0) {
 	if (dev == NULL) {
-	    battinfo->cap = (total_cap * 100) / total_lfcap;
+	    /*
+	     * Avoid division by zero if none of the batteries had valid
+	     * capacity info.
+	     */
+	    if (total_lfcap > 0)
+		battinfo->cap = (total_cap * 100) / total_lfcap;
+	    else
+		battinfo->cap = 0;
 	    battinfo->min = total_min;
 	    battinfo->state = batt_stat;
 	    battinfo->rate = valid_rate;

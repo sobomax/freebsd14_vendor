@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: ebec77bdb37f02d6f7567c3c22292366d4569723 $");
+__FBSDID("$FreeBSD: 2a3c027c9389afd97a1fd96e11a8ffa65d26ad83 $");
 
 #include <sys/types.h>
 #include <sys/param.h>
@@ -42,19 +42,6 @@ ddi_strtol(const char *str, char **nptr, int base, long *result)
 {
 
 	*result = strtol(str, nptr, base);
-	return (0);
-}
-
-int
-ddi_strtoul(const char *str, char **nptr, int base, unsigned long *result)
-{
-
-	if (str == hw_serial) {
-		*result = prison0.pr_hostid;
-		return (0);
-	}
-
-	*result = strtoul(str, nptr, base);
 	return (0);
 }
 

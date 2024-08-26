@@ -1,6 +1,5 @@
-/* $FreeBSD: dfb97a3e5597b6cf76dc16547267e0ed8e3cc308 $ */
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-NetBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 1998 The NetBSD Foundation, Inc. All rights reserved.
  * Copyright (c) 1998 Lennart Augustsson. All rights reserved.

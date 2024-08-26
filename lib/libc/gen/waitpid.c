@@ -31,8 +31,6 @@
 
 #include <sys/cdefs.h>
 __SCCSID("@(#)waitpid.c	8.1 (Berkeley) 6/4/93");
-__FBSDID("$FreeBSD: c17cefa09ab3fd92d1314a185a6ec37471ccb81b $");
-
 #include "namespace.h"
 #include <sys/types.h>
 #include <sys/time.h>

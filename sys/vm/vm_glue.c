@@ -59,8 +59,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: a5d837456986f32146401ab91e27a8e04b27e150 $");
-
 #include "opt_vm.h"
 #include "opt_kstack_pages.h"
 #include "opt_kstack_max_pages.h"
@@ -73,6 +71,7 @@ __FBSDID("$FreeBSD: a5d837456986f32146401ab91e27a8e04b27e150 $");
 #include <sys/limits.h>
 #include <sys/lock.h>
 #include <sys/malloc.h>
+#include <sys/msan.h>
 #include <sys/mutex.h>
 #include <sys/proc.h>
 #include <sys/racct.h>
@@ -297,19 +296,7 @@ vm_thread_stack_create(struct domainset *ds, int pages)
 	/*
 	 * Get a kernel virtual address for this thread's kstack.
 	 */
-#if defined(__mips__)
-	/*
-	 * We need to align the kstack's mapped address to fit within
-	 * a single TLB entry.
-	 */
-	if (vmem_xalloc(kernel_arena, (pages + KSTACK_GUARD_PAGES) * PAGE_SIZE,
-	    PAGE_SIZE * 2, 0, 0, VMEM_ADDR_MIN, VMEM_ADDR_MAX,
-	    M_BESTFIT | M_NOWAIT, &ks)) {
-		ks = 0;
-	}
-#else
 	ks = kva_alloc((pages + KSTACK_GUARD_PAGES) * PAGE_SIZE);
-#endif
 	if (ks == 0) {
 		printf("%s: kstack allocation failed\n", __func__);
 		return (0);
@@ -387,6 +374,7 @@ vm_thread_new(struct thread *td, int pages)
 	td->td_kstack = ks;
 	td->td_kstack_pages = pages;
 	kasan_mark((void *)ks, ptoa(pages), ptoa(pages), 0);
+	kmsan_mark((void *)ks, ptoa(pages), KMSAN_STATE_UNINIT);
 	return (1);
 }
 
@@ -590,8 +578,7 @@ vm_forkproc(struct thread *td, struct proc *p2, struct thread *td2,
  * the process was still executing.
  */
 void
-vm_waitproc(p)
-	struct proc *p;
+vm_waitproc(struct proc *p)
 {
 
 	vmspace_exitfree(p);		/* and clean-out the vmspace */

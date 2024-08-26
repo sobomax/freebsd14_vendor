@@ -35,7 +35,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 73d0cc478617a14042f4881006b2825e9a3d4c1d $");
 #include "opt_ddb.h"
 
 #include <sys/param.h>
@@ -173,17 +172,14 @@ db_validate_address(vm_offset_t addr)
 	else
 		pmap = p->p_vmspace->vm_map.pmap;
 
-	return (pmap_extract(pmap, addr) == FALSE);
+	return (pmap_extract(pmap, addr) == 0);
 }
 
 /*
  * Read bytes from kernel address space for debugger.
  */
 int
-db_read_bytes(addr, size, data)
-	vm_offset_t	addr;
-	size_t	size;
-	char	*data;
+db_read_bytes(vm_offset_t addr, size_t size, char *data)
 {
 	char	*src = (char *)addr;
 

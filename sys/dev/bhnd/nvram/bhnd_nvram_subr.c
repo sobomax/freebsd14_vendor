@@ -28,8 +28,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 21788eff6d0bffb55a613723bf34df314ce8c4bb $");
-
 #include <sys/param.h>
 
 #ifdef _KERNEL

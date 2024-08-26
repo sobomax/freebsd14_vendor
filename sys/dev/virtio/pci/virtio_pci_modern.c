@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2017, Bryan Venteicher <bryanv@FreeBSD.org>
  * All rights reserved.
@@ -29,8 +29,6 @@
 /* Driver for the modern VirtIO PCI interface. */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 30dcebe320b12e224809a5c3e0605479e4ac11ad $");
-
 #include <sys/param.h>
 #include <sys/systm.h>
 #include <sys/bus.h>
@@ -206,7 +204,7 @@ static device_method_t vtpci_modern_methods[] = {
 	/* Bus interface. */
 	DEVMETHOD(bus_driver_added,		vtpci_modern_driver_added),
 	DEVMETHOD(bus_child_detached,		vtpci_modern_child_detached),
-	DEVMETHOD(bus_child_pnpinfo_str,	virtio_child_pnpinfo_str),
+	DEVMETHOD(bus_child_pnpinfo,		virtio_child_pnpinfo),
 	DEVMETHOD(bus_read_ivar,		vtpci_modern_read_ivar),
 	DEVMETHOD(bus_write_ivar,		vtpci_modern_write_ivar),
 
@@ -242,10 +240,7 @@ static driver_t vtpci_modern_driver = {
 	.size = sizeof(struct vtpci_modern_softc)
 };
 
-devclass_t vtpci_modern_devclass;
-
-DRIVER_MODULE(virtio_pci_modern, pci, vtpci_modern_driver,
-    vtpci_modern_devclass, 0, 0);
+DRIVER_MODULE(virtio_pci_modern, pci, vtpci_modern_driver, 0, 0);
 
 static int
 vtpci_modern_probe(device_t dev)

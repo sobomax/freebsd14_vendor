@@ -30,9 +30,6 @@
  * EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include <sys/cdefs.h>
-__FBSDID("$FreeBSD: e6afea809943bb9ae2274cbc3e654157b38667c0 $");
-
 #include <sys/types.h>
 #include <time.h>
 #include "libc_private.h"

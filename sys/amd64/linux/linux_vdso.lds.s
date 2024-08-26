@@ -1,8 +1,6 @@
 /*
  * Linker script for 64-bit vDSO.
  * Copied from Linux kernel arch/x86/vdso/vdso-layout.lds.S
- *
- * $FreeBSD: 24d8cab162f8319cfa7c60ca15dde0f496d4c92a $
  */
 
 SECTIONS

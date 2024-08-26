@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2005 Poul-Henning Kamp.  All rights reserved.
  *
@@ -23,8 +23,6 @@
  * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
- *
- * $FreeBSD: 5c3cb17eca612f6e93e0f3418bf53f8f550aec7d $
  */
 
 /*
@@ -36,8 +34,6 @@
 #define	_FS_DEVFS_DEVFS_INT_H_
 
 #include <sys/queue.h>
-
-#ifdef _KERNEL
 
 struct devfs_dirent;
 struct devfs_mount;
@@ -59,6 +55,7 @@ struct cdev_priv {
 #define CDP_ACTIVE		(1 << 0)
 #define CDP_SCHED_DTR		(1 << 1)
 #define	CDP_UNREF_DTR		(1 << 2)
+#define CDP_ON_ACTIVE_LIST	(1 << 3)
 
 	u_int			cdp_inuse;
 	u_int			cdp_maxdirent;
@@ -76,6 +73,8 @@ struct cdev_priv {
 
 #define	cdev2priv(c)	__containerof(c, struct cdev_priv, cdp_c)
 
+#ifdef _KERNEL
+
 struct cdev	*devfs_alloc(int);
 int	devfs_dev_exists(const char *);
 void	devfs_free(struct cdev *);
@@ -91,7 +90,6 @@ int	devfs_pathpath(const char *, const char *);
 extern struct unrhdr *devfs_inos;
 extern struct mtx devmtx;
 extern struct mtx devfs_de_interlock;
-extern struct sx clone_drain_lock;
 extern struct mtx cdevpriv_mtx;
 extern TAILQ_HEAD(cdev_priv_list, cdev_priv) cdevp_list;
 

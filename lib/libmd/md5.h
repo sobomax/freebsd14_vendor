@@ -1,4 +1,3 @@
-/* $FreeBSD: 631dec819e798cb42ded21107af8e35225ace0a4 $ */
 
 #ifndef _MD5_H_
 #define _MD5_H_

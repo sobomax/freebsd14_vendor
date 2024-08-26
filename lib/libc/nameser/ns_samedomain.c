@@ -20,9 +20,6 @@
 #ifndef lint
 static const char rcsid[] = "$Id: ns_samedomain.c,v 1.6 2005/04/27 04:56:40 sra Exp $";
 #endif
-#include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 858d0d1436a582b67b6f7fbbc198816f7d5104cf $");
-
 #include "port_before.h"
 
 #include <sys/types.h>

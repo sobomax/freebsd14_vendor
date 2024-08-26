@@ -26,9 +26,8 @@
 .\" SUCH DAMAGE.
 .\"
 .\"     @(#)ping.8	8.2 (Berkeley) 12/11/93
-.\" $FreeBSD: 689641a0928287f34c154f4b32cb262075f6d8fd $
 .\"
-.Dd November 20, 2022
+.Dd September 15, 2023
 .Dt PING 8
 .Os
 .Sh NAME
@@ -82,6 +81,7 @@ packets to network hosts
 .Op Fl 6AaDdEfHNnOoquvYyZ
 .Op Fl .\& Ns Ar chars
 .Op Fl b Ar bufsiz
+.Op Fl C Ar pcp
 .Op Fl c Ar count
 .Op Fl e Ar gateway
 .Op Fl I Ar interface
@@ -795,7 +795,7 @@ utility with IPv6 support first appeared in the WIDE Hydrangea IPv6
 protocol stack kit.
 .Pp
 IPv6 and IPsec support based on the KAME Project
-.Pq Pa http://www.kame.net/
+.Pq Pa https://www.kame.net/
 stack was initially integrated into
 .Fx 4.0 .
 .Pp

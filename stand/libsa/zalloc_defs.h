@@ -25,8 +25,6 @@
  * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
- *
- * $FreeBSD: bb7c593ba8229c326db08b2bb87a7d85ecd86efd $
  */
 
 /*
@@ -63,7 +61,7 @@
  * least sizeof(struct MemNode); this is asserted in zalloc.c.
  */
 
-#if defined(__arm__) || defined(__mips__) || defined(__powerpc__)
+#if defined(__arm__) || defined(__powerpc__)
 #define	MALLOCALIGN		64
 #else
 #define	MALLOCALIGN		16

@@ -1,3 +1,2 @@
-# $FreeBSD: a7bcb501e2b56437284af88c581301d04e229176 $
 
 RTLD_ENTRY=	_rtld_start

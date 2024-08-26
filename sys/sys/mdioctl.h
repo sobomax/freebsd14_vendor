@@ -38,8 +38,6 @@
  *	@(#)vnioctl.h	8.1 (Berkeley) 6/10/93
  *
  * From: src/sys/sys/vnioctl.h,v 1.4
- *
- * $FreeBSD: 9e0b0c995341b9daa03f7724a6e1b3bccaef634a $
  */
 
 #ifndef _SYS_MDIOCTL_H_
@@ -92,5 +90,6 @@ struct md_ioctl {
 #define MD_ASYNC	0x40	/* Asynchronous mode */
 #define MD_VERIFY	0x80	/* Open file with O_VERIFY (vnode only) */
 #define	MD_CACHE	0x100	/* Cache vnode data */
+#define	MD_MUSTDEALLOC	0x200	/* BIO_DELETE only if dealloc is available */
 
 #endif	/* _SYS_MDIOCTL_H_*/

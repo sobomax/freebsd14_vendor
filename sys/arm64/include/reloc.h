@@ -1,1 +1,6 @@
-/* $FreeBSD: da23dbe43a4f66856b70e327ef3ea5b3495cffff $ */
+
+#ifdef __arm__
+#include <arm/reloc.h>
+#else /* !__arm__ */
+/* empty */
+#endif /* !__arm__ */

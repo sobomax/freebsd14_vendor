@@ -7,8 +7,6 @@
  * can do whatever you want with this stuff. If we meet some day, and you think
  * this stuff is worth it, you can buy me a beer in return.        Joerg Wunsch
  * ----------------------------------------------------------------------------
- *
- * $FreeBSD: b6190a97121a29899fb4d17d967955681e29aba0 $
  */
 
 /*

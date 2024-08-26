@@ -30,8 +30,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: a50c743796c13426b7053e0f6a3f6190e7139216 $");
-
 #include <sys/types.h>
 
 #include "crypt.h"

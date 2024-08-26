@@ -1,4 +1,3 @@
-# $FreeBSD: 71efd2e755c15bdc510660a2f1a4269dd0665b3f $
 
 .PATH: ${SRCTOP}/sys/dev/intel
 KMOD=   pchtherm

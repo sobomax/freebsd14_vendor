@@ -2,8 +2,6 @@
  * Linker script for 32-bit vDSO.
  * Copied from Linux kernel arch/x86/vdso/vdso-layout.lds.S
  * and arch/x86/vdso/vdso32/vdso32.lds.S
- *
- * $FreeBSD: 6b47a120847ed2650147d8c73bdafaa2f8dba136 $
  */
 
 SECTIONS

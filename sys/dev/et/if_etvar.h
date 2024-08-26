@@ -34,7 +34,6 @@
  * SUCH DAMAGE.
  *
  * $DragonFly: src/sys/dev/netif/et/if_etvar.h,v 1.4 2007/10/23 14:28:42 sephe Exp $
- * $FreeBSD: 461324f2f0f1ac5e07940fa4b145c05a2b6cdd62 $
  */
 
 #ifndef _IF_ETVAR_H
@@ -284,7 +283,7 @@ struct et_hw_stats {
 };
 
 struct et_softc {
-	struct ifnet		*ifp;
+	if_t			ifp;
 	device_t		dev;
 	struct mtx		sc_mtx;
 	device_t		sc_miibus;

@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright 2019 Justin Hibbits
  *
@@ -26,8 +26,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 15b8920fe2671f009eccd31a7e9c88fe8bc68a1a $");
-
 #include "opt_platform.h"
 
 #include <sys/param.h>
@@ -170,8 +168,6 @@ struct xive_irq {
 	uint32_t	lirq;
 	uint64_t	vp;
 	uint64_t	flags;
-#define	OPAL_XIVE_IRQ_EOI_VIA_FW	0x00000020
-#define	OPAL_XIVE_IRQ_MASK_VIA_FW	0x00000010
 #define	OPAL_XIVE_IRQ_SHIFT_BUG		0x00000008
 #define	OPAL_XIVE_IRQ_LSI		0x00000004
 #define	OPAL_XIVE_IRQ_STORE_EOI		0x00000002
@@ -204,13 +200,8 @@ static driver_t xics_driver = {
 	0
 };
 
-static devclass_t xive_devclass;
-static devclass_t xics_devclass;
-
-EARLY_DRIVER_MODULE(xive, ofwbus, xive_driver, xive_devclass, 0, 0,
-    BUS_PASS_INTERRUPT-1);
-EARLY_DRIVER_MODULE(xivevc, ofwbus, xics_driver, xics_devclass, 0, 0,
-    BUS_PASS_INTERRUPT);
+EARLY_DRIVER_MODULE(xive, ofwbus, xive_driver, 0, 0, BUS_PASS_INTERRUPT - 1);
+EARLY_DRIVER_MODULE(xivevc, ofwbus, xics_driver, 0, 0, BUS_PASS_INTERRUPT);
 
 MALLOC_DEFINE(M_XIVE, "xive", "XIVE Memory");
 
@@ -598,9 +589,7 @@ xive_eoi(device_t dev, u_int irq, void *priv)
 	} else
 		rirq = priv;
 
-	if (rirq->flags & OPAL_XIVE_IRQ_EOI_VIA_FW)
-		opal_call(OPAL_INT_EOI, irq);
-	else if (rirq->flags & OPAL_XIVE_IRQ_STORE_EOI)
+	if (rirq->flags & OPAL_XIVE_IRQ_STORE_EOI)
 		xive_write_mmap8(rirq->eoi_page + XIVE_IRQ_STORE_EOI, 0);
 	else if (rirq->flags & OPAL_XIVE_IRQ_LSI)
 		xive_read_mmap8(rirq->eoi_page + XIVE_IRQ_LOAD_EOI);

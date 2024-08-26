@@ -1,4 +1,3 @@
-# $FreeBSD: 94118d6eb00d4964000ff879d7c19101ac4beb4b $
 
 LIB=	gpio
 SHLIB_MAJOR= 0

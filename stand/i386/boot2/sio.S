@@ -11,8 +11,6 @@
  * implied warranties, including, without limitation, the implied
  * warranties of merchantability and fitness for a particular
  * purpose.
- *
- * $FreeBSD: ca9d0a2406aa2d3c6ac7c5d259af1224829a04ae $
  */
 
 		.set SIO_PRT,SIOPRT		# Base port

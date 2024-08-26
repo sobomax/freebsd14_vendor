@@ -30,7 +30,6 @@
   POSSIBILITY OF SUCH DAMAGE.
 
 ******************************************************************************/
-/*$FreeBSD: 1146ece279b5e6f67d3f16d56e1dd6055de1508b $*/
 
 #ifndef _I40E_OSDEP_H_
 #define _I40E_OSDEP_H_

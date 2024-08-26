@@ -34,8 +34,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 805d19cc2b42641c0849ef181f686f5f36044fe4 $");
-
 #include "opt_platform.h"
 #include <sys/param.h>
 #include <sys/bus.h>
@@ -428,7 +426,7 @@ excise_msi_region(struct mem_region *avail, int asz)
 static int
 excise_fdt_reserved(struct mem_region *avail, int asz)
 {
-	struct mem_region fdtmap[32];
+	struct mem_region fdtmap[64];
 	ssize_t fdtmapsize;
 	phandle_t chosen;
 	int j, fdtentries;
@@ -598,7 +596,7 @@ OF_initial_setup(void *fdt_ptr, void *junk, int (*openfirm)(void *))
 }
 
 boolean_t
-OF_bootstrap()
+OF_bootstrap(void)
 {
 	boolean_t status = FALSE;
 	int err = 0;
@@ -809,7 +807,7 @@ openfirmware(void *args)
 }
 
 void
-OF_reboot()
+OF_reboot(void)
 {
 	struct {
 		cell_t name;

@@ -1,4 +1,3 @@
-# $FreeBSD: 897e308c351c53532a2e88da3ac62735576b5ebc $
 
 RPCDIR=	${SRCTOP}/include/rpcsvc
 .PATH: ${RPCDIR} ${SRCTOP}/usr.sbin/ypserv ${SRCTOP}/libexec/ypxfr

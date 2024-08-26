@@ -1,9 +1,8 @@
 /*	$NetBSD: hesiod.h,v 1.3 1999/01/24 23:53:18 lukem Exp $	*/
-/*	$FreeBSD: e8c38d84dccb35bbb9c5e76df214481c9cdf66d7 $ */
 
 
 /*-
- * SPDX-License-Identifier: (BSD-2-Clause-NetBSD AND ISC)
+ * SPDX-License-Identifier: (BSD-2-Clause AND ISC)
  *
  * Copyright (c) 1997, 1998, 1999 The NetBSD Foundation, Inc.
  * All rights reserved.

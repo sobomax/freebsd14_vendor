@@ -42,8 +42,6 @@ static char sccsid[] = "@(#)parse.c	8.1 (Berkeley) 6/6/93";
 #endif
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 68e07bc922e7bc57e06a1ddf9808e4c902b43dca $");
-
 #include <err.h>
 #include <stdio.h>
 #include "indent_globs.h"

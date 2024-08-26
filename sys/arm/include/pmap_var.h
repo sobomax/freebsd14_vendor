@@ -23,15 +23,13 @@
  * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
- *
- * $FreeBSD: 34c101df5c4dd10b03f9501a1f39641840f65dc2 $
  */
 
 #ifndef _MACHINE_PMAP_VAR_H_
 #define _MACHINE_PMAP_VAR_H_
 
-#include <machine/cpu-v6.h>
-#include <machine/pte-v6.h>
+#include <machine/pte.h>
+
 /*
  *  Various PMAP defines, exports, and inline functions
  *  definitions also usable in other MD code.

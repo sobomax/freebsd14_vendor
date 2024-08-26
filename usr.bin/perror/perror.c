@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2009 Hudson River Trading LLC
  * Written by: George V. Neville-Neil <gnn@FreeBSD.org>
@@ -28,8 +28,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 1cf502aa1f3d7fcdc960fea92fc2620055ff67d4 $");
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -37,7 +35,7 @@ __FBSDID("$FreeBSD: 1cf502aa1f3d7fcdc960fea92fc2620055ff67d4 $");
 #include <locale.h>
 #include <sys/errno.h>
 
-static void usage(void);
+static void usage(void) __dead2;
 
 int 
 main(int argc, char **argv)

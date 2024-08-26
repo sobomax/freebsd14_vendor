@@ -1,11 +1,9 @@
-# $FreeBSD: e2dc67f54319a56108fe9d983a702c8e0153a421 $
-
+# SPDX-License-Identifier: BSD-3-Clause
+# Copyright(c) 2007-2022 Intel Corporation
 .PATH: ${SRCTOP}/sys/contrib/dev/qat
 
-KMOD=	qat_c62xfw
-IMG1=	qat_c62x
-IMG2=	qat_c62x_mmp
+KMOD= qat_c62x_fw
 
-FIRMWS=	${IMG1}.bin:${KMOD}:111 ${IMG2}.bin:${IMG2}:111
+FIRMWS= ${SRCTOP}/sys/contrib/dev/qat/qat_c62x.bin:qat_c62x_fw:111 ${SRCTOP}/sys/contrib/dev/qat/qat_c62x_mmp.bin:qat_c62x_mmp_fw:111
 
 .include <bsd.kmod.mk>

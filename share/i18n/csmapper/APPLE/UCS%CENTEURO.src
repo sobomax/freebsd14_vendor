@@ -1,4 +1,3 @@
-# $FreeBSD: ba57234a5a9a331a16ef8b2712adb93208e6ae55 $
 # $NetBSD: UCS%CENTEURO.src,v 1.2 2006/04/08 15:47:39 tnozaki Exp $
 
 TYPE		ROWCOL

@@ -28,8 +28,6 @@
 .\" (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
 .\" THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 .\"
-.\" $FreeBSD: cc4c836e88895ebec7618a351994322d3e474ecb $
-.\"
 .Dd July 27, 2020
 .Dt TREE 3
 .Os
@@ -661,7 +659,9 @@ The
 macro updates augmentation data of the element
 .Fa elm
 and its ancestors in the tree.
-If RB_AUGMENT is defined by the RB user, then when an element in the
+If
+.Fn RB_AUGMENT
+is defined by the RB user, then when an element in the
 tree is changed, without changing the order of items in the tree,
 invoking this function on that element restores consistency of the
 augmentation state of the tree as if the element had been removed and

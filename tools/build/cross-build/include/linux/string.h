@@ -32,8 +32,6 @@
  * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
- *
- * $FreeBSD: 485cc2b680b51e2ac9dd673104521c48fcab7082 $
  */
 #pragma once
 
@@ -49,10 +47,13 @@
 #include <sys/cdefs.h>
 
 __BEGIN_DECLS
+#if !defined(__GLIBC__) || \
+    (defined(__GLIBC__) && (!__GLIBC_PREREQ(2, 38) || !defined(_GNU_SOURCE)))
 size_t strlcpy(char *dst, const char *src, size_t siz);
 size_t strlcat(char *dst, const char *src, size_t siz);
+#endif
 char *strnstr(const char *str, const char *find, size_t str_len);
-void strmode(/* mode_t*/ int mode, char *str);
+void strmode(mode_t mode, char *str);
 
 #if !defined(__GLIBC__) || \
     (defined(__GLIBC__) && (!__GLIBC_PREREQ(2, 25) || !defined(_GNU_SOURCE)))

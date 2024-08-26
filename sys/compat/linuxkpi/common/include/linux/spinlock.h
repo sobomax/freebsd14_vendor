@@ -25,8 +25,6 @@
  * THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- *
- * $FreeBSD: a87cb7180b284eccf4c2bc0ace6965359a02deaa $
  */
 #ifndef	_LINUXKPI_LINUX_SPINLOCK_H_
 #define	_LINUXKPI_LINUX_SPINLOCK_H_
@@ -128,6 +126,7 @@ typedef struct {
 } while (0)
 
 #define	spin_unlock_irqrestore(_l, flags) do {		\
+	(void)(flags);					\
 	spin_unlock(_l);				\
 } while (0)
 

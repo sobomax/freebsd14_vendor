@@ -29,7 +29,6 @@
  * SUCH DAMAGE.
  *
  *	@(#)unpcb.h	8.1 (Berkeley) 6/2/93
- * $FreeBSD: 5944e83e96a0b54e7993bdd14db6907b7f6a0e15 $
  */
 
 #ifndef _SYS_UNPCB_H_
@@ -174,7 +173,7 @@ struct xunpgen {
 	u_int	xug_count;
 	unp_gen_t xug_gen;
 	so_gen_t xug_sogen;
-} __aligned(8);;
+} __aligned(8);
 #endif /* _SYS_SOCKETVAR_H_ */
 
 #if defined(_KERNEL)

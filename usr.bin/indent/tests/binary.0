@@ -1,4 +1,3 @@
-/* $FreeBSD: b2adc1fe6428eaf086e1762096af2842d7c31615 $ */
 #define b00101010 -1
 void t(void) {
 	unsigned a[] = {0b00101010, 0x00005678, 02, 17U};

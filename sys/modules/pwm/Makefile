@@ -1,4 +1,3 @@
-# $FreeBSD: 2d1b07724cace047e3fbe88051ecdebe8c210f3c $
 
 # Modules for dev/pwm drivers.
 

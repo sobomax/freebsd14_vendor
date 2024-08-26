@@ -1,5 +1,5 @@
 --
--- SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+-- SPDX-License-Identifier: BSD-2-Clause
 --
 -- Copyright (c) 2018 Kyle Evans <kevans@FreeBSD.org>
 --
@@ -24,25 +24,11 @@
 -- OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 -- SUCH DAMAGE.
 --
--- $FreeBSD: 12f6b57642dbbed7f47b0ee8b25a83c872234e1e $
---
 
 local config = require("config")
 local core = require("core")
 
 local cli = {}
-
-if not pager then
-	-- shim for the pager module that just doesn't do it.
-	-- XXX Remove after 12.2 goes EoL.
-	pager = {
-		open = function() end,
-		close = function() end,
-		output = function(str)
-			printc(str)
-		end,
-	}
-end
 
 -- Internal function
 -- Parses arguments to boot and returns two values: kernel_name, argstr

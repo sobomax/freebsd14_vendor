@@ -1,2 +1,1 @@
-.\" $FreeBSD: 6b23d559f19dc496cef22d4c02a2854e35452e7d $
 Do not build PF firewall package.

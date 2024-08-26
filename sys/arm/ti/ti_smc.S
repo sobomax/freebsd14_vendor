@@ -23,8 +23,6 @@
  */
 
 #include <machine/asm.h>
-__FBSDID("$FreeBSD: 287f0a7711f7c8e9d99f3f5c24be7a3d41b7d7fe $");
-
 #include <machine/armreg.h>
 
 	.cpu cortex-a8

@@ -34,8 +34,6 @@
 #if 0
 static char sccsid[] = "@(#)pattern.c	8.1 (Berkeley) 5/31/93";
 #endif
-static const char rcsid[] =
- "$FreeBSD: 2b30678cf3b5553f3df1d8b6d2601de2cf277e2f $";
 #endif /* not lint */
 
 /*

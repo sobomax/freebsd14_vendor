@@ -1,6 +1,5 @@
-/* $FreeBSD: 23c4d0aa3ec3f552aba1e587d54322447da31b5e $ */
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (C) 1996-2008, 4Front Technologies
  * All rights reserved.

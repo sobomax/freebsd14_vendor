@@ -37,7 +37,6 @@
  * SUCH DAMAGE.
  *
  *      @(#)extern.h	8.1 (Berkeley) 6/6/93
- * $FreeBSD: b44eb41877576dcc91417a084491728853419477 $
  */
 
 extern int eopterr;

@@ -32,8 +32,6 @@
  * SUCH DAMAGE.
  *
  *
- *	$FreeBSD: c7edaa0b9d5ccf4245f16fec809b1d4223a53403 $
- *
  * This file implements AES-CCM+CBC-MAC, as described
  * at https://tools.ietf.org/html/rfc3610, using Intel's
  * AES-NI instructions.

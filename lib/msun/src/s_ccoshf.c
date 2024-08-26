@@ -1,5 +1,5 @@
 /*-
- * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+ * SPDX-License-Identifier: BSD-2-Clause
  *
  * Copyright (c) 2005 Bruce D. Evans and Steven G. Kargl
  * All rights reserved.
@@ -29,9 +29,6 @@
 /*
  * Float version of ccosh().  See s_ccosh.c for details.
  */
-
-#include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 5d7a09ba5f8dbb7442dc4ca124e5eee43c42a96e $");
 
 #include <complex.h>
 #include <math.h>

@@ -1,7 +1,6 @@
 #
 # DEFAULTS -- Default kernel configuration file for FreeBSD/arm64
 #
-# $FreeBSD: ffc08435380f1c10fd443acc3af6ae866e51f682 $
 
 machine		arm64 aarch64
 
@@ -13,4 +12,10 @@ options 	GEOM_PART_BSD
 options 	GEOM_PART_MBR
 options 	GEOM_PART_GPT
 
+# Default congestion control algorithm
+options 	CC_CUBIC		# include CUBIC congestion control
+
 options 	NEW_PCIB
+options 	INTRNG
+
+options 	NETLINK			# netlink(4) support

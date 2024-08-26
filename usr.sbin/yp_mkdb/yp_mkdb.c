@@ -33,8 +33,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 19139c3dc61e3766717cd49d9c90d77c7f315f2e $");
-
 #include <err.h>
 #include <fcntl.h>
 #include <limits.h>
@@ -92,7 +90,6 @@ unwind(char *map)
 		    (int)data.size, (char *)data.data);
 
 	(void)(dbp->close)(dbp);
-	return;
 }
 
 int

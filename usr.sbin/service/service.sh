@@ -1,8 +1,6 @@
 #!/bin/sh
 
-# $FreeBSD: df2869f98a6c35679a13292107289fe838bc8f1d $
-
-# SPDX-License-Identifier: BSD-2-Clause-FreeBSD
+# SPDX-License-Identifier: BSD-2-Clause
 #
 #  Copyright (c) 2009 Douglas Barton
 #  All rights reserved.
@@ -37,21 +35,23 @@ usage () {
 	echo "${0##*/} [-j <jail name or id>] -e"
 	echo "${0##*/} [-j <jail name or id>] -R"
 	echo "${0##*/} [-j <jail name or id>] [-v] -l | -r"
-	echo "${0##*/} [-j <jail name or id>] [-v] <rc.d script> start|stop|etc."
+	echo "${0##*/} [-j <jail name or id>] [-v] [-E var=value] <rc.d script> start|stop|etc."
 	echo "${0##*/} -h"
 	echo ''
-	echo "-j	Perform actions within the named jail"
-	echo '-e	Show services that are enabled'
-	echo "-R	Stop and start enabled $local_startup services"
-	echo "-l	List all scripts in /etc/rc.d and $local_startup"
-	echo '-r	Show the results of boot time rcorder'
-	echo '-v	Verbose'
+	echo "-j		Perform actions within the named jail"
+	echo "-E n=val	Set variable n to val before executing the rc.d script"
+	echo '-e		Show services that are enabled'
+	echo "-R		Stop and start enabled $local_startup services"
+	echo "-l		List all scripts in /etc/rc.d and $local_startup"
+	echo '-r		Show the results of boot time rcorder'
+	echo '-v		Verbose'
 	echo ''
 }
 
-while getopts 'j:ehlrRv' COMMAND_LINE_ARGUMENT ; do
+while getopts 'j:E:ehlrRv' COMMAND_LINE_ARGUMENT ; do
 	case "${COMMAND_LINE_ARGUMENT}" in
 	j)	JAIL="${OPTARG}" ;;
+	E)	VARS="${VARS} ${OPTARG}" ;;
 	e)	ENABLED=eopt ;;
 	h)	usage ; exit 0 ;;
 	l)	LIST=lopt ;;
@@ -72,6 +72,9 @@ if [ -n "${JAIL}" ]; then
 	[ -n "${RCORDER}" ] && args="${args} -r"
 	[ -n "${RESTART}" ] && args="${args} -R"
 	[ -n "${VERBOSE}" ] && args="${args} -v"
+	for var in ${VARS}; do
+		args="${args} -E ${var}"
+	done
 
 	# Call jexec(8) with the rebuild args and any positional args that
 	# were left in $@
@@ -83,6 +86,9 @@ if [ -n "$RESTART" ]; then
 	skip="-s nostart"
 	if [ `/sbin/sysctl -n security.jail.jailed` -eq 1 ]; then
 		skip="$skip -s nojail"
+		if [ `/sbin/sysctl -n security.jail.vnet` -ne 1 ]; then
+			skip="$skip -s nojailvnet"
+		fi
 	fi
 	[ -n "$local_startup" ] && find_local_scripts_new
 	files=`rcorder ${skip} ${local_rc} 2>/dev/null`
@@ -113,6 +119,9 @@ if [ -n "$ENABLED" -o -n "$RCORDER" ]; then
 	skip="-s nostart"
 	if [ `/sbin/sysctl -n security.jail.jailed` -eq 1 ]; then
 		skip="$skip -s nojail"
+		if [ `/sbin/sysctl -n security.jail.vnet` -ne 1 ]; then
+			skip="$skip -s nojailvnet"
+		fi
 	fi
 	[ -n "$local_startup" ] && find_local_scripts_new
 	files=`rcorder ${skip} /etc/rc.d/* ${local_rc} 2>/dev/null`
@@ -165,7 +174,7 @@ cd /
 for dir in /etc/rc.d $local_startup; do
 	if [ -x "$dir/$script" ]; then
 		[ -n "$VERBOSE" ] && echo "$script is located in $dir"
-		exec env -i -L -/daemon HOME=/ PATH=/sbin:/bin:/usr/sbin:/usr/bin "$dir/$script" "$@"
+		exec env -i -L -/daemon HOME=/ PATH=/sbin:/bin:/usr/sbin:/usr/bin ${VARS} "$dir/$script" "$@"
 	fi
 done
 

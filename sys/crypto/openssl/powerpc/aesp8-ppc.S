@@ -1,4 +1,3 @@
-/* $FreeBSD: e29b45aa3d2ab1df03337c9159e6fd34e9ab07b9 $ */
 /* Do not modify. This file is auto-generated from aesp8-ppc.pl. */
 .machine	"any"
 
