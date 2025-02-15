@@ -11,7 +11,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: eea3c772ea4f325657c572d01a3e8e2993fb8ad7 $");
+__FBSDID("$FreeBSD: 59aa19672443eda7e1c707513c3019f553556cef $");
 
 #include <sys/types.h>
 #include <sys/param.h>  /* defines used in kernel.h and module.h */
@@ -174,12 +174,7 @@ krping_write(struct cdev *dev, struct uio *uio, int ioflag)
 	char *cp;
 	krping_t *krpingmsg;
 
-	krpingmsg = malloc(sizeof *krpingmsg, M_DEVBUF, M_WAITOK|M_ZERO);
-	if (!krpingmsg) {
-		uprintf("Could not malloc mem!\n");
-		return ENOMEM;
-	}
-
+	krpingmsg = malloc(sizeof *krpingmsg, M_DEVBUF, M_WAITOK | M_ZERO);
 	cp = krpingmsg->msg;
 	while (uio->uio_resid) {
 		amt = MIN(uio->uio_resid, remain);

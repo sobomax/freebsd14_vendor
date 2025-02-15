@@ -1480,7 +1480,10 @@ template <class ELFT, class RelTy> void RelocationScanner::scanOne(RelTy *&i) {
 
   // Process TLS relocations, including TLS optimizations. Note that
   // R_TPREL and R_TPREL_NEG relocations are resolved in processAux.
-  if (sym.isTls()) {
+  //
+  // Some RISCV TLSDESC relocations reference a local NOTYPE symbol,
+  // but we need to process them in handleTlsRelocation.
+  if (sym.isTls() || oneof<R_TLSDESC_PC, R_TLSDESC_CALL>(expr)) {
     if (unsigned processed =
             handleTlsRelocation(type, sym, *sec, offset, addend, expr)) {
       i += processed - 1;
@@ -1581,30 +1584,44 @@ template <class ELFT> void elf::scanRelocations() {
   bool serial = !config->zCombreloc || config->emachine == EM_MIPS ||
                 config->emachine == EM_PPC64;
   parallel::TaskGroup tg;
-  for (ELFFileBase *f : ctx.objectFiles) {
-    auto fn = [f]() {
+  auto outerFn = [&]() {
+    for (ELFFileBase *f : ctx.objectFiles) {
+      auto fn = [f]() {
+        RelocationScanner scanner;
+        for (InputSectionBase *s : f->getSections()) {
+          if (s && s->kind() == SectionBase::Regular && s->isLive() &&
+              (s->flags & SHF_ALLOC) &&
+              !(s->type == SHT_ARM_EXIDX && config->emachine == EM_ARM))
+            scanner.template scanSection<ELFT>(*s);
+        }
+      };
+      if (serial)
+        fn();
+      else
+        tg.spawn(fn);
+    }
+    auto scanEH = [] {
       RelocationScanner scanner;
-      for (InputSectionBase *s : f->getSections()) {
-        if (s && s->kind() == SectionBase::Regular && s->isLive() &&
-            (s->flags & SHF_ALLOC) &&
-            !(s->type == SHT_ARM_EXIDX && config->emachine == EM_ARM))
-          scanner.template scanSection<ELFT>(*s);
+      for (Partition &part : partitions) {
+        for (EhInputSection *sec : part.ehFrame->sections)
+          scanner.template scanSection<ELFT>(*sec);
+        if (part.armExidx && part.armExidx->isLive())
+          for (InputSection *sec : part.armExidx->exidxSections)
+            if (sec->isLive())
+              scanner.template scanSection<ELFT>(*sec);
       }
     };
-    tg.spawn(fn, serial);
-  }
-
-  tg.spawn([] {
-    RelocationScanner scanner;
-    for (Partition &part : partitions) {
-      for (EhInputSection *sec : part.ehFrame->sections)
-        scanner.template scanSection<ELFT>(*sec);
-      if (part.armExidx && part.armExidx->isLive())
-        for (InputSection *sec : part.armExidx->exidxSections)
-          if (sec->isLive())
-            scanner.template scanSection<ELFT>(*sec);
-    }
-  });
+    if (serial)
+      scanEH();
+    else
+      tg.spawn(scanEH);
+  };
+  // If `serial` is true, call `spawn` to ensure that `scanner` runs in a thread
+  // with valid getThreadIndex().
+  if (serial)
+    tg.spawn(outerFn);
+  else
+    outerFn();
 }
 
 static bool handleNonPreemptibleIfunc(Symbol &sym, uint16_t flags) {

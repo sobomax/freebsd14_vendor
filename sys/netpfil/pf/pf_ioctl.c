@@ -2071,7 +2071,8 @@ pf_rule_to_krule(const struct pf_rule *rule, struct pf_krule *krule)
 	krule->os_fingerprint = rule->os_fingerprint;
 
 	krule->rtableid = rule->rtableid;
-	bcopy(rule->timeout, krule->timeout, sizeof(krule->timeout));
+	/* pf_rule->timeout is smaller than pf_krule->timeout */
+	bcopy(rule->timeout, krule->timeout, sizeof(rule->timeout));
 	krule->max_states = rule->max_states;
 	krule->max_src_nodes = rule->max_src_nodes;
 	krule->max_src_states = rule->max_src_states;
@@ -2669,9 +2670,6 @@ pfioctl(struct cdev *dev, u_long cmd, caddr_t addr, int flags, struct thread *td
 
 		/* Copy the request in */
 		packed = malloc(nv->len, M_NVLIST, M_WAITOK);
-		if (packed == NULL)
-			ERROUT(ENOMEM);
-
 		error = copyin(nv->data, packed, nv->len);
 		if (error)
 			ERROUT(error);
@@ -2749,9 +2747,6 @@ DIOCGETETHRULES_error:
 			ERROUT(ENOMEM);
 
 		nvlpacked = malloc(nv->len, M_NVLIST, M_WAITOK);
-		if (nvlpacked == NULL)
-			ERROUT(ENOMEM);
-
 		error = copyin(nv->data, nvlpacked, nv->len);
 		if (error)
 			ERROUT(error);
@@ -2849,9 +2844,6 @@ DIOCGETETHRULE_error:
 			ERROUT(ENOMEM);
 
 		nvlpacked = malloc(nv->len, M_NVLIST, M_WAITOK);
-		if (nvlpacked == NULL)
-			ERROUT(ENOMEM);
-
 		error = copyin(nv->data, nvlpacked, nv->len);
 		if (error)
 			ERROUT(error);
@@ -2882,8 +2874,6 @@ DIOCGETETHRULE_error:
 		}
 
 		rule = malloc(sizeof(*rule), M_PFRULE, M_WAITOK);
-		if (rule == NULL)
-			ERROUT(ENOMEM);
 		rule->timestamp = NULL;
 
 		error = pf_nveth_rule_to_keth_rule(nvl, rule);
@@ -2982,9 +2972,6 @@ DIOCADDETHRULE_error:
 			ERROUT(ENOMEM);
 
 		nvlpacked = malloc(nv->len, M_NVLIST, M_WAITOK);
-		if (nvlpacked == NULL)
-			ERROUT(ENOMEM);
-
 		error = copyin(nv->data, nvlpacked, nv->len);
 		if (error)
 			ERROUT(error);
@@ -3060,9 +3047,6 @@ DIOCGETETHRULESETS_error:
 			ERROUT(ENOMEM);
 
 		nvlpacked = malloc(nv->len, M_NVLIST, M_WAITOK);
-		if (nvlpacked == NULL)
-			ERROUT(ENOMEM);
-
 		error = copyin(nv->data, nvlpacked, nv->len);
 		if (error)
 			ERROUT(error);
@@ -3332,9 +3316,6 @@ DIOCADDRULENV_error:
 
 		/* Copy the request in */
 		nvlpacked = malloc(nv->len, M_NVLIST, M_WAITOK);
-		if (nvlpacked == NULL)
-			ERROUT(ENOMEM);
-
 		error = copyin(nv->data, nvlpacked, nv->len);
 		if (error)
 			ERROUT(error);
@@ -3793,7 +3774,7 @@ DIOCCHANGERULE_error:
 		    sizeof(struct pfsync_state_1301), M_TEMP, M_WAITOK | M_ZERO);
 		nr = 0;
 
-		for (i = 0; i <= pf_hashmask; i++) {
+		for (i = 0; i <= V_pf_hashmask; i++) {
 			struct pf_idhash *ih = &V_pf_idhash[i];
 
 DIOCGETSTATES_retry:
@@ -3872,7 +3853,7 @@ DIOCGETSTATES_full:
 		    sizeof(struct pf_state_export), M_TEMP, M_WAITOK | M_ZERO);
 		nr = 0;
 
-		for (i = 0; i <= pf_hashmask; i++) {
+		for (i = 0; i <= V_pf_hashmask; i++) {
 			struct pf_idhash *ih = &V_pf_idhash[i];
 
 DIOCGETSTATESV2_retry:
@@ -5515,7 +5496,7 @@ DIOCCHANGEADDR_error:
 		struct pf_src_node	*p, *pstore;
 		uint32_t		 i, nr = 0;
 
-		for (i = 0, sh = V_pf_srchash; i <= pf_srchashmask;
+		for (i = 0, sh = V_pf_srchash; i <= V_pf_srchashmask;
 				i++, sh++) {
 			PF_HASHROW_LOCK(sh);
 			LIST_FOREACH(n, &sh->nodes, entry)
@@ -5534,7 +5515,7 @@ DIOCCHANGEADDR_error:
 		nr = 0;
 
 		p = pstore = malloc(psn->psn_len, M_TEMP, M_WAITOK | M_ZERO);
-		for (i = 0, sh = V_pf_srchash; i <= pf_srchashmask;
+		for (i = 0, sh = V_pf_srchash; i <= V_pf_srchashmask;
 		    i++, sh++) {
 		    PF_HASHROW_LOCK(sh);
 		    LIST_FOREACH(n, &sh->nodes, entry) {
@@ -6006,7 +5987,7 @@ pf_clear_all_states(void)
 	struct pf_kstate	*s;
 	u_int i;
 
-	for (i = 0; i <= pf_hashmask; i++) {
+	for (i = 0; i <= V_pf_hashmask; i++) {
 		struct pf_idhash *ih = &V_pf_idhash[i];
 relock:
 		PF_HASHROW_LOCK(ih);
@@ -6042,7 +6023,7 @@ pf_clear_srcnodes(struct pf_ksrc_node *n)
 	struct pf_kstate *s;
 	int i;
 
-	for (i = 0; i <= pf_hashmask; i++) {
+	for (i = 0; i <= V_pf_hashmask; i++) {
 		struct pf_idhash *ih = &V_pf_idhash[i];
 
 		PF_HASHROW_LOCK(ih);
@@ -6058,7 +6039,7 @@ pf_clear_srcnodes(struct pf_ksrc_node *n)
 	if (n == NULL) {
 		struct pf_srchash *sh;
 
-		for (i = 0, sh = V_pf_srchash; i <= pf_srchashmask;
+		for (i = 0, sh = V_pf_srchash; i <= V_pf_srchashmask;
 		    i++, sh++) {
 			PF_HASHROW_LOCK(sh);
 			LIST_FOREACH(n, &sh->nodes, entry) {
@@ -6080,7 +6061,7 @@ pf_kill_srcnodes(struct pfioc_src_node_kill *psnk)
 	struct pf_ksrc_node_list	 kill;
 
 	LIST_INIT(&kill);
-	for (int i = 0; i <= pf_srchashmask; i++) {
+	for (int i = 0; i <= V_pf_srchashmask; i++) {
 		struct pf_srchash *sh = &V_pf_srchash[i];
 		struct pf_ksrc_node *sn, *tmp;
 
@@ -6101,7 +6082,7 @@ pf_kill_srcnodes(struct pfioc_src_node_kill *psnk)
 		PF_HASHROW_UNLOCK(sh);
 	}
 
-	for (int i = 0; i <= pf_hashmask; i++) {
+	for (int i = 0; i <= V_pf_hashmask; i++) {
 		struct pf_idhash *ih = &V_pf_idhash[i];
 		struct pf_kstate *s;
 
@@ -6131,9 +6112,6 @@ pf_keepcounters(struct pfioc_nv *nv)
 		ERROUT(ENOMEM);
 
 	nvlpacked = malloc(nv->len, M_NVLIST, M_WAITOK);
-	if (nvlpacked == NULL)
-		ERROUT(ENOMEM);
-
 	error = copyin(nv->data, nvlpacked, nv->len);
 	if (error)
 		ERROUT(error);
@@ -6162,7 +6140,7 @@ pf_clear_states(const struct pf_kstate_kill *kill)
 	int		 idx;
 	unsigned int	 killed = 0, dir;
 
-	for (unsigned int i = 0; i <= pf_hashmask; i++) {
+	for (unsigned int i = 0; i <= V_pf_hashmask; i++) {
 		struct pf_idhash *ih = &V_pf_idhash[i];
 
 relock_DIOCCLRSTATES:
@@ -6236,7 +6214,7 @@ pf_killstates(struct pf_kstate_kill *kill, unsigned int *killed)
 		return;
 	}
 
-	for (unsigned int i = 0; i <= pf_hashmask; i++)
+	for (unsigned int i = 0; i <= V_pf_hashmask; i++)
 		*killed += pf_killstates_row(kill, &V_pf_idhash[i]);
 
 	return;
@@ -6257,9 +6235,6 @@ pf_killstates_nv(struct pfioc_nv *nv)
 		ERROUT(ENOMEM);
 
 	nvlpacked = malloc(nv->len, M_NVLIST, M_WAITOK);
-	if (nvlpacked == NULL)
-		ERROUT(ENOMEM);
-
 	error = copyin(nv->data, nvlpacked, nv->len);
 	if (error)
 		ERROUT(error);
@@ -6315,9 +6290,6 @@ pf_clearstates_nv(struct pfioc_nv *nv)
 		ERROUT(ENOMEM);
 
 	nvlpacked = malloc(nv->len, M_NVLIST, M_WAITOK);
-	if (nvlpacked == NULL)
-		ERROUT(ENOMEM);
-
 	error = copyin(nv->data, nvlpacked, nv->len);
 	if (error)
 		ERROUT(error);
@@ -6374,9 +6346,6 @@ pf_getstate(struct pfioc_nv *nv)
 		ERROUT(ENOMEM);
 
 	nvlpacked = malloc(nv->len, M_NVLIST, M_WAITOK);
-	if (nvlpacked == NULL)
-		ERROUT(ENOMEM);
-
 	error = copyin(nv->data, nvlpacked, nv->len);
 	if (error)
 		ERROUT(error);

@@ -224,6 +224,10 @@ static counter_u64_t vnode_skipped_requeues;
 SYSCTL_COUNTER_U64(_vfs_vnode_stats, OID_AUTO, skipped_requeues, CTLFLAG_RD, &vnode_skipped_requeues,
     "Number of times LRU requeue was skipped due to lock contention");
 
+static __read_mostly bool vnode_can_skip_requeue;
+SYSCTL_BOOL(_vfs_vnode_param, OID_AUTO, can_skip_requeue, CTLFLAG_RW,
+    &vnode_can_skip_requeue, 0, "Is LRU requeue skippable");
+
 static u_long deferred_inact;
 SYSCTL_ULONG(_vfs, OID_AUTO, deferred_inact, CTLFLAG_RD,
     &deferred_inact, 0, "Number of times inactive processing was deferred");
@@ -1957,25 +1961,11 @@ vn_alloc_hard(struct mount *mp, u_long rnumvnodes, bool bumped)
 
 	mtx_lock(&vnode_list_mtx);
 
-	if (vn_alloc_cyclecount != 0) {
-		rnumvnodes = atomic_load_long(&numvnodes);
-		if (rnumvnodes + 1 < desiredvnodes) {
-			vn_alloc_cyclecount = 0;
-			mtx_unlock(&vnode_list_mtx);
-			goto alloc;
-		}
-
-		rfreevnodes = vnlru_read_freevnodes();
-		if (rfreevnodes < wantfreevnodes) {
-			if (vn_alloc_cyclecount++ >= rfreevnodes) {
-				vn_alloc_cyclecount = 0;
-				vstir = true;
-			}
-		} else {
-			vn_alloc_cyclecount = 0;
-		}
+	rfreevnodes = vnlru_read_freevnodes();
+	if (vn_alloc_cyclecount++ >= rfreevnodes) {
+		vn_alloc_cyclecount = 0;
+		vstir = true;
 	}
-
 	/*
 	 * Grow the vnode cache if it will not be above its target max
 	 * after growing.  Otherwise, if the free list is nonempty, try
@@ -3785,31 +3775,41 @@ vdbatch_process(struct vdbatch *vd)
 	 * lock contention, where vnode_list_mtx becomes the primary bottleneck
 	 * if multiple CPUs get here (one real-world example is highly parallel
 	 * do-nothing make , which will stat *tons* of vnodes). Since it is
-	 * quasi-LRU (read: not that great even if fully honoured) just dodge
-	 * the problem. Parties which don't like it are welcome to implement
-	 * something better.
+	 * quasi-LRU (read: not that great even if fully honoured) provide an
+	 * option to just dodge the problem. Parties which don't like it are
+	 * welcome to implement something better.
 	 */
-	critical_enter();
-	if (mtx_trylock(&vnode_list_mtx)) {
-		for (i = 0; i < VDBATCH_SIZE; i++) {
-			vp = vd->tab[i];
-			vd->tab[i] = NULL;
-			TAILQ_REMOVE(&vnode_list, vp, v_vnodelist);
-			TAILQ_INSERT_TAIL(&vnode_list, vp, v_vnodelist);
-			MPASS(vp->v_dbatchcpu != NOCPU);
-			vp->v_dbatchcpu = NOCPU;
-		}
-		mtx_unlock(&vnode_list_mtx);
-	} else {
-		counter_u64_add(vnode_skipped_requeues, 1);
+	if (vnode_can_skip_requeue) {
+		if (!mtx_trylock(&vnode_list_mtx)) {
+			counter_u64_add(vnode_skipped_requeues, 1);
+			critical_enter();
+			for (i = 0; i < VDBATCH_SIZE; i++) {
+				vp = vd->tab[i];
+				vd->tab[i] = NULL;
+				MPASS(vp->v_dbatchcpu != NOCPU);
+				vp->v_dbatchcpu = NOCPU;
+			}
+			vd->index = 0;
+			critical_exit();
+			return;
 
-		for (i = 0; i < VDBATCH_SIZE; i++) {
-			vp = vd->tab[i];
-			vd->tab[i] = NULL;
-			MPASS(vp->v_dbatchcpu != NOCPU);
-			vp->v_dbatchcpu = NOCPU;
 		}
+		/* fallthrough to locked processing */
+	} else {
+		mtx_lock(&vnode_list_mtx);
 	}
+
+	mtx_assert(&vnode_list_mtx, MA_OWNED);
+	critical_enter();
+	for (i = 0; i < VDBATCH_SIZE; i++) {
+		vp = vd->tab[i];
+		vd->tab[i] = NULL;
+		TAILQ_REMOVE(&vnode_list, vp, v_vnodelist);
+		TAILQ_INSERT_TAIL(&vnode_list, vp, v_vnodelist);
+		MPASS(vp->v_dbatchcpu != NOCPU);
+		vp->v_dbatchcpu = NOCPU;
+	}
+	mtx_unlock(&vnode_list_mtx);
 	vd->index = 0;
 	critical_exit();
 }

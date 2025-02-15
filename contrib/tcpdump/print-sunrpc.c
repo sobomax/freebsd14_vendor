@@ -21,9 +21,7 @@
 
 /* \summary: Sun Remote Procedure Call printer */
 
-#ifdef HAVE_CONFIG_H
 #include <config.h>
-#endif
 
 /*
  * At least on HP-UX:
@@ -93,7 +91,7 @@
  *
  *	from: @(#)pmap_prot.h 1.14 88/02/08 SMI
  *	from: @(#)pmap_prot.h	2.1 88/07/29 4.0 RPCSRC
- * $FreeBSD: b2b33f25a0201be5be43b061d03ab4aeded8bc37 $
+ * $FreeBSD: 5fc6597fc287da642b87eeb81ef5c07c8664b7a4 $
  */
 
 /*

@@ -763,6 +763,10 @@
         ..
         compat32
         ..
+        cam
+            ctl
+            ..
+        ..
         devrandom
         ..
         dtrace
@@ -1053,6 +1057,8 @@
         ..
         du
         ..
+        env
+        ..
         factor
         ..
         file2c
@@ -1171,6 +1177,8 @@
     usr.sbin
         chown
         ..
+        ctladm
+        ..
         daemon
         ..
         etcupdate
@@ -1182,6 +1190,8 @@
         jail
         ..
         makefs
+        ..
+        mixer
         ..
         newsyslog
         ..

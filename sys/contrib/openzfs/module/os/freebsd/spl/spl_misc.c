@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: e3653167323b76eeab8210cf5dd411c11fde8a6a $");
+__FBSDID("$FreeBSD: 10d3a7772b117f696504d33c5d5ac7982692db19 $");
 
 #include <sys/types.h>
 #include <sys/param.h>
@@ -40,6 +40,9 @@ __FBSDID("$FreeBSD: e3653167323b76eeab8210cf5dd411c11fde8a6a $");
 #include <sys/zfs_context.h>
 
 static struct opensolaris_utsname hw_utsname = {
+	.sysname = ostype,
+	.nodename = prison0.pr_hostname,
+	.release = osrelease,
 	.machine = MACHINE
 };
 
@@ -52,10 +55,6 @@ utsname(void)
 static void
 opensolaris_utsname_init(void *arg)
 {
-
-	hw_utsname.sysname = ostype;
-	hw_utsname.nodename = prison0.pr_hostname;
-	hw_utsname.release = osrelease;
 	snprintf(hw_utsname.version, sizeof (hw_utsname.version),
 	    "%d", osreldate);
 }

@@ -102,6 +102,7 @@ u_int	cpu_exthigh;		/* Highest arg to extended CPUID */
 u_int	cpu_id;			/* Stepping ID */
 u_int	cpu_procinfo;		/* HyperThreading Info / Brand Index / CLFUSH */
 u_int	cpu_procinfo2;		/* Multicore info */
+u_int	cpu_procinfo3;
 char	cpu_vendor[20];		/* CPU Origin code */
 u_int	cpu_vendor_id;		/* CPU vendor ID */
 u_int	cpu_mxcsr_mask;		/* Valid bits in mxcsr */
@@ -119,7 +120,7 @@ u_int	cpu_power_eax;		/* 06H: Power management leaf, %eax */
 u_int	cpu_power_ebx;		/* 06H: Power management leaf, %ebx */
 u_int	cpu_power_ecx;		/* 06H: Power management leaf, %ecx */
 u_int	cpu_power_edx;		/* 06H: Power management leaf, %edx */
-char machine[] = MACHINE;
+const char machine[] = MACHINE;
 
 SYSCTL_UINT(_hw, OID_AUTO, via_feature_rng, CTLFLAG_RD,
     &via_feature_rng, 0,
@@ -153,8 +154,8 @@ sysctl_hw_machine(SYSCTL_HANDLER_ARGS)
 SYSCTL_PROC(_hw, HW_MACHINE, machine, CTLTYPE_STRING | CTLFLAG_RD |
     CTLFLAG_CAPRD | CTLFLAG_MPSAFE, NULL, 0, sysctl_hw_machine, "A", "Machine class");
 #else
-SYSCTL_STRING(_hw, HW_MACHINE, machine, CTLFLAG_RD | CTLFLAG_CAPRD,
-    machine, 0, "Machine class");
+SYSCTL_CONST_STRING(_hw, HW_MACHINE, machine, CTLFLAG_RD | CTLFLAG_CAPRD,
+    machine, "Machine class");
 #endif
 
 char cpu_model[128];
@@ -1085,19 +1086,29 @@ printcpuinfo(void)
 				    "\001CLZERO"
 				    "\002IRPerf"
 				    "\003XSaveErPtr"
+				    "\004INVLPGB"
 				    "\005RDPRU"
+				    "\007BE"
 				    "\011MCOMMIT"
 				    "\012WBNOINVD"
 				    "\015IBPB"
+				    "\016INT_WBINVD"
 				    "\017IBRS"
 				    "\020STIBP"
 				    "\021IBRS_ALWAYSON"
 				    "\022STIBP_ALWAYSON"
 				    "\023PREFER_IBRS"
+				    "\024SAMEMODE_IBRS"
+				    "\025NOLMSLE"
+				    "\026INVLPGBNEST"
 				    "\030PPIN"
 				    "\031SSBD"
 				    "\032VIRT_SSBD"
 				    "\033SSB_NO"
+				    "\034CPPC"
+				    "\035PSFD"
+				    "\036BTC_NO"
+				    "\037IBPB_RET"
 				    );
 			}
 
@@ -1350,6 +1361,7 @@ static struct {
 	{ "KVMKVMKVM",		VM_GUEST_KVM },		/* KVM */
 	{ "bhyve bhyve ",	VM_GUEST_BHYVE },	/* bhyve */
 	{ "VBoxVBoxVBox",	VM_GUEST_VBOX },	/* VirtualBox */
+	{ "___ NVMM ___",	VM_GUEST_NVMM },	/* NVMM */
 };
 
 static void
@@ -1636,6 +1648,7 @@ finishidentcpu(void)
 		cpu_maxphyaddr = regs[0] & 0xff;
 		amd_extended_feature_extensions = regs[1];
 		cpu_procinfo2 = regs[2];
+		cpu_procinfo3 = regs[3];
 	} else {
 		cpu_maxphyaddr = (cpu_feature & CPUID_PAE) != 0 ? 36 : 32;
 	}

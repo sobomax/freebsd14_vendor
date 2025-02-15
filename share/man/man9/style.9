@@ -24,7 +24,7 @@
 .\"
 .\"	From: @(#)style	1.14 (Berkeley) 4/28/95
 .\"
-.Dd July 28, 2022
+.Dd April 26, 2024
 .Dt STYLE 9
 .Os
 .Sh NAME
@@ -530,7 +530,7 @@ parts of the
 cascade.
 Elements in a
 .Ic switch
-statement that cascade should have a
+statement that execute some code and then cascade to the next case should have a
 .Li FALLTHROUGH
 comment.
 Numerical arguments should be checked for accuracy.
@@ -915,6 +915,10 @@ instead of the older
 .Fn CTASSERT .
 .Sh FILES
 .Bl -tag -width indent
+.It Pa /usr/src/tools/build/checkstyle9.pl
+A script to check for violations of
+.Nm
+in a source file.
 .It Pa /usr/src/tools/tools/editing/freebsd.el
 An Emacs plugin to follow the
 .Fx

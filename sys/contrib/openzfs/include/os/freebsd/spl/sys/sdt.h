@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 2daa6de1af08607699c939db82d519256056f786 $
+ * $FreeBSD: e2c4830cb96424dcde59b8ee881a63f9b14496b7 $
  */
 
 #ifndef _OPENSOLARIS_SYS_SDT_H_
@@ -31,13 +31,14 @@
 
 #include_next <sys/sdt.h>
 #ifdef KDTRACE_HOOKS
-/* CSTYLED */
+/* BEGIN CSTYLED */
 SDT_PROBE_DECLARE(sdt, , , set__error);
 
-#define	SET_ERROR(err) \
-	((sdt_sdt___set__error->id ? \
-	(*sdt_probe_func)(sdt_sdt___set__error->id, \
-	    (uintptr_t)err, 0, 0, 0, 0) : 0), err)
+#define	SET_ERROR(err)	({ 					\
+	SDT_PROBE1(sdt, , , set__error, (uintptr_t)err);	\
+	err;							\
+})
+/* END CSTYLED */
 #else
 #define	SET_ERROR(err) (err)
 #endif

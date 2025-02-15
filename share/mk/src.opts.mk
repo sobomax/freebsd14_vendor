@@ -118,6 +118,7 @@ __DEFAULT_YES_OPTIONS = \
     IPFW \
     ISCSI \
     JAIL \
+    JEMALLOC_LG_VADDR_WIDE \
     KDUMP \
     KVM \
     LDNS \
@@ -128,10 +129,12 @@ __DEFAULT_YES_OPTIONS = \
     LLD_IS_LD \
     LLVM_COV \
     LLVM_CXXFILT \
+    LOADER_BIOS_TEXTONLY \
     LOADER_GELI \
     LOADER_KBOOT \
     LOADER_LUA \
     LOADER_OFW \
+    LOADER_PXEBOOT \
     LOADER_UBOOT \
     LOCALES \
     LOCATE \
@@ -150,7 +153,6 @@ __DEFAULT_YES_OPTIONS = \
     NS_CACHING \
     NTP \
     NUAGEINIT \
-    NVME \
     OFED \
     OPENSSL \
     PAM \
@@ -190,6 +192,7 @@ __DEFAULT_YES_OPTIONS = \
     WIRELESS \
     WPA_SUPPLICANT_EAPOL \
     ZFS \
+    ZFS_TESTS \
     LOADER_ZFS \
     ZONEINFO
 
@@ -204,7 +207,6 @@ __DEFAULT_NO_OPTIONS = \
     DTRACE_TESTS \
     EXPERIMENTAL \
     HESIOD \
-    LOADER_BIOS_TEXTONLY \
     LOADER_VERBOSE \
     LOADER_VERIEXEC_PASS_MANIFEST \
     LLVM_ASSERTIONS \
@@ -346,12 +348,6 @@ BROKEN_OPTIONS+=MLX5TOOL
 BROKEN_OPTIONS+=HYPERV
 .endif
 
-# NVME is only aarch64, x86 and powerpc64*
-.if ${__T} != "aarch64" && ${__T} != "amd64" && ${__T} != "i386" && \
-    ${__T:Mpowerpc64*} == ""
-BROKEN_OPTIONS+=NVME
-.endif
-
 .if ${__T} == "aarch64" || ${__T} == "amd64" || ${__T} == "i386" || \
     ${__T:Mpowerpc64*} != "" || ${__T:Mriscv64*} != ""
 __DEFAULT_YES_OPTIONS+=OPENMP
@@ -450,6 +446,11 @@ MK_OFED_EXTRA:=	no
 
 .if ${MK_TESTS} == "no"
 MK_DTRACE_TESTS:= no
+MK_ZFS_TESTS:= no
+.endif
+
+.if ${MK_ZFS} == "no"
+MK_ZFS_TESTS:=	no
 .endif
 
 .if ${MK_TESTS_SUPPORT} == "no"

@@ -496,9 +496,16 @@ do_el1h_sync(struct thread *td, struct trapframe *frame)
 	 * Enable debug exceptions if we aren't already handling one. They will
 	 * be masked again in the exception handler's epilogue.
 	 */
-	if (exception != EXCP_BRK && exception != EXCP_WATCHPT_EL1 &&
-	    exception != EXCP_SOFTSTP_EL1)
+	switch (exception) {
+	case EXCP_BRK:
+	case EXCP_BRKPT_EL1:
+	case EXCP_WATCHPT_EL1:
+	case EXCP_SOFTSTP_EL1:
+		break;
+	default:
 		dbg_enable();
+		break;
+	}
 
 	switch (exception) {
 	case EXCP_FP_SIMD:
@@ -543,6 +550,7 @@ do_el1h_sync(struct thread *td, struct trapframe *frame)
 		panic("No debugger in kernel.");
 #endif
 		break;
+	case EXCP_BRKPT_EL1:
 	case EXCP_WATCHPT_EL1:
 	case EXCP_SOFTSTP_EL1:
 #ifdef KDB
@@ -627,8 +635,10 @@ do_el0_sync(struct thread *td, struct trapframe *frame)
 #endif
 		break;
 	case EXCP_SVE:
-		call_trapsignal(td, SIGILL, ILL_ILLTRP, (void *)frame->tf_elr,
-		    exception);
+		/* Returns true if this thread can use SVE */
+		if (!sve_restore_state(td))
+			call_trapsignal(td, SIGILL, ILL_ILLTRP,
+			    (void *)frame->tf_elr, exception);
 		userret(td, frame);
 		break;
 	case EXCP_SVC32:
@@ -722,7 +732,8 @@ do_el0_sync(struct thread *td, struct trapframe *frame)
 		break;
 	}
 
-	KASSERT((td->td_pcb->pcb_fpflags & ~PCB_FP_USERMASK) == 0,
+	KASSERT(
+	    (td->td_pcb->pcb_fpflags & ~(PCB_FP_USERMASK|PCB_FP_SVEVALID)) == 0,
 	    ("Kernel VFP flags set while entering userspace"));
 	KASSERT(
 	    td->td_pcb->pcb_fpusaved == &td->td_pcb->pcb_fpustate,

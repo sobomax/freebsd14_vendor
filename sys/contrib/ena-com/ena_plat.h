@@ -35,7 +35,7 @@
 #define ENA_PLAT_H_
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: b5dc4e91a73c21b33bd86fde9428098d0d585ed5 $");
+__FBSDID("$FreeBSD: 0c6b89aad062acbbc8ef6c6d7ba59215da44f999 $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -334,11 +334,12 @@ ena_reg_read32(struct ena_bus *bus, bus_size_t offset)
 	return v;
 }
 
-#define ENA_MEMCPY_TO_DEVICE_64(dst, src, size)				\
+#define ENA_MEMCPY_TO_DEVICE_64(bus, dst, src, size)			\
 	do {								\
 		int count, i;						\
 		volatile uint64_t *to = (volatile uint64_t *)(dst);	\
 		const uint64_t *from = (const uint64_t *)(src);		\
+		(void)(bus);						\
 		count = (size) / 8;					\
 									\
 		for (i = 0; i < count; i++, from++, to++)		\
@@ -469,8 +470,12 @@ void	ena_rss_key_fill(void *key, size_t size);
 
 #define ENA_RSS_FILL_KEY(key, size) ena_rss_key_fill(key, size)
 
+#define ENA_FIELD_GET(value, mask, offset) ((value & mask) >> offset)
+
 #include "ena_defs/ena_includes.h"
 
 #define ENA_BITS_PER_U64(bitmap) (bitcount64(bitmap))
+
+#define ENA_ADMIN_OS_FREEBSD 4
 
 #endif /* ENA_PLAT_H_ */

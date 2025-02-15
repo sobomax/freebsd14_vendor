@@ -552,6 +552,10 @@ SYSCTL_INT(_vm_pmap, OID_AUTO, pcid_enabled, CTLFLAG_RDTUN | CTLFLAG_NOFETCH,
 int invpcid_works = 0;
 SYSCTL_INT(_vm_pmap, OID_AUTO, invpcid_works, CTLFLAG_RD, &invpcid_works, 0,
     "Is the invpcid instruction available ?");
+int invlpgb_works;
+SYSCTL_INT(_vm_pmap, OID_AUTO, invlpgb_works, CTLFLAG_RD, &invlpgb_works, 0,
+    "Is the invlpgb instruction available?");
+int invlpgb_maxcnt;
 int pmap_pcid_invlpg_workaround = 0;
 SYSCTL_INT(_vm_pmap, OID_AUTO, pcid_invlpg_workaround,
     CTLFLAG_RDTUN | CTLFLAG_NOFETCH,
@@ -1611,8 +1615,8 @@ nkpt_init(vm_paddr_t addr)
 	 * Secondly, device memory mapped as part of setting up the low-
 	 * level console(s) is taken from KVA, starting at virtual_avail.
 	 * This is because cninit() is called after pmap_bootstrap() but
-	 * before vm_init() and pmap_init(). 20MB for a frame buffer is
-	 * not uncommon.
+	 * before vm_mem_init() and pmap_init(). 20MB for a frame buffer
+	 * is not uncommon.
 	 */
 	pt_pages += 32;		/* 64MB additional slop. */
 #endif
@@ -2223,7 +2227,7 @@ pmap_bootstrap_la57(void *arg __unused)
 	 * entering all existing kernel mappings into level 5 table.
 	 */
 	v_pml5[pmap_pml5e_index(UPT_MAX_ADDRESS)] = KPML4phys | X86_PG_V |
-	    X86_PG_RW | X86_PG_A | X86_PG_M | pg_g;
+	    X86_PG_RW | X86_PG_A | X86_PG_M;
 
 	/*
 	 * Add pml5 entry for 1:1 trampoline mapping after LA57 is turned on.
@@ -2242,7 +2246,11 @@ pmap_bootstrap_la57(void *arg __unused)
 	*(u_long *)(v_code + 2 + (la57_trampoline_gdt_desc - la57_trampoline)) =
 	    la57_trampoline_gdt - la57_trampoline + VM_PAGE_TO_PHYS(m_code);
 	la57_tramp = (void (*)(uint64_t))VM_PAGE_TO_PHYS(m_code);
-	invlpg((vm_offset_t)la57_tramp);
+	pmap_invalidate_all(kernel_pmap);
+	if (bootverbose) {
+		printf("entering LA57 trampoline at %#lx\n",
+		    (vm_offset_t)la57_tramp);
+	}
 	la57_tramp(KPML5phys);
 
 	/*
@@ -2256,6 +2264,10 @@ pmap_bootstrap_la57(void *arg __unused)
 	ssdtosyssd(&gdt_segs[GPROC0_SEL],
 	    (struct system_segment_descriptor *)&__pcpu[0].pc_gdt[GPROC0_SEL]);
 	ltr(GSEL(GPROC0_SEL, SEL_KPL));
+	lidt(&r_idt);
+
+	if (bootverbose)
+		printf("LA57 trampoline returned, CR4 %#lx\n", rcr4());
 
 	/*
 	 * Now unmap the trampoline, and free the pages.
@@ -2451,7 +2463,8 @@ pmap_init_pv_table(void)
 
 /*
  *	Initialize the pmap module.
- *	Called by vm_init, to initialize any structures that the pmap
+ *
+ *	Called by vm_mem_init(), to initialize any structures that the pmap
  *	system needs to map virtual memory.
  */
 void
@@ -4358,15 +4371,13 @@ pmap_pinit_pml5(vm_page_t pml5pg)
 	 * entering all existing kernel mappings into level 5 table.
 	 */
 	pm_pml5[pmap_pml5e_index(UPT_MAX_ADDRESS)] = KPML4phys | X86_PG_V |
-	    X86_PG_RW | X86_PG_A | X86_PG_M | pg_g |
-	    pmap_cache_bits(kernel_pmap, VM_MEMATTR_DEFAULT, FALSE);
+	    X86_PG_RW | X86_PG_A | X86_PG_M;
 
 	/* 
 	 * Install self-referential address mapping entry.
 	 */
 	pm_pml5[PML5PML5I] = VM_PAGE_TO_PHYS(pml5pg) |
-	    X86_PG_RW | X86_PG_V | X86_PG_M | X86_PG_A |
-	    pmap_cache_bits(kernel_pmap, VM_MEMATTR_DEFAULT, FALSE);
+	    X86_PG_RW | X86_PG_V | X86_PG_M | X86_PG_A;
 }
 
 static void
@@ -4395,8 +4406,7 @@ pmap_pinit_pml5_pti(vm_page_t pml5pgu)
 	 */
 	pm_pml5u[pmap_pml5e_index(UPT_MAX_ADDRESS)] =
 	    pmap_kextract((vm_offset_t)pti_pml4) |
-	    X86_PG_V | X86_PG_RW | X86_PG_A | X86_PG_M | pg_g |
-	    pmap_cache_bits(kernel_pmap, VM_MEMATTR_DEFAULT, FALSE);
+	    X86_PG_V | X86_PG_RW | X86_PG_A | X86_PG_M;
 }
 
 /* Allocate a page table page and do related bookkeeping */
@@ -4703,8 +4713,8 @@ pmap_allocpte_nosleep(pmap_t pmap, vm_pindex_t ptepindex, struct rwlock **lockp,
 		*pml5 = VM_PAGE_TO_PHYS(m) | PG_U | PG_RW | PG_V | PG_A | PG_M;
 
 		if (pmap->pm_pmltopu != NULL && pml5index < NUPML5E) {
-			if (pmap->pm_ucr3 != PMAP_NO_CR3)
-				*pml5 |= pg_nx;
+			MPASS(pmap->pm_ucr3 != PMAP_NO_CR3);
+			*pml5 |= pg_nx;
 
 			pml5u = &pmap->pm_pmltopu[pml5index];
 			*pml5u = VM_PAGE_TO_PHYS(m) | PG_U | PG_RW | PG_V |
@@ -4724,6 +4734,8 @@ pmap_allocpte_nosleep(pmap_t pmap, vm_pindex_t ptepindex, struct rwlock **lockp,
 
 		if (!pmap_is_la57(pmap) && pmap->pm_pmltopu != NULL &&
 		    pml4index < NUPML4E) {
+			MPASS(pmap->pm_ucr3 != PMAP_NO_CR3);
+
 			/*
 			 * PTI: Make all user-space mappings in the
 			 * kernel-mode page table no-execute so that
@@ -4731,8 +4743,7 @@ pmap_allocpte_nosleep(pmap_t pmap, vm_pindex_t ptepindex, struct rwlock **lockp,
 			 * the kernel-mode page table active on return
 			 * to user space.
 			 */
-			if (pmap->pm_ucr3 != PMAP_NO_CR3)
-				*pml4 |= pg_nx;
+			*pml4 |= pg_nx;
 
 			pml4u = &pmap->pm_pmltopu[pml4index];
 			*pml4u = VM_PAGE_TO_PHYS(m) | PG_U | PG_RW | PG_V |
@@ -4757,8 +4768,8 @@ pmap_allocpte_nosleep(pmap_t pmap, vm_pindex_t ptepindex, struct rwlock **lockp,
 		}
 		if ((*pdp & PG_V) == 0) {
 			/* Have to allocate a new pd, recurse */
-		  if (pmap_allocpte_nosleep(pmap, pmap_pdpe_pindex(va),
-		      lockp, va) == NULL) {
+			if (pmap_allocpte_nosleep(pmap, pmap_pdpe_pindex(va),
+			    lockp, va) == NULL) {
 				pmap_allocpte_free_unref(pmap, va,
 				    pmap_pml4e(pmap, va));
 				pmap_free_pt_page(pmap, m, true);
