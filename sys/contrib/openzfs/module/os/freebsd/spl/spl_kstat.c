@@ -28,9 +28,6 @@
  * [2] https://illumos.org/man/9f/kstat_create
  */
 
-#include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 43cd4da02e306bef54ced23dce64cb97defb9fa2 $");
-
 #include <sys/types.h>
 #include <sys/param.h>
 #include <sys/kernel.h>

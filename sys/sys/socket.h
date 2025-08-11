@@ -166,17 +166,18 @@ typedef	__uintptr_t	uintptr_t;
 #define	SO_LISTENQLIMIT	0x1011		/* socket's backlog limit */
 #define	SO_LISTENQLEN	0x1012		/* socket's complete queue length */
 #define	SO_LISTENINCQLEN	0x1013	/* socket's incomplete queue length */
-#define	SO_SETFIB	0x1014		/* use this FIB to route */
+#define	SO_FIB		0x1014		/* get or set socket FIB */
+#define	SO_SETFIB	SO_FIB		/* backward compat alias */
 #define	SO_USER_COOKIE	0x1015		/* user cookie (dummynet etc.) */
 #define	SO_PROTOCOL	0x1016		/* get socket protocol (Linux name) */
 #define	SO_PROTOTYPE	SO_PROTOCOL	/* alias for SO_PROTOCOL (SunOS name) */
 #define	SO_TS_CLOCK	0x1017		/* clock type used for SO_TIMESTAMP */
 #define	SO_MAX_PACING_RATE	0x1018	/* socket's max TX pacing rate (Linux name) */
 #define	SO_DOMAIN	0x1019		/* get socket domain */
+#define	SO_SPLICE	0x1023		/* splice data to other socket */
 #endif
 
 #if __BSD_VISIBLE
-#define	SO_SPLICE	0x1023		/* splice data to other socket */
 #define	SO_TS_REALTIME_MICRO	0	/* microsecond resolution, realtime */
 #define	SO_TS_BINTIME		1	/* sub-nanosecond resolution, realtime */
 #define	SO_TS_REALTIME		2	/* nanosecond resolution, realtime */

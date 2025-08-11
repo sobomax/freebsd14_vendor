@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 8583df509b5527ee337a53f061a31d3ab6af8887 $
+ * $FreeBSD: 96ba10e5679e1424747b922273e67a4007fb31d4 $
  */
 
 #ifndef _OPENSOLARIS_SYS_PROC_H_
@@ -88,9 +88,6 @@ do_thread_create(caddr_t stk, size_t stksize, void (*proc)(void *), void *arg,
 		thread_lock(td);
 		sched_prio(td, pri);
 		sched_add(td, SRQ_BORING);
-#if __FreeBSD_version < 1300068
-		thread_unlock(td);
-#endif
 	}
 	return (td);
 }

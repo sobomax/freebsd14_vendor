@@ -45,10 +45,8 @@
 #include <sys/malloc.h>
 #include <sys/queue.h>
 #include <sys/taskqueue.h>
-#include <sys/pciio.h>
 #include <dev/pci/pcireg.h>
 #include <dev/pci/pcivar.h>
-#include <dev/pci/pci_private.h>
 #include <sys/firmware.h>
 #include <sys/sbuf.h>
 #include <sys/smp.h>
@@ -318,15 +316,17 @@ static int t4_nofldtxq = -NOFLDTXQ;
 SYSCTL_INT(_hw_cxgbe, OID_AUTO, nofldtxq, CTLFLAG_RDTUN, &t4_nofldtxq, 0,
     "Number of offload TX queues per port");
 
-#define NOFLDRXQ 2
-static int t4_nofldrxq = -NOFLDRXQ;
-SYSCTL_INT(_hw_cxgbe, OID_AUTO, nofldrxq, CTLFLAG_RDTUN, &t4_nofldrxq, 0,
-    "Number of offload RX queues per port");
-
 #define NOFLDTXQ_VI 1
 static int t4_nofldtxq_vi = -NOFLDTXQ_VI;
 SYSCTL_INT(_hw_cxgbe, OID_AUTO, nofldtxq_vi, CTLFLAG_RDTUN, &t4_nofldtxq_vi, 0,
     "Number of offload TX queues per VI");
+#endif
+
+#if defined(TCP_OFFLOAD)
+#define NOFLDRXQ 2
+static int t4_nofldrxq = -NOFLDRXQ;
+SYSCTL_INT(_hw_cxgbe, OID_AUTO, nofldrxq, CTLFLAG_RDTUN, &t4_nofldrxq, 0,
+    "Number of offload RX queues per port");
 
 #define NOFLDRXQ_VI 1
 static int t4_nofldrxq_vi = -NOFLDRXQ_VI;
@@ -334,12 +334,12 @@ SYSCTL_INT(_hw_cxgbe, OID_AUTO, nofldrxq_vi, CTLFLAG_RDTUN, &t4_nofldrxq_vi, 0,
     "Number of offload RX queues per VI");
 
 #define TMR_IDX_OFLD 1
-int t4_tmr_idx_ofld = TMR_IDX_OFLD;
+static int t4_tmr_idx_ofld = TMR_IDX_OFLD;
 SYSCTL_INT(_hw_cxgbe, OID_AUTO, holdoff_timer_idx_ofld, CTLFLAG_RDTUN,
     &t4_tmr_idx_ofld, 0, "Holdoff timer index for offload queues");
 
 #define PKTC_IDX_OFLD (-1)
-int t4_pktc_idx_ofld = PKTC_IDX_OFLD;
+static int t4_pktc_idx_ofld = PKTC_IDX_OFLD;
 SYSCTL_INT(_hw_cxgbe, OID_AUTO, holdoff_pktc_idx_ofld, CTLFLAG_RDTUN,
     &t4_pktc_idx_ofld, 0, "holdoff packet counter index for offload queues");
 
@@ -633,6 +633,10 @@ static int t4_reset_on_fatal_err = 0;
 SYSCTL_INT(_hw_cxgbe, OID_AUTO, reset_on_fatal_err, CTLFLAG_RWTUN,
     &t4_reset_on_fatal_err, 0, "reset adapter on fatal errors");
 
+static int t4_reset_method = 1;
+SYSCTL_INT(_hw_cxgbe, OID_AUTO, reset_method, CTLFLAG_RWTUN, &t4_reset_method,
+    0, "reset method: 0 = PL_RST, 1 = PCIe secondary bus reset, 2 = PCIe link bounce");
+
 static int t4_clock_gate_on_suspend = 0;
 SYSCTL_INT(_hw_cxgbe, OID_AUTO, clock_gate_on_suspend, CTLFLAG_RWTUN,
     &t4_clock_gate_on_suspend, 0, "gate the clock on suspend");
@@ -686,9 +690,10 @@ SYSCTL_INT(_hw_cxgbe, OID_AUTO, drop_pkts_with_l4_errors, CTLFLAG_RDTUN,
  * TOE tunables.
  */
 static int t4_cop_managed_offloading = 0;
-SYSCTL_INT(_hw_cxgbe, OID_AUTO, cop_managed_offloading, CTLFLAG_RDTUN,
+SYSCTL_INT(_hw_cxgbe_toe, OID_AUTO, cop_managed_offloading, CTLFLAG_RDTUN,
     &t4_cop_managed_offloading, 0,
     "COP (Connection Offload Policy) controls all TOE offload");
+TUNABLE_INT("hw.cxgbe.cop_managed_offloading", &t4_cop_managed_offloading);
 #endif
 
 #ifdef KERN_TLS
@@ -935,15 +940,15 @@ struct {
 	{0x6402, "Chelsio T6225-SO-CR"},	/* 2 x 10/25G, nomem */
 	{0x6403, "Chelsio T6425-CR"},		/* 4 x 10/25G */
 	{0x6404, "Chelsio T6425-SO-CR"},	/* 4 x 10/25G, nomem */
-	{0x6405, "Chelsio T6225-OCP-SO"},	/* 2 x 10/25G, nomem */
-	{0x6406, "Chelsio T62100-OCP-SO"},	/* 2 x 40/50/100G, nomem */
+	{0x6405, "Chelsio T6225-SO-OCP3"},	/* 2 x 10/25G, nomem */
+	{0x6406, "Chelsio T6225-OCP3"},		/* 2 x 10/25G */
 	{0x6407, "Chelsio T62100-LP-CR"},	/* 2 x 40/50/100G */
 	{0x6408, "Chelsio T62100-SO-CR"},	/* 2 x 40/50/100G, nomem */
 	{0x6409, "Chelsio T6210-BT"},		/* 2 x 10GBASE-T */
 	{0x640d, "Chelsio T62100-CR"},		/* 2 x 40/50/100G */
 	{0x6410, "Chelsio T6-DBG-100"},		/* 2 x 40/50/100G, debug */
 	{0x6411, "Chelsio T6225-LL-CR"},	/* 2 x 10/25G */
-	{0x6414, "Chelsio T61100-OCP-SO"},	/* 1 x 40/50/100G, nomem */
+	{0x6414, "Chelsio T62100-SO-OCP3"},	/* 2 x 40/50/100G, nomem */
 	{0x6415, "Chelsio T6201-BT"},		/* 2 x 1000BASE-T */
 
 	/* Custom */
@@ -1132,7 +1137,7 @@ t4_calibration(void *arg)
 
 	sc = (struct adapter *)arg;
 
-	KASSERT((hw_off_limits(sc) == 0), ("hw_off_limits at t4_calibration"));
+	KASSERT(hw_all_ok(sc), ("!hw_all_ok at t4_calibration"));
 	hw = t4_read_reg64(sc, A_SGE_TIMESTAMP_LO);
 	sbt = sbinuptime();
 
@@ -1932,6 +1937,8 @@ stop_adapter(struct adapter *sc)
 	t4_shutdown_adapter(sc);
 	for_each_port(sc, i) {
 		pi = sc->port[i];
+		if (pi == NULL)
+			continue;
 		PORT_LOCK(pi);
 		if (pi->up_vis > 0 && pi->link_cfg.link_ok) {
 			/*
@@ -2043,6 +2050,8 @@ stop_lld(struct adapter *sc)
 	/* Quiesce all activity. */
 	for_each_port(sc, i) {
 		pi = sc->port[i];
+		if (pi == NULL)
+			continue;
 		pi->vxlan_tcam_entry = false;
 		for_each_vi(pi, j, vi) {
 			vi->xact_addr_filt = -1;
@@ -2542,39 +2551,134 @@ t4_reset_post(device_t dev, device_t child)
 }
 
 static int
-reset_adapter_with_pci_bus_reset(struct adapter *sc)
-{
-	int rc;
-
-	mtx_lock(&Giant);
-	rc = BUS_RESET_CHILD(device_get_parent(sc->dev), sc->dev, 0);
-	mtx_unlock(&Giant);
-	return (rc);
-}
-
-static int
 reset_adapter_with_pl_rst(struct adapter *sc)
 {
-	suspend_adapter(sc);
-
 	/* This is a t4_write_reg without the hw_off_limits check. */
 	MPASS(sc->error_flags & HW_OFF_LIMITS);
 	bus_space_write_4(sc->bt, sc->bh, A_PL_RST,
 			  F_PIORSTMODE | F_PIORST | F_AUTOPCIEPAUSE);
 	pause("pl_rst", 1 * hz);		/* Wait 1s for reset */
-
-	resume_adapter(sc);
-
 	return (0);
+}
+
+static int
+reset_adapter_with_pcie_sbr(struct adapter *sc)
+{
+	device_t pdev = device_get_parent(sc->dev);
+	device_t gpdev = device_get_parent(pdev);
+	device_t *children;
+	int rc, i, lcap, lsta, nchildren;
+	uint32_t v;
+
+	rc = pci_find_cap(gpdev, PCIY_EXPRESS, &v);
+	if (rc != 0) {
+		CH_ERR(sc, "%s: pci_find_cap(%s, pcie) failed: %d\n", __func__,
+		    device_get_nameunit(gpdev), rc);
+		return (ENOTSUP);
+	}
+	lcap = v + PCIER_LINK_CAP;
+	lsta = v + PCIER_LINK_STA;
+
+	nchildren = 0;
+	device_get_children(pdev, &children, &nchildren);
+	for (i = 0; i < nchildren; i++)
+		pci_save_state(children[i]);
+	v = pci_read_config(gpdev, PCIR_BRIDGECTL_1, 2);
+	pci_write_config(gpdev, PCIR_BRIDGECTL_1, v | PCIB_BCR_SECBUS_RESET, 2);
+	pause("pcie_sbr1", hz / 10);	/* 100ms */
+	pci_write_config(gpdev, PCIR_BRIDGECTL_1, v, 2);
+	pause("pcie_sbr2", hz);		/* Wait 1s before restore_state. */
+	v = pci_read_config(gpdev, lsta, 2);
+	if (pci_read_config(gpdev, lcap, 2) & PCIEM_LINK_CAP_DL_ACTIVE)
+		rc = v & PCIEM_LINK_STA_DL_ACTIVE ? 0 : ETIMEDOUT;
+	else if (v & (PCIEM_LINK_STA_TRAINING_ERROR | PCIEM_LINK_STA_TRAINING))
+		rc = ETIMEDOUT;
+	else
+		rc = 0;
+	if (rc != 0)
+		CH_ERR(sc, "%s: PCIe link is down after reset, LINK_STA 0x%x\n",
+		    __func__, v);
+	else {
+		for (i = 0; i < nchildren; i++)
+			pci_restore_state(children[i]);
+	}
+	free(children, M_TEMP);
+
+	return (rc);
+}
+
+static int
+reset_adapter_with_pcie_link_bounce(struct adapter *sc)
+{
+	device_t pdev = device_get_parent(sc->dev);
+	device_t gpdev = device_get_parent(pdev);
+	device_t *children;
+	int rc, i, lcap, lctl, lsta, nchildren;
+	uint32_t v;
+
+	rc = pci_find_cap(gpdev, PCIY_EXPRESS, &v);
+	if (rc != 0) {
+		CH_ERR(sc, "%s: pci_find_cap(%s, pcie) failed: %d\n", __func__,
+		    device_get_nameunit(gpdev), rc);
+		return (ENOTSUP);
+	}
+	lcap = v + PCIER_LINK_CAP;
+	lctl = v + PCIER_LINK_CTL;
+	lsta = v + PCIER_LINK_STA;
+
+	nchildren = 0;
+	device_get_children(pdev, &children, &nchildren);
+	for (i = 0; i < nchildren; i++)
+		pci_save_state(children[i]);
+	v = pci_read_config(gpdev, lctl, 2);
+	pci_write_config(gpdev, lctl, v | PCIEM_LINK_CTL_LINK_DIS, 2);
+	pause("pcie_lnk1", 100 * hz / 1000);	/* 100ms */
+	pci_write_config(gpdev, lctl, v | PCIEM_LINK_CTL_RETRAIN_LINK, 2);
+	pause("pcie_lnk2", hz);		/* Wait 1s before restore_state. */
+	v = pci_read_config(gpdev, lsta, 2);
+	if (pci_read_config(gpdev, lcap, 2) & PCIEM_LINK_CAP_DL_ACTIVE)
+		rc = v & PCIEM_LINK_STA_DL_ACTIVE ? 0 : ETIMEDOUT;
+	else if (v & (PCIEM_LINK_STA_TRAINING_ERROR | PCIEM_LINK_STA_TRAINING))
+		rc = ETIMEDOUT;
+	else
+		rc = 0;
+	if (rc != 0)
+		CH_ERR(sc, "%s: PCIe link is down after reset, LINK_STA 0x%x\n",
+		    __func__, v);
+	else {
+		for (i = 0; i < nchildren; i++)
+			pci_restore_state(children[i]);
+	}
+	free(children, M_TEMP);
+
+	return (rc);
 }
 
 static inline int
 reset_adapter(struct adapter *sc)
 {
-	if (vm_guest == 0)
-		return (reset_adapter_with_pci_bus_reset(sc));
-	else
-		return (reset_adapter_with_pl_rst(sc));
+	int rc;
+	const int reset_method = vm_guest == VM_GUEST_NO ? t4_reset_method : 0;
+
+	rc = suspend_adapter(sc);
+	if (rc != 0)
+		return (rc);
+
+	switch (reset_method) {
+	case 1:
+		rc = reset_adapter_with_pcie_sbr(sc);
+		break;
+	case 2:
+		rc = reset_adapter_with_pcie_link_bounce(sc);
+		break;
+	case 0:
+	default:
+		rc = reset_adapter_with_pl_rst(sc);
+		break;
+	}
+	if (rc == 0)
+		rc = resume_adapter(sc);
+	return (rc);
 }
 
 static void
@@ -2871,7 +2975,7 @@ cxgbe_ioctl(if_t ifp, unsigned long cmd, caddr_t data)
 		if_setmtu(ifp, mtu);
 		if (vi->flags & VI_INIT_DONE) {
 			t4_update_fl_bufsize(ifp);
-			if (!hw_off_limits(sc) &&
+			if (hw_all_ok(sc) &&
 			    if_getdrvflags(ifp) & IFF_DRV_RUNNING)
 				rc = update_mac_settings(ifp, XGMAC_MTU);
 		}
@@ -2883,7 +2987,7 @@ cxgbe_ioctl(if_t ifp, unsigned long cmd, caddr_t data)
 		if (rc)
 			return (rc);
 
-		if (hw_off_limits(sc)) {
+		if (!hw_all_ok(sc)) {
 			rc = ENXIO;
 			goto fail;
 		}
@@ -2911,7 +3015,7 @@ cxgbe_ioctl(if_t ifp, unsigned long cmd, caddr_t data)
 		rc = begin_synchronized_op(sc, vi, SLEEP_OK | INTR_OK, "t4multi");
 		if (rc)
 			return (rc);
-		if (!hw_off_limits(sc) && if_getdrvflags(ifp) & IFF_DRV_RUNNING)
+		if (hw_all_ok(sc) && if_getdrvflags(ifp) & IFF_DRV_RUNNING)
 			rc = update_mac_settings(ifp, XGMAC_MCADDRS);
 		end_synchronized_op(sc, 0);
 		break;
@@ -3086,7 +3190,7 @@ fail:
 		rc = begin_synchronized_op(sc, vi, SLEEP_OK | INTR_OK, "t4i2c");
 		if (rc)
 			return (rc);
-		if (hw_off_limits(sc))
+		if (!hw_all_ok(sc))
 			rc = ENXIO;
 		else
 			rc = -t4_i2c_rd(sc, sc->mbox, pi->port_id, i2c.dev_addr,
@@ -3363,7 +3467,7 @@ cxgbe_media_change(if_t ifp)
 		if (IFM_OPTIONS(ifm->ifm_media) & IFM_ETH_TXPAUSE)
 			lc->requested_fc |= PAUSE_TX;
 	}
-	if (pi->up_vis > 0 && !hw_off_limits(sc)) {
+	if (pi->up_vis > 0 && hw_all_ok(sc)) {
 		fixup_link_config(pi);
 		rc = apply_link_config(pi);
 	}
@@ -3445,6 +3549,7 @@ port_mword(struct port_info *pi, uint32_t speed)
 		/* Pluggable transceiver */
 		switch (pi->mod_type) {
 		case FW_PORT_MOD_TYPE_LR:
+		case FW_PORT_MOD_TYPE_LR_SIMPLEX:
 			switch (speed) {
 			case FW_PORT_CAP32_SPEED_1G:
 				return (IFM_1000_LX);
@@ -3501,6 +3606,10 @@ port_mword(struct port_info *pi, uint32_t speed)
 			if (speed == FW_PORT_CAP32_SPEED_10G)
 				return (IFM_10G_LRM);
 			break;
+		case FW_PORT_MOD_TYPE_DR:
+			if (speed == FW_PORT_CAP32_SPEED_100G)
+				return (IFM_100G_DR);
+			break;
 		case FW_PORT_MOD_TYPE_NA:
 			MPASS(0);	/* Not pluggable? */
 			/* fall throough */
@@ -3531,7 +3640,7 @@ cxgbe_media_status(if_t ifp, struct ifmediareq *ifmr)
 		return;
 	PORT_LOCK(pi);
 
-	if (pi->up_vis == 0 && !hw_off_limits(sc)) {
+	if (pi->up_vis == 0 && hw_all_ok(sc)) {
 		/*
 		 * If all the interfaces are administratively down the firmware
 		 * does not report transceiver changes.  Refresh port info here
@@ -4022,6 +4131,8 @@ stop_atid_allocator(struct adapter *sc)
 {
 	struct tid_info *t = &sc->tids;
 
+	if (t->natids == 0)
+		return;
 	mtx_lock(&t->atid_lock);
 	t->atid_alloc_stopped = true;
 	mtx_unlock(&t->atid_lock);
@@ -4032,6 +4143,8 @@ restart_atid_allocator(struct adapter *sc)
 {
 	struct tid_info *t = &sc->tids;
 
+	if (t->natids == 0)
+		return;
 	mtx_lock(&t->atid_lock);
 	KASSERT(t->atids_in_use == 0,
 	    ("%s: %d atids still in use.", __func__, t->atids_in_use));
@@ -6329,20 +6442,13 @@ int
 begin_synchronized_op(struct adapter *sc, struct vi_info *vi, int flags,
     char *wmesg)
 {
-	int rc, pri;
+	int rc;
 
 #ifdef WITNESS
 	/* the caller thinks it's ok to sleep, but is it really? */
 	if (flags & SLEEP_OK)
-		WITNESS_WARN(WARN_GIANTOK | WARN_SLEEPOK, NULL,
-		    "begin_synchronized_op");
+		WITNESS_WARN(WARN_GIANTOK | WARN_SLEEPOK, NULL, __func__);
 #endif
-
-	if (INTR_OK)
-		pri = PCATCH;
-	else
-		pri = 0;
-
 	ADAPTER_LOCK(sc);
 	for (;;) {
 
@@ -6361,7 +6467,8 @@ begin_synchronized_op(struct adapter *sc, struct vi_info *vi, int flags,
 			goto done;
 		}
 
-		if (mtx_sleep(&sc->flags, &sc->sc_lock, pri, wmesg, 0)) {
+		if (mtx_sleep(&sc->flags, &sc->sc_lock,
+		    flags & INTR_OK ? PCATCH : 0, wmesg, 0)) {
 			rc = EINTR;
 			goto done;
 		}
@@ -7797,7 +7904,7 @@ t4_sysctls(struct adapter *sc)
 		SYSCTL_ADD_INT(ctx, children, OID_AUTO, "rx_coalesce",
 		    CTLFLAG_RW, &sc->tt.rx_coalesce, 0, "receive coalescing");
 
-		sc->tt.tls = 0;
+		sc->tt.tls = 1;
 		SYSCTL_ADD_PROC(ctx, children, OID_AUTO, "tls", CTLTYPE_INT |
 		    CTLFLAG_RW | CTLFLAG_MPSAFE, sc, 0, sysctl_tls, "I",
 		    "Inline TLS allowed");
@@ -8243,10 +8350,6 @@ sysctl_bitfield_8b(SYSCTL_HANDLER_ARGS)
 	int rc;
 	struct sbuf *sb;
 
-	rc = sysctl_wire_old_buffer(req, 0);
-	if (rc != 0)
-		return(rc);
-
 	sb = sbuf_new_for_sysctl(NULL, NULL, 128, req);
 	if (sb == NULL)
 		return (ENOMEM);
@@ -8263,10 +8366,6 @@ sysctl_bitfield_16b(SYSCTL_HANDLER_ARGS)
 {
 	int rc;
 	struct sbuf *sb;
-
-	rc = sysctl_wire_old_buffer(req, 0);
-	if (rc != 0)
-		return(rc);
 
 	sb = sbuf_new_for_sysctl(NULL, NULL, 128, req);
 	if (sb == NULL)
@@ -8291,7 +8390,7 @@ sysctl_btphy(SYSCTL_HANDLER_ARGS)
 	rc = begin_synchronized_op(sc, &pi->vi[0], SLEEP_OK | INTR_OK, "t4btt");
 	if (rc)
 		return (rc);
-	if (hw_off_limits(sc))
+	if (!hw_all_ok(sc))
 		rc = ENXIO;
 	else {
 		/* XXX: magic numbers */
@@ -8348,7 +8447,7 @@ sysctl_tx_vm_wr(SYSCTL_HANDLER_ARGS)
 	    "t4txvm");
 	if (rc)
 		return (rc);
-	if (hw_off_limits(sc))
+	if (!hw_all_ok(sc))
 		rc = ENXIO;
 	else if (if_getdrvflags(vi->ifp) & IFF_DRV_RUNNING) {
 		/*
@@ -8525,10 +8624,6 @@ sysctl_pause_settings(SYSCTL_HANDLER_ARGS)
 		struct sbuf *sb;
 		static char *bits = "\20\1RX\2TX\3AUTO";
 
-		rc = sysctl_wire_old_buffer(req, 0);
-		if (rc != 0)
-			return(rc);
-
 		sb = sbuf_new_for_sysctl(NULL, NULL, 128, req);
 		if (sb == NULL)
 			return (ENOMEM);
@@ -8566,7 +8661,7 @@ sysctl_pause_settings(SYSCTL_HANDLER_ARGS)
 		    "t4PAUSE");
 		if (rc)
 			return (rc);
-		if (!hw_off_limits(sc)) {
+		if (hw_all_ok(sc)) {
 			PORT_LOCK(pi);
 			lc->requested_fc = n;
 			fixup_link_config(pi);
@@ -8589,10 +8684,6 @@ sysctl_link_fec(SYSCTL_HANDLER_ARGS)
 	int rc;
 	struct sbuf *sb;
 	static char *bits = "\20\1RS-FEC\2FC-FEC\3NO-FEC\4RSVD1\5RSVD2";
-
-	rc = sysctl_wire_old_buffer(req, 0);
-	if (rc != 0)
-		return(rc);
 
 	sb = sbuf_new_for_sysctl(NULL, NULL, 128, req);
 	if (sb == NULL)
@@ -8620,10 +8711,6 @@ sysctl_requested_fec(SYSCTL_HANDLER_ARGS)
 		struct sbuf *sb;
 		static char *bits = "\20\1RS-FEC\2FC-FEC\3NO-FEC\4RSVD2"
 		    "\5RSVD3\6auto\7module";
-
-		rc = sysctl_wire_old_buffer(req, 0);
-		if (rc != 0)
-			return(rc);
 
 		sb = sbuf_new_for_sysctl(NULL, NULL, 128, req);
 		if (sb == NULL)
@@ -8670,7 +8757,7 @@ sysctl_requested_fec(SYSCTL_HANDLER_ARGS)
 			lc->requested_fec = n & (M_FW_PORT_CAP32_FEC |
 			    FEC_MODULE);
 		}
-		if (!hw_off_limits(sc)) {
+		if (hw_all_ok(sc)) {
 			fixup_link_config(pi);
 			if (pi->up_vis > 0) {
 				rc = apply_link_config(pi);
@@ -8700,10 +8787,6 @@ sysctl_module_fec(SYSCTL_HANDLER_ARGS)
 	struct sbuf *sb;
 	static char *bits = "\20\1RS-FEC\2FC-FEC\3NO-FEC\4RSVD2\5RSVD3";
 
-	rc = sysctl_wire_old_buffer(req, 0);
-	if (rc != 0)
-		return (rc);
-
 	sb = sbuf_new_for_sysctl(NULL, NULL, 128, req);
 	if (sb == NULL)
 		return (ENOMEM);
@@ -8712,7 +8795,7 @@ sysctl_module_fec(SYSCTL_HANDLER_ARGS)
 		rc = EBUSY;
 		goto done;
 	}
-	if (hw_off_limits(sc)) {
+	if (!hw_all_ok(sc)) {
 		rc = ENXIO;
 		goto done;
 	}
@@ -8730,14 +8813,15 @@ sysctl_module_fec(SYSCTL_HANDLER_ARGS)
 	fec = lc->fec_hint;
 	if (pi->mod_type == FW_PORT_MOD_TYPE_NONE ||
 	    !fec_supported(lc->pcaps)) {
+		PORT_UNLOCK(pi);
 		sbuf_printf(sb, "n/a");
 	} else {
 		if (fec == 0)
 			fec = FEC_NONE;
+		PORT_UNLOCK(pi);
 		sbuf_printf(sb, "%b", fec & M_FW_PORT_CAP32_FEC, bits);
 	}
 	rc = sbuf_finish(sb);
-	PORT_UNLOCK(pi);
 done:
 	sbuf_delete(sb);
 	end_synchronized_op(sc, 0);
@@ -8777,7 +8861,7 @@ sysctl_autoneg(SYSCTL_HANDLER_ARGS)
 		goto done;
 	}
 	lc->requested_aneg = val;
-	if (!hw_off_limits(sc)) {
+	if (hw_all_ok(sc)) {
 		fixup_link_config(pi);
 		if (pi->up_vis > 0)
 			rc = apply_link_config(pi);
@@ -8812,7 +8896,7 @@ sysctl_force_fec(SYSCTL_HANDLER_ARGS)
 		return (rc);
 	PORT_LOCK(pi);
 	lc->force_fec = val;
-	if (!hw_off_limits(sc)) {
+	if (hw_all_ok(sc)) {
 		fixup_link_config(pi);
 		if (pi->up_vis > 0)
 			rc = apply_link_config(pi);
@@ -8852,7 +8936,7 @@ sysctl_temperature(SYSCTL_HANDLER_ARGS)
 	rc = begin_synchronized_op(sc, NULL, SLEEP_OK | INTR_OK, "t4temp");
 	if (rc)
 		return (rc);
-	if (hw_off_limits(sc))
+	if (!hw_all_ok(sc))
 		rc = ENXIO;
 	else {
 		param = V_FW_PARAMS_MNEM(FW_PARAMS_MNEM_DEV) |
@@ -8883,7 +8967,7 @@ sysctl_vdd(SYSCTL_HANDLER_ARGS)
 		    "t4vdd");
 		if (rc)
 			return (rc);
-		if (hw_off_limits(sc))
+		if (!hw_all_ok(sc))
 			rc = ENXIO;
 		else {
 			param = V_FW_PARAMS_MNEM(FW_PARAMS_MNEM_DEV) |
@@ -8920,7 +9004,7 @@ sysctl_reset_sensor(SYSCTL_HANDLER_ARGS)
 	rc = begin_synchronized_op(sc, NULL, SLEEP_OK | INTR_OK, "t4srst");
 	if (rc)
 		return (rc);
-	if (hw_off_limits(sc))
+	if (!hw_all_ok(sc))
 		rc = ENXIO;
 	else {
 		param = (V_FW_PARAMS_MNEM(FW_PARAMS_MNEM_DEV) |
@@ -8946,7 +9030,7 @@ sysctl_loadavg(SYSCTL_HANDLER_ARGS)
 	rc = begin_synchronized_op(sc, NULL, SLEEP_OK | INTR_OK, "t4lavg");
 	if (rc)
 		return (rc);
-	if (hw_off_limits(sc))
+	if (hw_all_ok(sc))
 		rc = ENXIO;
 	else {
 		param = V_FW_PARAMS_MNEM(FW_PARAMS_MNEM_DEV) |
@@ -8955,10 +9039,6 @@ sysctl_loadavg(SYSCTL_HANDLER_ARGS)
 	}
 	end_synchronized_op(sc, 0);
 	if (rc)
-		return (rc);
-
-	rc = sysctl_wire_old_buffer(req, 0);
-	if (rc != 0)
 		return (rc);
 
 	sb = sbuf_new_for_sysctl(NULL, NULL, 4096, req);
@@ -8990,14 +9070,11 @@ sysctl_cctrl(SYSCTL_HANDLER_ARGS)
 		"0.9375"
 	};
 
-	rc = sysctl_wire_old_buffer(req, 0);
-	if (rc != 0)
-		return (rc);
-
 	sb = sbuf_new_for_sysctl(NULL, NULL, 4096, req);
 	if (sb == NULL)
 		return (ENOMEM);
 
+	rc = 0;
 	mtx_lock(&sc->reg_lock);
 	if (hw_off_limits(sc))
 		rc = ENXIO;
@@ -9072,10 +9149,6 @@ sysctl_cim_ibq_obq(SYSCTL_HANDLER_ARGS)
 		goto done;
 	}
 	n = rc * sizeof(uint32_t);	/* rc has # of words actually read */
-
-	rc = sysctl_wire_old_buffer(req, 0);
-	if (rc != 0)
-		goto done;
 
 	sb = sbuf_new_for_sysctl(NULL, NULL, PAGE_SIZE, req);
 	if (sb == NULL) {
@@ -9195,9 +9268,6 @@ sysctl_cim_la(SYSCTL_HANDLER_ARGS)
 	struct sbuf *sb;
 	int rc;
 
-	rc = sysctl_wire_old_buffer(req, 0);
-	if (rc != 0)
-		return (rc);
 	sb = sbuf_new_for_sysctl(NULL, NULL, 4096, req);
 	if (sb == NULL)
 		return (ENOMEM);
@@ -9265,10 +9335,6 @@ sysctl_cim_ma_la(SYSCTL_HANDLER_ARGS)
 	uint32_t *buf, *p;
 	int rc;
 
-	rc = sysctl_wire_old_buffer(req, 0);
-	if (rc != 0)
-		return (rc);
-
 	sb = sbuf_new_for_sysctl(NULL, NULL, 4096, req);
 	if (sb == NULL)
 		return (ENOMEM);
@@ -9276,6 +9342,7 @@ sysctl_cim_ma_la(SYSCTL_HANDLER_ARGS)
 	buf = malloc(2 * CIM_MALA_SIZE * 5 * sizeof(uint32_t), M_CXGBE,
 	    M_ZERO | M_WAITOK);
 
+	rc = 0;
 	mtx_lock(&sc->reg_lock);
 	if (hw_off_limits(sc))
 		rc = ENXIO;
@@ -9316,10 +9383,6 @@ sysctl_cim_pif_la(SYSCTL_HANDLER_ARGS)
 	uint32_t *buf, *p;
 	int rc;
 
-	rc = sysctl_wire_old_buffer(req, 0);
-	if (rc != 0)
-		return (rc);
-
 	sb = sbuf_new_for_sysctl(NULL, NULL, 4096, req);
 	if (sb == NULL)
 		return (ENOMEM);
@@ -9327,6 +9390,7 @@ sysctl_cim_pif_la(SYSCTL_HANDLER_ARGS)
 	buf = malloc(2 * CIM_PIFLA_SIZE * 6 * sizeof(uint32_t), M_CXGBE,
 	    M_ZERO | M_WAITOK);
 
+	rc = 0;
 	mtx_lock(&sc->reg_lock);
 	if (hw_off_limits(sc))
 		rc = ENXIO;
@@ -9396,10 +9460,6 @@ sysctl_cim_qcfg(SYSCTL_HANDLER_ARGS)
 	if (rc)
 		return (rc);
 
-	rc = sysctl_wire_old_buffer(req, 0);
-	if (rc != 0)
-		return (rc);
-
 	sb = sbuf_new_for_sysctl(NULL, NULL, PAGE_SIZE, req);
 	if (sb == NULL)
 		return (ENOMEM);
@@ -9432,14 +9492,11 @@ sysctl_cpl_stats(SYSCTL_HANDLER_ARGS)
 	int rc;
 	struct tp_cpl_stats stats;
 
-	rc = sysctl_wire_old_buffer(req, 0);
-	if (rc != 0)
-		return (rc);
-
 	sb = sbuf_new_for_sysctl(NULL, NULL, 256, req);
 	if (sb == NULL)
 		return (ENOMEM);
 
+	rc = 0;
 	mtx_lock(&sc->reg_lock);
 	if (hw_off_limits(sc))
 		rc = ENXIO;
@@ -9478,14 +9535,11 @@ sysctl_ddp_stats(SYSCTL_HANDLER_ARGS)
 	int rc;
 	struct tp_usm_stats stats;
 
-	rc = sysctl_wire_old_buffer(req, 0);
-	if (rc != 0)
-		return(rc);
-
 	sb = sbuf_new_for_sysctl(NULL, NULL, 256, req);
 	if (sb == NULL)
 		return (ENOMEM);
 
+	rc = 0;
 	mtx_lock(&sc->reg_lock);
 	if (hw_off_limits(sc))
 		rc = ENXIO;
@@ -9511,14 +9565,11 @@ sysctl_tid_stats(SYSCTL_HANDLER_ARGS)
 	int rc;
 	struct tp_tid_stats stats;
 
-	rc = sysctl_wire_old_buffer(req, 0);
-	if (rc != 0)
-		return(rc);
-
 	sb = sbuf_new_for_sysctl(NULL, NULL, 256, req);
 	if (sb == NULL)
 		return (ENOMEM);
 
+	rc = 0;
 	mtx_lock(&sc->reg_lock);
 	if (hw_off_limits(sc))
 		rc = ENXIO;
@@ -9655,9 +9706,6 @@ sysctl_devlog(SYSCTL_HANDLER_ARGS)
 	int rc;
 	struct sbuf *sb;
 
-	rc = sysctl_wire_old_buffer(req, 0);
-	if (rc != 0)
-		return (rc);
 	sb = sbuf_new_for_sysctl(NULL, NULL, 4096, req);
 	if (sb == NULL)
 		return (ENOMEM);
@@ -9700,10 +9748,7 @@ sysctl_fcoe_stats(SYSCTL_HANDLER_ARGS)
 	struct tp_fcoe_stats stats[MAX_NCHAN];
 	int i, nchan = sc->chip_params->nchan;
 
-	rc = sysctl_wire_old_buffer(req, 0);
-	if (rc != 0)
-		return (rc);
-
+	rc = 0;
 	mtx_lock(&sc->reg_lock);
 	if (hw_off_limits(sc))
 		rc = ENXIO;
@@ -9756,16 +9801,13 @@ sysctl_hw_sched(SYSCTL_HANDLER_ARGS)
 	unsigned int map, kbps, ipg, mode;
 	unsigned int pace_tab[NTX_SCHED];
 
-	rc = sysctl_wire_old_buffer(req, 0);
-	if (rc != 0)
-		return (rc);
-
 	sb = sbuf_new_for_sysctl(NULL, NULL, 512, req);
 	if (sb == NULL)
 		return (ENOMEM);
 
 	mtx_lock(&sc->reg_lock);
 	if (hw_off_limits(sc)) {
+		mtx_unlock(&sc->reg_lock);
 		rc = ENXIO;
 		goto done;
 	}
@@ -9773,6 +9815,7 @@ sysctl_hw_sched(SYSCTL_HANDLER_ARGS)
 	map = t4_read_reg(sc, A_TP_TX_MOD_QUEUE_REQ_MAP);
 	mode = G_TIMERMODE(t4_read_reg(sc, A_TP_MOD_CONFIG));
 	t4_read_pace_tbl(sc, pace_tab);
+	mtx_unlock(&sc->reg_lock);
 
 	sbuf_printf(sb, "Scheduler  Mode   Channel  Rate (Kbps)   "
 	    "Class IPG (0.1 ns)   Flow IPG (us)");
@@ -9798,7 +9841,6 @@ sysctl_hw_sched(SYSCTL_HANDLER_ARGS)
 	}
 	rc = sbuf_finish(sb);
 done:
-	mtx_unlock(&sc->reg_lock);
 	sbuf_delete(sb);
 	return (rc);
 }
@@ -9821,16 +9863,13 @@ sysctl_lb_stats(SYSCTL_HANDLER_ARGS)
 		"BG2FramesTrunc:", "BG3FramesTrunc:"
 	};
 
-	rc = sysctl_wire_old_buffer(req, 0);
-	if (rc != 0)
-		return (rc);
-
 	sb = sbuf_new_for_sysctl(NULL, NULL, 4096, req);
 	if (sb == NULL)
 		return (ENOMEM);
 
 	memset(s, 0, sizeof(s));
 
+	rc = 0;
 	for (i = 0; i < sc->chip_params->nchan; i += 2) {
 		mtx_lock(&sc->reg_lock);
 		if (hw_off_limits(sc))
@@ -9853,7 +9892,8 @@ sysctl_lb_stats(SYSCTL_HANDLER_ARGS)
 				   *p0++, *p1++);
 	}
 
-	rc = sbuf_finish(sb);
+	if (rc == 0)
+		rc = sbuf_finish(sb);
 	sbuf_delete(sb);
 
 	return (rc);
@@ -9867,9 +9907,6 @@ sysctl_linkdnrc(SYSCTL_HANDLER_ARGS)
 	struct link_config *lc = &pi->link_cfg;
 	struct sbuf *sb;
 
-	rc = sysctl_wire_old_buffer(req, 0);
-	if (rc != 0)
-		return(rc);
 	sb = sbuf_new_for_sysctl(NULL, NULL, 64, req);
 	if (sb == NULL)
 		return (ENOMEM);
@@ -10207,10 +10244,6 @@ sysctl_mps_tcam(SYSCTL_HANDLER_ARGS)
 
 	MPASS(chip_id(sc) <= CHELSIO_T5);
 
-	rc = sysctl_wire_old_buffer(req, 0);
-	if (rc != 0)
-		return (rc);
-
 	sb = sbuf_new_for_sysctl(NULL, NULL, 4096, req);
 	if (sb == NULL)
 		return (ENOMEM);
@@ -10218,6 +10251,7 @@ sysctl_mps_tcam(SYSCTL_HANDLER_ARGS)
 	sbuf_printf(sb,
 	    "Idx  Ethernet address     Mask     Vld Ports PF"
 	    "  VF              Replication             P0 P1 P2 P3  ML");
+	rc = 0;
 	for (i = 0; i < sc->chip_params->mps_tcam_size; i++) {
 		uint64_t tcamx, tcamy, mask;
 		uint32_t cls_lo, cls_hi;
@@ -10311,10 +10345,6 @@ sysctl_mps_tcam_t6(SYSCTL_HANDLER_ARGS)
 
 	MPASS(chip_id(sc) > CHELSIO_T5);
 
-	rc = sysctl_wire_old_buffer(req, 0);
-	if (rc != 0)
-		return (rc);
-
 	sb = sbuf_new_for_sysctl(NULL, NULL, 4096, req);
 	if (sb == NULL)
 		return (ENOMEM);
@@ -10324,6 +10354,7 @@ sysctl_mps_tcam_t6(SYSCTL_HANDLER_ARGS)
 	    "                           Replication"
 	    "                                    P0 P1 P2 P3  ML\n");
 
+	rc = 0;
 	for (i = 0; i < sc->chip_params->mps_tcam_size; i++) {
 		uint8_t dip_hit, vlan_vld, lookup_type, port_num;
 		uint16_t ivlan;
@@ -10493,10 +10524,7 @@ sysctl_path_mtus(SYSCTL_HANDLER_ARGS)
 	int rc;
 	uint16_t mtus[NMTUS];
 
-	rc = sysctl_wire_old_buffer(req, 0);
-	if (rc != 0)
-		return (rc);
-
+	rc = 0;
 	mtx_lock(&sc->reg_lock);
 	if (hw_off_limits(sc))
 		rc = ENXIO;
@@ -10538,10 +10566,7 @@ sysctl_pm_stats(SYSCTL_HANDLER_ARGS)
 		"Rx FIFO wait", NULL, "Rx latency"
 	};
 
-	rc = sysctl_wire_old_buffer(req, 0);
-	if (rc != 0)
-		return (rc);
-
+	rc = 0;
 	mtx_lock(&sc->reg_lock);
 	if (hw_off_limits(sc))
 		rc = ENXIO;
@@ -10602,10 +10627,7 @@ sysctl_rdma_stats(SYSCTL_HANDLER_ARGS)
 	int rc;
 	struct tp_rdma_stats stats;
 
-	rc = sysctl_wire_old_buffer(req, 0);
-	if (rc != 0)
-		return (rc);
-
+	rc = 0;
 	mtx_lock(&sc->reg_lock);
 	if (hw_off_limits(sc))
 		rc = ENXIO;
@@ -10636,10 +10658,7 @@ sysctl_tcp_stats(SYSCTL_HANDLER_ARGS)
 	int rc;
 	struct tp_tcp_stats v4, v6;
 
-	rc = sysctl_wire_old_buffer(req, 0);
-	if (rc != 0)
-		return (rc);
-
+	rc = 0;
 	mtx_lock(&sc->reg_lock);
 	if (hw_off_limits(sc))
 		rc = ENXIO;
@@ -10679,10 +10698,7 @@ sysctl_tids(SYSCTL_HANDLER_ARGS)
 	uint32_t x, y;
 	struct tid_info *t = &sc->tids;
 
-	rc = sysctl_wire_old_buffer(req, 0);
-	if (rc != 0)
-		return (rc);
-
+	rc = 0;
 	sb = sbuf_new_for_sysctl(NULL, NULL, 256, req);
 	if (sb == NULL)
 		return (ENOMEM);
@@ -10774,10 +10790,7 @@ sysctl_tp_err_stats(SYSCTL_HANDLER_ARGS)
 	int rc;
 	struct tp_err_stats stats;
 
-	rc = sysctl_wire_old_buffer(req, 0);
-	if (rc != 0)
-		return (rc);
-
+	rc = 0;
 	mtx_lock(&sc->reg_lock);
 	if (hw_off_limits(sc))
 		rc = ENXIO;
@@ -10855,10 +10868,7 @@ sysctl_tnl_stats(SYSCTL_HANDLER_ARGS)
 	int rc;
 	struct tp_tnl_stats stats;
 
-	rc = sysctl_wire_old_buffer(req, 0);
-	if (rc != 0)
-		return(rc);
-
+	rc = 0;
 	mtx_lock(&sc->reg_lock);
 	if (hw_off_limits(sc))
 		rc = ENXIO;
@@ -11122,10 +11132,7 @@ sysctl_tp_la(SYSCTL_HANDLER_ARGS)
 	u_int i, inc;
 	void (*show_func)(struct sbuf *, uint64_t *, int);
 
-	rc = sysctl_wire_old_buffer(req, 0);
-	if (rc != 0)
-		return (rc);
-
+	rc = 0;
 	sb = sbuf_new_for_sysctl(NULL, NULL, 4096, req);
 	if (sb == NULL)
 		return (ENOMEM);
@@ -11173,10 +11180,7 @@ sysctl_tx_rate(SYSCTL_HANDLER_ARGS)
 	int rc;
 	u64 nrate[MAX_NCHAN], orate[MAX_NCHAN];
 
-	rc = sysctl_wire_old_buffer(req, 0);
-	if (rc != 0)
-		return (rc);
-
+	rc = 0;
 	mtx_lock(&sc->reg_lock);
 	if (hw_off_limits(sc))
 		rc = ENXIO;
@@ -11219,10 +11223,7 @@ sysctl_ulprx_la(SYSCTL_HANDLER_ARGS)
 	uint32_t *buf, *p;
 	int rc, i;
 
-	rc = sysctl_wire_old_buffer(req, 0);
-	if (rc != 0)
-		return (rc);
-
+	rc = 0;
 	sb = sbuf_new_for_sysctl(NULL, NULL, 4096, req);
 	if (sb == NULL)
 		return (ENOMEM);
@@ -11263,10 +11264,7 @@ sysctl_wcwr_stats(SYSCTL_HANDLER_ARGS)
 
 	MPASS(chip_id(sc) >= CHELSIO_T5);
 
-	rc = sysctl_wire_old_buffer(req, 0);
-	if (rc != 0)
-		return (rc);
-
+	rc = 0;
 	mtx_lock(&sc->reg_lock);
 	if (hw_off_limits(sc))
 		rc = ENXIO;
@@ -11313,10 +11311,6 @@ sysctl_cpus(SYSCTL_HANDLER_ARGS)
 
 	CPU_ZERO(&cpuset);
 	rc = bus_get_cpus(sc->dev, op, sizeof(cpuset), &cpuset);
-	if (rc != 0)
-		return (rc);
-
-	rc = sysctl_wire_old_buffer(req, 0);
 	if (rc != 0)
 		return (rc);
 
@@ -12228,32 +12222,6 @@ t4_os_find_pci_capability(struct adapter *sc, int cap)
 	return (pci_find_cap(sc->dev, cap, &i) == 0 ? i : 0);
 }
 
-int
-t4_os_pci_save_state(struct adapter *sc)
-{
-	device_t dev;
-	struct pci_devinfo *dinfo;
-
-	dev = sc->dev;
-	dinfo = device_get_ivars(dev);
-
-	pci_cfg_save(dev, dinfo, 0);
-	return (0);
-}
-
-int
-t4_os_pci_restore_state(struct adapter *sc)
-{
-	device_t dev;
-	struct pci_devinfo *dinfo;
-
-	dev = sc->dev;
-	dinfo = device_get_ivars(dev);
-
-	pci_cfg_restore(dev, dinfo);
-	return (0);
-}
-
 void
 t4_os_portmod_changed(struct port_info *pi)
 {
@@ -12261,7 +12229,8 @@ t4_os_portmod_changed(struct port_info *pi)
 	struct vi_info *vi;
 	if_t ifp;
 	static const char *mod_str[] = {
-		NULL, "LR", "SR", "ER", "TWINAX", "active TWINAX", "LRM"
+		NULL, "LR", "SR", "ER", "TWINAX", "active TWINAX", "LRM",
+		"LR_SIMPLEX", "DR"
 	};
 
 	KASSERT((pi->flags & FIXED_IFMEDIA) == 0,
@@ -12516,7 +12485,7 @@ toe_capability(struct vi_info *vi, bool enable)
 
 	if (!is_offload(sc))
 		return (ENODEV);
-	if (hw_off_limits(sc))
+	if (!hw_all_ok(sc))
 		return (ENXIO);
 
 	if (enable) {
@@ -12779,7 +12748,7 @@ ktls_capability(struct adapter *sc, bool enable)
 		return (ENODEV);
 	if (!is_t6(sc))
 		return (0);
-	if (hw_off_limits(sc))
+	if (!hw_all_ok(sc))
 		return (ENXIO);
 
 	if (enable) {

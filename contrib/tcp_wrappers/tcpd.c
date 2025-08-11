@@ -9,7 +9,7 @@
   * 
   * Author: Wietse Venema, Eindhoven University of Technology, The Netherlands.
   *
-  * $FreeBSD: a0ba42f71f86509e1aab93ef879fec32193cd36b $
+  * $FreeBSD: 164132570a366848a510bcf5e838423095f7a023 $
   */
 
 #ifndef lint
@@ -44,6 +44,7 @@ static char sccsid[] = "@(#) tcpd.c 1.10 96/02/11 17:01:32";
 int     allow_severity = SEVERITY;	/* run-time adjustable */
 int     deny_severity = LOG_WARNING;	/* ditto */
 
+int
 main(int argc, char **argv)
 {
     struct request_info request;

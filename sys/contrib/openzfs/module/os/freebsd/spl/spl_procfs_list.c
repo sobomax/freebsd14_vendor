@@ -25,9 +25,6 @@
  *
  */
 
-#include <sys/cdefs.h>
-__FBSDID("$FreeBSD: e8448ce006868a00b9bed1f37384e74aa204e626 $");
-
 #include <sys/list.h>
 #include <sys/mutex.h>
 #include <sys/procfs_list.h>

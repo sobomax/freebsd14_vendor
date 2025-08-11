@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $ $FreeBSD: 909ae3886e9c8e36558a316c92c51e9b7202c3aa $
+ * $ $FreeBSD: 32c10bdca90e85d4f0a30884d0303a277d4e4199 $
  */
 
 #ifndef _OPENSOLARIS_SYS_POLICY_H_
@@ -70,10 +70,4 @@ int	secpolicy_xvattr(vnode_t *vp, xvattr_t *xvap, uid_t owner, cred_t *cr,
 	    vtype_t vtype);
 int	secpolicy_smb(cred_t *cr);
 
-
-#if __FreeBSD_version >= 1300005
-#define	spl_priv_check_cred(a, b) priv_check_cred((a), (b))
-#else
-#define	spl_priv_check_cred(a, b) priv_check_cred((a), (b), 0)
-#endif
 #endif	/* _OPENSOLARIS_SYS_POLICY_H_ */

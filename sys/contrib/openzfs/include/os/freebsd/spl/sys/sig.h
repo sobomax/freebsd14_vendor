@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: a4d440d38326d6d83beef65d886ec1c1bad042fa $
+ * $FreeBSD: 17fc65cbe3e2bc170c282a42c1b3a8014e8c76ca $
  */
 
 #ifndef _OPENSOLARIS_SYS_SIG_H_
@@ -39,20 +39,14 @@
 #include <sys/signalvar.h>
 #include <sys/debug.h>
 
-#define	FORREAL		0
-#define	JUSTLOOKING	1
-
 static __inline int
-issig(int why)
+issig(void)
 {
 	struct thread *td = curthread;
 	struct proc *p;
 	int sig;
 
-	ASSERT(why == FORREAL || why == JUSTLOOKING);
 	if (SIGPENDING(td)) {
-		if (why == JUSTLOOKING)
-			return (1);
 		p = td->td_proc;
 		PROC_LOCK(p);
 		mtx_lock(&p->p_sigacts->ps_mtx);

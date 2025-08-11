@@ -440,9 +440,16 @@ umtxq_unbusy(struct umtx_key *key)
 }
 
 void
+umtxq_busy_unlocked(struct umtx_key *key)
+{
+	umtxq_lock(key);
+	umtxq_busy(key);
+	umtxq_unlock(key);
+}
+
+void
 umtxq_unbusy_unlocked(struct umtx_key *key)
 {
-
 	umtxq_lock(key);
 	umtxq_unbusy(key);
 	umtxq_unlock(key);
@@ -1739,6 +1746,9 @@ umtx_pi_alloc(int flags)
 	struct umtx_pi *pi;
 
 	pi = uma_zalloc(umtx_pi_zone, M_ZERO | flags);
+	if (pi == NULL)
+		return (NULL);
+
 	TAILQ_INIT(&pi->pi_blocked);
 	atomic_add_int(&umtx_pi_allocated, 1);
 	return (pi);
@@ -2368,9 +2378,7 @@ do_lock_pi(struct thread *td, struct umutex *m, uint32_t flags,
 		if (error != 0)
 			break;
 
-		umtxq_lock(&uq->uq_key);
-		umtxq_busy(&uq->uq_key);
-		umtxq_unlock(&uq->uq_key);
+		umtxq_busy_unlocked(&uq->uq_key);
 
 		/*
 		 * Set the contested bit so that a release in user space
@@ -2536,9 +2544,7 @@ do_lock_pp(struct thread *td, struct umutex *m, uint32_t flags,
 	su = (priv_check(td, PRIV_SCHED_RTPRIO) == 0);
 	for (;;) {
 		old_inherited_pri = uq->uq_inherited_pri;
-		umtxq_lock(&uq->uq_key);
-		umtxq_busy(&uq->uq_key);
-		umtxq_unlock(&uq->uq_key);
+		umtxq_busy_unlocked(&uq->uq_key);
 
 		rv = fueword32(&m->m_ceilings[0], &ceiling);
 		if (rv == -1) {
@@ -2604,16 +2610,18 @@ do_lock_pp(struct thread *td, struct umutex *m, uint32_t flags,
 			 */
 			if (error == 0) {
 				error = thread_check_susp(td, false);
-				if (error == 0) {
-					if (try != 0)
-						error = EBUSY;
-					else
-						continue;
+				if (error == 0 && try == 0) {
+					umtxq_unbusy_unlocked(&uq->uq_key);
+					continue;
 				}
 				error = 0;
 			}
 		} else if (owner == UMUTEX_RB_NOTRECOV) {
 			error = ENOTRECOVERABLE;
+		} else if (owner == UMUTEX_CONTESTED) {
+			/* Spurious failure, retry. */
+			umtxq_unbusy_unlocked(&uq->uq_key);
+			continue;
 		}
 
 		if (try != 0)
@@ -2721,9 +2729,8 @@ do_unlock_pp(struct thread *td, struct umutex *m, uint32_t flags, bool rb)
 	    TYPE_PP_ROBUST_UMUTEX : TYPE_PP_UMUTEX, GET_SHARE(flags),
 	    &key)) != 0)
 		return (error);
-	umtxq_lock(&key);
-	umtxq_busy(&key);
-	umtxq_unlock(&key);
+	umtxq_busy_unlocked(&key);
+
 	/*
 	 * For priority protected mutex, always set unlocked state
 	 * to UMUTEX_CONTESTED, so that userland always enters kernel
@@ -2786,9 +2793,7 @@ do_set_ceiling(struct thread *td, struct umutex *m, uint32_t ceiling,
 	    &uq->uq_key)) != 0)
 		return (error);
 	for (;;) {
-		umtxq_lock(&uq->uq_key);
-		umtxq_busy(&uq->uq_key);
-		umtxq_unlock(&uq->uq_key);
+		umtxq_busy_unlocked(&uq->uq_key);
 
 		rv = fueword32(&m->m_ceilings[0], &save_ceiling);
 		if (rv == -1) {
@@ -2823,6 +2828,10 @@ do_set_ceiling(struct thread *td, struct umutex *m, uint32_t ceiling,
 		} else if (owner == UMUTEX_RB_NOTRECOV) {
 			error = ENOTRECOVERABLE;
 			break;
+		} else if (owner == UMUTEX_CONTESTED) {
+			/* Spurious failure, retry. */
+			umtxq_unbusy_unlocked(&uq->uq_key);
+			continue;
 		}
 
 		/*
@@ -3138,9 +3147,7 @@ do_rw_rdlock(struct thread *td, struct urwlock *rwlock, long fflag,
 			break;
 
 		/* grab monitor lock */
-		umtxq_lock(&uq->uq_key);
-		umtxq_busy(&uq->uq_key);
-		umtxq_unlock(&uq->uq_key);
+		umtxq_busy_unlocked(&uq->uq_key);
 
 		/*
 		 * re-read the state, in case it changed between the try-lock above
@@ -3331,9 +3338,7 @@ do_rw_wrlock(struct thread *td, struct urwlock *rwlock, struct _umtx_time *timeo
 		}
 
 		/* grab monitor lock */
-		umtxq_lock(&uq->uq_key);
-		umtxq_busy(&uq->uq_key);
-		umtxq_unlock(&uq->uq_key);
+		umtxq_busy_unlocked(&uq->uq_key);
 
 		/*
 		 * Re-read the state, in case it changed between the
@@ -4486,6 +4491,7 @@ static int
 umtx_shm_create_reg(struct thread *td, const struct umtx_key *key,
     struct umtx_shm_reg **res)
 {
+	struct shmfd *shm;
 	struct umtx_shm_reg *reg, *reg1;
 	struct ucred *cred;
 	int error;
@@ -4505,9 +4511,14 @@ umtx_shm_create_reg(struct thread *td, const struct umtx_key *key,
 	cred = td->td_ucred;
 	if (!chgumtxcnt(cred->cr_ruidinfo, 1, lim_cur(td, RLIMIT_UMTXP)))
 		return (ENOMEM);
+	shm = shm_alloc(td->td_ucred, O_RDWR, false);
+	if (shm == NULL) {
+		chgumtxcnt(cred->cr_ruidinfo, -1, 0);
+		return (ENOMEM);
+	}
 	reg = uma_zalloc(umtx_shm_reg_zone, M_WAITOK | M_ZERO);
 	bcopy(key, &reg->ushm_key, sizeof(*key));
-	reg->ushm_obj = shm_alloc(td->td_ucred, O_RDWR, false);
+	reg->ushm_obj = shm;
 	reg->ushm_cred = crhold(cred);
 	error = shm_dotruncate(reg->ushm_obj, PAGE_SIZE);
 	if (error != 0) {

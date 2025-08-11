@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 1a0d6a242b24cc7767621de44821d7658d183cdd $
+ * $FreeBSD: e37c380fdb5b009e731604d877d951d597394ddc $
  */
 
 #ifndef _IWL_DEVTRACE_H
@@ -60,6 +60,8 @@ void trace_iwlwifi_dev_rx_data(const struct device *,
 #define	trace_iwlwifi_dev_irq_msix(...)
 #define	trace_iwlwifi_dev_tx(...)
 #define	trace_iwlwifi_dev_tx_tb(...)
+
+#define	maybe_trace_iwlwifi_dev_rx(...)
 
 #define	trace_iwlwifi_crit(...)
 #define	trace_iwlwifi_dbg(...)

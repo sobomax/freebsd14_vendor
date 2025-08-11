@@ -299,6 +299,7 @@ MAN+=	abort2.2 \
 	rmdir.2 \
 	rtprio.2 \
 	sched_get_priority_max.2 \
+	sched_getcpu.3 \
 	sched_setparam.2 \
 	sched_setscheduler.2 \
 	sched_yield.2 \
@@ -310,6 +311,7 @@ MAN+=	abort2.2 \
 	semget.2 \
 	semop.2 \
 	send.2 \
+	setcred.2 \
 	setfib.2 \
 	sendfile.2 \
 	setgroups.2 \
@@ -442,6 +444,7 @@ MLINKS+=jail.2 jail_attach.2 \
 	jail.2 jail_set.2
 MLINKS+=kldunload.2 kldunloadf.2
 MLINKS+=kqueue.2 kevent.2 \
+	kqueue.2 kqueue1.2 \
 	kqueue.2 kqueuex.2 \
 	kqueue.2 EV_SET.3
 MLINKS+=link.2 linkat.2

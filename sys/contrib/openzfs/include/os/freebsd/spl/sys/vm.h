@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 7b3830be8a579a3a3774bb4e972ba3ed087e9668 $
+ * $FreeBSD: 07ee6bc191a785575c2bd0376767758c45f93c55 $
  */
 
 #ifndef _OPENSOLARIS_SYS_VM_H_
@@ -41,22 +41,6 @@ void	zfs_vmobject_assert_wlocked(vm_object_t object);
 void	zfs_vmobject_wlock(vm_object_t object);
 void	zfs_vmobject_wunlock(vm_object_t object);
 
-#if __FreeBSD_version >= 1300081
-#define	zfs_vmobject_assert_wlocked_12(x)
-#define	zfs_vmobject_wlock_12(x)
-#define	zfs_vmobject_wunlock_12(x)
-#else
-#define	zfs_vmobject_assert_wlocked_12(x)		\
-	zfs_vmobject_assert_wlocked((x))
-#define	zfs_vmobject_wlock_12(x)				\
-	zfs_vmobject_wlock(x)
-#define	zfs_vmobject_wunlock_12(x)				\
-	zfs_vmobject_wunlock(x)
-#define	vm_page_grab_unlocked(obj, idx, flags)	\
-	vm_page_grab((obj), (idx), (flags))
-#define	vm_page_grab_valid_unlocked(m, obj, idx, flags)	\
-	vm_page_grab_valid((m), (obj), (idx), (flags))
-#endif
 static inline caddr_t
 zfs_map_page(vm_page_t pp, struct sf_buf **sfp)
 {

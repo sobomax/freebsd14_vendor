@@ -1,5 +1,5 @@
 /*-
- * Copyright (c) 2020-2021 The FreeBSD Foundation
+ * Copyright (c) 2020-2025 The FreeBSD Foundation
  *
  * This software was developed by Björn Zeeb under sponsorship from
  * the FreeBSD Foundation.
@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: a9b10b841f9530347b82f91a081afd903519821b $
+ * $FreeBSD: 71c0744f017c5e227c489f7a129913445d6fc5e4 $
  */
 
 /*
@@ -69,6 +69,13 @@ struct iwl_lq_sta {
 	struct {
 		spinlock_t	lock;
 		uint16_t	max_agg_bufsize;
+		/*
+		 * Based on the assumption that these are in "FW" too and
+		 * there is a f() to set last_rssi add them here too.
+		 */
+		uint8_t		chains;
+		uint8_t		chain_signal[IEEE80211_MAX_CHAINS];
+		uint8_t		last_rssi;
 	} pers;
 };
 

@@ -12,25 +12,64 @@ Items affecting the ports and packages system can be found in
 /usr/ports/UPDATING.  Please read that file before updating system packages
 and/or ports.
 
-20250129:
-	14.2-RELEASE-p1 SA-25:02.fs
-			SA-25:03.etcupdate
-			SA-25:04.ktrace
-			EN-25:02.audit
-			EN-25:03.tzdata
+20250808:
+	14.3-RELEASE-p2	EN-25:12.efi
+			EN-25:13.wlan_tkip
+			EN-25:14.route
+			SA-25:07.libarchive
 
-	Buffer overflow in some filesystems via NFS [SA-25:02.fs]
+	Fix bsdinstall(8) not copying the correct loader on systems with IA32 UEFI
+	firmware. [EN-25:12.efi]
 
-	Unprivileged access to system files [SA-25:03.etcupdate]
+	Fix net80211 TKIP crypto support failing for some drivers. [EN-25:13.wlan_tkip]
 
-	Uninitialized kernel memory disclosure via ktrace(2) [SA-25:04.ktrace]
+	Fix route(8) monitor buffering too much when redirected to a file. [EN-25:14.route]
 
-	System call auditing disabled by DTrace [EN-25:02.audit]
+	Update libarchive to 3.8.1 to fix integer overflow leading to double
+	free. [SA-25:07.libarchive]
 
-	Timezone database information update [EN-25:03.tzdata]
+20250702:
+	14.3-RELEASE-p1	EN-25:10.zfs
 
-20241203:
-	14.2-RELEASE.
+	Fix corruption in ZFS replication streams from encrypted datasets [EN-25:10.zfs]
+
+20250610:
+	14.3-RELEASE.
+
+20250419:
+	LinuxKPI alloc routines were changed to return physically contiguous
+	memory where expected. These changes may require out-of-tree drivers
+	to be recompiled.
+	Bump __FreeBSD_version to 1402505 to be able to detect this change.
+
+20250419:
+	Intel iwlwifi firmware has been removed from the src repository.
+	Before updating their system, users of iwlwifi(4) or iwx(4) must
+	install the appropriate firmware for their chipset using fwget(8) or
+	building it from ports.
+
+20250403:
+	Commit 8aedc83c1cc2 ("New setcred() system call and associated MAC
+	hooks") introduces new MAC hooks for the new setcred() system call,
+	modifying the layout and size of 'struct mac_policy_ops'.  As a result,
+	all MAC modules need to be recompiled.
+
+20250228:
+	Commit 9fed5151903f modified the internal API between the
+	nfscommon and nfscl modules.  As such, both of these modules
+	need to be rebuilt from sources.
+	__FreeBSD_version was bumped to 1402504 for this patch.
+
+20250117:
+	The layout of NFS file handles for the tarfs, cd9660, and ext2fs
+	file systems has changed.  An NFS server that exports any of these file
+	systems will need its clients to unmount and remount the exports.
+
+20241222:
+	The ng_ubt(4) driver now requires firmwares to be loaded on Realtek
+	adaptors with rtlbtfw(8) utility. It no longer attaches to devices
+	standing in bootloader mode. Firmware files are available in the
+	comms/rtlbt-firmware port.
 
 20240419:
 	Clang, llvm, lld, lldb, compiler-rt, libc++, libunwind and openmp have
@@ -2041,7 +2080,7 @@ FOOTNOTES:
 	happens automatically. If all your modules come from ports, then adding
 	the port origin directories to PORTS_MODULES instead is also automatic
 	and effective, eg:
-	     PORTS_MODULES+=x11/nvidia-driver
+	     PORTS_MODULES+=graphics/drm-kmod graphics/nvidia-drm-kmod
 
 	[3] From the bootblocks, boot -s, and then do
 		fsck -p

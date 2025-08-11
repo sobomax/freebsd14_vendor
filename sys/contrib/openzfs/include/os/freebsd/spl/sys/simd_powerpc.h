@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 2fd806e1a0b527fbbf2de506df602d6c326f1ebd $
+ * $FreeBSD: 608122d9d135ccdeebb28361be97b64f08eec688 $
  */
 
 /*
@@ -48,13 +48,18 @@
 
 #include <machine/pcb.h>
 #include <machine/cpu.h>
+#include <machine/fpu.h>
 
-/* FreeBSD doesn't support floating point on powerpc kernel yet */
-#define	kfpu_allowed()		0
-
+#define	kfpu_allowed()		1
 #define	kfpu_initialize(tsk)	do {} while (0)
-#define	kfpu_begin()		do {} while (0)
-#define	kfpu_end()		do {} while (0)
+#define kfpu_begin() {					\
+	if (__predict_false(!is_fpu_kern_thread(0)))	\
+	fpu_kern_enter(PCPU_GET(curthread), NULL, FPU_KERN_NOCTX);\
+}
+#define kfpu_end()	{				\
+	if (__predict_false(PCPU_GET(curpcb)->pcb_flags & PCB_KERN_FPU_NOSAVE))\
+	fpu_kern_leave(PCPU_GET(curthread), NULL);	\
+}
 #define	kfpu_init()		(0)
 #define	kfpu_fini()		do {} while (0)
 

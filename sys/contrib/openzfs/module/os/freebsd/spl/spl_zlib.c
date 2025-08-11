@@ -25,9 +25,6 @@
  *
  */
 
-#include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 42c6d7f9df6c3b319ac3a1f1d4a077ceeab486f0 $");
-
 #include <sys/types.h>
 #include <sys/kmem.h>
 #include <sys/kmem_cache.h>

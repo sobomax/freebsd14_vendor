@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 4560bb05e97842e39deb317364675a5c04a343c7 $
+ * $FreeBSD: d16e1db5e8261ac0274c22cc449a351d06faf5d7 $
  */
 
 #ifndef _FREEBSD_SIMD_H
@@ -49,5 +49,8 @@
 #define	kfpu_init()		(0)
 #define	kfpu_fini()		do {} while (0)
 #endif
+
+#define	simd_stat_init()	do {} while (0)
+#define	simd_stat_fini()	do {} while (0)
 
 #endif

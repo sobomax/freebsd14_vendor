@@ -23,16 +23,14 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: 7583166e727bb906c93d4eaccd43603a2fcad075 $
+ * $FreeBSD: 146fa9e5d133add792fe0e103f643808875aa061 $
  */
 
 #ifndef _OPENSOLARIS_SYS_RANDOM_H_
 #define	_OPENSOLARIS_SYS_RANDOM_H_
 
 #include_next <sys/random.h>
-#if  __FreeBSD_version >= 1300108
 #include <sys/prng.h>
-#endif
 
 static inline int
 random_get_bytes(uint8_t *p, size_t s)
@@ -51,7 +49,7 @@ random_get_pseudo_bytes(uint8_t *p, size_t s)
 static inline uint32_t
 random_in_range(uint32_t range)
 {
-#if defined(_KERNEL) && __FreeBSD_version >= 1300108
+#if defined(_KERNEL)
 	return (prng32_bounded(range));
 #else
 	uint32_t r;

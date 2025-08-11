@@ -150,7 +150,7 @@ static fo_fallocate_t	shm_fallocate;
 static fo_fspacectl_t	shm_fspacectl;
 
 /* File descriptor operations. */
-struct fileops shm_ops = {
+const struct fileops shm_ops = {
 	.fo_read = shm_read,
 	.fo_write = shm_write,
 	.fo_truncate = shm_truncate,
@@ -481,7 +481,10 @@ shm_write(struct file *fp, struct uio *uio, struct ucred *active_cred,
 	struct shmfd *shmfd;
 	void *rl_cookie;
 	int error;
-	off_t size;
+	off_t newsize;
+
+	KASSERT((flags & FOF_OFFSET) == 0 || uio->uio_offset >= 0,
+	    ("%s: negative offset", __func__));
 
 	shmfd = fp->f_data;
 #ifdef MAC
@@ -503,21 +506,23 @@ shm_write(struct file *fp, struct uio *uio, struct ucred *active_cred,
 			return (EFBIG);
 		}
 
-		size = shmfd->shm_size;
+		newsize = atomic_load_64(&shmfd->shm_size);
 	} else {
-		size = uio->uio_offset + uio->uio_resid;
+		newsize = uio->uio_offset + uio->uio_resid;
 	}
 	if ((flags & FOF_OFFSET) == 0)
 		rl_cookie = shm_rangelock_wlock(shmfd, 0, OFF_MAX);
 	else
-		rl_cookie = shm_rangelock_wlock(shmfd, uio->uio_offset, size);
+		rl_cookie = shm_rangelock_wlock(shmfd, uio->uio_offset,
+		    MAX(newsize, uio->uio_offset));
 	if ((shmfd->shm_seals & F_SEAL_WRITE) != 0) {
 		error = EPERM;
 	} else {
 		error = 0;
 		if ((shmfd->shm_flags & SHM_GROW_ON_WRITE) != 0 &&
-		    size > shmfd->shm_size) {
-			error = shm_dotruncate_cookie(shmfd, size, rl_cookie);
+		    newsize > shmfd->shm_size) {
+			error = shm_dotruncate_cookie(shmfd, newsize,
+			    rl_cookie);
 		}
 		if (error == 0)
 			error = uiomove_object(shmfd->shm_object,
@@ -938,22 +943,32 @@ shm_alloc(struct ucred *ucred, mode_t mode, bool largepage)
 	struct shmfd *shmfd;
 	vm_object_t obj;
 
+	if (largepage) {
+		obj = phys_pager_allocate(NULL, &shm_largepage_phys_ops,
+		    NULL, 0, VM_PROT_DEFAULT, 0, ucred);
+	} else {
+		obj = vm_pager_allocate(shmfd_pager_type, NULL, 0,
+		    VM_PROT_DEFAULT, 0, ucred);
+	}
+	if (obj == NULL) {
+		/*
+		 * swap reservation limits can cause object allocation
+		 * to fail.
+		 */
+		return (NULL);
+	}
+
 	shmfd = malloc(sizeof(*shmfd), M_SHMFD, M_WAITOK | M_ZERO);
-	shmfd->shm_size = 0;
 	shmfd->shm_uid = ucred->cr_uid;
 	shmfd->shm_gid = ucred->cr_gid;
 	shmfd->shm_mode = mode;
 	if (largepage) {
-		obj = phys_pager_allocate(NULL, &shm_largepage_phys_ops,
-		    NULL, shmfd->shm_size, VM_PROT_DEFAULT, 0, ucred);
 		obj->un_pager.phys.phys_priv = shmfd;
 		shmfd->shm_lp_alloc_policy = SHM_LARGEPAGE_ALLOC_DEFAULT;
 	} else {
-		obj = vm_pager_allocate(shmfd_pager_type, NULL,
-		    shmfd->shm_size, VM_PROT_DEFAULT, 0, ucred);
 		obj->un_pager.swp.swp_priv = shmfd;
 	}
-	KASSERT(obj != NULL, ("shm_create: vm_pager_allocate"));
+
 	VM_OBJECT_WLOCK(obj);
 	vm_object_set_flag(obj, OBJ_POSIXSHM);
 	VM_OBJECT_WUNLOCK(obj);
@@ -1210,8 +1225,8 @@ kern_shm_open2(struct thread *td, const char *userpath, int flags, mode_t mode,
 		if (CAP_TRACING(td))
 			ktrcapfail(CAPFAIL_NAMEI, path);
 		if (IN_CAPABILITY_MODE(td)) {
-			free(path, M_SHMFD);
-			return (ECAPMODE);
+			error = ECAPMODE;
+			goto outnofp;
 		}
 #endif
 
@@ -1231,20 +1246,21 @@ kern_shm_open2(struct thread *td, const char *userpath, int flags, mode_t mode,
 	 * in sys_shm_open() to keep this implementation compliant.
 	 */
 	error = falloc_caps(td, &fp, &fd, flags & O_CLOEXEC, fcaps);
-	if (error) {
-		free(path, M_SHMFD);
-		return (error);
-	}
+	if (error != 0)
+		goto outnofp;
 
 	/* A SHM_ANON path pointer creates an anonymous object. */
 	if (userpath == SHM_ANON) {
 		/* A read-only anonymous object is pointless. */
 		if ((flags & O_ACCMODE) == O_RDONLY) {
-			fdclose(td, fp, fd);
-			fdrop(fp, td);
-			return (EINVAL);
+			error = EINVAL;
+			goto out;
 		}
 		shmfd = shm_alloc(td->td_ucred, cmode, largepage);
+		if (shmfd == NULL) {
+			error = ENOMEM;
+			goto out;
+		}
 		shmfd->shm_seals = initial_seals;
 		shmfd->shm_flags = shmflags;
 	} else {
@@ -1261,17 +1277,26 @@ kern_shm_open2(struct thread *td, const char *userpath, int flags, mode_t mode,
 #endif
 					shmfd = shm_alloc(td->td_ucred, cmode,
 					    largepage);
-					shmfd->shm_seals = initial_seals;
-					shmfd->shm_flags = shmflags;
-					shm_insert(path, fnv, shmfd);
+					if (shmfd == NULL) {
+						error = ENOMEM;
+					} else {
+						shmfd->shm_seals =
+						    initial_seals;
+						shmfd->shm_flags = shmflags;
+						shm_insert(path, fnv, shmfd);
+						path = NULL;
+					}
 #ifdef MAC
 				}
 #endif
 			} else {
-				free(path, M_SHMFD);
 				error = ENOENT;
 			}
 		} else {
+			/*
+			 * Object already exists, obtain a new reference if
+			 * requested and permitted.
+			 */
 			rl_cookie = shm_rangelock_wlock(shmfd, 0, OFF_MAX);
 
 			/*
@@ -1283,12 +1308,6 @@ kern_shm_open2(struct thread *td, const char *userpath, int flags, mode_t mode,
 			 * not be sealed.
 			 */
 			initial_seals &= ~shmfd->shm_seals;
-
-			/*
-			 * Object already exists, obtain a new
-			 * reference if requested and permitted.
-			 */
-			free(path, M_SHMFD);
 
 			/*
 			 * initial_seals can't set additional seals if we've
@@ -1348,19 +1367,25 @@ kern_shm_open2(struct thread *td, const char *userpath, int flags, mode_t mode,
 		}
 		sx_xunlock(&shm_dict_lock);
 
-		if (error) {
-			fdclose(td, fp, fd);
-			fdrop(fp, td);
-			return (error);
-		}
+		if (error != 0)
+			goto out;
 	}
 
 	finit(fp, FFLAGS(flags & O_ACCMODE), DTYPE_SHM, shmfd, &shm_ops);
 
 	td->td_retval[0] = fd;
 	fdrop(fp, td);
+	free(path, M_SHMFD);
 
 	return (0);
+
+out:
+	fdclose(td, fp, fd);
+	fdrop(fp, td);
+outnofp:
+	free(path, M_SHMFD);
+
+	return (error);
 }
 
 /* System calls. */
@@ -1648,7 +1673,7 @@ fail:
 
 static int
 shm_mmap(struct file *fp, vm_map_t map, vm_offset_t *addr, vm_size_t objsize,
-    vm_prot_t prot, vm_prot_t cap_maxprot, int flags,
+    vm_prot_t prot, vm_prot_t max_maxprot, int flags,
     vm_ooffset_t foff, struct thread *td)
 {
 	struct shmfd *shmfd;
@@ -1671,8 +1696,8 @@ shm_mmap(struct file *fp, vm_map_t map, vm_offset_t *addr, vm_size_t objsize,
 	 * writeable.
 	 */
 	if ((flags & MAP_SHARED) == 0) {
-		cap_maxprot |= VM_PROT_WRITE;
-		maxprot |= VM_PROT_WRITE;
+		if ((max_maxprot & VM_PROT_WRITE) != 0)
+			maxprot |= VM_PROT_WRITE;
 		writecnt = false;
 	} else {
 		if ((fp->f_flag & FWRITE) != 0 &&
@@ -1692,7 +1717,7 @@ shm_mmap(struct file *fp, vm_map_t map, vm_offset_t *addr, vm_size_t objsize,
 			goto out;
 		}
 	}
-	maxprot &= cap_maxprot;
+	maxprot &= max_maxprot;
 
 	/* See comment in vn_mmap(). */
 	if (

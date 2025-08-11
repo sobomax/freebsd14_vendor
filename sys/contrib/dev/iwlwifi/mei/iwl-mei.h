@@ -1,5 +1,5 @@
 /*-
- * Copyright (c) 2022 The FreeBSD Foundation
+ * Copyright (c) 2022-2024 The FreeBSD Foundation
  *
  * This software was developed by Björn Zeeb under sponsorship from
  * the FreeBSD Foundation.
@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: aec85c42d02a58f74c81af9f576b0dedc642ccdf $
+ * $FreeBSD: ad60ce0acd86fb1e03764e0d048a8b6a16c77655 $
  */
 
 #ifndef _IWL_MEI_IWL_MEI_H
@@ -153,6 +153,11 @@ static __inline bool
 iwl_mei_pldr_req(void)
 {
 	return (false);
+}
+
+static __inline void
+iwl_mei_set_power_limit(__le16 *x __unused)
+{
 }
 #endif
 

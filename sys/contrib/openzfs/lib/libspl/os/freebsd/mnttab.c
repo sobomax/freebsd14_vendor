@@ -29,9 +29,6 @@
  * functions.
  */
 
-#include <sys/cdefs.h>
-__FBSDID("$FreeBSD: a4673084ad5f91876a0b376dfcd3bacb26331bb0 $");
-
 #include <sys/param.h>
 #include <sys/mount.h>
 #include <sys/mntent.h>

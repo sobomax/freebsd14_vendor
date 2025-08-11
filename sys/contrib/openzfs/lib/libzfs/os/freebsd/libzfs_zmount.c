@@ -28,9 +28,6 @@
  * This file implements Solaris compatible zmount() function.
  */
 
-#include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 34976f7bbf46b3eb5ad56583e078f460558fc78c $");
-
 #include <sys/param.h>
 #include <sys/mount.h>
 #include <sys/uio.h>

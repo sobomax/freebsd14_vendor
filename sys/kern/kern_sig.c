@@ -119,7 +119,7 @@ static void	sigqueue_start(void);
 static void	sigfastblock_setpend(struct thread *td, bool resched);
 
 static uma_zone_t	ksiginfo_zone = NULL;
-struct filterops sig_filtops = {
+const struct filterops sig_filtops = {
 	.f_isfd = 0,
 	.f_attach = filt_sigattach,
 	.f_detach = filt_sigdetach,
@@ -345,6 +345,14 @@ ast_sig(struct thread *td, int tda)
 	 * the postsig() loop was performed.
 	 */
 	sigfastblock_setpend(td, resched_sigs);
+
+	/*
+	 * Clear td_sa.code: signal to ptrace that syscall arguments
+	 * are unavailable after this point. This AST handler is the
+	 * last chance for ptracestop() to signal the tracer before
+	 * the tracee returns to userspace.
+	 */
+	td->td_sa.code = 0;
 }
 
 static void
