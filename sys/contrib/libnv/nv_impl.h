@@ -29,7 +29,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: e9cd3ffabc3fd047c1336429f1f8522d7e019018 $
+ * $FreeBSD: 4ac57fc7b4974f760a9f5c701ff6cb6014a0dc7c $
  */
 
 #ifndef	_NV_IMPL_H_
@@ -41,6 +41,14 @@ struct nvpair;
 
 typedef struct nvpair nvpair_t;
 #endif
+
+struct nvlist_header {
+	uint8_t		nvlh_magic;
+	uint8_t		nvlh_version;
+	uint8_t		nvlh_flags;
+	uint64_t	nvlh_descriptors;
+	uint64_t	nvlh_size;
+} __packed;
 
 #define	NV_TYPE_NVLIST_ARRAY_NEXT	254
 #define	NV_TYPE_NVLIST_UP		255

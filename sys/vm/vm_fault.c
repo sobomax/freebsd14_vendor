@@ -139,6 +139,7 @@ struct faultstate {
 	vm_object_t	object;
 	vm_pindex_t	pindex;
 	vm_page_t	m;
+	bool		m_needs_zeroing;
 
 	/* Top-level map object. */
 	vm_object_t	first_object;
@@ -264,7 +265,6 @@ vm_fault_unlock_vp(struct faultstate *fs)
 static void
 vm_fault_deallocate(struct faultstate *fs)
 {
-
 	vm_fault_page_release(&fs->m_cow);
 	vm_fault_page_release(&fs->m);
 	vm_object_pip_wakeup(fs->object);
@@ -1172,7 +1172,7 @@ vm_fault_zerofill(struct faultstate *fs)
 	/*
 	 * Zero the page if necessary and mark it valid.
 	 */
-	if ((fs->m->flags & PG_ZERO) == 0) {
+	if (fs->m_needs_zeroing) {
 		pmap_zero_page(fs->m);
 	} else {
 		VM_CNT_INC(v_ozfod);
@@ -1286,6 +1286,8 @@ vm_fault_allocate(struct faultstate *fs)
 			vm_waitpfault(dset, vm_pfault_oom_wait * hz);
 		return (FAULT_RESTART);
 	}
+	if (fs->object == fs->first_object)
+		fs->m_needs_zeroing = (fs->m->flags & PG_ZERO) == 0;
 	fs->oom_started = false;
 
 	return (FAULT_CONTINUE);
@@ -1561,6 +1563,7 @@ vm_fault(vm_map_t map, vm_offset_t vaddr, vm_prot_t fault_type,
 
 RetryFault:
 	fs.fault_type = fault_type;
+	fs.m_needs_zeroing = true;
 
 	/*
 	 * Find the backing store object and offset into it to begin the

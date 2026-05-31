@@ -31,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: 92d6e655876a403f6cdaa5ea7e78be28513113c1 $");
+__FBSDID("$FreeBSD: cbd35ab67dd229c6aaddad4c9bbbc91a131a59a9 $");
 
 #include <sys/param.h>
 #include <sys/endian.h>
@@ -118,13 +118,6 @@ MALLOC_DEFINE(M_NVLIST, "nvlist", "kernel nvlist");
 
 #define	NVLIST_HEADER_MAGIC	0x6c
 #define	NVLIST_HEADER_VERSION	0x00
-struct nvlist_header {
-	uint8_t		nvlh_magic;
-	uint8_t		nvlh_version;
-	uint8_t		nvlh_flags;
-	uint64_t	nvlh_descriptors;
-	uint64_t	nvlh_size;
-} __packed;
 
 nvlist_t *
 nvlist_create(int flags)
@@ -1029,10 +1022,6 @@ static bool
 nvlist_check_header(struct nvlist_header *nvlhdrp)
 {
 
-	if (nvlhdrp->nvlh_size > SIZE_MAX - sizeof(*nvlhdrp)) {
-		ERRNO_SET(EINVAL);
-		return (false);
-	}
 	if (nvlhdrp->nvlh_magic != NVLIST_HEADER_MAGIC) {
 		ERRNO_SET(EINVAL);
 		return (false);
@@ -1052,6 +1041,11 @@ nvlist_check_header(struct nvlist_header *nvlhdrp)
 		nvlhdrp->nvlh_descriptors = be64toh(nvlhdrp->nvlh_descriptors);
 	}
 #endif
+	if (nvlhdrp->nvlh_size > SIZE_MAX - sizeof(*nvlhdrp)) {
+		ERRNO_SET(EINVAL);
+		return (false);
+	}
+
 	return (true);
 }
 
